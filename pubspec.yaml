@@ -24,6 +24,7 @@ dependencies:
   get_it: ^4.0.2
   provider: ^4.0.5+1
   shared_preferences: ^0.5.7+1
+  mockito: ^4.1.1
 
 dev_dependencies:
   flutter_test:
