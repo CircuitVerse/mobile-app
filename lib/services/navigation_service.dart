@@ -27,7 +27,7 @@ class NavigationService {
     );
   }
 
-  bool pop() {
+  void pop() {
     return navigatorKey.currentState.pop();
   }
 }

@@ -12,7 +12,7 @@ class StartUpView extends StatelessWidget {
         body: Center(
           child: Text(
             'CircuitVerse',
-            style: Theme.of(context).textTheme.display2.copyWith(
+            style: Theme.of(context).textTheme.headline4.copyWith(
                   color: Colors.white,
                 ),
           ),
