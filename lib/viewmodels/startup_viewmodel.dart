@@ -1,8 +1,8 @@
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/services/navigation_service.dart';
-import 'package:mobile_app/ui/views/home_view.dart';
-import 'package:mobile_app/ui/views/login_view.dart';
+import 'package:mobile_app/ui/views/home/home_view.dart';
+import 'package:mobile_app/ui/views/login/login_view.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class StartUpViewModel extends BaseModel {

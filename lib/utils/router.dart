@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/ui/views/home_view.dart';
-import 'package:mobile_app/ui/views/login_view.dart';
+import 'package:mobile_app/ui/views/home/home_view.dart';
+import 'package:mobile_app/ui/views/login/login_view.dart';
 
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
