@@ -25,6 +25,9 @@ dependencies:
   provider: ^4.0.5+1
   shared_preferences: ^0.5.7+1
   mockito: ^4.1.1
+  url_launcher: ^5.4.5
+  http: ^0.12.1
+  transparent_image: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +36,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  assets:
+    - assets/images/homepage/
+  
   fonts:
     - family: Poppins
       fonts:
