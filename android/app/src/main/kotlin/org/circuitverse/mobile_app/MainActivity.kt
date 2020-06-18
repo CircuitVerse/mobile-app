@@ -1,4 +1,4 @@
-package com.circuitverse.mobile_app
+package org.circuitverse.mobile_app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
