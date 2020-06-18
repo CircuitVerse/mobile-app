@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mobile_app/locale/locales.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/managers/dialog_manager.dart';
 import 'package:mobile_app/services/dialog_service.dart';
@@ -23,6 +25,16 @@ class CircuitVerseMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'CircuitVerse Mobile',
+      localizationsDelegates: [
+        AppLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale("en", ""),
+      ],
+      onGenerateTitle: (BuildContext context) =>
+          AppLocalizations.of(context).title,
       debugShowCheckedModeBanner: false,
       builder: (context, child) => Navigator(
         key: locator<DialogService>().dialogNavigationKey,
