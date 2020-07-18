@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
-import 'package:mobile_app/services/navigation_service.dart';
 import 'package:mobile_app/ui/views/home/home_view.dart';
-import 'package:mobile_app/ui/views/login/login_view.dart';
 import 'package:mobile_app/ui/views/startup_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mockito/mockito.dart';
@@ -25,8 +24,7 @@ void main() {
 
   Future<void> _pumpStartUpView(WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
-        navigatorKey: locator<NavigationService>().navigatorKey,
+      GetMaterialApp(
         onGenerateRoute: Router.generateRoute,
         navigatorObservers: [mockObserver],
         home: StartUpView(),
@@ -42,31 +40,16 @@ void main() {
       (WidgetTester tester) async {
     await _pumpStartUpView(tester);
 
-    expect(find.text("CircuitVerse"), findsOneWidget);
+    expect(find.text('CircuitVerse'), findsOneWidget);
     await tester.pumpAndSettle(Duration(seconds: 1));
   });
 
-  testWidgets('HomeView is pushed over StartUpView if is_logged_in = true',
+  testWidgets('HomeView is pushed over StartUpView',
       (WidgetTester tester) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("is_logged_in", true);
-
     await _pumpStartUpView(tester);
     await tester.pumpAndSettle(Duration(seconds: 1));
 
     verify(mockObserver.didPush(any, any));
     expect(find.byType(HomeView), findsOneWidget);
-  });
-
-  testWidgets('LoginView is pushed over StartUpView if is_logged_in = false',
-      (WidgetTester tester) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("is_logged_in", false);
-
-    await _pumpStartUpView(tester);
-    await tester.pumpAndSettle(Duration(seconds: 1));
-
-    verify(mockObserver.didPush(any, any));
-    expect(find.byType(LoginView), findsOneWidget);
   });
 }

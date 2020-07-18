@@ -11,7 +11,7 @@ class BaseModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  String _errorMessage = "";
+  String _errorMessage = '';
 
   String get errorMessage => _errorMessage;
 

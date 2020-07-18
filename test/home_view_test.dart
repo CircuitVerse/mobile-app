@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
-import 'package:mobile_app/services/navigation_service.dart';
 import 'package:mobile_app/ui/components/cv_outline_button.dart';
 import 'package:mobile_app/ui/components/cv_subheader.dart';
-import 'package:mobile_app/ui/views/home/feature_card.dart';
+import 'package:mobile_app/ui/views/home/components/feature_card.dart';
 import 'package:mobile_app/ui/views/home/home_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mockito/mockito.dart';
@@ -26,8 +26,7 @@ void main() {
 
   Future<void> _pumpHomeView(WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
-        navigatorKey: locator<NavigationService>().navigatorKey,
+      GetMaterialApp(
         onGenerateRoute: Router.generateRoute,
         navigatorObservers: [mockObserver],
         home: HomeView(),
@@ -39,7 +38,7 @@ void main() {
     verify(mockObserver.didPush(any, any));
   }
 
-  testWidgets("Home View Widgets", (WidgetTester tester) async {
+  testWidgets('Home View Widgets', (WidgetTester tester) async {
     await _pumpHomeView(tester);
     await tester.pumpAndSettle();
 
@@ -48,7 +47,7 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    expect(find.text("Dive into the world of Logic Circuits for free!"),
+    expect(find.text('Dive into the world of Logic Circuits for free!'),
         findsOneWidget);
     expect(find.byType(CVSubheader), findsOneWidget);
     expect(find.byType(CVOutlineButton), findsNWidgets(2));
