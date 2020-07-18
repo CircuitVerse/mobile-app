@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:mobile_app/enums/auth_type.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -64,5 +63,18 @@ class LocalStorageService {
 
   set isFirstTimeLogin(bool isLoggedIn) {
     _saveToDisk(isFirstTimeLoginKey, isLoggedIn);
+  }
+
+  User get currentUser {
+    var userJson = _getFromDisk(userKey);
+    if (userJson == null) {
+      return null;
+    }
+
+    return User.fromJson(json.decode(userJson));
+  }
+
+  set currentUser(User userToSave) {
+    _saveToDisk(userKey, json.encode(userToSave?.toJson()));
   }
 }
