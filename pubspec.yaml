@@ -21,7 +21,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-
   cupertino_icons: ^0.1.2
   get_it: ^4.0.2
   provider: ^4.0.5+1
@@ -30,6 +29,9 @@ dependencies:
   url_launcher: ^5.4.5
   http: ^0.12.1
   transparent_image: ^1.0.0
+  flutter_svg: ^0.17.4
+  flutter_icons: ^1.1.0
+  get: ^2.10.3
   intl: ^0.16.1
   intl_translation:
 
@@ -37,6 +39,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.7.3
+  pedantic: ^1.9.0
 
 flutter_icons:
   android: "launcher_icon"
@@ -56,3 +59,6 @@ flutter:
         - asset: assets/fonts/Poppins/Poppins-Regular.ttf
         - asset: assets/fonts/Poppins/Poppins-Italic.ttf
           style: italic
+    - family: Grinched
+      fonts:
+        - asset: assets/fonts/Grinched/GrinchedRegular.ttf
