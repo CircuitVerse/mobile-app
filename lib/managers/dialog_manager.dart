@@ -7,11 +7,12 @@ class DialogManager extends StatefulWidget {
   final Widget child;
   DialogManager({Key key, this.child}) : super(key: key);
 
+  @override
   _DialogManagerState createState() => _DialogManagerState();
 }
 
 class _DialogManagerState extends State<DialogManager> {
-  DialogService _dialogService = locator<DialogService>();
+  final DialogService _dialogService = locator<DialogService>();
 
   @override
   void initState() {
@@ -25,7 +26,7 @@ class _DialogManagerState extends State<DialogManager> {
   }
 
   void _showDialog(DialogRequest request) {
-    bool isConfirmationDialog = request.cancelTitle != null;
+    var isConfirmationDialog = request.cancelTitle != null;
     showDialog(
       context: context,
       barrierDismissible: false,

@@ -5,10 +5,10 @@ import 'package:mobile_app/l10n/messages_all.dart';
 
 class AppLocalizations {
   static Future<AppLocalizations> load(Locale locale) {
-    final String name =
+    final name =
         locale.countryCode.isEmpty ? locale.languageCode : locale.toString();
 
-    final String localeName = Intl.canonicalizedLocale(name);
+    final localeName = Intl.canonicalizedLocale(name);
 
     return initializeMessages(localeName).then((bool _) {
       Intl.defaultLocale = localeName;
@@ -22,9 +22,9 @@ class AppLocalizations {
 
   String get title {
     return Intl.message(
-      "CircuitVerse",
-      name: "title",
-      desc: "Title for CircuitVerse Mobile",
+      'CircuitVerse',
+      name: 'title',
+      desc: 'Title for CircuitVerse Mobile',
     );
   }
 }
