@@ -31,14 +31,16 @@ class CVHeader extends StatelessWidget {
                 textAlign: TextAlign.center,
               )
             : Container(),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Text(
-            description,
-            style: Theme.of(context).textTheme.subtitle1,
-            textAlign: TextAlign.center,
-          ),
-        ),
+        description != null
+            ? Container(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Text(
+                  description,
+                  style: Theme.of(context).textTheme.subtitle1,
+                  textAlign: TextAlign.center,
+                ),
+              )
+            : Container(),
       ],
     );
   }

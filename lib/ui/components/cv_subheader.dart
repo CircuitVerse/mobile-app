@@ -16,6 +16,7 @@ class CVSubheader extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.headline4.copyWith(
                   fontWeight: FontWeight.w400,
+                  color: Colors.black,
                 ),
             textAlign: TextAlign.center,
           ),
