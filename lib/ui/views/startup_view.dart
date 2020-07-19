@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
-import 'package:mobile_app/viewmodels/startup_viewmodel.dart';
+import 'package:mobile_app/viewmodels/startup/startup_viewmodel.dart';
 
 class StartUpView extends StatelessWidget {
   @override

@@ -19,19 +19,51 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^0.1.2
   get_it: ^4.0.2
   provider: ^4.0.5+1
   shared_preferences: ^0.5.7+1
   mockito: ^4.1.1
+  url_launcher: ^5.4.5
+  http: ^0.12.1
+  transparent_image: ^1.0.0
+  flutter_svg: ^0.17.4
+  flutter_icons: ^1.1.0
+  get: ^2.10.3
+  intl: ^0.16.1
+  intl_translation:
+  datetime_picker_formfield: ^1.0.0
+  timeago: ^2.0.26
+  google_sign_in: ^4.5.1
+  oauth2_client: ^1.4.2
+  html: ^0.14.0+3
+  webview_flutter: ^0.3.22+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.7.3
+  pedantic: ^1.9.0
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/icon.png"
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/icons/
+    - assets/images/homepage/
+    - assets/images/contribute/
+    - assets/images/teachers/
+    - assets/images/login/
+    - assets/images/signup/
+    - assets/images/group/
+    - assets/images/profile/
 
   fonts:
     - family: Poppins
@@ -39,3 +71,6 @@ flutter:
         - asset: assets/fonts/Poppins/Poppins-Regular.ttf
         - asset: assets/fonts/Poppins/Poppins-Italic.ttf
           style: italic
+    - family: Grinched
+      fonts:
+        - asset: assets/fonts/Grinched/GrinchedRegular.ttf
