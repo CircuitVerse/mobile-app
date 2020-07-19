@@ -35,7 +35,6 @@ dependencies:
   intl: ^0.16.1
   intl_translation:
   datetime_picker_formfield: ^1.0.0
-  flutter_facebook_login: ^3.0.0
   timeago: ^2.0.26
   google_sign_in: ^4.5.1
   oauth2_client: ^1.4.2
