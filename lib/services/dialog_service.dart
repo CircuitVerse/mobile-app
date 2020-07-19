@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/models/dialog_models.dart';
 
 class DialogService {
-  GlobalKey<NavigatorState> _dialogNavigationKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> _dialogNavigationKey =
+      GlobalKey<NavigatorState>();
   Function(DialogRequest) _showDialogListener;
   Completer _dialogCompleter;
 
@@ -61,5 +62,11 @@ class DialogService {
     _dialogNavigationKey.currentState.pop();
     _dialogCompleter.complete(response);
     _dialogCompleter = null;
+  }
+
+  void popDialog() {
+    if (_dialogNavigationKey.currentState.canPop()) {
+      _dialogNavigationKey.currentState.pop();
+    }
   }
 }

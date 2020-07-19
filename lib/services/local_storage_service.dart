@@ -1,22 +1,22 @@
+import 'dart:convert';
+
+import 'package:mobile_app/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
   static LocalStorageService _instance;
   static SharedPreferences _preferences;
 
-  static const String userKey = "logged_in_user";
-  static const String tokenKey = "token";
-  static const String isLoggedInKey = "is_logged_in";
-  static const String isFirstTimeLoginKey = "is_first_time_login";
+  static const String userKey = 'logged_in_user';
+  static const String tokenKey = 'token';
+  static const String isLoggedInKey = 'is_logged_in';
+  static const String isFirstTimeLoginKey = 'is_first_time_login';
+  static const String authTypeKey = 'login_method';
 
   static Future<LocalStorageService> getInstance() async {
-    if (_instance == null) {
-      _instance = LocalStorageService();
-    }
+    _instance ??= LocalStorageService();
 
-    if (_preferences == null) {
-      _preferences = await SharedPreferences.getInstance();
-    }
+    _preferences ??= await SharedPreferences.getInstance();
 
     return _instance;
   }
@@ -63,5 +63,18 @@ class LocalStorageService {
 
   set isFirstTimeLogin(bool isLoggedIn) {
     _saveToDisk(isFirstTimeLoginKey, isLoggedIn);
+  }
+
+  User get currentUser {
+    var userJson = _getFromDisk(userKey);
+    if (userJson == null) {
+      return null;
+    }
+
+    return User.fromJson(json.decode(userJson));
+  }
+
+  set currentUser(User userToSave) {
+    _saveToDisk(userKey, json.encode(userToSave?.toJson()));
   }
 }

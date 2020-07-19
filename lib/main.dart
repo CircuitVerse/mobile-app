@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get/get.dart';
+import 'package:mobile_app/locale/locales.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/managers/dialog_manager.dart';
 import 'package:mobile_app/services/dialog_service.dart';
-import 'package:mobile_app/services/navigation_service.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/utils/styles.dart';
 
@@ -21,8 +23,18 @@ class CircuitVerseMobile extends StatelessWidget {
   // This widget is the root of CircuitVerse Mobile.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'CircuitVerse Mobile',
+      localizationsDelegates: [
+        AppLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en', ''),
+      ],
+      onGenerateTitle: (BuildContext context) =>
+          AppLocalizations.of(context).title,
       debugShowCheckedModeBanner: false,
       builder: (context, child) => Navigator(
         key: locator<DialogService>().dialogNavigationKey,
@@ -30,7 +42,6 @@ class CircuitVerseMobile extends StatelessWidget {
           builder: (context) => DialogManager(child: child),
         ),
       ),
-      navigatorKey: locator<NavigationService>().navigatorKey,
       onGenerateRoute: Router.generateRoute,
       theme: ThemeData(
         primarySwatch: generateMaterialColor(Color.fromRGBO(66, 185, 131, 1)),
