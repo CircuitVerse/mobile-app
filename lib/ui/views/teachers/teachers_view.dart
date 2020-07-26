@@ -25,21 +25,18 @@ class TeachersView extends StatelessWidget {
               cardHeading: 'Create Groups and add your students',
               cardDescription:
                   'You can create groups and add your students to them! If students are already registered with CircuitVerse they will be added automatically. If they are not registered with CircuitVerse yet, an invitation will be sent to register. Once they register, they will be added automatically.',
-              isOdd: true,
             ),
             TeachersCard(
               assetPath: 'assets/images/teachers/assignment.png',
               cardHeading: 'Post Assignments',
               cardDescription:
                   'To create an assignment, simply click an add new assignment button. Give the details of the assignment and the deadline. The assignment will automatically close at deadline. Students cannot continue their assignment unless the teacher reopens the assignment again.',
-              isOdd: false,
             ),
             TeachersCard(
               assetPath: 'assets/images/teachers/grading.png',
               cardHeading: 'Grading assignments',
               cardDescription:
                   'Grade assignments very easily with the in build preview. Simply select the student, to his/her assignment work.',
-              isOdd: true,
             ),
             TeachersCard(
               assetPath: 'assets/images/teachers/embed.png',
@@ -47,7 +44,6 @@ class TeachersView extends StatelessWidget {
                   'Use Interactive Circuits in your Blogs, Study Materials or PowerPoint presentations',
               cardDescription:
                   'Make sure the project is public. Click on embed, to get the embed HTML5 code, then simply embed the circuit. You may need to use a PowerPoint plugin like Live Slides to embed the live Circuit.',
-              isOdd: false,
             ),
           ],
         ),
