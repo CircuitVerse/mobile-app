@@ -136,7 +136,7 @@ class ApiUtils {
       default:
         print(response.body);
         throw FetchDataException(
-          'Error occured while Communication with Server with StatusCode : ${response.statusCode}',
+          'Error Occurred while Communication with Server with StatusCode : ${response.statusCode}',
         );
     }
   }

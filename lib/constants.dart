@@ -3,7 +3,7 @@ class Constants {
   static const String BAD_RESPONSE_FORMAT = 'Bad Response Format';
   static const String INVALID_PARAMETERS = 'Invalid parameters, Retry!';
   static const String GENERIC_FAILURE =
-      'Something Wrong Occured! Please try again.';
+      'Something Wrong Occurred! Please try again.';
   static const String NO_INTERNET_CONNECTION = 'No Internet Connection';
   static const String HTTP_EXCEPTION = 'Unable to fetch response';
   static const String UNAUTHENTICATED =
