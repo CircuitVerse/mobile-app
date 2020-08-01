@@ -8,23 +8,23 @@ import 'package:mobile_app/ui/views/home/home_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
-class LoginViewModel extends BaseModel {
+class SignupViewModel extends BaseModel {
   final UsersApi _userApi = locator<UsersApi>();
   final LocalStorageService _storage = locator<LocalStorageService>();
 
-  bool _isLoginSuccessful = false;
+  bool _isSignupSuccessful = false;
 
-  bool get isLoginSuccessful => _isLoginSuccessful;
+  bool get isSignupSuccessful => _isSignupSuccessful;
 
-  set isLoginSuccessful(bool isLoginSuccessful) {
-    _isLoginSuccessful = isLoginSuccessful;
+  set isSignupSuccessful(bool isSignupSuccessful) {
+    _isSignupSuccessful = isSignupSuccessful;
     notifyListeners();
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> signup(String name, String email, String password) async {
     setState(ViewState.Busy);
     try {
-      var token = await _userApi.login(email, password);
+      var token = await _userApi.signup(name, email, password);
 
       // store token in local storage..
       _storage.token = token;
@@ -35,14 +35,14 @@ class LoginViewModel extends BaseModel {
       // save current user to local storage..
       _storage.currentUser = await _userApi.fetchProfile();
 
-      isLoginSuccessful = true;
+      isSignupSuccessful = true;
 
       setState(ViewState.Idle);
 
-      // show login successful snackbar..
-      SnackBarUtils.showDark('Login Successful');
+      // show signup successful snackbar..
+      SnackBarUtils.showDark('Signup Successful');
 
-      // move to home view on successful login..
+      // move to home view on successful signup..
       await Future.delayed(Duration(seconds: 1));
       await Get.offAllNamed(HomeView.id);
     } on Failure catch (f) {
