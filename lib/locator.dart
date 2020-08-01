@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/API/contributors_api.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
@@ -15,6 +16,7 @@ Future<void> setupLocator() async {
 
   // API Services
   locator.registerLazySingleton<ContributorsApi>(() => HttpContributorsApi());
+  locator.registerLazySingleton<UsersApi>(() => HttpUsersApi());
 
   // Startup ViewModel
   locator.registerFactory(() => StartUpViewModel());
