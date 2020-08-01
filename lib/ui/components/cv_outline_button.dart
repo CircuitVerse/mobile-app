@@ -12,7 +12,7 @@ class CVOutlineButton extends StatelessWidget {
     @required this.title,
     this.onPressed,
     this.isBodyText = false,
-    this.isPrimaryDark = true,
+    this.isPrimaryDark = false,
   }) : super(key: key);
 
   @override

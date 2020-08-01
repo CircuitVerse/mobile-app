@@ -7,35 +7,42 @@ import 'package:mobile_app/ui/components/cv_password_field.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/authentication/components/authentication_options_view.dart';
-import 'package:mobile_app/ui/views/authentication/forgot_password_view.dart';
-import 'package:mobile_app/ui/views/authentication/signup_view.dart';
+import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/validators.dart';
-import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
+import 'package:mobile_app/viewmodels/authentication/signup_viewmodel.dart';
 
-class LoginView extends StatefulWidget {
-  static const String id = 'login_view';
+class SignupView extends StatefulWidget {
+  static const String id = 'signup_view';
 
   @override
-  _LoginViewState createState() => _LoginViewState();
+  _SignupViewState createState() => _SignupViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
-  LoginViewModel _loginModel;
+class _SignupViewState extends State<SignupView> {
+  SignupViewModel _signUpModel;
   final _formKey = GlobalKey<FormState>();
-  String _email, _password;
+  String _name, _email, _password;
 
-  Widget _buildLoginImage() {
+  Widget _buildSignUpImage() {
     return Container(
       color: AppTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
         child: Image.asset(
-          'assets/images/login/cv_login.png',
+          'assets/images/signup/cv_signup.png',
           height: MediaQuery.of(context).size.height / 2.8,
           width: double.infinity,
         ),
       ),
+    );
+  }
+
+  Widget _buildNameInput() {
+    return CVTextField(
+      label: 'Name',
+      validator: (value) => value.isEmpty ? 'Name can\'t be empty' : null,
+      onSaved: (value) => _name = value.trim(),
     );
   }
 
@@ -56,47 +63,33 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  Widget _buildForgotPasswordComponent() {
-    return GestureDetector(
-      onTap: () => Get.toNamed(ForgotPasswordView.id),
-      child: Container(
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Text(
-          'Forgot Password?',
-          style: TextStyle(color: AppTheme.primaryColorDark),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLoginButton() {
+  Widget _buildRegisterButton() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
-      child: (_loginModel.state == ViewState.Busy)
+      child: (_signUpModel.state == ViewState.Busy)
           ? CVPrimaryButton(
               title: 'Authenticating..',
               isPrimaryDark: true,
             )
           : CVOutlineButton(
-              title: 'LOGIN',
+              title: 'REGISTER',
               isPrimaryDark: true,
               onPressed: _validateAndSubmit,
             ),
     );
   }
 
-  Widget _buildNewUserSignUpComponent() {
+  Widget _buildAlreadyRegisteredComponent() {
     return GestureDetector(
-      onTap: () => Get.toNamed(SignupView.id),
+      onTap: () => Get.offAllNamed(LoginView.id),
       child: RichText(
         text: TextSpan(
-          text: 'New User? ',
+          text: 'Already Registered? ',
           style: Theme.of(context).textTheme.bodyText1,
           children: <TextSpan>[
             TextSpan(
-              text: 'Sign Up',
+              text: 'Login',
               style: TextStyle(
                 color: AppTheme.primaryColorDark,
               ),
@@ -110,33 +103,33 @@ class _LoginViewState extends State<LoginView> {
   void _validateAndSubmit() {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
-      _loginModel.login(_email, _password).then((_) {
-        if (!_loginModel.isLoginSuccessful) _formKey.currentState.reset();
+      _signUpModel.signup(_name, _email, _password).then((_) {
+        if (!_signUpModel.isSignupSuccessful) _formKey.currentState.reset();
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<LoginViewModel>(
-      onModelReady: (model) => _loginModel = model,
+    return BaseView<SignupViewModel>(
+      onModelReady: (model) => _signUpModel = model,
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
               children: <Widget>[
-                _buildLoginImage(),
+                _buildSignUpImage(),
                 SizedBox(height: 8),
+                _buildNameInput(),
                 _buildEmailInput(),
                 _buildPasswordInput(),
-                _buildForgotPasswordComponent(),
                 SizedBox(height: 16),
-                _buildLoginButton(),
-                _buildNewUserSignUpComponent(),
+                _buildRegisterButton(),
+                _buildAlreadyRegisteredComponent(),
                 SizedBox(height: 32),
                 AuthenticationOptionsView(
-                  isSignUpView: false,
+                  isSignUpView: true,
                 ),
               ],
             ),

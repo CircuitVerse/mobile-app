@@ -3,29 +3,27 @@ import 'package:get/get.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/ui/components/cv_outline_button.dart';
-import 'package:mobile_app/ui/components/cv_password_field.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/authentication/components/authentication_options_view.dart';
-import 'package:mobile_app/ui/views/authentication/forgot_password_view.dart';
 import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/validators.dart';
-import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
+import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.dart';
 
-class LoginView extends StatefulWidget {
-  static const String id = 'login_view';
+class ForgotPasswordView extends StatefulWidget {
+  static const String id = 'forgot_password_view';
 
   @override
-  _LoginViewState createState() => _LoginViewState();
+  _ForgotPasswordViewState createState() => _ForgotPasswordViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
-  LoginViewModel _loginModel;
+class _ForgotPasswordViewState extends State<ForgotPasswordView> {
+  ForgotPasswordViewModel _forgotPasswordModel;
   final _formKey = GlobalKey<FormState>();
-  String _email, _password;
+  String _email;
 
-  Widget _buildLoginImage() {
+  Widget _buildForgotPasswordImage() {
     return Container(
       color: AppTheme.imageBackground,
       padding: const EdgeInsets.all(16),
@@ -49,38 +47,17 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  Widget _buildPasswordInput() {
-    return CVPasswordField(
-      validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
-      onSaved: (value) => _password = value.trim(),
-    );
-  }
-
-  Widget _buildForgotPasswordComponent() {
-    return GestureDetector(
-      onTap: () => Get.toNamed(ForgotPasswordView.id),
-      child: Container(
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Text(
-          'Forgot Password?',
-          style: TextStyle(color: AppTheme.primaryColorDark),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLoginButton() {
+  Widget _buildSendInstructionsButton() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
-      child: (_loginModel.state == ViewState.Busy)
+      child: (_forgotPasswordModel.state == ViewState.Busy)
           ? CVPrimaryButton(
-              title: 'Authenticating..',
+              title: 'Sending..',
               isPrimaryDark: true,
             )
           : CVOutlineButton(
-              title: 'LOGIN',
+              title: 'SEND INSTRUCTIONS',
               isPrimaryDark: true,
               onPressed: _validateAndSubmit,
             ),
@@ -89,7 +66,7 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _buildNewUserSignUpComponent() {
     return GestureDetector(
-      onTap: () => Get.toNamed(SignupView.id),
+      onTap: () => Get.offNamed(SignupView.id),
       child: RichText(
         text: TextSpan(
           text: 'New User? ',
@@ -110,29 +87,29 @@ class _LoginViewState extends State<LoginView> {
   void _validateAndSubmit() {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
-      _loginModel.login(_email, _password).then((_) {
-        if (!_loginModel.isLoginSuccessful) _formKey.currentState.reset();
+      _forgotPasswordModel.onForgotPassword(_email).then((_) {
+        if (!_forgotPasswordModel.isResetPasswordInstructionsSent) {
+          _formKey.currentState.reset();
+        }
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<LoginViewModel>(
-      onModelReady: (model) => _loginModel = model,
+    return BaseView<ForgotPasswordViewModel>(
+      onModelReady: (model) => _forgotPasswordModel = model,
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
               children: <Widget>[
-                _buildLoginImage(),
+                _buildForgotPasswordImage(),
                 SizedBox(height: 8),
                 _buildEmailInput(),
-                _buildPasswordInput(),
-                _buildForgotPasswordComponent(),
-                SizedBox(height: 16),
-                _buildLoginButton(),
+                SizedBox(height: 8),
+                _buildSendInstructionsButton(),
                 _buildNewUserSignUpComponent(),
                 SizedBox(height: 32),
                 AuthenticationOptionsView(

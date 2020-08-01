@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
+import 'package:mobile_app/ui/views/authentication/forgot_password_view.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
+import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/ui/views/contributors/contributors_view.dart';
 import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
 import 'package:mobile_app/ui/views/home/home_view.dart';
@@ -13,8 +15,12 @@ import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case SignupView.id:
+        return CupertinoPageRoute(builder: (_) => SignupView());
       case LoginView.id:
         return CupertinoPageRoute(builder: (_) => LoginView());
+      case ForgotPasswordView.id:
+        return CupertinoPageRoute(builder: (_) => ForgotPasswordView());
       case HomeView.id:
         return CupertinoPageRoute(builder: (_) => HomeView());
       case TeachersView.id:
