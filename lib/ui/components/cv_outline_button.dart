@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/app_theme.dart';
 
 class CVOutlineButton extends StatelessWidget {
   final String title;
@@ -27,9 +28,8 @@ class CVOutlineButton extends StatelessWidget {
         ),
       ),
       borderSide: BorderSide(
-        color: isPrimaryDark
-            ? Theme.of(context).primaryColorDark
-            : Theme.of(context).primaryColor,
+        color:
+            isPrimaryDark ? AppTheme.primaryColorDark : AppTheme.primaryColor,
         width: 2,
       ),
       onPressed: onPressed ?? () {},

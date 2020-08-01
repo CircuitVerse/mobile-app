@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/app_theme.dart';
 
 class CVPasswordField extends StatefulWidget {
   final Function(String) validator;
@@ -34,7 +35,7 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
           suffixIcon: GestureDetector(
             child: Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
-              color: Theme.of(context).primaryColor,
+              color: AppTheme.primaryColor,
             ),
             onTap: _toggle,
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/ui/components/cv_outline_button.dart';
 import 'package:mobile_app/ui/components/cv_subheader.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
@@ -53,7 +54,7 @@ class _HomeViewState extends State<HomeView> {
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headline3.copyWith(
                       fontFamily: 'Grinched',
-                      color: Theme.of(context).primaryColor,
+                      color: AppTheme.primaryColor,
                     ),
               ),
             ),

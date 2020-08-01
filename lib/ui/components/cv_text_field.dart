@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/app_theme.dart';
 
 class CVTextField extends StatelessWidget {
   final String label;
@@ -56,7 +57,7 @@ class CVTextField extends StatelessWidget {
                 icon: iconData != null
                     ? Icon(
                         iconData,
-                        color: Theme.of(context).primaryColor,
+                        color: AppTheme.primaryColor,
                         size: 28,
                       )
                     : null,
