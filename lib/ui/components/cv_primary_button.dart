@@ -6,6 +6,7 @@ class CVPrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isBodyText;
   final bool isPrimaryDark;
+  final EdgeInsetsGeometry padding;
 
   const CVPrimaryButton({
     Key key,
@@ -13,23 +14,22 @@ class CVPrimaryButton extends StatelessWidget {
     this.onPressed,
     this.isBodyText = false,
     this.isPrimaryDark = false,
+    this.padding = const EdgeInsets.all(8),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RaisedButton(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Text(
-          title,
-          style: isBodyText
-              ? Theme.of(context).textTheme.bodyText1.copyWith(
-                    color: Colors.white,
-                  )
-              : Theme.of(context).textTheme.headline6.copyWith(
-                    color: Colors.white,
-                  ),
-        ),
+      padding: padding,
+      child: Text(
+        title,
+        style: isBodyText
+            ? Theme.of(context).textTheme.bodyText1.copyWith(
+                  color: Colors.white,
+                )
+            : Theme.of(context).textTheme.headline6.copyWith(
+                  color: Colors.white,
+                ),
       ),
       color: isPrimaryDark ? AppTheme.primaryColorDark : AppTheme.primaryColor,
       onPressed: onPressed ?? () {},

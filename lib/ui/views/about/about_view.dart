@@ -29,24 +29,27 @@ class AboutView extends StatelessWidget {
     Widget _buildTosAndPrivacyButtons() {
       return Container(
         margin: const EdgeInsets.symmetric(vertical: 32),
-        child: Wrap(
-          alignment: WrapAlignment.center,
+        child: Row(
           children: <Widget>[
-            CVPrimaryButton(
-              title: 'Terms Of Service',
-              isBodyText: true,
-              onPressed: () => _launchURL(
-                'https://circuitverse.org/tos',
-                'Terms of Service',
+            Expanded(
+              child: CVPrimaryButton(
+                title: 'Terms Of Service',
+                isBodyText: true,
+                onPressed: () => _launchURL(
+                  'https://circuitverse.org/tos',
+                  'Terms of Service',
+                ),
               ),
             ),
-            SizedBox(width: 16),
-            CVPrimaryButton(
-              title: 'Privacy Policy',
-              isBodyText: true,
-              onPressed: () => _launchURL(
-                'https://circuitverse.org/privacy',
-                'Privacy',
+            SizedBox(width: 8),
+            Expanded(
+              child: CVPrimaryButton(
+                title: 'Privacy Policy',
+                isBodyText: true,
+                onPressed: () => _launchURL(
+                  'https://circuitverse.org/privacy',
+                  'Privacy',
+                ),
               ),
             ),
           ],
