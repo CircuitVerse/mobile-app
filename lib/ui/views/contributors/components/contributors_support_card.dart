@@ -15,9 +15,8 @@ class ContributeSupportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      elevation: 5,
+      margin: const EdgeInsets.symmetric(vertical: 8),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -33,7 +32,7 @@ class ContributeSupportCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.all(8),
               child: Text(
                 cardDescriptionList
                     .map((x) => '\u2022 $x\n')

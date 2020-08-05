@@ -40,6 +40,7 @@ class ContributorsView extends StatelessWidget {
               description: 'Github',
               url: 'https://github.com/CircuitVerse',
             ),
+            SizedBox(height: 32),
             CVSubheader(title: 'How to Support ?'),
             ContributeSupportCard(
               imagePath: 'assets/images/contribute/person.png',
