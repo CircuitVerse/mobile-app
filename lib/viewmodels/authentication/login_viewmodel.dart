@@ -33,7 +33,7 @@ class LoginViewModel extends BaseModel {
       _storage.isLoggedIn = true;
 
       // save current user to local storage..
-      _storage.currentUser = await _userApi.fetchProfile();
+      _storage.currentUser = await _userApi.fetchCurrentUser();
 
       isLoginSuccessful = true;
 

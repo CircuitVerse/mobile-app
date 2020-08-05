@@ -12,7 +12,9 @@ abstract class UsersApi {
 
   Future<String> signup(String name, String email, String password);
 
-  Future<User> fetchProfile();
+  Future<User> fetchUser(String userId);
+
+  Future<User> fetchCurrentUser();
 
   Future<User> updateProfile(String name, String educationalInstitute,
       String country, bool subscribed);
@@ -78,7 +80,28 @@ class HttpUsersApi implements UsersApi {
   }
 
   @override
-  Future<User> fetchProfile() async {
+  Future<User> fetchUser(String userId) async {
+    var endpoint = '/users/$userId';
+    var uri = Constants.BASE_URL + endpoint;
+    try {
+      ApiUtils.addTokenToHeaders(headers);
+      var jsonResponse = await ApiUtils.get(
+        uri,
+        headers: headers,
+      );
+      var user = User.fromJson(jsonResponse);
+      return user;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on NotFoundException {
+      throw Failure(Constants.USER_NOT_FOUND);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
+    }
+  }
+
+  @override
+  Future<User> fetchCurrentUser() async {
     var endpoint = '/me/';
     var uri = Constants.BASE_URL + endpoint;
     try {
