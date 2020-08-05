@@ -6,7 +6,7 @@ class Validators {
 
   static bool isEmailValid(String email) => _emailRegExp.hasMatch(email);
 
-  static bool emailsValidator(String emails) {
+  static bool areEmailsValid(String emails) {
     // Get list of emails from controller..
     List _emails = emails.replaceAll(' ', '').split(',');
 
