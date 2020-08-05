@@ -1,4 +1,5 @@
 import 'package:mobile_app/locator.dart';
+import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
@@ -10,7 +11,7 @@ class HomeViewModel extends BaseModel {
 
   bool get isLoggedIn => _storage.isLoggedIn;
 
-  String get currentUserName => _storage.currentUser.data.attributes.name ?? '';
+  User get currentUser => _storage.currentUser;
 
   Future<void> onLogout() async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
