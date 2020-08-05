@@ -11,8 +11,6 @@ import 'package:mobile_app/ui/views/contributors/contributors_view.dart';
 import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
 import 'package:mobile_app/ui/views/home/components/feature_card.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
-import 'package:mobile_app/ui/views/projects/favourite_projects_view.dart';
-import 'package:mobile_app/ui/views/projects/my_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
 
@@ -73,7 +71,7 @@ class _HomeViewState extends State<HomeView> {
             model.isLoggedIn
                 ? ExpansionTile(
                     title: Text(
-                      model.currentUserName,
+                      model.currentUser.data.attributes.name ?? '',
                       style: Theme.of(context).textTheme.headline6.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -81,23 +79,15 @@ class _HomeViewState extends State<HomeView> {
                     children: <Widget>[
                       InkWell(
                         child: _buildDrawerTile('Profile', FontAwesome5.user),
-                        onTap: () => Get.offAndToNamed(ProfileView.id),
-                      ),
-                      InkWell(
-                        child: _buildDrawerTile(
-                            'My Projects', FontAwesome5.address_book),
-                        onTap: () => Get.offAndToNamed(MyProjectsView.id),
+                        onTap: () => Get.offAndToNamed(
+                          ProfileView.id,
+                          arguments: model.currentUser.data.id,
+                        ),
                       ),
                       InkWell(
                         child: _buildDrawerTile(
                             'My Groups', FontAwesome5.object_group),
                         onTap: () => Get.offAndToNamed(MyGroupsView.id),
-                      ),
-                      InkWell(
-                        child: _buildDrawerTile(
-                            'My Favourites', Icons.bookmark_border),
-                        onTap: () =>
-                            Get.offAndToNamed(FavouriteProjectsView.id),
                       ),
                       InkWell(
                         child:
@@ -152,12 +142,14 @@ class _HomeViewState extends State<HomeView> {
           children: <Widget>[
             CVOutlineButton(
               title: 'For Teachers',
+              isPrimaryDark: true,
               onPressed: () => Get.toNamed(TeachersView.id),
               isBodyText: true,
             ),
             SizedBox(width: 16),
             CVOutlineButton(
               title: 'For Contributors',
+              isPrimaryDark: true,
               onPressed: () => Get.toNamed(ContributorsView.id),
               isBodyText: true,
             ),
