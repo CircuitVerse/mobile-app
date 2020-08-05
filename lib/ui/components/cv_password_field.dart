@@ -34,7 +34,7 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
         obscureText: _obscureText,
         keyboardType: TextInputType.visiblePassword,
         style: TextStyle(color: Colors.black),
-        decoration: InputDecoration(
+        decoration: AppTheme.textFieldDecoration.copyWith(
           suffixIcon: GestureDetector(
             child: Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
@@ -42,10 +42,6 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
             ),
             onTap: _toggle,
           ),
-          focusedBorder: AppTheme.primaryDarkOutlineBorder,
-          enabledBorder: AppTheme.primaryDarkOutlineBorder,
-          errorBorder: AppTheme.redOutlineBorder,
-          focusedErrorBorder: AppTheme.redOutlineBorder,
           labelText: 'Password',
         ),
         validator: widget.validator,

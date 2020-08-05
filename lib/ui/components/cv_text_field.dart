@@ -41,11 +41,7 @@ class CVTextField extends StatelessWidget {
         keyboardType: type,
         initialValue: initialValue,
         style: TextStyle(color: Colors.black),
-        decoration: InputDecoration(
-          focusedBorder: AppTheme.primaryDarkOutlineBorder,
-          enabledBorder: AppTheme.primaryDarkOutlineBorder,
-          errorBorder: AppTheme.redOutlineBorder,
-          focusedErrorBorder: AppTheme.redOutlineBorder,
+        decoration: AppTheme.textFieldDecoration.copyWith(
           labelText: label,
         ),
         validator: validator,
