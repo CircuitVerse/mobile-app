@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/enums/view_state.dart';
-import 'package:mobile_app/ui/components/cv_outline_button.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/authentication/components/authentication_options_view.dart';
@@ -51,16 +50,12 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
-      child: (_forgotPasswordModel.state == ViewState.Busy)
-          ? CVPrimaryButton(
-              title: 'Sending..',
-              isPrimaryDark: true,
-            )
-          : CVOutlineButton(
-              title: 'SEND INSTRUCTIONS',
-              isPrimaryDark: true,
-              onPressed: _validateAndSubmit,
-            ),
+      child: CVPrimaryButton(
+        title: _forgotPasswordModel.state == ViewState.Busy
+            ? 'Sending..'
+            : 'SEND INSTRUCTIONS',
+        onPressed: _validateAndSubmit,
+      ),
     );
   }
 
@@ -85,7 +80,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   }
 
   void _validateAndSubmit() {
-    if (Validators.validateAndSaveForm(_formKey)) {
+    if (Validators.validateAndSaveForm(_formKey) &&
+        _forgotPasswordModel.state != ViewState.Busy) {
       FocusScope.of(context).requestFocus(FocusNode());
       _forgotPasswordModel.onForgotPassword(_email).then((_) {
         if (!_forgotPasswordModel.isResetPasswordInstructionsSent) {
@@ -110,6 +106,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 _buildEmailInput(),
                 SizedBox(height: 8),
                 _buildSendInstructionsButton(),
+                SizedBox(height: 8),
                 _buildNewUserSignUpComponent(),
                 SizedBox(height: 32),
                 AuthenticationOptionsView(

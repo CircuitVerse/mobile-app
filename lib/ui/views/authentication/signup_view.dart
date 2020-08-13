@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/enums/view_state.dart';
-import 'package:mobile_app/ui/components/cv_outline_button.dart';
 import 'package:mobile_app/ui/components/cv_password_field.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
@@ -67,16 +66,12 @@ class _SignupViewState extends State<SignupView> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
-      child: (_signUpModel.state == ViewState.Busy)
-          ? CVPrimaryButton(
-              title: 'Authenticating..',
-              isPrimaryDark: true,
-            )
-          : CVOutlineButton(
-              title: 'REGISTER',
-              isPrimaryDark: true,
-              onPressed: _validateAndSubmit,
-            ),
+      child: CVPrimaryButton(
+        title: _signUpModel.state == ViewState.Busy
+            ? 'Authenticating..'
+            : 'REGISTER',
+        onPressed: _validateAndSubmit,
+      ),
     );
   }
 
@@ -101,7 +96,8 @@ class _SignupViewState extends State<SignupView> {
   }
 
   void _validateAndSubmit() {
-    if (Validators.validateAndSaveForm(_formKey)) {
+    if (Validators.validateAndSaveForm(_formKey) &&
+        _signUpModel.state != ViewState.Busy) {
       FocusScope.of(context).requestFocus(FocusNode());
       _signUpModel.signup(_name, _email, _password).then((_) {
         if (!_signUpModel.isSignupSuccessful) _formKey.currentState.reset();
@@ -126,6 +122,7 @@ class _SignupViewState extends State<SignupView> {
                 _buildPasswordInput(),
                 SizedBox(height: 16),
                 _buildRegisterButton(),
+                SizedBox(height: 8),
                 _buildAlreadyRegisteredComponent(),
                 SizedBox(height: 32),
                 AuthenticationOptionsView(

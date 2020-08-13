@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/enums/view_state.dart';
-import 'package:mobile_app/ui/components/cv_outline_button.dart';
 import 'package:mobile_app/ui/components/cv_password_field.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
@@ -74,16 +73,11 @@ class _LoginViewState extends State<LoginView> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
-      child: (_loginModel.state == ViewState.Busy)
-          ? CVPrimaryButton(
-              title: 'Authenticating..',
-              isPrimaryDark: true,
-            )
-          : CVOutlineButton(
-              title: 'LOGIN',
-              isPrimaryDark: true,
-              onPressed: _validateAndSubmit,
-            ),
+      child: CVPrimaryButton(
+        title:
+            _loginModel.state == ViewState.Busy ? 'Authenticating..' : 'LOGIN',
+        onPressed: _validateAndSubmit,
+      ),
     );
   }
 
@@ -108,7 +102,8 @@ class _LoginViewState extends State<LoginView> {
   }
 
   void _validateAndSubmit() {
-    if (Validators.validateAndSaveForm(_formKey)) {
+    if (Validators.validateAndSaveForm(_formKey) &&
+        _loginModel.state != ViewState.Busy) {
       FocusScope.of(context).requestFocus(FocusNode());
       _loginModel.login(_email, _password).then((_) {
         if (!_loginModel.isLoginSuccessful) _formKey.currentState.reset();
@@ -133,6 +128,7 @@ class _LoginViewState extends State<LoginView> {
                 _buildForgotPasswordComponent(),
                 SizedBox(height: 16),
                 _buildLoginButton(),
+                SizedBox(height: 8),
                 _buildNewUserSignUpComponent(),
                 SizedBox(height: 32),
                 AuthenticationOptionsView(
