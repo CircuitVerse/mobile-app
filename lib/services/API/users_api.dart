@@ -18,6 +18,8 @@ abstract class UsersApi {
 
   Future<User> updateProfile(String name, String educationalInstitute,
       String country, bool subscribed);
+
+  Future<bool> sendResetPasswordInstructions(String email);
 }
 
 class HttpUsersApi implements UsersApi {
@@ -139,6 +141,27 @@ class HttpUsersApi implements UsersApi {
       );
       var user = User.fromJson(jsonResponse);
       return user;
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
+    }
+  }
+
+  @override
+  Future<bool> sendResetPasswordInstructions(String email) async {
+    var endpoint = '/password/forgot';
+    var uri = Constants.BASE_URL + endpoint;
+    var json = {'email': email};
+    try {
+      var jsonResponse = await ApiUtils.post(
+        uri,
+        headers: headers,
+        body: json,
+      );
+      return jsonResponse['message'] is String;
+    } on NotFoundException {
+      throw Failure(Constants.USER_NOT_FOUND);
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on Exception {
