@@ -7,6 +7,9 @@ class DialogService {
   final GlobalKey<NavigatorState> _dialogNavigationKey =
       GlobalKey<NavigatorState>();
   Function(DialogRequest) _showDialogListener;
+  Function(DialogRequest) _showConfirmationDialogListener;
+  Function(DialogRequest) _showProgressDialogListener;
+
   Completer _dialogCompleter;
 
   GlobalKey<NavigatorState> get dialogNavigationKey => _dialogNavigationKey;
@@ -16,6 +19,16 @@ class DialogService {
   /// Registers a callback function. Typically to show the dialog
   void registerDialogListener(Function(DialogRequest) showDialogListener) {
     _showDialogListener = showDialogListener;
+  }
+
+  void registerConfirmationDialogListener(
+      Function(DialogRequest) showDialogListener) {
+    _showConfirmationDialogListener = showDialogListener;
+  }
+
+  void registerProgressDialogListener(
+      Function(DialogRequest) showDialogListener) {
+    _showProgressDialogListener = showDialogListener;
   }
 
   /// Calls the dialog listener and returns a Future that will wait for dialogComplete.
@@ -36,13 +49,14 @@ class DialogService {
   }
 
   /// Shows a confirmation dialog
-  Future<DialogResponse> showConfirmationDialog(
-      {String title,
-      String description,
-      String confirmationTitle = 'OK',
-      String cancelTitle = 'CANCEL'}) {
+  Future<DialogResponse> showConfirmationDialog({
+    String title,
+    String description,
+    String confirmationTitle = 'OK',
+    String cancelTitle = 'CANCEL',
+  }) {
     _dialogCompleter = Completer<DialogResponse>();
-    _showDialogListener(
+    _showConfirmationDialogListener(
       DialogRequest(
         title: title,
         description: description,
@@ -54,7 +68,9 @@ class DialogService {
   }
 
   void showCustomProgressDialog({String title}) {
-    _showDialogListener(DialogRequest(title: title));
+    _showProgressDialogListener(
+      DialogRequest(title: title),
+    );
   }
 
   /// Completes the _dialogCompleter to resume the Future's execution call
