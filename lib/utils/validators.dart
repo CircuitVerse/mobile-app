@@ -10,7 +10,7 @@ class Validators {
     // Get list of emails from controller..
     List _emails = emails.replaceAll(' ', '').split(',');
 
-    // returns true if no email from above list voilates _emailRegExp..
+    // returns true if no email from above list violates _emailRegExp..
     return _emails.where((email) => !_emailRegExp.hasMatch(email)).isEmpty;
   }
 
