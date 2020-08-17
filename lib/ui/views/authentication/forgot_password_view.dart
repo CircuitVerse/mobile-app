@@ -27,13 +27,13 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
   Widget _buildForgotPasswordImage() {
     return Container(
+      width: MediaQuery.of(context).size.width,
       color: AppTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
         child: Image.asset(
           'assets/images/login/cv_login.png',
           height: 300,
-          width: double.infinity,
         ),
       ),
     );
