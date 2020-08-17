@@ -19,4 +19,12 @@ class BaseModel extends ChangeNotifier {
     _errorMessage = errorMessage;
     notifyListeners();
   }
+
+  bool get isIdle => state == ViewState.Idle;
+
+  bool get isBusy => state == ViewState.Busy;
+
+  bool get isError => state == ViewState.Error;
+
+  bool get isSuccess => state == ViewState.Success;
 }
