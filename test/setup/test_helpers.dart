@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/API/contributors_api.dart';
-import 'package:mobile_app/services/API/projects_api.dart';
 import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mockito/mockito.dart';
