@@ -18,16 +18,15 @@ class HttpContributorsApi implements ContributorsApi {
   Future<List<CircuitVerseContributors>> fetchContributors() async {
     var _url =
         'https://api.github.com/repos/CircuitVerse/CircuitVerse/contributors';
+
     try {
       var _jsonResponse = await ApiUtils.get(_url, headers: headers);
       var _listOfContributors =
           circuitVerseContributorsFromJson(jsonEncode(_jsonResponse));
       return _listOfContributors;
-    } on FormatException catch (e) {
-      print(e.message);
+    } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception catch (e) {
-      print(e.toString());
+    } on Exception {
       throw Failure(Constants.GENERIC_FAILURE);
     }
   }

@@ -59,7 +59,7 @@ class AboutView extends StatelessWidget {
 
     Widget _buildContributorsList(AboutViewModel model) {
       switch (model.state) {
-        case ViewState.Idle:
+        case ViewState.Success:
           var _contributorsAvatars = <Widget>[];
           model.cvContributors.forEach((contributor) {
             if (contributor.type == Type.USER) {
