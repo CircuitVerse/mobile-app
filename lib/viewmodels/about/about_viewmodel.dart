@@ -21,9 +21,8 @@ class AboutViewModel extends BaseModel {
     setState(ViewState.Busy);
     try {
       cvContributors = await _contributorsApi.fetchContributors();
-      setState(ViewState.Idle);
+      setState(ViewState.Success);
     } on Failure catch (f) {
-      print(f.message);
       setErrorMessage(f.message);
       setState(ViewState.Error);
     }
