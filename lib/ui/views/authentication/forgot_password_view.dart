@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/enums/view_state.dart';
+import 'package:mobile_app/locator.dart';
+import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/authentication/components/authentication_options_view.dart';
 import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
+import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.dart';
 
@@ -29,7 +32,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       child: SafeArea(
         child: Image.asset(
           'assets/images/login/cv_login.png',
-          height: MediaQuery.of(context).size.height / 2.8,
+          height: 300,
           width: double.infinity,
         ),
       ),
@@ -79,15 +82,31 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     );
   }
 
-  void _validateAndSubmit() {
+  Future<void> _validateAndSubmit() async {
+    var _dialogService = locator<DialogService>();
+
     if (Validators.validateAndSaveForm(_formKey) &&
-        _forgotPasswordModel.state != ViewState.Busy) {
+        !_forgotPasswordModel.isBusy) {
       FocusScope.of(context).requestFocus(FocusNode());
-      _forgotPasswordModel.onForgotPassword(_email).then((_) {
-        if (!_forgotPasswordModel.isResetPasswordInstructionsSent) {
-          _formKey.currentState.reset();
-        }
-      });
+
+      _dialogService.showCustomProgressDialog(title: 'Sending Instructions');
+
+      await _forgotPasswordModel.onForgotPassword(_email);
+
+      _dialogService.popDialog();
+
+      if (_forgotPasswordModel.isSuccess) {
+        // show instructions sent snackbar
+        SnackBarUtils.showDark('Instructions Sent to $_email');
+
+        // route back to previous screen
+        await Future.delayed(Duration(seconds: 1));
+        await Get.back();
+      } else if (_forgotPasswordModel.isError) {
+        // show failure snackbar
+        SnackBarUtils.showDark(_forgotPasswordModel.errorMessage);
+        _formKey.currentState.reset();
+      }
     }
   }
 

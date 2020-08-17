@@ -9,6 +9,8 @@ import 'package:mobile_app/ui/views/authentication/components/authentication_opt
 import 'package:mobile_app/ui/views/authentication/forgot_password_view.dart';
 import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
+import 'package:mobile_app/ui/views/home/home_view.dart';
+import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
 
@@ -31,7 +33,7 @@ class _LoginViewState extends State<LoginView> {
       child: SafeArea(
         child: Image.asset(
           'assets/images/login/cv_login.png',
-          height: MediaQuery.of(context).size.height / 2.8,
+          height: 300,
           width: double.infinity,
         ),
       ),
@@ -101,13 +103,24 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  void _validateAndSubmit() {
-    if (Validators.validateAndSaveForm(_formKey) &&
-        _loginModel.state != ViewState.Busy) {
+  Future<void> _validateAndSubmit() async {
+    if (Validators.validateAndSaveForm(_formKey) && !_loginModel.isBusy) {
       FocusScope.of(context).requestFocus(FocusNode());
-      _loginModel.login(_email, _password).then((_) {
-        if (!_loginModel.isLoginSuccessful) _formKey.currentState.reset();
-      });
+
+      await _loginModel.login(_email, _password);
+
+      if (_loginModel.isSuccess) {
+        // show login successful snackbar..
+        SnackBarUtils.showDark('Login Successful');
+
+        // move to home view on successful login..
+        await Future.delayed(Duration(seconds: 1));
+        await Get.offAllNamed(HomeView.id);
+      } else if (_loginModel.isError) {
+        // show failure snackbar..
+        SnackBarUtils.showDark(_loginModel.errorMessage);
+        _formKey.currentState.reset();
+      }
     }
   }
 

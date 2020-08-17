@@ -8,6 +8,8 @@ import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/authentication/components/authentication_options_view.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
+import 'package:mobile_app/ui/views/home/home_view.dart';
+import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/signup_viewmodel.dart';
 
@@ -30,7 +32,7 @@ class _SignupViewState extends State<SignupView> {
       child: SafeArea(
         child: Image.asset(
           'assets/images/signup/cv_signup.png',
-          height: MediaQuery.of(context).size.height / 2.8,
+          height: 300,
           width: double.infinity,
         ),
       ),
@@ -95,13 +97,24 @@ class _SignupViewState extends State<SignupView> {
     );
   }
 
-  void _validateAndSubmit() {
-    if (Validators.validateAndSaveForm(_formKey) &&
-        _signUpModel.state != ViewState.Busy) {
+  Future<void> _validateAndSubmit() async {
+    if (Validators.validateAndSaveForm(_formKey) && !_signUpModel.isBusy) {
       FocusScope.of(context).requestFocus(FocusNode());
-      _signUpModel.signup(_name, _email, _password).then((_) {
-        if (!_signUpModel.isSignupSuccessful) _formKey.currentState.reset();
-      });
+
+      await _signUpModel.signup(_name, _email, _password);
+
+      if (_signUpModel.isSuccess) {
+        // show signup successful snackbar..
+        SnackBarUtils.showDark('Signup Successful');
+
+        // move to home view on successful signup..
+        await Future.delayed(Duration(seconds: 1));
+        await Get.offAllNamed(HomeView.id);
+      } else if (_signUpModel.isError) {
+        // show failure snackbar..
+        SnackBarUtils.showDark(_signUpModel.errorMessage);
+        _formKey.currentState.reset();
+      }
     }
   }
 
