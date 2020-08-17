@@ -37,7 +37,15 @@ jobs:
     - run: flutter analyze .
     
     # Run tests for our flutter project.
-    - run: flutter test
+    - run: flutter test --coverage
+
+    # Sends test coverage to coveralls
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        flag-name: run-${{ matrix.platform }}
+        parallel: true
     
     # Build apk.
     - run: flutter build apk
@@ -52,3 +60,13 @@ jobs:
       with:
         name: release-apk
         path: build/app/outputs/apk/release/app-release.apk
+
+  finish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        parallel-finished: true
