@@ -7,11 +7,11 @@ class LocalStorageService {
   static LocalStorageService _instance;
   static SharedPreferences _preferences;
 
-  static const String userKey = 'logged_in_user';
-  static const String tokenKey = 'token';
-  static const String isLoggedInKey = 'is_logged_in';
-  static const String isFirstTimeLoginKey = 'is_first_time_login';
-  static const String authTypeKey = 'login_method';
+  static const String USER = 'logged_in_user';
+  static const String TOKEN = 'token';
+  static const String IS_LOGGED_IN = 'is_logged_in';
+  static const String IS_FIRST_TIME_LOGIN = 'is_first_time_login';
+  static const String AUTH_TYPE = 'auth_type';
 
   static Future<LocalStorageService> getInstance() async {
     _instance ??= LocalStorageService();
@@ -47,26 +47,26 @@ class LocalStorageService {
     }
   }
 
-  String get token => _getFromDisk(tokenKey);
+  String get token => _getFromDisk(TOKEN);
 
   set token(String _token) {
-    _saveToDisk(tokenKey, _token);
+    _saveToDisk(TOKEN, _token);
   }
 
-  bool get isLoggedIn => _getFromDisk(isLoggedInKey) ?? false;
+  bool get isLoggedIn => _getFromDisk(IS_LOGGED_IN) ?? false;
 
   set isLoggedIn(bool isLoggedIn) {
-    _saveToDisk(isLoggedInKey, isLoggedIn);
+    _saveToDisk(IS_LOGGED_IN, isLoggedIn);
   }
 
-  bool get isFirstTimeLogin => _getFromDisk(isFirstTimeLoginKey) ?? true;
+  bool get isFirstTimeLogin => _getFromDisk(IS_FIRST_TIME_LOGIN) ?? true;
 
   set isFirstTimeLogin(bool isLoggedIn) {
-    _saveToDisk(isFirstTimeLoginKey, isLoggedIn);
+    _saveToDisk(IS_FIRST_TIME_LOGIN, isLoggedIn);
   }
 
   User get currentUser {
-    var userJson = _getFromDisk(userKey);
+    var userJson = _getFromDisk(USER);
     if (userJson == null) {
       return null;
     }
@@ -75,6 +75,6 @@ class LocalStorageService {
   }
 
   set currentUser(User userToSave) {
-    _saveToDisk(userKey, json.encode(userToSave?.toJson()));
+    _saveToDisk(USER, json.encode(userToSave?.toJson()));
   }
 }
