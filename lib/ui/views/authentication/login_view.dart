@@ -8,7 +8,7 @@ import 'package:mobile_app/ui/views/authentication/components/authentication_opt
 import 'package:mobile_app/ui/views/authentication/forgot_password_view.dart';
 import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
-import 'package:mobile_app/ui/views/home/home_view.dart';
+import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
@@ -113,7 +113,7 @@ class _LoginViewState extends State<LoginView> {
 
         // move to home view on successful login..
         await Future.delayed(Duration(seconds: 1));
-        await Get.offAllNamed(HomeView.id);
+        await Get.offAllNamed(CVLandingView.id);
       } else if (_loginModel.isError) {
         // show failure snackbar..
         SnackBarUtils.showDark(_loginModel.errorMessage);

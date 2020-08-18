@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
-import 'package:mobile_app/ui/views/home/home_view.dart';
+import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/ui/views/startup_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mockito/mockito.dart';
@@ -49,7 +49,7 @@ void main() {
       await tester.pumpAndSettle(Duration(seconds: 1));
 
       verify(mockObserver.didPush(any, any));
-      expect(find.byType(HomeView), findsOneWidget);
+      expect(find.byType(CVLandingView), findsOneWidget);
     });
   });
 }

@@ -7,6 +7,7 @@ import 'package:mobile_app/viewmodels/authentication/authentication_options_view
 import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.dart';
 import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
 import 'package:mobile_app/viewmodels/authentication/signup_viewmodel.dart';
+import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
 import 'package:mobile_app/viewmodels/startup/startup_viewmodel.dart';
 import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
@@ -32,6 +33,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => ForgotPasswordViewModel());
 
   // Static ViewModels
+  locator.registerFactory(() => CVLandingViewModel());
   locator.registerFactory(() => HomeViewModel());
   locator.registerFactory(() => AboutViewModel());
 }
