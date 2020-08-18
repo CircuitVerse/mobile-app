@@ -38,7 +38,7 @@ void main() {
       test('When called & service returns error', () async {
         var _mockContributorsApi = getAndRegisterContributorsApiMock();
         when(_mockContributorsApi.fetchContributors())
-            .thenThrow(Failure('Some Error Occured!'));
+            .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = AboutViewModel();
         await _model.fetchContributors();

@@ -45,7 +45,7 @@ void main() {
         var _usersApiMock = getAndRegisterUsersApiMock();
 
         when(_usersApiMock.sendResetPasswordInstructions('test@test.com'))
-            .thenThrow(Failure('Some Error Occured!'));
+            .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = ForgotPasswordViewModel();
         await _model.onForgotPassword('test@test.com');

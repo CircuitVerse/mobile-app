@@ -30,7 +30,7 @@ void main() {
         var _mockUsersApi = getAndRegisterUsersApiMock();
 
         when(_mockUsersApi.login('test@test.com', 'password'))
-            .thenThrow(Failure('Some Error Occured!'));
+            .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = LoginViewModel();
         await _model.login('test@test.com', 'password');

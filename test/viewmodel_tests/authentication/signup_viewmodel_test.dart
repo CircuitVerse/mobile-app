@@ -30,7 +30,7 @@ void main() {
         var _mockUsersApi = getAndRegisterUsersApiMock();
 
         when(_mockUsersApi.signup('test', 'test@test.com', 'password'))
-            .thenThrow(Failure('Some Error Occured!'));
+            .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = SignupViewModel();
         await _model.signup('test', 'test@test.com', 'password');
