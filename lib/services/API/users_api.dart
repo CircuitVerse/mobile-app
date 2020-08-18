@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/failure_model.dart';
@@ -31,7 +32,7 @@ class HttpUsersApi implements UsersApi {
   @override
   Future<String> login(String email, String password) async {
     var endpoint = '/auth/login';
-    var uri = Constants.BASE_URL + endpoint;
+    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {
       'email': email,
       'password': password,
@@ -58,7 +59,7 @@ class HttpUsersApi implements UsersApi {
   @override
   Future<String> signup(String name, String email, String password) async {
     var endpoint = '/auth/signup';
-    var uri = Constants.BASE_URL + endpoint;
+    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {
       'name': name,
       'email': email,
@@ -84,7 +85,7 @@ class HttpUsersApi implements UsersApi {
   @override
   Future<User> fetchUser(String userId) async {
     var endpoint = '/users/$userId';
-    var uri = Constants.BASE_URL + endpoint;
+    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     try {
       ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(
@@ -105,7 +106,7 @@ class HttpUsersApi implements UsersApi {
   @override
   Future<User> fetchCurrentUser() async {
     var endpoint = '/me/';
-    var uri = Constants.BASE_URL + endpoint;
+    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     try {
       ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(
@@ -125,7 +126,7 @@ class HttpUsersApi implements UsersApi {
   Future<User> updateProfile(String name, String educationalInstitute,
       String country, bool isSubscribed) async {
     var endpoint = '/users/${_storage.currentUser.data.id}';
-    var uri = Constants.BASE_URL + endpoint;
+    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {
       'name': name,
       'educational_institute': educationalInstitute,
@@ -151,7 +152,7 @@ class HttpUsersApi implements UsersApi {
   @override
   Future<bool> sendResetPasswordInstructions(String email) async {
     var endpoint = '/password/forgot';
-    var uri = Constants.BASE_URL + endpoint;
+    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'email': email};
     try {
       var jsonResponse = await ApiUtils.post(

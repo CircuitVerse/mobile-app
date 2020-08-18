@@ -1,7 +1,4 @@
 class Constants {
-  /// BASE URL
-  static const String BASE_URL = 'https://circuitverse.org/api/v1';
-
   /// USER CONSTANTS
   static const String USER_AUTH_WRONG_CREDENTIALS =
       'Invalid credentials, please check';
