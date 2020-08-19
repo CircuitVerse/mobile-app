@@ -6,11 +6,14 @@ import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class SignupViewModel extends BaseModel {
+  // ViewState Keys
+  final String SIGNUP = 'signup';
+
   final UsersApi _userApi = locator<UsersApi>();
   final LocalStorageService _storage = locator<LocalStorageService>();
 
   Future<void> signup(String name, String email, String password) async {
-    setState(ViewState.Busy);
+    setStateFor(SIGNUP, ViewState.Busy);
     try {
       var token = await _userApi.signup(name, email, password);
 
@@ -23,10 +26,10 @@ class SignupViewModel extends BaseModel {
       // save current user to local storage..
       _storage.currentUser = await _userApi.fetchCurrentUser();
 
-      setState(ViewState.Success);
+      setStateFor(SIGNUP, ViewState.Success);
     } on Failure catch (f) {
-      setErrorMessage(f.message);
-      setState(ViewState.Error);
+      setStateFor(SIGNUP, ViewState.Error);
+      setErrorMessageFor(SIGNUP, f.message);
     }
   }
 }

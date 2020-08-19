@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/app_theme.dart';
-import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/ui/components/cv_password_field.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
@@ -69,7 +68,7 @@ class _SignupViewState extends State<SignupView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _signUpModel.state == ViewState.Busy
+        title: _signUpModel.isBusy(_signUpModel.SIGNUP)
             ? 'Authenticating..'
             : 'REGISTER',
         onPressed: _validateAndSubmit,
@@ -98,21 +97,23 @@ class _SignupViewState extends State<SignupView> {
   }
 
   Future<void> _validateAndSubmit() async {
-    if (Validators.validateAndSaveForm(_formKey) && !_signUpModel.isBusy) {
+    if (Validators.validateAndSaveForm(_formKey) &&
+        !_signUpModel.isBusy(_signUpModel.SIGNUP)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
       await _signUpModel.signup(_name, _email, _password);
 
-      if (_signUpModel.isSuccess) {
+      if (_signUpModel.isSuccess(_signUpModel.SIGNUP)) {
         // show signup successful snackbar..
         SnackBarUtils.showDark('Signup Successful');
 
         // move to home view on successful signup..
         await Future.delayed(Duration(seconds: 1));
         await Get.offAllNamed(CVLandingView.id);
-      } else if (_signUpModel.isError) {
+      } else if (_signUpModel.isError(_signUpModel.SIGNUP)) {
         // show failure snackbar..
-        SnackBarUtils.showDark(_signUpModel.errorMessage);
+        SnackBarUtils.showDark(
+            _signUpModel.errorMessageFor(_signUpModel.SIGNUP));
         _formKey.currentState.reset();
       }
     }

@@ -23,7 +23,8 @@ void main() {
 
         // should call login with expected variables
         verify(_usersApiMock.sendResetPasswordInstructions('test@test.com'));
-        expect(_model.state, ViewState.Success);
+        expect(
+            _model.stateFor(_model.SEND_RESET_INSTRUCTIONS), ViewState.Success);
       });
 
       test('When called & service returns response false', () async {
@@ -37,8 +38,10 @@ void main() {
 
         // should call login with expected variables
         verify(_usersApiMock.sendResetPasswordInstructions('test@test.com'));
-        expect(_model.state, ViewState.Error);
-        expect(_model.errorMessage, "Instructions couldn't be sent!");
+        expect(
+            _model.stateFor(_model.SEND_RESET_INSTRUCTIONS), ViewState.Error);
+        expect(_model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS),
+            "Instructions couldn't be sent!");
       });
 
       test('When called & service throws failure', () async {
@@ -52,7 +55,8 @@ void main() {
 
         // should call login with expected variables
         verify(_usersApiMock.sendResetPasswordInstructions('test@test.com'));
-        expect(_model.state, ViewState.Error);
+        expect(
+            _model.stateFor(_model.SEND_RESET_INSTRUCTIONS), ViewState.Error);
       });
     });
   });

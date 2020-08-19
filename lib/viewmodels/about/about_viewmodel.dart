@@ -6,6 +6,9 @@ import 'package:mobile_app/services/API/contributors_api.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class AboutViewModel extends BaseModel {
+  // ViewState Keys
+  final String FETCH_CONTRIBUTORS = 'fetch_contributors';
+
   final _contributorsApi = locator<ContributorsApi>();
 
   List<CircuitVerseContributors> _cvContributors;
@@ -18,13 +21,14 @@ class AboutViewModel extends BaseModel {
   }
 
   Future fetchContributors() async {
-    setState(ViewState.Busy);
+    setStateFor(FETCH_CONTRIBUTORS, ViewState.Busy);
     try {
       cvContributors = await _contributorsApi.fetchContributors();
-      setState(ViewState.Success);
+
+      setStateFor(FETCH_CONTRIBUTORS, ViewState.Success);
     } on Failure catch (f) {
-      setErrorMessage(f.message);
-      setState(ViewState.Error);
+      setStateFor(FETCH_CONTRIBUTORS, ViewState.Error);
+      setErrorMessageFor(FETCH_CONTRIBUTORS, f.message);
     }
   }
 }

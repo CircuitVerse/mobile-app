@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/app_theme.dart';
-import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
@@ -21,7 +20,7 @@ class ForgotPasswordView extends StatefulWidget {
 }
 
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
-  ForgotPasswordViewModel _forgotPasswordModel;
+  ForgotPasswordViewModel _model;
   final _formKey = GlobalKey<FormState>();
   String _email;
 
@@ -54,7 +53,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _forgotPasswordModel.state == ViewState.Busy
+        title: _model.isBusy(_model.SEND_RESET_INSTRUCTIONS)
             ? 'Sending..'
             : 'SEND INSTRUCTIONS',
         onPressed: _validateAndSubmit,
@@ -86,25 +85,26 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     var _dialogService = locator<DialogService>();
 
     if (Validators.validateAndSaveForm(_formKey) &&
-        !_forgotPasswordModel.isBusy) {
+        !_model.isBusy(_model.SEND_RESET_INSTRUCTIONS)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
       _dialogService.showCustomProgressDialog(title: 'Sending Instructions');
 
-      await _forgotPasswordModel.onForgotPassword(_email);
+      await _model.onForgotPassword(_email);
 
       _dialogService.popDialog();
 
-      if (_forgotPasswordModel.isSuccess) {
+      if (_model.isSuccess(_model.SEND_RESET_INSTRUCTIONS)) {
         // show instructions sent snackbar
         SnackBarUtils.showDark('Instructions Sent to $_email');
 
         // route back to previous screen
         await Future.delayed(Duration(seconds: 1));
         await Get.back();
-      } else if (_forgotPasswordModel.isError) {
+      } else if (_model.isError(_model.SEND_RESET_INSTRUCTIONS)) {
         // show failure snackbar
-        SnackBarUtils.showDark(_forgotPasswordModel.errorMessage);
+        SnackBarUtils.showDark(
+            _model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS));
         _formKey.currentState.reset();
       }
     }
@@ -113,7 +113,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   @override
   Widget build(BuildContext context) {
     return BaseView<ForgotPasswordViewModel>(
-      onModelReady: (model) => _forgotPasswordModel = model,
+      onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Form(

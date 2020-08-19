@@ -21,7 +21,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginViewModel _loginModel;
+  LoginViewModel _model;
   final _formKey = GlobalKey<FormState>();
   String _email, _password;
 
@@ -75,7 +75,7 @@ class _LoginViewState extends State<LoginView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _loginModel.isBusy ? 'Authenticating..' : 'LOGIN',
+        title: _model.isBusy(_model.LOGIN) ? 'Authenticating..' : 'LOGIN',
         onPressed: _validateAndSubmit,
       ),
     );
@@ -102,21 +102,22 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Future<void> _validateAndSubmit() async {
-    if (Validators.validateAndSaveForm(_formKey) && !_loginModel.isBusy) {
+    if (Validators.validateAndSaveForm(_formKey) &&
+        !_model.isBusy(_model.LOGIN)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      await _loginModel.login(_email, _password);
+      await _model.login(_email, _password);
 
-      if (_loginModel.isSuccess) {
+      if (_model.isSuccess(_model.LOGIN)) {
         // show login successful snackbar..
         SnackBarUtils.showDark('Login Successful');
 
         // move to home view on successful login..
         await Future.delayed(Duration(seconds: 1));
         await Get.offAllNamed(CVLandingView.id);
-      } else if (_loginModel.isError) {
+      } else if (_model.isError(_model.LOGIN)) {
         // show failure snackbar..
-        SnackBarUtils.showDark(_loginModel.errorMessage);
+        SnackBarUtils.showDark(_model.errorMessageFor(_model.LOGIN));
         _formKey.currentState.reset();
       }
     }
@@ -125,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return BaseView<LoginViewModel>(
-      onModelReady: (model) => _loginModel = model,
+      onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           child: Form(

@@ -18,10 +18,8 @@ class AboutView extends StatefulWidget {
   _AboutViewState createState() => _AboutViewState();
 }
 
-class _AboutViewState extends State<AboutView>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
+class _AboutViewState extends State<AboutView> {
+  AboutViewModel _model;
 
   Future<void> _launchURL(String url, String title) async {
     await Get.to(
@@ -64,11 +62,11 @@ class _AboutViewState extends State<AboutView>
     );
   }
 
-  Widget _buildContributorsList(AboutViewModel model) {
-    switch (model.state) {
+  Widget _buildContributorsList() {
+    switch (_model.stateFor(_model.FETCH_CONTRIBUTORS)) {
       case ViewState.Success:
         var _contributorsAvatars = <Widget>[];
-        model.cvContributors.forEach((contributor) {
+        _model.cvContributors.forEach((contributor) {
           if (contributor.type == Type.USER) {
             _contributorsAvatars.add(
               ContributorAvatar(contributor: contributor),
@@ -93,7 +91,7 @@ class _AboutViewState extends State<AboutView>
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 32),
           child: Text(
-            model.errorMessage,
+            _model.errorMessageFor(_model.FETCH_CONTRIBUTORS),
             textAlign: TextAlign.center,
           ),
         );
@@ -105,10 +103,11 @@ class _AboutViewState extends State<AboutView>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
     return BaseView<AboutViewModel>(
-      onModelReady: (model) => model.fetchContributors(),
+      onModelReady: (model) {
+        _model = model;
+        _model.fetchContributors();
+      },
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -140,7 +139,7 @@ class _AboutViewState extends State<AboutView>
                 subtitle:
                     "Meet the awesome people of CircuitVerse community that've made this platform what it is now.",
               ),
-              _buildContributorsList(model),
+              _buildContributorsList(),
             ],
           ),
         ),

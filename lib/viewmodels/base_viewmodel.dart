@@ -2,29 +2,28 @@ import 'package:flutter/foundation.dart';
 import 'package:mobile_app/enums/view_state.dart';
 
 class BaseModel extends ChangeNotifier {
-  ViewState _state = ViewState.Idle;
+  final Map<String, ViewState> _viewStates = <String, ViewState>{};
+  final Map<String, String> _errorMessages = <String, String>{};
 
-  ViewState get state => _state;
+  ViewState stateFor(String key) => _viewStates[key] ?? ViewState.Idle;
 
-  void setState(ViewState viewState) {
-    _state = viewState;
+  void setStateFor(String key, ViewState viewState) {
+    _viewStates[key] = viewState;
     notifyListeners();
   }
 
-  String _errorMessage = '';
+  String errorMessageFor(String key) => _errorMessages[key] ?? '';
 
-  String get errorMessage => _errorMessage;
-
-  void setErrorMessage(String errorMessage) {
-    _errorMessage = errorMessage;
+  void setErrorMessageFor(String key, String error) {
+    _errorMessages[key] = error;
     notifyListeners();
   }
 
-  bool get isIdle => state == ViewState.Idle;
+  bool isIdle(String key) => _viewStates[key] == ViewState.Idle;
 
-  bool get isBusy => state == ViewState.Busy;
+  bool isBusy(String key) => _viewStates[key] == ViewState.Busy;
 
-  bool get isError => state == ViewState.Error;
+  bool isError(String key) => _viewStates[key] == ViewState.Error;
 
-  bool get isSuccess => state == ViewState.Success;
+  bool isSuccess(String key) => _viewStates[key] == ViewState.Success;
 }
