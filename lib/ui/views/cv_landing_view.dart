@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/locator.dart';
+import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -11,6 +13,7 @@ import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
 import 'package:mobile_app/ui/views/home/home_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
+import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 
 class CVLandingView extends StatefulWidget {
@@ -21,14 +24,15 @@ class CVLandingView extends StatefulWidget {
 }
 
 class _CVLandingViewState extends State<CVLandingView> {
-  CVLandingViewModel _cvLandingModel;
+  final DialogService _dialogService = locator<DialogService>();
+  CVLandingViewModel _model;
   int _selectedIndex = 0;
 
   final List<Widget> _items = [
     HomeView(),
     AboutView(),
-    ContributorsView(),
-    TeachersView(),
+    ContributorsView(showAppBar: false),
+    TeachersView(showAppBar: false),
     ProfileView(),
     MyGroupsView(),
   ];
@@ -70,6 +74,22 @@ class _CVLandingViewState extends State<CVLandingView> {
     );
   }
 
+  Future<void> onLogoutPressed() async {
+    Get.back();
+
+    var _dialogResponse = await _dialogService.showConfirmationDialog(
+      title: 'Log Out',
+      description: 'Are you sure you want to logout?',
+      confirmationTitle: 'LOGOUT',
+    );
+
+    if (_dialogResponse.confirmed) {
+      _model.onLogout();
+      setState(() => _selectedIndex = 0);
+      SnackBarUtils.showDark('Logged Out Successfully');
+    }
+  }
+
   Widget _buildDrawer() {
     return Drawer(
       child: ListView(
@@ -101,11 +121,11 @@ class _CVLandingViewState extends State<CVLandingView> {
             child: _buildDrawerTile('Teachers', Icons.account_balance),
             onTap: () => setSelectedIndexTo(3),
           ),
-          _cvLandingModel.isLoggedIn
+          _model.isLoggedIn
               ? ExpansionTile(
                   maintainState: true,
                   title: Text(
-                    _cvLandingModel.currentUser.data.attributes.name ?? '',
+                    _model.currentUser.data.attributes.name ?? '',
                     style: Theme.of(context).textTheme.headline6.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -122,10 +142,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                     ),
                     InkWell(
                       child: _buildDrawerTile('Log Out', Ionicons.ios_log_out),
-                      onTap: () {
-                        Get.back();
-                        _cvLandingModel.onLogout();
-                      },
+                      onTap: onLogoutPressed,
                     ),
                   ],
                 )
@@ -142,24 +159,33 @@ class _CVLandingViewState extends State<CVLandingView> {
   Widget build(BuildContext context) {
     return BaseView<CVLandingViewModel>(
       onModelReady: (model) {
-        _cvLandingModel = model;
+        _model = model;
       },
-      builder: (context, model, child) => Scaffold(
-        appBar: _buildAppBar(),
-        drawer: _buildDrawer(),
-        body: PageTransitionSwitcher(
-          transitionBuilder: (
-            Widget child,
-            Animation<double> animation,
-            Animation<double> secondaryAnimation,
-          ) {
-            return FadeThroughTransition(
-              animation: animation,
-              secondaryAnimation: secondaryAnimation,
-              child: child,
-            );
-          },
-          child: _items.elementAt(_selectedIndex),
+      builder: (context, model, child) => WillPopScope(
+        onWillPop: () {
+          if (_selectedIndex != 0) {
+            setState(() => _selectedIndex = 0);
+            return Future.value(false);
+          }
+          return Future.value(true);
+        },
+        child: Scaffold(
+          appBar: _buildAppBar(),
+          drawer: _buildDrawer(),
+          body: PageTransitionSwitcher(
+            transitionBuilder: (
+              Widget child,
+              Animation<double> animation,
+              Animation<double> secondaryAnimation,
+            ) {
+              return FadeThroughTransition(
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                child: child,
+              );
+            },
+            child: _items.elementAt(_selectedIndex),
+          ),
         ),
       ),
     );
