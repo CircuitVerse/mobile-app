@@ -5,7 +5,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
-import 'package:mobile_app/ui/views/authentication/components/authentication_options_view.dart';
+import 'package:mobile_app/ui/views/authentication/components/auth_options_view.dart';
 import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
@@ -128,8 +128,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 SizedBox(height: 8),
                 _buildNewUserSignUpComponent(),
                 SizedBox(height: 32),
-                AuthenticationOptionsView(
-                  isSignUpView: false,
+                AuthOptionsView(
+                  isSignUp: false,
                 ),
               ],
             ),

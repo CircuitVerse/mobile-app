@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:mobile_app/enums/auth_type.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -76,5 +77,14 @@ class LocalStorageService {
 
   set currentUser(User userToSave) {
     _saveToDisk(USER, json.encode(userToSave?.toJson()));
+  }
+
+  AuthType get authType {
+    var _authType = _getFromDisk(AUTH_TYPE);
+    return authTypeValues.map[_authType];
+  }
+
+  set authType(AuthType authType) {
+    _saveToDisk(AUTH_TYPE, authTypeValues.reverse[authType]);
   }
 }

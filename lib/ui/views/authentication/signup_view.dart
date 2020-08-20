@@ -4,7 +4,7 @@ import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/ui/components/cv_password_field.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
-import 'package:mobile_app/ui/views/authentication/components/authentication_options_view.dart';
+import 'package:mobile_app/ui/views/authentication/components/auth_options_view.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/cv_landing_view.dart';
@@ -139,9 +139,7 @@ class _SignupViewState extends State<SignupView> {
                 SizedBox(height: 8),
                 _buildAlreadyRegisteredComponent(),
                 SizedBox(height: 32),
-                AuthenticationOptionsView(
-                  isSignUpView: true,
-                ),
+                AuthOptionsView(isSignUp: true),
               ],
             ),
           ),

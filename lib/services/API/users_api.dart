@@ -13,6 +13,10 @@ abstract class UsersApi {
 
   Future<String> signup(String name, String email, String password);
 
+  Future<String> oauth_login({String accessToken, String provider});
+
+  Future<String> oauth_signup({String accessToken, String provider});
+
   Future<User> fetchUser(String userId);
 
   Future<User> fetchCurrentUser();
@@ -65,6 +69,58 @@ class HttpUsersApi implements UsersApi {
       'email': email,
       'password': password,
     };
+    try {
+      var jsonResponse = await ApiUtils.post(
+        uri,
+        headers: headers,
+        body: json,
+      );
+      String token = jsonResponse['token'];
+      return token;
+    } on ConflictException {
+      throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
+    }
+  }
+
+  @override
+  Future<String> oauth_login({String accessToken, String provider}) async {
+    var endpoint = '/oauth/login';
+    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var json = {
+      'access_token': accessToken,
+      'provider': provider,
+    };
+
+    try {
+      var jsonResponse = await ApiUtils.post(
+        uri,
+        headers: headers,
+        body: json,
+      );
+      String token = jsonResponse['token'];
+      return token;
+    } on NotFoundException {
+      throw Failure(Constants.USER_AUTH_USER_NOT_FOUND);
+    } on FormatException {
+      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
+    }
+  }
+
+  @override
+  Future<String> oauth_signup({String accessToken, String provider}) async {
+    var endpoint = '/oauth/signup';
+    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var json = {
+      'access_token': accessToken,
+      'provider': provider,
+    };
+
     try {
       var jsonResponse = await ApiUtils.post(
         uri,

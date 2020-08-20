@@ -4,7 +4,7 @@ import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/ui/components/cv_password_field.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
-import 'package:mobile_app/ui/views/authentication/components/authentication_options_view.dart';
+import 'package:mobile_app/ui/views/authentication/components/auth_options_view.dart';
 import 'package:mobile_app/ui/views/authentication/forgot_password_view.dart';
 import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -143,9 +143,7 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(height: 8),
                 _buildNewUserSignUpComponent(),
                 SizedBox(height: 32),
-                AuthenticationOptionsView(
-                  isSignUpView: false,
-                ),
+                AuthOptionsView(isSignUp: false),
               ],
             ),
           ),

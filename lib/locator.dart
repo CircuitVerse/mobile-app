@@ -3,7 +3,7 @@ import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/API/contributors_api.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
-import 'package:mobile_app/viewmodels/authentication/authentication_options_viewmodel.dart';
+import 'package:mobile_app/viewmodels/authentication/auth_options_viewmodel.dart';
 import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.dart';
 import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
 import 'package:mobile_app/viewmodels/authentication/signup_viewmodel.dart';
@@ -29,7 +29,7 @@ Future<void> setupLocator() async {
   // Authentication ViewModels
   locator.registerFactory(() => SignupViewModel());
   locator.registerFactory(() => LoginViewModel());
-  locator.registerFactory(() => AuthenticationOptionsViewModel());
+  locator.registerFactory(() => AuthOptionsViewModel());
   locator.registerFactory(() => ForgotPasswordViewModel());
 
   // Static ViewModels
