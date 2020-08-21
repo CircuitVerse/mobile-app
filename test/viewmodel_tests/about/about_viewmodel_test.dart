@@ -5,7 +5,7 @@ import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../setup/test_data/contributors_mock_data.dart';
+import '../../setup/test_data/mock_contributors.dart';
 import '../../setup/test_helpers.dart';
 
 void main() {
@@ -18,8 +18,8 @@ void main() {
         var _mockContributorsApi = getAndRegisterContributorsApiMock();
         when(_mockContributorsApi.fetchContributors()).thenAnswer(
           (_) => Future.value(
-            contributorsMockData
-                .map((e) => CircuitVerseContributors.fromJson(e))
+            mockContributors
+                .map((e) => CircuitVerseContributor.fromJson(e))
                 .toList(),
           ),
         );

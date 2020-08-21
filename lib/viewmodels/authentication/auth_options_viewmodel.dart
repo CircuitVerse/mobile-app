@@ -31,12 +31,12 @@ class AuthOptionsViewModel extends BaseModel {
         try {
           // save token & current user to local storage..
           if (isSignUp) {
-            _storage.token = await _userApi.oauth_signup(
+            _storage.token = await _userApi.oauthSignup(
               accessToken: result.accessToken.token,
               provider: 'facebook',
             );
           } else {
-            _storage.token = await _userApi.oauth_login(
+            _storage.token = await _userApi.oauthLogin(
               accessToken: result.accessToken.token,
               provider: 'facebook',
             );
@@ -79,12 +79,12 @@ class AuthOptionsViewModel extends BaseModel {
 
       // save token & current user to local storage..
       if (isSignUp) {
-        _storage.token = await _userApi.oauth_signup(
+        _storage.token = await _userApi.oauthSignup(
           accessToken: _googleSignInAuthentication.accessToken,
           provider: 'google',
         );
       } else {
-        _storage.token = await _userApi.oauth_login(
+        _storage.token = await _userApi.oauthLogin(
           accessToken: _googleSignInAuthentication.accessToken,
           provider: 'google',
         );
@@ -128,12 +128,12 @@ class AuthOptionsViewModel extends BaseModel {
 
       // save token & current user to local storage..
       if (isSignUp) {
-        _storage.token = await _userApi.oauth_signup(
+        _storage.token = await _userApi.oauthSignup(
           accessToken: _accessTokenResponse.accessToken,
           provider: 'github',
         );
       } else {
-        _storage.token = await _userApi.oauth_login(
+        _storage.token = await _userApi.oauthLogin(
           accessToken: _accessTokenResponse.accessToken,
           provider: 'github',
         );

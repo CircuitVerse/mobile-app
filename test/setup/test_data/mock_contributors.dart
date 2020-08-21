@@ -1,4 +1,4 @@
-List contributorsMockData = [
+List mockContributors = [
   {
     'login': 'ankitkataria',
     'id': 22021150,

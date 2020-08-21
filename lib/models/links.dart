@@ -20,12 +20,4 @@ class Links {
         next: json['next'],
         last: json['last'],
       );
-
-  Map<String, dynamic> toJson() => {
-        'self': self,
-        'first': first,
-        'prev': prev,
-        'next': next,
-        'last': last,
-      };
 }

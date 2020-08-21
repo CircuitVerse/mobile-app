@@ -2,14 +2,11 @@ import 'dart:convert';
 
 import 'package:mobile_app/utils/enum_values.dart';
 
-List<CircuitVerseContributors> circuitVerseContributorsFromJson(String str) =>
-    List<CircuitVerseContributors>.from(
-        json.decode(str).map((x) => CircuitVerseContributors.fromJson(x)));
+List<CircuitVerseContributor> circuitVerseContributorsFromJson(String str) =>
+    List<CircuitVerseContributor>.from(
+        json.decode(str).map((x) => CircuitVerseContributor.fromJson(x)));
 
-String circuitVerseContributorsToJson(List<CircuitVerseContributors> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class CircuitVerseContributors {
+class CircuitVerseContributor {
   String login;
   int id;
   String nodeId;
@@ -30,7 +27,7 @@ class CircuitVerseContributors {
   bool siteAdmin;
   int contributions;
 
-  CircuitVerseContributors({
+  CircuitVerseContributor({
     this.login,
     this.id,
     this.nodeId,
@@ -52,8 +49,8 @@ class CircuitVerseContributors {
     this.contributions,
   });
 
-  factory CircuitVerseContributors.fromJson(Map<String, dynamic> json) =>
-      CircuitVerseContributors(
+  factory CircuitVerseContributor.fromJson(Map<String, dynamic> json) =>
+      CircuitVerseContributor(
         login: json['login'],
         id: json['id'],
         nodeId: json['node_id'],
@@ -74,30 +71,11 @@ class CircuitVerseContributors {
         siteAdmin: json['site_admin'],
         contributions: json['contributions'],
       );
-
-  Map<String, dynamic> toJson() => {
-        'login': login,
-        'id': id,
-        'node_id': nodeId,
-        'avatar_url': avatarUrl,
-        'gravatar_id': gravatarId,
-        'url': url,
-        'html_url': htmlUrl,
-        'followers_url': followersUrl,
-        'following_url': followingUrl,
-        'gists_url': gistsUrl,
-        'starred_url': starredUrl,
-        'subscriptions_url': subscriptionsUrl,
-        'organizations_url': organizationsUrl,
-        'repos_url': reposUrl,
-        'events_url': eventsUrl,
-        'received_events_url': receivedEventsUrl,
-        'type': typeValues.reverse[type],
-        'site_admin': siteAdmin,
-        'contributions': contributions,
-      };
 }
 
 enum Type { USER, BOT }
 
-final typeValues = EnumValues({'Bot': Type.BOT, 'User': Type.USER});
+final typeValues = EnumValues({
+  'Bot': Type.BOT,
+  'User': Type.USER,
+});

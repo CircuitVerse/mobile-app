@@ -11,11 +11,11 @@ class AboutViewModel extends BaseModel {
 
   final _contributorsApi = locator<ContributorsApi>();
 
-  List<CircuitVerseContributors> _cvContributors;
+  List<CircuitVerseContributor> _cvContributors;
 
-  List<CircuitVerseContributors> get cvContributors => _cvContributors;
+  List<CircuitVerseContributor> get cvContributors => _cvContributors;
 
-  set cvContributors(List<CircuitVerseContributors> cvContributors) {
+  set cvContributors(List<CircuitVerseContributor> cvContributors) {
     _cvContributors = cvContributors;
     notifyListeners();
   }
