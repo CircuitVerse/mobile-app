@@ -1,4 +1,3 @@
-import 'package:http/http.dart' as http;
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
@@ -29,7 +28,6 @@ abstract class UsersApi {
 
 class HttpUsersApi implements UsersApi {
   var headers = {'Content-Type': 'application/json'};
-  http.Client client = http.Client();
 
   final LocalStorageService _storage = locator<LocalStorageService>();
 

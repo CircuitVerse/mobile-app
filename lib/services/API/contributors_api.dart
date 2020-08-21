@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/models/cv_contributors.dart';
 import 'package:mobile_app/models/failure_model.dart';
@@ -12,7 +11,6 @@ abstract class ContributorsApi {
 
 class HttpContributorsApi implements ContributorsApi {
   var headers = {'Content-Type': 'application/json'};
-  http.Client client = http.Client();
 
   @override
   Future<List<CircuitVerseContributor>> fetchContributors() async {
