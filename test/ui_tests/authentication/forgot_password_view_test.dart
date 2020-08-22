@@ -48,7 +48,6 @@ void main() {
       expect(find.byWidgetPredicate(_forgotPasswordImagePredicate),
           findsOneWidget);
       expect(find.byType(CVTextField), findsOneWidget);
-      expect(find.text('Forgot Password?'), findsOneWidget);
       expect(find.byType(CVPrimaryButton), findsOneWidget);
       expect(find.byWidgetPredicate((widget) {
         return widget is RichText &&
@@ -67,7 +66,6 @@ void main() {
       }));
       await tester.pumpAndSettle();
 
-      verify(mockObserver.didPush(any, any));
       expect(find.byType(SignupView), findsOneWidget);
     });
 
