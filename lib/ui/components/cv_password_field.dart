@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/app_theme.dart';
 
 class CVPasswordField extends StatefulWidget {
   final Function(String) validator;
@@ -24,22 +25,24 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
       child: TextFormField(
         maxLines: 1,
         obscureText: _obscureText,
         keyboardType: TextInputType.visiblePassword,
         style: TextStyle(color: Colors.black),
-        decoration: InputDecoration(
+        decoration: AppTheme.textFieldDecoration.copyWith(
           suffixIcon: GestureDetector(
             child: Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
-              color: Theme.of(context).primaryColor,
+              color: AppTheme.primaryColorDark,
             ),
             onTap: _toggle,
           ),
           labelText: 'Password',
-          labelStyle: Theme.of(context).textTheme.subtitle1,
         ),
         validator: widget.validator,
         onSaved: widget.onSaved,

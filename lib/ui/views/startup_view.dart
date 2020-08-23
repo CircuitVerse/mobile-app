@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/startup/startup_viewmodel.dart';
 
@@ -8,7 +9,7 @@ class StartUpView extends StatelessWidget {
     return BaseView<StartUpViewModel>(
       onModelReady: (model) => model.handleStartUpLogic(),
       builder: (context, model, child) => Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: AppTheme.primaryColor,
         body: Center(
           child: Text(
             'CircuitVerse',

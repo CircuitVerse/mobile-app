@@ -18,6 +18,8 @@ class _DialogManagerState extends State<DialogManager> {
   void initState() {
     super.initState();
     _dialogService.registerDialogListener(_showDialog);
+    _dialogService.registerConfirmationDialogListener(_showConfirmationDialog);
+    _dialogService.registerProgressDialogListener(_showProgressDialog);
   }
 
   @override
@@ -26,69 +28,116 @@ class _DialogManagerState extends State<DialogManager> {
   }
 
   void _showDialog(DialogRequest request) {
-    var isConfirmationDialog = request.cancelTitle != null;
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) => request.description == null
-          ? SimpleDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        title: Text(
+          request.title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(request.description),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              request.buttonTitle,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
               ),
+            ),
+            onPressed: () {
+              _dialogService.dialogComplete(
+                DialogResponse(confirmed: true),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showConfirmationDialog(DialogRequest request) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        title: Text(
+          request.title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(request.description),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              request.cancelTitle,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: () {
+              _dialogService.dialogComplete(
+                DialogResponse(confirmed: false),
+              );
+            },
+          ),
+          FlatButton(
+            child: Text(
+              request.buttonTitle,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: () {
+              _dialogService.dialogComplete(
+                DialogResponse(confirmed: true),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showProgressDialog(DialogRequest request) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => SimpleDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      CircularProgressIndicator(),
-                      Text(request.title, style: TextStyle(fontSize: 18)),
-                    ],
-                  ),
-                ),
-              ],
-            )
-          : AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              title: Text(
-                request.title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              content: Text(request.description),
-              actions: <Widget>[
-                if (isConfirmationDialog)
-                  FlatButton(
-                    child: Text(
-                      request.cancelTitle,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: () {
-                      _dialogService.dialogComplete(
-                        DialogResponse(confirmed: false),
-                      );
-                    },
-                  ),
-                FlatButton(
+                CircularProgressIndicator(),
+                SizedBox(width: 16),
+                Expanded(
                   child: Text(
-                    request.buttonTitle,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    request.title,
+                    style: TextStyle(fontSize: 18),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  onPressed: () {
-                    _dialogService.dialogComplete(
-                      DialogResponse(confirmed: true),
-                    );
-                  },
                 ),
               ],
             ),
+          ),
+        ],
+      ),
     );
   }
 }

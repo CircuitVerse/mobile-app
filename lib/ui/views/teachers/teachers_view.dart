@@ -5,11 +5,14 @@ import 'package:mobile_app/ui/views/teachers/components/teachers_card.dart';
 
 class TeachersView extends StatelessWidget {
   static const String id = 'teachers_view';
+  final bool showAppBar;
+
+  const TeachersView({Key key, this.showAppBar = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: showAppBar ? AppBar() : null,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
