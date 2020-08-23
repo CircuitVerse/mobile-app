@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+
+class CardButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final Color color;
+  final String title;
+
+  const CardButton({
+    Key key,
+    @required this.onPressed,
+    @required this.color,
+    @required this.title,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2),
+      child: FlatButton(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        onPressed: onPressed,
+        color: color,
+        child: Text(
+          title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                color: Colors.white,
+              ),
+        ),
+      ),
+    );
+  }
+}
