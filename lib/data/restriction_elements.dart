@@ -1,4 +1,4 @@
-Map<String, List<String>> retrictionElements = {
+Map<String, List<String>> restrictionElements = {
   'Input': [
     'Input',
     'Button',
