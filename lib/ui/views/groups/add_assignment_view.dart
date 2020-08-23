@@ -173,7 +173,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Column(
-        children: retrictionElements.entries
+        children: restrictionElements.entries
             .toList()
             .map<Widget>((e) => _buildRestrictionComponent(e.key, e.value))
             .toList(),
