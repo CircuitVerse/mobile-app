@@ -40,18 +40,6 @@ void main() {
         await _model.addAssignment(
             '1', 'Test', _localDeadline, 'letter', 'description', []);
 
-        // verify call to addAssignment without timezone offset substracted was not made
-        verifyNever(
-          _mockAssignmentsApi.addAssignment(
-            '1',
-            'Test',
-            _deadlineFormat.format(_localDeadline),
-            'description',
-            'letter',
-            json.encode([]),
-          ),
-        );
-
         // verify call to addAssignment with timezone offset subtracted was made
         verify(
           _mockAssignmentsApi.addAssignment(
