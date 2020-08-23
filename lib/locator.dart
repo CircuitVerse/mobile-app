@@ -8,6 +8,13 @@ import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.d
 import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
 import 'package:mobile_app/viewmodels/authentication/signup_viewmodel.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
+import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
+import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
+import 'package:mobile_app/viewmodels/groups/edit_group_viewmodel.dart';
+import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
+import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
+import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
+import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
 import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
 import 'package:mobile_app/viewmodels/startup/startup_viewmodel.dart';
 import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
@@ -22,6 +29,11 @@ Future<void> setupLocator() async {
   // API Services
   locator.registerLazySingleton<ContributorsApi>(() => HttpContributorsApi());
   locator.registerLazySingleton<UsersApi>(() => HttpUsersApi());
+  locator.registerLazySingleton<GroupsApi>(() => HttpGroupsApi());
+  locator.registerLazySingleton<GroupMembersApi>(() => HttpGroupMembersApi());
+  locator.registerLazySingleton<AssignmentsApi>(() => HttpAssignmentsApi());
+  locator.registerLazySingleton<GradesApi>(() => HttpGradesApi());
+  locator.registerLazySingleton<FCMApi>(() => HttpFCMApi());
 
   // Startup ViewModel
   locator.registerFactory(() => StartUpViewModel());
@@ -36,4 +48,15 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => CVLandingViewModel());
   locator.registerFactory(() => HomeViewModel());
   locator.registerFactory(() => AboutViewModel());
+
+  // Groups ViewModels
+  locator.registerFactory(() => MyGroupsViewModel());
+  locator.registerFactory(() => GroupDetailsViewModel());
+  locator.registerFactory(() => NewGroupViewModel());
+  locator.registerFactory(() => EditGroupViewModel());
+
+  // Assignment ViewModels
+  locator.registerFactory(() => AddAssignmentViewModel());
+  locator.registerFactory(() => UpdateAssignmentViewModel());
+  locator.registerFactory(() => AssignmentDetailsViewModel());
 }
