@@ -7,11 +7,14 @@ import 'package:mobile_app/ui/views/contributors/components/contributors_support
 
 class ContributorsView extends StatelessWidget {
   static const String id = 'contributors_view';
+  final bool showAppBar;
+
+  const ContributorsView({Key key, this.showAppBar = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: showAppBar ? AppBar() : null,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -40,6 +43,7 @@ class ContributorsView extends StatelessWidget {
               description: 'Github',
               url: 'https://github.com/CircuitVerse',
             ),
+            SizedBox(height: 32),
             CVSubheader(title: 'How to Support ?'),
             ContributeSupportCard(
               imagePath: 'assets/images/contribute/person.png',

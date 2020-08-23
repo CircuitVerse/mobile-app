@@ -11,8 +11,15 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class AboutView extends StatelessWidget {
+class AboutView extends StatefulWidget {
   static const String id = 'about_view';
+
+  @override
+  _AboutViewState createState() => _AboutViewState();
+}
+
+class _AboutViewState extends State<AboutView> {
+  AboutViewModel _model;
 
   Future<void> _launchURL(String url, String title) async {
     await Get.to(
@@ -24,15 +31,13 @@ class AboutView extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    Widget _buildTosAndPrivacyButtons() {
-      return Container(
-        margin: const EdgeInsets.symmetric(vertical: 32),
-        child: Wrap(
-          alignment: WrapAlignment.center,
-          children: <Widget>[
-            CVPrimaryButton(
+  Widget _buildTosAndPrivacyButtons() {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 32),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: CVPrimaryButton(
               title: 'Terms Of Service',
               isBodyText: true,
               onPressed: () => _launchURL(
@@ -40,8 +45,10 @@ class AboutView extends StatelessWidget {
                 'Terms of Service',
               ),
             ),
-            SizedBox(width: 16),
-            CVPrimaryButton(
+          ),
+          SizedBox(width: 8),
+          Expanded(
+            child: CVPrimaryButton(
               title: 'Privacy Policy',
               isBodyText: true,
               onPressed: () => _launchURL(
@@ -49,54 +56,59 @@ class AboutView extends StatelessWidget {
                 'Privacy',
               ),
             ),
-          ],
-        ),
-      );
-    }
+          ),
+        ],
+      ),
+    );
+  }
 
-    Widget _buildContributorsList(AboutViewModel model) {
-      switch (model.state) {
-        case ViewState.Idle:
-          var _contributorsAvatars = <Widget>[];
-          model.cvContributors.forEach((contributor) {
-            if (contributor.type == Type.USER) {
-              _contributorsAvatars.add(
-                ContributorAvatar(contributor: contributor),
-              );
-            }
-          });
-          return Wrap(
-            alignment: WrapAlignment.center,
-            children: _contributorsAvatars,
-          );
-          break;
-        case ViewState.Busy:
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32),
-            child: Text(
-              'Loading Contributors ...',
-              textAlign: TextAlign.center,
-            ),
-          );
-          break;
-        case ViewState.Error:
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32),
-            child: Text(
-              model.errorMessage,
-              textAlign: TextAlign.center,
-            ),
-          );
-          break;
-        default:
-          return Container();
-      }
+  Widget _buildContributorsList() {
+    switch (_model.stateFor(_model.FETCH_CONTRIBUTORS)) {
+      case ViewState.Success:
+        var _contributorsAvatars = <Widget>[];
+        _model.cvContributors.forEach((contributor) {
+          if (contributor.type == Type.USER) {
+            _contributorsAvatars.add(
+              ContributorAvatar(contributor: contributor),
+            );
+          }
+        });
+        return Wrap(
+          alignment: WrapAlignment.center,
+          children: _contributorsAvatars,
+        );
+        break;
+      case ViewState.Busy:
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 32),
+          child: Text(
+            'Loading Contributors ...',
+            textAlign: TextAlign.center,
+          ),
+        );
+        break;
+      case ViewState.Error:
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 32),
+          child: Text(
+            _model.errorMessageFor(_model.FETCH_CONTRIBUTORS),
+            textAlign: TextAlign.center,
+          ),
+        );
+        break;
+      default:
+        return Container();
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return BaseView<AboutViewModel>(
-      onModelReady: (model) => model.fetchContributors(),
+      onModelReady: (model) {
+        _model = model;
+        _model.fetchContributors();
+      },
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -127,7 +139,7 @@ class AboutView extends StatelessWidget {
                 subtitle:
                     "Meet the awesome people of CircuitVerse community that've made this platform what it is now.",
               ),
-              _buildContributorsList(model),
+              _buildContributorsList(),
             ],
           ),
         ),

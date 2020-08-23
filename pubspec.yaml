@@ -29,17 +29,19 @@ dependencies:
   url_launcher: ^5.4.5
   http: ^0.12.1
   transparent_image: ^1.0.0
-  flutter_svg: ^0.17.4
+  flutter_svg: ^0.18.0
   flutter_icons: ^1.1.0
   get: ^2.10.3
   intl: ^0.16.1
-  intl_translation:
+  intl_translation: null
   datetime_picker_formfield: ^1.0.0
   timeago: ^2.0.26
   google_sign_in: ^4.5.1
   oauth2_client: ^1.4.2
   html: ^0.14.0+3
   webview_flutter: ^0.3.22+1
+  animations: ^1.1.2
+  flutter_facebook_login: ^3.0.0
 
 dev_dependencies:
   flutter_test:

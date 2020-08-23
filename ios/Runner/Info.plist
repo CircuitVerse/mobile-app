@@ -46,5 +46,44 @@
     <array>
         <string>en</string>
     </array>
+	<!-- Authentication configuration -->
+    <key>CFBundleURLTypes</key>
+    <array>
+		<!-- Facebook authentication config -->
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>fb567334037481721</string>
+            </array>
+        </dict>
+		<!-- Google authentication config -->
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+                <string>com.googleusercontent.apps.377832615490-d5i0e2guo62fja096ugpnjak12sleo8m</string>
+            </array>
+		</dict>
+		<!-- Github authentication config -->
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+                <string>circuitverse</string>
+            </array>
+			<key>CFBundleURLName</key>
+        	<string>auth/callback/github</string>
+		</dict>
+    </array>
+    <key>FacebookAppID</key>
+    <string>567334037481721</string>
+    <key>FacebookDisplayName</key>
+    <string>CircuitVerse</string>
+    
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbapi</string>
+        <string>fb-messenger-share-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
+    </array>
 </dict>
 </plist>

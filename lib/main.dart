@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/locale/locales.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/managers/dialog_manager.dart';
@@ -44,9 +45,9 @@ class CircuitVerseMobile extends StatelessWidget {
       ),
       onGenerateRoute: Router.generateRoute,
       theme: ThemeData(
-        primarySwatch: generateMaterialColor(Color.fromRGBO(66, 185, 131, 1)),
+        primarySwatch: generateMaterialColor(AppTheme.primaryColor),
         fontFamily: 'Poppins',
-        cursorColor: Color.fromRGBO(66, 185, 131, 1),
+        cursorColor: AppTheme.primaryColor,
       ),
       home: StartUpView(),
     );

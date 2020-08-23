@@ -1,0 +1,243 @@
+PODS:
+  - AppAuth (1.4.0):
+    - AppAuth/Core (= 1.4.0)
+    - AppAuth/ExternalUserAgent (= 1.4.0)
+  - AppAuth/Core (1.4.0)
+  - AppAuth/ExternalUserAgent (1.4.0)
+  - FBSDKCoreKit (5.15.1):
+    - FBSDKCoreKit/Basics (= 5.15.1)
+    - FBSDKCoreKit/Core (= 5.15.1)
+  - FBSDKCoreKit/Basics (5.15.1)
+  - FBSDKCoreKit/Core (5.15.1):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (5.15.1):
+    - FBSDKLoginKit/Login (= 5.15.1)
+  - FBSDKLoginKit/Login (5.15.1):
+    - FBSDKCoreKit (~> 5.0)
+  - Firebase/Core (6.30.0):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 6.7.2)
+  - Firebase/CoreOnly (6.30.0):
+    - FirebaseCore (= 6.10.0)
+  - Firebase/Messaging (6.30.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 4.6.1)
+  - firebase_messaging (0.0.1):
+    - Firebase/Core
+    - Firebase/Messaging
+    - Flutter
+  - FirebaseAnalytics (6.7.2):
+    - FirebaseCore (~> 6.8)
+    - FirebaseInstallations (~> 1.4)
+    - GoogleAppMeasurement (= 6.7.2)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/MethodSwizzler (~> 6.7)
+    - GoogleUtilities/Network (~> 6.7)
+    - "GoogleUtilities/NSData+zlib (~> 6.7)"
+    - nanopb (~> 1.30905.0)
+  - FirebaseCore (6.10.0):
+    - FirebaseCoreDiagnostics (~> 1.3)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Logger (~> 6.7)
+  - FirebaseCoreDiagnostics (1.5.0):
+    - GoogleDataTransport (~> 7.0)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Logger (~> 6.7)
+    - nanopb (~> 1.30905.0)
+  - FirebaseInstallations (1.6.0):
+    - FirebaseCore (~> 6.10)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/UserDefaults (~> 6.7)
+    - PromisesObjC (~> 1.2)
+  - FirebaseInstanceID (4.5.1):
+    - FirebaseCore (~> 6.8)
+    - FirebaseInstallations (~> 1.0)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/UserDefaults (~> 6.7)
+  - FirebaseMessaging (4.6.1):
+    - FirebaseCore (~> 6.8)
+    - FirebaseInstanceID (~> 4.3)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Reachability (~> 6.7)
+    - GoogleUtilities/UserDefaults (~> 6.7)
+    - Protobuf (>= 3.9.2, ~> 3.9)
+  - Flutter (1.20.0)
+  - flutter_facebook_login (0.0.1):
+    - FBSDKCoreKit (~> 5.5)
+    - FBSDKLoginKit (~> 5.5)
+    - Flutter
+  - flutter_secure_storage (3.3.1):
+    - Flutter
+  - flutter_web_auth (0.2.4):
+    - Flutter
+  - google_sign_in (0.0.1):
+    - Flutter
+    - GoogleSignIn (~> 5.0)
+  - google_sign_in_web (0.8.1):
+    - Flutter
+  - GoogleAppMeasurement (6.7.2):
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/MethodSwizzler (~> 6.7)
+    - GoogleUtilities/Network (~> 6.7)
+    - "GoogleUtilities/NSData+zlib (~> 6.7)"
+    - nanopb (~> 1.30905.0)
+  - GoogleDataTransport (7.2.0):
+    - nanopb (~> 1.30905.0)
+  - GoogleSignIn (5.0.2):
+    - AppAuth (~> 1.2)
+    - GTMAppAuth (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleUtilities/AppDelegateSwizzler (6.7.2):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (6.7.2):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (6.7.2):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (6.7.2):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (6.7.2):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (6.7.2)"
+  - GoogleUtilities/Reachability (6.7.2):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (6.7.2):
+    - GoogleUtilities/Logger
+  - GTMAppAuth (1.0.0):
+    - AppAuth/Core (~> 1.0)
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.4.0):
+    - GTMSessionFetcher/Full (= 1.4.0)
+  - GTMSessionFetcher/Core (1.4.0)
+  - GTMSessionFetcher/Full (1.4.0):
+    - GTMSessionFetcher/Core (= 1.4.0)
+  - nanopb (1.30905.0):
+    - nanopb/decode (= 1.30905.0)
+    - nanopb/encode (= 1.30905.0)
+  - nanopb/decode (1.30905.0)
+  - nanopb/encode (1.30905.0)
+  - PromisesObjC (1.2.10)
+  - Protobuf (3.13.0)
+  - shared_preferences (0.0.1):
+    - Flutter
+  - shared_preferences_macos (0.0.1):
+    - Flutter
+  - shared_preferences_web (0.0.1):
+    - Flutter
+  - url_launcher (0.0.1):
+    - Flutter
+  - url_launcher_macos (0.0.1):
+    - Flutter
+  - url_launcher_web (0.0.1):
+    - Flutter
+  - webview_flutter (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - firebase_messaging (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-6.0.16/ios`)
+  - flutter_facebook_login (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_facebook_login-3.0.0/ios`)
+  - flutter_secure_storage (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage-3.3.3/ios`)
+  - flutter_web_auth (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_web_auth-0.2.4/ios`)
+  - google_sign_in (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-4.5.1/ios`)
+  - "google_sign_in_web (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.1+1/ios`)"
+  - "shared_preferences (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.7+3/ios`)"
+  - "shared_preferences_macos (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+10/ios`)"
+  - "shared_preferences_web (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+7/ios`)"
+  - url_launcher (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.4.10/ios`)
+  - "url_launcher_macos (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-0.0.1+7/ios`)"
+  - "url_launcher_web (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-0.1.1+6/ios`)"
+  - "webview_flutter (from `/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/webview_flutter-0.3.22+1/ios`)"
+
+SPEC REPOS:
+  trunk:
+    - AppAuth
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - Firebase
+    - FirebaseAnalytics
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseInstallations
+    - FirebaseInstanceID
+    - FirebaseMessaging
+    - Flutter
+    - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleSignIn
+    - GoogleUtilities
+    - GTMAppAuth
+    - GTMSessionFetcher
+    - nanopb
+    - PromisesObjC
+    - Protobuf
+
+EXTERNAL SOURCES:
+  firebase_messaging:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_messaging-6.0.16/ios"
+  flutter_facebook_login:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_facebook_login-3.0.0/ios"
+  flutter_secure_storage:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_secure_storage-3.3.3/ios"
+  flutter_web_auth:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_web_auth-0.2.4/ios"
+  google_sign_in:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in-4.5.1/ios"
+  google_sign_in_web:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/google_sign_in_web-0.9.1+1/ios"
+  shared_preferences:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-0.5.7+3/ios"
+  shared_preferences_macos:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+10/ios"
+  shared_preferences_web:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+7/ios"
+  url_launcher:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher-5.4.10/ios"
+  url_launcher_macos:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-0.0.1+7/ios"
+  url_launcher_web:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/url_launcher_web-0.1.1+6/ios"
+  webview_flutter:
+    :path: "/home/nitish/flutter/.pub-cache/hosted/pub.dartlang.org/webview_flutter-0.3.22+1/ios"
+
+SPEC CHECKSUMS:
+  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  FBSDKCoreKit: 1d5acf7c9d7a2f92bb1a242dc60cae5b7adb91df
+  FBSDKLoginKit: f1ea8026a58b52d30c9f2e6a58ca7d813619fb83
+  Firebase: 210f41ca352067d83b1ba4fd2e7fb49a0c017397
+  firebase_messaging: 21344b3b3a7d9d325d63a70e3750c0c798fe1e03
+  FirebaseAnalytics: a299a86ef70fcc6aa011418bc65a7e101fb9636c
+  FirebaseCore: 9a41e2de78fef10f63cee30ab10e2945266bc1fc
+  FirebaseCoreDiagnostics: 7535fe695737f8c5b350584292a70b7f8ff0357b
+  FirebaseInstallations: 45f9d44d3a8d6f780fa337ee8987dad87210fcbc
+  FirebaseInstanceID: c4ad474b87787afd27d09541800620993b457d6f
+  FirebaseMessaging: 942cfe05b4f53c95ab8959395ca35c200398b2f0
+  Flutter: 8f223781b68c379dc009b58f216c2dbaa2f7cc8e
+  flutter_facebook_login: cfb5659f686b1c575ef205c6b6fd20db9679d3c4
+  flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
+  flutter_web_auth: b7465086188ce4413d7e8b23622583784b9007a7
+  google_sign_in: 6bd214b9c154f881422f5fe27b66aaa7bbd580cc
+  google_sign_in_web: 52deb24929ac0992baff65c57956031c44ed44c3
+  GoogleAppMeasurement: 3def7652b1f5b5a576178dc332e2a36a260fbef6
+  GoogleDataTransport: 672fb0ce96fe7f7f31d43672fca62ad2c9c86f7b
+  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
+  GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
+  GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
+  GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
+  nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
+  PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
+  Protobuf: 3dac39b34a08151c6d949560efe3f86134a3f748
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
+  shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9
+  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
+  url_launcher_macos: fd7894421cd39320dce5f292fc99ea9270b2a313
+  url_launcher_web: e5527357f037c87560776e36436bf2b0288b965c
+  webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
+
+PODFILE CHECKSUM: ba46ea13dee49a625ec5b3f5a01d6f62535c6617
+
+COCOAPODS: 1.9.3
