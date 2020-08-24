@@ -35,6 +35,22 @@ if (project.hasProperty('dart-defines')) {
         }
 }
 
+// debug keystore configuration
+def debugKeystoreProperties = new Properties()
+def debugKeystorePropertiesFile = rootProject.file('key.debug.properties')
+
+if (debugKeystorePropertiesFile.exists()) {
+    debugKeystoreProperties.load(new FileInputStream(debugKeystorePropertiesFile))
+}
+
+// release keystore configuration
+def releaseKeystoreProperties = new Properties()
+def releaseKeystorePropertiesFile = rootProject.file('key.release.properties')
+
+if (releaseKeystorePropertiesFile.exists()) {
+    releaseKeystoreProperties.load(new FileInputStream(releaseKeystorePropertiesFile))
+}
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -64,18 +80,31 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file('key.jks')
-            storePassword 'CircuitVerse@123'
-            keyAlias 'androiddebugkey'
-            keyPassword 'CircuitVerse@123'
+            if (debugKeystorePropertiesFile.exists()) {
+                keyAlias debugKeystoreProperties['keyAlias']
+                keyPassword debugKeystoreProperties['keyPassword']
+                storeFile file(debugKeystoreProperties['storeFile'])
+                storePassword debugKeystoreProperties['storePassword']
+            }
+        }
+
+        release {
+            if (releaseKeystorePropertiesFile.exists()) {
+                keyAlias releaseKeystoreProperties['keyAlias']
+                keyPassword releaseKeystoreProperties['keyPassword']
+                storeFile file(releaseKeystoreProperties['storeFile'])
+                storePassword releaseKeystoreProperties['storePassword']
+            }
         }
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            if(releaseKeystorePropertiesFile.exists()){
+                signingConfig signingConfigs.release
+            }else{
+                signingConfig signingConfigs.debug
+            }
         }
     }
 }
