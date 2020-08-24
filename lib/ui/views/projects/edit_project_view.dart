@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:html_editor/html_editor.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
@@ -8,7 +9,6 @@ import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
-import 'package:mobile_app/utils/string_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/edit_project_viewmodel.dart';
 
@@ -26,8 +26,9 @@ class _EditProjectViewState extends State<EditProjectView> {
   final DialogService _dialogService = locator<DialogService>();
   EditProjectViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name, _projectAccessType, _description;
+  String _name, _projectAccessType;
   List<String> _tags;
+  final GlobalKey<HtmlEditorState> _descriptionEditor = GlobalKey();
 
   @override
   void initState() {
@@ -35,8 +36,6 @@ class _EditProjectViewState extends State<EditProjectView> {
     _name = widget.project.attributes.name;
     _tags = widget.project.attributes.tags.map((tag) => tag.name).toList();
     _projectAccessType = widget.project.attributes.projectAccessType;
-    _description = StringUtils.parseHtmlString(
-        widget.project.attributes.description ?? '');
   }
 
   Widget _buildNameInput() {
@@ -84,11 +83,21 @@ class _EditProjectViewState extends State<EditProjectView> {
   }
 
   Widget _buildDescriptionInput() {
-    return CVTextField(
-      label: 'Description',
-      maxLines: 5,
-      initialValue: _description,
-      onSaved: (value) => _description = value.trim(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
+      child: HtmlEditor(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: AppTheme.primaryColorDark,
+          ),
+        ),
+        value: widget.project.attributes.description ?? '',
+        key: _descriptionEditor,
+        height: 300,
+      ),
     );
   }
 
@@ -102,7 +111,7 @@ class _EditProjectViewState extends State<EditProjectView> {
         widget.project.id,
         name: _name,
         projectAccessType: _projectAccessType,
-        description: _description,
+        description: await _descriptionEditor.currentState.getText(),
         tagsList: _tags,
       );
 
