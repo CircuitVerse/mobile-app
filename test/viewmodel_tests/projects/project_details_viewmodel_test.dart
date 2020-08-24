@@ -198,7 +198,7 @@ void main() {
         verify(_mockProjectsApi.toggleStarProject('1'));
         expect(_model.stateFor(_model.TOGGLE_STAR), ViewState.Success);
 
-        // verify starCount to descrement by 1..
+        // verify starCount to decrement by 1..
         expect(_model.starCount, -1);
       });
 

@@ -239,7 +239,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     ),
                   ),
                   Text(
-                    'Enter Email IDs separated by commas. Users need to be registered already on the platform. Note that collaboration is not real time as of now. Every save overwites the previous data.',
+                    'Enter Email IDs separated by commas. Users need to be registered already on the platform. Note that collaboration is not real time as of now. Every save overwrites the previous data.',
                     style: Theme.of(context).textTheme.bodyText1,
                   )
                 ],
