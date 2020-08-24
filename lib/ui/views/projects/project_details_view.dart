@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/config/environment_config.dart';
@@ -10,7 +12,6 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
-import 'package:mobile_app/utils/string_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -106,7 +107,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: RichText(
         text: TextSpan(
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
           children: <TextSpan>[
             TextSpan(
               text: '$heading : ',
@@ -114,10 +115,59 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             ),
             TextSpan(
               text: description,
-              style: Theme.of(context).textTheme.headline6,
+              style: TextStyle(fontSize: 18),
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildProjectAuthor() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: RichText(
+        text: TextSpan(
+          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
+          children: <TextSpan>[
+            TextSpan(
+              text: 'Author : ',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            TextSpan(
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => Get.toNamed(ProfileView.id,
+                    arguments: _recievedProject.relationships.author.data.id),
+              text: _recievedProject.attributes.authorName,
+              style: TextStyle(
+                fontSize: 18,
+                decoration: TextDecoration.underline,
+                color: AppTheme.primaryColor,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProjectDescription() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Description',
+            style: Theme.of(context).textTheme.headline6.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+          ),
+          Html(
+            data: """${_recievedProject.attributes.description ?? ''}""",
+          )
+        ],
       ),
     );
   }
@@ -407,10 +457,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           ),
           if (_model.project.hasAuthorAccess)
             IconButton(
-                padding: const EdgeInsets.all(0),
-                icon: Icon(Icons.delete_outline),
-                color: AppTheme.red,
-                onPressed: () => onDeleteCollaboratorPressed(collaborator)),
+              padding: const EdgeInsets.all(0),
+              icon: Icon(Icons.delete_outline),
+              color: AppTheme.red,
+              onPressed: () => onDeleteCollaboratorPressed(collaborator),
+            ),
         ],
       ),
     );
@@ -449,19 +500,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  _buildProjectDetailComponent(
-                    'Author',
-                    _projectAttrs.authorName,
-                  ),
+                  _buildProjectAuthor(),
                   _buildProjectDetailComponent(
                     'Project Access Type',
                     _projectAttrs.projectAccessType,
                   ),
-                  _buildProjectDetailComponent(
-                    'Description',
-                    StringUtils.parseHtmlString(
-                        _projectAttrs.description ?? ''),
-                  ),
+                  _buildProjectDescription(),
                   Divider(height: 32),
                   Wrap(
                     spacing: 8,
