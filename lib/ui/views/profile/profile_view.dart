@@ -4,6 +4,7 @@ import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
+import 'package:mobile_app/ui/components/cv_tab_bar.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/profile/user_favourites_view.dart';
 import 'package:mobile_app/ui/views/profile/user_projects_view.dart';
@@ -169,11 +170,21 @@ class _ProfileViewState extends State<ProfileView> {
         child: DefaultTabController(
           length: 2,
           child: Scaffold(
-            appBar: TabBar(
-              tabs: [
-                Tab(text: 'Circuits'),
-                Tab(text: 'Favourites'),
-              ],
+            appBar: CVTabBar(
+              color: AppTheme.lightGrey.withOpacity(0.2),
+              tabBar: TabBar(
+                labelColor: Colors.white,
+                unselectedLabelColor: Colors.black87,
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicator: BoxDecoration(
+                  color: AppTheme.primaryColor,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+                ),
+                tabs: [
+                  Tab(text: 'Circuits'),
+                  Tab(text: 'Favourites'),
+                ],
+              ),
             ),
             body: TabBarView(
               children: [
