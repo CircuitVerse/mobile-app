@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/app_theme.dart';
@@ -24,6 +25,11 @@ class CircuitVerseMobile extends StatelessWidget {
   // This widget is the root of CircuitVerse Mobile.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return GetMaterialApp(
       title: 'CircuitVerse Mobile',
       localizationsDelegates: [
