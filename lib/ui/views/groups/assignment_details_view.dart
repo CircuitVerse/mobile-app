@@ -41,6 +41,36 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
     _recievedAssignment = widget.assignment;
   }
 
+  Widget _buildEditAssignmentButton() {
+    return RaisedButton(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: Row(
+        children: [
+          Icon(Icons.edit, color: Colors.white),
+          SizedBox(width: 8),
+          Text(
+            'Edit',
+            style: Theme.of(context).textTheme.headline6.copyWith(
+                  color: Colors.white,
+                ),
+          )
+        ],
+      ),
+      color: AppTheme.primaryColor,
+      onPressed: () async {
+        var _updatedAssignment = await Get.toNamed(
+          UpdateAssignmentView.id,
+          arguments: _recievedAssignment,
+        );
+        if (_updatedAssignment is Assignment) {
+          setState(() {
+            _recievedAssignment = _updatedAssignment;
+          });
+        }
+      },
+    );
+  }
+
   Widget _buildHeader() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -56,21 +86,10 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             textAlign: TextAlign.center,
           ),
         ),
-        if (_recievedAssignment.attributes.hasMentorAccess)
-          IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () async {
-              var _updatedAssignment = await Get.toNamed(
-                UpdateAssignmentView.id,
-                arguments: _recievedAssignment,
-              );
-              if (_updatedAssignment is Assignment) {
-                setState(() {
-                  _recievedAssignment = _updatedAssignment;
-                });
-              }
-            },
-          )
+        if (_recievedAssignment.attributes.hasMentorAccess) ...[
+          SizedBox(width: 12),
+          _buildEditAssignmentButton(),
+        ]
       ],
     );
   }

@@ -39,6 +39,36 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     _recievedGroup = widget.group;
   }
 
+  Widget _buildEditGroupButton() {
+    return RaisedButton(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: Row(
+        children: [
+          Icon(Icons.edit, color: Colors.white),
+          SizedBox(width: 8),
+          Text(
+            'Edit',
+            style: Theme.of(context).textTheme.headline6.copyWith(
+                  color: Colors.white,
+                ),
+          )
+        ],
+      ),
+      color: AppTheme.primaryColor,
+      onPressed: () async {
+        var _updatedGroup = await Get.toNamed(
+          EditGroupView.id,
+          arguments: _recievedGroup,
+        );
+        if (_updatedGroup is Group) {
+          setState(() {
+            _recievedGroup = _updatedGroup;
+          });
+        }
+      },
+    );
+  }
+
   Widget _buildHeader() {
     return Column(
       children: <Widget>[
@@ -55,21 +85,10 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 textAlign: TextAlign.center,
               ),
             ),
-            if (_recievedGroup.isMentor)
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () async {
-                  var _updatedGroup = await Get.toNamed(
-                    EditGroupView.id,
-                    arguments: _recievedGroup,
-                  );
-                  if (_updatedGroup is Group) {
-                    setState(() {
-                      _recievedGroup = _updatedGroup;
-                    });
-                  }
-                },
-              )
+            if (_recievedGroup.isMentor) ...[
+              SizedBox(width: 12),
+              _buildEditGroupButton(),
+            ]
           ],
         ),
         RichText(

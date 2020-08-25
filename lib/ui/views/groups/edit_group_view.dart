@@ -80,7 +80,7 @@ class _EditGroupViewState extends State<EditGroupView> {
               ),
               SizedBox(height: 16),
               CVPrimaryButton(
-                title: 'SAVE',
+                title: 'Save',
                 onPressed: _validateAndSubmit,
               )
             ],

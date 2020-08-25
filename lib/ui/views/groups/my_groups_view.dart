@@ -93,10 +93,12 @@ class _MyGroupsViewState extends State<MyGroupsView> {
           );
 
           _items.add(
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 48),
+            Center(
               child: CVPrimaryButton(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 16,
+                ),
                 title: '+ Make New Group',
                 onPressed: onCreateGroupPressed,
               ),
