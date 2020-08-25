@@ -22,7 +22,7 @@ if (flutterVersionName == null) {
 }
 
 def environmentVariables = [
-    FB_APP_ID: '567334037481721',
+    FB_APP_ID: 'FB_APP_ID',
     APP_NAME: 'CircuitVerse',
 ];
 
