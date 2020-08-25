@@ -10,6 +10,14 @@ class Constants {
       'You are not authorized to fetch this user';
   static const String USER_NOT_FOUND = 'User not found';
 
+  /// PROJECT CONSTANTS
+  static const String PROJECT_NOT_FOUND = 'No project was found';
+  static const String PROJECT_FORK_CONFLICT = 'Cannot fork your own project';
+
+  /// COLLABORATOR CONSTANTS
+  static const String COLLABORATOR_NOT_FOUND =
+      'The requested collaborator does not exists';
+
   /// GROUP RELATED CONSTANTS
   static const String GROUP_NOT_FOUND = 'The requested group does not exists';
 

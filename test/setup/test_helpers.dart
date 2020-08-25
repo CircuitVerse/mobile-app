@@ -2,10 +2,12 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/API/assignments_api.dart';
+import 'package:mobile_app/services/API/collaborators_api.dart';
 import 'package:mobile_app/services/API/contributors_api.dart';
 import 'package:mobile_app/services/API/grades_api.dart';
 import 'package:mobile_app/services/API/group_members_api.dart';
 import 'package:mobile_app/services/API/groups_api.dart';
+import 'package:mobile_app/services/API/projects_api.dart';
 import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mockito/mockito.dart';
@@ -27,6 +29,10 @@ class AssignmentsApiMock extends Mock implements AssignmentsApi {}
 class GradesApiMock extends Mock implements GradesApi {}
 
 class UsersApiMock extends Mock implements UsersApi {}
+
+class ProjectsApiMock extends Mock implements ProjectsApi {}
+
+class CollaboratorsApiMock extends Mock implements CollaboratorsApi {}
 
 LocalStorageService getAndRegisterLocalStorageServiceMock() {
   _removeRegistrationIfExists<LocalStorageService>();
@@ -84,6 +90,22 @@ UsersApi getAndRegisterUsersApiMock() {
   return _usersApi;
 }
 
+ProjectsApi getAndRegisterProjectsApiMock() {
+  _removeRegistrationIfExists<ProjectsApi>();
+  var _projectsApi = ProjectsApiMock();
+
+  locator.registerSingleton<ProjectsApi>(_projectsApi);
+  return _projectsApi;
+}
+
+CollaboratorsApi getAndRegisterCollaboratorsApiMock() {
+  _removeRegistrationIfExists<CollaboratorsApi>();
+  var _collaboratorsApi = CollaboratorsApiMock();
+
+  locator.registerSingleton<CollaboratorsApi>(_collaboratorsApi);
+  return _collaboratorsApi;
+}
+
 void registerServices() {
   getAndRegisterLocalStorageServiceMock();
   getAndRegisterContributorsApiMock();
@@ -92,6 +114,8 @@ void registerServices() {
   getAndRegisterAssignmentsApiMock();
   getAndRegisterGradesApiMock();
   getAndRegisterUsersApiMock();
+  getAndRegisterProjectsApiMock();
+  getAndRegisterCollaboratorsApiMock();
 }
 
 void unregisterServices() {
@@ -102,6 +126,8 @@ void unregisterServices() {
   locator.unregister<AssignmentsApi>();
   locator.unregister<GradesApi>();
   locator.unregister<UsersApi>();
+  locator.unregister<ProjectsApi>();
+  locator.unregister<CollaboratorsApi>();
 }
 
 void _removeRegistrationIfExists<T>() {
