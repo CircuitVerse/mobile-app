@@ -1,5 +1,6 @@
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/enums/auth_type.dart';
 import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/locator.dart';
@@ -110,14 +111,14 @@ class AuthOptionsViewModel extends BaseModel {
 
   Future githubAuth({bool isSignUp = false}) async {
     OAuth2Client _client = GitHubOAuth2Client(
-      redirectUri: 'circuitverse://auth/callback/github',
+      redirectUri: EnvironmentConfig.GITHUB_OAUTH_REDIRECT_URI,
       customUriScheme: 'circuitverse',
     );
 
     var _oauthHelper = OAuth2Helper(
       _client,
-      clientId: '06fa6b965ba7e4a4175c',
-      clientSecret: 'd3a8a95bd1691b557ca347b14ae6507b89f92e47',
+      clientId: EnvironmentConfig.GITHUB_OAUTH_CLIENT_ID,
+      clientSecret: EnvironmentConfig.GITHUB_OAUTH_CLIENT_SECRET,
       scopes: ['read:user'],
     );
 

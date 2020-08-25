@@ -53,14 +53,14 @@
         <dict>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>fb567334037481721</string>
+                <string>FB_LOGIN_PROTOCOL_SCHEME</string>
             </array>
         </dict>
 		<!-- Google authentication config -->
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-                <string>com.googleusercontent.apps.377832615490-d5i0e2guo62fja096ugpnjak12sleo8m</string>
+                <string>REVERSED_CLIENT_ID</string>
             </array>
 		</dict>
 		<!-- Github authentication config -->
@@ -74,7 +74,7 @@
 		</dict>
     </array>
     <key>FacebookAppID</key>
-    <string>567334037481721</string>
+    <string>FB_APP_ID</string>
     <key>FacebookDisplayName</key>
     <string>CircuitVerse</string>
     
