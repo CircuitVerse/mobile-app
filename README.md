@@ -17,6 +17,28 @@ A detailed guide for multiple platforms setup could be find [here](https://flutt
 - `flutter pub get` to get all the dependencies.
 - `flutter run`
 
+### Android OAuth Config
+
+This project uses flutter version 1.20.2 and hence the support for compile time variables. To use compile time variables pass them in `--dart-defines` as `flutter run --dart-defines=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
+
+#### Facebook Configuration
+
+1. `FB_APP_ID`
+
+#### Github Configuration
+
+1. `GITHUB_OAUTH_CLIENT_ID`
+2. `GITHUB_OAUTH_CLIENT_SECRET`
+
+#### Google Configuration
+
+For Google OAuth we use [google_sign_in](https://pub.dev/packages/google_sign_in). You'll require a Java KeyStore(`.jks`)
+
+1. Add `cv_debug.jks` in `android/app/`.
+2. Add `key.debug.properties` in `android/`.
+
+Note: The OAuth Configuration section is not mandatory to get started. To get hold of the above secrets/files drop a message on slack with clear requirements and we'll take care.
+
 ## Project Structure
 
 ```bash

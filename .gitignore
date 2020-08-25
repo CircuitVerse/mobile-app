@@ -51,3 +51,7 @@ doc/api/
 
 # test coverage
 /coverage
+
+# android configuration files
+*.jks
+key*.properties
