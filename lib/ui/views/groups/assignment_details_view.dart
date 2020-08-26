@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/app_theme.dart';
@@ -96,25 +98,46 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
   Widget _buildDetailComponent(String title, String description) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       alignment: Alignment.centerLeft,
       child: RichText(
         text: TextSpan(
-          style: Theme.of(context).textTheme.headline6,
+          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
           children: <TextSpan>[
             TextSpan(
               text: '$title : ',
-              style: Theme.of(context).textTheme.headline6.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(
               text: description.isEmpty || description == null
                   ? 'N.A'
                   : description,
+              style: TextStyle(fontSize: 18),
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildAssignmentDescription() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Description',
+            style: Theme.of(context).textTheme.headline6.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+          ),
+          Html(
+            data: """${_recievedAssignment.attributes.description ?? ''}""",
+            style: {'body': Style(fontSize: FontSize(18))},
+          )
+        ],
       ),
     );
   }
@@ -389,7 +412,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                   'Time Remaining',
                   '${_remainingTime.inDays} days ${_remainingTime.inHours.remainder(24)} hours ${_remainingTime.inMinutes.remainder(60)} minutes',
                 ),
-              _buildDetailComponent('Description', _attrs.description),
+              _buildAssignmentDescription(),
               _buildDetailComponent(
                 'Restricted Elements',
                 json.decode(_attrs.restrictions).join(' , '),

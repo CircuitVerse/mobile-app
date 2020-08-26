@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/config/environment_config.dart';
@@ -158,7 +159,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Description',
+            'Description :',
             style: Theme.of(context).textTheme.headline6.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -166,6 +167,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           ),
           Html(
             data: """${_recievedProject.attributes.description ?? ''}""",
+            style: {'body': Style(fontSize: FontSize(18))},
           )
         ],
       ),
