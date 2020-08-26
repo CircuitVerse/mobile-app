@@ -1,6 +1,7 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:html_editor/html_editor.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/data/restriction_elements.dart';
@@ -27,7 +28,8 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   final DialogService _dialogService = locator<DialogService>();
   AddAssignmentViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name, _gradingScale = 'No Scale', _description;
+  String _name, _gradingScale = 'No Scale';
+  final GlobalKey<HtmlEditorState> _descriptionEditor = GlobalKey();
   DateTime _deadline;
   final List<String> _restrictions = [];
   final List<String> _gradingOptions = [
@@ -47,10 +49,20 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   }
 
   Widget _buildDescriptionInput() {
-    return CVTextField(
-      maxLines: 5,
-      label: 'Description',
-      onSaved: (description) => _description = description.trim(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
+      child: HtmlEditor(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: AppTheme.primaryColorDark,
+          ),
+        ),
+        key: _descriptionEditor,
+        height: 300,
+      ),
     );
   }
 
@@ -198,8 +210,14 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       // Shows progress dialog..
       _dialogService.showCustomProgressDialog(title: 'Adding..');
 
-      await _model.addAssignment(widget.groupId, _name, _deadline,
-          _gradingScale, _description, _restrictions);
+      await _model.addAssignment(
+        widget.groupId,
+        _name,
+        _deadline,
+        _gradingScale,
+        await _descriptionEditor.currentState.getText(),
+        _restrictions,
+      );
 
       _dialogService.popDialog();
 

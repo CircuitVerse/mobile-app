@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:html_editor/html_editor.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/data/restriction_elements.dart';
@@ -30,7 +31,8 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   final DialogService _dialogService = locator<DialogService>();
   UpdateAssignmentViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name, _description;
+  String _name;
+  final GlobalKey<HtmlEditorState> _descriptionEditor = GlobalKey();
   DateTime _deadline;
   List _restrictions = [];
   bool _isRestrictionEnabled = false;
@@ -52,11 +54,21 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   }
 
   Widget _buildDescriptionInput() {
-    return CVTextField(
-      initialValue: widget.assignment.attributes.description,
-      maxLines: 5,
-      label: 'Description',
-      onSaved: (description) => _description = description.trim(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
+      child: HtmlEditor(
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: AppTheme.primaryColorDark,
+          ),
+        ),
+        value: widget.assignment.attributes.description ?? '',
+        key: _descriptionEditor,
+        height: 300,
+      ),
     );
   }
 
@@ -181,7 +193,12 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       _dialogService.showCustomProgressDialog(title: 'Updating..');
 
       await _model.updateAssignment(
-          widget.assignment.id, _name, _deadline, _description, _restrictions);
+        widget.assignment.id,
+        _name,
+        _deadline,
+        await _descriptionEditor.currentState.getText(),
+        _restrictions,
+      );
 
       _dialogService.popDialog();
 
