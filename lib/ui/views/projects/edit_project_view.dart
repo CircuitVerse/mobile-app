@@ -143,18 +143,20 @@ class _EditProjectViewState extends State<EditProjectView> {
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(title: Text('Edit ${widget.project.attributes.name}')),
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            children: <Widget>[
-              _buildNameInput(),
-              _buildTagsInput(),
-              _buildProjectAccessTypeInput(),
-              _buildDescriptionInput(),
-              SizedBox(height: 16),
-              _buildUpdateProjectButton(),
-            ],
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                _buildNameInput(),
+                _buildTagsInput(),
+                _buildProjectAccessTypeInput(),
+                _buildDescriptionInput(),
+                SizedBox(height: 16),
+                _buildUpdateProjectButton(),
+              ],
+            ),
           ),
         ),
       ),

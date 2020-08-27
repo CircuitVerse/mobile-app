@@ -106,18 +106,20 @@ class _EditProfileViewState extends State<EditProfileView> {
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(title: Text('Update Profile')),
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            children: <Widget>[
-              _buildNameInput(),
-              _buildCountryField(),
-              _buildInstituteField(),
-              _buildSubscribedField(),
-              SizedBox(height: 16),
-              _buildSaveDetailsButton(),
-            ],
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                _buildNameInput(),
+                _buildCountryField(),
+                _buildInstituteField(),
+                _buildSubscribedField(),
+                SizedBox(height: 16),
+                _buildSaveDetailsButton(),
+              ],
+            ),
           ),
         ),
       ),

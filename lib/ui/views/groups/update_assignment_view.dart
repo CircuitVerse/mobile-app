@@ -219,18 +219,20 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(title: Text('Update Assignment')),
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            children: <Widget>[
-              _buildNameInput(),
-              _buildDescriptionInput(),
-              _buildDeadlineInput(),
-              _buildRestrictionsHeader(),
-              _isRestrictionEnabled ? _buildRestrictions() : Container(),
-              _buildUpdateButton(),
-            ],
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                _buildNameInput(),
+                _buildDescriptionInput(),
+                _buildDeadlineInput(),
+                _buildRestrictionsHeader(),
+                _isRestrictionEnabled ? _buildRestrictions() : Container(),
+                _buildUpdateButton(),
+              ],
+            ),
           ),
         ),
       ),

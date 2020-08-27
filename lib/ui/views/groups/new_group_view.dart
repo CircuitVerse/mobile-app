@@ -50,35 +50,37 @@ class _NewGroupViewState extends State<NewGroupView> {
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(),
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            padding: const EdgeInsets.all(16),
-            children: <Widget>[
-              CVSubheader(
-                title: 'NEW GROUP',
-                subtitle:
-                    'Groups an be used by mentors to set projects for and give grades to students.',
-              ),
-              SizedBox(height: 16),
-              SvgPicture.asset(
-                'assets/images/group/new_group.svg',
-                height: 200,
-              ),
-              SizedBox(height: 16),
-              CVTextField(
-                padding: const EdgeInsets.all(0),
-                label: 'Group Name',
-                validator: (value) =>
-                    value.isEmpty ? 'Please enter a Group Name' : null,
-                onSaved: (value) => _name = value.trim(),
-              ),
-              SizedBox(height: 16),
-              CVPrimaryButton(
-                title: 'SAVE',
-                onPressed: _validateAndSubmit,
-              )
-            ],
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                CVSubheader(
+                  title: 'NEW GROUP',
+                  subtitle:
+                      'Groups an be used by mentors to set projects for and give grades to students.',
+                ),
+                SizedBox(height: 16),
+                SvgPicture.asset(
+                  'assets/images/group/new_group.svg',
+                  height: 200,
+                ),
+                SizedBox(height: 16),
+                CVTextField(
+                  padding: const EdgeInsets.all(0),
+                  label: 'Group Name',
+                  validator: (value) =>
+                      value.isEmpty ? 'Please enter a Group Name' : null,
+                  onSaved: (value) => _name = value.trim(),
+                ),
+                SizedBox(height: 16),
+                CVPrimaryButton(
+                  title: 'SAVE',
+                  onPressed: _validateAndSubmit,
+                )
+              ],
+            ),
           ),
         ),
       ),
