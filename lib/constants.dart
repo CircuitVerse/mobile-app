@@ -10,6 +10,30 @@ class Constants {
       'You are not authorized to fetch this user';
   static const String USER_NOT_FOUND = 'User not found';
 
+  /// PROJECT CONSTANTS
+  static const String PROJECT_NOT_FOUND = 'No project was found';
+  static const String PROJECT_FORK_CONFLICT = 'Cannot fork your own project';
+
+  /// COLLABORATOR CONSTANTS
+  static const String COLLABORATOR_NOT_FOUND =
+      'The requested collaborator does not exists';
+
+  /// GROUP RELATED CONSTANTS
+  static const String GROUP_NOT_FOUND = 'The requested group does not exists';
+
+  /// GROUP MEMBERS CONSTANTS
+  static const String GROUP_MEMBER_NOT_FOUND =
+      'The requested group member does not exists';
+
+  /// ASSIGNMENTS CONSTANTS
+  static const String ASSIGNMENT_ALREADY_OPENED =
+      'The assignment is already opened';
+  static const String ASSIGNMENT_NOT_FOUND =
+      'The requested assignment does not exists';
+
+  /// GRADE CONSTANTS
+  static const String GRADE_NOT_FOUND = 'Grade not found';
+
   /// GENERIC FAILURE CONSTANTS
   static const String BAD_RESPONSE_FORMAT = 'Bad response format';
   static const String INVALID_PARAMETERS = 'Invalid parameters, retry!';
