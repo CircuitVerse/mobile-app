@@ -111,6 +111,7 @@ class _EditProfileViewState extends State<EditProfileView> {
           child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 _buildNameInput(),
                 _buildCountryField(),
