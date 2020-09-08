@@ -59,6 +59,7 @@ class _EditGroupViewState extends State<EditGroupView> {
           child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 CVSubheader(
                   title: 'EDIT GROUP',

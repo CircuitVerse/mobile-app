@@ -148,6 +148,7 @@ class _EditProjectViewState extends State<EditProjectView> {
           child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 _buildNameInput(),
                 _buildTagsInput(),

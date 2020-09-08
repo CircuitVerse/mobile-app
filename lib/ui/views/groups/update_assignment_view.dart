@@ -224,6 +224,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
           child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 _buildNameInput(),
                 _buildDescriptionInput(),
