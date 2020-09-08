@@ -55,6 +55,7 @@ class _NewGroupViewState extends State<NewGroupView> {
           child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 CVSubheader(
                   title: 'NEW GROUP',
