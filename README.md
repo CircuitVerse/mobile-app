@@ -19,7 +19,7 @@ A detailed guide for multiple platforms setup could be find [here](https://flutt
 
 ### Android OAuth Config
 
-This project uses flutter version 1.20.2 and hence the support for compile time variables. To use compile time variables pass them in `--dart-defines` as `flutter run --dart-defines=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
+This project uses flutter version 1.20.2 and hence the support for compile time variables. To use compile time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
 
 #### Facebook Configuration
 
