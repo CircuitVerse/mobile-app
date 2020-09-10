@@ -25,81 +25,81 @@ class Router {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case SignupView.id:
-        return CupertinoPageRoute(builder: (_) => SignupView());
+        return MaterialPageRoute(builder: (_) => SignupView());
       case LoginView.id:
-        return CupertinoPageRoute(builder: (_) => LoginView());
+        return MaterialPageRoute(builder: (_) => LoginView());
       case ForgotPasswordView.id:
-        return CupertinoPageRoute(builder: (_) => ForgotPasswordView());
+        return MaterialPageRoute(builder: (_) => ForgotPasswordView());
       case CVLandingView.id:
-        return CupertinoPageRoute(builder: (_) => CVLandingView());
+        return MaterialPageRoute(builder: (_) => CVLandingView());
       case TeachersView.id:
-        return CupertinoPageRoute(builder: (_) => TeachersView());
+        return MaterialPageRoute(builder: (_) => TeachersView());
       case ContributorsView.id:
-        return CupertinoPageRoute(builder: (_) => ContributorsView());
+        return MaterialPageRoute(builder: (_) => ContributorsView());
       case ProfileView.id:
         var _userId = settings.arguments as String;
-        return CupertinoPageRoute(
+        return MaterialPageRoute(
           builder: (_) => ProfileView(
             userId: _userId,
           ),
         );
       case EditProfileView.id:
-        return CupertinoPageRoute(builder: (_) => EditProfileView());
+        return MaterialPageRoute(builder: (_) => EditProfileView());
       case ProjectDetailsView.id:
         var _project = settings.arguments as Project;
-        return CupertinoPageRoute(
+        return MaterialPageRoute(
           builder: (_) => ProjectDetailsView(
             project: _project,
           ),
         );
       case EditProjectView.id:
         var _project = settings.arguments as Project;
-        return CupertinoPageRoute(
+        return MaterialPageRoute(
           builder: (_) => EditProjectView(
             project: _project,
           ),
         );
       case MyGroupsView.id:
-        return CupertinoPageRoute(builder: (_) => MyGroupsView());
+        return MaterialPageRoute(builder: (_) => MyGroupsView());
       case GroupDetailsView.id:
         var group = settings.arguments as Group;
-        return CupertinoPageRoute(
+        return MaterialPageRoute(
           builder: (_) => GroupDetailsView(
             group: group,
           ),
         );
       case NewGroupView.id:
-        return CupertinoPageRoute(builder: (_) => NewGroupView());
+        return MaterialPageRoute(builder: (_) => NewGroupView());
       case EditGroupView.id:
         var group = settings.arguments as Group;
-        return CupertinoPageRoute(
+        return MaterialPageRoute(
           builder: (_) => EditGroupView(
             group: group,
           ),
         );
       case AssignmentDetailsView.id:
         var _assignment = settings.arguments as Assignment;
-        return CupertinoPageRoute(
+        return MaterialPageRoute(
           builder: (_) => AssignmentDetailsView(
             assignment: _assignment,
           ),
         );
       case AddAssignmentView.id:
         var _groupId = settings.arguments as String;
-        return CupertinoPageRoute(
+        return MaterialPageRoute(
           builder: (_) => AddAssignmentView(
             groupId: _groupId,
           ),
         );
       case UpdateAssignmentView.id:
         var _assignment = settings.arguments as Assignment;
-        return CupertinoPageRoute(
+        return MaterialPageRoute(
           builder: (_) => UpdateAssignmentView(
             assignment: _assignment,
           ),
         );
       default:
-        return CupertinoPageRoute(
+        return MaterialPageRoute(
           builder: (_) => Scaffold(
             body: Center(
               child: Text('No route defined for ${settings.name}'),
