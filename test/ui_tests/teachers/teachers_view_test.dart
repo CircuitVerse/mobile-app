@@ -19,7 +19,7 @@ void main() {
     Future<void> _pumpTeachersView(WidgetTester tester) async {
       await tester.pumpWidget(
         GetMaterialApp(
-          onGenerateRoute: Router.generateRoute,
+          onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: TeachersView(),
         ),
