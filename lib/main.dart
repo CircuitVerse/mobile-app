@@ -49,7 +49,7 @@ class CircuitVerseMobile extends StatelessWidget {
           builder: (context) => DialogManager(child: child),
         ),
       ),
-      onGenerateRoute: Router.generateRoute,
+      onGenerateRoute: CVRouter.generateRoute,
       theme: ThemeData(
         primarySwatch: generateMaterialColor(AppTheme.primaryColor),
         fontFamily: 'Poppins',

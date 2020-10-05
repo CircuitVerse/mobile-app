@@ -21,7 +21,7 @@ import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 
-class Router {
+class CVRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case SignupView.id:

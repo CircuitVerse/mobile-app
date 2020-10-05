@@ -26,7 +26,7 @@ void main() {
     Future<void> _pumpSignupView(WidgetTester tester) async {
       await tester.pumpWidget(
         GetMaterialApp(
-          onGenerateRoute: Router.generateRoute,
+          onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: SignupView(),
         ),
