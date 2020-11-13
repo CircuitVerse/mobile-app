@@ -25,7 +25,8 @@ class _AboutViewState extends State<AboutView> {
     await Get.to(
       Scaffold(
         appBar: AppBar(title: Text(title)),
-        body: WebView(initialUrl: url),
+        body: WebView(
+            initialUrl: url, javascriptMode: JavascriptMode.unrestricted),
       ),
       transition: Transition.cupertino,
     );
