@@ -2,7 +2,6 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
@@ -95,14 +94,10 @@ class _CVLandingViewState extends State<CVLandingView> {
       child: ListView(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 32),
-            child: Text(
-              'CircuitVerse',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline3.copyWith(
-                    fontFamily: 'Grinched',
-                    color: AppTheme.primaryColor,
-                  ),
+            padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 10),
+            child: Image.asset(
+              'assets/images/landing/cv_full_logo.png',
+              width: 90,
             ),
           ),
           InkWell(
