@@ -11,11 +11,12 @@ class AboutTosView extends StatelessWidget {
 
   TextSpan _buildText(BuildContext context, String text, {bool bold = false}) {
     return TextSpan(
-        style: Theme.of(context)
-            .textTheme
-            .bodyText1
-            .copyWith(fontWeight: bold ? FontWeight.bold : FontWeight.normal),
-        text: text);
+      style: Theme.of(context)
+          .textTheme
+          .bodyText1
+          .copyWith(fontWeight: bold ? FontWeight.bold : FontWeight.normal),
+      text: text,
+    );
   }
 
   TextSpan _buildLink(String text, String link) {
@@ -40,7 +41,7 @@ class AboutTosView extends StatelessWidget {
       @required String title,
       @required List<TextSpan> content}) {
     return Container(
-      child: Column(children: [
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
           title,
           style: Theme.of(context)
