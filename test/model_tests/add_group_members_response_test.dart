@@ -6,17 +6,17 @@ import '../setup/test_data/mock_add_group_members_response.dart';
 void main() {
   group('AddGroupMembersResponseTest -', () {
     test('fromJson', () {
-      var _collaborator_response =
+      var _collaboratorResponse =
           AddGroupMembersResponse.fromJson(mockAddGroupMembersResponse);
 
-      expect(_collaborator_response, isInstanceOf<AddGroupMembersResponse>());
+      expect(_collaboratorResponse, isInstanceOf<AddGroupMembersResponse>());
 
-      expect(_collaborator_response.added.length, 1);
-      expect(_collaborator_response.added[0], 'test@test.com');
-      expect(_collaborator_response.pending.length, 1);
-      expect(_collaborator_response.pending[0], 'pending@test.com');
-      expect(_collaborator_response.invalid.length, 1);
-      expect(_collaborator_response.invalid[0], 'invalid@test.com');
+      expect(_collaboratorResponse.added.length, 1);
+      expect(_collaboratorResponse.added[0], 'test@test.com');
+      expect(_collaboratorResponse.pending.length, 1);
+      expect(_collaboratorResponse.pending[0], 'pending@test.com');
+      expect(_collaboratorResponse.invalid.length, 1);
+      expect(_collaboratorResponse.invalid[0], 'invalid@test.com');
     });
   });
 }

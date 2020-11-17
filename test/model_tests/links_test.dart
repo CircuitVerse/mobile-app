@@ -6,11 +6,10 @@ import '../setup/test_data/mock_links.dart';
 void main() {
   group('Links Test -', () {
     test('fromJson', () {
-      var _links =
-          Links.fromJson(mockLinks);
+      var _links = Links.fromJson(mockLinks);
 
       expect(_links, isInstanceOf<Links>());
-    
+
       expect(_links.self, '{url}?page[number]=2');
       expect(_links.first, '{url}?page[number]=1');
       expect(_links.prev, '{url}?page[number]=1');

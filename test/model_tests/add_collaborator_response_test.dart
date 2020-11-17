@@ -6,17 +6,17 @@ import '../setup/test_data/mock_add_collaborators_response.dart';
 void main() {
   group('AddCollaboratorResponseTest -', () {
     test('fromJson', () {
-      var _collaborator_response =
+      var _collaboratorResponse =
           AddCollaboratorsResponse.fromJson(mockAddCollaboratorsResponse);
 
-      expect(_collaborator_response, isInstanceOf<AddCollaboratorsResponse>());
+      expect(_collaboratorResponse, isInstanceOf<AddCollaboratorsResponse>());
 
-      expect(_collaborator_response.added.length, 1);
-      expect(_collaborator_response.added[0], 'test@test.com');
-      expect(_collaborator_response.existing.length, 1);
-      expect(_collaborator_response.existing[0], 'existing@test.com');
-      expect(_collaborator_response.invalid.length, 1);
-      expect(_collaborator_response.invalid[0], 'invalid@test.com');
+      expect(_collaboratorResponse.added.length, 1);
+      expect(_collaboratorResponse.added[0], 'test@test.com');
+      expect(_collaboratorResponse.existing.length, 1);
+      expect(_collaboratorResponse.existing[0], 'existing@test.com');
+      expect(_collaboratorResponse.invalid.length, 1);
+      expect(_collaboratorResponse.invalid[0], 'invalid@test.com');
     });
   });
 }
