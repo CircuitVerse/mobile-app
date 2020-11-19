@@ -61,6 +61,7 @@ flutter:
 
   assets:
     - assets/icons/
+    - assets/images/landing/
     - assets/images/homepage/
     - assets/images/contribute/
     - assets/images/teachers/
@@ -75,7 +76,4 @@ flutter:
         - asset: assets/fonts/Poppins/Poppins-Regular.ttf
         - asset: assets/fonts/Poppins/Poppins-Italic.ttf
           style: italic
-    - family: Grinched
-      fonts:
-        - asset: assets/fonts/Grinched/GrinchedRegular.ttf
 

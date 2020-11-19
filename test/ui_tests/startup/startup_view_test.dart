@@ -35,11 +35,11 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds CircuitVerse on StartUpView',
+    testWidgets('finds CircuitVerse logo on StartUpView',
         (WidgetTester tester) async {
       await _pumpStartUpView(tester);
 
-      expect(find.text('CircuitVerse'), findsOneWidget);
+      expect(find.byKey(Key('cv_startup_logo')), findsOneWidget);
       await tester.pumpAndSettle(Duration(seconds: 1));
     });
 
