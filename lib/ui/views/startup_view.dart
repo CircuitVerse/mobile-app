@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/startup/startup_viewmodel.dart';
 
@@ -9,13 +8,13 @@ class StartUpView extends StatelessWidget {
     return BaseView<StartUpViewModel>(
       onModelReady: (model) => model.handleStartUpLogic(),
       builder: (context, model, child) => Scaffold(
-        backgroundColor: AppTheme.primaryColor,
         body: Center(
-          child: Text(
-            'CircuitVerse',
-            style: Theme.of(context).textTheme.headline4.copyWith(
-                  color: Colors.white,
-                ),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 42),
+            child: Image.asset(
+              'assets/images/landing/cv_full_logo.png',
+              key: Key('cv_startup_logo'),
+            ),
           ),
         ),
       ),
