@@ -6,6 +6,7 @@ import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_social_card.dart';
 import 'package:mobile_app/ui/components/cv_subheader.dart';
+import 'package:mobile_app/ui/views/about/about_tos_view.dart';
 import 'package:mobile_app/ui/views/about/components/contributor_avatar.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
@@ -40,10 +41,7 @@ class _AboutViewState extends State<AboutView> {
             child: CVPrimaryButton(
               title: 'Terms Of Service',
               isBodyText: true,
-              onPressed: () => _launchURL(
-                'https://circuitverse.org/tos',
-                'Terms of Service',
-              ),
+              onPressed: () => Get.toNamed(AboutTosView.id),
             ),
           ),
           SizedBox(width: 8),

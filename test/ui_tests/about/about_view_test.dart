@@ -5,7 +5,9 @@ import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/cv_contributors.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
+import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_subheader.dart';
+import 'package:mobile_app/ui/views/about/about_tos_view.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
 import 'package:mobile_app/ui/views/about/components/contributor_avatar.dart';
 import 'package:mobile_app/utils/image_test_utils.dart';
@@ -77,6 +79,20 @@ void main() {
           expect(find.byType(ContributorAvatar), findsNWidgets(3));
         });
       });
+    });
+
+    testWidgets('Terms of Service Page is Pushed onTap',
+        (WidgetTester tester) async {
+      await _pumpAboutView(tester);
+
+      expect(find.widgetWithText(CVPrimaryButton, 'Terms Of Service'),
+          findsOneWidget);
+      await tester
+          .tap(find.widgetWithText(CVPrimaryButton, 'Terms Of Service'));
+      await tester.pumpAndSettle();
+
+      verify(mockObserver.didPush(any, any));
+      expect(find.byType(AboutTosView), findsOneWidget);
     });
   });
 }
