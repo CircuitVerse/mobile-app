@@ -6,11 +6,11 @@ import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_social_card.dart';
 import 'package:mobile_app/ui/components/cv_subheader.dart';
+import 'package:mobile_app/ui/views/about/about_privacy_policy_view.dart';
 import 'package:mobile_app/ui/views/about/about_tos_view.dart';
 import 'package:mobile_app/ui/views/about/components/contributor_avatar.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class AboutView extends StatefulWidget {
   static const String id = 'about_view';
@@ -21,16 +21,6 @@ class AboutView extends StatefulWidget {
 
 class _AboutViewState extends State<AboutView> {
   AboutViewModel _model;
-
-  Future<void> _launchURL(String url, String title) async {
-    await Get.to(
-      Scaffold(
-        appBar: AppBar(title: Text(title)),
-        body: WebView(initialUrl: url),
-      ),
-      transition: Transition.cupertino,
-    );
-  }
 
   Widget _buildTosAndPrivacyButtons() {
     return Container(
@@ -49,10 +39,7 @@ class _AboutViewState extends State<AboutView> {
             child: CVPrimaryButton(
               title: 'Privacy Policy',
               isBodyText: true,
-              onPressed: () => _launchURL(
-                'https://circuitverse.org/privacy',
-                'Privacy',
-              ),
+              onPressed: () => Get.toNamed(AboutPrivacyPolicyView.id),
             ),
           ),
         ],
