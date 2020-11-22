@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/models/assignments.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/models/projects.dart';
+import 'package:mobile_app/ui/views/about/about_privacy_policy_view.dart';
 import 'package:mobile_app/ui/views/about/about_tos_view.dart';
 import 'package:mobile_app/ui/views/authentication/forgot_password_view.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
@@ -39,6 +40,8 @@ class CVRouter {
         return MaterialPageRoute(builder: (_) => ContributorsView());
       case AboutTosView.id:
         return MaterialPageRoute(builder: (_) => AboutTosView());
+      case AboutPrivacyPolicyView.id:
+        return MaterialPageRoute(builder: (_) => AboutPrivacyPolicyView());
       case ProfileView.id:
         var _userId = settings.arguments as String;
         return MaterialPageRoute(

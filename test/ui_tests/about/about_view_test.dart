@@ -7,6 +7,7 @@ import 'package:mobile_app/models/cv_contributors.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_subheader.dart';
+import 'package:mobile_app/ui/views/about/about_privacy_policy_view.dart';
 import 'package:mobile_app/ui/views/about/about_tos_view.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
 import 'package:mobile_app/ui/views/about/components/contributor_avatar.dart';
@@ -93,6 +94,18 @@ void main() {
 
       verify(mockObserver.didPush(any, any));
       expect(find.byType(AboutTosView), findsOneWidget);
+    });
+
+    testWidgets('Policy Page is Pushed onTap', (WidgetTester tester) async {
+      await _pumpAboutView(tester);
+
+      expect(find.widgetWithText(CVPrimaryButton, 'Privacy Policy'),
+          findsOneWidget);
+      await tester.tap(find.widgetWithText(CVPrimaryButton, 'Privacy Policy'));
+      await tester.pumpAndSettle();
+
+      verify(mockObserver.didPush(any, any));
+      expect(find.byType(AboutPrivacyPolicyView), findsOneWidget);
     });
   });
 }

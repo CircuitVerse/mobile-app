@@ -39,7 +39,6 @@ dependencies:
   google_sign_in: ^4.5.1
   oauth2_client: ^1.4.2
   html: ^0.14.0+3
-  webview_flutter: ^0.3.22+1
   animations: ^1.1.2
   flutter_facebook_login: ^3.0.0
   flutter_html: ^1.0.2
