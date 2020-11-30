@@ -38,14 +38,7 @@ Map<String, dynamic> mockGroup = {
   'data': {
     'id': '1',
     'type': 'group',
-    'attributes': {
-      'member_count': 1,
-      'mentor_name': 'Test User',
-      'name': 'Test Group',
-      'mentor_id': 1,
-      'created_at': '2020-08-15T05:49:56.433Z',
-      'updated_at': '2020-08-15T17:21:13.813Z'
-    },
+    'attributes': mockGroupAttributes,
     'relationships': {
       'group_members': {
         'data': [
@@ -102,4 +95,13 @@ Map<String, dynamic> mockGroup = {
       }
     }
   ]
+};
+
+Map<String, dynamic> mockGroupAttributes = {
+  'member_count': 1,
+  'mentor_name': 'Test User',
+  'name': 'Test Group',
+  'mentor_id': 1,
+  'created_at': '2020-08-15T05:49:56.433Z',
+  'updated_at': '2020-08-15T17:21:13.813Z'
 };
