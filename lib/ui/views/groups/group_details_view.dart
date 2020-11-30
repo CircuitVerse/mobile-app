@@ -180,7 +180,10 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               actions: <Widget>[
                 FlatButton(
                   child: Text('CANCEL'),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () {
+                    _emails = null;
+                    Navigator.pop(context);
+                  },
                 ),
                 FlatButton(
                   child: Text('ADD'),
