@@ -16,6 +16,7 @@ class AboutPrivacyPolicyView extends StatelessWidget {
       style: Theme.of(context).textTheme.bodyText1.copyWith(
             fontWeight: bold ? FontWeight.bold : FontWeight.normal,
             fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+            fontFamily: 'Poppins',
           ),
       text: text,
     );
@@ -26,6 +27,7 @@ class AboutPrivacyPolicyView extends StatelessWidget {
       style: TextStyle(
         color: Colors.blue,
         fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+        fontFamily: 'Poppins',
       ),
       text: text,
       recognizer: TapGestureRecognizer()
@@ -41,32 +43,36 @@ class AboutPrivacyPolicyView extends StatelessWidget {
     );
   }
 
-  Widget _buildSection(
-      {@required BuildContext context,
-      String title = '',
-      bool heading = false,
-      @required List<TextSpan> content}) {
+  Widget _buildSection({
+    @required BuildContext context,
+    String title = '',
+    bool heading = false,
+    @required List<TextSpan> content,
+  }) {
     var style = heading
         ? Theme.of(context).textTheme.headline5
         : Theme.of(context).textTheme.headline6;
 
     return Container(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        title != ''
-            ? Text(
-                title,
-                style: style.copyWith(
-                    fontWeight: FontWeight.w400, color: Colors.black),
-                textAlign: TextAlign.left,
-              )
-            : Container(),
-        RichText(
-          textAlign: TextAlign.justify,
-          text: TextSpan(
-            children: content,
-          ),
-        )
-      ]),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          title != ''
+              ? Text(
+                  title,
+                  style: style.copyWith(
+                      fontWeight: FontWeight.w400, color: Colors.black),
+                  textAlign: TextAlign.left,
+                )
+              : Container(),
+          RichText(
+            textAlign: TextAlign.justify,
+            text: TextSpan(
+              children: content,
+            ),
+          )
+        ],
+      ),
     );
   }
 
