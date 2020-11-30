@@ -31,6 +31,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   GroupDetailsViewModel _model;
   final _formKey = GlobalKey<FormState>();
   String _emails;
+  //bool isFormFilled = false;
   Group _recievedGroup;
 
   @override
@@ -128,6 +129,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             _model.errorMessageFor(_model.ADD_GROUP_MEMBERS));
       }
     }
+    _emails = null;
   }
 
   void showAddGroupMemberDialog() {
@@ -158,13 +160,19 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 key: _formKey,
                 child: TextFormField(
                   maxLines: 5,
+                  onChanged: (emailValue) {
+                    if(emailValue != null){
+                      setState(() {
+                        _emails = emailValue;
+                      });
+                    }
+                  },
                   autofocus: true,
                   decoration: AppTheme.textFieldDecoration.copyWith(
                     hintText: 'Email Ids',
                   ),
                   validator: (emails) => Validators.areEmailsValid(emails)
-                      ? null
-                      : 'Enter emails in valid format.',
+                      ? null : 'Enter emails in valid format',
                   onSaved: (emails) =>
                       _emails = emails.replaceAll(' ', '').trim(),
                 ),
@@ -176,7 +184,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 ),
                 FlatButton(
                   child: Text('ADD'),
-                  onPressed: () => onAddGroupMemberPressed(context),
+                  disabledTextColor: Colors.grey,
+                  onPressed: _emails == null ? null : () => onAddGroupMemberPressed(context),
                 ),
               ],
             ),
