@@ -24,6 +24,16 @@ class _SignupViewState extends State<SignupView> {
   final _formKey = GlobalKey<FormState>();
   String _name, _email, _password;
 
+  final _focusNode1 = FocusNode();
+  final _focusNode2 = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode1.dispose();
+    _focusNode2.dispose();
+    super.dispose();
+  }
+
   Widget _buildSignUpImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -43,6 +53,9 @@ class _SignupViewState extends State<SignupView> {
       label: 'Name',
       validator: (value) => value.isEmpty ? 'Name can\'t be empty' : null,
       onSaved: (value) => _name = value.trim(),
+      fieldSubmitted: (_) {
+        FocusScope.of(context).requestFocus(_focusNode1);
+      },
     );
   }
 
@@ -53,6 +66,11 @@ class _SignupViewState extends State<SignupView> {
       validator: (value) =>
           Validators.isEmailValid(value) ? null : 'Please enter a valid email',
       onSaved: (value) => _email = value.trim(),
+      focus_node: _focusNode1,
+      fieldSubmitted: (_) {
+        _focusNode1.unfocus();
+        FocusScope.of(context).requestFocus(_focusNode2);
+      },
     );
   }
 
@@ -60,6 +78,7 @@ class _SignupViewState extends State<SignupView> {
     return CVPasswordField(
       validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
       onSaved: (value) => _password = value.trim(),
+      focus_node: _focusNode2,
     );
   }
 

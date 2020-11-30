@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile_app/app_theme.dart';
 
 class CVPasswordField extends StatefulWidget {
   final Function(String) validator;
   final Function(String) onSaved;
+  final FocusNode focus_node;
 
-  const CVPasswordField({Key key, this.validator, this.onSaved})
-      : super(key: key);
+  const CVPasswordField({
+    Key key,
+    this.validator,
+    this.onSaved,
+    this.focus_node,
+  }) : super(key: key);
 
   @override
   _CVPasswordFieldState createState() => _CVPasswordFieldState();
@@ -44,8 +50,10 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
           ),
           labelText: 'Password',
         ),
+        textInputAction: TextInputAction.done,
         validator: widget.validator,
         onSaved: widget.onSaved,
+        focusNode: widget.focus_node,
       ),
     );
   }

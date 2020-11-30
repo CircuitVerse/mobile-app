@@ -24,6 +24,13 @@ class _LoginViewState extends State<LoginView> {
   LoginViewModel _model;
   final _formKey = GlobalKey<FormState>();
   String _email, _password;
+  final _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   Widget _buildLoginImage() {
     return Container(
@@ -46,6 +53,9 @@ class _LoginViewState extends State<LoginView> {
       validator: (value) =>
           Validators.isEmailValid(value) ? null : 'Please enter a valid email',
       onSaved: (value) => _email = value.trim(),
+      fieldSubmitted: (_) {
+        FocusScope.of(context).requestFocus(_focusNode);
+      },
     );
   }
 
@@ -53,6 +63,7 @@ class _LoginViewState extends State<LoginView> {
     return CVPasswordField(
       validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
       onSaved: (value) => _password = value.trim(),
+      focus_node: _focusNode,
     );
   }
 
