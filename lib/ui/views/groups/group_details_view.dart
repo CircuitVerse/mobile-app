@@ -161,7 +161,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 child: TextFormField(
                   maxLines: 5,
                   onChanged: (emailValue) {
-                    if(emailValue != null){
+                    if (emailValue != null) {
                       setState(() {
                         _emails = emailValue;
                       });
@@ -172,7 +172,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                     hintText: 'Email Ids',
                   ),
                   validator: (emails) => Validators.areEmailsValid(emails)
-                      ? null : 'Enter emails in valid format',
+                      ? null
+                      : 'Enter emails in valid format',
                   onSaved: (emails) =>
                       _emails = emails.replaceAll(' ', '').trim(),
                 ),
@@ -188,7 +189,9 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 FlatButton(
                   child: Text('ADD'),
                   disabledTextColor: Colors.grey,
-                  onPressed: _emails == null ? null : () => onAddGroupMemberPressed(context),
+                  onPressed: _emails == null
+                      ? null
+                      : () => onAddGroupMemberPressed(context),
                 ),
               ],
             ),
