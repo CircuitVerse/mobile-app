@@ -409,15 +409,9 @@ class AddButton extends StatefulWidget {
 class _AddButtonState extends State<AddButton> {
   Function dynamicAddFunction;
   void setAddFunction(bool isActive) {
-    if (isActive == true) {
-      setState(() {
-        dynamicAddFunction = widget.addFunction;
-      });
-    } else if (isActive == false) {
-      setState(() {
-        dynamicAddFunction = null;
-      });
-    }
+    setState(() {
+      dynamicAddFunction = isActive ? widget.addFunction : null;
+    });
   }
 
   @override
