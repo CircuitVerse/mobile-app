@@ -5,13 +5,13 @@ import 'package:mobile_app/app_theme.dart';
 class CVPasswordField extends StatefulWidget {
   final Function(String) validator;
   final Function(String) onSaved;
-  final FocusNode focus_node;
+  final FocusNode focusNode;
 
   const CVPasswordField({
     Key key,
     this.validator,
     this.onSaved,
-    this.focus_node,
+    this.focusNode,
   }) : super(key: key);
 
   @override
@@ -36,6 +36,7 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
         vertical: 8,
       ),
       child: TextFormField(
+        focusNode: widget.focusNode,
         maxLines: 1,
         obscureText: _obscureText,
         keyboardType: TextInputType.visiblePassword,
@@ -53,7 +54,6 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
         textInputAction: TextInputAction.done,
         validator: widget.validator,
         onSaved: widget.onSaved,
-        focusNode: widget.focus_node,
       ),
     );
   }

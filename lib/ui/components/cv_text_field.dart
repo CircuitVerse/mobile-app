@@ -10,9 +10,9 @@ class CVTextField extends StatelessWidget {
   final String initialValue;
   final Function(String) validator;
   final Function(String) onSaved;
-  final Function(String) fieldSubmitted;
+  final Function(String) onFieldSubmitted;
   final EdgeInsets padding;
-  final FocusNode focus_node;
+  final FocusNode focusNode;
 
   /// Creates a [TextField] that is specifically styled for CircuitVerse.
   ///
@@ -33,8 +33,8 @@ class CVTextField extends StatelessWidget {
       horizontal: 16,
       vertical: 8,
     ),
-    this.focus_node,
-    this.fieldSubmitted,
+    this.focusNode,
+    this.onFieldSubmitted,
   }) : super(key: key);
 
   @override
@@ -42,6 +42,7 @@ class CVTextField extends StatelessWidget {
     return Padding(
       padding: padding,
       child: TextFormField(
+        focusNode: focusNode,
         controller: controller,
         maxLines: maxLines,
         keyboardType: type,
@@ -52,10 +53,9 @@ class CVTextField extends StatelessWidget {
         ),
         validator: validator,
         onSaved: onSaved,
-        focusNode: focus_node,
         textInputAction: action,
         autofocus: true,
-        onFieldSubmitted: fieldSubmitted,
+        onFieldSubmitted: onFieldSubmitted,
       ),
     );
   }

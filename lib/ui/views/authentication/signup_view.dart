@@ -24,13 +24,13 @@ class _SignupViewState extends State<SignupView> {
   final _formKey = GlobalKey<FormState>();
   String _name, _email, _password;
 
-  final _focusNode1 = FocusNode();
-  final _focusNode2 = FocusNode();
+  final _nameFocusNode = FocusNode();
+  final _emailFocusNode = FocusNode();
 
   @override
   void dispose() {
-    _focusNode1.dispose();
-    _focusNode2.dispose();
+    _nameFocusNode.dispose();
+    _emailFocusNode.dispose();
     super.dispose();
   }
 
@@ -53,32 +53,31 @@ class _SignupViewState extends State<SignupView> {
       label: 'Name',
       validator: (value) => value.isEmpty ? 'Name can\'t be empty' : null,
       onSaved: (value) => _name = value.trim(),
-      fieldSubmitted: (_) {
-        FocusScope.of(context).requestFocus(_focusNode1);
-      },
+      onFieldSubmitted: (_) =>
+          FocusScope.of(context).requestFocus(_nameFocusNode),
     );
   }
 
   Widget _buildEmailInput() {
     return CVTextField(
+      focusNode: _nameFocusNode,
       label: 'Email',
       type: TextInputType.emailAddress,
       validator: (value) =>
           Validators.isEmailValid(value) ? null : 'Please enter a valid email',
       onSaved: (value) => _email = value.trim(),
-      focus_node: _focusNode1,
-      fieldSubmitted: (_) {
-        _focusNode1.unfocus();
-        FocusScope.of(context).requestFocus(_focusNode2);
+      onFieldSubmitted: (_) {
+        _nameFocusNode.unfocus();
+        FocusScope.of(context).requestFocus(_emailFocusNode);
       },
     );
   }
 
   Widget _buildPasswordInput() {
     return CVPasswordField(
+      focusNode: _emailFocusNode,
       validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
       onSaved: (value) => _password = value.trim(),
-      focus_node: _focusNode2,
     );
   }
 
