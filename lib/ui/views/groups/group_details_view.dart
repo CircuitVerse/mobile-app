@@ -31,8 +31,9 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   GroupDetailsViewModel _model;
   final _formKey = GlobalKey<FormState>();
   String _emails;
-  //bool isFormFilled = false;
   Group _recievedGroup;
+  final GlobalKey<_AddButtonState> addButtonGlobalKey =
+      GlobalKey<_AddButtonState>();
 
   @override
   void initState() {
@@ -129,7 +130,9 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             _model.errorMessageFor(_model.ADD_GROUP_MEMBERS));
       }
     }
-    _emails = null;
+    setState(() {
+      _emails = null;
+    });
   }
 
   void showAddGroupMemberDialog() {
@@ -161,13 +164,9 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 child: TextFormField(
                   maxLines: 5,
                   onChanged: (emailValue) {
-                    if (emailValue != null) {
-                      setState(() {
-                        _emails = emailValue;
-                      });
-                    }
+                    addButtonGlobalKey.currentState
+                        .setAddFunction(emailValue.isNotEmpty);
                   },
-                  autofocus: true,
                   decoration: AppTheme.textFieldDecoration.copyWith(
                     hintText: 'Email Ids',
                   ),
@@ -186,13 +185,10 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                     Navigator.pop(context);
                   },
                 ),
-                FlatButton(
-                  child: Text('ADD'),
-                  disabledTextColor: Colors.grey,
-                  onPressed: _emails == null
-                      ? null
-                      : () => onAddGroupMemberPressed(context),
-                ),
+                AddButton(
+                    addFunction: onAddGroupMemberPressed,
+                    context: context,
+                    key: addButtonGlobalKey),
               ],
             ),
           );
@@ -397,6 +393,41 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           );
         }),
       ),
+    );
+  }
+}
+
+class AddButton extends StatefulWidget {
+  AddButton({@required this.addFunction, this.context, @required Key key})
+      : super(key: key);
+  final Function addFunction;
+  final BuildContext context;
+  @override
+  _AddButtonState createState() => _AddButtonState();
+}
+
+class _AddButtonState extends State<AddButton> {
+  Function dynamicAddFunction;
+  void setAddFunction(bool isActive) {
+    if (isActive == true) {
+      setState(() {
+        dynamicAddFunction = widget.addFunction;
+      });
+    } else if (isActive == false) {
+      setState(() {
+        dynamicAddFunction = null;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      child: Text('ADD'),
+      disabledTextColor: Colors.grey,
+      onPressed: dynamicAddFunction == null
+          ? null
+          : () => dynamicAddFunction.call(widget.context),
     );
   }
 }
