@@ -35,7 +35,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         child: AspectRatio(
           aspectRatio: 1.6,
           child: FadeInImage.memoryNetwork(
-            width: double.infinity,
+            fit: BoxFit.cover,
             placeholder: kTransparentImage,
             image:
                 '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + widget.project.attributes.imagePreview.url}',

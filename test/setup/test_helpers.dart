@@ -14,6 +14,7 @@ import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
 import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart';
+import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 
 Function deepEq = DeepCollectionEquality().equals;
@@ -48,6 +49,9 @@ class MockGroupDetailsViewModel extends Mock implements GroupDetailsViewModel {}
 
 class MockFeaturedProjectsViewModel extends Mock
     implements FeaturedProjectsViewModel {}
+
+class MockProjectDetailsViewModel extends Mock
+    implements ProjectDetailsViewModel {}
 
 LocalStorageService getAndRegisterLocalStorageServiceMock() {
   _removeRegistrationIfExists<LocalStorageService>();
