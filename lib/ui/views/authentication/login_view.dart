@@ -35,7 +35,7 @@ class _LoginViewState extends State<LoginView> {
   Widget _buildLoginImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      color: AppTheme.imageBackground,
+      color: PrimaryAppTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
         child: Image.asset(
@@ -74,7 +74,7 @@ class _LoginViewState extends State<LoginView> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Text(
           'Forgot Password?',
-          style: TextStyle(color: AppTheme.primaryColorDark),
+          style: TextStyle(color: PrimaryAppTheme.primaryColorDark),
         ),
       ),
     );
@@ -102,7 +102,7 @@ class _LoginViewState extends State<LoginView> {
             TextSpan(
               text: 'Sign Up',
               style: TextStyle(
-                color: AppTheme.primaryColorDark,
+                color: PrimaryAppTheme.primaryColorDark,
               ),
             ),
           ],

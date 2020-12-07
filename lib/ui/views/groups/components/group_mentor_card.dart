@@ -4,6 +4,7 @@ import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/group_details_view.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class GroupMentorCard extends StatefulWidget {
   final Group group;
@@ -27,17 +28,21 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
         border: Border(
           top: BorderSide(
             width: 10,
-            color: AppTheme.primaryColor,
+            color: PrimaryAppTheme.primaryColor,
           ),
         ),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.grey,
+            color: ThemeProvider.themeOf(context).id == 'dark'
+                ? PrimaryAppTheme.bgCardDark
+                : PrimaryAppTheme.grey,
             offset: Offset(0, 3),
             blurRadius: 2,
           )
         ],
-        color: AppTheme.bgCard,
+        color: ThemeProvider.themeOf(context).id == 'dark'
+            ? PrimaryAppTheme.bgCardDark
+            : PrimaryAppTheme.bgCard,
       ),
       child: Column(
         children: <Widget>[
@@ -62,21 +67,21 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
                 child: CardButton(
                   onPressed: () =>
                       Get.toNamed(GroupDetailsView.id, arguments: widget.group),
-                  color: AppTheme.primaryColor,
+                  color: PrimaryAppTheme.primaryColor,
                   title: 'View',
                 ),
               ),
               Flexible(
                 child: CardButton(
                   onPressed: widget.onEdit,
-                  color: AppTheme.blue,
+                  color: PrimaryAppTheme.blue,
                   title: 'Edit',
                 ),
               ),
               Flexible(
                 child: CardButton(
                   onPressed: widget.onDelete,
-                  color: AppTheme.red,
+                  color: PrimaryAppTheme.red,
                   title: 'Delete',
                 ),
               ),

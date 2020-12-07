@@ -12,7 +12,7 @@ class CVAddIconButton extends StatelessWidget {
       padding: const EdgeInsets.all(0),
       icon: Icon(
         Icons.add_circle_outline,
-        color: AppTheme.grey,
+        color: PrimaryAppTheme.grey,
         size: 36,
       ),
       onPressed: onPressed,

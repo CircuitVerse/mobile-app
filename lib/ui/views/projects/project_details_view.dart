@@ -42,7 +42,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Widget _buildProjectPreview() {
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: AppTheme.grey)),
+      decoration:
+          BoxDecoration(border: Border.all(color: PrimaryAppTheme.grey)),
       child: FadeInImage.memoryNetwork(
         placeholder: kTransparentImage,
         image:
@@ -72,7 +73,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Widget _buildProjectHeader(String title) {
     return Container(
       padding: const EdgeInsets.all(4),
-      color: AppTheme.primaryColor,
+      color: PrimaryAppTheme.primaryColor,
       width: double.infinity,
       child: Text(
         title,
@@ -143,7 +144,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               style: TextStyle(
                 fontSize: 18,
                 decoration: TextDecoration.underline,
-                color: AppTheme.primaryColor,
+                color: PrimaryAppTheme.primaryColor,
               ),
             )
           ],
@@ -203,7 +204,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
         decoration: BoxDecoration(
-          color: AppTheme.primaryColor,
+          color: PrimaryAppTheme.primaryColor,
           borderRadius: BorderRadius.circular(4),
         ),
         child: Row(
@@ -240,7 +241,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       child: Container(
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: AppTheme.primaryColor,
+          color: PrimaryAppTheme.primaryColor,
           borderRadius: BorderRadius.circular(4),
         ),
         child: Icon(
@@ -301,7 +302,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 child: TextFormField(
                   maxLines: 5,
                   autofocus: true,
-                  decoration: AppTheme.textFieldDecoration.copyWith(
+                  decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
                     hintText: 'Email Ids',
                   ),
                   validator: (emails) => Validators.areEmailsValid(emails)
@@ -355,7 +356,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
         decoration: BoxDecoration(
-          border: Border.all(color: AppTheme.primaryColorDark),
+          border: Border.all(color: PrimaryAppTheme.primaryColorDark),
           borderRadius: BorderRadius.circular(4),
         ),
         child: Row(
@@ -399,7 +400,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
         decoration: BoxDecoration(
-          border: Border.all(color: AppTheme.primaryColorDark),
+          border: Border.all(color: PrimaryAppTheme.primaryColorDark),
           borderRadius: BorderRadius.circular(4),
         ),
         child: Row(
@@ -451,7 +452,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 collaborator.attributes.name,
                 style: Theme.of(context).textTheme.headline6.copyWith(
                       decoration: TextDecoration.underline,
-                      color: AppTheme.primaryColorDark,
+                      color: PrimaryAppTheme.primaryColorDark,
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -461,7 +462,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             IconButton(
               padding: const EdgeInsets.all(0),
               icon: Icon(Icons.delete_outline),
-              color: AppTheme.red,
+              color: PrimaryAppTheme.red,
               onPressed: () => onDeleteCollaboratorPressed(collaborator),
             ),
         ],

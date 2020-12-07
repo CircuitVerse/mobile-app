@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
@@ -14,6 +15,7 @@ import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class CVLandingView extends StatefulWidget {
   static const String id = 'cv_landing_view';
@@ -58,14 +60,25 @@ class _CVLandingViewState extends State<CVLandingView> {
 
   Widget _buildAppBar() {
     return AppBar(
-      title: Text(_appBarTitle(_selectedIndex)),
+      title: Text(
+        _appBarTitle(_selectedIndex),
+        style: TextStyle(
+            color: ThemeProvider.themeOf(context).id == 'dark'
+                ? PrimaryAppTheme.primaryColor
+                : Colors.black),
+      ),
       centerTitle: true,
     );
   }
 
   Widget _buildDrawerTile(String title, IconData iconData) {
     return ListTile(
-      leading: Icon(iconData),
+      leading: Icon(
+        iconData,
+        color: ThemeProvider.themeOf(context).id == 'dark'
+            ? PrimaryAppTheme.primaryColor
+            : Colors.black,
+      ),
       title: Text(
         title,
         style: Theme.of(context).textTheme.headline6,
@@ -116,6 +129,15 @@ class _CVLandingViewState extends State<CVLandingView> {
             child: _buildDrawerTile('Teachers', Icons.account_balance),
             onTap: () => setSelectedIndexTo(3),
           ),
+          ThemeProvider.themeOf(context).id == 'dark'
+              ? InkWell(
+                  child: _buildDrawerTile('Light Mode', Icons.brightness_high),
+                  onTap: () => ThemeProvider.controllerOf(context).nextTheme(),
+                )
+              : InkWell(
+                  child: _buildDrawerTile('Dark Mode', Icons.brightness_low),
+                  onTap: () => ThemeProvider.controllerOf(context).nextTheme(),
+                ),
           _model.isLoggedIn
               ? ExpansionTile(
                   maintainState: true,

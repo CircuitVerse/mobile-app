@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_app/app_theme.dart';
+import 'package:theme_provider/theme_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPrivacyPolicyView extends StatelessWidget {
@@ -61,7 +63,10 @@ class AboutPrivacyPolicyView extends StatelessWidget {
               ? Text(
                   title,
                   style: style.copyWith(
-                      fontWeight: FontWeight.w400, color: Colors.black),
+                      fontWeight: FontWeight.w400,
+                      color: ThemeProvider.themeOf(context).id == 'dark'
+                          ? PrimaryAppTheme.primaryColor
+                          : Colors.black),
                   textAlign: TextAlign.left,
                 )
               : Container(),
@@ -79,7 +84,16 @@ class AboutPrivacyPolicyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: showAppBar ? AppBar(title: Text('Privacy Policy')) : null,
+      appBar: showAppBar
+          ? AppBar(
+              title: Text(
+              'Privacy Policy',
+              style: TextStyle(
+                  color: ThemeProvider.themeOf(context).id == 'dark'
+                      ? PrimaryAppTheme.primaryColor
+                      : Colors.black),
+            ))
+          : null,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

@@ -16,6 +16,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class UpdateAssignmentView extends StatefulWidget {
   static const String id = 'update_assignment_view';
@@ -61,8 +62,11 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       ),
       child: HtmlEditor(
         decoration: BoxDecoration(
+          color: ThemeProvider.themeOf(context).id == 'dark'
+              ? PrimaryAppTheme.primaryColor
+              : Colors.grey[100],
           border: Border.all(
-            color: AppTheme.primaryColorDark,
+            color: PrimaryAppTheme.primaryColorDark,
           ),
         ),
         value: widget.assignment.attributes.description ?? '',
@@ -78,7 +82,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       child: DateTimeField(
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: widget.assignment.attributes.deadline,
-        decoration: AppTheme.textFieldDecoration.copyWith(
+        decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
           labelText: 'Deadline',
         ),
         onShowPicker: (context, currentValue) async {

@@ -11,6 +11,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/edit_project_viewmodel.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class EditProjectView extends StatefulWidget {
   static const String id = 'edit_project_view';
@@ -60,7 +61,7 @@ class _EditProjectViewState extends State<EditProjectView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: DropdownButtonFormField<String>(
-        decoration: AppTheme.textFieldDecoration.copyWith(
+        decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
           labelText: 'Project Access Type',
         ),
         value: _projectAccessType,
@@ -90,8 +91,11 @@ class _EditProjectViewState extends State<EditProjectView> {
       ),
       child: HtmlEditor(
         decoration: BoxDecoration(
+          color: ThemeProvider.themeOf(context).id == 'dark'
+              ? PrimaryAppTheme.primaryColor
+              : Colors.grey[100],
           border: Border.all(
-            color: AppTheme.primaryColorDark,
+            color: PrimaryAppTheme.primaryColorDark,
           ),
         ),
         value: widget.project.attributes.description ?? '',

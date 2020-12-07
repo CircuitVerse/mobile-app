@@ -17,6 +17,7 @@ import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
+import 'package:theme_provider/theme_provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class AssignmentDetailsView extends StatefulWidget {
@@ -58,7 +59,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           )
         ],
       ),
-      color: AppTheme.primaryColor,
+      color: PrimaryAppTheme.primaryColor,
       onPressed: () async {
         var _updatedAssignment = await Get.toNamed(
           UpdateAssignmentView.id,
@@ -82,7 +83,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           child: Text(
             _recievedAssignment.attributes.name,
             style: Theme.of(context).textTheme.headline4.copyWith(
-                  color: Colors.black,
+                  color: ThemeProvider.themeOf(context).id == 'dark'
+                      ? Colors.white
+                      : Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
             textAlign: TextAlign.center,
@@ -156,10 +159,10 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: _model.focussedProject == submission
-                      ? AppTheme.primaryColor
+                      ? PrimaryAppTheme.primaryColor
                       : Colors.transparent,
                   border: Border.all(
-                    color: AppTheme.grey.withOpacity(0.5),
+                    color: PrimaryAppTheme.grey.withOpacity(0.5),
                     width: 0.5,
                   ),
                 ),
@@ -199,7 +202,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              border: Border.all(color: AppTheme.primaryColorDark),
+              border: Border.all(color: PrimaryAppTheme.primaryColorDark),
             ),
             child: _model.projects.isEmpty
                 ? Padding(
@@ -217,7 +220,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
               aspectRatio: 1.6,
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: AppTheme.primaryColorDark),
+                  border: Border.all(color: PrimaryAppTheme.primaryColorDark),
                 ),
                 child: FadeInImage.memoryNetwork(
                   width: double.infinity,
@@ -311,7 +314,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          border: Border.all(color: AppTheme.primaryColorDark),
+          border: Border.all(color: PrimaryAppTheme.primaryColorDark),
         ),
         child: Form(
           key: _formKey,
@@ -366,7 +369,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                               color: Colors.white,
                             ),
                       ),
-                      color: AppTheme.red,
+                      color: PrimaryAppTheme.red,
                       onPressed: () => deleteGrade(_submittedGrade.id),
                     )
                 ],

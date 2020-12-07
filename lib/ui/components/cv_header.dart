@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/app_theme.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class CVHeader extends StatelessWidget {
   final String title;
@@ -18,7 +19,7 @@ class CVHeader extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.headline3.copyWith(
                 fontWeight: FontWeight.w400,
-                color: AppTheme.primaryColorDark,
+                color: PrimaryAppTheme.primaryColorDark,
               ),
           textAlign: TextAlign.center,
         ),
@@ -27,7 +28,9 @@ class CVHeader extends StatelessWidget {
                 subtitle,
                 style: Theme.of(context).textTheme.subtitle1.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: ThemeProvider.themeOf(context).id == 'dark'
+                          ? Colors.white
+                          : Colors.black,
                     ),
                 textAlign: TextAlign.center,
               )

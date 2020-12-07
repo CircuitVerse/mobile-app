@@ -28,8 +28,9 @@ class CVOutlineButton extends StatelessWidget {
         ),
       ),
       borderSide: BorderSide(
-        color:
-            isPrimaryDark ? AppTheme.primaryColorDark : AppTheme.primaryColor,
+        color: isPrimaryDark
+            ? PrimaryAppTheme.primaryColorDark
+            : PrimaryAppTheme.primaryColor,
         width: 2,
       ),
       onPressed: onPressed ?? () {},

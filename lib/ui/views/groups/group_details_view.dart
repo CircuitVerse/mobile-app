@@ -15,6 +15,7 @@ import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class GroupDetailsView extends StatefulWidget {
   static const String id = 'group_details_view';
@@ -54,7 +55,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           )
         ],
       ),
-      color: AppTheme.primaryColor,
+      color: PrimaryAppTheme.primaryColor,
       onPressed: () async {
         var _updatedGroup = await Get.toNamed(
           EditGroupView.id,
@@ -79,7 +80,9 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               child: Text(
                 _recievedGroup.attributes.name,
                 style: Theme.of(context).textTheme.headline4.copyWith(
-                      color: Colors.black,
+                      color: ThemeProvider.themeOf(context).id == 'dark'
+                          ? Colors.white
+                          : Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                 textAlign: TextAlign.center,
@@ -159,7 +162,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 child: TextFormField(
                   maxLines: 5,
                   autofocus: true,
-                  decoration: AppTheme.textFieldDecoration.copyWith(
+                  decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
                     hintText: 'Email Ids',
                   ),
                   validator: (emails) => Validators.areEmailsValid(emails)

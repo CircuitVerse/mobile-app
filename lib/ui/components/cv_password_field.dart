@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_app/app_theme.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class CVPasswordField extends StatefulWidget {
   final Function(String) validator;
@@ -40,12 +41,16 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
         maxLines: 1,
         obscureText: _obscureText,
         keyboardType: TextInputType.visiblePassword,
-        style: TextStyle(color: Colors.black),
-        decoration: AppTheme.textFieldDecoration.copyWith(
+        style: TextStyle(
+          color: ThemeProvider.themeOf(context).id == 'dark'
+              ? Colors.white
+              : Colors.black,
+        ),
+        decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
           suffixIcon: GestureDetector(
             child: Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
-              color: AppTheme.primaryColorDark,
+              color: PrimaryAppTheme.primaryColorDark,
             ),
             onTap: _toggle,
           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AppTheme {
-  AppTheme._();
+class PrimaryAppTheme {
+  PrimaryAppTheme._();
 
   static const Color primaryColor = Color.fromRGBO(66, 185, 131, 1);
   static const Color primaryColorDark = Color.fromRGBO(2, 110, 87, 1);
@@ -13,22 +13,22 @@ class AppTheme {
   static const Color grey = Color.fromRGBO(150, 150, 150, 1);
   static const Color lightGrey = Color.fromRGBO(150, 150, 150, 0.5);
   static const Color bgCard = Color.fromRGBO(255, 255, 255, 0.9);
-
+  static Color bgCardDark = Colors.grey[700];
   static const OutlineInputBorder primaryDarkOutlineBorder = OutlineInputBorder(
     borderRadius: BorderRadius.zero,
-    borderSide: BorderSide(color: AppTheme.primaryColorDark),
+    borderSide: BorderSide(color: PrimaryAppTheme.primaryColorDark),
   );
 
   static const OutlineInputBorder redOutlineBorder = OutlineInputBorder(
     borderRadius: BorderRadius.zero,
-    borderSide: BorderSide(color: AppTheme.red),
+    borderSide: BorderSide(color: PrimaryAppTheme.red),
   );
 
   static const InputDecoration textFieldDecoration = InputDecoration(
     contentPadding: EdgeInsets.all(8),
-    focusedBorder: AppTheme.primaryDarkOutlineBorder,
-    enabledBorder: AppTheme.primaryDarkOutlineBorder,
-    errorBorder: AppTheme.redOutlineBorder,
-    focusedErrorBorder: AppTheme.redOutlineBorder,
+    focusedBorder: PrimaryAppTheme.primaryDarkOutlineBorder,
+    enabledBorder: PrimaryAppTheme.primaryDarkOutlineBorder,
+    errorBorder: PrimaryAppTheme.redOutlineBorder,
+    focusedErrorBorder: PrimaryAppTheme.redOutlineBorder,
   );
 }

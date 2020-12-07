@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class CircuitVerseSocialCard extends StatelessWidget {
   final String imagePath;
@@ -23,7 +24,9 @@ class CircuitVerseSocialCard extends StatelessWidget {
         await launchURL(url);
       },
       child: Card(
-        color: AppTheme.primaryColorShadow,
+        color: ThemeProvider.themeOf(context).id == 'dark'
+            ? PrimaryAppTheme.primaryColor
+            : PrimaryAppTheme.primaryColorShadow,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: Row(
@@ -41,6 +44,9 @@ class CircuitVerseSocialCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.subtitle1.copyWith(
                             fontWeight: FontWeight.bold,
+                            color: ThemeProvider.themeOf(context).id == 'dark'
+                                ? Colors.white
+                                : Colors.black,
                           ),
                     ),
                     Text(

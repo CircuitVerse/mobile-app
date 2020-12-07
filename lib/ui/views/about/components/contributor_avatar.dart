@@ -21,7 +21,7 @@ class ContributorAvatar extends StatelessWidget {
           width: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(color: AppTheme.primaryColor),
+            border: Border.all(color: PrimaryAppTheme.primaryColor),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(24),

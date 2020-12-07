@@ -4,6 +4,7 @@ import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/group_details_view.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class GroupMemberCard extends StatelessWidget {
   final Group group;
@@ -19,17 +20,21 @@ class GroupMemberCard extends StatelessWidget {
         border: Border(
           left: BorderSide(
             width: 10,
-            color: AppTheme.primaryColor,
+            color: PrimaryAppTheme.primaryColor,
           ),
         ),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.grey,
+            color: ThemeProvider.themeOf(context).id == 'dark'
+                ? PrimaryAppTheme.bgCardDark
+                : PrimaryAppTheme.grey,
             offset: Offset(0, 3),
             blurRadius: 2,
           ),
         ],
-        color: AppTheme.bgCard,
+        color: ThemeProvider.themeOf(context).id == 'dark'
+            ? PrimaryAppTheme.bgCardDark
+            : PrimaryAppTheme.bgCard,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,7 +63,7 @@ class GroupMemberCard extends StatelessWidget {
           ),
           CardButton(
             onPressed: () => Get.toNamed(GroupDetailsView.id, arguments: group),
-            color: AppTheme.primaryColor,
+            color: PrimaryAppTheme.primaryColor,
             title: 'View',
           )
         ],

@@ -13,6 +13,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class AddAssignmentView extends StatefulWidget {
   static const String id = 'add_assignment_view';
@@ -56,8 +57,11 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       ),
       child: HtmlEditor(
         decoration: BoxDecoration(
+          color: ThemeProvider.themeOf(context).id == 'dark'
+              ? PrimaryAppTheme.primaryColor
+              : Colors.grey[100],
           border: Border.all(
-            color: AppTheme.primaryColorDark,
+            color: PrimaryAppTheme.primaryColorDark,
           ),
         ),
         key: _descriptionEditor,
@@ -72,7 +76,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       child: DateTimeField(
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: DateTime.now().add(Duration(days: 7)),
-        decoration: AppTheme.textFieldDecoration.copyWith(
+        decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
           labelText: 'Deadline',
         ),
         onShowPicker: (context, currentValue) async {
@@ -102,7 +106,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: DropdownButtonFormField<String>(
-        decoration: AppTheme.textFieldDecoration.copyWith(
+        decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
           labelText: 'Grading Scale',
         ),
         value: _gradingScale,

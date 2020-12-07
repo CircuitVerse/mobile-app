@@ -27,7 +27,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   Widget _buildForgotPasswordImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      color: AppTheme.imageBackground,
+      color: PrimaryAppTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
         child: Image.asset(
@@ -73,7 +73,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
             TextSpan(
               text: 'Sign Up',
               style: TextStyle(
-                color: AppTheme.primaryColorDark,
+                color: PrimaryAppTheme.primaryColorDark,
               ),
             ),
           ],

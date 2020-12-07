@@ -31,7 +31,9 @@ class CVPrimaryButton extends StatelessWidget {
                   color: Colors.white,
                 ),
       ),
-      color: isPrimaryDark ? AppTheme.primaryColorDark : AppTheme.primaryColor,
+      color: isPrimaryDark
+          ? PrimaryAppTheme.primaryColorDark
+          : PrimaryAppTheme.primaryColor,
       onPressed: onPressed ?? () {},
     );
   }

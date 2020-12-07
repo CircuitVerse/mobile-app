@@ -85,7 +85,7 @@ class _ProfileViewState extends State<ProfileView> {
   Widget _buildEditProfileButton() {
     if (userId == locator<LocalStorageService>().currentUser.data.id) {
       return FlatButton(
-        color: AppTheme.primaryColor,
+        color: PrimaryAppTheme.primaryColor,
         onPressed: () async {
           var _updatedUser = await Get.toNamed(EditProfileView.id);
           if (_updatedUser is User) {
@@ -111,7 +111,7 @@ class _ProfileViewState extends State<ProfileView> {
 
     return Card(
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: AppTheme.lightGrey),
+        side: BorderSide(color: PrimaryAppTheme.lightGrey),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Padding(
@@ -164,20 +164,20 @@ class _ProfileViewState extends State<ProfileView> {
     return Expanded(
       child: Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: AppTheme.lightGrey),
+          side: BorderSide(color: PrimaryAppTheme.lightGrey),
           borderRadius: BorderRadius.circular(4),
         ),
         child: DefaultTabController(
           length: 2,
           child: Scaffold(
             appBar: CVTabBar(
-              color: AppTheme.lightGrey.withOpacity(0.2),
+              color: PrimaryAppTheme.lightGrey.withOpacity(0.2),
               tabBar: TabBar(
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.black87,
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicator: BoxDecoration(
-                  color: AppTheme.primaryColor,
+                  color: PrimaryAppTheme.primaryColor,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
                 ),
                 tabs: [
