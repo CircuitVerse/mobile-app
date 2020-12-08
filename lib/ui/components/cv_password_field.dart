@@ -41,21 +41,18 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
         maxLines: 1,
         obscureText: _obscureText,
         keyboardType: TextInputType.visiblePassword,
-        style: TextStyle(
-          color: ThemeProvider.themeOf(context).id == 'dark'
-              ? Colors.white
-              : Colors.black,
-        ),
+        style: TextStyle(color: PrimaryAppTheme.getTextColor(context)),
         decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
-          suffixIcon: GestureDetector(
-            child: Icon(
-              _obscureText ? Icons.visibility_off : Icons.visibility,
-              color: PrimaryAppTheme.primaryColorDark,
+            suffixIcon: GestureDetector(
+              child: Icon(
+                _obscureText ? Icons.visibility_off : Icons.visibility,
+                color: PrimaryAppTheme.primaryColorDark,
+              ),
+              onTap: _toggle,
             ),
-            onTap: _toggle,
-          ),
-          labelText: 'Password',
-        ),
+            labelText: 'Password',
+            labelStyle:
+                TextStyle(color: PrimaryAppTheme.textfieldlabelColor(context))),
         textInputAction: TextInputAction.done,
         validator: widget.validator,
         onSaved: widget.onSaved,

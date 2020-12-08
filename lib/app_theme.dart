@@ -1,10 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class PrimaryAppTheme {
   PrimaryAppTheme._();
+  static Color textfieldlabelColor(context) {
+    return ThemeProvider.themeOf(context).id == 'dark'
+        ? Colors.grey[300]
+        : Colors.grey[600];
+  }
+
+  static Color getTextColor(context) {
+    return ThemeProvider.themeOf(context).id == 'dark'
+        ? Colors.white
+        : Colors.black;
+  }
+
+  static Color primaryHeading(context) {
+    return ThemeProvider.themeOf(context).id == 'dark'
+        ? PrimaryAppTheme.primaryColor
+        : Colors.black;
+  }
+
+  static Color boxBg(context) {
+    return ThemeProvider.themeOf(context).id == 'dark'
+        ? PrimaryAppTheme.bgCardDark
+        : PrimaryAppTheme.bgCard;
+  }
+
+  static Color boxShadow(context) {
+    return ThemeProvider.themeOf(context).id == 'dark'
+        ? PrimaryAppTheme.bgCardDark
+        : PrimaryAppTheme.grey;
+  }
+
+  static Color htmlEditorBg(context) {
+    return ThemeProvider.themeOf(context).id == 'dark'
+        ? PrimaryAppTheme.bgCardDark
+        : PrimaryAppTheme.grey;
+  }
+
+  static Color appbarText(context) {
+    return ThemeProvider.themeOf(context).id == 'dark'
+        ? PrimaryAppTheme.primaryColor
+        : Colors.black;
+  }
+
+  static Color drawerIcon(context) {
+    return ThemeProvider.themeOf(context).id == 'dark'
+        ? PrimaryAppTheme.primaryColor
+        : Colors.black;
+  }
+
+  static Color highlightText(context) {
+    return ThemeProvider.themeOf(context).id == 'dark'
+        ? PrimaryAppTheme.primaryColor
+        : PrimaryAppTheme.primaryColorDark;
+  }
 
   static const Color primaryColor = Color.fromRGBO(66, 185, 131, 1);
   static const Color primaryColorDark = Color.fromRGBO(2, 110, 87, 1);
+  static const Color primaryColorDarkTheme = Color.fromRGBO(33, 33, 33, 1);
   static const Color primaryColorLight = Color.fromRGBO(66, 185, 131, 0.5);
   static const Color primaryColorShadow = Color.fromRGBO(245, 255, 252, 1);
   static const Color imageBackground = Color.fromRGBO(63, 61, 86, 1);

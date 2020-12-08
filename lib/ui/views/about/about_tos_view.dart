@@ -58,9 +58,7 @@ class AboutTosView extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.headline5.copyWith(
                 fontWeight: FontWeight.w400,
-                color: ThemeProvider.themeOf(context).id == 'dark'
-                    ? PrimaryAppTheme.primaryColor
-                    : Colors.black),
+                color: PrimaryAppTheme.primaryHeading(context)),
             textAlign: TextAlign.left,
           ),
           RichText(
@@ -81,10 +79,7 @@ class AboutTosView extends StatelessWidget {
           ? AppBar(
               title: Text(
               'Terms of Service',
-              style: TextStyle(
-                  color: ThemeProvider.themeOf(context).id == 'dark'
-                      ? PrimaryAppTheme.primaryColor
-                      : Colors.black),
+              style: TextStyle(color: PrimaryAppTheme.primaryHeading(context)),
             ))
           : null,
       body: SingleChildScrollView(

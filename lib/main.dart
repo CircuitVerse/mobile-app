@@ -8,11 +8,8 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/managers/dialog_manager.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/utils/router.dart';
-
 import 'package:theme_provider/theme_provider.dart';
-
 import 'app_theme.dart';
-
 import 'ui/views/startup_view.dart';
 
 Future<void> main() async {
@@ -49,10 +46,9 @@ class CircuitVerseMobile extends StatelessWidget {
           AppTheme(
               id: 'dark',
               data: ThemeData(
-                primaryColor: Colors.grey[900],
-                accentColor: Colors.grey[700],
+                primaryColor: PrimaryAppTheme.primaryColorDarkTheme,
+                accentColor: PrimaryAppTheme.primaryColorDarkTheme,
                 fontFamily: 'Poppins',
-                backgroundColor: Colors.black,
                 brightness: Brightness.dark,
                 cursorColor: PrimaryAppTheme.primaryColor,
               ),

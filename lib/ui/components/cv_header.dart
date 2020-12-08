@@ -27,11 +27,8 @@ class CVHeader extends StatelessWidget {
             ? Text(
                 subtitle,
                 style: Theme.of(context).textTheme.subtitle1.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: ThemeProvider.themeOf(context).id == 'dark'
-                          ? Colors.white
-                          : Colors.black,
-                    ),
+                    fontWeight: FontWeight.bold,
+                    color: PrimaryAppTheme.getTextColor(context)),
                 textAlign: TextAlign.center,
               )
             : Container(),

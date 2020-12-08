@@ -60,25 +60,15 @@ class _CVLandingViewState extends State<CVLandingView> {
 
   Widget _buildAppBar() {
     return AppBar(
-      title: Text(
-        _appBarTitle(_selectedIndex),
-        style: TextStyle(
-            color: ThemeProvider.themeOf(context).id == 'dark'
-                ? PrimaryAppTheme.primaryColor
-                : Colors.black),
-      ),
+      title: Text(_appBarTitle(_selectedIndex),
+          style: TextStyle(color: PrimaryAppTheme.appbarText(context))),
       centerTitle: true,
     );
   }
 
   Widget _buildDrawerTile(String title, IconData iconData) {
     return ListTile(
-      leading: Icon(
-        iconData,
-        color: ThemeProvider.themeOf(context).id == 'dark'
-            ? PrimaryAppTheme.primaryColor
-            : Colors.black,
-      ),
+      leading: Icon(iconData, color: PrimaryAppTheme.drawerIcon(context)),
       title: Text(
         title,
         style: Theme.of(context).textTheme.headline6,
@@ -129,15 +119,6 @@ class _CVLandingViewState extends State<CVLandingView> {
             child: _buildDrawerTile('Teachers', Icons.account_balance),
             onTap: () => setSelectedIndexTo(3),
           ),
-          ThemeProvider.themeOf(context).id == 'dark'
-              ? InkWell(
-                  child: _buildDrawerTile('Light Mode', Icons.brightness_high),
-                  onTap: () => ThemeProvider.controllerOf(context).nextTheme(),
-                )
-              : InkWell(
-                  child: _buildDrawerTile('Dark Mode', Icons.brightness_low),
-                  onTap: () => ThemeProvider.controllerOf(context).nextTheme(),
-                ),
           _model.isLoggedIn
               ? ExpansionTile(
                   maintainState: true,
@@ -189,6 +170,16 @@ class _CVLandingViewState extends State<CVLandingView> {
         child: Scaffold(
           appBar: _buildAppBar(),
           drawer: _buildDrawer(),
+          floatingActionButton: FloatingActionButton(
+            // isExtended: true,
+            child: ThemeProvider.themeOf(context).id == 'dark'
+                ? Icon(Icons.brightness_low)
+                : Icon(Icons.brightness_high),
+            backgroundColor: PrimaryAppTheme.primaryColor,
+            onPressed: () {
+              ThemeProvider.controllerOf(context).nextTheme();
+            },
+          ),
           body: PageTransitionSwitcher(
             transitionBuilder: (
               Widget child,

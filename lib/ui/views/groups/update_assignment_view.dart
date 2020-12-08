@@ -62,9 +62,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       ),
       child: HtmlEditor(
         decoration: BoxDecoration(
-          color: ThemeProvider.themeOf(context).id == 'dark'
-              ? PrimaryAppTheme.primaryColor
-              : Colors.grey[100],
+          color: PrimaryAppTheme.htmlEditorBg(context),
           border: Border.all(
             color: PrimaryAppTheme.primaryColorDark,
           ),

@@ -80,9 +80,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               child: Text(
                 _recievedGroup.attributes.name,
                 style: Theme.of(context).textTheme.headline4.copyWith(
-                      color: ThemeProvider.themeOf(context).id == 'dark'
-                          ? Colors.white
-                          : Colors.black,
+                      color: PrimaryAppTheme.getTextColor(context),
                       fontWeight: FontWeight.bold,
                     ),
                 textAlign: TextAlign.center,

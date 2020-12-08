@@ -74,7 +74,7 @@ class _LoginViewState extends State<LoginView> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Text(
           'Forgot Password?',
-          style: TextStyle(color: PrimaryAppTheme.primaryColorDark),
+          style: TextStyle(color: PrimaryAppTheme.highlightText(context)),
         ),
       ),
     );
@@ -102,7 +102,7 @@ class _LoginViewState extends State<LoginView> {
             TextSpan(
               text: 'Sign Up',
               style: TextStyle(
-                color: PrimaryAppTheme.primaryColorDark,
+                color: PrimaryAppTheme.highlightText(context),
               ),
             ),
           ],

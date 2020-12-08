@@ -48,14 +48,11 @@ class CVTextField extends StatelessWidget {
         maxLines: maxLines,
         keyboardType: type,
         initialValue: initialValue,
-        style: TextStyle(
-          color: ThemeProvider.themeOf(context).id == 'dark'
-              ? Colors.white
-              : Colors.black,
-        ),
+        style: TextStyle(color: PrimaryAppTheme.getTextColor(context)),
         decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
-          labelText: label,
-        ),
+            labelText: label,
+            labelStyle:
+                TextStyle(color: PrimaryAppTheme.textfieldlabelColor(context))),
         validator: validator,
         onSaved: onSaved,
         textInputAction: action,

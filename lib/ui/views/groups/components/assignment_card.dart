@@ -160,20 +160,15 @@ class _AssignmentCardState extends State<AssignmentCard> {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        border: Border.all(color: PrimaryAppTheme.primaryColorLight),
-        boxShadow: [
-          BoxShadow(
-            color: ThemeProvider.themeOf(context).id == 'dark'
-                ? PrimaryAppTheme.bgCardDark
-                : PrimaryAppTheme.grey,
-            offset: Offset(0, 3),
-            blurRadius: 2,
-          )
-        ],
-        color: ThemeProvider.themeOf(context).id == 'dark'
-            ? PrimaryAppTheme.bgCardDark
-            : PrimaryAppTheme.bgCard,
-      ),
+          border: Border.all(color: PrimaryAppTheme.primaryColorLight),
+          boxShadow: [
+            BoxShadow(
+              color: PrimaryAppTheme.boxShadow(context),
+              offset: Offset(0, 3),
+              blurRadius: 2,
+            )
+          ],
+          color: PrimaryAppTheme.boxBg(context)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[

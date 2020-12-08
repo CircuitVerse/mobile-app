@@ -25,25 +25,20 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            width: 10,
-            color: PrimaryAppTheme.primaryColor,
+          border: Border(
+            top: BorderSide(
+              width: 10,
+              color: PrimaryAppTheme.primaryColor,
+            ),
           ),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: ThemeProvider.themeOf(context).id == 'dark'
-                ? PrimaryAppTheme.bgCardDark
-                : PrimaryAppTheme.grey,
-            offset: Offset(0, 3),
-            blurRadius: 2,
-          )
-        ],
-        color: ThemeProvider.themeOf(context).id == 'dark'
-            ? PrimaryAppTheme.bgCardDark
-            : PrimaryAppTheme.bgCard,
-      ),
+          boxShadow: [
+            BoxShadow(
+              color: PrimaryAppTheme.boxShadow(context),
+              offset: Offset(0, 3),
+              blurRadius: 2,
+            )
+          ],
+          color: PrimaryAppTheme.boxBg(context)),
       child: Column(
         children: <Widget>[
           Text(

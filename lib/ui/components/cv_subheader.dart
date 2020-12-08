@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/app_theme.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class CVSubheader extends StatelessWidget {
@@ -15,9 +16,7 @@ class CVSubheader extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.headline4.copyWith(
                 fontWeight: FontWeight.w400,
-                color: ThemeProvider.themeOf(context).id == 'dark'
-                    ? Colors.white
-                    : Colors.black,
+                color: PrimaryAppTheme.getTextColor(context),
               ),
           textAlign: TextAlign.center,
         ),
@@ -25,11 +24,8 @@ class CVSubheader extends StatelessWidget {
             ? Text(
                 subtitle,
                 style: Theme.of(context).textTheme.subtitle1.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: ThemeProvider.themeOf(context).id == 'dark'
-                          ? Colors.white
-                          : Colors.black,
-                    ),
+                    fontWeight: FontWeight.w400,
+                    color: PrimaryAppTheme.getTextColor(context)),
                 textAlign: TextAlign.center,
               )
             : Container(),
