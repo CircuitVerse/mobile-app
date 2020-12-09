@@ -64,7 +64,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Widget _buildViewsComponent() {
     return Row(
       children: <Widget>[
-        Icon(Icons.visibility, color: Colors.black, size: 18),
+        Icon(Icons.visibility, size: 18),
         Text(' ${_recievedProject.attributes.view} Views'),
       ],
     );
@@ -452,7 +452,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 collaborator.attributes.name,
                 style: Theme.of(context).textTheme.headline6.copyWith(
                       decoration: TextDecoration.underline,
-                      color: PrimaryAppTheme.primaryColorDark,
+                      color: PrimaryAppTheme.highlightText(context),
                       fontWeight: FontWeight.bold,
                     ),
               ),

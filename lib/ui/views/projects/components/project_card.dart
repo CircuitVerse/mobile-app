@@ -56,8 +56,12 @@ class _ProjectCardState extends State<ProjectCard> {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline5.copyWith(
                     color: ThemeProvider.themeOf(context).id == 'dark'
-                        ? widget.isHeaderFilled ? Colors.black : Colors.white
-                        : widget.isHeaderFilled ? Colors.white : Colors.black,
+                        ? widget.isHeaderFilled
+                            ? Colors.black
+                            : Colors.white
+                        : widget.isHeaderFilled
+                            ? Colors.white
+                            : Colors.black,
                   ),
             ),
           ),

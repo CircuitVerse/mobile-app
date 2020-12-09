@@ -174,7 +174,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                     style: Theme.of(context).textTheme.headline6.copyWith(
                           color: _model.focussedProject == submission
                               ? Colors.white
-                              : Colors.black,
+                              : PrimaryAppTheme.getTextColor(context),
                         ),
                   ),
                 ),
