@@ -5,6 +5,7 @@ import 'package:mobile_app/ui/components/cv_subheader.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/contributors/contributors_view.dart';
 import 'package:mobile_app/ui/views/home/components/feature_card.dart';
+import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
 
@@ -110,6 +111,18 @@ class _HomeViewState extends State<HomeView> {
               cardHeading: 'Multi Bit Buses and components',
               cardDescription:
                   'CircuitVerse supports multi bit wires, this means circuit design is easier, faster and uncluttered.',
+            ),
+            SizedBox(height: 16),
+            CVSubheader(
+              title: 'Editor Picks',
+              subtitle:
+                  'These circuits have been hand-picked by our authors for their awesomeness',
+            ),
+            FeaturedProjectsView(embed: true),
+            CVOutlineButton(
+              title: 'Explore More',
+              isPrimaryDark: true,
+              onPressed: () => Get.toNamed(FeaturedProjectsView.id),
             ),
           ],
         ),

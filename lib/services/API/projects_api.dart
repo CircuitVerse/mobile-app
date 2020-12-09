@@ -21,6 +21,7 @@ abstract class ProjectsApi {
 
   Future<Projects> getFeaturedProjects({
     int page = 1,
+    int size = 5,
     String filterByTag,
     String sortBy,
   });
@@ -107,10 +108,11 @@ class HttpProjectsApi implements ProjectsApi {
   @override
   Future<Projects> getFeaturedProjects({
     int page = 1,
+    int size = 5,
     String filterByTag,
     String sortBy,
   }) async {
-    var endpoint = '/projects/featured?page[number]=$page';
+    var endpoint = '/projects/featured?page[number]=$page&page[size]=$size';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
     if (sortBy != null) endpoint += '&sort=$sortBy';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;

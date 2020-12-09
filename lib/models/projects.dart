@@ -49,9 +49,15 @@ class Project {
             : null,
       );
 
-  bool get hasAuthorAccess =>
-      relationships.author.data.id ==
-      locator<LocalStorageService>().currentUser.data.id;
+  bool get hasAuthorAccess {
+    var currentUser = locator<LocalStorageService>().currentUser;
+
+    if (currentUser != null) {
+      return relationships.author.data.id == currentUser.data.id;
+    }
+
+    return false;
+  }
 }
 
 class ProjectAttributes {

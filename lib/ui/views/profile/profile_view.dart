@@ -83,7 +83,9 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Widget _buildEditProfileButton() {
-    if (userId == locator<LocalStorageService>().currentUser.data.id) {
+    var _localStorageService = locator<LocalStorageService>();
+    if (_localStorageService.isLoggedIn &&
+        userId == _localStorageService.currentUser.data.id) {
       return FlatButton(
         color: AppTheme.primaryColor,
         onPressed: () async {
