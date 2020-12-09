@@ -11,6 +11,7 @@ import 'package:mobile_app/ui/views/contributors/contributors_view.dart';
 import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
 import 'package:mobile_app/ui/views/home/home_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
+import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
@@ -29,6 +30,7 @@ class _CVLandingViewState extends State<CVLandingView> {
 
   final List<Widget> _items = [
     HomeView(),
+    FeaturedProjectsView(showAppBar: false),
     AboutView(),
     ContributorsView(showAppBar: false),
     TeachersView(showAppBar: false),
@@ -45,10 +47,13 @@ class _CVLandingViewState extends State<CVLandingView> {
 
   String _appBarTitle(int selectedIndex) {
     switch (selectedIndex) {
-      case 4:
-        return 'Profile';
+      case 1:
+        return 'Featured Circuits';
         break;
       case 5:
+        return 'Profile';
+        break;
+      case 6:
         return 'Groups';
         break;
       default:
@@ -104,17 +109,34 @@ class _CVLandingViewState extends State<CVLandingView> {
             child: _buildDrawerTile('Home', Icons.home),
             onTap: () => setSelectedIndexTo(0),
           ),
-          InkWell(
-            child: _buildDrawerTile('About', FontAwesome5.address_card),
-            onTap: () => setSelectedIndexTo(1),
+          ExpansionTile(
+            maintainState: true,
+            title: ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: Icon(Icons.explore),
+              title: Text(
+                'Explore',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
+            children: <Widget>[
+              InkWell(
+                child: _buildDrawerTile('Featured Circuits', Icons.star),
+                onTap: () => setSelectedIndexTo(1),
+              ),
+            ],
           ),
           InkWell(
-            child: _buildDrawerTile('Contribute', Icons.add),
+            child: _buildDrawerTile('About', FontAwesome5.address_card),
             onTap: () => setSelectedIndexTo(2),
           ),
           InkWell(
-            child: _buildDrawerTile('Teachers', Icons.account_balance),
+            child: _buildDrawerTile('Contribute', Icons.add),
             onTap: () => setSelectedIndexTo(3),
+          ),
+          InkWell(
+            child: _buildDrawerTile('Teachers', Icons.account_balance),
+            onTap: () => setSelectedIndexTo(4),
           ),
           _model.isLoggedIn
               ? ExpansionTile(
@@ -128,12 +150,12 @@ class _CVLandingViewState extends State<CVLandingView> {
                   children: <Widget>[
                     InkWell(
                       child: _buildDrawerTile('Profile', FontAwesome5.user),
-                      onTap: () => setSelectedIndexTo(4),
+                      onTap: () => setSelectedIndexTo(5),
                     ),
                     InkWell(
                       child: _buildDrawerTile(
                           'My Groups', FontAwesome5.object_group),
-                      onTap: () => setSelectedIndexTo(5),
+                      onTap: () => setSelectedIndexTo(6),
                     ),
                     InkWell(
                       child: _buildDrawerTile('Log Out', Ionicons.ios_log_out),
