@@ -33,12 +33,6 @@ class PrimaryAppTheme {
         : PrimaryAppTheme.grey;
   }
 
-  static Color htmlEditorBg(context) {
-    return ThemeProvider.themeOf(context).id == 'dark'
-        ? PrimaryAppTheme.bgCardDark
-        : PrimaryAppTheme.grey;
-  }
-
   static Color appbarText(context) {
     return ThemeProvider.themeOf(context).id == 'dark'
         ? PrimaryAppTheme.primaryColor
@@ -57,6 +51,16 @@ class PrimaryAppTheme {
         : PrimaryAppTheme.primaryColorDark;
   }
 
+  static Color unexpanded_trailing(context) {
+    return ThemeProvider.themeOf(context).id == 'dark'
+        ? Colors.white
+        : Colors.black;
+  }
+
+  static Color expanded_trailing(context) {
+    return Colors.green;
+  }
+
   static const Color primaryColor = Color.fromRGBO(66, 185, 131, 1);
   static const Color primaryColorDark = Color.fromRGBO(2, 110, 87, 1);
   static const Color primaryColorDarkTheme = Color.fromRGBO(33, 33, 33, 1);
@@ -69,6 +73,7 @@ class PrimaryAppTheme {
   static const Color lightGrey = Color.fromRGBO(150, 150, 150, 0.5);
   static const Color bgCard = Color.fromRGBO(255, 255, 255, 0.9);
   static Color bgCardDark = Colors.grey[700];
+  static Color htmlEditorBg = Colors.grey[100];
   static const OutlineInputBorder primaryDarkOutlineBorder = OutlineInputBorder(
     borderRadius: BorderRadius.zero,
     borderSide: BorderSide(color: PrimaryAppTheme.primaryColorDark),

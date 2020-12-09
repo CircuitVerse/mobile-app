@@ -4,7 +4,6 @@ import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/group_details_view.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 class GroupMemberCard extends StatelessWidget {
   final Group group;

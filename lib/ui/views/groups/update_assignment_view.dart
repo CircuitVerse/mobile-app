@@ -16,7 +16,6 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 class UpdateAssignmentView extends StatefulWidget {
   static const String id = 'update_assignment_view';
@@ -62,7 +61,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       ),
       child: HtmlEditor(
         decoration: BoxDecoration(
-          color: PrimaryAppTheme.htmlEditorBg(context),
+          color: PrimaryAppTheme.htmlEditorBg,
           border: Border.all(
             color: PrimaryAppTheme.primaryColorDark,
           ),

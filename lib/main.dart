@@ -77,11 +77,6 @@ class CircuitVerseMobile extends StatelessWidget {
                 ),
               ),
               onGenerateRoute: CVRouter.generateRoute,
-              // theme: ThemeData(
-              //   primarySwatch: generateMaterialColor(AppTheme.primaryColor),
-              //   fontFamily: 'Poppins',
-              //   cursorColor: AppTheme.primaryColor,
-              // ),
               home: StartUpView(),
             ),
           ),

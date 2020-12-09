@@ -13,7 +13,6 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 class AddAssignmentView extends StatefulWidget {
   static const String id = 'add_assignment_view';
@@ -57,9 +56,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       ),
       child: HtmlEditor(
         decoration: BoxDecoration(
-          color: ThemeProvider.themeOf(context).id == 'dark'
-              ? PrimaryAppTheme.primaryColor
-              : Colors.grey[100],
+          color: PrimaryAppTheme.htmlEditorBg,
           border: Border.all(
             color: PrimaryAppTheme.primaryColorDark,
           ),

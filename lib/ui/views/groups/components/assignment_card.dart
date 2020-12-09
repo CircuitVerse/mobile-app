@@ -5,7 +5,6 @@ import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/models/assignments.dart';
 import 'package:mobile_app/ui/views/groups/assignment_details_view.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 class AssignmentCard extends StatefulWidget {
   final Assignment assignment;

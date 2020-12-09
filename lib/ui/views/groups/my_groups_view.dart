@@ -13,7 +13,6 @@ import 'package:mobile_app/ui/views/groups/edit_group_view.dart';
 import 'package:mobile_app/ui/views/groups/new_group_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 class MyGroupsView extends StatefulWidget {
   static const String id = 'my_groups_view';

@@ -94,60 +94,85 @@ class _CVLandingViewState extends State<CVLandingView> {
 
   Widget _buildDrawer() {
     return Drawer(
-      child: ListView(
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 10),
-            child: Image.asset(
-              'assets/images/landing/cv_full_logo.png',
-              width: 90,
+      child: Stack(
+        children: [
+          ListView(
+            children: <Widget>[
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 32, horizontal: 10),
+                child: Image.asset(
+                  'assets/images/landing/cv_full_logo.png',
+                  width: 90,
+                ),
+              ),
+              InkWell(
+                child: _buildDrawerTile('Home', Icons.home),
+                onTap: () => setSelectedIndexTo(0),
+              ),
+              InkWell(
+                child: _buildDrawerTile('About', FontAwesome5.address_card),
+                onTap: () => setSelectedIndexTo(1),
+              ),
+              InkWell(
+                child: _buildDrawerTile('Contribute', Icons.add),
+                onTap: () => setSelectedIndexTo(2),
+              ),
+              InkWell(
+                child: _buildDrawerTile('Teachers', Icons.account_balance),
+                onTap: () => setSelectedIndexTo(3),
+              ),
+              _model.isLoggedIn
+                  ? ExpansionTile(
+                      maintainState: true,
+                      title: Text(
+                        _model.currentUser.data.attributes.name ?? '',
+                        style: Theme.of(context).textTheme.headline6.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      children: <Widget>[
+                        InkWell(
+                          child: _buildDrawerTile('Profile', FontAwesome5.user),
+                          onTap: () => setSelectedIndexTo(4),
+                        ),
+                        InkWell(
+                          child: _buildDrawerTile(
+                              'My Groups', FontAwesome5.object_group),
+                          onTap: () => setSelectedIndexTo(5),
+                        ),
+                        InkWell(
+                          child:
+                              _buildDrawerTile('Log Out', Ionicons.ios_log_out),
+                          onTap: onLogoutPressed,
+                        ),
+                      ],
+                    )
+                  : InkWell(
+                      child: _buildDrawerTile('Login', Ionicons.ios_log_in),
+                      onTap: () => Get.offAndToNamed(LoginView.id),
+                    )
+            ],
+          ),
+          Positioned(
+            right: 5,
+            top: 35,
+            child: GestureDetector(
+              onTap: () {
+                print('hello');
+                ThemeProvider.controllerOf(context).nextTheme();
+              },
+              child: IconButton(
+                  icon: ThemeProvider.themeOf(context).id == 'dark'
+                      ? const Icon(Icons.brightness_low)
+                      : const Icon(Icons.brightness_high),
+                  iconSize: 28.0,
+                  onPressed: () {
+                    print('hello');
+                    ThemeProvider.controllerOf(context).nextTheme();
+                  }),
             ),
           ),
-          InkWell(
-            child: _buildDrawerTile('Home', Icons.home),
-            onTap: () => setSelectedIndexTo(0),
-          ),
-          InkWell(
-            child: _buildDrawerTile('About', FontAwesome5.address_card),
-            onTap: () => setSelectedIndexTo(1),
-          ),
-          InkWell(
-            child: _buildDrawerTile('Contribute', Icons.add),
-            onTap: () => setSelectedIndexTo(2),
-          ),
-          InkWell(
-            child: _buildDrawerTile('Teachers', Icons.account_balance),
-            onTap: () => setSelectedIndexTo(3),
-          ),
-          _model.isLoggedIn
-              ? ExpansionTile(
-                  maintainState: true,
-                  title: Text(
-                    _model.currentUser.data.attributes.name ?? '',
-                    style: Theme.of(context).textTheme.headline6.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  children: <Widget>[
-                    InkWell(
-                      child: _buildDrawerTile('Profile', FontAwesome5.user),
-                      onTap: () => setSelectedIndexTo(4),
-                    ),
-                    InkWell(
-                      child: _buildDrawerTile(
-                          'My Groups', FontAwesome5.object_group),
-                      onTap: () => setSelectedIndexTo(5),
-                    ),
-                    InkWell(
-                      child: _buildDrawerTile('Log Out', Ionicons.ios_log_out),
-                      onTap: onLogoutPressed,
-                    ),
-                  ],
-                )
-              : InkWell(
-                  child: _buildDrawerTile('Login', Ionicons.ios_log_in),
-                  onTap: () => Get.offAndToNamed(LoginView.id),
-                )
         ],
       ),
     );
@@ -170,16 +195,16 @@ class _CVLandingViewState extends State<CVLandingView> {
         child: Scaffold(
           appBar: _buildAppBar(),
           drawer: _buildDrawer(),
-          floatingActionButton: FloatingActionButton(
-            // isExtended: true,
-            child: ThemeProvider.themeOf(context).id == 'dark'
-                ? Icon(Icons.brightness_low)
-                : Icon(Icons.brightness_high),
-            backgroundColor: PrimaryAppTheme.primaryColor,
-            onPressed: () {
-              ThemeProvider.controllerOf(context).nextTheme();
-            },
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   // isExtended: true,
+          // child: ThemeProvider.themeOf(context).id == 'dark'
+          //     ? Icon(Icons.brightness_low)
+          //     : Icon(Icons.brightness_high),
+          //   backgroundColor: PrimaryAppTheme.primaryColor,
+          //   onPressed: () {
+          //     ThemeProvider.controllerOf(context).nextTheme();
+          //   },
+          // ),
           body: PageTransitionSwitcher(
             transitionBuilder: (
               Widget child,

@@ -15,7 +15,6 @@ import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 class GroupDetailsView extends StatefulWidget {
   static const String id = 'group_details_view';

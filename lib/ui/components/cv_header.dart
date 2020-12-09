@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/app_theme.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 class CVHeader extends StatelessWidget {
   final String title;
