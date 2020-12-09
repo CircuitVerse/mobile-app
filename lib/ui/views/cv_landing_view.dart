@@ -12,6 +12,7 @@ import 'package:mobile_app/ui/views/contributors/contributors_view.dart';
 import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
 import 'package:mobile_app/ui/views/home/home_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
+import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
@@ -31,6 +32,7 @@ class _CVLandingViewState extends State<CVLandingView> {
 
   final List<Widget> _items = [
     HomeView(),
+    FeaturedProjectsView(showAppBar: false),
     AboutView(),
     ContributorsView(showAppBar: false),
     TeachersView(showAppBar: false),
@@ -47,10 +49,13 @@ class _CVLandingViewState extends State<CVLandingView> {
 
   String _appBarTitle(int selectedIndex) {
     switch (selectedIndex) {
-      case 4:
-        return 'Profile';
+      case 1:
+        return 'Featured Circuits';
         break;
       case 5:
+        return 'Profile';
+        break;
+      case 6:
         return 'Groups';
         break;
       default:
@@ -94,6 +99,7 @@ class _CVLandingViewState extends State<CVLandingView> {
 
   Widget _buildDrawer() {
     return Drawer(
+
       child: Stack(
         children: [
           ListView(
@@ -159,7 +165,7 @@ class _CVLandingViewState extends State<CVLandingView> {
             top: 35,
             child: GestureDetector(
               onTap: () {
-                print('hello');
+                
                 ThemeProvider.controllerOf(context).nextTheme();
               },
               child: IconButton(
@@ -168,11 +174,12 @@ class _CVLandingViewState extends State<CVLandingView> {
                       : const Icon(Icons.brightness_high),
                   iconSize: 28.0,
                   onPressed: () {
-                    print('hello');
+                    
                     ThemeProvider.controllerOf(context).nextTheme();
                   }),
             ),
           ),
+
         ],
       ),
     );
@@ -195,16 +202,7 @@ class _CVLandingViewState extends State<CVLandingView> {
         child: Scaffold(
           appBar: _buildAppBar(),
           drawer: _buildDrawer(),
-          // floatingActionButton: FloatingActionButton(
-          //   // isExtended: true,
-          // child: ThemeProvider.themeOf(context).id == 'dark'
-          //     ? Icon(Icons.brightness_low)
-          //     : Icon(Icons.brightness_high),
-          //   backgroundColor: PrimaryAppTheme.primaryColor,
-          //   onPressed: () {
-          //     ThemeProvider.controllerOf(context).nextTheme();
-          //   },
-          // ),
+        
           body: PageTransitionSwitcher(
             transitionBuilder: (
               Widget child,

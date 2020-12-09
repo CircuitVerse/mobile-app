@@ -68,7 +68,7 @@ class LocalStorageService {
 
   User get currentUser {
     var userJson = _getFromDisk(USER);
-    if (userJson == null) {
+    if (userJson == null || userJson == 'null') {
       return null;
     }
 
