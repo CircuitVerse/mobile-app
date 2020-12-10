@@ -1,57 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 class PrimaryAppTheme {
   PrimaryAppTheme._();
   static Color textfieldlabelColor(context) {
-    return Theme.of(context).brightness == Brightness.dark
+    return ThemeProvider.themeOf(context) != null &&
+            ThemeProvider.themeOf(context).id == 'dark'
         ? Colors.grey[300]
         : Colors.grey[600];
   }
 
   static Color getTextColor(context) {
-    return Theme.of(context).brightness == Brightness.dark
+    return ThemeProvider.themeOf(context) != null &&
+            ThemeProvider.themeOf(context).id == 'dark'
         ? Colors.white
         : Colors.black;
   }
 
   static Color primaryHeading(context) {
-    return Theme.of(context).brightness == Brightness.dark
+    return ThemeProvider.themeOf(context) != null &&
+            ThemeProvider.themeOf(context).id == 'dark'
         ? PrimaryAppTheme.primaryColor
         : Colors.black;
   }
 
   static Color boxBg(context) {
-    return Theme.of(context).brightness == Brightness.dark
+    return ThemeProvider.themeOf(context) != null &&
+            ThemeProvider.themeOf(context).id == 'dark'
         ? PrimaryAppTheme.bgCardDark
         : PrimaryAppTheme.bgCard;
   }
 
   static Color boxShadow(context) {
-    return Theme.of(context).brightness == Brightness.dark
+    return ThemeProvider.themeOf(context) != null &&
+            ThemeProvider.themeOf(context).id == 'dark'
         ? PrimaryAppTheme.bgCardDark
         : PrimaryAppTheme.grey;
   }
 
   static Color appbarText(context) {
-    return Theme.of(context).brightness == Brightness.dark
+    return ThemeProvider.themeOf(context) != null &&
+            ThemeProvider.themeOf(context).id == 'dark'
         ? PrimaryAppTheme.primaryColor
         : Colors.black;
   }
 
   static Color drawerIcon(context) {
-    return Theme.of(context).brightness == Brightness.dark
+    return ThemeProvider.themeOf(context) != null &&
+            ThemeProvider.themeOf(context).id == 'dark'
         ? PrimaryAppTheme.primaryColor
         : Colors.black;
   }
 
   static Color highlightText(context) {
-    return Theme.of(context).brightness == Brightness.dark
+    return ThemeProvider.themeOf(context) != null &&
+            ThemeProvider.themeOf(context).id == 'dark'
         ? PrimaryAppTheme.primaryColor
         : PrimaryAppTheme.primaryColorDark;
   }
 
   static ThemeData getThemeData(context) {
-    return Theme.of(context).brightness == Brightness.dark
+    return ThemeProvider.themeOf(context) != null &&
+            ThemeProvider.themeOf(context).id == 'dark'
         ? ThemeData.dark().copyWith(
             accentColor: PrimaryAppTheme.primaryColor,
             primaryColor: PrimaryAppTheme.primaryColor)
