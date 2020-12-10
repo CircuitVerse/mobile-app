@@ -189,20 +189,17 @@ class _CVLandingViewState extends State<CVLandingView> {
           Positioned(
             right: 5,
             top: 35,
-            child: GestureDetector(
-              onTap: () {
-                ThemeProvider.controllerOf(context).nextTheme();
-              },
-              child: IconButton(
-                  icon: ThemeProvider.themeOf(context).id == 'dark'
-                      ? const Icon(Icons.brightness_low)
-                      : const Icon(Icons.brightness_high),
-                  iconSize: 28.0,
-                  onPressed: () {
-                    print(Theme.of(context).brightness);
+            child: IconButton(
+                icon: ThemeProvider.themeOf(context) != null &&
+                        ThemeProvider.themeOf(context).id == 'dark'
+                    ? const Icon(Icons.brightness_low)
+                    : const Icon(Icons.brightness_high),
+                iconSize: 28.0,
+                onPressed: () {
+                  if (ThemeProvider.themeOf(context) != null) {
                     ThemeProvider.controllerOf(context).nextTheme();
-                  }),
-            ),
+                  }
+                }),
           ),
         ],
       ),
