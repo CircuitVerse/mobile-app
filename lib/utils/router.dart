@@ -20,6 +20,7 @@ import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
+import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 
@@ -42,6 +43,8 @@ class CVRouter {
         return MaterialPageRoute(builder: (_) => AboutTosView());
       case AboutPrivacyPolicyView.id:
         return MaterialPageRoute(builder: (_) => AboutPrivacyPolicyView());
+      case FeaturedProjectsView.id:
+        return MaterialPageRoute(builder: (_) => FeaturedProjectsView());
       case ProfileView.id:
         var _userId = settings.arguments as String;
         return MaterialPageRoute(
