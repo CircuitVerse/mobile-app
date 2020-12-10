@@ -115,25 +115,28 @@ class _CVLandingViewState extends State<CVLandingView> {
                 child: _buildDrawerTile('Home', Icons.home),
                 onTap: () => setSelectedIndexTo(0),
               ),
-              ExpansionTile(
-                maintainState: true,
-                title: ListTile(
-                  contentPadding: EdgeInsets.all(0),
-                  leading: Icon(
-                    Icons.explore,
-                    color: PrimaryAppTheme.drawerIcon(context),
+              Theme(
+                data: PrimaryAppTheme.getThemeData(context),
+                child: ExpansionTile(
+                  maintainState: true,
+                  title: ListTile(
+                    contentPadding: EdgeInsets.all(0),
+                    leading: Icon(
+                      Icons.explore,
+                      color: PrimaryAppTheme.drawerIcon(context),
+                    ),
+                    title: Text(
+                      'Explore',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
-                  title: Text(
-                    'Explore',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
+                  children: <Widget>[
+                    InkWell(
+                      child: _buildDrawerTile('Featured Circuits', Icons.star),
+                      onTap: () => setSelectedIndexTo(1),
+                    ),
+                  ],
                 ),
-                children: <Widget>[
-                  InkWell(
-                    child: _buildDrawerTile('Featured Circuits', Icons.star),
-                    onTap: () => setSelectedIndexTo(1),
-                  ),
-                ],
               ),
               InkWell(
                 child: _buildDrawerTile('About', FontAwesome5.address_card),
@@ -148,30 +151,34 @@ class _CVLandingViewState extends State<CVLandingView> {
                 onTap: () => setSelectedIndexTo(4),
               ),
               _model.isLoggedIn
-                  ? ExpansionTile(
-                      maintainState: true,
-                      title: Text(
-                        _model.currentUser.data.attributes.name ?? '',
-                        style: Theme.of(context).textTheme.headline6.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                  ? Theme(
+                      data: PrimaryAppTheme.getThemeData(context),
+                      child: ExpansionTile(
+                        maintainState: true,
+                        title: Text(
+                          _model.currentUser.data.attributes.name ?? '',
+                          style: Theme.of(context).textTheme.headline6.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                        children: <Widget>[
+                          InkWell(
+                            child:
+                                _buildDrawerTile('Profile', FontAwesome5.user),
+                            onTap: () => setSelectedIndexTo(5),
+                          ),
+                          InkWell(
+                            child: _buildDrawerTile(
+                                'My Groups', FontAwesome5.object_group),
+                            onTap: () => setSelectedIndexTo(6),
+                          ),
+                          InkWell(
+                            child: _buildDrawerTile(
+                                'Log Out', Ionicons.ios_log_out),
+                            onTap: onLogoutPressed,
+                          ),
+                        ],
                       ),
-                      children: <Widget>[
-                        InkWell(
-                          child: _buildDrawerTile('Profile', FontAwesome5.user),
-                          onTap: () => setSelectedIndexTo(5),
-                        ),
-                        InkWell(
-                          child: _buildDrawerTile(
-                              'My Groups', FontAwesome5.object_group),
-                          onTap: () => setSelectedIndexTo(6),
-                        ),
-                        InkWell(
-                          child:
-                              _buildDrawerTile('Log Out', Ionicons.ios_log_out),
-                          onTap: onLogoutPressed,
-                        ),
-                      ],
                     )
                   : InkWell(
                       child: _buildDrawerTile('Login', Ionicons.ios_log_in),
@@ -192,6 +199,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                       : const Icon(Icons.brightness_high),
                   iconSize: 28.0,
                   onPressed: () {
+                    print(Theme.of(context).brightness);
                     ThemeProvider.controllerOf(context).nextTheme();
                   }),
             ),
