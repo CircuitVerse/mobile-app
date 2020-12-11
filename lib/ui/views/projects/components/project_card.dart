@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/models/projects.dart';
-import 'package:theme_provider/theme_provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ProjectCard extends StatefulWidget {
@@ -55,7 +54,7 @@ class _ProjectCardState extends State<ProjectCard> {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline5.copyWith(
-                    color: ThemeProvider.themeOf(context).id == 'dark'
+                    color: Theme.of(context).brightness == Brightness.dark
                         ? widget.isHeaderFilled
                             ? Colors.black
                             : Colors.white

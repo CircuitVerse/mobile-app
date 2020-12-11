@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 class CircuitVerseSocialCard extends StatelessWidget {
   final String imagePath;
@@ -24,7 +23,7 @@ class CircuitVerseSocialCard extends StatelessWidget {
         await launchURL(url);
       },
       child: Card(
-        color: ThemeProvider.themeOf(context).id == 'dark'
+        color: Theme.of(context).brightness == Brightness.dark
             ? PrimaryAppTheme.primaryColor
             : PrimaryAppTheme.primaryColorShadow,
         child: Padding(

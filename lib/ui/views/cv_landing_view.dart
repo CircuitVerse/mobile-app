@@ -190,13 +190,12 @@ class _CVLandingViewState extends State<CVLandingView> {
             right: 5,
             top: 35,
             child: IconButton(
-                icon: ThemeProvider.themeOf(context) != null &&
-                        ThemeProvider.themeOf(context).id == 'dark'
+                icon: Theme.of(context).brightness == Brightness.dark
                     ? const Icon(Icons.brightness_low)
                     : const Icon(Icons.brightness_high),
                 iconSize: 28.0,
                 onPressed: () {
-                  if (ThemeProvider.themeOf(context) != null) {
+                  if (ThemeProvider != null) {
                     ThemeProvider.controllerOf(context).nextTheme();
                   }
                 }),

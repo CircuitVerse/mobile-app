@@ -1,72 +1,72 @@
 import 'package:flutter/material.dart';
-import 'package:theme_provider/theme_provider.dart';
 
 class PrimaryAppTheme {
   PrimaryAppTheme._();
   static Color textfieldlabelColor(context) {
-    return ThemeProvider.themeOf(context) != null &&
-            ThemeProvider.themeOf(context).id == 'dark'
+    return Theme.of(context).brightness == Brightness.dark
         ? Colors.grey[300]
         : Colors.grey[600];
   }
 
   static Color getTextColor(context) {
-    return ThemeProvider.themeOf(context) != null &&
-            ThemeProvider.themeOf(context).id == 'dark'
+    return Theme.of(context).brightness == Brightness.dark
         ? Colors.white
         : Colors.black;
   }
 
   static Color primaryHeading(context) {
-    return ThemeProvider.themeOf(context) != null &&
-            ThemeProvider.themeOf(context).id == 'dark'
+    return Theme.of(context).brightness == Brightness.dark
         ? PrimaryAppTheme.primaryColor
         : Colors.black;
   }
 
   static Color boxBg(context) {
-    return ThemeProvider.themeOf(context) != null &&
-            ThemeProvider.themeOf(context).id == 'dark'
+    return Theme.of(context).brightness == Brightness.dark
         ? PrimaryAppTheme.bgCardDark
         : PrimaryAppTheme.bgCard;
   }
 
   static Color boxShadow(context) {
-    return ThemeProvider.themeOf(context) != null &&
-            ThemeProvider.themeOf(context).id == 'dark'
+    return Theme.of(context).brightness == Brightness.dark
         ? PrimaryAppTheme.bgCardDark
         : PrimaryAppTheme.grey;
   }
 
   static Color appbarText(context) {
-    return ThemeProvider.themeOf(context) != null &&
-            ThemeProvider.themeOf(context).id == 'dark'
+    return Theme.of(context).brightness == Brightness.dark
         ? PrimaryAppTheme.primaryColor
         : Colors.black;
   }
 
   static Color drawerIcon(context) {
-    return ThemeProvider.themeOf(context) != null &&
-            ThemeProvider.themeOf(context).id == 'dark'
+    return Theme.of(context).brightness == Brightness.dark
         ? PrimaryAppTheme.primaryColor
         : Colors.black;
   }
 
   static Color highlightText(context) {
-    return ThemeProvider.themeOf(context) != null &&
-            ThemeProvider.themeOf(context).id == 'dark'
+    return Theme.of(context).brightness == Brightness.dark
         ? PrimaryAppTheme.primaryColor
         : PrimaryAppTheme.primaryColorDark;
   }
 
+  static Color unexpanded_trailing(context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? Colors.white
+        : Colors.black;
+  }
+
+  static Color expanded_trailing(context) {
+    return Colors.green;
+  }
+
   static ThemeData getThemeData(context) {
-    return ThemeProvider.themeOf(context) != null &&
-            ThemeProvider.themeOf(context).id == 'dark'
+    return Theme.of(context).brightness == Brightness.dark
         ? ThemeData.dark().copyWith(
-            accentColor: PrimaryAppTheme.primaryColor,
+            accentColor: Colors.green,
             primaryColor: PrimaryAppTheme.primaryColor)
-        : ThemeData.light().copyWith(
-            accentColor: PrimaryAppTheme.primaryColor,
+        : ThemeData.dark().copyWith(
+            accentColor: Colors.green,
             primaryColor: PrimaryAppTheme.primaryColor);
   }
 

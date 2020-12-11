@@ -83,7 +83,8 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           child: Text(
             _recievedAssignment.attributes.name,
             style: Theme.of(context).textTheme.headline4.copyWith(
-                  color: ThemeProvider.themeOf(context).id == 'dark'
+                  color: ThemeProvider != null &&
+                          ThemeProvider.themeOf(context).id == 'dark'
                       ? Colors.white
                       : Colors.black,
                   fontWeight: FontWeight.bold,

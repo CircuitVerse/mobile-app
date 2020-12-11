@@ -9,7 +9,6 @@ import 'package:mobile_app/ui/views/home/home_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../setup/test_helpers.dart';
 
 void main() {
