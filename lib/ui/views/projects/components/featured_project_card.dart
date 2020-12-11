@@ -54,7 +54,8 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
           bottomRight: Radius.circular(4),
         ),
         border: Border.fromBorderSide(
-            BorderSide(color: PrimaryAppTheme.primaryColor)),
+          BorderSide(color: PrimaryAppTheme.primaryColor),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

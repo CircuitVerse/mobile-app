@@ -62,8 +62,9 @@ class AboutPrivacyPolicyView extends StatelessWidget {
               ? Text(
                   title,
                   style: style.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: PrimaryAppTheme.primaryHeading(context)),
+                    fontWeight: FontWeight.w400,
+                    color: PrimaryAppTheme.primaryHeading(context),
+                  ),
                   textAlign: TextAlign.left,
                 )
               : Container(),
@@ -84,9 +85,12 @@ class AboutPrivacyPolicyView extends StatelessWidget {
       appBar: showAppBar
           ? AppBar(
               title: Text(
-              'Privacy Policy',
-              style: TextStyle(color: PrimaryAppTheme.primaryHeading(context)),
-            ))
+                'Privacy Policy',
+                style: TextStyle(
+                  color: PrimaryAppTheme.primaryHeading(context),
+                ),
+              ),
+            )
           : null,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

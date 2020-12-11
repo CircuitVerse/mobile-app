@@ -65,15 +65,22 @@ class _CVLandingViewState extends State<CVLandingView> {
 
   Widget _buildAppBar() {
     return AppBar(
-      title: Text(_appBarTitle(_selectedIndex),
-          style: TextStyle(color: PrimaryAppTheme.appbarText(context))),
+      title: Text(
+        _appBarTitle(_selectedIndex),
+        style: TextStyle(
+          color: PrimaryAppTheme.appbarText(context),
+        ),
+      ),
       centerTitle: true,
     );
   }
 
   Widget _buildDrawerTile(String title, IconData iconData) {
     return ListTile(
-      leading: Icon(iconData, color: PrimaryAppTheme.drawerIcon(context)),
+      leading: Icon(
+        iconData,
+        color: PrimaryAppTheme.drawerIcon(context),
+      ),
       title: Text(
         title,
         style: Theme.of(context).textTheme.headline6,

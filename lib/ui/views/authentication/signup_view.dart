@@ -126,7 +126,9 @@ class _SignupViewState extends State<SignupView> {
         SnackBarUtils.showDark('Signup Successful');
 
         // move to home view on successful signup..
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(
+          Duration(seconds: 1),
+        );
         await Get.offAllNamed(CVLandingView.id);
       } else if (_signUpModel.isError(_signUpModel.SIGNUP)) {
         // show failure snackbar..

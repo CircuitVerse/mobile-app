@@ -139,7 +139,11 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           ),
           Html(
             data: """${_recievedAssignment.attributes.description ?? ''}""",
-            style: {'body': Style(fontSize: FontSize(18))},
+            style: {
+              'body': Style(
+                fontSize: FontSize(18),
+              )
+            },
           )
         ],
       ),

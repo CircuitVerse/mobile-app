@@ -42,8 +42,9 @@ class CircuitVerseSocialCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.subtitle1.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: PrimaryAppTheme.getTextColor(context)),
+                            fontWeight: FontWeight.bold,
+                            color: PrimaryAppTheme.getTextColor(context),
+                          ),
                     ),
                     Text(
                       description,

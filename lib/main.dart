@@ -82,7 +82,8 @@ class CircuitVerseMobile extends StatelessWidget {
                   home: StartUpView(),
                 ),
               ),
-            ))
+            ),
+          )
         : GetMaterialApp(
             title: 'CircuitVerse Mobile',
             localizationsDelegates: [

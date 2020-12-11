@@ -42,7 +42,8 @@ class _ProjectCardState extends State<ProjectCard> {
         border: widget.isHeaderFilled
             ? null
             : Border.fromBorderSide(
-                BorderSide(color: PrimaryAppTheme.primaryColor)),
+                BorderSide(color: PrimaryAppTheme.primaryColor),
+              ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

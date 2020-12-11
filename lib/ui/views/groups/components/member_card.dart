@@ -20,15 +20,16 @@ class MemberCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-          border: Border.all(color: PrimaryAppTheme.primaryColorLight),
-          boxShadow: [
-            BoxShadow(
-              color: PrimaryAppTheme.boxShadow(context),
-              offset: Offset(0, 3),
-              blurRadius: 2,
-            )
-          ],
-          color: PrimaryAppTheme.boxBg(context)),
+        border: Border.all(color: PrimaryAppTheme.primaryColorLight),
+        boxShadow: [
+          BoxShadow(
+            color: PrimaryAppTheme.boxShadow(context),
+            offset: Offset(0, 3),
+            blurRadius: 2,
+          )
+        ],
+        color: PrimaryAppTheme.boxBg(context),
+      ),
       child: Row(
         children: <Widget>[
           Expanded(

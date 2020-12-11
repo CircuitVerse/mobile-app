@@ -14,7 +14,9 @@ class CVTabBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(4),
+        ),
       ),
       child: tabBar,
     );

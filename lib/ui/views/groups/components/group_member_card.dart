@@ -16,20 +16,21 @@ class GroupMemberCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-          border: Border(
-            left: BorderSide(
-              width: 10,
-              color: PrimaryAppTheme.primaryColor,
-            ),
+        border: Border(
+          left: BorderSide(
+            width: 10,
+            color: PrimaryAppTheme.primaryColor,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: PrimaryAppTheme.boxShadow(context),
-              offset: Offset(0, 3),
-              blurRadius: 2,
-            ),
-          ],
-          color: PrimaryAppTheme.boxBg(context)),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: PrimaryAppTheme.boxShadow(context),
+            offset: Offset(0, 3),
+            blurRadius: 2,
+          ),
+        ],
+        color: PrimaryAppTheme.boxBg(context),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
