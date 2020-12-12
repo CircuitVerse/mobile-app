@@ -114,8 +114,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // Mock Local Storage
-      var _localStorage = MockLocalStorageService();
-      locator.registerSingleton<LocalStorageService>(_localStorage);
+      var _localStorage = getAndRegisterLocalStorageServiceMock();
 
       when(_localStorage.currentUser)
           .thenAnswer((_) => User.fromJson(mockUser));

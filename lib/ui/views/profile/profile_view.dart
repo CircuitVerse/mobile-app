@@ -45,6 +45,8 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Widget _buildNameComponent() {
+    print(_model?.user?.data?.attributes?.name ?? 'null');
+    print('Building Name Component');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Text(
@@ -203,10 +205,11 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return BaseView<ProfileViewModel>(
-      onModelReady: (model) async {
+      onModelReady: (model) {
         _model = model;
-        await _model.fetchUserProfile(userId);
+        _model.fetchUserProfile(userId);
         _profileUser = _model.user;
+        print('Fetched');
       },
       builder: (context, model, child) => Scaffold(
         appBar: widget.userId != null
