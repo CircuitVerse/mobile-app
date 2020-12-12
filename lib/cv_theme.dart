@@ -58,7 +58,7 @@ class CVTheme {
   static const Color primaryColorLight = Color.fromRGBO(66, 185, 131, 0.5);
   static const Color primaryColorShadow = Color.fromRGBO(245, 255, 252, 1);
   static const Color imageBackground = Color.fromRGBO(63, 61, 86, 1);
-  static const Color secondryColor = Color.fromRGBO(33, 33, 33, 1);
+  static const Color secondaryColor = Color.fromRGBO(33, 33, 33, 1);
   static const Color blue = Color.fromRGBO(66, 185, 182, 1);
   static const Color red = Color.fromRGBO(255, 89, 89, 1);
   static const Color grey = Color.fromRGBO(150, 150, 150, 1);
