@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
@@ -68,7 +68,7 @@ class _CVLandingViewState extends State<CVLandingView> {
       title: Text(
         _appBarTitle(_selectedIndex),
         style: TextStyle(
-          color: PrimaryAppTheme.appbarText(context),
+          color: CVTheme.appBarText(context),
         ),
       ),
       centerTitle: true,
@@ -79,7 +79,7 @@ class _CVLandingViewState extends State<CVLandingView> {
     return ListTile(
       leading: Icon(
         iconData,
-        color: PrimaryAppTheme.drawerIcon(context),
+        color: CVTheme.drawerIcon(context),
       ),
       title: Text(
         title,
@@ -123,14 +123,14 @@ class _CVLandingViewState extends State<CVLandingView> {
                 onTap: () => setSelectedIndexTo(0),
               ),
               Theme(
-                data: PrimaryAppTheme.getThemeData(context),
+                data: CVTheme.themeData,
                 child: ExpansionTile(
                   maintainState: true,
                   title: ListTile(
                     contentPadding: EdgeInsets.all(0),
                     leading: Icon(
                       Icons.explore,
-                      color: PrimaryAppTheme.drawerIcon(context),
+                      color: CVTheme.drawerIcon(context),
                     ),
                     title: Text(
                       'Explore',
@@ -159,7 +159,7 @@ class _CVLandingViewState extends State<CVLandingView> {
               ),
               _model.isLoggedIn
                   ? Theme(
-                      data: PrimaryAppTheme.getThemeData(context),
+                      data: CVTheme.themeData,
                       child: ExpansionTile(
                         maintainState: true,
                         title: Text(

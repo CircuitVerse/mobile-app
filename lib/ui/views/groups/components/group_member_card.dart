@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/group_details_view.dart';
@@ -19,17 +19,17 @@ class GroupMemberCard extends StatelessWidget {
         border: Border(
           left: BorderSide(
             width: 10,
-            color: PrimaryAppTheme.primaryColor,
+            color: CVTheme.primaryColor,
           ),
         ),
         boxShadow: [
           BoxShadow(
-            color: PrimaryAppTheme.boxShadow(context),
+            color: CVTheme.boxShadow(context),
             offset: Offset(0, 3),
             blurRadius: 2,
           ),
         ],
-        color: PrimaryAppTheme.boxBg(context),
+        color: CVTheme.boxBg(context),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,7 +58,7 @@ class GroupMemberCard extends StatelessWidget {
           ),
           CardButton(
             onPressed: () => Get.toNamed(GroupDetailsView.id, arguments: group),
-            color: PrimaryAppTheme.primaryColor,
+            color: CVTheme.primaryColor,
             title: 'View',
           )
         ],

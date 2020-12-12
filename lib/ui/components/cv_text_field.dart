@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 
 class CVTextField extends StatelessWidget {
   final String label;
@@ -48,12 +48,12 @@ class CVTextField extends StatelessWidget {
         keyboardType: type,
         initialValue: initialValue,
         style: TextStyle(
-          color: PrimaryAppTheme.getTextColor(context),
+          color: CVTheme.textColor(context),
         ),
-        decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
+        decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: label,
           labelStyle: TextStyle(
-            color: PrimaryAppTheme.textfieldlabelColor(context),
+            color: CVTheme.textFieldLabelColor(context),
           ),
         ),
         validator: validator,

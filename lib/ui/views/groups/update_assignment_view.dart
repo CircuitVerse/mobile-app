@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:html_editor/html_editor.dart';
 import 'package:intl/intl.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/data/restriction_elements.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/assignments.dart';
@@ -61,9 +61,9 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       ),
       child: HtmlEditor(
         decoration: BoxDecoration(
-          color: PrimaryAppTheme.htmlEditorBg,
+          color: CVTheme.htmlEditorBg,
           border: Border.all(
-            color: PrimaryAppTheme.primaryColorDark,
+            color: CVTheme.primaryColorDark,
           ),
         ),
         value: widget.assignment.attributes.description ?? '',
@@ -79,7 +79,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       child: DateTimeField(
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: widget.assignment.attributes.deadline,
-        decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
+        decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: 'Deadline',
         ),
         onShowPicker: (context, currentValue) async {

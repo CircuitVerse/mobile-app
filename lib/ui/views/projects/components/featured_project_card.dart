@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
@@ -20,7 +20,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
   Widget _buildPreview() {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: PrimaryAppTheme.primaryColor),
+        border: Border.all(color: CVTheme.primaryColor),
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(4),
           topRight: Radius.circular(4),
@@ -54,7 +54,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
           bottomRight: Radius.circular(4),
         ),
         border: Border.fromBorderSide(
-          BorderSide(color: PrimaryAppTheme.primaryColor),
+          BorderSide(color: CVTheme.primaryColor),
         ),
       ),
       child: Row(
@@ -68,7 +68,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.start,
                 style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: PrimaryAppTheme.getTextColor(context),
+                      color: CVTheme.textColor(context),
                     ),
               ),
             ),
@@ -89,7 +89,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
       padding: const EdgeInsets.all(8.0),
       child: Card(
         elevation: 5,
-        shadowColor: PrimaryAppTheme.primaryColorLight,
+        shadowColor: CVTheme.primaryColorLight,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

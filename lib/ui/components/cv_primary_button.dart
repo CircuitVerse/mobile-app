@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 
 class CVPrimaryButton extends StatelessWidget {
   final String title;
@@ -31,9 +31,7 @@ class CVPrimaryButton extends StatelessWidget {
                   color: Colors.white,
                 ),
       ),
-      color: isPrimaryDark
-          ? PrimaryAppTheme.primaryColorDark
-          : PrimaryAppTheme.primaryColor,
+      color: isPrimaryDark ? CVTheme.primaryColorDark : CVTheme.primaryColor,
       onPressed: onPressed ?? () {},
     );
   }

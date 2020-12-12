@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/group_details_view.dart';
@@ -27,17 +27,17 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
         border: Border(
           top: BorderSide(
             width: 10,
-            color: PrimaryAppTheme.primaryColor,
+            color: CVTheme.primaryColor,
           ),
         ),
         boxShadow: [
           BoxShadow(
-            color: PrimaryAppTheme.boxShadow(context),
+            color: CVTheme.boxShadow(context),
             offset: Offset(0, 3),
             blurRadius: 2,
           )
         ],
-        color: PrimaryAppTheme.boxBg(context),
+        color: CVTheme.boxBg(context),
       ),
       child: Column(
         children: <Widget>[
@@ -62,21 +62,21 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
                 child: CardButton(
                   onPressed: () =>
                       Get.toNamed(GroupDetailsView.id, arguments: widget.group),
-                  color: PrimaryAppTheme.primaryColor,
+                  color: CVTheme.primaryColor,
                   title: 'View',
                 ),
               ),
               Flexible(
                 child: CardButton(
                   onPressed: widget.onEdit,
-                  color: PrimaryAppTheme.blue,
+                  color: CVTheme.blue,
                   title: 'Edit',
                 ),
               ),
               Flexible(
                 child: CardButton(
                   onPressed: widget.onDelete,
-                  color: PrimaryAppTheme.red,
+                  color: CVTheme.red,
                   title: 'Delete',
                 ),
               ),

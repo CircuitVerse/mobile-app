@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
@@ -26,7 +26,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   Widget _buildForgotPasswordImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      color: PrimaryAppTheme.imageBackground,
+      color: CVTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
         child: Image.asset(
@@ -72,7 +72,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
             TextSpan(
               text: 'Sign Up',
               style: TextStyle(
-                color: PrimaryAppTheme.primaryColorDark,
+                color: CVTheme.primaryColorDark,
               ),
             ),
           ],

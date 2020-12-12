@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/services/dialog_service.dart';
@@ -87,7 +87,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
               'Groups',
               style: Theme.of(context).textTheme.headline4.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: PrimaryAppTheme.getTextColor(context)),
+                  color: CVTheme.textColor(context)),
               textAlign: TextAlign.center,
             ),
           );

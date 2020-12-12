@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/ui/components/cv_password_field.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
@@ -37,7 +37,7 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildSignUpImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      color: PrimaryAppTheme.imageBackground,
+      color: CVTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
         child: Image.asset(
@@ -105,7 +105,7 @@ class _SignupViewState extends State<SignupView> {
             TextSpan(
               text: 'Login',
               style: TextStyle(
-                color: PrimaryAppTheme.primaryColorDark,
+                color: CVTheme.primaryColorDark,
               ),
             ),
           ],

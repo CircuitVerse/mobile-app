@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locale/locales.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/managers/dialog_manager.dart';
@@ -10,7 +10,7 @@ import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/utils/styles.dart';
 import 'package:theme_provider/theme_provider.dart';
-import 'app_theme.dart';
+
 import 'ui/views/startup_view.dart';
 
 Future<void> main() async {
@@ -39,20 +39,20 @@ class CircuitVerseMobile extends StatelessWidget {
               AppTheme(
                   id: 'light',
                   data: ThemeData(
-                    primaryColor: PrimaryAppTheme.primaryColor,
-                    accentColor: PrimaryAppTheme.primaryColor,
+                    primaryColor: CVTheme.primaryColor,
+                    accentColor: CVTheme.primaryColor,
                     fontFamily: 'Poppins',
-                    cursorColor: PrimaryAppTheme.primaryColor,
+                    cursorColor: CVTheme.primaryColor,
                   ),
                   description: 'LightTheme'),
               AppTheme(
                   id: 'dark',
                   data: ThemeData(
-                    primaryColor: PrimaryAppTheme.primaryColorDarkTheme,
-                    accentColor: PrimaryAppTheme.primaryColorDarkTheme,
+                    primaryColor: CVTheme.secondryColor,
+                    accentColor: CVTheme.secondryColor,
                     fontFamily: 'Poppins',
                     brightness: Brightness.dark,
-                    cursorColor: PrimaryAppTheme.primaryColor,
+                    cursorColor: CVTheme.primaryColor,
                   ),
                   description: 'DarkTheme')
             ],
@@ -105,10 +105,9 @@ class CircuitVerseMobile extends StatelessWidget {
             ),
             onGenerateRoute: CVRouter.generateRoute,
             theme: ThemeData(
-              primarySwatch:
-                  generateMaterialColor(PrimaryAppTheme.primaryColor),
+              primarySwatch: generateMaterialColor(CVTheme.primaryColor),
               fontFamily: 'Poppins',
-              cursorColor: PrimaryAppTheme.primaryColor,
+              cursorColor: CVTheme.primaryColor,
             ),
             home: StartUpView(),
           );

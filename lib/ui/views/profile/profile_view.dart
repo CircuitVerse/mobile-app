@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
@@ -87,7 +87,7 @@ class _ProfileViewState extends State<ProfileView> {
     if (_localStorageService.isLoggedIn &&
         userId == _localStorageService.currentUser.data.id) {
       return FlatButton(
-        color: PrimaryAppTheme.primaryColor,
+        color: CVTheme.primaryColor,
         onPressed: () async {
           var _updatedUser = await Get.toNamed(EditProfileView.id);
           if (_updatedUser is User) {
@@ -113,7 +113,7 @@ class _ProfileViewState extends State<ProfileView> {
 
     return Card(
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: PrimaryAppTheme.lightGrey),
+        side: BorderSide(color: CVTheme.lightGrey),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Padding(
@@ -166,20 +166,20 @@ class _ProfileViewState extends State<ProfileView> {
     return Expanded(
       child: Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: PrimaryAppTheme.lightGrey),
+          side: BorderSide(color: CVTheme.lightGrey),
           borderRadius: BorderRadius.circular(4),
         ),
         child: DefaultTabController(
           length: 2,
           child: Scaffold(
             appBar: CVTabBar(
-              color: PrimaryAppTheme.lightGrey.withOpacity(0.2),
+              color: CVTheme.lightGrey.withOpacity(0.2),
               tabBar: TabBar(
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.black87,
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicator: BoxDecoration(
-                  color: PrimaryAppTheme.primaryColor,
+                  color: CVTheme.primaryColor,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
                 ),
                 tabs: [

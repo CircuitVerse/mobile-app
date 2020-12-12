@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutPrivacyPolicyView extends StatelessWidget {
@@ -63,7 +63,7 @@ class AboutPrivacyPolicyView extends StatelessWidget {
                   title,
                   style: style.copyWith(
                     fontWeight: FontWeight.w400,
-                    color: PrimaryAppTheme.primaryHeading(context),
+                    color: CVTheme.primaryHeading(context),
                   ),
                   textAlign: TextAlign.left,
                 )
@@ -87,7 +87,7 @@ class AboutPrivacyPolicyView extends StatelessWidget {
               title: Text(
                 'Privacy Policy',
                 style: TextStyle(
-                  color: PrimaryAppTheme.primaryHeading(context),
+                  color: CVTheme.primaryHeading(context),
                 ),
               ),
             )

@@ -5,7 +5,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/assignments.dart';
@@ -59,7 +59,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           )
         ],
       ),
-      color: PrimaryAppTheme.primaryColor,
+      color: CVTheme.primaryColor,
       onPressed: () async {
         var _updatedAssignment = await Get.toNamed(
           UpdateAssignmentView.id,
@@ -164,10 +164,10 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: _model.focussedProject == submission
-                      ? PrimaryAppTheme.primaryColor
+                      ? CVTheme.primaryColor
                       : Colors.transparent,
                   border: Border.all(
-                    color: PrimaryAppTheme.grey.withOpacity(0.5),
+                    color: CVTheme.grey.withOpacity(0.5),
                     width: 0.5,
                   ),
                 ),
@@ -179,7 +179,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                     style: Theme.of(context).textTheme.headline6.copyWith(
                           color: _model.focussedProject == submission
                               ? Colors.white
-                              : PrimaryAppTheme.getTextColor(context),
+                              : CVTheme.textColor(context),
                         ),
                   ),
                 ),
@@ -207,7 +207,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              border: Border.all(color: PrimaryAppTheme.primaryColorDark),
+              border: Border.all(color: CVTheme.primaryColorDark),
             ),
             child: _model.projects.isEmpty
                 ? Padding(
@@ -225,7 +225,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
               aspectRatio: 1.6,
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: PrimaryAppTheme.primaryColorDark),
+                  border: Border.all(color: CVTheme.primaryColorDark),
                 ),
                 child: FadeInImage.memoryNetwork(
                   width: double.infinity,
@@ -319,7 +319,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          border: Border.all(color: PrimaryAppTheme.primaryColorDark),
+          border: Border.all(color: CVTheme.primaryColorDark),
         ),
         child: Form(
           key: _formKey,
@@ -374,7 +374,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                               color: Colors.white,
                             ),
                       ),
-                      color: PrimaryAppTheme.red,
+                      color: CVTheme.red,
                       onPressed: () => deleteGrade(_submittedGrade.id),
                     )
                 ],

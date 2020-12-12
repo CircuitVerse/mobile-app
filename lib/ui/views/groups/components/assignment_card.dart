@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/assignments.dart';
 import 'package:mobile_app/ui/views/groups/assignment_details_view.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
@@ -61,7 +61,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
           title: 'Show',
           onPressed: () => Get.toNamed(AssignmentDetailsView.id,
               arguments: widget.assignment),
-          color: PrimaryAppTheme.primaryColor,
+          color: CVTheme.primaryColor,
         ),
       ),
     );
@@ -74,7 +74,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
             child: CardButton(
               title: 'Edit',
               onPressed: widget.onEditPressed,
-              color: PrimaryAppTheme.blue,
+              color: CVTheme.blue,
             ),
           ),
         );
@@ -85,7 +85,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
             child: CardButton(
               title: 'Reopen',
               onPressed: widget.onReopenPressed,
-              color: PrimaryAppTheme.blue,
+              color: CVTheme.blue,
             ),
           ),
         );
@@ -97,7 +97,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
           child: CardButton(
             title: 'Delete',
             onPressed: widget.onDeletePressed,
-            color: PrimaryAppTheme.red,
+            color: CVTheme.red,
           ),
         ),
       );
@@ -110,7 +110,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
               child: CardButton(
                 title: 'View Submission',
                 onPressed: () {},
-                color: PrimaryAppTheme.blue,
+                color: CVTheme.blue,
               ),
             ),
           );
@@ -126,7 +126,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
               child: CardButton(
                 title: 'View Your Work',
                 onPressed: () {},
-                color: PrimaryAppTheme.blue,
+                color: CVTheme.blue,
               ),
             ),
           );
@@ -137,7 +137,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
               child: CardButton(
                 title: 'Start Working',
                 onPressed: widget.onStartPressed,
-                color: PrimaryAppTheme.blue,
+                color: CVTheme.blue,
               ),
             ),
           );
@@ -159,15 +159,15 @@ class _AssignmentCardState extends State<AssignmentCard> {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        border: Border.all(color: PrimaryAppTheme.primaryColorLight),
+        border: Border.all(color: CVTheme.primaryColorLight),
         boxShadow: [
           BoxShadow(
-            color: PrimaryAppTheme.boxShadow(context),
+            color: CVTheme.boxShadow(context),
             offset: Offset(0, 3),
             blurRadius: 2,
           )
         ],
-        color: PrimaryAppTheme.boxBg(context),
+        color: CVTheme.boxBg(context),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

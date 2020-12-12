@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:html_editor/html_editor.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/dialog_service.dart';
@@ -60,7 +60,7 @@ class _EditProjectViewState extends State<EditProjectView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: DropdownButtonFormField<String>(
-        decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
+        decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: 'Project Access Type',
         ),
         value: _projectAccessType,
@@ -90,9 +90,9 @@ class _EditProjectViewState extends State<EditProjectView> {
       ),
       child: HtmlEditor(
         decoration: BoxDecoration(
-          color: PrimaryAppTheme.htmlEditorBg,
+          color: CVTheme.htmlEditorBg,
           border: Border.all(
-            color: PrimaryAppTheme.primaryColorDark,
+            color: CVTheme.primaryColorDark,
           ),
         ),
         value: widget.project.attributes.description ?? '',

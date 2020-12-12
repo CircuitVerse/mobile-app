@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/collaborators.dart';
@@ -45,8 +45,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Widget _buildProjectPreview() {
     return Container(
-      decoration:
-          BoxDecoration(border: Border.all(color: PrimaryAppTheme.grey)),
+      decoration: BoxDecoration(border: Border.all(color: CVTheme.grey)),
       child: FadeInImage.memoryNetwork(
         placeholder: kTransparentImage,
         image:
@@ -76,7 +75,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Widget _buildProjectHeader(String title) {
     return Container(
       padding: const EdgeInsets.all(4),
-      color: PrimaryAppTheme.primaryColor,
+      color: CVTheme.primaryColor,
       width: double.infinity,
       child: Text(
         title,
@@ -147,7 +146,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               style: TextStyle(
                 fontSize: 18,
                 decoration: TextDecoration.underline,
-                color: PrimaryAppTheme.primaryColor,
+                color: CVTheme.primaryColor,
               ),
             )
           ],
@@ -207,7 +206,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
         decoration: BoxDecoration(
-          color: PrimaryAppTheme.primaryColor,
+          color: CVTheme.primaryColor,
           borderRadius: BorderRadius.circular(4),
         ),
         child: Row(
@@ -244,7 +243,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       child: Container(
         padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: PrimaryAppTheme.primaryColor,
+          color: CVTheme.primaryColor,
           borderRadius: BorderRadius.circular(4),
         ),
         child: Icon(
@@ -305,7 +304,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 child: TextFormField(
                   maxLines: 5,
                   autofocus: true,
-                  decoration: PrimaryAppTheme.textFieldDecoration.copyWith(
+                  decoration: CVTheme.textFieldDecoration.copyWith(
                     hintText: 'Email Ids',
                   ),
                   validator: (emails) => Validators.areEmailsValid(emails)
@@ -359,7 +358,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
         decoration: BoxDecoration(
-          border: Border.all(color: PrimaryAppTheme.primaryColorDark),
+          border: Border.all(color: CVTheme.primaryColorDark),
           borderRadius: BorderRadius.circular(4),
         ),
         child: Row(
@@ -403,7 +402,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
         decoration: BoxDecoration(
-          border: Border.all(color: PrimaryAppTheme.primaryColorDark),
+          border: Border.all(color: CVTheme.primaryColorDark),
           borderRadius: BorderRadius.circular(4),
         ),
         child: Row(
@@ -455,7 +454,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 collaborator.attributes.name,
                 style: Theme.of(context).textTheme.headline6.copyWith(
                       decoration: TextDecoration.underline,
-                      color: PrimaryAppTheme.highlightText(context),
+                      color: CVTheme.highlightText(context),
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -465,7 +464,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             IconButton(
               padding: const EdgeInsets.all(0),
               icon: Icon(Icons.delete_outline),
-              color: PrimaryAppTheme.red,
+              color: CVTheme.red,
               onPressed: () => onDeleteCollaboratorPressed(collaborator),
             ),
         ],
