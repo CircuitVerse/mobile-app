@@ -79,6 +79,7 @@ class _EditGroupViewState extends State<EditGroupView> {
                   validator: (value) =>
                       value.isEmpty ? 'Please enter a Group Name' : null,
                   onSaved: (value) => _name = value.trim(),
+                  action: TextInputAction.done,
                 ),
                 SizedBox(height: 16),
                 CVPrimaryButton(

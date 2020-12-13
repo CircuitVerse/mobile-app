@@ -37,6 +37,14 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   final TextEditingController _gradesController = TextEditingController();
   final TextEditingController _remarksController = TextEditingController();
 
+  final _gradeFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _gradeFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -333,10 +341,13 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                     : TextInputType.text,
                 validator: (value) =>
                     value.isEmpty ? "Grade can't be empty" : null,
+                onFieldSubmitted: (_) =>
+                    FocusScope.of(context).requestFocus(_gradeFocusNode),
               ),
               SizedBox(height: 4),
               CVTextField(
                 label: 'Remarks',
+                focusNode: _gradeFocusNode,
                 controller: _remarksController,
                 padding: const EdgeInsets.all(0),
               ),
