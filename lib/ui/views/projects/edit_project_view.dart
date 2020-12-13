@@ -30,6 +30,16 @@ class _EditProjectViewState extends State<EditProjectView> {
   List<String> _tags;
   final GlobalKey<HtmlEditorState> _descriptionEditor = GlobalKey();
 
+  final _nameFocusNode = FocusNode();
+  final _tagsListFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _nameFocusNode.dispose();
+    _tagsListFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -44,15 +54,22 @@ class _EditProjectViewState extends State<EditProjectView> {
       initialValue: _name,
       validator: (value) => value.isEmpty ? "Name can't be empty" : null,
       onSaved: (value) => _name = value.trim(),
+      onFieldSubmitted: (_) =>
+          FocusScope.of(context).requestFocus(_nameFocusNode),
     );
   }
 
   Widget _buildTagsInput() {
     return CVTextField(
       label: 'Tags List',
+      focusNode: _nameFocusNode,
       initialValue: _tags.join(' , '),
       onSaved: (value) =>
           _tags = value.split(',').map((tag) => tag.trim()).toList(),
+      onFieldSubmitted: (_) {
+        _nameFocusNode.unfocus();
+        FocusScope.of(context).requestFocus(_tagsListFocusNode);
+      },
     );
   }
 
@@ -60,6 +77,7 @@ class _EditProjectViewState extends State<EditProjectView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: DropdownButtonFormField<String>(
+        focusNode: _tagsListFocusNode,
         decoration: AppTheme.textFieldDecoration.copyWith(
           labelText: 'Project Access Type',
         ),

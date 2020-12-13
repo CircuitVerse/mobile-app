@@ -24,6 +24,16 @@ class _EditProfileViewState extends State<EditProfileView> {
   String _name, _educationalInstitute, _country;
   bool _subscribed;
 
+  final _nameFocusNode = FocusNode();
+  final _countryFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _nameFocusNode.dispose();
+    _countryFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -40,22 +50,31 @@ class _EditProfileViewState extends State<EditProfileView> {
       initialValue: _name,
       validator: (value) => value.isEmpty ? "Name can't be empty" : null,
       onSaved: (value) => _name = value.trim(),
+      onFieldSubmitted: (_) =>
+          FocusScope.of(context).requestFocus(_nameFocusNode),
     );
   }
 
   Widget _buildCountryField() {
     return CVTextField(
+      focusNode: _nameFocusNode,
       label: 'Country',
       initialValue: _country,
       onSaved: (value) => _country = value.trim(),
+      onFieldSubmitted: (_) {
+        _nameFocusNode.unfocus();
+        FocusScope.of(context).requestFocus(_countryFocusNode);
+      },
     );
   }
 
   Widget _buildInstituteField() {
     return CVTextField(
+      focusNode: _countryFocusNode,
       label: 'Educational Institute',
       initialValue: _educationalInstitute,
       onSaved: (value) => _educationalInstitute = value.trim(),
+      action: TextInputAction.done,
     );
   }
 

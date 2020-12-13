@@ -45,6 +45,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       label: 'Name',
       validator: (name) => name.isEmpty ? 'Please enter a valid name' : null,
       onSaved: (name) => _name = name.trim(),
+      action: TextInputAction.done,
     );
   }
 
