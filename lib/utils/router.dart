@@ -17,6 +17,7 @@ import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
 import 'package:mobile_app/ui/views/groups/new_group_view.dart';
 import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
 import 'package:mobile_app/ui/views/cv_landing_view.dart';
+import 'package:mobile_app/ui/views/ib/ib_post_view.dart';
 import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
@@ -45,6 +46,8 @@ class CVRouter {
         return MaterialPageRoute(builder: (_) => AboutPrivacyPolicyView());
       case FeaturedProjectsView.id:
         return MaterialPageRoute(builder: (_) => FeaturedProjectsView());
+      case IbPostView.id:
+        return MaterialPageRoute(builder: (_) => IbPostView(postId: 'test-id'));
       case ProfileView.id:
         var _userId = settings.arguments as String;
         return MaterialPageRoute(

@@ -10,6 +10,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/contributors/contributors_view.dart';
 import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
 import 'package:mobile_app/ui/views/home/home_view.dart';
+import 'package:mobile_app/ui/views/ib/ib_post_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
@@ -125,6 +126,10 @@ class _CVLandingViewState extends State<CVLandingView> {
                 onTap: () => setSelectedIndexTo(1),
               ),
             ],
+          ),
+          InkWell(
+            child: _buildDrawerTile('IB Test', Icons.star),
+            onTap: () => Get.toNamed(IbPostView.id),
           ),
           InkWell(
             child: _buildDrawerTile('About', FontAwesome5.address_card),
