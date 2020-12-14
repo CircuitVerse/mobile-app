@@ -60,7 +60,8 @@ class MockProfileViewModel extends Mock implements ProfileViewModel {}
 
 class MockUserProjectsViewModel extends Mock implements UserProjectsViewModel {}
 
-class MockUserFavouritesViewModel extends Mock implements UserFavouritesViewModel {}
+class MockUserFavouritesViewModel extends Mock
+    implements UserFavouritesViewModel {}
 
 LocalStorageService getAndRegisterLocalStorageServiceMock() {
   _removeRegistrationIfExists<LocalStorageService>();

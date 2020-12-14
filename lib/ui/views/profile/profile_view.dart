@@ -25,7 +25,6 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   ProfileViewModel _model;
   String userId;
-  User _profileUser;
 
   @override
   void initState() {
@@ -45,12 +44,10 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Widget _buildNameComponent() {
-    print(_model?.user?.data?.attributes?.name ?? 'null');
-    print('Building Name Component');
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Text(
-        _profileUser?.data?.attributes?.name ?? 'N.A',
+        _model?.user?.data?.attributes?.name ?? 'N.A',
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -94,7 +91,7 @@ class _ProfileViewState extends State<ProfileView> {
           var _updatedUser = await Get.toNamed(EditProfileView.id);
           if (_updatedUser is User) {
             setState(() {
-              _profileUser = _updatedUser;
+              _model.user = _updatedUser;
             });
           }
         },
@@ -111,7 +108,7 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Widget _buildProfileCard() {
-    var _attrs = _profileUser?.data?.attributes;
+    var _attrs = _model?.user?.data?.attributes;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -208,8 +205,6 @@ class _ProfileViewState extends State<ProfileView> {
       onModelReady: (model) {
         _model = model;
         _model.fetchUserProfile(userId);
-        _profileUser = _model.user;
-        print('Fetched');
       },
       builder: (context, model, child) => Scaffold(
         appBar: widget.userId != null

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
@@ -29,7 +28,6 @@ void main() {
     setUp(() => mockObserver = NavigatorObserverMock());
 
     Future<void> _pumpProfileView(WidgetTester tester) async {
-
       // Mock Local Storage
       var _localStorageService = getAndRegisterLocalStorageServiceMock();
 
@@ -42,8 +40,9 @@ void main() {
       locator.registerSingleton<ProfileViewModel>(_profileViewModel);
 
       when(_profileViewModel.fetchUserProfile(any)).thenReturn(null);
-      
-      when(_profileViewModel.isSuccess(_profileViewModel.FETCH_USER_PROFILE)).thenReturn(true);
+
+      when(_profileViewModel.isSuccess(_profileViewModel.FETCH_USER_PROFILE))
+          .thenReturn(true);
       when(_profileViewModel.user).thenReturn(user);
 
       // Mock User Projects ViewModel
@@ -51,14 +50,19 @@ void main() {
       locator.registerSingleton<UserProjectsViewModel>(_userProjectsViewModel);
 
       when(_userProjectsViewModel.fetchUserProjects()).thenReturn(null);
-      when(_userProjectsViewModel.isSuccess(_userProjectsViewModel.FETCH_USER_PROJECTS)).thenReturn(false);
+      when(_userProjectsViewModel
+              .isSuccess(_userProjectsViewModel.FETCH_USER_PROJECTS))
+          .thenReturn(false);
 
-      // Mock User Favorities ViewModel
-      var _userFavoritiesViewModel = MockUserFavouritesViewModel();
-      locator.registerSingleton<UserFavouritesViewModel>(_userFavoritiesViewModel);
+      // Mock User Favorites ViewModel
+      var _userFavoritesViewModel = MockUserFavouritesViewModel();
+      locator
+          .registerSingleton<UserFavouritesViewModel>(_userFavoritesViewModel);
 
       when(_userProjectsViewModel.fetchUserProjects()).thenReturn(null);
-      when(_userProjectsViewModel.isSuccess(_userProjectsViewModel.FETCH_USER_PROJECTS)).thenReturn(false);
+      when(_userProjectsViewModel
+              .isSuccess(_userProjectsViewModel.FETCH_USER_PROJECTS))
+          .thenReturn(false);
 
       await tester.pumpWidget(
         GetMaterialApp(
@@ -82,15 +86,22 @@ void main() {
         // Finds Profile Image
         expect(find.byType(Image), findsOneWidget);
 
-        //print(find.byType(Text).toString());
         // Finds Username
         expect(find.text('Test User'), findsOneWidget);
 
-        // Finds Joined text
-        //expect(find.textContaining('Joined'), findsOneWidget);
-        //print(find.textContaining('Joined').toString());
+        // Finds Joined, Country, Institute, Subscription
+        expect(find.byWidgetPredicate((widget) {
+          return widget is RichText &&
+              (widget.text.toPlainText() == 'Joined : 10 months ago' ||
+                  widget.text.toPlainText() == 'Country : India' ||
+                  widget.text.toPlainText() ==
+                      'Educational Institute : Gurukul' ||
+                  widget.text.toPlainText() == 'Subscribed to mails : true');
+        }), findsNWidgets(4));
 
-        // Finds Country
+        // Finds Tabs of Circuits, Favorities
+        expect(find.widgetWithText(Tab, 'Circuits'), findsOneWidget);
+        expect(find.widgetWithText(Tab, 'Favourites'), findsOneWidget);
       });
     });
   });
