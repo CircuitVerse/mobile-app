@@ -54,16 +54,6 @@ void main() {
               .isSuccess(_userProjectsViewModel.FETCH_USER_PROJECTS))
           .thenReturn(false);
 
-      // Mock User Favorites ViewModel
-      var _userFavoritesViewModel = MockUserFavouritesViewModel();
-      locator
-          .registerSingleton<UserFavouritesViewModel>(_userFavoritesViewModel);
-
-      when(_userProjectsViewModel.fetchUserProjects()).thenReturn(null);
-      when(_userProjectsViewModel
-              .isSuccess(_userProjectsViewModel.FETCH_USER_PROJECTS))
-          .thenReturn(false);
-
       await tester.pumpWidget(
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
@@ -99,7 +89,7 @@ void main() {
                   widget.text.toPlainText() == 'Subscribed to mails : true');
         }), findsNWidgets(4));
 
-        // Finds Tabs of Circuits, Favorities
+        // Finds Tabs of Circuits, Favorites
         expect(find.widgetWithText(Tab, 'Circuits'), findsOneWidget);
         expect(find.widgetWithText(Tab, 'Favourites'), findsOneWidget);
       });
