@@ -13,6 +13,7 @@ import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
+import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
@@ -62,6 +63,8 @@ class MockUserProjectsViewModel extends Mock implements UserProjectsViewModel {}
 
 class MockUserFavouritesViewModel extends Mock
     implements UserFavouritesViewModel {}
+
+class MockEditProfileViewModel extends Mock implements EditProfileViewModel {}
 
 LocalStorageService getAndRegisterLocalStorageServiceMock() {
   _removeRegistrationIfExists<LocalStorageService>();
