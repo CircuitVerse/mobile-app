@@ -8,13 +8,9 @@ import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
-import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/utils/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
-import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
-import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
-import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

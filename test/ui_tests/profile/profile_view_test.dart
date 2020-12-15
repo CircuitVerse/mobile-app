@@ -7,7 +7,6 @@ import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/utils/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
-import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -82,7 +81,7 @@ void main() {
         // Finds Joined, Country, Institute, Subscription
         expect(find.byWidgetPredicate((widget) {
           return widget is RichText &&
-              (widget.text.toPlainText() == 'Joined : 10 months ago' ||
+              (widget.text.toPlainText().contains('Joined : ') ||
                   widget.text.toPlainText() == 'Country : India' ||
                   widget.text.toPlainText() ==
                       'Educational Institute : Gurukul' ||
