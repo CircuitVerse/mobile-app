@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:mobile_app/app_theme.dart';
 import 'package:mobile_app/locale/locales.dart';
 import 'package:mobile_app/locator.dart';
-import 'package:mobile_app/managers/dialog_manager.dart';
-import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/utils/styles.dart';
 
@@ -43,12 +41,6 @@ class CircuitVerseMobile extends StatelessWidget {
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context).title,
       debugShowCheckedModeBanner: false,
-      builder: (context, child) => Navigator(
-        key: locator<DialogService>().dialogNavigationKey,
-        onGenerateRoute: (settings) => MaterialPageRoute(
-          builder: (context) => DialogManager(child: child),
-        ),
-      ),
       onGenerateRoute: CVRouter.generateRoute,
       theme: ThemeData(
         primarySwatch: generateMaterialColor(AppTheme.primaryColor),
