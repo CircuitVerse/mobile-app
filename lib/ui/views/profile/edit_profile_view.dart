@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
+import 'package:mobile_app/services/API/country_institute_api.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
+import 'package:mobile_app/ui/components/cv_typeahead_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
@@ -56,25 +58,30 @@ class _EditProfileViewState extends State<EditProfileView> {
   }
 
   Widget _buildCountryField() {
-    return CVTextField(
+    return CVTypeAheadField(
       focusNode: _nameFocusNode,
       label: 'Country',
-      initialValue: _country,
-      onSaved: (value) => _country = value.trim(),
-      onFieldSubmitted: (_) {
+      controller: TextEditingController(text: _country),
+      onSaved: (value) => _country = (value != '') ? value.trim() : '',
+      onFieldSubmitted: () {
         _nameFocusNode.unfocus();
         FocusScope.of(context).requestFocus(_countryFocusNode);
       },
+      countryInstituteToggle: CountryInstituteAPI.COUNTRY,
+      countryInstituteObject: locator<CountryInstituteAPI>(),
     );
   }
 
   Widget _buildInstituteField() {
-    return CVTextField(
+    return CVTypeAheadField(
       focusNode: _countryFocusNode,
       label: 'Educational Institute',
-      initialValue: _educationalInstitute,
-      onSaved: (value) => _educationalInstitute = value.trim(),
+      controller: TextEditingController(text: _educationalInstitute),
+      onSaved: (value) =>
+          _educationalInstitute = (value != '') ? value.trim() : '',
+      countryInstituteToggle: CountryInstituteAPI.EDUCATIONAL_INSTITUTE,
       action: TextInputAction.done,
+      countryInstituteObject: locator<CountryInstituteAPI>(),
     );
   }
 
