@@ -37,24 +37,26 @@ class CircuitVerseMobile extends StatelessWidget {
             loadThemeOnInit: true,
             themes: [
               AppTheme(
-                  id: 'light',
-                  data: ThemeData(
-                    primaryColor: CVTheme.primaryColor,
-                    accentColor: CVTheme.primaryColor,
-                    fontFamily: 'Poppins',
-                    cursorColor: CVTheme.primaryColor,
-                  ),
-                  description: 'LightTheme'),
+                id: 'light',
+                data: ThemeData(
+                  primaryColor: CVTheme.primaryColor,
+                  accentColor: CVTheme.primaryColor,
+                  fontFamily: 'Poppins',
+                  cursorColor: CVTheme.primaryColor,
+                ),
+                description: 'LightTheme',
+              ),
               AppTheme(
-                  id: 'dark',
-                  data: ThemeData(
-                    primaryColor: CVTheme.secondaryColor,
-                    accentColor: CVTheme.secondaryColor,
-                    fontFamily: 'Poppins',
-                    brightness: Brightness.dark,
-                    cursorColor: CVTheme.primaryColor,
-                  ),
-                  description: 'DarkTheme')
+                id: 'dark',
+                data: ThemeData(
+                  primaryColor: CVTheme.secondaryColor,
+                  accentColor: CVTheme.secondaryColor,
+                  fontFamily: 'Poppins',
+                  brightness: Brightness.dark,
+                  cursorColor: CVTheme.primaryColor,
+                ),
+                description: 'DarkTheme',
+              ),
             ],
             child: ThemeConsumer(
               child: Builder(
