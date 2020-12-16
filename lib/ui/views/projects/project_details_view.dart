@@ -9,6 +9,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/collaborators.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/dialog_service.dart';
+import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
@@ -28,6 +29,8 @@ class ProjectDetailsView extends StatefulWidget {
 }
 
 class _ProjectDetailsViewState extends State<ProjectDetailsView> {
+  final LocalStorageService _localStorageService =
+      locator<LocalStorageService>();
   final DialogService _dialogService = locator<DialogService>();
   ProjectDetailsViewModel _model;
   final _formKey = GlobalKey<FormState>();
@@ -513,9 +516,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     spacing: 8,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: <Widget>[
-                      if (!_recievedProject.hasAuthorAccess)
+                      if (!_recievedProject.hasAuthorAccess &&
+                          _localStorageService.isLoggedIn)
                         _buildForkProjectButton(),
-                      _buildStarProjectButton(),
+                      if (_localStorageService.isLoggedIn)
+                        _buildStarProjectButton(),
                       if (_recievedProject.hasAuthorAccess)
                         _buildAddCollaboratorsButton(),
                     ],
