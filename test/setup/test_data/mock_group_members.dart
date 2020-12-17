@@ -25,12 +25,14 @@ Map<String, dynamic> mockGroupMembers = {
 Map<String, dynamic> mockGroupMember = {
   'id': '1',
   'type': 'group_member',
-  'attributes': {
-    'group_id': 1,
-    'user_id': 1,
-    'created_at': '2020-08-15T14:36:38.228Z',
-    'updated_at': '2020-08-15T14:36:38.228Z',
-    'name': 'Test User',
-    'email': 'test@test.com'
-  }
+  'attributes': mockGroupMemberAttributes
+};
+
+Map<String, dynamic> mockGroupMemberAttributes = {
+  'group_id': 1,
+  'user_id': 1,
+  'created_at': '2020-08-15T14:36:38.228Z',
+  'updated_at': '2020-08-15T14:36:38.228Z',
+  'name': 'Test User',
+  'email': 'test@test.com'
 };

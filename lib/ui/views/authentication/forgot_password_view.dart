@@ -45,6 +45,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       validator: (value) =>
           Validators.isEmailValid(value) ? null : 'Please enter a valid email',
       onSaved: (value) => _email = value.trim(),
+      action: TextInputAction.done,
     );
   }
 
