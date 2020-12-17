@@ -36,7 +36,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   final _formKey = GlobalKey<FormState>();
   String _emails;
   Project _recievedProject;
-  final GlobalKey<_AddButtonState> addButtonGlobalKey = GlobalKey<_AddButtonState>();
+  final GlobalKey<_AddButtonState> addButtonGlobalKey =
+      GlobalKey<_AddButtonState>();
 
   @override
   void initState() {
@@ -89,6 +90,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       ),
     );
   }
+
   Widget _buildProjectNameHeader() {
     return Column(
       children: <Widget>[
