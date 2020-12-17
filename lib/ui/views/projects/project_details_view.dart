@@ -36,6 +36,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   final _formKey = GlobalKey<FormState>();
   String _emails;
   Project _recievedProject;
+  final GlobalKey<_AddButtonState> addButtonGlobalKey = GlobalKey<_AddButtonState>();
 
   @override
   void initState() {
@@ -88,7 +89,6 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       ),
     );
   }
-
   Widget _buildProjectNameHeader() {
     return Column(
       children: <Widget>[
@@ -303,6 +303,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 key: _formKey,
                 child: TextFormField(
                   maxLines: 5,
+                  onChanged: (emailValue) {
+                    addButtonGlobalKey.currentState
+                        .setAddFunction(emailValue.isNotEmpty);
+                  },
                   autofocus: true,
                   decoration: AppTheme.textFieldDecoration.copyWith(
                     hintText: 'Email Ids',
@@ -319,10 +323,14 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   child: Text('CANCEL'),
                   onPressed: () => Navigator.pop(context),
                 ),
-                FlatButton(
-                  child: Text('ADD'),
-                  onPressed: () => onAddCollaboratorsPressed(context),
-                ),
+                // FlatButton(
+                //   child: Text('ADD'),
+                //   onPressed: () => onAddCollaboratorsPressed(context),
+                // ),
+                AddButton(
+                    addFunction: onAddCollaboratorsPressed,
+                    context: context,
+                    key: addButtonGlobalKey),
               ],
             ),
           );
@@ -558,6 +566,35 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           );
         }),
       ),
+    );
+  }
+}
+
+class AddButton extends StatefulWidget {
+  AddButton({@required this.addFunction, this.context, @required Key key})
+      : super(key: key);
+  final Function addFunction;
+  final BuildContext context;
+  @override
+  _AddButtonState createState() => _AddButtonState();
+}
+
+class _AddButtonState extends State<AddButton> {
+  Function dynamicAddFunction;
+  void setAddFunction(bool isActive) {
+    setState(() {
+      dynamicAddFunction = isActive ? widget.addFunction : null;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+      child: Text('ADD'),
+      disabledTextColor: Colors.grey,
+      onPressed: dynamicAddFunction == null
+          ? null
+          : () => dynamicAddFunction.call(widget.context),
     );
   }
 }
