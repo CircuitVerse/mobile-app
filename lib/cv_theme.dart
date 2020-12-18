@@ -64,8 +64,8 @@ class CVTheme {
   static const Color grey = Color.fromRGBO(150, 150, 150, 1);
   static const Color lightGrey = Color.fromRGBO(150, 150, 150, 0.5);
   static const Color bgCard = Color.fromRGBO(255, 255, 255, 0.9);
-  static Color bgCardDark = Colors.grey[700];
-  static Color htmlEditorBg = Colors.grey[100];
+  static const Color bgCardDark = Color.fromRGBO(97, 97, 97, 1);
+  static const Color htmlEditorBg = Color.fromRGBO(245, 245, 245, 1);
   static const OutlineInputBorder primaryDarkOutlineBorder = OutlineInputBorder(
     borderRadius: BorderRadius.zero,
     borderSide: BorderSide(color: CVTheme.primaryColorDark),

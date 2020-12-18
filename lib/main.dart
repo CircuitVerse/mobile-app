@@ -5,12 +5,8 @@ import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locale/locales.dart';
 import 'package:mobile_app/locator.dart';
-import 'package:mobile_app/managers/dialog_manager.dart';
-import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/utils/router.dart';
-import 'package:mobile_app/utils/styles.dart';
 import 'package:theme_provider/theme_provider.dart';
-
 import 'ui/views/startup_view.dart';
 
 Future<void> main() async {
@@ -31,37 +27,35 @@ class CircuitVerseMobile extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return ThemeProvider != null
-        ? ThemeProvider(
-            saveThemesOnChange: true,
-            loadThemeOnInit: true,
-            themes: [
-              AppTheme(
-                id: 'light',
-                data: ThemeData(
-                  primaryColor: CVTheme.primaryColor,
-                  accentColor: CVTheme.primaryColor,
-                  fontFamily: 'Poppins',
-                  cursorColor: CVTheme.primaryColor,
-                ),
-                description: 'LightTheme',
-              ),
-              AppTheme(
-                id: 'dark',
-                data: ThemeData(
-                  primaryColor: CVTheme.secondaryColor,
-                  accentColor: CVTheme.secondaryColor,
-                  fontFamily: 'Poppins',
-                  brightness: Brightness.dark,
-                  cursorColor: CVTheme.primaryColor,
-                ),
-                description: 'DarkTheme',
-              ),
-            ],
-            child: ThemeConsumer(
-              child: Builder(
-                builder: (themeContext) => GetMaterialApp(
-                  theme: ThemeProvider.themeOf(themeContext).data,
+    return ThemeProvider(
+      saveThemesOnChange: true,
+      loadThemeOnInit: true,
+      themes: [
+        AppTheme(
+          id: 'light',
+          data: ThemeData(
+            primaryColor: CVTheme.primaryColor,
+            accentColor: CVTheme.primaryColor,
+            fontFamily: 'Poppins',
+            cursorColor: CVTheme.primaryColor,
+          ),
+          description: 'LightTheme',
+        ),
+        AppTheme(
+          id: 'dark',
+          data: ThemeData(
+            primaryColor: CVTheme.secondaryColor,
+            accentColor: CVTheme.secondaryColor,
+            fontFamily: 'Poppins',
+            brightness: Brightness.dark,
+            cursorColor: CVTheme.primaryColor,
+          ),
+          description: 'DarkTheme',
+        ),
+      ],
+      child: ThemeConsumer(
+        child: Builder(
+            builder: (themeContext) => GetMaterialApp(
                   title: 'CircuitVerse Mobile',
                   localizationsDelegates: [
                     AppLocalizationsDelegate(),
@@ -74,44 +68,11 @@ class CircuitVerseMobile extends StatelessWidget {
                   onGenerateTitle: (BuildContext context) =>
                       AppLocalizations.of(context).title,
                   debugShowCheckedModeBanner: false,
-                  builder: (context, child) => Navigator(
-                    key: locator<DialogService>().dialogNavigationKey,
-                    onGenerateRoute: (settings) => MaterialPageRoute(
-                      builder: (context) => DialogManager(child: child),
-                    ),
-                  ),
                   onGenerateRoute: CVRouter.generateRoute,
+                  theme: ThemeProvider.themeOf(themeContext).data,
                   home: StartUpView(),
-                ),
-              ),
-            ),
-          )
-        : GetMaterialApp(
-            title: 'CircuitVerse Mobile',
-            localizationsDelegates: [
-              AppLocalizationsDelegate(),
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            supportedLocales: [
-              Locale('en', ''),
-            ],
-            onGenerateTitle: (BuildContext context) =>
-                AppLocalizations.of(context).title,
-            debugShowCheckedModeBanner: false,
-            builder: (context, child) => Navigator(
-              key: locator<DialogService>().dialogNavigationKey,
-              onGenerateRoute: (settings) => MaterialPageRoute(
-                builder: (context) => DialogManager(child: child),
-              ),
-            ),
-            onGenerateRoute: CVRouter.generateRoute,
-            theme: ThemeData(
-              primarySwatch: generateMaterialColor(CVTheme.primaryColor),
-              fontFamily: 'Poppins',
-              cursorColor: CVTheme.primaryColor,
-            ),
-            home: StartUpView(),
-          );
+                )),
+      ),
+    );
   }
 }
