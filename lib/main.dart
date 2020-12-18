@@ -55,23 +55,24 @@ class CircuitVerseMobile extends StatelessWidget {
       ],
       child: ThemeConsumer(
         child: Builder(
-            builder: (themeContext) => GetMaterialApp(
-                  title: 'CircuitVerse Mobile',
-                  localizationsDelegates: [
-                    AppLocalizationsDelegate(),
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                  ],
-                  supportedLocales: [
-                    Locale('en', ''),
-                  ],
-                  onGenerateTitle: (BuildContext context) =>
-                      AppLocalizations.of(context).title,
-                  debugShowCheckedModeBanner: false,
-                  onGenerateRoute: CVRouter.generateRoute,
-                  theme: ThemeProvider.themeOf(themeContext).data,
-                  home: StartUpView(),
-                )),
+          builder: (themeContext) => GetMaterialApp(
+            title: 'CircuitVerse Mobile',
+            localizationsDelegates: [
+              AppLocalizationsDelegate(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: [
+              Locale('en', ''),
+            ],
+            onGenerateTitle: (BuildContext context) =>
+                AppLocalizations.of(context).title,
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: CVRouter.generateRoute,
+            theme: ThemeProvider.themeOf(themeContext).data,
+            home: StartUpView(),
+          ),
+        ),
       ),
     );
   }
