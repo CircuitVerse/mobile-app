@@ -17,12 +17,9 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
         ? 'https://restcountries.eu/rest/v2/all'
         : 'http://universities.hipolabs.com/search?';
 
-    var headers = {'Content-Type': 'application/json'};
     try {
-      ApiUtils.addTokenToHeaders(headers);
       data = await ApiUtils.get(
         url,
-        headers: headers,
       );
 
       var matches = [];
