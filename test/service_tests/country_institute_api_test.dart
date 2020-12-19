@@ -19,19 +19,25 @@ void main() {
         var _countryApi = HttpCountryInstituteAPI();
 
         expect(
-          (await _countryApi.getSuggestions('ta', CountryInstituteAPI.COUNTRY))
+          (await _countryApi.getCountries(
+            'ta',
+          ))
               .toString(),
           [].toString(),
         );
 
         expect(
-          (await _countryApi.getSuggestions('t', CountryInstituteAPI.COUNTRY))
+          (await _countryApi.getCountries(
+            't',
+          ))
               .toString(),
           ['Test'].toString(),
         );
 
         expect(
-          (await _countryApi.getSuggestions('', CountryInstituteAPI.COUNTRY))
+          (await _countryApi.getCountries(
+            '',
+          ))
               .toString(),
           ['Test'].toString(),
         );
@@ -41,7 +47,10 @@ void main() {
         var _countriesApi = HttpCountryInstituteAPI();
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_countriesApi.getSuggestions('', ''),
+        expect(
+            _countriesApi.getCountries(
+              '',
+            ),
             throwsA(isInstanceOf<Failure>()));
       });
     });
@@ -55,22 +64,25 @@ void main() {
         var _countryApi = HttpCountryInstituteAPI();
 
         expect(
-          (await _countryApi.getSuggestions(
-                  'ta', CountryInstituteAPI.EDUCATIONAL_INSTITUTE))
+          (await _countryApi.getInstitutes(
+            'ta',
+          ))
               .toString(),
           [].toString(),
         );
 
         expect(
-          (await _countryApi.getSuggestions(
-                  't', CountryInstituteAPI.EDUCATIONAL_INSTITUTE))
+          (await _countryApi.getInstitutes(
+            't',
+          ))
               .toString(),
           ['Test'].toString(),
         );
 
         expect(
-          (await _countryApi.getSuggestions(
-                  '', CountryInstituteAPI.EDUCATIONAL_INSTITUTE))
+          (await _countryApi.getInstitutes(
+            '',
+          ))
               .toString(),
           ['Test'].toString(),
         );
@@ -80,7 +92,10 @@ void main() {
         var _countriesApi = HttpCountryInstituteAPI();
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_countriesApi.getSuggestions('', ''),
+        expect(
+            _countriesApi.getInstitutes(
+              '',
+            ),
             throwsA(isInstanceOf<Failure>()));
       });
     });

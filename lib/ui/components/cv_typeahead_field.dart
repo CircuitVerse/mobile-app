@@ -15,7 +15,7 @@ class CVTypeAheadField extends StatelessWidget {
   final EdgeInsets padding;
   final FocusNode focusNode;
   final CountryInstituteAPI countryInstituteObject;
-  final String countryInstituteToggle;
+  final String toggle;
 
   /// Creates a [TextField] that is specifically styled for CircuitVerse.
   ///
@@ -38,7 +38,7 @@ class CVTypeAheadField extends StatelessWidget {
     this.onFieldSubmitted,
     this.countryInstituteObject,
     this.controller,
-    this.countryInstituteToggle,
+    this.toggle,
   }) : super(key: key);
 
   @override
@@ -67,10 +67,24 @@ class CVTypeAheadField extends StatelessWidget {
             ),
             suggestionsCallback: (pattern) async {
               try {
-                return await countryInstituteObject.getSuggestions(
-                    pattern, countryInstituteToggle);
+                if (toggle == HttpCountryInstituteAPI.COUNTRY) {
+                  return await countryInstituteObject.getCountries(
+                    pattern,
+                  );
+                }
+                if (toggle == HttpCountryInstituteAPI.EDUCATIONAL_INSTITUTE) {
+                  return await countryInstituteObject.getInstitutes(
+                    pattern,
+                  );
+                }
+                //// If there is need of some other API Fetch add another if condition
+                return [
+                  pattern == '' ? 'No suggestions found' : pattern,
+                ];
               } catch (e) {
-                return [pattern == '' ? 'No suggestions found' : pattern];
+                return [
+                  pattern == '' ? 'No suggestions found' : pattern,
+                ];
               }
             },
             transitionBuilder: (context, suggestionsBox, controller) {
@@ -87,7 +101,9 @@ class CVTypeAheadField extends StatelessWidget {
               }
             },
             onSaved: (value) {
-              onSaved((value == '') ? (text ?? 'N.A') : value);
+              onSaved(
+                (value == '') ? (text ?? 'N.A') : value,
+              );
             },
           );
         },
