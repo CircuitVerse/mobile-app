@@ -9,8 +9,6 @@ abstract class CountryInstituteAPI {
 
 class HttpCountryInstituteAPI implements CountryInstituteAPI {
   List<dynamic> data;
-  static const String COUNTRY = 'country';
-  static const String EDUCATIONAL_INSTITUTE = 'educational institute';
 
   Future<dynamic> _fetchAPI(String query, String url) async {
     try {

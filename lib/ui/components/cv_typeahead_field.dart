@@ -17,6 +17,9 @@ class CVTypeAheadField extends StatelessWidget {
   final CountryInstituteAPI countryInstituteObject;
   final String toggle;
 
+  static const String COUNTRY = 'country';
+  static const String EDUCATIONAL_INSTITUTE = 'educational institute';
+
   /// Creates a [TextField] that is specifically styled for CircuitVerse.
   ///
   /// When a [TextInputType] is not specified, it defaults to [TextInputType.text]
@@ -44,6 +47,7 @@ class CVTypeAheadField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String text;
+
     return Padding(
       padding: padding,
       child: FutureBuilder(
@@ -67,12 +71,12 @@ class CVTypeAheadField extends StatelessWidget {
             ),
             suggestionsCallback: (pattern) async {
               try {
-                if (toggle == HttpCountryInstituteAPI.COUNTRY) {
+                if (toggle == COUNTRY) {
                   return await countryInstituteObject.getCountries(
                     pattern,
                   );
                 }
-                if (toggle == HttpCountryInstituteAPI.EDUCATIONAL_INSTITUTE) {
+                if (toggle == EDUCATIONAL_INSTITUTE) {
                   return await countryInstituteObject.getInstitutes(
                     pattern,
                   );

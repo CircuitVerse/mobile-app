@@ -12,6 +12,8 @@ import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 
+import '../../components/cv_typeahead_field.dart';
+
 class EditProfileView extends StatefulWidget {
   static const String id = 'edit_profile_view';
 
@@ -67,7 +69,7 @@ class _EditProfileViewState extends State<EditProfileView> {
         _nameFocusNode.unfocus();
         FocusScope.of(context).requestFocus(_countryFocusNode);
       },
-      toggle: HttpCountryInstituteAPI.COUNTRY,
+      toggle: CVTypeAheadField.COUNTRY,
       countryInstituteObject: locator<CountryInstituteAPI>(),
     );
   }
@@ -79,7 +81,7 @@ class _EditProfileViewState extends State<EditProfileView> {
       controller: TextEditingController(text: _educationalInstitute),
       onSaved: (value) =>
           _educationalInstitute = (value != '') ? value.trim() : '',
-      toggle: HttpCountryInstituteAPI.EDUCATIONAL_INSTITUTE,
+      toggle: CVTypeAheadField.EDUCATIONAL_INSTITUTE,
       action: TextInputAction.done,
       countryInstituteObject: locator<CountryInstituteAPI>(),
     );
