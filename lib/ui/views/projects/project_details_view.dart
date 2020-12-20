@@ -325,14 +325,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   child: Text('CANCEL'),
                   onPressed: () => Navigator.pop(context),
                 ),
-                // FlatButton(
-                //   child: Text('ADD'),
-                //   onPressed: () => onAddCollaboratorsPressed(context),
-                // ),
                 AddButton(
                     addFunction: onAddCollaboratorsPressed,
                     context: context,
-                    key: addButtonGlobalKey),
+                    key: addButtonGlobalKey,
+                ),
               ],
             ),
           );
