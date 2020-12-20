@@ -186,9 +186,9 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                   },
                 ),
                 AddButton(
-                    addFunction: onAddGroupMemberPressed,
-                    context: context,
-                    key: addButtonGlobalKey,
+                  addFunction: onAddGroupMemberPressed,
+                  context: context,
+                  key: addButtonGlobalKey,
                 ),
               ],
             ),

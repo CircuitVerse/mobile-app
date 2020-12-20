@@ -326,9 +326,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   onPressed: () => Navigator.pop(context),
                 ),
                 AddButton(
-                    addFunction: onAddCollaboratorsPressed,
-                    context: context,
-                    key: addButtonGlobalKey,
+                  addFunction: onAddCollaboratorsPressed,
+                  context: context,
+                  key: addButtonGlobalKey,
                 ),
               ],
             ),
