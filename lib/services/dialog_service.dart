@@ -1,34 +1,114 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mobile_app/models/dialog_models.dart';
 
 class DialogService {
-  final GlobalKey<NavigatorState> _dialogNavigationKey =
-      GlobalKey<NavigatorState>();
-  Function(DialogRequest) _showDialogListener;
-  Function(DialogRequest) _showConfirmationDialogListener;
-  Function(DialogRequest) _showProgressDialogListener;
-
   Completer _dialogCompleter;
-
-  GlobalKey<NavigatorState> get dialogNavigationKey => _dialogNavigationKey;
 
   Completer<DialogResponse> get dialogCompleter => _dialogCompleter;
 
-  /// Registers a callback function. Typically to show the dialog
-  void registerDialogListener(Function(DialogRequest) showDialogListener) {
-    _showDialogListener = showDialogListener;
+  void _showDialog(DialogRequest request) {
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        title: Text(
+          request.title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(request.description),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              request.buttonTitle,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: () {
+              dialogComplete(DialogResponse(confirmed: true));
+            },
+          ),
+        ],
+      ),
+    );
   }
 
-  void registerConfirmationDialogListener(
-      Function(DialogRequest) showDialogListener) {
-    _showConfirmationDialogListener = showDialogListener;
+  void _showConfirmationDialog(DialogRequest request) {
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        title: Text(
+          request.title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(request.description),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              request.cancelTitle,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: () {
+              dialogComplete(DialogResponse(confirmed: false));
+            },
+          ),
+          FlatButton(
+            child: Text(
+              request.buttonTitle,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onPressed: () {
+              dialogComplete(DialogResponse(confirmed: true));
+            },
+          ),
+        ],
+      ),
+    );
   }
 
-  void registerProgressDialogListener(
-      Function(DialogRequest) showDialogListener) {
-    _showProgressDialogListener = showDialogListener;
+  void _showProgressDialog(DialogRequest request) {
+    Get.dialog(
+      SimpleDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                CircularProgressIndicator(),
+                SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    request.title,
+                    style: TextStyle(fontSize: 18),
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   /// Calls the dialog listener and returns a Future that will wait for dialogComplete.
@@ -38,7 +118,7 @@ class DialogService {
     String buttonTitle = 'OK',
   }) {
     _dialogCompleter = Completer<DialogResponse>();
-    _showDialogListener(
+    _showDialog(
       DialogRequest(
         title: title,
         description: description,
@@ -56,7 +136,7 @@ class DialogService {
     String cancelTitle = 'CANCEL',
   }) {
     _dialogCompleter = Completer<DialogResponse>();
-    _showConfirmationDialogListener(
+    _showConfirmationDialog(
       DialogRequest(
         title: title,
         description: description,
@@ -68,21 +148,21 @@ class DialogService {
   }
 
   void showCustomProgressDialog({String title}) {
-    _showProgressDialogListener(
+    _showProgressDialog(
       DialogRequest(title: title),
     );
   }
 
   /// Completes the _dialogCompleter to resume the Future's execution call
   void dialogComplete(DialogResponse response) {
-    _dialogNavigationKey.currentState.pop();
+    Get.key.currentState.pop();
     _dialogCompleter.complete(response);
     _dialogCompleter = null;
   }
 
   void popDialog() {
-    if (_dialogNavigationKey.currentState.canPop()) {
-      _dialogNavigationKey.currentState.pop();
+    if (Get.key.currentState.canPop()) {
+      Get.key.currentState.pop();
     }
   }
 }
