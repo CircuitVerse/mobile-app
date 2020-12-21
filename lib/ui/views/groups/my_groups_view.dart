@@ -86,8 +86,9 @@ class _MyGroupsViewState extends State<MyGroupsView> {
             Text(
               'Groups',
               style: Theme.of(context).textTheme.headline4.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: CVTheme.textColor(context)),
+                    fontWeight: FontWeight.bold,
+                    color: CVTheme.textColor(context),
+                  ),
               textAlign: TextAlign.center,
             ),
           );
