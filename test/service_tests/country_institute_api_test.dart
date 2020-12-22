@@ -13,32 +13,23 @@ import '../setup/test_data/mock_institutes_data.dart';
 void main() {
   group('CountryApi -', () {
     group('fetchCountries -', () {
-      test('When called & http client returns succes response', () async {
+      test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
             (_) => Future.value(Response(jsonEncode(mockCountries), 200)));
         var _countryApi = HttpCountryInstituteAPI();
 
         expect(
-          (await _countryApi.getCountries(
-            'ta',
-          ))
-              .toString(),
+          (await _countryApi.getCountries('ta')).toString(),
           [].toString(),
         );
 
         expect(
-          (await _countryApi.getCountries(
-            't',
-          ))
-              .toString(),
+          (await _countryApi.getCountries('t')).toString(),
           ['Test'].toString(),
         );
 
         expect(
-          (await _countryApi.getCountries(
-            '',
-          ))
-              .toString(),
+          (await _countryApi.getCountries('')).toString(),
           ['Test'].toString(),
         );
       });
@@ -48,42 +39,30 @@ void main() {
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
         expect(
-            _countriesApi.getCountries(
-              '',
-            ),
-            throwsA(isInstanceOf<Failure>()));
+            _countriesApi.getCountries(''), throwsA(isInstanceOf<Failure>()));
       });
     });
   });
 
   group('InstituteApi -', () {
     group('fetchInstitutes -', () {
-      test('When called & http client returns succes response', () async {
+      test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
             (_) => Future.value(Response(jsonEncode(mockInstitutes), 200)));
         var _countryApi = HttpCountryInstituteAPI();
 
         expect(
-          (await _countryApi.getInstitutes(
-            'ta',
-          ))
-              .toString(),
+          (await _countryApi.getInstitutes('ta')).toString(),
           [].toString(),
         );
 
         expect(
-          (await _countryApi.getInstitutes(
-            't',
-          ))
-              .toString(),
+          (await _countryApi.getInstitutes('t')).toString(),
           ['Test'].toString(),
         );
 
         expect(
-          (await _countryApi.getInstitutes(
-            '',
-          ))
-              .toString(),
+          (await _countryApi.getInstitutes('')).toString(),
           ['Test'].toString(),
         );
       });
@@ -93,10 +72,7 @@ void main() {
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
         expect(
-            _countriesApi.getInstitutes(
-              '',
-            ),
-            throwsA(isInstanceOf<Failure>()));
+            _countriesApi.getInstitutes(''), throwsA(isInstanceOf<Failure>()));
       });
     });
   });
