@@ -7,6 +7,7 @@ import 'package:mobile_app/services/API/group_members_api.dart';
 import 'package:mobile_app/services/API/groups_api.dart';
 import 'package:mobile_app/services/API/projects_api.dart';
 import 'package:mobile_app/services/API/users_api.dart';
+import 'package:mobile_app/services/API/country_institute_api.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/API/contributors_api.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
@@ -50,6 +51,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<AssignmentsApi>(() => HttpAssignmentsApi());
   locator.registerLazySingleton<GradesApi>(() => HttpGradesApi());
   locator.registerLazySingleton<FCMApi>(() => HttpFCMApi());
+  locator.registerLazySingleton<CountryInstituteAPI>(
+      () => HttpCountryInstituteAPI());
 
   // Startup ViewModel
   locator.registerFactory(() => StartUpViewModel());
