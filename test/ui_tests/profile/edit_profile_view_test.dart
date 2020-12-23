@@ -7,6 +7,7 @@ import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
+import 'package:mobile_app/ui/components/cv_typeahead_field.dart';
 import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
 import 'package:mobile_app/utils/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
@@ -58,10 +59,10 @@ void main() {
 
         // Finds Name, Country, Educational Institute
         expect(find.byWidgetPredicate((widget) {
-          return widget is CVTextField &&
-              (widget.label == 'Name' ||
-                  widget.label == 'Country' ||
-                  widget.label == 'Educational Institute');
+          return (widget is CVTextField && widget.label == 'Name') ||
+              (widget is CVTypeAheadField &&
+                  (widget.label == 'Country' ||
+                      widget.label == 'Educational Institute'));
         }), findsNWidgets(3));
 
         // Finds Subscribe to mail checkbox
