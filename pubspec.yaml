@@ -44,6 +44,7 @@ dependencies:
   flutter_html: ^1.0.2
   html_editor: ^1.0.1
   theme_provider: ^0.4.0+1
+  flutter_typeahead: ^1.9.1
 
 dev_dependencies:
   flutter_test:

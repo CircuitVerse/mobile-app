@@ -105,7 +105,7 @@ class _SignupViewState extends State<SignupView> {
             TextSpan(
               text: 'Login',
               style: TextStyle(
-                color: CVTheme.primaryColorDark,
+                color: CVTheme.highlightText(context),
               ),
             ),
           ],

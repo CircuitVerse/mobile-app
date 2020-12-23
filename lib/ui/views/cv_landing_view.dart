@@ -123,7 +123,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                 onTap: () => setSelectedIndexTo(0),
               ),
               Theme(
-                data: CVTheme.themeData,
+                data: CVTheme.themeData(context),
                 child: ExpansionTile(
                   maintainState: true,
                   title: ListTile(
@@ -159,7 +159,7 @@ class _CVLandingViewState extends State<CVLandingView> {
               ),
               _model.isLoggedIn
                   ? Theme(
-                      data: CVTheme.themeData,
+                      data: CVTheme.themeData(context),
                       child: ExpansionTile(
                         maintainState: true,
                         title: Text(
