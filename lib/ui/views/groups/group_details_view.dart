@@ -14,6 +14,7 @@ import 'package:mobile_app/ui/views/groups/edit_group_view.dart';
 import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
+import '../../components/cv_stateful_button.dart';
 import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 
 class GroupDetailsView extends StatefulWidget {
@@ -32,8 +33,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   final _formKey = GlobalKey<FormState>();
   String _emails;
   Group _recievedGroup;
-  final GlobalKey<_AddButtonState> addButtonGlobalKey =
-      GlobalKey<_AddButtonState>();
+  final GlobalKey<CVStateFulButtonState> addButtonGlobalKey =
+      GlobalKey<CVStateFulButtonState>();
 
   @override
   void initState() {
@@ -130,9 +131,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             _model.errorMessageFor(_model.ADD_GROUP_MEMBERS));
       }
     }
-    setState(() {
-      _emails = null;
-    });
+    setState(() => _emails = null);
   }
 
   void showAddGroupMemberDialog() {
@@ -165,7 +164,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                   maxLines: 5,
                   onChanged: (emailValue) {
                     addButtonGlobalKey.currentState
-                        .setAddFunction(emailValue.isNotEmpty);
+                        .setDynamicFunction(emailValue.isNotEmpty);
                   },
                   decoration: AppTheme.textFieldDecoration.copyWith(
                     hintText: 'Email Ids',
@@ -185,9 +184,10 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                     Navigator.pop(context);
                   },
                 ),
-                AddButton(
-                  addFunction: onAddGroupMemberPressed,
+                CVStateFulButton(
+                  triggerFunction: onAddGroupMemberPressed,
                   context: context,
+                  buttonText: 'ADD',
                   key: addButtonGlobalKey,
                 ),
               ],
@@ -394,35 +394,6 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           );
         }),
       ),
-    );
-  }
-}
-
-class AddButton extends StatefulWidget {
-  AddButton({@required this.addFunction, this.context, @required Key key})
-      : super(key: key);
-  final Function addFunction;
-  final BuildContext context;
-  @override
-  _AddButtonState createState() => _AddButtonState();
-}
-
-class _AddButtonState extends State<AddButton> {
-  Function dynamicAddFunction;
-  void setAddFunction(bool isActive) {
-    setState(() {
-      dynamicAddFunction = isActive ? widget.addFunction : null;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-      child: Text('ADD'),
-      disabledTextColor: Colors.grey,
-      onPressed: dynamicAddFunction == null
-          ? null
-          : () => dynamicAddFunction.call(widget.context),
     );
   }
 }
