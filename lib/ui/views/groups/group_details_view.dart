@@ -14,7 +14,7 @@ import 'package:mobile_app/ui/views/groups/edit_group_view.dart';
 import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
-import '../../components/cv_stateful_button.dart';
+import '../../components/cv_flat_button.dart';
 import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 
 class GroupDetailsView extends StatefulWidget {
@@ -33,8 +33,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   final _formKey = GlobalKey<FormState>();
   String _emails;
   Group _recievedGroup;
-  final GlobalKey<CVStateFulButtonState> addButtonGlobalKey =
-      GlobalKey<CVStateFulButtonState>();
+  final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
+      GlobalKey<CVFlatButtonState>();
 
   @override
   void initState() {
@@ -184,7 +184,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                     Navigator.pop(context);
                   },
                 ),
-                CVStateFulButton(
+                CVFlatButton(
                   triggerFunction: onAddGroupMemberPressed,
                   context: context,
                   buttonText: 'ADD',

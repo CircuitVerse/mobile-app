@@ -10,7 +10,7 @@ import 'package:mobile_app/models/collaborators.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
-import 'package:mobile_app/ui/components/cv_stateful_button.dart';
+import 'package:mobile_app/ui/components/cv_flat_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
@@ -37,8 +37,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   final _formKey = GlobalKey<FormState>();
   String _emails;
   Project _recievedProject;
-  final GlobalKey<CVStateFulButtonState> addButtonGlobalKey =
-      GlobalKey<CVStateFulButtonState>();
+  final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
+      GlobalKey<CVFlatButtonState>();
 
   @override
   void initState() {
@@ -326,7 +326,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   child: Text('CANCEL'),
                   onPressed: () => Navigator.pop(context),
                 ),
-                CVStateFulButton(
+                CVFlatButton(
                   triggerFunction: onAddCollaboratorsPressed,
                   context: context,
                   buttonText: 'ADD',
@@ -560,42 +560,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               );
             });
           }
-
           return ListView(
             padding: const EdgeInsets.all(16),
             children: _items,
           );
         }),
       ),
-    );
-  }
-}
-
-class AddButton extends StatefulWidget {
-  AddButton({@required this.addFunction, this.context, @required Key key})
-      : super(key: key);
-  final Function addFunction;
-  final BuildContext context;
-  @override
-  _AddButtonState createState() => _AddButtonState();
-}
-
-class _AddButtonState extends State<AddButton> {
-  Function dynamicAddFunction;
-  void setAddFunction(bool isActive) {
-    setState(() {
-      dynamicAddFunction = isActive ? widget.addFunction : null;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-      child: Text('ADD'),
-      disabledTextColor: Colors.grey,
-      onPressed: dynamicAddFunction == null
-          ? null
-          : () => dynamicAddFunction.call(widget.context),
     );
   }
 }
