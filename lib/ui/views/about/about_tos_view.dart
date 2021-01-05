@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ui/views/about/about_privacy_policy_view.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../cv_theme.dart';
 
 class AboutTosView extends StatelessWidget {
   static const String id = 'about_tos_view';
@@ -54,10 +55,10 @@ class AboutTosView extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context)
-                .textTheme
-                .headline5
-                .copyWith(fontWeight: FontWeight.w400, color: Colors.black),
+            style: Theme.of(context).textTheme.headline5.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: CVTheme.primaryHeading(context),
+                ),
             textAlign: TextAlign.left,
           ),
           RichText(
@@ -74,7 +75,16 @@ class AboutTosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: showAppBar ? AppBar(title: Text('Terms of Service')) : null,
+      appBar: showAppBar
+          ? AppBar(
+              title: Text(
+                'Terms of Service',
+                style: TextStyle(
+                  color: CVTheme.primaryHeading(context),
+                ),
+              ),
+            )
+          : null,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

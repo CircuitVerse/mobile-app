@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
@@ -8,7 +8,6 @@ import 'package:transparent_image/transparent_image.dart';
 class FeaturedProjectCard extends StatefulWidget {
   final Project project;
   final VoidCallback onViewPressed;
-
   const FeaturedProjectCard(
       {Key key, @required this.project, this.onViewPressed})
       : super(key: key);
@@ -21,7 +20,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
   Widget _buildPreview() {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: AppTheme.primaryColor),
+        border: Border.all(color: CVTheme.primaryColor),
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(4),
           topRight: Radius.circular(4),
@@ -54,7 +53,9 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
           bottomLeft: Radius.circular(4),
           bottomRight: Radius.circular(4),
         ),
-        border: Border.fromBorderSide(BorderSide(color: AppTheme.primaryColor)),
+        border: Border.fromBorderSide(
+          BorderSide(color: CVTheme.primaryColor),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,7 +68,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.start,
                 style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: Colors.black,
+                      color: CVTheme.textColor(context),
                     ),
               ),
             ),
@@ -88,7 +89,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
       padding: const EdgeInsets.all(8.0),
       child: Card(
         elevation: 5,
-        shadowColor: AppTheme.primaryColorLight,
+        shadowColor: CVTheme.primaryColorLight,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

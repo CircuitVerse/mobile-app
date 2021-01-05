@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/cv_contributors.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -21,7 +21,7 @@ class ContributorAvatar extends StatelessWidget {
           width: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(color: AppTheme.primaryColor),
+            border: Border.all(color: CVTheme.primaryColor),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(24),
