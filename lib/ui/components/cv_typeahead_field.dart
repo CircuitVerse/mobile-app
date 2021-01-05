@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:mobile_app/services/API/country_institute_api.dart';
 
@@ -58,13 +58,18 @@ class CVTypeAheadField extends StatelessWidget {
           }
           return TypeAheadFormField(
             textFieldConfiguration: TextFieldConfiguration(
-              decoration: AppTheme.textFieldDecoration.copyWith(
+              decoration: CVTheme.textFieldDecoration.copyWith(
                 labelText: label,
+                labelStyle: TextStyle(
+                  color: CVTheme.textColor(context),
+                ),
               ),
               controller: controller,
               textInputAction: action,
               focusNode: focusNode,
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(
+                color: CVTheme.textColor(context),
+              ),
               maxLines: maxLines,
               keyboardType: type,
               autofocus: true,

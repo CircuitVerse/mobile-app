@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 
 class CVTextField extends StatelessWidget {
   final String label;
@@ -47,9 +47,14 @@ class CVTextField extends StatelessWidget {
         maxLines: maxLines,
         keyboardType: type,
         initialValue: initialValue,
-        style: TextStyle(color: Colors.black),
-        decoration: AppTheme.textFieldDecoration.copyWith(
+        style: TextStyle(
+          color: CVTheme.textColor(context),
+        ),
+        decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: label,
+          labelStyle: TextStyle(
+            color: CVTheme.textFieldLabelColor(context),
+          ),
         ),
         validator: validator,
         onSaved: onSaved,

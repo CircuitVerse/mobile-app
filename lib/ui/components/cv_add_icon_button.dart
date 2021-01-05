@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 
 class CVAddIconButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -12,7 +12,7 @@ class CVAddIconButton extends StatelessWidget {
       padding: const EdgeInsets.all(0),
       icon: Icon(
         Icons.add_circle_outline,
-        color: AppTheme.grey,
+        color: CVTheme.grey,
         size: 36,
       ),
       onPressed: onPressed,

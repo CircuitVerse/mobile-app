@@ -29,7 +29,9 @@ class ContributeDonateCard extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.black, width: 2),
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8),
+                ),
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
@@ -41,7 +43,9 @@ class ContributeDonateCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(8),
+                ),
                 child: Image.asset(
                   imagePath,
                   width: MediaQuery.of(context).size.width / 2,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:html_editor/html_editor.dart';
 import 'package:intl/intl.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/data/restriction_elements.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
@@ -57,8 +57,9 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       ),
       child: HtmlEditor(
         decoration: BoxDecoration(
+          color: CVTheme.htmlEditorBg,
           border: Border.all(
-            color: AppTheme.primaryColorDark,
+            color: CVTheme.primaryColorDark,
           ),
         ),
         key: _descriptionEditor,
@@ -73,7 +74,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       child: DateTimeField(
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: DateTime.now().add(Duration(days: 7)),
-        decoration: AppTheme.textFieldDecoration.copyWith(
+        decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: 'Deadline',
         ),
         onShowPicker: (context, currentValue) async {
@@ -103,7 +104,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: DropdownButtonFormField<String>(
-        decoration: AppTheme.textFieldDecoration.copyWith(
+        decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: 'Grading Scale',
         ),
         value: _gradingScale,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/group_members.dart';
 
 class MemberCard extends StatelessWidget {
@@ -20,15 +20,15 @@ class MemberCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        border: Border.all(color: AppTheme.primaryColorLight),
+        border: Border.all(color: CVTheme.primaryColorLight),
         boxShadow: [
           BoxShadow(
-            color: AppTheme.grey,
+            color: CVTheme.boxShadow(context),
             offset: Offset(0, 3),
             blurRadius: 2,
           )
         ],
-        color: AppTheme.bgCard,
+        color: CVTheme.boxBg(context),
       ),
       child: Row(
         children: <Widget>[
@@ -53,7 +53,7 @@ class MemberCard extends StatelessWidget {
           hasMentorAccess
               ? IconButton(
                   icon: Icon(Icons.delete_outline),
-                  color: AppTheme.red,
+                  color: CVTheme.red,
                   onPressed: onDeletePressed,
                 )
               : Container()
