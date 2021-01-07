@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/assignments.dart';
 import 'package:mobile_app/models/groups.dart';
@@ -57,7 +57,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           )
         ],
       ),
-      color: AppTheme.primaryColor,
+      color: CVTheme.primaryColor,
       onPressed: () async {
         var _updatedGroup = await Get.toNamed(
           EditGroupView.id,
@@ -82,7 +82,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               child: Text(
                 _recievedGroup.attributes.name,
                 style: Theme.of(context).textTheme.headline4.copyWith(
-                      color: Colors.black,
+                      color: CVTheme.textColor(context),
                       fontWeight: FontWeight.bold,
                     ),
                 textAlign: TextAlign.center,
@@ -167,6 +167,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                         .setDynamicFunction(emailValue.isNotEmpty);
                   },
                   decoration: AppTheme.textFieldDecoration.copyWith(
+                  autofocus: true,
+                  decoration: CVTheme.textFieldDecoration.copyWith(
                     hintText: 'Email Ids',
                   ),
                   validator: (emails) => Validators.areEmailsValid(emails)

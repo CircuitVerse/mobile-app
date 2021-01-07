@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -33,14 +33,16 @@ class _ProjectCardState extends State<ProjectCard> {
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
       decoration: BoxDecoration(
         color:
-            widget.isHeaderFilled ? AppTheme.primaryColor : Colors.transparent,
+            widget.isHeaderFilled ? CVTheme.primaryColor : Colors.transparent,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(4),
           topRight: Radius.circular(4),
         ),
         border: widget.isHeaderFilled
             ? null
-            : Border.fromBorderSide(BorderSide(color: AppTheme.primaryColor)),
+            : Border.fromBorderSide(
+                BorderSide(color: CVTheme.primaryColor),
+              ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +54,13 @@ class _ProjectCardState extends State<ProjectCard> {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline5.copyWith(
-                    color: widget.isHeaderFilled ? Colors.white : Colors.black,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? widget.isHeaderFilled
+                            ? Colors.black
+                            : Colors.white
+                        : widget.isHeaderFilled
+                            ? Colors.white
+                            : Colors.black,
                   ),
             ),
           ),
@@ -66,7 +74,7 @@ class _ProjectCardState extends State<ProjectCard> {
   Widget _buildPreview() {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: AppTheme.primaryColor),
+        border: Border.all(color: CVTheme.primaryColor),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(4),
           bottomRight: Radius.circular(4),
@@ -80,7 +88,7 @@ class _ProjectCardState extends State<ProjectCard> {
         child: AspectRatio(
           aspectRatio: 1.6,
           child: FadeInImage.memoryNetwork(
-            width: double.infinity,
+            fit: BoxFit.cover,
             placeholder: kTransparentImage,
             image:
                 '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + widget.project.attributes.imagePreview.url}',
@@ -98,7 +106,7 @@ class _ProjectCardState extends State<ProjectCard> {
         padding: const EdgeInsets.all(8.0),
         child: Card(
           elevation: 5,
-          shadowColor: AppTheme.primaryColorLight,
+          shadowColor: CVTheme.primaryColorLight,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[

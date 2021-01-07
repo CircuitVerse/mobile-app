@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mobile_app/app_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
@@ -25,7 +25,6 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   ProfileViewModel _model;
   String userId;
-  User _profileUser;
 
   @override
   void initState() {
@@ -48,7 +47,7 @@ class _ProfileViewState extends State<ProfileView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Text(
-        _profileUser?.data?.attributes?.name ?? 'N.A',
+        _model?.user?.data?.attributes?.name ?? 'N.A',
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -87,12 +86,12 @@ class _ProfileViewState extends State<ProfileView> {
     if (_localStorageService.isLoggedIn &&
         userId == _localStorageService.currentUser.data.id) {
       return FlatButton(
-        color: AppTheme.primaryColor,
+        color: CVTheme.primaryColor,
         onPressed: () async {
           var _updatedUser = await Get.toNamed(EditProfileView.id);
           if (_updatedUser is User) {
             setState(() {
-              _profileUser = _updatedUser;
+              _model.user = _updatedUser;
             });
           }
         },
@@ -109,11 +108,11 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Widget _buildProfileCard() {
-    var _attrs = _profileUser?.data?.attributes;
+    var _attrs = _model?.user?.data?.attributes;
 
     return Card(
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: AppTheme.lightGrey),
+        side: BorderSide(color: CVTheme.lightGrey),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Padding(
@@ -166,20 +165,20 @@ class _ProfileViewState extends State<ProfileView> {
     return Expanded(
       child: Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: AppTheme.lightGrey),
+          side: BorderSide(color: CVTheme.lightGrey),
           borderRadius: BorderRadius.circular(4),
         ),
         child: DefaultTabController(
           length: 2,
           child: Scaffold(
             appBar: CVTabBar(
-              color: AppTheme.lightGrey.withOpacity(0.2),
+              color: CVTheme.lightGrey.withOpacity(0.2),
               tabBar: TabBar(
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.black87,
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicator: BoxDecoration(
-                  color: AppTheme.primaryColor,
+                  color: CVTheme.primaryColor,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
                 ),
                 tabs: [
@@ -203,10 +202,9 @@ class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return BaseView<ProfileViewModel>(
-      onModelReady: (model) async {
+      onModelReady: (model) {
         _model = model;
-        await _model.fetchUserProfile(userId);
-        _profileUser = _model.user;
+        _model.fetchUserProfile(userId);
       },
       builder: (context, model, child) => Scaffold(
         appBar: widget.userId != null
