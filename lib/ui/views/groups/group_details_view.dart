@@ -162,18 +162,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 key: _formKey,
                 child: TextFormField(
                   maxLines: 5,
-                  onChanged: (emailValue) {
-                    addButtonGlobalKey.currentState
-                        .setDynamicFunction(emailValue.isNotEmpty);
-                  },
-                  decoration: AppTheme.textFieldDecoration.copyWith(
                   autofocus: true,
                   decoration: CVTheme.textFieldDecoration.copyWith(
                     hintText: 'Email Ids',
                   ),
                   validator: (emails) => Validators.areEmailsValid(emails)
                       ? null
-                      : 'Enter emails in valid format',
+                      : 'Enter emails in valid format.',
                   onSaved: (emails) =>
                       _emails = emails.replaceAll(' ', '').trim(),
                 ),
@@ -181,10 +176,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               actions: <Widget>[
                 FlatButton(
                   child: Text('CANCEL'),
-                  onPressed: () {
-                    _emails = null;
-                    Navigator.pop(context);
-                  },
+                  onPressed: () => Navigator.pop(context),
                 ),
                 CVFlatButton(
                   triggerFunction: onAddGroupMemberPressed,
