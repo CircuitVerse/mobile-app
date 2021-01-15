@@ -156,25 +156,27 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   }
 
   Widget _buildProjectDescription() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Description :',
-            style: Theme.of(context).textTheme.headline6.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
+    return (_recievedProject.attributes.description != '')
+        ? Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Description :',
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                 ),
-          ),
-          Html(
-            data: """${_recievedProject.attributes.description ?? ''}""",
-            style: {'body': Style(fontSize: FontSize(18))},
+                Html(
+                  data: """${_recievedProject.attributes.description ?? ''}""",
+                  style: {'body': Style(fontSize: FontSize(18))},
+                )
+              ],
+            ),
           )
-        ],
-      ),
-    );
+        : Container();
   }
 
   Future<void> onForkProjectPressed() async {
