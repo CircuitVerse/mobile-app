@@ -156,7 +156,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   }
 
   Widget _buildProjectDescription() {
-    return (_recievedProject.attributes.description != '')
+    return (_recievedProject.attributes.description ?? '') != ''
         ? Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0),
             child: Column(
