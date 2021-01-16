@@ -327,10 +327,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   onPressed: () => Navigator.pop(context),
                 ),
                 CVFlatButton(
+                  key: addButtonGlobalKey,
                   triggerFunction: onAddCollaboratorsPressed,
                   context: context,
                   buttonText: 'ADD',
-                  key: addButtonGlobalKey,
                 ),
               ],
             ),

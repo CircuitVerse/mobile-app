@@ -179,10 +179,10 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                   onPressed: () => Navigator.pop(context),
                 ),
                 CVFlatButton(
+                  key: addButtonGlobalKey,
                   triggerFunction: onAddGroupMemberPressed,
                   context: context,
                   buttonText: 'ADD',
-                  key: addButtonGlobalKey,
                 ),
               ],
             ),

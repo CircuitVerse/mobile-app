@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class CVFlatButton extends StatefulWidget {
   CVFlatButton({
+    @required Key key,
     @required this.triggerFunction,
     @required this.buttonText,
     this.context,
-    @required Key key,
   }) : super(key: key);
   final Function triggerFunction;
   final String buttonText;
