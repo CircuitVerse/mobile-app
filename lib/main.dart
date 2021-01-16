@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
@@ -27,50 +28,52 @@ class CircuitVerseMobile extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return ThemeProvider(
-      saveThemesOnChange: true,
-      loadThemeOnInit: true,
-      themes: [
-        AppTheme(
-          id: 'light',
-          data: ThemeData(
-            primaryColor: CVTheme.primaryColor,
-            accentColor: CVTheme.primaryColor,
-            fontFamily: 'Poppins',
-            cursorColor: CVTheme.primaryColor,
+    return KeyboardDismissOnTap(
+      child: ThemeProvider(
+        saveThemesOnChange: true,
+        loadThemeOnInit: true,
+        themes: [
+          AppTheme(
+            id: 'light',
+            data: ThemeData(
+              primaryColor: CVTheme.primaryColor,
+              accentColor: CVTheme.primaryColor,
+              fontFamily: 'Poppins',
+              cursorColor: CVTheme.primaryColor,
+            ),
+            description: 'LightTheme',
           ),
-          description: 'LightTheme',
-        ),
-        AppTheme(
-          id: 'dark',
-          data: ThemeData(
-            primaryColor: CVTheme.secondaryColor,
-            accentColor: CVTheme.secondaryColor,
-            fontFamily: 'Poppins',
-            brightness: Brightness.dark,
-            cursorColor: CVTheme.primaryColor,
+          AppTheme(
+            id: 'dark',
+            data: ThemeData(
+              primaryColor: CVTheme.secondaryColor,
+              accentColor: CVTheme.secondaryColor,
+              fontFamily: 'Poppins',
+              brightness: Brightness.dark,
+              cursorColor: CVTheme.primaryColor,
+            ),
+            description: 'DarkTheme',
           ),
-          description: 'DarkTheme',
-        ),
-      ],
-      child: ThemeConsumer(
-        child: Builder(
-          builder: (themeContext) => GetMaterialApp(
-            title: 'CircuitVerse Mobile',
-            localizationsDelegates: [
-              AppLocalizationsDelegate(),
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            supportedLocales: [
-              Locale('en', ''),
-            ],
-            onGenerateTitle: (BuildContext context) =>
-                AppLocalizations.of(context).title,
-            debugShowCheckedModeBanner: false,
-            onGenerateRoute: CVRouter.generateRoute,
-            theme: ThemeProvider.themeOf(themeContext).data,
-            home: StartUpView(),
+        ],
+        child: ThemeConsumer(
+          child: Builder(
+            builder: (themeContext) => GetMaterialApp(
+              title: 'CircuitVerse Mobile',
+              localizationsDelegates: [
+                AppLocalizationsDelegate(),
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: [
+                Locale('en', ''),
+              ],
+              onGenerateTitle: (BuildContext context) =>
+                  AppLocalizations.of(context).title,
+              debugShowCheckedModeBanner: false,
+              onGenerateRoute: CVRouter.generateRoute,
+              theme: ThemeProvider.themeOf(themeContext).data,
+              home: StartUpView(),
+            ),
           ),
         ),
       ),
