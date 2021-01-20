@@ -31,6 +31,7 @@ class EditProfileViewModel extends BaseModel {
       _storage.currentUser = _updatedUser;
 
       setStateFor(UPDATE_PROFILE, ViewState.Success);
+      notifyListeners();
     } on Failure catch (f) {
       setStateFor(UPDATE_PROFILE, ViewState.Error);
       setErrorMessageFor(UPDATE_PROFILE, f.message);
