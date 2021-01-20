@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-enum ShimmerDirection { ltr, rtl, ttb, btt }
+enum CVShimmerDirection { LeftToRight, RightToLeft, TopToBottom, BottomToTop }
 
 @immutable
-class Shimmer extends StatefulWidget {
+class CVShimmer extends StatefulWidget {
   final Widget child;
   final Duration period;
-  final ShimmerDirection direction;
+  final CVShimmerDirection direction;
   final Gradient gradient;
   final int loop;
   final bool enabled;
 
-  const Shimmer({
+  const CVShimmer({
     Key key,
     @required this.child,
     @required this.gradient,
-    this.direction = ShimmerDirection.ltr,
+    this.direction = CVShimmerDirection.LeftToRight,
     this.period = const Duration(milliseconds: 1500),
     this.loop = 0,
     this.enabled = true,
   }) : super(key: key);
 
-  Shimmer.fromColors({
+  CVShimmer.fromColors({
     Key key,
     @required this.child,
     @required Color baseColor,
     @required Color highlightColor,
     this.period = const Duration(milliseconds: 1500),
-    this.direction = ShimmerDirection.ltr,
+    this.direction = CVShimmerDirection.LeftToRight,
     this.loop = 0,
     this.enabled = true,
   })  : gradient = LinearGradient(
@@ -51,14 +51,14 @@ class Shimmer extends StatefulWidget {
         super(key: key);
 
   @override
-  _ShimmerState createState() => _ShimmerState();
+  _CVShimmerState createState() => _CVShimmerState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(DiagnosticsProperty<Gradient>('gradient', gradient,
         defaultValue: null));
-    properties.add(EnumProperty<ShimmerDirection>('direction', direction));
+    properties.add(EnumProperty<CVShimmerDirection>('direction', direction));
     properties.add(
         DiagnosticsProperty<Duration>('period', period, defaultValue: null));
     properties
@@ -66,7 +66,8 @@ class Shimmer extends StatefulWidget {
   }
 }
 
-class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
+class _CVShimmerState extends State<CVShimmer>
+    with SingleTickerProviderStateMixin {
   AnimationController _controller;
   int _count = 0;
 
@@ -91,7 +92,7 @@ class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
   }
 
   @override
-  void didUpdateWidget(Shimmer oldWidget) {
+  void didUpdateWidget(CVShimmer oldWidget) {
     if (widget.enabled) {
       _controller.forward();
     } else {
@@ -105,7 +106,7 @@ class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
     return AnimatedBuilder(
       animation: _controller,
       child: widget.child,
-      builder: (BuildContext context, Widget child) => _Shimmer(
+      builder: (BuildContext context, Widget child) => _CVShimmer(
         child: child,
         direction: widget.direction,
         gradient: widget.gradient,
@@ -122,12 +123,12 @@ class _ShimmerState extends State<Shimmer> with SingleTickerProviderStateMixin {
 }
 
 @immutable
-class _Shimmer extends SingleChildRenderObjectWidget {
+class _CVShimmer extends SingleChildRenderObjectWidget {
   final double percent;
-  final ShimmerDirection direction;
+  final CVShimmerDirection direction;
   final Gradient gradient;
 
-  const _Shimmer({
+  const _CVShimmer({
     Widget child,
     @required this.percent,
     @required this.direction,
@@ -135,24 +136,24 @@ class _Shimmer extends SingleChildRenderObjectWidget {
   }) : super(child: child);
 
   @override
-  _ShimmerFilter createRenderObject(BuildContext context) {
-    return _ShimmerFilter(percent, direction, gradient);
+  _CVShimmerFilter createRenderObject(BuildContext context) {
+    return _CVShimmerFilter(percent, direction, gradient);
   }
 
   @override
-  void updateRenderObject(BuildContext context, _ShimmerFilter shimmer) {
-    shimmer.percent = percent;
-    shimmer.gradient = gradient;
-    shimmer.direction = direction;
+  void updateRenderObject(BuildContext context, _CVShimmerFilter CVShimmer) {
+    CVShimmer.percent = percent;
+    CVShimmer.gradient = gradient;
+    CVShimmer.direction = direction;
   }
 }
 
-class _ShimmerFilter extends RenderProxyBox {
-  ShimmerDirection _direction;
+class _CVShimmerFilter extends RenderProxyBox {
+  CVShimmerDirection _direction;
   Gradient _gradient;
   double _percent;
 
-  _ShimmerFilter(this._percent, this._direction, this._gradient);
+  _CVShimmerFilter(this._percent, this._direction, this._gradient);
 
   @override
   ShaderMaskLayer get layer => super.layer as ShaderMaskLayer;
@@ -176,7 +177,7 @@ class _ShimmerFilter extends RenderProxyBox {
     markNeedsPaint();
   }
 
-  set direction(ShimmerDirection newDirection) {
+  set direction(CVShimmerDirection newDirection) {
     if (newDirection == _direction) {
       return;
     }
@@ -193,15 +194,15 @@ class _ShimmerFilter extends RenderProxyBox {
       final height = child.size.height;
       Rect rect;
       double dx, dy;
-      if (_direction == ShimmerDirection.rtl) {
+      if (_direction == CVShimmerDirection.RightToLeft) {
         dx = _offset(width, -width, _percent);
         dy = 0.0;
         rect = Rect.fromLTWH(dx - width, dy, 3 * width, height);
-      } else if (_direction == ShimmerDirection.ttb) {
+      } else if (_direction == CVShimmerDirection.TopToBottom) {
         dx = 0.0;
         dy = _offset(-height, height, _percent);
         rect = Rect.fromLTWH(dx, dy - height, width, 3 * height);
-      } else if (_direction == ShimmerDirection.btt) {
+      } else if (_direction == CVShimmerDirection.BottomToTop) {
         dx = 0.0;
         dy = _offset(height, -height, _percent);
         rect = Rect.fromLTWH(dx, dy - height, width, 3 * height);
