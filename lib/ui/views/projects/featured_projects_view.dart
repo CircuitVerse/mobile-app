@@ -44,7 +44,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
             );
           });
         } else if (model.isBusy(model.FETCH_FEATURED_PROJECTS)) {
-          _items.add(Padding(
+          var _shimmerWidget = Padding(
             padding: EdgeInsets.symmetric(vertical: 15),
             child: SizedBox(
               width: MediaQuery.of(context).size.width * .9,
@@ -54,29 +54,10 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                   highlightColor: Colors.white,
                   child: Card()),
             ),
-          ));
-          _items.add(Padding(
-            padding: EdgeInsets.symmetric(vertical: 15),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * .9,
-              height: 200.0,
-              child: CVShimmer.fromColors(
-                  baseColor: Colors.grey,
-                  highlightColor: Colors.white,
-                  child: Card()),
-            ),
-          ));
-          _items.add(Padding(
-            padding: EdgeInsets.symmetric(vertical: 15),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * .9,
-              height: 200.0,
-              child: CVShimmer.fromColors(
-                  baseColor: Colors.grey,
-                  highlightColor: Colors.white,
-                  child: Card()),
-            ),
-          ));
+          );
+          _items.add(_shimmerWidget);
+          _items.add(_shimmerWidget);
+          _items.add(_shimmerWidget);
         }
 
         if (!widget.embed &&
