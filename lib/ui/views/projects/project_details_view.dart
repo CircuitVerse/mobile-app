@@ -93,7 +93,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView>
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               IconButton(
-                  icon: Icon(Icons.zoom_in),
+                  icon: Icon(
+                    Icons.zoom_in,
+                    color: Colors.black,
+                  ),
                   onPressed: () {
                     setState(() {
                       isZoomed = true;
@@ -643,7 +646,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView>
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 IconButton(
-                                    icon: Icon(Icons.zoom_out),
+                                    icon: Icon(
+                                      Icons.zoom_out,
+                                      color: Colors.black,
+                                    ),
                                     onPressed: () {
                                       setState(() {
                                         isZoomed = false;
