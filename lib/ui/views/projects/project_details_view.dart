@@ -29,7 +29,9 @@ class ProjectDetailsView extends StatefulWidget {
   _ProjectDetailsViewState createState() => _ProjectDetailsViewState();
 }
 
-class _ProjectDetailsViewState extends State<ProjectDetailsView> {
+class _ProjectDetailsViewState extends State<ProjectDetailsView>
+    with TickerProviderStateMixin {
+  bool isZoomed = false;
   final LocalStorageService _localStorageService =
       locator<LocalStorageService>();
   final DialogService _dialogService = locator<DialogService>();
@@ -40,19 +42,75 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
       GlobalKey<CVFlatButtonState>();
 
+  final TransformationController _transformationController =
+      TransformationController();
+  Animation<Matrix4> _animationReset;
+  AnimationController _controllerReset;
+
+  // Handle reset to home transform animation.
+  void _onAnimateReset() {
+    _transformationController.value = _animationReset.value;
+    if (!_controllerReset.isAnimating) {
+      _animationReset?.removeListener(_onAnimateReset);
+      _animationReset = null;
+      _controllerReset.reset();
+    }
+  }
+
+  // Stop a running reset to home transform animation.
+  void _animateResetStop() {
+    _controllerReset.stop();
+    _animationReset?.removeListener(_onAnimateReset);
+    _animationReset = null;
+    _controllerReset.reset();
+  }
+
+  void _onScaleStart(ScaleStartDetails details) {
+    // If the user tries to cause a transformation while the reset animation is
+    // running, cancel the reset animation.
+    if (_controllerReset.status == AnimationStatus.forward) {
+      _animateResetStop();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _recievedProject = widget.project;
+    _controllerReset = AnimationController(
+      vsync: this,
+    );
   }
 
   Widget _buildProjectPreview() {
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: CVTheme.grey)),
-      child: FadeInImage.memoryNetwork(
-        placeholder: kTransparentImage,
-        image:
-            '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _recievedProject.attributes.imagePreview.url}',
+      decoration: BoxDecoration(
+          border: Border.all(color: CVTheme.grey), color: Colors.white),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                  icon: Icon(Icons.zoom_in),
+                  onPressed: () {
+                    setState(() {
+                      isZoomed = true;
+                      if (isZoomed) {
+                        print('Zoomed');
+                      } else {
+                        print('Not Zoomed');
+                      }
+                    });
+                  })
+            ],
+          ),
+          FadeInImage.memoryNetwork(
+            placeholder: kTransparentImage,
+            image:
+                '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _recievedProject.attributes.imagePreview.url}',
+          ),
+        ],
       ),
     );
   }
@@ -562,9 +620,56 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               );
             });
           }
-          return ListView(
-            padding: const EdgeInsets.all(16),
-            children: _items,
+          return Stack(
+            children: [
+              ListView(
+                padding: const EdgeInsets.all(16),
+                children: _items,
+              ),
+              isZoomed
+                  ? Container(
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: CVTheme.grey),
+                            color: Colors.white),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                    icon: Icon(Icons.zoom_out),
+                                    onPressed: () {
+                                      setState(() {
+                                        isZoomed = false;
+                                      });
+                                    })
+                              ],
+                            ),
+                            Expanded(
+                              child: Center(
+                                child: InteractiveViewer(
+                                  minScale: 1,
+                                  maxScale: 2,
+                                  transformationController:
+                                      _transformationController,
+                                  onInteractionStart: _onScaleStart,
+                                  child: FadeInImage.memoryNetwork(
+                                    placeholder: kTransparentImage,
+                                    image:
+                                        '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _recievedProject.attributes.imagePreview.url}',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Container(),
+            ],
           );
         }),
       ),
