@@ -18,6 +18,7 @@ import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:zoom_widget/zoom_widget.dart';
 
 class ProjectDetailsView extends StatefulWidget {
   static const String id = 'project_details_view';
@@ -96,19 +97,21 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView>
                   onPressed: () {
                     setState(() {
                       isZoomed = true;
-                      if (isZoomed) {
-                        print('Zoomed');
-                      } else {
-                        print('Not Zoomed');
-                      }
                     });
                   })
             ],
           ),
-          FadeInImage.memoryNetwork(
-            placeholder: kTransparentImage,
-            image:
-                '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _recievedProject.attributes.imagePreview.url}',
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isZoomed = true;
+              });
+            },
+            child: FadeInImage.memoryNetwork(
+              placeholder: kTransparentImage,
+              image:
+                  '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _recievedProject.attributes.imagePreview.url}',
+            ),
           ),
         ],
       ),
@@ -650,16 +653,21 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView>
                             ),
                             Expanded(
                               child: Center(
-                                child: InteractiveViewer(
-                                  minScale: 1,
-                                  maxScale: 2,
-                                  transformationController:
-                                      _transformationController,
-                                  onInteractionStart: _onScaleStart,
-                                  child: FadeInImage.memoryNetwork(
-                                    placeholder: kTransparentImage,
-                                    image:
-                                        '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _recievedProject.attributes.imagePreview.url}',
+                                child: Zoom(
+                                  backgroundColor: Colors.white,
+                                  canvasColor: Colors.white,
+                                  width: 1500,
+                                  height: 1200,
+                                  initZoom: 0,
+                                  centerOnScale: true,
+                                  enableScroll: true,
+                                  doubleTapZoom: true,
+                                  child: Center(
+                                    child: FadeInImage.memoryNetwork(
+                                      placeholder: kTransparentImage,
+                                      image:
+                                          '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _recievedProject.attributes.imagePreview.url}',
+                                    ),
                                   ),
                                 ),
                               ),
