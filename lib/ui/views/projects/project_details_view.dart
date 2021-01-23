@@ -30,8 +30,7 @@ class ProjectDetailsView extends StatefulWidget {
   _ProjectDetailsViewState createState() => _ProjectDetailsViewState();
 }
 
-class _ProjectDetailsViewState extends State<ProjectDetailsView>
-    with TickerProviderStateMixin {
+class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   bool isZoomed = false;
   final LocalStorageService _localStorageService =
       locator<LocalStorageService>();
@@ -43,44 +42,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView>
   final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
       GlobalKey<CVFlatButtonState>();
 
-  final TransformationController _transformationController =
-      TransformationController();
-  Animation<Matrix4> _animationReset;
-  AnimationController _controllerReset;
-
-  // Handle reset to home transform animation.
-  void _onAnimateReset() {
-    _transformationController.value = _animationReset.value;
-    if (!_controllerReset.isAnimating) {
-      _animationReset?.removeListener(_onAnimateReset);
-      _animationReset = null;
-      _controllerReset.reset();
-    }
-  }
-
-  // Stop a running reset to home transform animation.
-  void _animateResetStop() {
-    _controllerReset.stop();
-    _animationReset?.removeListener(_onAnimateReset);
-    _animationReset = null;
-    _controllerReset.reset();
-  }
-
-  void _onScaleStart(ScaleStartDetails details) {
-    // If the user tries to cause a transformation while the reset animation is
-    // running, cancel the reset animation.
-    if (_controllerReset.status == AnimationStatus.forward) {
-      _animateResetStop();
-    }
-  }
-
   @override
   void initState() {
     super.initState();
     _recievedProject = widget.project;
-    _controllerReset = AnimationController(
-      vsync: this,
-    );
   }
 
   Widget _buildProjectPreview() {
