@@ -10,6 +10,7 @@ import 'package:mobile_app/models/collaborators.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
+import 'package:mobile_app/ui/components/cv_flat_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
@@ -36,6 +37,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   final _formKey = GlobalKey<FormState>();
   String _emails;
   Project _recievedProject;
+  final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
+      GlobalKey<CVFlatButtonState>();
 
   @override
   void initState() {
@@ -305,6 +308,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 key: _formKey,
                 child: TextFormField(
                   maxLines: 5,
+                  onChanged: (emailValue) {
+                    addButtonGlobalKey.currentState
+                        .setDynamicFunction(emailValue.isNotEmpty);
+                  },
                   autofocus: true,
                   decoration: CVTheme.textFieldDecoration.copyWith(
                     hintText: 'Email Ids',
@@ -321,9 +328,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   child: Text('CANCEL'),
                   onPressed: () => Navigator.pop(context),
                 ),
-                FlatButton(
-                  child: Text('ADD'),
-                  onPressed: () => onAddCollaboratorsPressed(context),
+                CVFlatButton(
+                  key: addButtonGlobalKey,
+                  triggerFunction: onAddCollaboratorsPressed,
+                  context: context,
+                  buttonText: 'ADD',
                 ),
               ],
             ),
@@ -553,7 +562,6 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               );
             });
           }
-
           return ListView(
             padding: const EdgeInsets.all(16),
             children: _items,
