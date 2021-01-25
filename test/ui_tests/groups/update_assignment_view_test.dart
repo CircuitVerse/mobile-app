@@ -75,7 +75,7 @@ void main() {
           findsOneWidget);
     });
 
-    testWidgets('on Update Assingment button is Tapped',
+    testWidgets('on Update Assignment button is Tapped',
         (WidgetTester tester) async {
       // Mock Dialog Service
       var _dialogService = MockDialogService();

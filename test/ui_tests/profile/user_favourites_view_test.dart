@@ -58,7 +58,7 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic UserFavourtesView widgets',
+    testWidgets('finds Generic UserFavouritesView widgets',
         (WidgetTester tester) async {
       await provideMockedNetworkImages(() async {
         await _pumpUserFavouritesView(tester);

@@ -72,7 +72,7 @@ void main() {
           findsOneWidget);
     });
 
-    testWidgets('on Create Assingment button is Tapped',
+    testWidgets('on Create Assignment button is Tapped',
         (WidgetTester tester) async {
       // Mock Dialog Service
       var _dialogService = MockDialogService();
