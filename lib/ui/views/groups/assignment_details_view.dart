@@ -17,7 +17,6 @@ import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
-import 'package:theme_provider/theme_provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class AssignmentDetailsView extends StatefulWidget {
@@ -91,10 +90,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           child: Text(
             _recievedAssignment.attributes.name,
             style: Theme.of(context).textTheme.headline4.copyWith(
-                  color: ThemeProvider != null &&
-                          ThemeProvider.themeOf(context).id == 'dark'
-                      ? Colors.white
-                      : Colors.black,
+                  color: CVTheme.textColor(context),
                   fontWeight: FontWeight.bold,
                 ),
             textAlign: TextAlign.center,
@@ -236,7 +232,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                   border: Border.all(color: CVTheme.primaryColorDark),
                 ),
                 child: FadeInImage.memoryNetwork(
-                  width: double.infinity,
+                  fit: BoxFit.cover,
                   placeholder: kTransparentImage,
                   image:
                       '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _model.focussedProject.attributes.imagePreview.url}',

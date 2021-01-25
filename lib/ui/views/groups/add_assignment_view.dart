@@ -72,6 +72,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: DateTimeField(
+        key: Key('cv_assignment_deadline_field'),
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: DateTime.now().add(Duration(days: 7)),
         decoration: CVTheme.textFieldDecoration.copyWith(
@@ -104,6 +105,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: DropdownButtonFormField<String>(
+        key: Key('cv_assignment_grading_dropdown'),
         decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: 'Grading Scale',
         ),
@@ -212,12 +214,23 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       // Shows progress dialog..
       _dialogService.showCustomProgressDialog(title: 'Adding..');
 
+      // [ISSUE] [html_editor] Throws error in Tests
+      var _descriptionEditorText;
+      try {
+        _descriptionEditorText =
+            await _descriptionEditor.currentState.getText();
+      } on NoSuchMethodError {
+        print(
+            'Handled html_editor error. NOTE: This should only throw during tests.');
+        _descriptionEditorText = '';
+      }
+
       await _model.addAssignment(
         widget.groupId,
         _name,
         _deadline,
         _gradingScale,
-        await _descriptionEditor.currentState.getText(),
+        _descriptionEditorText,
         _restrictions,
       );
 
