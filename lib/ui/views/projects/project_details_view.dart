@@ -17,8 +17,8 @@ import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:transparent_image/transparent_image.dart';
-import 'package:zoom_widget/zoom_widget.dart';
 
 class ProjectDetailsView extends StatefulWidget {
   static const String id = 'project_details_view';
@@ -31,7 +31,6 @@ class ProjectDetailsView extends StatefulWidget {
 }
 
 class _ProjectDetailsViewState extends State<ProjectDetailsView> {
-  bool isZoomed = false;
   final LocalStorageService _localStorageService =
       locator<LocalStorageService>();
   final DialogService _dialogService = locator<DialogService>();
@@ -50,38 +49,25 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Widget _buildProjectPreview() {
     return Container(
+      height: 400,
       decoration: BoxDecoration(
-          border: Border.all(color: CVTheme.grey), color: Colors.white),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                  icon: Icon(
-                    Icons.zoom_in,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      isZoomed = true;
-                    });
-                  })
-            ],
+        border: Border.all(color: CVTheme.grey),
+        color: Colors.white,
+      ),
+      child: ClipRRect(
+        child: PhotoView.customChild(
+          backgroundDecoration: BoxDecoration(
+            color: Colors.white,
           ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isZoomed = true;
-              });
-            },
-            child: FadeInImage.memoryNetwork(
-              placeholder: kTransparentImage,
-              image:
-                  '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _recievedProject.attributes.imagePreview.url}',
-            ),
+          initialScale: 1.0,
+          child: FadeInImage.memoryNetwork(
+            height: 100,
+            width: 50,
+            placeholder: kTransparentImage,
+            image:
+                '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _recievedProject.attributes.imagePreview.url}',
           ),
-        ],
+        ),
       ),
     );
   }
@@ -591,64 +577,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               );
             });
           }
-          return Stack(
-            children: [
-              ListView(
-                padding: const EdgeInsets.all(16),
-                children: _items,
-              ),
-              isZoomed
-                  ? Container(
-                      height: double.infinity,
-                      width: double.infinity,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: CVTheme.grey),
-                            color: Colors.white),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                    icon: Icon(
-                                      Icons.zoom_out,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        isZoomed = false;
-                                      });
-                                    })
-                              ],
-                            ),
-                            Expanded(
-                              child: Center(
-                                child: Zoom(
-                                  backgroundColor: Colors.white,
-                                  canvasColor: Colors.white,
-                                  width: 1500,
-                                  height: 1200,
-                                  initZoom: 0,
-                                  centerOnScale: true,
-                                  enableScroll: true,
-                                  doubleTapZoom: true,
-                                  child: Center(
-                                    child: FadeInImage.memoryNetwork(
-                                      placeholder: kTransparentImage,
-                                      image:
-                                          '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _recievedProject.attributes.imagePreview.url}',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  : Container(),
-            ],
+          return ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(16),
+            children: _items,
           );
         }),
       ),
