@@ -48,7 +48,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     _recievedProject = widget.project;
   }
 
-  void showShareWidget() {
+  void onShareButtonPressed() {
     final RenderBox box = context.findRenderObject();
     var URL =
         'https://circuitverse.org/users/${widget.project.relationships.author.data.id}/projects/${widget.project.id}';
@@ -60,7 +60,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: IconButton(
-        onPressed: showShareWidget,
+        onPressed: onShareButtonPressed,
         icon: Icon(Icons.share),
         tooltip: 'Share',
       ),
