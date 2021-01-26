@@ -47,6 +47,7 @@ dependencies:
   flutter_typeahead: ^1.9.1
   flutter_keyboard_visibility: ^4.0.2
   photo_view: ^0.10.3
+  share: ^0.6.5+4
 
 dev_dependencies:
   flutter_test:
