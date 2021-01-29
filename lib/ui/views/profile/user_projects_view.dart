@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/ui/components/cv_add_icon_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/project_card.dart';
@@ -48,7 +49,7 @@ class _UserProjectsViewState extends State<UserProjectsView>
           return Center(
             child: Text(
               'No projects yet',
-              style: TextStyle(fontSize: 25, color: Colors.white),
+              style: TextStyle(fontSize: 25, color: CVTheme.textColor(context)),
             ),
           );
         }

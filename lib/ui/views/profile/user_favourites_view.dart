@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_add_icon_button.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
@@ -55,7 +56,8 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
               children: [
                 Text(
                   'No Favourites',
-                  style: TextStyle(fontSize: 25, color: Colors.white),
+                  style: TextStyle(
+                      fontSize: 25, color: CVTheme.textColor(context)),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
