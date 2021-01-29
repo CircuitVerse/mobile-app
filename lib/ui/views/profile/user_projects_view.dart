@@ -44,10 +44,10 @@ class _UserProjectsViewState extends State<UserProjectsView>
           });
         }
 
-        if (_items.isEmpty == true) {
+        if (_items.isEmpty) {
           return Center(
             child: Text(
-              'No projects yet :(',
+              'No projects yet',
               style: TextStyle(fontSize: 25, color: Colors.white),
             ),
           );
