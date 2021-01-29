@@ -44,6 +44,15 @@ class _UserProjectsViewState extends State<UserProjectsView>
           });
         }
 
+        if (_items.isEmpty == true) {
+          return Center(
+            child: Text(
+              'No projects yet :(',
+              style: TextStyle(fontSize: 25, color: Colors.white),
+            ),
+          );
+        }
+
         if (model?.previousUserProjectsBatch?.links?.next != null) {
           _items.add(
             CVAddIconButton(
