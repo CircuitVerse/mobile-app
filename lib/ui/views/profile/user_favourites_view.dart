@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_add_icon_button.dart';
+import 'package:mobile_app/ui/components/cv_shimmer.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
@@ -45,6 +46,20 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
               ),
             );
           });
+        } else if (model.isBusy(model.FETCH_USER_FAVOURITES)) {
+          var _shimmerWidget = Padding(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * .9,
+              height: 200.0,
+              child: CVShimmer.fromColors(
+                  baseColor: Colors.grey,
+                  highlightColor: Colors.white,
+                  child: Card()),
+            ),
+          );
+          _items.add(_shimmerWidget);
+          _items.add(_shimmerWidget);
         }
 
         if (model?.previousUserFavouritesBatch?.links?.next != null) {

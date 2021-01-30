@@ -6,6 +6,7 @@ import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_add_icon_button.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
+import 'package:mobile_app/ui/components/cv_shimmer.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/groups/components/group_member_card.dart';
 import 'package:mobile_app/ui/views/groups/components/group_mentor_card.dart';
@@ -128,6 +129,20 @@ class _MyGroupsViewState extends State<MyGroupsView> {
                 CVAddIconButton(onPressed: _model.fetchMentoredGroups),
               );
             }
+          } else if (model.isBusy(model.FETCH_MENTORED_GROUPS)) {
+            var _shimmerWidget = Padding(
+              padding: EdgeInsets.symmetric(vertical: 15),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * .9,
+                height: 150.0,
+                child: CVShimmer.fromColors(
+                    baseColor: Colors.grey,
+                    highlightColor: Colors.white,
+                    child: Card()),
+              ),
+            );
+            _items.add(_shimmerWidget);
+            _items.add(_shimmerWidget);
           }
 
           _items.add(SizedBox(height: 24));
@@ -146,6 +161,19 @@ class _MyGroupsViewState extends State<MyGroupsView> {
                 CVAddIconButton(onPressed: _model.fetchMemberGroups),
               );
             }
+          } else if (model.isBusy(model.FETCH_MEMBER_GROUPS)) {
+            var _shimmerWidget = Padding(
+              padding: EdgeInsets.symmetric(vertical: 15),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * .9,
+                height: 100.0,
+                child: CVShimmer.fromColors(
+                    baseColor: Colors.grey,
+                    highlightColor: Colors.white,
+                    child: Card()),
+              ),
+            );
+            _items.add(_shimmerWidget);
           }
 
           return ListView(
