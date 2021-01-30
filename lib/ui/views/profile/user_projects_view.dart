@@ -6,6 +6,9 @@ import 'package:mobile_app/ui/views/projects/components/project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
 
+import '../../components/cv_primary_button.dart';
+import '../projects/featured_projects_view.dart';
+
 class UserProjectsView extends StatefulWidget {
   final String userId;
 
@@ -28,7 +31,8 @@ class _UserProjectsViewState extends State<UserProjectsView>
       builder: (context, model, child) {
         final _items = <Widget>[];
 
-        if (model.isSuccess(model.FETCH_USER_PROJECTS)) {
+        if (model.isSuccess(model.FETCH_USER_PROJECTS) &&
+            model.userProjects.isNotEmpty) {
           model.userProjects.forEach((project) {
             _items.add(
               ProjectCard(
@@ -42,6 +46,27 @@ class _UserProjectsViewState extends State<UserProjectsView>
               ),
             );
           });
+        } else {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'No Circuits Present.',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CVPrimaryButton(
+                  title: 'Explore Circuits',
+                  onPressed: () {
+                    Get.toNamed(FeaturedProjectsView.id);
+                  },
+                )
+              ],
+            ),
+          );
         }
 
         if (model?.previousUserProjectsBatch?.links?.next != null) {

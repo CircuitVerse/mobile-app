@@ -7,6 +7,9 @@ import 'package:mobile_app/ui/views/projects/components/project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 
+import '../../components/cv_primary_button.dart';
+import '../projects/featured_projects_view.dart';
+
 class UserFavouritesView extends StatefulWidget {
   final String userId;
 
@@ -31,7 +34,8 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
       builder: (context, model, child) {
         final _items = <Widget>[];
 
-        if (model.isSuccess(model.FETCH_USER_FAVOURITES)) {
+        if (model.isSuccess(model.FETCH_USER_FAVOURITES) &&
+            model.userFavourites.isNotEmpty) {
           model.userFavourites.forEach((project) {
             _items.add(
               ProjectCard(
@@ -45,6 +49,27 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
               ),
             );
           });
+        } else {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'No Favourites Present.',
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CVPrimaryButton(
+                  title: 'Explore Circuits',
+                  onPressed: () {
+                    Get.toNamed(FeaturedProjectsView.id);
+                  },
+                )
+              ],
+            ),
+          );
         }
 
         if (model?.previousUserFavouritesBatch?.links?.next != null) {
