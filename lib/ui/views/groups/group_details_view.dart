@@ -161,6 +161,10 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               content: Form(
                 key: _formKey,
                 child: TextFormField(
+                  onChanged: (emailValue) {
+                    addButtonGlobalKey.currentState
+                        .setDynamicFunction(emailValue.isNotEmpty);
+                  },
                   maxLines: 5,
                   autofocus: true,
                   decoration: CVTheme.textFieldDecoration.copyWith(
