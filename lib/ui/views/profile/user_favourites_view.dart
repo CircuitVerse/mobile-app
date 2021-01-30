@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_add_icon_button.dart';
+import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/project_card.dart';
+import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 
@@ -30,7 +33,6 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
       onModelReady: (model) => model.fetchUserFavourites(userId: widget.userId),
       builder: (context, model, child) {
         final _items = <Widget>[];
-
         if (model.isSuccess(model.FETCH_USER_FAVOURITES)) {
           model.userFavourites.forEach((project) {
             _items.add(
@@ -45,6 +47,28 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
               ),
             );
           });
+        }
+
+        if (_items.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'No Favourites',
+                  style: TextStyle(
+                      fontSize: 25, color: CVTheme.textColor(context)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                ),
+                CVPrimaryButton(
+                  title: 'Explore Circuits',
+                  onPressed: () => Get.toNamed(FeaturedProjectsView.id),
+                ),
+              ],
+            ),
+          );
         }
 
         if (model?.previousUserFavouritesBatch?.links?.next != null) {
