@@ -122,6 +122,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
               );
             });
 
+            // adds NONE text widget in case of no mentored groups
             if(_model.mentoredGroups.isEmpty){
               _items.add(
                 Container(
@@ -157,6 +158,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
               _items.add(GroupMemberCard(group: group));
             });
 
+            // adds NONE text widget in case of no member groups
             if(_model.memberGroups.isEmpty){
               _items.add(
                 Container(
@@ -174,7 +176,6 @@ class _MyGroupsViewState extends State<MyGroupsView> {
                 ),
               );
             }
-
             // Adds fetch more groups icon if link to next set exists
             if (_model?.previousMemberGroupsBatch?.links?.next != null) {
               _items.add(
