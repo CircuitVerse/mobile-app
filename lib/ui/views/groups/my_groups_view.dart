@@ -92,6 +92,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
             ),
           );
 
+          _items.add(SizedBox(height: 10));
           _items.add(
             Center(
               child: CVPrimaryButton(
@@ -105,7 +106,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
             ),
           );
 
-          _items.add(SizedBox(height: 24));
+          _items.add(SizedBox(height: 20));
 
           _items.add(_buildSubHeader(title: 'Groups You Mentor'));
 
@@ -121,6 +122,23 @@ class _MyGroupsViewState extends State<MyGroupsView> {
               );
             });
 
+            if(_model.mentoredGroups.isEmpty){
+              _items.add(
+                Container(
+                  margin: EdgeInsets.only(top: 5.0),
+                  decoration: BoxDecoration(
+                    color: Color(0xffD3D3D3),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Center(
+                      child: Text('NONE', style: TextStyle(letterSpacing: 1.0),),
+                    ),
+                  ),
+                ),
+              );
+            }
             // Adds fetch more groups icon if link to next set exists
             if (_model?.previousMentoredGroupsBatch?.links?.next != null) {
               _items.add(
@@ -138,6 +156,24 @@ class _MyGroupsViewState extends State<MyGroupsView> {
             _model.memberGroups.forEach((group) {
               _items.add(GroupMemberCard(group: group));
             });
+
+            if(_model.memberGroups.isEmpty){
+              _items.add(
+                Container(
+                  margin: EdgeInsets.only(top: 5.0),
+                  decoration: BoxDecoration(
+                    color: Color(0xffD3D3D3),
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Center(
+                      child: Text('NONE', style: TextStyle(letterSpacing: 1.0),),
+                    ),
+                  ),
+                ),
+              );
+            }
 
             // Adds fetch more groups icon if link to next set exists
             if (_model?.previousMemberGroupsBatch?.links?.next != null) {
