@@ -6,9 +6,8 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
-
-import '../../components/cv_primary_button.dart';
-import '../projects/featured_projects_view.dart';
+import 'package:mobile_app/ui/components/cv_primary_button.dart';
+import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 
 class UserFavouritesView extends StatefulWidget {
   final String userId;
