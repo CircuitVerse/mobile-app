@@ -57,7 +57,7 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic MyGroupsView widgets',
+    testWidgets('finds Generic UserProjectsView widgets',
         (WidgetTester tester) async {
       await provideMockedNetworkImages(() async {
         await _pumpUserProjectsView(tester);

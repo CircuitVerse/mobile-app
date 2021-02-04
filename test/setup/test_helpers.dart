@@ -11,8 +11,13 @@ import 'package:mobile_app/services/API/projects_api.dart';
 import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
+import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
+import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
+import 'package:mobile_app/viewmodels/groups/edit_group_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
+import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
+import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
@@ -65,6 +70,19 @@ class MockUserFavouritesViewModel extends Mock
     implements UserFavouritesViewModel {}
 
 class MockEditProfileViewModel extends Mock implements EditProfileViewModel {}
+
+class MockNewGroupViewModel extends Mock implements NewGroupViewModel {}
+
+class MockEditGroupViewModel extends Mock implements EditGroupViewModel {}
+
+class MockAddAssignmentViewModel extends Mock
+    implements AddAssignmentViewModel {}
+
+class MockUpdateAssignmentViewModel extends Mock
+    implements UpdateAssignmentViewModel {}
+
+class MockAssignmentDetailsViewModel extends Mock
+    implements AssignmentDetailsViewModel {}
 
 LocalStorageService getAndRegisterLocalStorageServiceMock() {
   _removeRegistrationIfExists<LocalStorageService>();
