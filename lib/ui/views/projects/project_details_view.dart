@@ -313,6 +313,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             _model.errorMessageFor(_model.ADD_COLLABORATORS));
       }
     }
+    setState(() => _emails = null);
   }
 
   void showAddCollaboratorsDialog() {
