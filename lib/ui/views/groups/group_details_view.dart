@@ -138,8 +138,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return SingleChildScrollView(
-            child: AlertDialog(
+          return AlertDialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -185,7 +184,6 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                   buttonText: 'ADD',
                 ),
               ],
-            ),
           );
         });
   }
