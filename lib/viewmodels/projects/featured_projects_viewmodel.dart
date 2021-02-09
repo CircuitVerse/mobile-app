@@ -24,10 +24,20 @@ class FeaturedProjectsViewModel extends BaseModel {
     notifyListeners();
   }
 
+  bool _isLoadingMoreCircuits = false;
+
+  bool get isLoadingMoreCircuits => _isLoadingMoreCircuits;
+
+  set isLoadingMoreCircuits(bool loading) {
+    _isLoadingMoreCircuits = loading;
+    notifyListeners();
+  }
+
   Future fetchFeaturedProjects({int size = 5}) async {
     try {
       if (previousFeaturedProjectsBatch?.links?.next != null) {
         // fetch next batch of projects..
+        isLoadingMoreCircuits = true;
         String _nextPageLink = previousFeaturedProjectsBatch.links.next;
 
         var _nextPageNumber =
@@ -38,6 +48,7 @@ class FeaturedProjectsViewModel extends BaseModel {
           page: _nextPageNumber,
           size: size,
         );
+        isLoadingMoreCircuits = false;
       } else {
         // Set State as busy only very first time..
         setStateFor(FETCH_FEATURED_PROJECTS, ViewState.Busy);
@@ -49,6 +60,7 @@ class FeaturedProjectsViewModel extends BaseModel {
       featuredProjects.addAll(previousFeaturedProjectsBatch.data);
       setStateFor(FETCH_FEATURED_PROJECTS, ViewState.Success);
     } on Failure catch (f) {
+      isLoadingMoreCircuits = false;
       setStateFor(FETCH_FEATURED_PROJECTS, ViewState.Error);
       setErrorMessageFor(FETCH_FEATURED_PROJECTS, f.message);
     }

@@ -21,6 +21,24 @@ class FeaturedProjectsView extends StatefulWidget {
 }
 
 class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
+  final _scrollController = ScrollController();
+  bool addedListener =
+      false; //Flag to know if a listener is already added to the controller or not.
+
+  dynamic _scrollListener(FeaturedProjectsViewModel model) {
+    var maxScroll = _scrollController.position.maxScrollExtent;
+    var currentScroll = _scrollController.position.pixels;
+    var delta =
+        200; // Loads more data if "delta" pixels left to reach maxScrollExtent
+    if (maxScroll - currentScroll <= delta) {
+      if (!model.isLoadingMoreCircuits &&
+          model?.previousFeaturedProjectsBatch?.links?.next != null) {
+        model.fetchFeaturedProjects();
+      }
+    }
+    addedListener = true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<FeaturedProjectsViewModel>(
@@ -28,6 +46,10 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
           ? model.fetchFeaturedProjects(size: 3)
           : model.fetchFeaturedProjects(),
       builder: (context, model, child) {
+        if (!addedListener) {
+          _scrollController.addListener(() => _scrollListener(model));
+        }
+
         final _items = <Widget>[];
 
         if (model.isSuccess(model.FETCH_FEATURED_PROJECTS)) {
@@ -41,16 +63,6 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
               ),
             );
           });
-        }
-
-        if (!widget.embed &&
-            model?.previousFeaturedProjectsBatch?.links?.next != null) {
-          _items.add(
-            CVPrimaryButton(
-              title: 'Load More',
-              onPressed: () => model.fetchFeaturedProjects(),
-            ),
-          );
         }
 
         if (widget.embed) {
@@ -67,12 +79,15 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                 'These circuits have been hand-picked by our authors for their awesomeness.',
           ),
         );
-
+        if (model.isLoadingMoreCircuits) {
+          _items.add(CircularProgressIndicator());
+        }
         return Scaffold(
           appBar: widget.showAppBar
               ? AppBar(title: Text('Featured Circuits'))
               : null,
           body: SingleChildScrollView(
+            controller: _scrollController,
             padding: const EdgeInsets.all(16),
             child: Column(
               children: _items,
