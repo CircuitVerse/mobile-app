@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
-import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/featured_project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
