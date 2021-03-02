@@ -138,54 +138,52 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return SingleChildScrollView(
-            child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Add Group Members',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Add Group Members',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
-                  Text(
-                    'Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  )
-                ],
-              ),
-              content: Form(
-                key: _formKey,
-                child: TextFormField(
-                  maxLines: 5,
-                  autofocus: true,
-                  decoration: CVTheme.textFieldDecoration.copyWith(
-                    hintText: 'Email Ids',
-                  ),
-                  validator: (emails) => Validators.areEmailsValid(emails)
-                      ? null
-                      : 'Enter emails in valid format.',
-                  onSaved: (emails) =>
-                      _emails = emails.replaceAll(' ', '').trim(),
                 ),
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('CANCEL'),
-                  onPressed: () => Navigator.pop(context),
-                ),
-                CVFlatButton(
-                  key: addButtonGlobalKey,
-                  triggerFunction: onAddGroupMemberPressed,
-                  context: context,
-                  buttonText: 'ADD',
-                ),
+                Text(
+                  'Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.',
+                  style: Theme.of(context).textTheme.bodyText1,
+                )
               ],
             ),
+            content: Form(
+              key: _formKey,
+              child: TextFormField(
+                maxLines: 5,
+                autofocus: true,
+                decoration: CVTheme.textFieldDecoration.copyWith(
+                  hintText: 'Email Ids',
+                ),
+                validator: (emails) => Validators.areEmailsValid(emails)
+                    ? null
+                    : 'Enter emails in valid format.',
+                onSaved: (emails) =>
+                    _emails = emails.replaceAll(' ', '').trim(),
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('CANCEL'),
+                onPressed: () => Navigator.pop(context),
+              ),
+              CVFlatButton(
+                key: addButtonGlobalKey,
+                triggerFunction: onAddGroupMemberPressed,
+                context: context,
+                buttonText: 'ADD',
+              ),
+            ],
           );
         });
   }

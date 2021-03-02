@@ -319,58 +319,56 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return SingleChildScrollView(
-            child: AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Add Collaborators',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Add Collaborators',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
-                  Text(
-                    'Enter Email IDs separated by commas. Users need to be registered already on the platform. Note that collaboration is not real time as of now. Every save overwrites the previous data.',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  )
-                ],
-              ),
-              content: Form(
-                key: _formKey,
-                child: TextFormField(
-                  maxLines: 5,
-                  onChanged: (emailValue) {
-                    addButtonGlobalKey.currentState
-                        .setDynamicFunction(emailValue.isNotEmpty);
-                  },
-                  autofocus: true,
-                  decoration: CVTheme.textFieldDecoration.copyWith(
-                    hintText: 'Email Ids',
-                  ),
-                  validator: (emails) => Validators.areEmailsValid(emails)
-                      ? null
-                      : 'Enter emails in valid format.',
-                  onSaved: (emails) =>
-                      _emails = emails.replaceAll(' ', '').trim(),
                 ),
-              ),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('CANCEL'),
-                  onPressed: () => Navigator.pop(context),
-                ),
-                CVFlatButton(
-                  key: addButtonGlobalKey,
-                  triggerFunction: onAddCollaboratorsPressed,
-                  context: context,
-                  buttonText: 'ADD',
-                ),
+                Text(
+                  'Enter Email IDs separated by commas. Users need to be registered already on the platform. Note that collaboration is not real time as of now. Every save overwrites the previous data.',
+                  style: Theme.of(context).textTheme.bodyText1,
+                )
               ],
             ),
+            content: Form(
+              key: _formKey,
+              child: TextFormField(
+                maxLines: 5,
+                onChanged: (emailValue) {
+                  addButtonGlobalKey.currentState
+                      .setDynamicFunction(emailValue.isNotEmpty);
+                },
+                autofocus: true,
+                decoration: CVTheme.textFieldDecoration.copyWith(
+                  hintText: 'Email Ids',
+                ),
+                validator: (emails) => Validators.areEmailsValid(emails)
+                    ? null
+                    : 'Enter emails in valid format.',
+                onSaved: (emails) =>
+                    _emails = emails.replaceAll(' ', '').trim(),
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('CANCEL'),
+                onPressed: () => Navigator.pop(context),
+              ),
+              CVFlatButton(
+                key: addButtonGlobalKey,
+                triggerFunction: onAddCollaboratorsPressed,
+                context: context,
+                buttonText: 'ADD',
+              ),
+            ],
           );
         });
   }
