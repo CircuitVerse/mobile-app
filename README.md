@@ -1,4 +1,5 @@
 # CircuitVerse Mobile
+[![Flutter CI](https://github.com/CircuitVerse/mobile-app/actions/workflows/flutter-ci.yml/badge.svg)](https://github.com/CircuitVerse/mobile-app/actions/workflows/flutter-ci.yml)
 
 CircuitVerse for mobile is a cross platform appication built in [flutter](https://flutter.dev/) using CircuitVerse API.
 
