@@ -16,7 +16,9 @@ import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
+import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';
+import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 
 class CVLandingView extends StatefulWidget {
   static const String id = 'cv_landing_view';
@@ -105,109 +107,113 @@ class _CVLandingViewState extends State<CVLandingView> {
   }
 
   Widget _buildDrawer() {
-    return Drawer(
-      child: Stack(
-        children: [
-          ListView(
-            children: <Widget>[
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 32, horizontal: 10),
-                child: Image.asset(
-                  'assets/images/landing/cv_full_logo.png',
-                  width: 90,
-                ),
-              ),
-              InkWell(
-                child: _buildDrawerTile('Home', Icons.home),
-                onTap: () => setSelectedIndexTo(0),
-              ),
-              Theme(
-                data: CVTheme.themeData(context),
-                child: ExpansionTile(
-                  maintainState: true,
-                  title: ListTile(
-                    contentPadding: EdgeInsets.all(0),
-                    leading: Icon(
-                      Icons.explore,
-                      color: CVTheme.drawerIcon(context),
-                    ),
-                    title: Text(
-                      'Explore',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
+    return Consumer<EditProfileViewModel>(
+      builder: (context, model, child) => Drawer(
+        child: Stack(
+          children: [
+            ListView(
+              children: <Widget>[
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 32, horizontal: 10),
+                  child: Image.asset(
+                    'assets/images/landing/cv_full_logo.png',
+                    width: 90,
                   ),
-                  children: <Widget>[
-                    InkWell(
-                      child: _buildDrawerTile('Featured Circuits', Icons.star),
-                      onTap: () => setSelectedIndexTo(1),
-                    ),
-                  ],
                 ),
-              ),
-              InkWell(
-                child: _buildDrawerTile('About', FontAwesome5.address_card),
-                onTap: () => setSelectedIndexTo(2),
-              ),
-              InkWell(
-                child: _buildDrawerTile('Contribute', Icons.add),
-                onTap: () => setSelectedIndexTo(3),
-              ),
-              InkWell(
-                child: _buildDrawerTile('Teachers', Icons.account_balance),
-                onTap: () => setSelectedIndexTo(4),
-              ),
-              _model.isLoggedIn
-                  ? Theme(
-                      data: CVTheme.themeData(context),
-                      child: ExpansionTile(
-                        maintainState: true,
-                        title: Text(
-                          _model.currentUser.data.attributes.name ?? '',
-                          style: Theme.of(context).textTheme.headline6.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        children: <Widget>[
-                          InkWell(
-                            child:
-                                _buildDrawerTile('Profile', FontAwesome5.user),
-                            onTap: () => setSelectedIndexTo(5),
-                          ),
-                          InkWell(
-                            child: _buildDrawerTile(
-                                'My Groups', FontAwesome5.object_group),
-                            onTap: () => setSelectedIndexTo(6),
-                          ),
-                          InkWell(
-                            child: _buildDrawerTile(
-                                'Log Out', Ionicons.ios_log_out),
-                            onTap: onLogoutPressed,
-                          ),
-                        ],
+                InkWell(
+                  child: _buildDrawerTile('Home', Icons.home),
+                  onTap: () => setSelectedIndexTo(0),
+                ),
+                Theme(
+                  data: CVTheme.themeData(context),
+                  child: ExpansionTile(
+                    maintainState: true,
+                    title: ListTile(
+                      contentPadding: EdgeInsets.all(0),
+                      leading: Icon(
+                        Icons.explore,
+                        color: CVTheme.drawerIcon(context),
                       ),
-                    )
-                  : InkWell(
-                      child: _buildDrawerTile('Login', Ionicons.ios_log_in),
-                      onTap: () => Get.offAndToNamed(LoginView.id),
-                    )
-            ],
-          ),
-          Positioned(
-            right: 5,
-            top: 35,
-            child: IconButton(
-                icon: Theme.of(context).brightness == Brightness.dark
-                    ? const Icon(Icons.brightness_low)
-                    : const Icon(Icons.brightness_high),
-                iconSize: 28.0,
-                onPressed: () {
-                  if (ThemeProvider != null) {
-                    ThemeProvider.controllerOf(context).nextTheme();
-                  }
-                }),
-          ),
-        ],
+                      title: Text(
+                        'Explore',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ),
+                    children: <Widget>[
+                      InkWell(
+                        child:
+                            _buildDrawerTile('Featured Circuits', Icons.star),
+                        onTap: () => setSelectedIndexTo(1),
+                      ),
+                    ],
+                  ),
+                ),
+                InkWell(
+                  child: _buildDrawerTile('About', FontAwesome5.address_card),
+                  onTap: () => setSelectedIndexTo(2),
+                ),
+                InkWell(
+                  child: _buildDrawerTile('Contribute', Icons.add),
+                  onTap: () => setSelectedIndexTo(3),
+                ),
+                InkWell(
+                  child: _buildDrawerTile('Teachers', Icons.account_balance),
+                  onTap: () => setSelectedIndexTo(4),
+                ),
+                _model.isLoggedIn
+                    ? Theme(
+                        data: CVTheme.themeData(context),
+                        child: ExpansionTile(
+                          maintainState: true,
+                          title: Text(
+                            _model.currentUser.data.attributes.name ?? '',
+                            style:
+                                Theme.of(context).textTheme.headline6.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                          ),
+                          children: <Widget>[
+                            InkWell(
+                              child: _buildDrawerTile(
+                                  'Profile', FontAwesome5.user),
+                              onTap: () => setSelectedIndexTo(5),
+                            ),
+                            InkWell(
+                              child: _buildDrawerTile(
+                                  'My Groups', FontAwesome5.object_group),
+                              onTap: () => setSelectedIndexTo(6),
+                            ),
+                            InkWell(
+                              child: _buildDrawerTile(
+                                  'Log Out', Ionicons.ios_log_out),
+                              onTap: onLogoutPressed,
+                            ),
+                          ],
+                        ),
+                      )
+                    : InkWell(
+                        child: _buildDrawerTile('Login', Ionicons.ios_log_in),
+                        onTap: () => Get.offAndToNamed(LoginView.id),
+                      )
+              ],
+            ),
+            Positioned(
+              right: 5,
+              top: 35,
+              child: IconButton(
+                  icon: Theme.of(context).brightness == Brightness.dark
+                      ? const Icon(Icons.brightness_low)
+                      : const Icon(Icons.brightness_high),
+                  iconSize: 28.0,
+                  onPressed: () {
+                    if (ThemeProvider != null) {
+                      ThemeProvider.controllerOf(context).nextTheme();
+                    }
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }
