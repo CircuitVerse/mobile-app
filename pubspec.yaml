@@ -1,6 +1,7 @@
 name: mobile_app
 description: A new Flutter project.
 
+publish_to: none
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -21,38 +22,36 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  cupertino_icons: ^0.1.2
-  get_it: ^4.0.2
-  provider: ^4.0.5+1
-  shared_preferences: ^0.5.7+1
+  cupertino_icons: ^1.0.2
+  get_it: ^6.0.0
+  provider: ^5.0.0
+  shared_preferences: ^2.0.4
   mockito: ^4.1.1
-  url_launcher: ^5.4.5
+  url_launcher: ^6.0.2
   http: ^0.12.1
   transparent_image: ^1.0.0
-  flutter_svg: ^0.18.0
+  flutter_svg: ^0.19.3
   flutter_icons: ^1.1.0
-  get: ^2.10.3
-  intl: ^0.16.1
-  intl_translation: null
-  datetime_picker_formfield: ^1.0.0
-  timeago: ^2.0.26
+  get: ^3.26.0
+  intl: ^0.17.0
+  datetime_picker_formfield: ^2.0.0
+  timeago: ^3.0.2
   google_sign_in: ^4.5.1
   oauth2_client: ^1.4.2
   html: ^0.14.0+3
-  animations: ^1.1.2
+  animations: ^2.0.0
   flutter_facebook_login: ^3.0.0
   flutter_html: ^1.0.2
-  html_editor: ^1.0.1
-  theme_provider: ^0.4.0+1
-  flutter_typeahead: ^1.9.1
-  flutter_keyboard_visibility: ^4.0.2
-  photo_view: ^0.10.3
-  share: ^0.6.5+4
+  theme_provider: ^0.5.0
+  flutter_typeahead: ^3.0.0-nullsafety.0
+  flutter_keyboard_visibility: ^5.0.0
+  photo_view: ^0.11.1
+  share: ^2.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.7.3
+  flutter_launcher_icons: ^0.8.1
   pedantic: ^1.9.0
 
 flutter_icons:
@@ -61,6 +60,7 @@ flutter_icons:
   image_path: "assets/icons/icon.png"
 
 flutter:
+  generate: true
   uses-material-design: true
 
   assets:
