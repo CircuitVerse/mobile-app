@@ -42,6 +42,7 @@ dependencies:
   animations: ^2.0.0
   flutter_facebook_login: ^3.0.0
   flutter_html: ^1.0.2
+  flutter_summernote: ^0.2.3
   theme_provider: ^0.5.0
   flutter_typeahead: ^3.0.0-nullsafety.0
   flutter_keyboard_visibility: ^5.0.0
@@ -53,6 +54,10 @@ dev_dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.8.1
   pedantic: ^1.9.0
+
+dependency_overrides:
+  mime: ^0.9.7
+  plugin_platform_interface: ^2.0.0
 
 flutter_icons:
   android: "launcher_icon"

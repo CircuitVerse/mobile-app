@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:html_editor/html_editor.dart';
+import 'package:flutter_summernote/flutter_summernote.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
@@ -28,7 +28,7 @@ class _EditProjectViewState extends State<EditProjectView> {
   final _formKey = GlobalKey<FormState>();
   String _name, _projectAccessType;
   List<String> _tags;
-  final GlobalKey<HtmlEditorState> _descriptionEditor = GlobalKey();
+  final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
 
   final _nameFocusNode = FocusNode();
   final _tagsListFocusNode = FocusNode();
@@ -106,16 +106,25 @@ class _EditProjectViewState extends State<EditProjectView> {
         horizontal: 16,
         vertical: 8,
       ),
-      child: HtmlEditor(
+      child: FlutterSummernote(
+        height: 300,
         decoration: BoxDecoration(
           color: CVTheme.htmlEditorBg,
           border: Border.all(
             color: CVTheme.primaryColorDark,
           ),
         ),
-        value: widget.project.attributes.description ?? '',
         key: _descriptionEditor,
-        height: 300,
+        hasAttachment: true,
+        customToolbar: """
+          [
+            ['view', ['codeview', 'undo', 'redo']],
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'hr']]
+          ]
+        """,
       ),
     );
   }

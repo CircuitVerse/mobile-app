@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:html_editor/html_editor.dart';
+import 'package:flutter_summernote/flutter_summernote.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/data/restriction_elements.dart';
@@ -32,7 +32,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   UpdateAssignmentViewModel _model;
   final _formKey = GlobalKey<FormState>();
   String _name;
-  final GlobalKey<HtmlEditorState> _descriptionEditor = GlobalKey();
+  final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
   DateTime _deadline;
   List _restrictions = [];
   bool _isRestrictionEnabled = false;
@@ -59,16 +59,25 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         horizontal: 16,
         vertical: 8,
       ),
-      child: HtmlEditor(
+      child: FlutterSummernote(
+        height: 300,
         decoration: BoxDecoration(
           color: CVTheme.htmlEditorBg,
           border: Border.all(
             color: CVTheme.primaryColorDark,
           ),
         ),
-        value: widget.assignment.attributes.description ?? '',
         key: _descriptionEditor,
-        height: 300,
+        hasAttachment: true,
+        customToolbar: """
+          [
+            ['view', ['codeview', 'undo', 'redo']],
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'hr']]
+          ]
+        """,
       ),
     );
   }
