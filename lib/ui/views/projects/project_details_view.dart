@@ -358,9 +358,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
-                child: Text('CANCEL'),
+              TextButton(
                 onPressed: () => Navigator.pop(context),
+                child: Text('CANCEL'),
               ),
               CVFlatButton(
                 key: addButtonGlobalKey,
@@ -432,7 +432,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.DELETE_PROJECT)) {
-        await Get.back(result: true);
+        Get.back(result: true);
         SnackBarUtils.showDark('Project Deleted');
       } else if (_model.isError(_model.DELETE_PROJECT)) {
         SnackBarUtils.showDark(_model.errorMessageFor(_model.DELETE_PROJECT));

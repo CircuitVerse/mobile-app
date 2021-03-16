@@ -56,7 +56,7 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Flexible(
                 child: CardButton(

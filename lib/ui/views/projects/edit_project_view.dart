@@ -147,7 +147,7 @@ class _EditProjectViewState extends State<EditProjectView> {
 
       if (_model.isSuccess(_model.UPDATE_PROJECT)) {
         await Future.delayed(Duration(seconds: 1));
-        await Get.back(result: _model.updatedProject);
+        Get.back(result: _model.updatedProject);
         SnackBarUtils.showDark('Project Updated');
       } else if (_model.isError(_model.UPDATE_PROJECT)) {
         SnackBarUtils.showDark(_model.errorMessageFor(_model.UPDATE_PROJECT));

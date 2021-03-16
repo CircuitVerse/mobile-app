@@ -100,7 +100,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
         // route back to previous screen
         await Future.delayed(Duration(seconds: 1));
-        await Get.back();
+        Get.back();
       } else if (_model.isError(_model.SEND_RESET_INSTRUCTIONS)) {
         // show failure snackbar
         SnackBarUtils.showDark(
