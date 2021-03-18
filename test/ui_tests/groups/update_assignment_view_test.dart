@@ -3,11 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:flutter_summernote/flutter_summernote.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/assignments.dart';
 import 'package:mobile_app/models/dialog_models.dart';
 import 'package:mobile_app/services/dialog_service.dart';
+import 'package:mobile_app/ui/components/cv_html_editor.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
@@ -56,7 +56,7 @@ void main() {
       expect(find.byWidgetPredicate((widget) {
         if (widget is CVTextField) {
           return widget.label == 'Name';
-        } else if (widget is FlutterSummernote) {
+        } else if (widget is CVHtmlEditor) {
           return true;
         } else if (widget is DateTimeField) {
           return widget.key == Key('cv_assignment_deadline_field');

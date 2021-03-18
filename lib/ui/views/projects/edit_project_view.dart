@@ -5,6 +5,7 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/dialog_service.dart';
+import 'package:mobile_app/ui/components/cv_html_editor.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -106,26 +107,7 @@ class _EditProjectViewState extends State<EditProjectView> {
         horizontal: 16,
         vertical: 8,
       ),
-      child: FlutterSummernote(
-        height: 300,
-        decoration: BoxDecoration(
-          color: CVTheme.htmlEditorBg,
-          border: Border.all(
-            color: CVTheme.primaryColorDark,
-          ),
-        ),
-        key: _descriptionEditor,
-        hasAttachment: true,
-        customToolbar: """
-          [
-            ['view', ['codeview', 'undo', 'redo']],
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['link', 'hr']]
-          ]
-        """,
-      ),
+      child: CVHtmlEditor(editorKey: _descriptionEditor),
     );
   }
 
