@@ -85,8 +85,10 @@ class _ProfileViewState extends State<ProfileView> {
     var _localStorageService = locator<LocalStorageService>();
     if (_localStorageService.isLoggedIn &&
         userId == _localStorageService.currentUser.data.id) {
-      return FlatButton(
-        color: CVTheme.primaryColor,
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: CVTheme.primaryColor,
+        ),
         onPressed: () async {
           var _updatedUser = await Get.toNamed(EditProfileView.id);
           if (_updatedUser is User) {

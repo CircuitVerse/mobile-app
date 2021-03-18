@@ -43,8 +43,22 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   }
 
   Widget _buildEditGroupButton() {
-    return RaisedButton(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        primary: CVTheme.primaryColor,
+      ),
+      onPressed: () async {
+        var _updatedGroup = await Get.toNamed(
+          EditGroupView.id,
+          arguments: _recievedGroup,
+        );
+        if (_updatedGroup is Group) {
+          setState(() {
+            _recievedGroup = _updatedGroup;
+          });
+        }
+      },
       child: Row(
         children: [
           Icon(Icons.edit, color: Colors.white),
@@ -57,18 +71,6 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           )
         ],
       ),
-      color: CVTheme.primaryColor,
-      onPressed: () async {
-        var _updatedGroup = await Get.toNamed(
-          EditGroupView.id,
-          arguments: _recievedGroup,
-        );
-        if (_updatedGroup is Group) {
-          setState(() {
-            _recievedGroup = _updatedGroup;
-          });
-        }
-      },
     );
   }
 
@@ -173,9 +175,9 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
-                child: Text('CANCEL'),
+              TextButton(
                 onPressed: () => Navigator.pop(context),
+                child: Text('CANCEL'),
               ),
               CVFlatButton(
                 key: addButtonGlobalKey,
@@ -227,7 +229,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             CVPrimaryButton(
               title: '+ Add',
               onPressed: onAddPressed,
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
             )
         ],
       ),

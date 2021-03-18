@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:html_editor/html_editor.dart';
+import 'package:flutter_summernote/flutter_summernote.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/dialog_service.dart';
+import 'package:mobile_app/ui/components/cv_html_editor.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -28,7 +29,7 @@ class _EditProjectViewState extends State<EditProjectView> {
   final _formKey = GlobalKey<FormState>();
   String _name, _projectAccessType;
   List<String> _tags;
-  final GlobalKey<HtmlEditorState> _descriptionEditor = GlobalKey();
+  final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
 
   final _nameFocusNode = FocusNode();
   final _tagsListFocusNode = FocusNode();
@@ -106,17 +107,7 @@ class _EditProjectViewState extends State<EditProjectView> {
         horizontal: 16,
         vertical: 8,
       ),
-      child: HtmlEditor(
-        decoration: BoxDecoration(
-          color: CVTheme.htmlEditorBg,
-          border: Border.all(
-            color: CVTheme.primaryColorDark,
-          ),
-        ),
-        value: widget.project.attributes.description ?? '',
-        key: _descriptionEditor,
-        height: 300,
-      ),
+      child: CVHtmlEditor(editorKey: _descriptionEditor),
     );
   }
 
@@ -138,7 +129,7 @@ class _EditProjectViewState extends State<EditProjectView> {
 
       if (_model.isSuccess(_model.UPDATE_PROJECT)) {
         await Future.delayed(Duration(seconds: 1));
-        await Get.back(result: _model.updatedProject);
+        Get.back(result: _model.updatedProject);
         SnackBarUtils.showDark('Project Updated');
       } else if (_model.isError(_model.UPDATE_PROJECT)) {
         SnackBarUtils.showDark(_model.errorMessageFor(_model.UPDATE_PROJECT));

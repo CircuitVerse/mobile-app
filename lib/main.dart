@@ -39,7 +39,9 @@ class CircuitVerseMobile extends StatelessWidget {
               primaryColor: CVTheme.primaryColor,
               accentColor: CVTheme.primaryColor,
               fontFamily: 'Poppins',
-              cursorColor: CVTheme.primaryColor,
+              textSelectionTheme: TextSelectionThemeData(
+                cursorColor: CVTheme.primaryColor,
+              ),
             ),
             description: 'LightTheme',
           ),
@@ -50,7 +52,9 @@ class CircuitVerseMobile extends StatelessWidget {
               accentColor: CVTheme.secondaryColor,
               fontFamily: 'Poppins',
               brightness: Brightness.dark,
-              cursorColor: CVTheme.primaryColor,
+              textSelectionTheme: TextSelectionThemeData(
+                cursorColor: CVTheme.primaryColor,
+              ),
             ),
             description: 'DarkTheme',
           ),
