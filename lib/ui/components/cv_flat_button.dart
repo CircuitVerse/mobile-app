@@ -24,12 +24,14 @@ class CVFlatButtonState extends State<CVFlatButton> {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      child: Text('${widget.buttonText}'),
-      disabledTextColor: Colors.grey,
+    return TextButton(
+      style: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all(Colors.grey),
+      ),
       onPressed: dynamicFunction == null
           ? null
           : () => dynamicFunction.call(widget.context),
+      child: Text('${widget.buttonText}'),
     );
   }
 }

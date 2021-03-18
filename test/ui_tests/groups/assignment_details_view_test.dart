@@ -73,7 +73,7 @@ void main() {
         expect(find.text('Test'), findsNWidgets(2));
 
         // Finds Assignment Edit Button, Submit Grade and Delete Grade Button
-        expect(find.byType(RaisedButton), findsNWidgets(3));
+        expect(find.byType(ElevatedButton), findsNWidgets(3));
 
         // Finds Name, Deadline, Restricted Elements
         expect(find.byWidgetPredicate((widget) {

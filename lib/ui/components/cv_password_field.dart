@@ -45,11 +45,11 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
         ),
         decoration: CVTheme.textFieldDecoration.copyWith(
           suffixIcon: GestureDetector(
+            onTap: _toggle,
             child: Icon(
               _obscureText ? Icons.visibility_off : Icons.visibility,
               color: CVTheme.primaryColorDark,
             ),
-            onTap: _toggle,
           ),
           labelText: 'Password',
           labelStyle: TextStyle(

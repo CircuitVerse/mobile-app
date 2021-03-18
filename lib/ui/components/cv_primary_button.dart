@@ -19,8 +19,13 @@ class CVPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      padding: padding,
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: padding,
+        primary:
+            isPrimaryDark ? CVTheme.primaryColorDark : CVTheme.primaryColor,
+      ),
+      onPressed: onPressed ?? () {},
       child: Text(
         title,
         style: isBodyText
@@ -31,8 +36,6 @@ class CVPrimaryButton extends StatelessWidget {
                   color: Colors.white,
                 ),
       ),
-      color: isPrimaryDark ? CVTheme.primaryColorDark : CVTheme.primaryColor,
-      onPressed: onPressed ?? () {},
     );
   }
 }

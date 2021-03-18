@@ -23,16 +23,16 @@ class DialogService {
         ),
         content: Text(request.description),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
+            onPressed: () {
+              dialogComplete(DialogResponse(confirmed: true));
+            },
             child: Text(
               request.buttonTitle,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            onPressed: () {
-              dialogComplete(DialogResponse(confirmed: true));
-            },
           ),
         ],
       ),
@@ -53,27 +53,27 @@ class DialogService {
         ),
         content: Text(request.description),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
+            onPressed: () {
+              dialogComplete(DialogResponse(confirmed: false));
+            },
             child: Text(
               request.cancelTitle,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            onPressed: () {
-              dialogComplete(DialogResponse(confirmed: false));
-            },
           ),
-          FlatButton(
+          TextButton(
+            onPressed: () {
+              dialogComplete(DialogResponse(confirmed: true));
+            },
             child: Text(
               request.buttonTitle,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            onPressed: () {
-              dialogComplete(DialogResponse(confirmed: true));
-            },
           ),
         ],
       ),

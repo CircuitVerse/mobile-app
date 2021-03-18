@@ -1,12 +1,13 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_summernote/flutter_summernote.dart';
 import 'package:get/get.dart';
-import 'package:html_editor/html_editor.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/data/restriction_elements.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
+import 'package:mobile_app/ui/components/cv_html_editor.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -29,7 +30,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   AddAssignmentViewModel _model;
   final _formKey = GlobalKey<FormState>();
   String _name, _gradingScale = 'No Scale';
-  final GlobalKey<HtmlEditorState> _descriptionEditor = GlobalKey();
+  final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
   DateTime _deadline;
   final List<String> _restrictions = [];
   final List<String> _gradingOptions = [
@@ -55,16 +56,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         horizontal: 16,
         vertical: 8,
       ),
-      child: HtmlEditor(
-        decoration: BoxDecoration(
-          color: CVTheme.htmlEditorBg,
-          border: Border.all(
-            color: CVTheme.primaryColorDark,
-          ),
-        ),
-        key: _descriptionEditor,
-        height: 300,
-      ),
+      child: CVHtmlEditor(editorKey: _descriptionEditor),
     );
   }
 

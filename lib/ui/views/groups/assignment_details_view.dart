@@ -52,8 +52,22 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   }
 
   Widget _buildEditAssignmentButton() {
-    return RaisedButton(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        primary: CVTheme.primaryColor,
+      ),
+      onPressed: () async {
+        var _updatedAssignment = await Get.toNamed(
+          UpdateAssignmentView.id,
+          arguments: _recievedAssignment,
+        );
+        if (_updatedAssignment is Assignment) {
+          setState(() {
+            _recievedAssignment = _updatedAssignment;
+          });
+        }
+      },
       child: Row(
         children: [
           Icon(Icons.edit, color: Colors.white),
@@ -66,18 +80,6 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           )
         ],
       ),
-      color: CVTheme.primaryColor,
-      onPressed: () async {
-        var _updatedAssignment = await Get.toNamed(
-          UpdateAssignmentView.id,
-          arguments: _recievedAssignment,
-        );
-        if (_updatedAssignment is Assignment) {
-          setState(() {
-            _recievedAssignment = _updatedAssignment;
-          });
-        }
-      },
     );
   }
 
@@ -373,16 +375,18 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                   ),
                   SizedBox(width: 16),
                   if (_submittedGrade != null)
-                    RaisedButton(
-                      padding: const EdgeInsets.all(8),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(8),
+                        primary: CVTheme.red,
+                      ),
+                      onPressed: () => deleteGrade(_submittedGrade.id),
                       child: Text(
                         'Delete',
                         style: Theme.of(context).textTheme.headline6.copyWith(
                               color: Colors.white,
                             ),
                       ),
-                      color: CVTheme.red,
-                      onPressed: () => deleteGrade(_submittedGrade.id),
                     )
                 ],
               ),

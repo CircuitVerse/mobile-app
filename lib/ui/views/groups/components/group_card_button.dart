@@ -16,10 +16,12 @@ class CardButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2),
-      child: FlatButton(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          primary: color,
+        ),
         onPressed: onPressed,
-        color: color,
         child: Text(
           title,
           maxLines: 1,
