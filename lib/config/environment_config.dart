@@ -15,4 +15,8 @@ class EnvironmentConfig {
     'GITHUB_OAUTH_REDIRECT_URI',
     defaultValue: 'circuitverse://auth/callback/github',
   );
+
+  // FB OAUTH ENV VARIABLES
+  static const String FB_APP_NAME = String.fromEnvironment('FB_APP_NAME');
+  static const String FB_APP_ID = String.fromEnvironment('FB_APP_ID');
 }

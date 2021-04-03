@@ -1,4 +1,4 @@
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/enums/auth_type.dart';
@@ -22,11 +22,10 @@ class AuthOptionsViewModel extends BaseModel {
   final LocalStorageService _storage = locator<LocalStorageService>();
 
   Future facebookAuth({bool isSignUp = false}) async {
-    final facebookLogin = FacebookLogin();
-    final result = await facebookLogin.logIn(['email']);
+    final result = await FacebookAuth.instance.login();
 
     switch (result.status) {
-      case FacebookLoginStatus.loggedIn:
+      case LoginStatus.success:
         setStateFor(FB_OAUTH, ViewState.Busy);
 
         try {
@@ -57,13 +56,15 @@ class AuthOptionsViewModel extends BaseModel {
           setErrorMessageFor(FB_OAUTH, f.message);
         }
         break;
-      case FacebookLoginStatus.cancelledByUser:
+      case LoginStatus.cancelled:
         setStateFor(FB_OAUTH, ViewState.Error);
         setErrorMessageFor(FB_OAUTH, 'Login Cancelled By User!');
         break;
-      case FacebookLoginStatus.error:
+      case LoginStatus.failed:
         setStateFor(FB_OAUTH, ViewState.Error);
         setErrorMessageFor(FB_OAUTH, 'Unable to authenticate!');
+        break;
+      case LoginStatus.operationInProgress:
         break;
     }
   }
