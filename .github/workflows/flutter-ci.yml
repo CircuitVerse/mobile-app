@@ -10,6 +10,8 @@ env:
   FB_APP_ID: ${{ secrets.FB_APP_ID }}
   GITHUB_OAUTH_CLIENT_ID: ${{ secrets.GITHUB_OAUTH_CLIENT_ID }}
   GITHUB_OAUTH_CLIENT_SECRET: ${{ secrets.GITHUB_OAUTH_CLIENT_SECRET }}
+  SUPPLY_JSON_KEY: ${{ secrets.SUPPLY_JSON_KEY }}
+  RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
         
 jobs:
   build:
@@ -24,6 +26,12 @@ jobs:
     - uses: actions/setup-java@v1
       with:
         java-version: '12.x'
+
+    # Setup Ruby for Fastlane
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.6
+        bundler-cache: true
     
     # Setup the flutter environment.
     - uses: subosito/flutter-action@v1
@@ -49,6 +57,11 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         flag-name: run-${{ matrix.platform }}
         parallel: true
+
+    # Save release props for signing
+    - name: Release Properties
+      if: ${{ github.event_name == 'push' }}
+      run: echo "${RELEASE_KEYSTORE}" | base64 --decode > android/key.release.properties
     
     # Build apk
     - run: flutter build apk --dart-define=FB_APP_ID=${FB_APP_ID} --dart-define=GITHUB_OAUTH_CLIENT_ID=${GITHUB_OAUTH_CLIENT_ID} --dart-define=GITHUB_OAUTH_CLIENT_SECRET=${GITHUB_OAUTH_CLIENT_SECRET}
@@ -73,3 +86,15 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         parallel-finished: true
+
+  deploy:
+    needs: finish
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+    steps:
+    - run: cd android
+    - name: Fastlane Supply
+      run: bundle exec fastlane supply init
+
+    - name: Fastlane Beta Deploy
+      run: bundle exec fastlane beta
