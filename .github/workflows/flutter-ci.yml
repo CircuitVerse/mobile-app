@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - fastlane
   pull_request:
 
 env:
