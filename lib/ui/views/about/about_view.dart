@@ -115,8 +115,7 @@ class _AboutViewState extends State<AboutView> {
                 imagePath: 'assets/images/contribute/slack.png',
                 title: 'Join and chat with us at',
                 description: 'Slack channel',
-                url:
-                    'https://join.slack.com/t/circuitverse-team/shared_invite/enQtNjc4MzcyNDE5OTA3LTdjYTM5NjFiZWZlZGI2MmU1MmYzYzczNmZlZDg5MjYxYmQ4ODRjMjQxM2UyMWI5ODUzODQzMDU2ZDEzNjI4NmE',
+                url: 'https://circuitverse.org/slack',
               ),
               Divider(),
               CVSubheader(

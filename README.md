@@ -1,4 +1,5 @@
 # CircuitVerse Mobile
+
 [![Flutter CI](https://github.com/CircuitVerse/mobile-app/actions/workflows/flutter-ci.yml/badge.svg)](https://github.com/CircuitVerse/mobile-app/actions/workflows/flutter-ci.yml)
 
 CircuitVerse for mobile is a cross platform appication built in [flutter](https://flutter.dev/) using CircuitVerse API.
@@ -123,7 +124,7 @@ mobile-app/lib/
 
 We would love to hear from you! We communicate on the following platforms:
 
-[![Slack](https://img.shields.io/badge/chat-on_slack-purple.svg?style=for-the-badge&logo=slack)](https://join.slack.com/t/circuitverse-team/shared_invite/enQtNjc4MzcyNDE5OTA3LTdjYTM5NjFiZWZlZGI2MmU1MmYzYzczNmZlZDg5MjYxYmQ4ODRjMjQxM2UyMWI5ODUzODQzMDU2ZDEzNjI4NmE)
+[![Slack](https://img.shields.io/badge/chat-on_slack-purple.svg?style=for-the-badge&logo=slack)](https://circuitverse.org/slack)
 
 ## Contributing
 
