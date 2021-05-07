@@ -1,0 +1,2 @@
+json_key_file("supply_json_key.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("org.circuitverse.mobile_app") # e.g. com.krausefx.app
