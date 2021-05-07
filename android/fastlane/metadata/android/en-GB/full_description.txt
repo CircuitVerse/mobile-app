@@ -1,0 +1,7 @@
+CircuitVerse aims to provide a platform where circuits can be designed and simulated using a graphical user interface. While users can design complete CPU implementations within the simulator, the software is designed primarily for educational use. CircuitVerse is an open-source project with an active community.
+
+CircuitVerse has been designed to be very easy to use in class. The platform has features to assist teachers in class and assignments including but not limited to
+
+1. Creating Groups and adding your students.
+2. Posting Assignments.
+3. Grading Assignments.
