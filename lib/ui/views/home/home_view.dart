@@ -30,7 +30,7 @@ class _HomeViewState extends State<HomeView> {
             textAlign: TextAlign.center,
           ),
           Text(
-            'From Simple gates to complex sequential circuits, plot timimg diagrams, automatic circuit generation, explore standard ICs, and much more',
+            'From Simple gates to complex sequential circuits, plot timing diagrams, automatic circuit generation, explore standard ICs, and much more',
             style: Theme.of(context).textTheme.subtitle1,
             textAlign: TextAlign.center,
           ),
