@@ -7,6 +7,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
+import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/contributors/contributors_view.dart';
 import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
@@ -187,9 +188,22 @@ class _CVLandingViewState extends State<CVLandingView> {
                         ],
                       ),
                     )
-                  : InkWell(
-                      onTap: () => Get.offAndToNamed(LoginView.id),
-                      child: _buildDrawerTile('Login', Ionicons.ios_log_in),
+                  : Theme(
+                      data: CVTheme.themeData(context),
+                      child: Column(
+                        children: <Widget>[
+                          InkWell(
+                            onTap: () => Get.offAndToNamed(LoginView.id),
+                            child:
+                                _buildDrawerTile('Login', Ionicons.ios_log_in),
+                          ),
+                          InkWell(
+                            onTap: () => Get.offAndToNamed(SignupView.id),
+                            child:
+                                _buildDrawerTile('Register', Ionicons.ios_person_add),
+                          )
+                        ],
+                      ),
                     )
             ],
           ),
