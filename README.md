@@ -3,7 +3,7 @@
 [![CI](https://github.com/CircuitVerse/mobile-app/actions/workflows/ci.yml/badge.svg)](https://github.com/CircuitVerse/mobile-app/actions/workflows/ci.yml)
 [![CD](https://github.com/CircuitVerse/mobile-app/actions/workflows/cd.yml/badge.svg)](https://github.com/CircuitVerse/mobile-app/actions/workflows/cd.yml)
 
-CircuitVerse for mobile is a cross platform appication built in [flutter](https://flutter.dev/) using CircuitVerse API.
+CircuitVerse for mobile is a cross platform application built in [flutter](https://flutter.dev/) using CircuitVerse API.
 
 ## Getting Started
 
