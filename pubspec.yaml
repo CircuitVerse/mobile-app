@@ -78,21 +78,7 @@ flutter:
     - assets/images/signup/
     - assets/images/group/
     - assets/images/profile/
-    - android/app/src/main/res/mipmap-mdpi/ic_launcher_foreground.png
-    - android/app/src/main/res/mipmap-xxxhdpi/
-    - android/app/src/main/res/drawable-xxxhdpi/
-    - android/app/src/main/res/drawable-xhdpi/
-    - android/app/src/main/res/mipmap-xhdpi/
-    - android/app/src/main/res/drawable/
-    - android/app/src/main/res/drawable-xxhdpi/
-    - android/app/src/main/res/mipmap-mdpi/
-    - android/app/src/main/res/values/
-    - android/app/src/main/res/drawable-mdpi/
-    - android/app/src/main/res/mipmap-anydpi-v26/
-    - android/app/src/main/res/
-    - android/app/src/main/res/drawable-hdpi/
-    - android/app/src/main/res/mipmap-hdpi/
-    - android/app/src/main/res/mipmap-xxhdpi/
+
 
 
   fonts:
