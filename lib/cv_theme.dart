@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CVTheme {
   CVTheme._();
+
   static Color textFieldLabelColor(context) {
     return Theme.of(context).brightness == Brightness.dark
         ? Colors.grey[300]
@@ -70,6 +71,7 @@ class CVTheme {
   static const Color bgCard = Color.fromRGBO(255, 255, 255, 0.9);
   static const Color bgCardDark = Color.fromRGBO(97, 97, 97, 1);
   static const Color htmlEditorBg = Color.fromRGBO(245, 245, 245, 1);
+
   static const OutlineInputBorder primaryDarkOutlineBorder = OutlineInputBorder(
     borderRadius: BorderRadius.zero,
     borderSide: BorderSide(color: CVTheme.primaryColorDark),
