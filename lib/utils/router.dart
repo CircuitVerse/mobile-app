@@ -17,6 +17,7 @@ import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
 import 'package:mobile_app/ui/views/groups/new_group_view.dart';
 import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
 import 'package:mobile_app/ui/views/cv_landing_view.dart';
+import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
 import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
@@ -107,6 +108,8 @@ class CVRouter {
             assignment: _assignment,
           ),
         );
+      case IbLandingView.id:
+        return MaterialPageRoute(builder: (_) => IbLandingView());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
