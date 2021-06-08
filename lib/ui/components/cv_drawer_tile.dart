@@ -23,9 +23,9 @@ class CVDrawerTile extends StatelessWidget {
         title: Text(
           title,
           style: Theme.of(context).textTheme.headline6.copyWith(
-            fontFamily: 'Poppins',
-            color: color ?? CVTheme.textColor(context),
-          ),
+                fontFamily: 'Poppins',
+                color: color ?? CVTheme.textColor(context),
+              ),
         ),
       ),
     );

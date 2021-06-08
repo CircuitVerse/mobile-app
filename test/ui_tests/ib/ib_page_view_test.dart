@@ -29,7 +29,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: IbPageView(),
+          home: IbPageView(tocCallback: (val) {}),
         ),
       );
 
@@ -38,7 +38,7 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds HomeView Widgets', (WidgetTester tester) async {
+    testWidgets('finds PageView Widgets', (WidgetTester tester) async {
       await _pumpIbPageView(tester);
       await tester.pumpAndSettle();
 
@@ -47,7 +47,11 @@ void main() {
 
       await tester.pumpAndSettle();
 
+      // Finds Text Widgets
       expect(find.byType(Text), findsWidgets);
+
+      // Finds FABs
+      expect(find.byType(FloatingActionButton), findsNWidgets(2));
     });
   });
 }
