@@ -17,7 +17,8 @@ class IbLandingView extends StatefulWidget {
 
 class _IbLandingViewState extends State<IbLandingView> {
   int _selectedIndex = 0;
-  
+  Function _onTocPressed;
+
   void setSelectedIndexTo(int index) {
     Get.back();
     if (_selectedIndex != index) {
@@ -40,13 +41,15 @@ class _IbLandingViewState extends State<IbLandingView> {
       title: Text(
         _appBarTitle(_selectedIndex),
       ),
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.menu_book_rounded),
-          tooltip: 'Show Table of Contents',
-          onPressed: () { },
-        ),
-      ],
+      actions: _onTocPressed != null
+          ? [
+              IconButton(
+                icon: const Icon(Icons.menu_book_rounded),
+                tooltip: 'Show Table of Contents',
+                onPressed: _onTocPressed,
+              ),
+            ]
+          : [],
       centerTitle: true,
       brightness: Brightness.dark,
     );
@@ -201,7 +204,13 @@ class _IbLandingViewState extends State<IbLandingView> {
                   child: child,
                 );
               },
-              child: IbPageView(),
+              child: IbPageView(
+                tocCallback: (val) {
+                  Future.delayed(Duration.zero, () async {
+                    setState(() => _onTocPressed = val);
+                  });
+                },
+              ),
             ),
           ),
         ),
