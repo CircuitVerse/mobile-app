@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
@@ -17,6 +18,26 @@ class IbPageView extends StatefulWidget {
 }
 
 class _IbPageViewState extends State<IbPageView> {
+  ScrollController _hideButtonController;
+  bool _isFabsVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _isFabsVisible = true;
+    _hideButtonController = ScrollController();
+    _hideButtonController.addListener(() {
+      if (_hideButtonController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        setState(() => _isFabsVisible = false);
+      }
+      if (_hideButtonController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        setState(() => _isFabsVisible = true);
+      }
+    });
+  }
+
   Widget _buildHeadings1(String title) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4),
@@ -169,26 +190,40 @@ class _IbPageViewState extends State<IbPageView> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        FloatingActionButton(
-          elevation: 0.0,
-          child: Icon(
-            Icons.arrow_back_rounded,
-            color: Theme.of(context).primaryIconTheme.color,
+        AnimatedOpacity(
+          duration: Duration(milliseconds: 500),
+          opacity: _isFabsVisible ? 1.0 : 0.0,
+          child: FloatingActionButton(
+            elevation: 0.0,
+            child: Icon(
+              Icons.arrow_back_rounded,
+              color: Theme.of(context).primaryIconTheme.color,
+            ),
+            backgroundColor: IbTheme.primaryColor,
+            onPressed: () {},
           ),
-          backgroundColor: IbTheme.primaryColor,
-          onPressed: () {},
         ),
-        FloatingActionButton(
-          elevation: 0.0,
-          child: Icon(
-            Icons.arrow_forward_rounded,
-            color: Theme.of(context).primaryIconTheme.color,
+        AnimatedOpacity(
+          duration: Duration(milliseconds: 500),
+          opacity: _isFabsVisible ? 1.0 : 0.0,
+          child: FloatingActionButton(
+            elevation: 0.0,
+            child: Icon(
+              Icons.arrow_forward_rounded,
+              color: Theme.of(context).primaryIconTheme.color,
+            ),
+            backgroundColor: IbTheme.primaryColor,
+            onPressed: () {},
           ),
-          backgroundColor: IbTheme.primaryColor,
-          onPressed: () {},
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _hideButtonController.dispose();
+    super.dispose();
   }
 
   @override
@@ -201,6 +236,7 @@ class _IbPageViewState extends State<IbPageView> {
       builder: (context, model, child) => Stack(
         children: [
           SingleChildScrollView(
+            controller: _hideButtonController,
             padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,6 +256,16 @@ class _IbPageViewState extends State<IbPageView> {
                 _buildHeadings3('Prerequistes'),
                 _buildParagraph(
                     'Before you start learning from this Book, I hope that you have some basic knowledge about computers and how they work. A basic idea regarding the initial concepts of Digital Electronics is enough to understand the topics covered in this tutorial.'),
+                _buildParagraph(
+                    'The Computer Logical Organization is basically the abstraction which is below the operating system and above the digital logic level. Now at this point, the important points are the functional units/subsystems that refer to some hardware which is made up of lower level building blocks.'),
+                _buildParagraph(
+                    'The Computer Logical Organization is basically the abstraction which is below the operating system and above the digital logic level. Now at this point, the important points are the functional units/subsystems that refer to some hardware which is made up of lower level building blocks.'),
+                _buildParagraph(
+                    'The Computer Logical Organization is basically the abstraction which is below the operating system and above the digital logic level. Now at this point, the important points are the functional units/subsystems that refer to some hardware which is made up of lower level building blocks.'),
+                _buildParagraph(
+                    'The Computer Logical Organization is basically the abstraction which is below the operating system and above the digital logic level. Now at this point, the important points are the functional units/subsystems that refer to some hardware which is made up of lower level building blocks.'),
+                _buildParagraph(
+                    'The Computer Logical Organization is basically the abstraction which is below the operating system and above the digital logic level. Now at this point, the important points are the functional units/subsystems that refer to some hardware which is made up of lower level building blocks.'),
                 _buildDivider(),
                 _buildFooter(),
               ],
