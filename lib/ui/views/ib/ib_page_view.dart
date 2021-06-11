@@ -194,12 +194,12 @@ class _IbPageViewState extends State<IbPageView> {
           duration: Duration(milliseconds: 500),
           opacity: _isFabsVisible ? 1.0 : 0.0,
           child: FloatingActionButton(
-            elevation: 0.0,
+            mini: true,
             child: Icon(
               Icons.arrow_back_rounded,
-              color: Theme.of(context).primaryIconTheme.color,
+              color: IbTheme.primaryColor,
             ),
-            backgroundColor: IbTheme.primaryColor,
+            backgroundColor: Theme.of(context).primaryIconTheme.color,
             onPressed: () {},
           ),
         ),
@@ -207,12 +207,12 @@ class _IbPageViewState extends State<IbPageView> {
           duration: Duration(milliseconds: 500),
           opacity: _isFabsVisible ? 1.0 : 0.0,
           child: FloatingActionButton(
-            elevation: 0.0,
+            mini: true,
             child: Icon(
               Icons.arrow_forward_rounded,
-              color: Theme.of(context).primaryIconTheme.color,
+              color: IbTheme.primaryColor,
             ),
-            backgroundColor: IbTheme.primaryColor,
+            backgroundColor: Theme.of(context).primaryIconTheme.color,
             onPressed: () {},
           ),
         ),
