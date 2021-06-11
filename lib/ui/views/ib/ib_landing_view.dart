@@ -60,9 +60,12 @@ class _IbLandingViewState extends State<IbLandingView> {
       maintainState: true,
       title: ListTile(
         contentPadding: EdgeInsets.all(0),
-        title: Text(
-          'Binary algebra',
-          style: Theme.of(context).textTheme.headline6,
+        title: GestureDetector(
+          onTap: () => setSelectedIndexTo(0),
+          child: Text(
+            'Binary algebra',
+            style: Theme.of(context).textTheme.headline6,
+          ),
         ),
       ),
       children: <Widget>[
