@@ -39,32 +39,39 @@ void main() {
     }
 
     testWidgets('finds IbPageView Widgets', (WidgetTester tester) async {
-      await _pumpHomeView(tester);
-      await tester.pumpAndSettle();
+      await tester.runAsync(() async {
+        await _pumpHomeView(tester);
+        await tester.pumpAndSettle();
 
-      // Finds AppBar
-      expect(find.byType(AppBar), findsOneWidget);
+        // Finds AppBar
+        expect(find.byType(AppBar), findsOneWidget);
 
-      // Finds AppBar Text
-      expect(find.text('CircuitVerse'), findsOneWidget);
+        // Finds AppBar Text
+        expect(find.text('CircuitVerse'), findsOneWidget);
 
-      // Finds Hamburger Drawer Icon and Table of Contents Icon
-      expect(find.byType(IconButton), findsNWidgets(2));
+        // Finds Table of Contents Icon
+        expect(find.byType(IconButton), findsNWidgets(1));
+
+        // Finds Floating Action Buttons
+        expect(find.byType(FloatingActionButton), findsNWidgets(2));
+      });
     });
 
     testWidgets('finds IbPageView Drawer Widgets', (WidgetTester tester) async {
-      await _pumpHomeView(tester);
-      await tester.pumpAndSettle();
+      await tester.runAsync(() async {
+        await _pumpHomeView(tester);
+        await tester.pumpAndSettle();
 
-      // Finds Scaffold
-      final state = tester.firstState(find.byType(Scaffold)) as ScaffoldState;
-      state.openDrawer();
-      await tester.pump();
+        // Finds Scaffold
+        final state = tester.firstState(find.byType(Scaffold)) as ScaffoldState;
+        state.openDrawer();
+        await tester.pump();
 
-      // Finds Drawer Widgets
-      expect(find.text('Return to Home'), findsOneWidget);
-      expect(find.text('Interactive Book Home'), findsOneWidget);
-      expect(find.byType(ExpansionTile), findsWidgets);
+        // Finds Drawer Widgets
+        expect(find.text('Return to Home'), findsOneWidget);
+        expect(find.text('Interactive Book Home'), findsOneWidget);
+        expect(find.byType(ExpansionTile), findsWidgets);
+      });
     });
   });
 }
