@@ -16,11 +16,11 @@ void main() {
     group('fetchApiPage -', () {
       test('When called & http client returns succes response', () async {
         ApiUtils.client = MockClient((_) => Future.value(
-            Response(jsonEncode([mockIbRawPageData1, mockIbRawPage2]), 200)));
+            Response(jsonEncode([mockIbRawPage1, mockIbRawPage2]), 200)));
         var _ibApi = HttpIbApi();
 
         expect((await _ibApi.fetchApiPage()).toString(),
-            [mockIbRawPageData1, mockIbRawPage2].toString());
+            [mockIbRawPage1, mockIbRawPage2].toString());
       });
 
       test('When called & http client throws Exceptions', () async {
