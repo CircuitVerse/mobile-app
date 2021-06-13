@@ -8,10 +8,10 @@ typedef TocCallback = void Function(Function);
 
 class IbPageView extends StatefulWidget {
   static const String id = 'ib_page_view';
-  final String page_id;
+  final String pageId;
   final TocCallback tocCallback;
 
-  IbPageView({@required this.tocCallback, this.page_id = 'index.md'});
+  IbPageView({@required this.tocCallback, this.pageId = 'index.md'});
 
   @override
   _IbPageViewState createState() => _IbPageViewState();
