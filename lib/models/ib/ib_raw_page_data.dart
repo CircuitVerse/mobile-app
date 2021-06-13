@@ -14,21 +14,22 @@ class IbRawPageData {
   String httpUrl;
   String apiUrl;
 
-  IbRawPageData(
-      {this.id,
-      this.title,
-      this.name,
-      this.content,
-      this.rawContent,
-      this.navOrder,
-      this.cvibLevel,
-      this.parent,
-      this.hasChildren,
-      this.hasToc,
-      this.disableComments,
-      this.frontMatter,
-      this.httpUrl,
-      this.apiUrl});
+  IbRawPageData({
+    this.id,
+    this.title,
+    this.name,
+    this.content,
+    this.rawContent,
+    this.navOrder,
+    this.cvibLevel,
+    this.parent,
+    this.hasChildren,
+    this.hasToc,
+    this.disableComments,
+    this.frontMatter,
+    this.httpUrl,
+    this.apiUrl,
+  });
 
   factory IbRawPageData.fromJson(Map<String, dynamic> json) => IbRawPageData(
         id: json['path'] ?? json['relative_path'],
