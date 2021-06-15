@@ -5,20 +5,20 @@ import 'package:mobile_app/models/ib/ib_raw_page_data.dart';
 import 'package:mobile_app/utils/api_utils.dart';
 
 abstract class IbApi {
-  Future<List> fetchApiPage({String id});
+  Future<List<Map<String, dynamic>>> fetchApiPage({String id});
   Future<IbRawPageData> fetchRawPageData({String id});
 }
 
 class HttpIbApi implements IbApi {
   @override
-  Future<List> fetchApiPage({String id = ''}) async {
+  Future<List<Map<String, dynamic>>> fetchApiPage({String id = ''}) async {
     var _url = id == ''
         ? '${EnvironmentConfig.IB_API_BASE_URL}.json'
         : '${EnvironmentConfig.IB_API_BASE_URL}/${id}.json';
 
     try {
       var _jsonResponse = await ApiUtils.get(_url);
-      return _jsonResponse;
+      return [..._jsonResponse];
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on Exception {
