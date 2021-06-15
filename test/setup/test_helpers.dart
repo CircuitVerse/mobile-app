@@ -7,9 +7,11 @@ import 'package:mobile_app/services/API/contributors_api.dart';
 import 'package:mobile_app/services/API/grades_api.dart';
 import 'package:mobile_app/services/API/group_members_api.dart';
 import 'package:mobile_app/services/API/groups_api.dart';
+import 'package:mobile_app/services/API/ib_api.dart';
 import 'package:mobile_app/services/API/projects_api.dart';
 import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/services/dialog_service.dart';
+import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
@@ -47,6 +49,10 @@ class UsersApiMock extends Mock implements UsersApi {}
 class ProjectsApiMock extends Mock implements ProjectsApi {}
 
 class CollaboratorsApiMock extends Mock implements CollaboratorsApi {}
+
+class IbApiMock extends Mock implements IbApi {}
+
+class IbEngineServiceMock extends Mock implements IbEngineService {}
 
 class MockDialogService extends Mock implements DialogService {}
 
@@ -156,6 +162,22 @@ CollaboratorsApi getAndRegisterCollaboratorsApiMock() {
   return _collaboratorsApi;
 }
 
+IbApi getAndRegisterIbApiMock() {
+  _removeRegistrationIfExists<IbApi>();
+  var _ibApi = IbApiMock();
+
+  locator.registerSingleton<IbApi>(_ibApi);
+  return _ibApi;
+}
+
+IbEngineService getAndRegisterIbEngineServiceMock() {
+  _removeRegistrationIfExists<IbEngineService>();
+  var _ibEngineService = IbEngineServiceMock();
+
+  locator.registerSingleton<IbEngineService>(_ibEngineService);
+  return _ibEngineService;
+}
+
 void registerServices() {
   getAndRegisterLocalStorageServiceMock();
   getAndRegisterContributorsApiMock();
@@ -166,6 +188,8 @@ void registerServices() {
   getAndRegisterUsersApiMock();
   getAndRegisterProjectsApiMock();
   getAndRegisterCollaboratorsApiMock();
+  getAndRegisterIbApiMock();
+  getAndRegisterIbEngineServiceMock();
 }
 
 void unregisterServices() {
@@ -178,6 +202,8 @@ void unregisterServices() {
   locator.unregister<UsersApi>();
   locator.unregister<ProjectsApi>();
   locator.unregister<CollaboratorsApi>();
+  locator.unregister<IbApi>();
+  locator.unregister<IbEngineService>();
 }
 
 void _removeRegistrationIfExists<T>() {

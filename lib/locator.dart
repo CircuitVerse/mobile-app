@@ -5,11 +5,13 @@ import 'package:mobile_app/services/API/fcm_api.dart';
 import 'package:mobile_app/services/API/grades_api.dart';
 import 'package:mobile_app/services/API/group_members_api.dart';
 import 'package:mobile_app/services/API/groups_api.dart';
+import 'package:mobile_app/services/API/ib_api.dart';
 import 'package:mobile_app/services/API/projects_api.dart';
 import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/services/API/country_institute_api.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/API/contributors_api.dart';
+import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/viewmodels/authentication/auth_options_viewmodel.dart';
 import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.dart';
@@ -53,6 +55,10 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<FCMApi>(() => HttpFCMApi());
   locator.registerLazySingleton<CountryInstituteAPI>(
       () => HttpCountryInstituteAPI());
+  locator.registerLazySingleton<IbApi>(() => HttpIbApi());
+
+  // Interactive Book Engine Service
+  locator.registerLazySingleton<IbEngineService>(() => IbEngineServiceImpl());
 
   // Startup ViewModel
   locator.registerFactory(() => StartUpViewModel());
