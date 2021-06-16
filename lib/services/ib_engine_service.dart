@@ -43,10 +43,6 @@ class IbEngineServiceImpl implements IbEngineService {
     var childPages = <IbChapter>[];
 
     for (var page in _apiResponse) {
-      if (page['title'] == null) {
-        print(page['title']);
-      }
-
       if (page['type'] == 'directory') {
         childPages.addAll(await _fetchPagesInDir(id: page['path']));
       } else if (page['has_children'] != null && page['has_children']) {

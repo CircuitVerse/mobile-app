@@ -26,6 +26,8 @@ import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
 import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
+import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
+import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
@@ -95,4 +97,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AddAssignmentViewModel());
   locator.registerFactory(() => UpdateAssignmentViewModel());
   locator.registerFactory(() => AssignmentDetailsViewModel());
+
+  // Interactive Book ViewModels
+  locator.registerFactory(() => IbLandingViewModel());
+  locator.registerFactory(() => IbPageViewModel());
 }
