@@ -28,12 +28,13 @@ void main() {
             id: mockIbRawPage2['path'],
             value: mockIbRawPage2['title'],
             navOrder: mockIbRawPage2['nav_order'].toString(),
-            //next: 'docs/binary-representation/binary-numbers.md',
+            next: mockIbRawPage3['path'],
             items: [
               IbChapter(
                 id: mockIbRawPage3['path'],
                 navOrder: mockIbRawPage3['nav_order'].toString(),
                 value: mockIbRawPage3['title'],
+                prev: mockIbRawPage2['path'],
               ),
             ],
           ),

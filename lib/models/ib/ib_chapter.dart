@@ -4,8 +4,8 @@ class IbChapter {
   final String id;
   final String value;
   final String navOrder;
-  final String prev;
-  final String next;
+  String prev;
+  String next;
   final List<IbChapter> items;
 
   IbChapter({
@@ -16,4 +16,7 @@ class IbChapter {
     this.next,
     this.items,
   });
+
+  set prevPage(String prev) => this.prev = prev;
+  set nextPage(String next) => this.next = next;
 }
