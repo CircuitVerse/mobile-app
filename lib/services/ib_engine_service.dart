@@ -32,6 +32,7 @@ class IbEngineServiceImpl implements IbEngineService {
     String id = '',
     bool ignoreIndex = false,
   }) async {
+    /// Fetch response from API for the given id
     var _apiResponse;
     try {
       _apiResponse = await _ibApi.fetchApiPage(id: id);
@@ -39,14 +40,19 @@ class IbEngineServiceImpl implements IbEngineService {
       throw Failure('IbApi: ${_.toString()}');
     }
 
-    var result = <IbChapter>[];
+    var parentPages = <IbChapter>[];
     var childPages = <IbChapter>[];
 
+    // Iterate over the list of pages present inside this response
     for (var page in _apiResponse) {
+      // Recursive scan if the page is directory
       if (page['type'] == 'directory') {
         childPages.addAll(await _fetchPagesInDir(id: page['path']));
       } else if (page['has_children'] != null && page['has_children']) {
-        result.add(IbChapter(
+        // If the page has children inside a directory, it's a parent page
+        // All child pages must be present inside parent one
+        // refer an example: https://learn.circuitverse.org/_api/pages/docs/binary-representation.json
+        parentPages.add(IbChapter(
           id: page['path'],
           value: page['title'],
           navOrder: page['nav_order'].toString(),
@@ -59,6 +65,7 @@ class IbEngineServiceImpl implements IbEngineService {
           continue;
         }
 
+        // Add child page to the list
         childPages.add(IbChapter(
           id: page['path'],
           value: page['title'],
@@ -68,15 +75,37 @@ class IbEngineServiceImpl implements IbEngineService {
     }
 
     // Sort child pages
-    if (result.isNotEmpty) {
+    if (parentPages.isNotEmpty) {
       childPages.sort((a, b) => a.navOrder.compareTo(b.navOrder));
-    } else if (id == '') {
-      // Sort root pages
-      childPages.sort(
-          (a, b) => int.parse(a.navOrder).compareTo(int.parse(b.navOrder)));
     }
 
-    return result.isEmpty ? childPages : result;
+    return parentPages.isEmpty ? childPages : parentPages;
+  }
+
+  /// Builds Navigation from IbChapters by
+  /// Assigning prev and next ids
+  List<IbChapter> _buildNav(List<IbChapter> chapters) {
+    // We have to flatten the nested chapters and assign prev and next to the objects
+    // but return chapters to keep the list intact
+
+    var _flatten = chapters.expand((c) => [c, ...c.items]).toList();
+
+    if (_flatten.length <= 1) {
+      return chapters;
+    }
+
+    String prev;
+
+    for (var i = 0; i < _flatten.length; i++) {
+      _flatten[i].prevPage = prev;
+      if (i + 1 < _flatten.length) {
+        _flatten[i].nextPage = _flatten[i + 1].id;
+      }
+
+      prev = _flatten[i].id;
+    }
+
+    return chapters;
   }
 
   /// Get Chapters and Build Navigation for Interactive Book
@@ -87,12 +116,21 @@ class IbEngineServiceImpl implements IbEngineService {
       return _ibChapters;
     }
 
+    var _chapters;
     try {
-      _ibChapters = await _fetchPagesInDir(ignoreIndex: true);
+      _chapters = await _fetchPagesInDir(ignoreIndex: true);
     } on Failure catch (e) {
       throw Failure(e.toString());
     }
 
+    // Sort root pages
+    _chapters
+        .sort((a, b) => int.parse(a.navOrder).compareTo(int.parse(b.navOrder)));
+
+    // Build Navigation
+    _chapters = _buildNav(_chapters);
+
+    _ibChapters = _chapters;
     return _ibChapters;
   }
 
