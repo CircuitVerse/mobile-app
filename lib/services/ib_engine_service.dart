@@ -1,3 +1,5 @@
+import 'package:html/dom.dart';
+import 'package:html/parser.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
@@ -210,6 +212,45 @@ class IbEngineServiceImpl implements IbEngineService {
     return _mdParser;
   }
 
+  /// Recursively parses list of table of contents
+  List<IbTocItem> _parseToc(Element element, {bool num = true}) {
+    var index = num ? 1 : 'a'.codeUnitAt(0);
+    var toc = <IbTocItem>[];
+
+    for (var li in element.children) {
+      var eff_index = num ? index.toString() : String.fromCharCode(index);
+      if (li.getElementsByTagName('ol').isNotEmpty) {
+        toc.add(
+          IbTocItem(
+            content: '$eff_index. ${li.firstChild.text}',
+            items: _parseToc(li.children[1], num: !num),
+          ),
+        );
+      } else {
+        toc.add(
+          IbTocItem(
+            content: '$eff_index. ${li.text}',
+          ),
+        );
+      }
+      index += 1;
+    }
+
+    return toc;
+  }
+
+  /// Fetches Table of Contents from HTML content
+  List<IbTocItem> _getTableOfContents(String content) {
+    var document = parse(content);
+    var mdElement = document.getElementById('markdown-toc');
+
+    if (mdElement != null) {
+      return _parseToc(mdElement);
+    }
+
+    throw Failure('Failed to find id "markdown-toc" in DOM');
+  }
+
   /// Fetches "Rich" Page Content
   @override
   Future<IbPageData> getPageData({String id = 'index.md'}) async {
@@ -225,6 +266,9 @@ class IbEngineServiceImpl implements IbEngineService {
       id: _ibRawPageData.id,
       title: _ibRawPageData.title,
       content: _pageParser(_ibRawPageData),
+      tableOfContents: _ibRawPageData.hasToc
+          ? _getTableOfContents(_ibRawPageData.content)
+          : [],
     );
   }
 }
