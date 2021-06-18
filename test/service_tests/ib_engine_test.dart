@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
@@ -75,7 +78,7 @@ void main() {
     });
 
     group('getPageData -', () {
-      test('When called and returns success response', () async {
+      test('When Home page called and returns success response', () async {
         var _expectedResult = IbPageData(
           id: 'index.md',
           title: 'Home',
@@ -95,6 +98,7 @@ void main() {
                 content:
                     'Before you start learning from this Book, I hope that you have some basic knowledge about computers and how they work. A basic idea regarding the initial concepts of Digital Electronics is enough to understand the topics covered in this tutorial.')
           ],
+          tableOfContents: [],
         );
 
         var _ibApi = getAndRegisterIbApiMock();
@@ -126,6 +130,102 @@ void main() {
             _expectedResult.content[6].content);
         expect(_actualResult.content[7].content,
             _expectedResult.content[7].content);
+      });
+
+      test('When a regular page called and returns success response', () async {
+        var mockDataFile =
+            await File('test/setup/test_data/contributing_guidelines.json');
+        Map<String, dynamic> mockIbRawPageData2 =
+            jsonDecode(await mockDataFile.readAsString());
+
+        var _expectedResult = IbPageData(
+            id: mockIbRawPageData2['path'],
+            title: mockIbRawPageData2['title'],
+            content: [],
+            tableOfContents: [
+              IbTocItem(
+                content: '1. About this guidelines',
+                items: [
+                  IbTocItem(content: 'a. Revision history'),
+                  IbTocItem(content: 'b. Purpose of the guidelines'),
+                  IbTocItem(content: 'c. Acknowledgements'),
+                ],
+              ),
+              IbTocItem(content: '2. Workflow'),
+              IbTocItem(
+                content: '3. Licensing',
+                items: [
+                  IbTocItem(
+                      content:
+                          'a. Non-free materials and special requirements'),
+                  IbTocItem(content: 'b. Linking to copyrighted works'),
+                ],
+              ),
+              IbTocItem(content: '4. Proposing a contribution'),
+              IbTocItem(content: '5. Editing existing content'),
+              IbTocItem(content: '6. Writing content'),
+              IbTocItem(content: '7. Style manual'),
+              IbTocItem(content: '8. Templates and examples'),
+              IbTocItem(
+                  content:
+                      '9. Code of conduct, interacting with the community / etiquette'),
+              IbTocItem(content: '10. Tools'),
+            ]);
+
+        var _ibApi = getAndRegisterIbApiMock();
+
+        when(_ibApi.fetchRawPageData(id: mockIbRawPageData2['path']))
+            .thenAnswer((_) =>
+                Future.value(IbRawPageData.fromJson(mockIbRawPageData2)));
+
+        var _ibEngine = IbEngineServiceImpl();
+        var _actualResult =
+            await _ibEngine.getPageData(id: mockIbRawPageData2['path']);
+
+        expect(_actualResult.id, _expectedResult.id);
+        expect(_actualResult.title, _expectedResult.title);
+        expect(_actualResult.tableOfContents.length,
+            _expectedResult.tableOfContents.length);
+
+        // [TODO] Tests for Content
+
+        expect(_actualResult.tableOfContents[0].content,
+            _expectedResult.tableOfContents[0].content);
+        expect(_actualResult.tableOfContents[0].items.length,
+            _expectedResult.tableOfContents[0].items.length);
+        expect(_actualResult.tableOfContents[0].items[0].content,
+            _expectedResult.tableOfContents[0].items[0].content);
+        expect(_actualResult.tableOfContents[0].items[1].content,
+            _expectedResult.tableOfContents[0].items[1].content);
+        expect(_actualResult.tableOfContents[0].items[2].content,
+            _expectedResult.tableOfContents[0].items[2].content);
+
+        expect(_actualResult.tableOfContents[1].content,
+            _expectedResult.tableOfContents[1].content);
+
+        expect(_actualResult.tableOfContents[2].content,
+            _expectedResult.tableOfContents[2].content);
+        expect(_actualResult.tableOfContents[2].items.length,
+            _expectedResult.tableOfContents[2].items.length);
+        expect(_actualResult.tableOfContents[2].items[0].content,
+            _expectedResult.tableOfContents[2].items[0].content);
+        expect(_actualResult.tableOfContents[2].items[1].content,
+            _expectedResult.tableOfContents[2].items[1].content);
+
+        expect(_actualResult.tableOfContents[3].content,
+            _expectedResult.tableOfContents[3].content);
+        expect(_actualResult.tableOfContents[4].content,
+            _expectedResult.tableOfContents[4].content);
+        expect(_actualResult.tableOfContents[5].content,
+            _expectedResult.tableOfContents[5].content);
+        expect(_actualResult.tableOfContents[6].content,
+            _expectedResult.tableOfContents[6].content);
+        expect(_actualResult.tableOfContents[7].content,
+            _expectedResult.tableOfContents[7].content);
+        expect(_actualResult.tableOfContents[8].content,
+            _expectedResult.tableOfContents[8].content);
+        expect(_actualResult.tableOfContents[9].content,
+            _expectedResult.tableOfContents[9].content);
       });
 
       test('When called and throws Failure', () async {

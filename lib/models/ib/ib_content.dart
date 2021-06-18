@@ -16,6 +16,12 @@ enum IbHeadingType {
   subtitle,
 }
 
+class IbTocItem extends IbContent {
+  final List<IbTocItem> items;
+
+  IbTocItem({@required String content, this.items}) : super(content: content);
+}
+
 class IbHeading extends IbContent {
   final IbHeadingType type;
 
