@@ -27,6 +27,8 @@ class IbEngineServiceImpl implements IbEngineService {
     'p_md': RegExp(r'(\n|^)[^{}](.*?)[^{}](?=\n|$)'),
     'hr_md': RegExp(r'-{3}'),
     'md_tags': RegExp(r'^{:\s?(.+)\s?}$'),
+    'toc_filter': RegExp(r'Table\s[oO]f\s[cC]ontents'),
+    'toc_list_filter': RegExp(r'1.\sTOC'),
   };
 
   /// Fetches Pages inside an API Page
@@ -88,9 +90,11 @@ class IbEngineServiceImpl implements IbEngineService {
   /// Assigning prev and next ids
   List<IbChapter> _buildNav(List<IbChapter> chapters) {
     // We have to flatten the nested chapters and assign prev and next to the objects
-    // but return chapters to keep the list intact
+    // but return original list of chapters to keep the order intact
 
-    var _flatten = chapters.expand((c) => [c, ...c.items]).toList();
+    var _flatten = chapters
+        .expand((c) => c.items != null ? [c, ...c.items] : [c])
+        .toList();
 
     if (_flatten.length <= 1) {
       return chapters;
@@ -178,14 +182,26 @@ class IbEngineServiceImpl implements IbEngineService {
             break;
         }
 
+        // Filter Table of Contents title
+        if (_mdFlags.contains('.no_toc') &&
+            headingsContent.startsWith(grammers['toc_filter'])) {
+          continue;
+        }
+
         _mdParser.add(IbHeading(content: headingsContent, type: headingType));
       } else if (grammers['hr_md'].hasMatch(block)) {
         // Dividers
         _mdParser.add(IbDivider());
       } else if (grammers['p_md'].hasMatch(block)) {
+        // Filter TOC text
+        if (_mdFlags.contains('.no_toc') &&
+            block.startsWith(grammers['toc_list_filter'])) {
+          continue;
+        }
+
         // Subtitle
-        if (_mdFlags.contains('.fs-9 ')) {
-          _mdFlags.remove('.fs-9 ');
+        if (_mdFlags.contains('.fs-9')) {
+          _mdFlags.remove('.fs-9');
 
           _mdParser
               .add(IbHeading(content: block, type: IbHeadingType.subtitle));
@@ -202,7 +218,13 @@ class IbEngineServiceImpl implements IbEngineService {
       } else if (grammers['md_tags'].hasMatch(block)) {
         // Markdown tags
         var mdFlag = grammers['md_tags'].firstMatch(block)?.group(1);
-        _mdFlags.add(mdFlag);
+
+        // Toggle toc md block tags
+        if (mdFlag == 'toc' && _mdFlags.contains('.no_toc')) {
+          _mdFlags.remove('.no_toc');
+        } else {
+          _mdFlags.addAll(mdFlag.split(' '));
+        }
       } else {
         // Unknown tags
 
@@ -246,9 +268,9 @@ class IbEngineServiceImpl implements IbEngineService {
 
     if (mdElement != null) {
       return _parseToc(mdElement);
+    } else {
+      return [];
     }
-
-    throw Failure('Failed to find id "markdown-toc" in DOM');
   }
 
   /// Fetches "Rich" Page Content
