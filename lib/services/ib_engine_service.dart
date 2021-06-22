@@ -100,15 +100,15 @@ class IbEngineServiceImpl implements IbEngineService {
       return chapters;
     }
 
-    String prev;
+    IbChapter prev;
 
     for (var i = 0; i < _flatten.length; i++) {
       _flatten[i].prevPage = prev;
       if (i + 1 < _flatten.length) {
-        _flatten[i].nextPage = _flatten[i + 1].id;
+        _flatten[i].nextPage = _flatten[i + 1];
       }
 
-      prev = _flatten[i].id;
+      prev = _flatten[i];
     }
 
     return chapters;
