@@ -26,22 +26,25 @@ void main() {
         when(_ibApi.fetchApiPage(id: ''))
             .thenAnswer((_) => Future.value([mockIbRawPage2, mockIbRawPage3]));
 
-        var _expectedResult = [
-          IbChapter(
-            id: mockIbRawPage2['path'],
-            value: mockIbRawPage2['title'],
-            navOrder: mockIbRawPage2['nav_order'].toString(),
-            next: mockIbRawPage3['path'],
-            items: [
-              IbChapter(
-                id: mockIbRawPage3['path'],
-                navOrder: mockIbRawPage3['nav_order'].toString(),
-                value: mockIbRawPage3['title'],
-                prev: mockIbRawPage2['path'],
-              ),
-            ],
-          ),
-        ];
+        var ibChapter2 = IbChapter(
+          id: mockIbRawPage3['path'],
+          navOrder: mockIbRawPage3['nav_order'].toString(),
+          value: mockIbRawPage3['title'],
+        );
+
+        var ibChapter = IbChapter(
+          id: mockIbRawPage2['path'],
+          value: mockIbRawPage2['title'],
+          navOrder: mockIbRawPage2['nav_order'].toString(),
+          next: ibChapter2,
+          items: [
+            ibChapter2,
+          ],
+        );
+
+        ibChapter2.prevPage = ibChapter;
+
+        var _expectedResult = [ibChapter];
 
         var _ibEngine = IbEngineServiceImpl();
         var _actualResult = await _ibEngine.getChapters();
@@ -49,18 +52,18 @@ void main() {
         expect(_actualResult.length, _expectedResult.length);
         expect(_actualResult[0].id, _expectedResult[0].id);
         expect(_actualResult[0].value, _expectedResult[0].value);
-        expect(_actualResult[0].prev, _expectedResult[0].prev);
-        expect(_actualResult[0].next, _expectedResult[0].next);
+        expect(_actualResult[0].prev?.id, _expectedResult[0].prev?.id);
+        expect(_actualResult[0].next?.id, _expectedResult[0].next?.id);
         expect(_actualResult[0].items != null, true);
 
         expect(_actualResult[0].items.length, _expectedResult[0].items.length);
         expect(_actualResult[0].items[0].id, _expectedResult[0].items[0].id);
         expect(
             _actualResult[0].items[0].value, _expectedResult[0].items[0].value);
-        expect(
-            _actualResult[0].items[0].prev, _expectedResult[0].items[0].prev);
-        expect(
-            _actualResult[0].items[0].next, _expectedResult[0].items[0].next);
+        expect(_actualResult[0].items[0].prev?.id,
+            _expectedResult[0].items[0].prev?.id);
+        expect(_actualResult[0].items[0].next?.id,
+            _expectedResult[0].items[0].next?.id);
         expect(_actualResult[0].items[0].items, null);
       });
 
