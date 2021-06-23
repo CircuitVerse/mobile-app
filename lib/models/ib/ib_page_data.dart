@@ -5,7 +5,7 @@ class IbPageData {
   final String id;
   final String title;
   final List<IbContent> content;
-  final List<dynamic> tableOfContents;
+  final List<IbTocItem> tableOfContents;
 
   IbPageData({
     @required this.id,
