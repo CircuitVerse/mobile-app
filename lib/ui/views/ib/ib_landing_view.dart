@@ -2,10 +2,11 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ib_theme.dart';
+import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
-import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
+import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class IbLandingView extends StatefulWidget {
@@ -16,30 +17,33 @@ class IbLandingView extends StatefulWidget {
 }
 
 class _IbLandingViewState extends State<IbLandingView> {
-  int _selectedIndex = 0;
+  final IbChapter _homeChapter = IbChapter(
+    id: 'index.md',
+    navOrder: '1',
+    value: 'Interactive Book Home',
+  );
+  IbChapter _selectedChapter;
   Function _onTocPressed;
 
-  void setSelectedIndexTo(int index) {
-    Get.back();
-    if (_selectedIndex != index) {
-      setState(() => _selectedIndex = index);
-    }
+  @override
+  void initState() {
+    super.initState();
+    _selectedChapter = _homeChapter;
   }
 
-  String _appBarTitle(int selectedIndex) {
-    switch (selectedIndex) {
-      case 0:
-        return 'CircuitVerse';
-        break;
-      default:
-        return 'Interactive Book';
+  void setSelectedChapter(IbChapter chapter) {
+    Get.back();
+    if (_selectedChapter.id != chapter.id) {
+      setState(() => _selectedChapter = chapter);
     }
   }
 
   Widget _buildAppBar() {
     return AppBar(
       title: Text(
-        _appBarTitle(_selectedIndex),
+        _selectedChapter.id == _homeChapter.id
+            ? 'CircuitVerse'
+            : 'Interactive Book',
       ),
       actions: _onTocPressed != null
           ? [
@@ -55,83 +59,53 @@ class _IbLandingViewState extends State<IbLandingView> {
     );
   }
 
-  Widget _buildExpandableChapter() {
+  Widget _buildChapter(IbChapter chapter) {
+    return InkWell(
+      onTap: () => setSelectedChapter(chapter),
+      child: CVDrawerTile(
+        title: chapter.value,
+      ),
+    );
+  }
+
+  Widget _buildExpandableChapter(IbChapter chapter) {
+    var nestedPages = <Widget>[];
+
+    for (var nestedChapter in chapter.items) {
+      nestedPages.add(_buildChapter(nestedChapter));
+    }
+
     return ExpansionTile(
       maintainState: true,
       title: ListTile(
         contentPadding: EdgeInsets.all(0),
         title: GestureDetector(
-          onTap: () => setSelectedIndexTo(0),
+          onTap: () => setSelectedChapter(chapter),
           child: Text(
-            'Binary algebra',
+            chapter.value,
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
       ),
-      children: <Widget>[
-        InkWell(
-          onTap: () => setSelectedIndexTo(0),
-          child: CVDrawerTile(title: 'Addition'),
-        ),
-        InkWell(
-          onTap: () => setSelectedIndexTo(0),
-          child: CVDrawerTile(title: 'Substraction'),
-        ),
-        InkWell(
-          onTap: () => setSelectedIndexTo(0),
-          child: CVDrawerTile(title: 'Multiplication'),
-        ),
-        InkWell(
-          onTap: () => setSelectedIndexTo(0),
-          child: CVDrawerTile(title: 'Division'),
-        ),
-        InkWell(
-          onTap: () => setSelectedIndexTo(0),
-          child: CVDrawerTile(title: 'Boolean algebra'),
-        ),
-        InkWell(
-          onTap: () => setSelectedIndexTo(0),
-          child: CVDrawerTile(title: 'Boolean functions'),
-        ),
-        InkWell(
-          onTap: () => setSelectedIndexTo(0),
-          child: CVDrawerTile(title: 'Shannon decomposition'),
-        ),
-        InkWell(
-          onTap: () => setSelectedIndexTo(0),
-          child: CVDrawerTile(title: 'IEEE Std 754'),
-        ),
-      ],
+      children: nestedPages,
     );
   }
 
-  Widget _buildChapters() {
-    return Column(
-      children: [
-        InkWell(
-          onTap: () => setSelectedIndexTo(0),
-          child: CVDrawerTile(
-            title: 'Binary Representation',
-          ),
-        ),
-        _buildExpandableChapter(),
-        InkWell(
-          onTap: () => setSelectedIndexTo(0),
-          child: CVDrawerTile(
-            title: 'Guidelines',
-          ),
-        ),
-        InkWell(
-          onTap: () => setSelectedIndexTo(0),
-          child: CVDrawerTile(
-            title: 'About',
-          ),
-        ),
-      ],
-    );
+  Widget _buildChapters(List<IbChapter> chapters) {
+    var _chapters = <Widget>[];
+
+    for (var chapter in chapters) {
+      if (chapter.items != null && chapter.items.isNotEmpty) {
+        _chapters.add(_buildExpandableChapter(chapter));
+      } else {
+        _chapters.add(_buildChapter(chapter));
+      }
+    }
+
+    return Column(children: _chapters);
   }
 
-  Widget _buildDrawer() {
+  Widget _buildDrawer(IbLandingViewModel _model) {
     return Drawer(
       child: Stack(
         children: [
@@ -146,13 +120,19 @@ class _IbLandingViewState extends State<IbLandingView> {
               ),
               Divider(thickness: 1),
               InkWell(
-                onTap: () => setSelectedIndexTo(0),
+                onTap: () => setSelectedChapter(_homeChapter),
                 child: CVDrawerTile(
                   title: 'Interactive Book Home',
                   color: IbTheme.getPrimaryColor(context),
                 ),
               ),
-              _buildChapters(),
+              !_model.isSuccess(_model.IB_FETCH_CHAPTERS)
+                  ? InkWell(
+                      child: CVDrawerTile(
+                        title: 'Loading...',
+                      ),
+                    )
+                  : _buildChapters(_model.chapters),
             ],
           ),
           Positioned(
@@ -177,47 +157,61 @@ class _IbLandingViewState extends State<IbLandingView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<CVLandingViewModel>(
-      onModelReady: (model) {
-        //_model = model;
-      },
-      builder: (context, model, child) => WillPopScope(
-        onWillPop: () {
-          if (_selectedIndex != 0) {
-            setState(() => _selectedIndex = 0);
-            return Future.value(false);
-          }
-          return Future.value(true);
-        },
-        child: Theme(
-          data: IbTheme.getThemeData(context),
-          child: Scaffold(
-            key: Key('IbLandingScaffold'),
-            appBar: _buildAppBar(),
-            drawer: _buildDrawer(),
-            body: PageTransitionSwitcher(
-              transitionBuilder: (
-                Widget child,
-                Animation<double> animation,
-                Animation<double> secondaryAnimation,
-              ) {
-                return FadeThroughTransition(
-                  animation: animation,
-                  secondaryAnimation: secondaryAnimation,
-                  child: child,
-                );
-              },
-              child: IbPageView(
-                tocCallback: (val) {
-                  Future.delayed(Duration.zero, () async {
-                    setState(() => _onTocPressed = val);
-                  });
+    return BaseView<IbLandingViewModel>(
+      onModelReady: (model) => model.fetchChapters(),
+      builder: (context, model, child) {
+        // Set next page for home page
+        if (model.isSuccess(model.IB_FETCH_CHAPTERS) &&
+            _homeChapter.next == null) {
+          _homeChapter.nextPage = model.chapters[0];
+          model.chapters[0].prev = _homeChapter;
+        }
+
+        return WillPopScope(
+          onWillPop: () {
+            if (_selectedChapter != _homeChapter) {
+              setState(() => _selectedChapter = _homeChapter);
+              return Future.value(false);
+            }
+            return Future.value(true);
+          },
+          child: Theme(
+            data: IbTheme.getThemeData(context),
+            child: Scaffold(
+              key: Key('IbLandingScaffold'),
+              appBar: _buildAppBar(),
+              drawer: _buildDrawer(model),
+              body: PageTransitionSwitcher(
+                transitionBuilder: (
+                  Widget child,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                ) {
+                  return FadeThroughTransition(
+                    animation: animation,
+                    secondaryAnimation: secondaryAnimation,
+                    child: child,
+                  );
                 },
+                child: IbPageView(
+                  key: Key(_selectedChapter.toString()),
+                  tocCallback: (val) {
+                    Future.delayed(Duration.zero, () async {
+                      if (mounted) {
+                        setState(() => _onTocPressed = val);
+                      }
+                    });
+                  },
+                  setPage: (chapter) {
+                    setState(() => _selectedChapter = chapter);
+                  },
+                  chapter: _selectedChapter,
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

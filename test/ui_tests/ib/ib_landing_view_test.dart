@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
+import 'package:mobile_app/models/ib/ib_chapter.dart';
+import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
 import 'package:mobile_app/utils/router.dart';
+import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
+import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,7 +27,36 @@ void main() {
 
     Future<void> _pumpHomeView(WidgetTester tester) async {
       // Mock ViewModel
+      var model = MockIbLandingViewModel();
+      locator.registerSingleton<IbLandingViewModel>(model);
+
+      var pageViewModel = MockIbPageViewModel();
+      locator.registerSingleton<IbPageViewModel>(pageViewModel);
+
+      // Mock Page View Model
+      when(pageViewModel.fetchPageData()).thenReturn(null);
+      when(pageViewModel.isSuccess(pageViewModel.IB_FETCH_PAGE_DATA))
+          .thenAnswer((_) => true);
+      when(pageViewModel.pageData)
+          .thenReturn(IbPageData(id: 'test', title: 'test', content: []));
+
       // Mock Page Drawer List
+      when(model.fetchChapters()).thenReturn(null);
+      when(model.isSuccess(model.IB_FETCH_CHAPTERS)).thenAnswer((_) => true);
+      when(model.chapters).thenAnswer((_) => [
+            IbChapter(
+              id: 'test',
+              value: 'Test Chapter',
+              navOrder: '1',
+              items: [
+                IbChapter(
+                  id: 'test-2',
+                  value: 'Test Chapter2',
+                  navOrder: '2',
+                ),
+              ],
+            )
+          ]);
 
       await tester.pumpWidget(
         GetMaterialApp(
@@ -53,7 +86,7 @@ void main() {
         expect(find.byType(IconButton), findsNWidgets(1));
 
         // Finds Floating Action Buttons
-        expect(find.byType(FloatingActionButton), findsNWidgets(2));
+        expect(find.byType(FloatingActionButton), findsNWidgets(1));
       });
     });
 
@@ -71,6 +104,9 @@ void main() {
         expect(find.text('Return to Home'), findsOneWidget);
         expect(find.text('Interactive Book Home'), findsOneWidget);
         expect(find.byType(ExpansionTile), findsWidgets);
+
+        // Finds Chapter
+        expect(find.text('Test Chapter'), findsOneWidget);
       });
     });
   });

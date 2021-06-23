@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:mobile_app/ib_theme.dart';
+import 'package:mobile_app/models/ib/ib_chapter.dart';
+import 'package:mobile_app/models/ib/ib_content.dart';
+import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
-import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
+import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 
 typedef TocCallback = void Function(Function);
+typedef SetPageCallback = void Function(IbChapter);
 
 class IbPageView extends StatefulWidget {
   static const String id = 'ib_page_view';
-  final String pageId;
   final TocCallback tocCallback;
+  final SetPageCallback setPage;
+  final IbChapter chapter;
 
-  IbPageView({@required this.tocCallback, this.pageId = 'index.md'});
+  IbPageView({
+    @required Key key,
+    @required this.tocCallback,
+    @required this.chapter,
+    @required this.setPage,
+  }) : super(key: key);
 
   @override
   _IbPageViewState createState() => _IbPageViewState();
 }
 
 class _IbPageViewState extends State<IbPageView> {
+  IbPageViewModel _model;
   ScrollController _hideButtonController;
   bool _isFabsVisible = true;
 
@@ -38,11 +49,11 @@ class _IbPageViewState extends State<IbPageView> {
     });
   }
 
-  Widget _buildHeadings1(String title) {
+  Widget _buildH1(IbHeading data) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4),
       child: Text(
-        title,
+        data.content,
         style: Theme.of(context).textTheme.headline4.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w300,
@@ -51,11 +62,11 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
-  Widget _buildHeadings2(String title) {
+  Widget _buildH2(IbHeading data) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4),
       child: Text(
-        title,
+        data.content,
         style: Theme.of(context).textTheme.headline5.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w600,
@@ -64,11 +75,11 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
-  Widget _buildHeadings3(String title) {
+  Widget _buildH3(IbHeading data) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 4),
       child: Text(
-        title,
+        data.content,
         style: Theme.of(context).textTheme.headline6.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w600,
@@ -77,17 +88,38 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
-  Widget _buildSubtitle(String title) {
+  Widget _buildSubtitle(IbHeading data) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5),
       child: Text(
-        title,
+        data.content,
         style: Theme.of(context)
             .textTheme
             .headline6
             .copyWith(fontWeight: FontWeight.w300),
       ),
     );
+  }
+
+  Widget _buildHeadings(IbHeading content) {
+    switch (content.type) {
+      case IbHeadingType.h1:
+        return _buildH1(content);
+      case IbHeadingType.h2:
+        return _buildH2(content);
+      case IbHeadingType.h3:
+        return _buildH3(content);
+      case IbHeadingType.h4:
+        return _buildH3(content);
+      case IbHeadingType.h5:
+        return _buildH3(content);
+      case IbHeadingType.h6:
+        return _buildH3(content);
+      case IbHeadingType.subtitle:
+        return _buildSubtitle(content);
+    }
+
+    return Container();
   }
 
   Widget _buildDivider() {
@@ -99,11 +131,11 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
-  Widget _buildParagraph(String content) {
+  Widget _buildParagraph(IbParagraph data) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Text(
-        content,
+        data.content,
         textAlign: TextAlign.justify,
         style: TextStyle(
           height: 1.2,
@@ -124,38 +156,41 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
+  Widget _buildTocListTile(String content, {bool root = true}) {
+    if (!root) {
+      return ListTile(
+        leading: Text(''),
+        minLeadingWidth: 20,
+        title: Text(content),
+      );
+    }
+
+    return ListTile(
+      title: Text(content),
+    );
+  }
+
+  List<Widget> _buildTocItems(IbTocItem item, {bool root = false}) {
+    var items = <Widget>[_buildTocListTile(item.content, root: root)];
+
+    if (item.items != null) {
+      for (var e in item.items) {
+        items.addAll(_buildTocItems(e));
+      }
+    }
+
+    return items;
+  }
+
   Widget _buildTOC() {
+    var items = <Widget>[];
+
+    for (var item in _model.pageData.tableOfContents) {
+      items.addAll(_buildTocItems(item, root: true));
+    }
+
     return Column(
-      children: [
-        ListTile(
-          title: Text('1. Introduction'),
-        ),
-        ListTile(
-          title: Text('2. Audience'),
-        ),
-        ListTile(
-          leading: Text(''),
-          minLeadingWidth: 20,
-          title: Text('a. Prerequistes'),
-        ),
-        ListTile(
-          leading: Text(''),
-          minLeadingWidth: 20,
-          title: Text('b. Prerequistes'),
-        ),
-        ListTile(
-          title: Text('3. Prerequistes'),
-        ),
-        ListTile(
-          title: Text('4. Prerequistes'),
-        ),
-        ListTile(
-          title: Text('5. Prerequistes'),
-        ),
-        ListTile(
-          title: Text('6. Prerequistes'),
-        ),
-      ],
+      children: items,
     );
   }
 
@@ -187,37 +222,96 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   Widget _buildFloatingActionButtons() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
+    var alignment = MainAxisAlignment.spaceBetween;
+    var buttons = <Widget>[];
+
+    if (widget.chapter.prev != null) {
+      if (widget.chapter.next == null) {
+        alignment = MainAxisAlignment.start;
+      }
+
+      buttons.add(
         AnimatedOpacity(
           duration: Duration(milliseconds: 500),
           opacity: _isFabsVisible ? 1.0 : 0.0,
           child: FloatingActionButton(
+            heroTag: 'previousPage',
             mini: true,
             child: Icon(
               Icons.arrow_back_rounded,
               color: IbTheme.primaryColor,
             ),
             backgroundColor: Theme.of(context).primaryIconTheme.color,
-            onPressed: () {},
+            onPressed: () => widget.setPage(widget.chapter.prev),
           ),
         ),
+      );
+    }
+
+    if (widget.chapter.next != null) {
+      if (widget.chapter.prev == null) {
+        alignment = MainAxisAlignment.end;
+      }
+
+      buttons.add(
         AnimatedOpacity(
           duration: Duration(milliseconds: 500),
           opacity: _isFabsVisible ? 1.0 : 0.0,
           child: FloatingActionButton(
+            heroTag: 'nextPage',
             mini: true,
             child: Icon(
               Icons.arrow_forward_rounded,
               color: IbTheme.primaryColor,
             ),
             backgroundColor: Theme.of(context).primaryIconTheme.color,
-            onPressed: () {},
+            onPressed: () => widget.setPage(widget.chapter.next),
           ),
         ),
-      ],
+      );
+    }
+
+    return Row(
+      mainAxisAlignment: alignment,
+      children: buttons,
     );
+  }
+
+  List<Widget> _buildPageContent(IbPageData pageData) {
+    if (pageData == null) {
+      return [
+        Text(
+          'Loading ...',
+          style: Theme.of(context).textTheme.headline6.copyWith(
+                color: IbTheme.primaryHeadingColor(context),
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+      ];
+    }
+
+    var contents = <Widget>[];
+
+    for (var content in pageData.content) {
+      switch (content.runtimeType) {
+        case IbHeading:
+          contents.add(_buildHeadings(content as IbHeading));
+          break;
+        case IbParagraph:
+          contents.add(_buildParagraph(content as IbParagraph));
+          break;
+        case IbDivider:
+          contents.add(_buildDivider());
+          break;
+      }
+    }
+
+    contents.addAll([
+      _buildDivider(),
+      _buildFooter(),
+    ]);
+
+    return contents;
   }
 
   @override
@@ -228,58 +322,42 @@ class _IbPageViewState extends State<IbPageView> {
 
   @override
   Widget build(BuildContext context) {
-    // As soon as we get model ready from ViewModel
-    // Set the callback to show bottom sheet
-    widget.tocCallback(_showBottomSheet);
+    return BaseView<IbPageViewModel>(
+      onModelReady: (model) {
+        _model = model;
+        model.fetchPageData(id: widget.chapter.id);
+      },
+      builder: (context, model, child) {
+        // Set the callback to show bottom sheet for Table of Contents
+        if (_model.isSuccess(_model.IB_FETCH_PAGE_DATA) &&
+            (model.pageData?.tableOfContents?.isNotEmpty ?? false)) {
+          widget.tocCallback(_showBottomSheet);
+        } else {
+          widget.tocCallback(null);
+        }
 
-    return BaseView<HomeViewModel>(
-      builder: (context, model, child) => Stack(
-        children: [
-          SingleChildScrollView(
-            controller: _hideButtonController,
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildHeadings1('Interactive-Book'),
-                _buildSubtitle('Learn Digital Logic Design easily.'),
-                _buildParagraph(
-                    'The Computer Logical Organization is basically the abstraction which is below the operating system and above the digital logic level. Now at this point, the important points are the functional units/subsystems that refer to some hardware which is made up of lower level building blocks.'),
-                _buildParagraph(
-                  'This interactive book gives a complete understanding on Computer Logical Organization starting from basic computer overview till the advanced level. This book is aimed to provide the knowledge to the reader on how to analyze the combinational and sequential circuits and implement them. You can use the combinational circuit/sequential circuit/combination of both the circuits, as per the requirement. After completing this book, you will be able to implement the type of digital circuit, which is suitable for specific application.',
-                ),
-                _buildDivider(),
-                _buildHeadings2('Audience'),
-                _buildParagraph(
-                  'This book is mainly prepared for the students who are interested in the concepts of digital circuits and Computer Logical Organization. Digital circuits contain a set of Logic gates and these can be operated with binary values, 0 and 1.',
-                ),
-                _buildHeadings3('Prerequistes'),
-                _buildParagraph(
-                    'Before you start learning from this Book, I hope that you have some basic knowledge about computers and how they work. A basic idea regarding the initial concepts of Digital Electronics is enough to understand the topics covered in this tutorial.'),
-                _buildParagraph(
-                    'The Computer Logical Organization is basically the abstraction which is below the operating system and above the digital logic level. Now at this point, the important points are the functional units/subsystems that refer to some hardware which is made up of lower level building blocks.'),
-                _buildParagraph(
-                    'The Computer Logical Organization is basically the abstraction which is below the operating system and above the digital logic level. Now at this point, the important points are the functional units/subsystems that refer to some hardware which is made up of lower level building blocks.'),
-                _buildParagraph(
-                    'The Computer Logical Organization is basically the abstraction which is below the operating system and above the digital logic level. Now at this point, the important points are the functional units/subsystems that refer to some hardware which is made up of lower level building blocks.'),
-                _buildParagraph(
-                    'The Computer Logical Organization is basically the abstraction which is below the operating system and above the digital logic level. Now at this point, the important points are the functional units/subsystems that refer to some hardware which is made up of lower level building blocks.'),
-                _buildParagraph(
-                    'The Computer Logical Organization is basically the abstraction which is below the operating system and above the digital logic level. Now at this point, the important points are the functional units/subsystems that refer to some hardware which is made up of lower level building blocks.'),
-                _buildDivider(),
-                _buildFooter(),
-              ],
+        return Stack(
+          children: [
+            SingleChildScrollView(
+              controller: _hideButtonController,
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: _buildPageContent(model.pageData),
+              ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: _buildFloatingActionButtons(),
-            ),
-          )
-        ],
-      ),
+            widget.chapter.prev != null || widget.chapter.next != null
+                ? Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: _buildFloatingActionButtons(),
+                    ),
+                  )
+                : Container(),
+          ],
+        );
+      },
     );
   }
 }

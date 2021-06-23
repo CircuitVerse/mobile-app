@@ -20,6 +20,8 @@ import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
+import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
+import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
@@ -89,6 +91,10 @@ class MockUpdateAssignmentViewModel extends Mock
 
 class MockAssignmentDetailsViewModel extends Mock
     implements AssignmentDetailsViewModel {}
+
+class MockIbLandingViewModel extends Mock implements IbLandingViewModel {}
+
+class MockIbPageViewModel extends Mock implements IbPageViewModel {}
 
 LocalStorageService getAndRegisterLocalStorageServiceMock() {
   _removeRegistrationIfExists<LocalStorageService>();
