@@ -171,7 +171,12 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   List<Widget> _buildTocItems(IbTocItem item, {bool root = false}) {
-    var items = <Widget>[_buildTocListTile(item.content, root: root)];
+    var items = <Widget>[
+      _buildTocListTile(
+        item.content,
+        root: root,
+      ),
+    ];
 
     if (item.items != null) {
       for (var e in item.items) {
@@ -186,7 +191,10 @@ class _IbPageViewState extends State<IbPageView> {
     var items = <Widget>[];
 
     for (var item in _model.pageData.tableOfContents) {
-      items.addAll(_buildTocItems(item, root: true));
+      items.addAll(_buildTocItems(
+        item,
+        root: true,
+      ));
     }
 
     return Column(
