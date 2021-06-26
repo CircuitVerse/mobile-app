@@ -48,6 +48,7 @@ dependencies:
   timeago: ^3.0.2
   transparent_image: ^1.0.0
   url_launcher: ^6.0.2
+  flutter_markdown: ^0.5.2
 
 dev_dependencies:
   flutter_test:
