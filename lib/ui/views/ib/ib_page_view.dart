@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:markdown/markdown.dart' as md;
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
+import 'package:mobile_app/ui/views/ib/syntaxes/ib_filter_syntax.dart';
+import 'package:mobile_app/ui/views/ib/syntaxes/ib_md_tag_syntax.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 
 typedef TocCallback = void Function(Function);
@@ -49,79 +53,6 @@ class _IbPageViewState extends State<IbPageView> {
     });
   }
 
-  Widget _buildH1(IbHeading data) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
-      child: Text(
-        data.content,
-        style: Theme.of(context).textTheme.headline4.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w300,
-            ),
-      ),
-    );
-  }
-
-  Widget _buildH2(IbHeading data) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
-      child: Text(
-        data.content,
-        style: Theme.of(context).textTheme.headline5.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w600,
-            ),
-      ),
-    );
-  }
-
-  Widget _buildH3(IbHeading data) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
-      child: Text(
-        data.content,
-        style: Theme.of(context).textTheme.headline6.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w600,
-            ),
-      ),
-    );
-  }
-
-  Widget _buildSubtitle(IbHeading data) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5),
-      child: Text(
-        data.content,
-        style: Theme.of(context)
-            .textTheme
-            .headline6
-            .copyWith(fontWeight: FontWeight.w300),
-      ),
-    );
-  }
-
-  Widget _buildHeadings(IbHeading content) {
-    switch (content.type) {
-      case IbHeadingType.h1:
-        return _buildH1(content);
-      case IbHeadingType.h2:
-        return _buildH2(content);
-      case IbHeadingType.h3:
-        return _buildH3(content);
-      case IbHeadingType.h4:
-        return _buildH3(content);
-      case IbHeadingType.h5:
-        return _buildH3(content);
-      case IbHeadingType.h6:
-        return _buildH3(content);
-      case IbHeadingType.subtitle:
-        return _buildSubtitle(content);
-    }
-
-    return Container();
-  }
-
   Widget _buildDivider() {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
@@ -131,15 +62,39 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
-  Widget _buildParagraph(IbParagraph data) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: Text(
-        data.content,
-        textAlign: TextAlign.justify,
-        style: TextStyle(
-          height: 1.2,
-        ),
+  Widget _buildMarkdown(IbMd data) {
+    return MarkdownBody(
+      data: data.content,
+      selectable: true,
+      extensionSet: md.ExtensionSet(
+        [
+          IbFilterSyntax(),
+          IbMdTagSyntax(),
+          ...md.ExtensionSet.gitHubFlavored.blockSyntaxes
+        ],
+        [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
+      ),
+      styleSheet: MarkdownStyleSheet(
+        h1: Theme.of(context).textTheme.headline4.copyWith(
+              color: IbTheme.primaryHeadingColor(context),
+              fontWeight: FontWeight.w300,
+            ),
+        h2: Theme.of(context).textTheme.headline5.copyWith(
+              color: IbTheme.primaryHeadingColor(context),
+              fontWeight: FontWeight.w600,
+            ),
+        h3: Theme.of(context).textTheme.headline6.copyWith(
+              color: IbTheme.primaryHeadingColor(context),
+              fontWeight: FontWeight.w600,
+            ),
+        h4: Theme.of(context).textTheme.headline4.copyWith(
+              color: IbTheme.primaryHeadingColor(context),
+              fontWeight: FontWeight.w300,
+            ),
+        h5: Theme.of(context)
+            .textTheme
+            .headline6
+            .copyWith(fontWeight: FontWeight.w300),
       ),
     );
   }
@@ -302,14 +257,8 @@ class _IbPageViewState extends State<IbPageView> {
 
     for (var content in pageData.content) {
       switch (content.runtimeType) {
-        case IbHeading:
-          contents.add(_buildHeadings(content as IbHeading));
-          break;
-        case IbParagraph:
-          contents.add(_buildParagraph(content as IbParagraph));
-          break;
-        case IbDivider:
-          contents.add(_buildDivider());
+        case IbMd:
+          contents.add(_buildMarkdown(content as IbMd));
           break;
       }
     }

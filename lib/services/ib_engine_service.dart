@@ -21,16 +21,6 @@ class IbEngineServiceImpl implements IbEngineService {
   /// Locally cache Chapters list for the session
   List<IbChapter> _ibChapters = [];
 
-  /// Regex Grammers
-  final Map<String, RegExp> grammers = {
-    'headings_md': RegExp(r'([#]+)\s(.+)'),
-    'p_md': RegExp(r'(\n|^)[^{}](.*?)[^{}](?=\n|$)'),
-    'hr_md': RegExp(r'-{3}'),
-    'md_tags': RegExp(r'^{:\s?(.+)\s?}$'),
-    'toc_filter': RegExp(r'Table\s[oO]f\s[cC]ontents'),
-    'toc_list_filter': RegExp(r'1.\sTOC'),
-  };
-
   /// Fetches Pages inside an API Page
   Future<List<IbChapter>> _fetchPagesInDir({
     String id = '',
@@ -140,100 +130,6 @@ class IbEngineServiceImpl implements IbEngineService {
     return _ibChapters;
   }
 
-  /// Interactive Book Page Parser
-  List<IbContent> _pageParser(IbRawPageData data) {
-    // Markdown Parsing
-    var _mdParser = <IbContent>[];
-
-    // Md flags
-    var _mdFlags = [];
-
-    for (final block in data.rawContent.split(RegExp(r'\n+'))) {
-      if (grammers['headings_md'].hasMatch(block)) {
-        // Headings Markdown
-        var headingsWeight =
-            grammers['headings_md'].firstMatch(block)?.group(1)?.length ?? 1;
-
-        var headingsContent =
-            grammers['headings_md'].firstMatch(block)?.group(2);
-
-        var headingType;
-        switch (headingsWeight) {
-          case 1:
-            headingType = IbHeadingType.h1;
-            break;
-          case 2:
-            headingType = IbHeadingType.h2;
-            break;
-          case 3:
-            headingType = IbHeadingType.h3;
-            break;
-          case 4:
-            headingType = IbHeadingType.h4;
-            break;
-          case 5:
-            headingType = IbHeadingType.h5;
-            break;
-          case 6:
-            headingType = IbHeadingType.h6;
-            break;
-          default:
-            headingType = IbHeadingType.h1;
-            break;
-        }
-
-        // Filter Table of Contents title
-        if (_mdFlags.contains('.no_toc') &&
-            headingsContent.startsWith(grammers['toc_filter'])) {
-          continue;
-        }
-
-        _mdParser.add(IbHeading(content: headingsContent, type: headingType));
-      } else if (grammers['hr_md'].hasMatch(block)) {
-        // Dividers
-        _mdParser.add(IbDivider());
-      } else if (grammers['p_md'].hasMatch(block)) {
-        // Filter TOC text
-        if (_mdFlags.contains('.no_toc') &&
-            block.startsWith(grammers['toc_list_filter'])) {
-          continue;
-        }
-
-        // Subtitle
-        if (_mdFlags.contains('.fs-9')) {
-          _mdFlags.remove('.fs-9');
-
-          _mdParser
-              .add(IbHeading(content: block, type: IbHeadingType.subtitle));
-          continue;
-        }
-
-        // Paragraphs
-        // If Paragraph repeated then append content
-        if (_mdParser.last is IbParagraph) {
-          (_mdParser.last as IbParagraph).content += ' ${block}';
-        } else {
-          _mdParser.add(IbParagraph(content: block));
-        }
-      } else if (grammers['md_tags'].hasMatch(block)) {
-        // Markdown tags
-        var mdFlag = grammers['md_tags'].firstMatch(block)?.group(1);
-
-        // Toggle toc md block tags
-        if (mdFlag == 'toc' && _mdFlags.contains('.no_toc')) {
-          _mdFlags.remove('.no_toc');
-        } else {
-          _mdFlags.addAll(mdFlag.split(' '));
-        }
-      } else {
-        // Unknown tags
-
-      }
-    }
-
-    return _mdParser;
-  }
-
   /// Recursively parses list of table of contents
   List<IbTocItem> _parseToc(Element element, {bool num = true}) {
     var index = num ? 1 : 'a'.codeUnitAt(0);
@@ -287,7 +183,9 @@ class IbEngineServiceImpl implements IbEngineService {
     return IbPageData(
       id: _ibRawPageData.id,
       title: _ibRawPageData.title,
-      content: _pageParser(_ibRawPageData),
+      content: [
+        IbMd(content: _ibRawPageData.rawContent),
+      ],
       tableOfContents: _ibRawPageData.hasToc
           ? _getTableOfContents(_ibRawPageData.content)
           : [],

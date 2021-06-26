@@ -12,10 +12,12 @@ class ApiUtils {
   static http.Client client = http.Client();
 
   /// Returns JSON GET response
-  static Future<dynamic> get(String uri, {Map<String, String> headers}) async {
+  static Future<dynamic> get(String uri,
+      {Map<String, String> headers, bool utfDecoder = false}) async {
     try {
       final response = await client.get(uri, headers: headers);
-      final jsonResponse = ApiUtils.jsonResponse(response);
+      final jsonResponse =
+          ApiUtils.jsonResponse(response, utfDecoder: utfDecoder);
       return jsonResponse;
     } on SocketException {
       throw Failure(Constants.NO_INTERNET_CONNECTION);
@@ -86,14 +88,17 @@ class ApiUtils {
     }
   }
 
-  static dynamic jsonResponse(http.Response response) {
+  static dynamic jsonResponse(http.Response response,
+      {bool utfDecoder = false}) {
     switch (response.statusCode) {
       case 200:
       case 201:
       case 202:
       case 204:
-        var responseJson =
-            response.body == '' ? {} : json.decode(response.body);
+        var responseJson = response.body == ''
+            ? {}
+            : json.decode(
+                utfDecoder ? utf8.decode(response.bodyBytes) : response.body);
         return responseJson;
       case 400:
         throw BadRequestException(response.body);

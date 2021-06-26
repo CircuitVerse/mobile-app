@@ -83,31 +83,17 @@ void main() {
     group('getPageData -', () {
       test('When Home page called and returns success response', () async {
         var _expectedResult = IbPageData(
-          id: 'index.md',
-          title: 'Home',
-          content: [
-            IbHeading(content: 'Interactive-Book', type: IbHeadingType.h1),
-            IbParagraph(content: 'Learn Digital Logic Design easily.'),
-            IbParagraph(
-                content:
-                    'The Computer Logical Organization is basically the abstraction which is below the operating system and above the digital logic level. Now at this point, the important points are the functional units/subsystems that refer to some hardware which is made up of lower level building blocks. This interactive book gives a complete understanding on Computer Logical Organization starting from basic computer overview till the advanced level. This book is aimed to provide the knowledge to the reader on how to analyze the combinational and sequential circuits and implement them. You can use the combinational circuit/sequential circuit/combination of both the circuits, as per the requirement. After completing this book, you will be able to implement the type of digital circuit, which is suitable for specific application.'),
-            IbDivider(),
-            IbHeading(content: 'Audience', type: IbHeadingType.h2),
-            IbParagraph(
-                content:
-                    'This book is mainly prepared for the students who are interested in the concepts of digital circuits and Computer Logical Organization. Digital circuits contain a set of Logic gates and these can be operated with binary values, 0 and 1.'),
-            IbHeading(content: 'Prerequisites', type: IbHeadingType.h3),
-            IbParagraph(
-                content:
-                    'Before you start learning from this Book, I hope that you have some basic knowledge about computers and how they work. A basic idea regarding the initial concepts of Digital Electronics is enough to understand the topics covered in this tutorial.')
-          ],
+          id: mockIbRawPageData1['name'],
+          title: mockIbRawPageData1['title'],
+          content: [IbMd(content: mockIbRawPageData1['raw_content'])],
           tableOfContents: [],
         );
 
         var _ibApi = getAndRegisterIbApiMock();
 
-        when(_ibApi.fetchRawPageData(id: 'index.md')).thenAnswer(
-            (_) => Future.value(IbRawPageData.fromJson(mockIbRawPageData1)));
+        when(_ibApi.fetchRawPageData(id: mockIbRawPageData1['name']))
+            .thenAnswer((_) =>
+                Future.value(IbRawPageData.fromJson(mockIbRawPageData1)));
 
         var _ibEngine = IbEngineServiceImpl();
         var _actualResult = await _ibEngine.getPageData();
@@ -119,20 +105,6 @@ void main() {
 
         expect(_actualResult.content[0].content,
             _expectedResult.content[0].content);
-        expect(_actualResult.content[1].content,
-            _expectedResult.content[1].content);
-        expect(_actualResult.content[2].content,
-            _expectedResult.content[2].content);
-        expect(_actualResult.content[3].content,
-            _expectedResult.content[3].content);
-        expect(_actualResult.content[4].content,
-            _expectedResult.content[4].content);
-        expect(_actualResult.content[5].content,
-            _expectedResult.content[5].content);
-        expect(_actualResult.content[6].content,
-            _expectedResult.content[6].content);
-        expect(_actualResult.content[7].content,
-            _expectedResult.content[7].content);
       });
 
       test('When a regular page called and returns success response', () async {

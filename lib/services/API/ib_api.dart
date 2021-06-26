@@ -31,7 +31,7 @@ class HttpIbApi implements IbApi {
     var _url = '${EnvironmentConfig.IB_API_BASE_URL}/${id}';
 
     try {
-      var _jsonResponse = await ApiUtils.get(_url);
+      var _jsonResponse = await ApiUtils.get(_url, utfDecoder: true);
       return IbRawPageData.fromJson(_jsonResponse);
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
