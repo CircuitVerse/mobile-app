@@ -7,6 +7,8 @@ import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
+import 'package:mobile_app/ui/views/ib/builders/ib_webview_builder.dart';
+import 'package:mobile_app/ui/views/ib/syntaxes/ib_embed_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_filter_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_md_tag_syntax.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
@@ -66,8 +68,12 @@ class _IbPageViewState extends State<IbPageView> {
     return MarkdownBody(
       data: data.content,
       selectable: true,
+      blockBuilders: {
+        'iframe': IbWebViewBuilder(context: context),
+      },
       extensionSet: md.ExtensionSet(
         [
+          IbEmbedSyntax(),
           IbFilterSyntax(),
           IbMdTagSyntax(),
           ...md.ExtensionSet.gitHubFlavored.blockSyntaxes
