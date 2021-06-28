@@ -50,7 +50,7 @@ dependencies:
   url_launcher: ^6.0.2
   flutter_markdown:
     git:
-      url: git://github.com/manjotsidhu/packages.git
+      url: git://github.com/CircuitVerse/packages.git
       path: packages/flutter_markdown
 
 dev_dependencies:
