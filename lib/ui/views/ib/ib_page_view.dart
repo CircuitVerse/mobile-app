@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
@@ -70,6 +71,7 @@ class _IbPageViewState extends State<IbPageView> {
     return MarkdownBody(
       data: data.content,
       selectable: true,
+      imageDirectory: EnvironmentConfig.IB_BASE_URL,
       blockBuilders: {
         'iframe': IbWebViewBuilder(context: context),
         'chapter_contents': IbChapterContentsBuilder(

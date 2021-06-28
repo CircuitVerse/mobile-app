@@ -9,6 +9,11 @@ class EnvironmentConfig {
     defaultValue: 'https://learn.circuitverse.org/_api/pages',
   );
 
+  static const String IB_BASE_URL = String.fromEnvironment(
+    'IB_BASE_URL',
+    defaultValue: 'https://learn.circuitverse.org',
+  );
+
   // GITHUB OAUTH ENV VARIABLES
   static const String GITHUB_OAUTH_CLIENT_ID = String.fromEnvironment(
     'GITHUB_OAUTH_CLIENT_ID',
