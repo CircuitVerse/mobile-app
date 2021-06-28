@@ -7,9 +7,11 @@ import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
+import 'package:mobile_app/ui/views/ib/builders/ib_chapter_contents_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_webview_builder.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_embed_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_filter_syntax.dart';
+import 'package:mobile_app/ui/views/ib/syntaxes/ib_liquid_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_md_tag_syntax.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 
@@ -70,12 +72,18 @@ class _IbPageViewState extends State<IbPageView> {
       selectable: true,
       blockBuilders: {
         'iframe': IbWebViewBuilder(context: context),
+        'chapter_contents': IbChapterContentsBuilder(
+            chapterContents: _model.pageData?.chapterOfContents?.isNotEmpty ??
+                    false
+                ? _buildTOC(_model.pageData.chapterOfContents, padding: false)
+                : Container()),
       },
       extensionSet: md.ExtensionSet(
         [
           IbEmbedSyntax(),
           IbFilterSyntax(),
           IbMdTagSyntax(),
+          IbLiquidSyntax(),
           ...md.ExtensionSet.gitHubFlavored.blockSyntaxes
         ],
         [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
@@ -117,45 +125,60 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
-  Widget _buildTocListTile(String content, {bool root = true}) {
+  Widget _buildTocListTile(String content,
+      {bool root = true, bool padding = true}) {
     if (!root) {
       return ListTile(
         leading: Text(''),
+        visualDensity: !padding ? VisualDensity(vertical: -3) : null,
+        contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
         minLeadingWidth: 20,
         title: Text(content),
       );
     }
 
     return ListTile(
+      visualDensity: !padding ? VisualDensity(vertical: -3) : null,
+      contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
       title: Text(content),
     );
   }
 
-  List<Widget> _buildTocItems(IbTocItem item, {bool root = false}) {
+  List<Widget> _buildTocItems(IbTocItem item,
+      {bool root = false, bool padding = true}) {
     var items = <Widget>[
       _buildTocListTile(
         item.content,
         root: root,
+        padding: padding,
       ),
     ];
 
     if (item.items != null) {
       for (var e in item.items) {
-        items.addAll(_buildTocItems(e));
+        items.addAll(
+          _buildTocItems(
+            e,
+            padding: padding,
+          ),
+        );
       }
     }
 
     return items;
   }
 
-  Widget _buildTOC() {
+  Widget _buildTOC(List<IbTocItem> toc, {bool padding = true}) {
     var items = <Widget>[];
 
-    for (var item in _model.pageData.tableOfContents) {
-      items.addAll(_buildTocItems(
-        item,
-        root: true,
-      ));
+    for (var item in toc) {
+      items.addAll(
+        _buildTocItems(
+          item,
+          root: true,
+          padding: padding,
+        ),
+      );
     }
 
     return Column(
@@ -181,7 +204,7 @@ class _IbPageViewState extends State<IbPageView> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: _buildTOC(),
+                child: _buildTOC(_model.pageData.tableOfContents),
               ),
             ),
           ],
