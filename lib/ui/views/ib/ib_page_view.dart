@@ -101,9 +101,9 @@ class _IbPageViewState extends State<IbPageView> {
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w600,
             ),
-        h4: Theme.of(context).textTheme.headline4.copyWith(
+        h4: Theme.of(context).textTheme.subtitle1.copyWith(
               color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w300,
+              fontWeight: FontWeight.w600,
             ),
         h5: Theme.of(context)
             .textTheme
