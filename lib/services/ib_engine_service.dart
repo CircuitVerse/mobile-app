@@ -157,6 +157,36 @@ class IbEngineServiceImpl implements IbEngineService {
     return toc;
   }
 
+  /// Recursively parses list of chapter contents
+  List<IbTocItem> _parseChapterContents(Element element,
+      {bool num = true, bool root = false}) {
+    var index = num ? 1 : 'a'.codeUnitAt(0);
+    var toc = <IbTocItem>[];
+
+    for (var li in element.children) {
+      var eff_index = num ? index.toString() : String.fromCharCode(index);
+      var sublist = <IbTocItem>[];
+
+      for (var node in li.nodes) {
+        if (node is Element && node.localName == 'ul') {
+          sublist.addAll(_parseChapterContents(node, num: !num));
+          break;
+        }
+      }
+
+      toc.add(IbTocItem(
+        content: root
+            ? '$eff_index. ${li.nodes[0].text.trim()}'
+            : '$eff_index. ${li.text.trim()}',
+        items: sublist.isNotEmpty ? sublist : null,
+      ));
+
+      index += 1;
+    }
+
+    return toc;
+  }
+
   /// Fetches Table of Contents from HTML content
   List<IbTocItem> _getTableOfContents(String content) {
     var document = parse(content);
@@ -164,6 +194,18 @@ class IbEngineServiceImpl implements IbEngineService {
 
     if (mdElement != null) {
       return _parseToc(mdElement);
+    } else {
+      return [];
+    }
+  }
+
+  /// Fetches Chapter of Contents from HTML Content
+  List<IbTocItem> _getChapterOfContents(String content) {
+    var document = parse(content);
+    var mdElement = document.getElementById('chapter-contents-toc');
+
+    if (mdElement != null) {
+      return _parseChapterContents(mdElement, root: true);
     } else {
       return [];
     }
@@ -188,6 +230,9 @@ class IbEngineServiceImpl implements IbEngineService {
       ],
       tableOfContents: _ibRawPageData.hasToc
           ? _getTableOfContents(_ibRawPageData.content)
+          : [],
+      chapterOfContents: _ibRawPageData.hasChildren
+          ? _getChapterOfContents(_ibRawPageData.content)
           : [],
     );
   }

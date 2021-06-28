@@ -6,11 +6,13 @@ class IbPageData {
   final String title;
   final List<IbContent> content;
   final List<IbTocItem> tableOfContents;
+  final List<IbTocItem> chapterOfContents;
 
   IbPageData({
     @required this.id,
     @required this.title,
     @required this.content,
     this.tableOfContents,
+    this.chapterOfContents,
   });
 }
