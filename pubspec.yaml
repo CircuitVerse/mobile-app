@@ -52,6 +52,7 @@ dependencies:
     git:
       url: git://github.com/CircuitVerse/packages.git
       path: packages/flutter_markdown
+  html_unescape: ^2.0.0
 
 dev_dependencies:
   flutter_test:

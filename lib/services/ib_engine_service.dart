@@ -7,6 +7,7 @@ import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/models/ib/ib_raw_page_data.dart';
 import 'package:mobile_app/services/API/ib_api.dart';
+import 'package:html_unescape/html_unescape.dart';
 
 /// Interactive Book Parser Engine
 abstract class IbEngineService {
@@ -226,7 +227,7 @@ class IbEngineServiceImpl implements IbEngineService {
       id: _ibRawPageData.id,
       title: _ibRawPageData.title,
       content: [
-        IbMd(content: _ibRawPageData.rawContent),
+        IbMd(content: HtmlUnescape().convert(_ibRawPageData.rawContent)),
       ],
       tableOfContents: _ibRawPageData.hasToc
           ? _getTableOfContents(_ibRawPageData.content)
