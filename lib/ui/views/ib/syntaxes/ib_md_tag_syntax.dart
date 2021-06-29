@@ -22,6 +22,18 @@ class IbMdTagSyntax extends md.BlockSyntax {
       return md.Element.text('h5', text);
     }
 
+    // (TODO) Fix Pop Quizes
+    if (_tagsStack.contains('.quiz')) {
+      // Ignore parsing quiz content
+      do {
+        parser.advance();
+      } while (!parser.isDone);
+
+      _tagsStack.remove('.quiz');
+
+      return null;
+    }
+
     parser.advance();
 
     return null;
