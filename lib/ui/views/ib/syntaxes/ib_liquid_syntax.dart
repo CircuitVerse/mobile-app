@@ -1,4 +1,5 @@
 import 'package:markdown/markdown.dart' as md;
+import 'package:mobile_app/config/environment_config.dart';
 
 class IbLiquidSyntax extends md.BlockSyntax {
   IbLiquidSyntax() : super();
@@ -14,9 +15,16 @@ class IbLiquidSyntax extends md.BlockSyntax {
       // chapter_toc include
       if (tags[1] == 'chapter_toc.html') {
         node = md.Element.text('chapter_contents', '');
+      } else if (tags[1] == 'image.html' && tags.length >= 3) {
+        // Images
+        var url = RegExp('url="([^"\n\r]+)"').firstMatch(match[1])[1];
+        var alt = RegExp('description="([^"\n\r]+)"').firstMatch(match[1])[1];
+
+        node = md.Element.withTag('img');
+        node.attributes['src'] = '${EnvironmentConfig.IB_BASE_URL}$url';
+        node.attributes['alt'] = alt;
       }
 
-      // [TODO] image.html for images
       // [TODO] interactions that will use webview
     }
 
