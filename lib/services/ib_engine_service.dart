@@ -225,6 +225,7 @@ class IbEngineServiceImpl implements IbEngineService {
 
     return IbPageData(
       id: _ibRawPageData.id,
+      pageUrl: _ibRawPageData.httpUrl,
       title: _ibRawPageData.title,
       content: [
         IbMd(content: HtmlUnescape().convert(_ibRawPageData.rawContent)),

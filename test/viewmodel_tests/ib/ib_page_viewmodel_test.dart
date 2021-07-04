@@ -19,6 +19,7 @@ void main() {
           (_) => Future.value(
             IbPageData(
               id: '',
+              pageUrl: '',
               title: 'Home',
               content: [],
             ),
