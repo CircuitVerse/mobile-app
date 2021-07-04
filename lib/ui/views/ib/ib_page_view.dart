@@ -353,12 +353,16 @@ class _IbPageViewState extends State<IbPageView> {
 
         return Stack(
           children: [
-            SingleChildScrollView(
+            Scrollbar(
+              isAlwaysShown: true,
               controller: _hideButtonController,
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: _buildPageContent(model.pageData),
+              child: SingleChildScrollView(
+                controller: _hideButtonController,
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: _buildPageContent(model.pageData),
+                ),
               ),
             ),
             widget.chapter.prev != null || widget.chapter.next != null
