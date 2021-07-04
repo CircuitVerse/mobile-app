@@ -14,7 +14,9 @@ import 'package:mobile_app/ui/views/ib/syntaxes/ib_embed_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_filter_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_liquid_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_md_tag_syntax.dart';
+import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 typedef TocCallback = void Function(Function);
 typedef SetPageCallback = void Function(IbChapter);
@@ -67,11 +69,36 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
+  void _onTapLink(String text, String href, String title) async {
+    // Confirm if it's a valid URL
+    if (!(await canLaunch(href))) {
+      print('[IB]: $href is not a valid link');
+      return;
+    }
+
+    // If Interactive Book link
+    if (href.startsWith(EnvironmentConfig.IB_BASE_URL)) {
+      // If URI is same as the current page
+      if (_model.pageData.pageUrl.startsWith(href)) {
+        // It's local link
+        // (TODO) Scroll to that local widget
+        return;
+      } else {
+        // Try to navigate to another page using url
+        // (TODO) We need [IbLandingViewModel] to be able to get Chapter using [httpUrl]
+        return;
+      }
+    }
+
+    launchURL(href);
+  }
+
   Widget _buildMarkdown(IbMd data) {
     return MarkdownBody(
       data: data.content,
       selectable: true,
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
+      onTapLink: _onTapLink,
       blockBuilders: {
         'iframe': IbWebViewBuilder(context: context),
         'chapter_contents': IbChapterContentsBuilder(

@@ -84,6 +84,7 @@ void main() {
       test('When Home page called and returns success response', () async {
         var _expectedResult = IbPageData(
           id: mockIbRawPageData1['name'],
+          pageUrl: mockIbRawPageData1['http_url'],
           title: mockIbRawPageData1['title'],
           content: [IbMd(content: mockIbRawPageData1['raw_content'])],
           tableOfContents: [],
@@ -115,6 +116,7 @@ void main() {
 
         var _expectedResult = IbPageData(
             id: mockIbRawPageData2['path'],
+            pageUrl: mockIbRawPageData2['http_url'],
             title: mockIbRawPageData2['title'],
             content: [],
             tableOfContents: [

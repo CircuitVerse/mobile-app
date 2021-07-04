@@ -37,6 +37,7 @@ void main() {
       when(model.pageData).thenAnswer(
         (_) => IbPageData(
           id: mockIbRawPageData1['path'],
+          pageUrl: mockIbRawPageData1['http_url'],
           title: mockIbRawPageData1['title'],
           content: [IbMd(content: mockIbRawPageData1['raw_content'])],
           tableOfContents: [],

@@ -37,8 +37,8 @@ void main() {
       when(pageViewModel.fetchPageData()).thenReturn(null);
       when(pageViewModel.isSuccess(pageViewModel.IB_FETCH_PAGE_DATA))
           .thenAnswer((_) => true);
-      when(pageViewModel.pageData)
-          .thenReturn(IbPageData(id: 'test', title: 'test', content: []));
+      when(pageViewModel.pageData).thenReturn(
+          IbPageData(id: 'test', pageUrl: 'test', title: 'test', content: []));
 
       // Mock Page Drawer List
       when(model.fetchChapters()).thenReturn(null);
