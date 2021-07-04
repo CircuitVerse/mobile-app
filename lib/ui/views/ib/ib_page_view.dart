@@ -354,7 +354,6 @@ class _IbPageViewState extends State<IbPageView> {
         return Stack(
           children: [
             Scrollbar(
-              isAlwaysShown: true,
               controller: _hideButtonController,
               child: SingleChildScrollView(
                 controller: _hideButtonController,
