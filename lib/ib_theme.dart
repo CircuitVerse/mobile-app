@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/cv_theme.dart';
 
 class IbTheme {
   IbTheme._();
@@ -45,20 +44,18 @@ class IbTheme {
 
   static Color boxBg(context) {
     return Theme.of(context).brightness == Brightness.dark
-        ? CVTheme.bgCardDark
-        : CVTheme.bgCard;
+        ? bgCardDark
+        : bgCard;
   }
 
   static Color boxShadow(context) {
-    return Theme.of(context).brightness == Brightness.dark
-        ? CVTheme.bgCardDark
-        : CVTheme.grey;
+    return Theme.of(context).brightness == Brightness.dark ? bgCardDark : grey;
   }
 
   static Color highlightText(context) {
     return Theme.of(context).brightness == Brightness.dark
-        ? CVTheme.primaryColor
-        : CVTheme.primaryColorDark;
+        ? primaryColor
+        : primaryColorDark;
   }
 
   static Color getPrimaryColor(context) {
@@ -69,8 +66,11 @@ class IbTheme {
 
   static const Color primaryColor = Color.fromRGBO(2, 110, 87, 1);
   static const Color brightPrimaryColor = Color.fromRGBO(0, 232, 179, 1);
-  static const Color primaryColorLight = Color.fromRGBO(2, 110, 87, 0.5);
+  static const Color primaryColorDark = Color.fromRGBO(2, 110, 87, 0.5);
   static const Color bodyTextColor = Color.fromRGBO(92, 89, 98, 1);
   static const Color headingTextColor = Color.fromRGBO(39, 38, 43, 1);
   static const String fontFamily = 'Roboto';
+  static const Color grey = Color.fromRGBO(150, 150, 150, 1);
+  static const Color bgCard = Color.fromRGBO(255, 255, 255, 0.9);
+  static const Color bgCardDark = Color.fromRGBO(97, 97, 97, 1);
 }
