@@ -260,9 +260,15 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
     _dialogService.popDialog();
 
     if (_model.isSuccess(_model.ADD_GRADE)) {
-      SnackBarUtils.showDark('Project Graded Successfully');
+      SnackBarUtils.showDark(
+        'Project Graded Successfully',
+        'You have graded the project.',
+      );
     } else if (_model.isError(_model.ADD_GRADE)) {
-      SnackBarUtils.showDark(_model.errorMessageFor(_model.ADD_GRADE));
+      SnackBarUtils.showDark(
+        'Error',
+        _model.errorMessageFor(_model.ADD_GRADE),
+      );
     }
   }
 
@@ -278,9 +284,15 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
     _dialogService.popDialog();
 
     if (_model.isSuccess(_model.UPDATE_GRADE)) {
-      SnackBarUtils.showDark('Grade updated Successfully');
+      SnackBarUtils.showDark(
+        'Grade updated Successfully',
+        'Grade has been updated successfully.',
+      );
     } else if (_model.isError(_model.UPDATE_GRADE)) {
-      SnackBarUtils.showDark(_model.errorMessageFor(_model.UPDATE_GRADE));
+      SnackBarUtils.showDark(
+        'Error',
+        _model.errorMessageFor(_model.UPDATE_GRADE),
+      );
     }
   }
 
@@ -299,11 +311,17 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.DELETE_GRADE)) {
-        SnackBarUtils.showDark('Grade Deleted');
+        SnackBarUtils.showDark(
+          'Grade Deleted',
+          'Grade has been removed successfully.',
+        );
         _gradesController.clear();
         _remarksController.clear();
       } else if (_model.isError(_model.DELETE_GRADE)) {
-        SnackBarUtils.showDark(_model.errorMessageFor(_model.DELETE_GRADE));
+        SnackBarUtils.showDark(
+          'Error',
+          _model.errorMessageFor(_model.DELETE_GRADE),
+        );
       }
     }
   }
