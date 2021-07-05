@@ -209,10 +209,15 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       if (_model.isSuccess(_model.UPDATE_ASSIGNMENT)) {
         await Future.delayed(Duration(seconds: 1));
         Get.back(result: _model.updatedAssignment);
-        SnackBarUtils.showDark('Assignment Updated');
+        SnackBarUtils.showDark(
+          'Assignment Updated',
+          'Assignment was updated successfully',
+        );
       } else if (_model.isError(_model.UPDATE_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-            _model.errorMessageFor(_model.UPDATE_ASSIGNMENT));
+          'Error',
+          _model.errorMessageFor(_model.UPDATE_ASSIGNMENT),
+        );
       }
     }
   }

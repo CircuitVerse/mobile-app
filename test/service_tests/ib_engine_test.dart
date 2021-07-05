@@ -110,7 +110,7 @@ void main() {
 
       test('When a regular page called and returns success response', () async {
         var mockDataFile =
-            await File('test/setup/test_data/contributing_guidelines.json');
+            File('test/setup/test_data/contributing_guidelines.json');
         Map<String, dynamic> mockIbRawPageData2 =
             jsonDecode(await mockDataFile.readAsString());
 
