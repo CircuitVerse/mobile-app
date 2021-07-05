@@ -89,7 +89,10 @@ class _CVLandingViewState extends State<CVLandingView> {
     if (_dialogResponse.confirmed) {
       _model.onLogout();
       setState(() => _selectedIndex = 0);
-      SnackBarUtils.showDark('Logged Out Successfully');
+      SnackBarUtils.showDark(
+        'Logged Out Successfully',
+        'You have been signed out.',
+      );
     }
   }
 

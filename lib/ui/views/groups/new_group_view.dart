@@ -37,9 +37,15 @@ class _NewGroupViewState extends State<NewGroupView> {
       if (_model.isSuccess(_model.ADD_GROUP)) {
         await Future.delayed(Duration(seconds: 1));
         Get.back(result: _model.newGroup);
-        SnackBarUtils.showDark('Group Created');
+        SnackBarUtils.showDark(
+          'Group Created',
+          'New group was created successfuly.',
+        );
       } else if (_model.isError(_model.ADD_GROUP)) {
-        SnackBarUtils.showDark(_model.errorMessageFor(_model.ADD_GROUP));
+        SnackBarUtils.showDark(
+          'Error',
+          _model.errorMessageFor(_model.ADD_GROUP),
+        );
       }
     }
   }

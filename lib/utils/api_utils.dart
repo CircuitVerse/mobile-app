@@ -15,7 +15,7 @@ class ApiUtils {
   static Future<dynamic> get(String uri,
       {Map<String, String> headers, bool utfDecoder = false}) async {
     try {
-      final response = await client.get(uri, headers: headers);
+      final response = await client.get(Uri.parse(uri), headers: headers);
       final jsonResponse =
           ApiUtils.jsonResponse(response, utfDecoder: utfDecoder);
       return jsonResponse;
@@ -30,8 +30,8 @@ class ApiUtils {
   static Future<dynamic> post(String uri,
       {Map<String, String> headers, dynamic body}) async {
     try {
-      final response =
-          await client.post(uri, headers: headers, body: jsonEncode(body));
+      final response = await client.post(Uri.parse(uri),
+          headers: headers, body: jsonEncode(body));
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on SocketException {
@@ -46,7 +46,7 @@ class ApiUtils {
       {Map<String, String> headers, dynamic body}) async {
     try {
       final response = await client.put(
-        uri,
+        Uri.parse(uri),
         headers: headers,
         body: jsonEncode(body),
       );
@@ -63,8 +63,11 @@ class ApiUtils {
   static Future<dynamic> patch(String uri,
       {Map<String, String> headers, dynamic body}) async {
     try {
-      final response =
-          await client.patch(uri, headers: headers, body: jsonEncode(body));
+      final response = await client.patch(
+        Uri.parse(uri),
+        headers: headers,
+        body: jsonEncode(body),
+      );
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on SocketException {
@@ -78,7 +81,10 @@ class ApiUtils {
   static Future<dynamic> delete(String uri,
       {Map<String, String> headers}) async {
     try {
-      final response = await client.delete(uri, headers: headers);
+      final response = await client.delete(
+        Uri.parse(uri),
+        headers: headers,
+      );
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on SocketException {

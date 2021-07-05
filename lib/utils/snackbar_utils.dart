@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SnackBarUtils {
-  static void showLight(String message, {String title}) {
+  static void showLight(String title, String message) {
     Get.snackbar(
       title,
       message,
@@ -10,7 +10,7 @@ class SnackBarUtils {
     );
   }
 
-  static void showDark(String message, {String title}) {
+  static void showDark(String title, String message) {
     Get.snackbar(
       title,
       message,

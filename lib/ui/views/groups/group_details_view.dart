@@ -127,10 +127,15 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       if (_model.isSuccess(_model.ADD_GROUP_MEMBERS) &&
           _model.addedMembersSuccessMessage.isNotEmpty) {
-        SnackBarUtils.showDark(_model.addedMembersSuccessMessage);
+        SnackBarUtils.showDark(
+          'Group Members Added',
+          _model.addedMembersSuccessMessage,
+        );
       } else if (_model.isError(_model.ADD_GROUP_MEMBERS)) {
         SnackBarUtils.showDark(
-            _model.errorMessageFor(_model.ADD_GROUP_MEMBERS));
+          'Error',
+          _model.errorMessageFor(_model.ADD_GROUP_MEMBERS),
+        );
       }
     }
     setState(() => _emails = null);
@@ -205,10 +210,15 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.DELETE_GROUP_MEMBER)) {
-        SnackBarUtils.showDark('Group Member Removed');
+        SnackBarUtils.showDark(
+          'Group Member Removed',
+          'Successfully removed group member.',
+        );
       } else if (_model.isError(_model.DELETE_GROUP_MEMBER)) {
         SnackBarUtils.showDark(
-            _model.errorMessageFor(_model.DELETE_GROUP_MEMBER));
+          'Error',
+          _model.errorMessageFor(_model.DELETE_GROUP_MEMBER),
+        );
       }
     }
   }
@@ -260,10 +270,15 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.DELETE_ASSIGNMENT)) {
-        SnackBarUtils.showDark('Assignment Deleted');
+        SnackBarUtils.showDark(
+          'Assignment Deleted',
+          'The assignment was successfully deleted.',
+        );
       } else if (_model.isError(_model.DELETE_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-            _model.errorMessageFor(_model.DELETE_ASSIGNMENT));
+          'Error',
+          _model.errorMessageFor(_model.DELETE_ASSIGNMENT),
+        );
       }
     }
   }
@@ -292,10 +307,15 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.REOPEN_ASSIGNMENT)) {
-        SnackBarUtils.showDark('Assignent Reopened');
+        SnackBarUtils.showDark(
+          'Assignent Reopened',
+          'The assignment is reopened now.',
+        );
       } else if (_model.isError(_model.REOPEN_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-            _model.errorMessageFor(_model.REOPEN_ASSIGNMENT));
+          'Error',
+          _model.errorMessageFor(_model.REOPEN_ASSIGNMENT),
+        );
       }
     }
   }
@@ -315,9 +335,15 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.START_ASSIGNMENT)) {
-        SnackBarUtils.showDark('Project Created');
+        SnackBarUtils.showDark(
+          'Project Created',
+          'Project is successfully created.',
+        );
       } else {
-        SnackBarUtils.showDark(_model.errorMessageFor(_model.START_ASSIGNMENT));
+        SnackBarUtils.showDark(
+          'Error',
+          _model.errorMessageFor(_model.START_ASSIGNMENT),
+        );
       }
     }
   }

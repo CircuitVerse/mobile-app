@@ -258,12 +258,12 @@ class _IbPageViewState extends State<IbPageView> {
           child: FloatingActionButton(
             heroTag: 'previousPage',
             mini: true,
+            backgroundColor: Theme.of(context).primaryIconTheme.color,
+            onPressed: () => widget.setPage(widget.chapter.prev),
             child: Icon(
               Icons.arrow_back_rounded,
               color: IbTheme.primaryColor,
             ),
-            backgroundColor: Theme.of(context).primaryIconTheme.color,
-            onPressed: () => widget.setPage(widget.chapter.prev),
           ),
         ),
       );
@@ -281,12 +281,12 @@ class _IbPageViewState extends State<IbPageView> {
           child: FloatingActionButton(
             heroTag: 'nextPage',
             mini: true,
+            backgroundColor: Theme.of(context).primaryIconTheme.color,
+            onPressed: () => widget.setPage(widget.chapter.next),
             child: Icon(
               Icons.arrow_forward_rounded,
               color: IbTheme.primaryColor,
             ),
-            backgroundColor: Theme.of(context).primaryIconTheme.color,
-            onPressed: () => widget.setPage(widget.chapter.next),
           ),
         ),
       );
