@@ -4,10 +4,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/database_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   group('DatabaseService Test -', () {
     setUpAll(() async {
+      SharedPreferences.setMockInitialValues({});
       await setupLocator();
     });
 
