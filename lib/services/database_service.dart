@@ -21,7 +21,11 @@ class DatabaseServiceImpl implements DatabaseService {
   @override
   Future<void> init() async {
     // Hive DB setup
-    await Hive.initFlutter();
+    try {
+      await Hive.initFlutter();
+    } catch (e) {
+      print('Hive Initialization Failed');
+    }
 
     // Register Adapters for Hive
     // (TODO)
