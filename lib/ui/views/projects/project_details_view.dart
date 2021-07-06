@@ -275,7 +275,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     if (_model.isSuccess(_model.TOGGLE_STAR)) {
       SnackBarUtils.showDark(
         'Project ${_model.isProjectStarred ? 'Starred' : 'Unstarred'}',
-        'You have succesfully ${_model.isProjectStarred ? 'stared' : 'unstarred'} the project',
+        'You have successfully ${_model.isProjectStarred ? 'stared' : 'unstarred'} the project',
       );
     } else if (_model.isError(_model.TOGGLE_STAR)) {
       SnackBarUtils.showDark(

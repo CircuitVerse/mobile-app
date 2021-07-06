@@ -308,7 +308,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       if (_model.isSuccess(_model.REOPEN_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          'Assignent Reopened',
+          'Assignment Reopened',
           'The assignment is reopened now.',
         );
       } else if (_model.isError(_model.REOPEN_ASSIGNMENT)) {
