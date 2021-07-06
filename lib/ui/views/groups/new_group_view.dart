@@ -39,7 +39,7 @@ class _NewGroupViewState extends State<NewGroupView> {
         Get.back(result: _model.newGroup);
         SnackBarUtils.showDark(
           'Group Created',
-          'New group was created successfuly.',
+          'New group was created successfully.',
         );
       } else if (_model.isError(_model.ADD_GROUP)) {
         SnackBarUtils.showDark(
