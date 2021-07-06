@@ -9,6 +9,7 @@ import 'package:mobile_app/services/API/ib_api.dart';
 import 'package:mobile_app/services/API/projects_api.dart';
 import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/services/API/country_institute_api.dart';
+import 'package:mobile_app/services/database_service.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/API/contributors_api.dart';
 import 'package:mobile_app/services/ib_engine_service.dart';
@@ -41,9 +42,15 @@ import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
 GetIt locator = GetIt.instance;
 
 Future<void> setupLocator() async {
+  // Dialog Service
   locator.registerLazySingleton(() => DialogService());
+
+  // Local Storage Service
   var localStorageService = await LocalStorageService.getInstance();
   locator.registerSingleton<LocalStorageService>(localStorageService);
+
+  // Database Service
+  locator.registerLazySingleton<DatabaseService>(() => DatabaseServiceImpl());
 
   // API Services
   locator.registerLazySingleton<ContributorsApi>(() => HttpContributorsApi());

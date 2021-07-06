@@ -10,6 +10,7 @@ import 'package:mobile_app/services/API/groups_api.dart';
 import 'package:mobile_app/services/API/ib_api.dart';
 import 'package:mobile_app/services/API/projects_api.dart';
 import 'package:mobile_app/services/API/users_api.dart';
+import 'package:mobile_app/services/database_service.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
@@ -35,6 +36,8 @@ Function deepEq = DeepCollectionEquality().equals;
 class NavigatorObserverMock extends Mock implements NavigatorObserver {}
 
 class LocalStorageServiceMock extends Mock implements LocalStorageService {}
+
+class DatabaseServiceMock extends Mock implements DatabaseService {}
 
 class ContributorsApiMock extends Mock implements ContributorsApi {}
 
@@ -102,6 +105,14 @@ LocalStorageService getAndRegisterLocalStorageServiceMock() {
 
   locator.registerSingleton<LocalStorageService>(_localStorageService);
   return _localStorageService;
+}
+
+DatabaseService getAndRegisterDatabaseServiceMock() {
+  _removeRegistrationIfExists<DatabaseService>();
+  var _databaseServiceMock = DatabaseServiceMock();
+
+  locator.registerSingleton<DatabaseService>(_databaseServiceMock);
+  return _databaseServiceMock;
 }
 
 ContributorsApi getAndRegisterContributorsApiMock() {
@@ -186,6 +197,7 @@ IbEngineService getAndRegisterIbEngineServiceMock() {
 
 void registerServices() {
   getAndRegisterLocalStorageServiceMock();
+  getAndRegisterDatabaseServiceMock();
   getAndRegisterContributorsApiMock();
   getAndRegisterGroupsApiMock();
   getAndRegisterGroupMembersApiMock();
@@ -200,6 +212,7 @@ void registerServices() {
 
 void unregisterServices() {
   locator.unregister<LocalStorageService>();
+  locator.unregister<DatabaseService>();
   locator.unregister<ContributorsApi>();
   locator.unregister<GroupsApi>();
   locator.unregister<GroupMembersApi>();
