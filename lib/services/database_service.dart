@@ -1,10 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mobile_app/models/ib/ib_raw_page_data.dart';
 
 enum DatabaseBox {
+  Metadata,
   IB,
 }
+
+List<TypeAdapter> DatabaseAdapters = <TypeAdapter>[
+  IbRawPageDataAdapter(),
+];
 
 extension DatabaseBoxExt on DatabaseBox {
   String get inString => describeEnum(this);
@@ -13,11 +19,15 @@ extension DatabaseBoxExt on DatabaseBox {
 abstract class DatabaseService {
   Future<void> init();
 
+  Future<bool> isExpired(String key);
   Future<T> getData<T>(DatabaseBox box, String key, {T defaultValue});
-  Future<void> setData<T>(DatabaseBox box, String key, T value);
+  Future<void> setData(DatabaseBox box, String key, dynamic value,
+      {bool expireData});
 }
 
 class DatabaseServiceImpl implements DatabaseService {
+  final int _timeoutHours = 6;
+
   @override
   Future<void> init() async {
     // Hive DB setup
@@ -28,7 +38,9 @@ class DatabaseServiceImpl implements DatabaseService {
     }
 
     // Register Adapters for Hive
-    // (TODO)
+    for (var adapter in DatabaseAdapters) {
+      Hive.registerAdapter(adapter);
+    }
   }
 
   Future<Box> _openBox(DatabaseBox box) async {
@@ -40,6 +52,19 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   @override
+  Future<bool> isExpired(String key) async {
+    var data = await getData<DateTime>(DatabaseBox.Metadata, key);
+
+    if (data == null ||
+        data.isBefore(
+            DateTime.now().subtract(Duration(hours: _timeoutHours)))) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
   Future<T> getData<T>(DatabaseBox box, String key, {T defaultValue}) async {
     var openedBox = await _openBox(box);
 
@@ -47,9 +72,14 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   @override
-  Future<void> setData<T>(DatabaseBox box, String key, T value) async {
+  Future<void> setData(DatabaseBox box, String key, dynamic value,
+      {bool expireData = false}) async {
     var openedBox = await _openBox(box);
 
-    return await openedBox.put(key, value);
+    if (expireData) {
+      await setData(DatabaseBox.Metadata, key, DateTime.now());
+    }
+
+    await openedBox.put(key, value);
   }
 }
