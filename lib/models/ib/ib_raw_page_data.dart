@@ -1,17 +1,49 @@
+import 'package:hive/hive.dart';
+
+part 'ib_raw_page_data.g.dart';
+
+@HiveType(typeId: 0)
 class IbRawPageData {
+  @HiveField(0)
   String id;
+
+  @HiveField(1)
   String title;
+
+  @HiveField(2)
   String name;
+
+  @HiveField(3)
   String content;
+
+  @HiveField(4)
   String rawContent;
+
+  @HiveField(5)
   String navOrder;
+
+  @HiveField(6)
   String cvibLevel;
+
+  @HiveField(7)
   String parent;
+
+  @HiveField(8)
   bool hasChildren;
+
+  @HiveField(9)
   bool hasToc;
+
+  @HiveField(10)
   bool disableComments;
+
+  @HiveField(11)
   Map<String, dynamic> frontMatter;
+
+  @HiveField(12)
   String httpUrl;
+
+  @HiveField(13)
   String apiUrl;
 
   IbRawPageData({
