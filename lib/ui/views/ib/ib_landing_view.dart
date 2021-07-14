@@ -64,6 +64,9 @@ class _IbLandingViewState extends State<IbLandingView> {
       onTap: () => setSelectedChapter(chapter),
       child: CVDrawerTile(
         title: chapter.value,
+        color: (_selectedChapter.id == chapter.id)
+            ? IbTheme.getPrimaryColor(context)
+            : null,
       ),
     );
   }
@@ -77,13 +80,20 @@ class _IbLandingViewState extends State<IbLandingView> {
 
     return ExpansionTile(
       maintainState: true,
+      initiallyExpanded:
+          (_selectedChapter.id.startsWith(chapter.id)) ? true : false,
       title: ListTile(
         contentPadding: EdgeInsets.all(0),
         title: GestureDetector(
           onTap: () => setSelectedChapter(chapter),
           child: Text(
             chapter.value,
-            style: Theme.of(context).textTheme.headline6,
+            style: Theme.of(context).textTheme.headline6.copyWith(
+                  fontFamily: 'Poppins',
+                  color: (_selectedChapter.id.startsWith(chapter.id))
+                      ? IbTheme.getPrimaryColor(context)
+                      : IbTheme.textColor(context),
+                ),
           ),
         ),
       ),
@@ -123,7 +133,9 @@ class _IbLandingViewState extends State<IbLandingView> {
                 onTap: () => setSelectedChapter(_homeChapter),
                 child: CVDrawerTile(
                   title: 'Interactive Book Home',
-                  color: IbTheme.getPrimaryColor(context),
+                  color: (_selectedChapter.id == _homeChapter.id)
+                      ? IbTheme.getPrimaryColor(context)
+                      : null,
                 ),
               ),
               !_model.isSuccess(_model.IB_FETCH_CHAPTERS)
