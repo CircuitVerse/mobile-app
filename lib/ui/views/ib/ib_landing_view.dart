@@ -23,7 +23,7 @@ class _IbLandingViewState extends State<IbLandingView> {
     value: 'Interactive Book Home',
   );
   IbChapter _selectedChapter;
-  Function _onTocPressed;
+  final ValueNotifier<Function> _tocNotifier = ValueNotifier(null);
 
   @override
   void initState() {
@@ -45,15 +45,20 @@ class _IbLandingViewState extends State<IbLandingView> {
             ? 'CircuitVerse'
             : 'Interactive Book',
       ),
-      actions: _onTocPressed != null
-          ? [
-              IconButton(
-                icon: const Icon(Icons.menu_book_rounded),
-                tooltip: 'Show Table of Contents',
-                onPressed: _onTocPressed,
-              ),
-            ]
-          : [],
+      actions: [
+        ValueListenableBuilder(
+          valueListenable: _tocNotifier,
+          builder: (context, value, child) {
+            return value != null
+                ? IconButton(
+                    icon: const Icon(Icons.menu_book_rounded),
+                    tooltip: 'Show Table of Contents',
+                    onPressed: value,
+                  )
+                : Container();
+          },
+        ),
+      ],
       centerTitle: true,
       brightness: Brightness.dark,
     );
@@ -66,7 +71,7 @@ class _IbLandingViewState extends State<IbLandingView> {
         title: chapter.value,
         color: (_selectedChapter.id == chapter.id)
             ? IbTheme.getPrimaryColor(context)
-            : null,
+            : IbTheme.textColor(context),
       ),
     );
   }
@@ -74,14 +79,21 @@ class _IbLandingViewState extends State<IbLandingView> {
   Widget _buildExpandableChapter(IbChapter chapter) {
     var nestedPages = <Widget>[];
 
+    var hasSelectedChapter = false;
     for (var nestedChapter in chapter.items) {
+      if (nestedChapter.id == _selectedChapter.id) {
+        hasSelectedChapter = true;
+      }
+
       nestedPages.add(_buildChapter(nestedChapter));
     }
 
     return ExpansionTile(
       maintainState: true,
       initiallyExpanded:
-          (_selectedChapter.id.startsWith(chapter.id)) ? true : false,
+          (_selectedChapter.id.startsWith(chapter.id) || hasSelectedChapter)
+              ? true
+              : false,
       title: ListTile(
         contentPadding: EdgeInsets.all(0),
         title: GestureDetector(
@@ -135,7 +147,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                   title: 'Interactive Book Home',
                   color: (_selectedChapter.id == _homeChapter.id)
                       ? IbTheme.getPrimaryColor(context)
-                      : null,
+                      : IbTheme.textColor(context),
                 ),
               ),
               !_model.isSuccess(_model.IB_FETCH_CHAPTERS)
@@ -210,7 +222,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                   tocCallback: (val) {
                     Future.delayed(Duration.zero, () async {
                       if (mounted) {
-                        setState(() => _onTocPressed = val);
+                        _tocNotifier.value = val;
                       }
                     });
                   },
