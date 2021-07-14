@@ -138,6 +138,14 @@ class _IbPageViewState extends State<IbPageView> {
             .textTheme
             .headline6
             .copyWith(fontWeight: FontWeight.w300),
+        horizontalRuleDecoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              width: 1.5,
+              color: Theme.of(context).dividerColor,
+            ),
+          ),
+        ),
       ),
     );
   }
