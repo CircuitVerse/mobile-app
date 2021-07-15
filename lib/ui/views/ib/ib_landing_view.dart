@@ -23,12 +23,19 @@ class _IbLandingViewState extends State<IbLandingView> {
     value: 'Interactive Book Home',
   );
   IbChapter _selectedChapter;
-  final ValueNotifier<Function> _tocNotifier = ValueNotifier(null);
+  ValueNotifier<Function> _tocNotifier;
 
   @override
   void initState() {
-    super.initState();
+    _tocNotifier = ValueNotifier(null);
     _selectedChapter = _homeChapter;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tocNotifier.dispose();
+    super.dispose();
   }
 
   void setSelectedChapter(IbChapter chapter) {
