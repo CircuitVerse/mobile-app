@@ -8,11 +8,11 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 class IbPageViewModel extends BaseModel {
   // ViewState Keys
   String IB_FETCH_PAGE_DATA = 'ib_fetch_page_data';
+  String IB_FETCH_INTERACTION_DATA = 'ib_fetch_interaction_data';
 
   final IbEngineService _ibEngineService = locator<IbEngineService>();
 
   IbPageData _pageData;
-
   IbPageData get pageData => _pageData;
 
   Future fetchPageData({String id = 'index.md'}) async {
@@ -23,6 +23,17 @@ class IbPageViewModel extends BaseModel {
     } on Failure catch (f) {
       setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
       setErrorMessageFor(IB_FETCH_PAGE_DATA, f.message);
+    }
+  }
+
+  Future fetchHtmlInteraction(String id) async {
+    try {
+      var result = await _ibEngineService.getHtmlInteraction(id);
+      setStateFor(IB_FETCH_INTERACTION_DATA, ViewState.Success);
+      return result;
+    } on Failure catch (f) {
+      setStateFor(IB_FETCH_INTERACTION_DATA, ViewState.Error);
+      setErrorMessageFor(IB_FETCH_INTERACTION_DATA, f.message);
     }
   }
 }

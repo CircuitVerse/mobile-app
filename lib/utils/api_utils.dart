@@ -13,9 +13,16 @@ class ApiUtils {
 
   /// Returns JSON GET response
   static Future<dynamic> get(String uri,
-      {Map<String, String> headers, bool utfDecoder = false}) async {
+      {Map<String, String> headers,
+      bool utfDecoder = false,
+      bool rawResponse = false}) async {
     try {
       final response = await client.get(Uri.parse(uri), headers: headers);
+
+      if (rawResponse) {
+        return response.body;
+      }
+
       final jsonResponse =
           ApiUtils.jsonResponse(response, utfDecoder: utfDecoder);
       return jsonResponse;

@@ -1,5 +1,6 @@
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
+import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
@@ -8,11 +9,13 @@ import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/models/ib/ib_raw_page_data.dart';
 import 'package:mobile_app/services/API/ib_api.dart';
 import 'package:html_unescape/html_unescape.dart';
+import 'package:mobile_app/utils/api_utils.dart';
 
 /// Interactive Book Parser Engine
 abstract class IbEngineService {
   Future<List<IbChapter>> getChapters();
   Future<IbPageData> getPageData({String id = 'index.md'});
+  Future<String> getHtmlInteraction(String id);
 }
 
 class IbEngineServiceImpl implements IbEngineService {
@@ -21,6 +24,17 @@ class IbEngineServiceImpl implements IbEngineService {
 
   /// Locally cache Chapters list for the session
   List<IbChapter> _ibChapters = [];
+
+  /// module.js URL for interaction
+  final _intModuleJsUrl =
+      '${EnvironmentConfig.IB_BASE_URL}/assets/js/module.js';
+
+  /// Base path for interactions
+  final _intBaseUrl =
+      'https://raw.githubusercontent.com/CircuitVerse/Interactive-Book/master/_includes';
+
+  /// module.js contents
+  String _intModuleJs;
 
   /// Fetches Pages inside an API Page
   Future<List<IbChapter>> _fetchPagesInDir({
@@ -237,5 +251,27 @@ class IbEngineServiceImpl implements IbEngineService {
           ? _getChapterOfContents(_ibRawPageData.content)
           : [],
     );
+  }
+
+  /// Fetches HTML Interaction from the given [id]
+  /// id is basically the file-name of the HTML interaction
+  /// Every Interaction uses module.js which also has to be used
+  @override
+  Future<String> getHtmlInteraction(String id) async {
+    // Fetch JS content if not already fetched
+    _intModuleJs ??= await ApiUtils.get(_intModuleJsUrl, rawResponse: true);
+
+    // Fetch Interaction HTML
+    String html = await ApiUtils.get('$_intBaseUrl/$id', rawResponse: true);
+
+    // concat JS + HTML
+    var js = '<script type="text/javascript">\n$_intModuleJs\n</script>';
+    var result = '$js\n$html';
+
+    // Replace local URLs with absolute
+    result = result.replaceAll(RegExp(r'(\.\.(\/\.\.)?)?(?<!org)\/assets'),
+        '${EnvironmentConfig.IB_BASE_URL}/assets');
+
+    return result;
   }
 }
