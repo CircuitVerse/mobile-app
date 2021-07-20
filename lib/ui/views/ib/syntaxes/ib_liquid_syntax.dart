@@ -23,9 +23,10 @@ class IbLiquidSyntax extends md.BlockSyntax {
         node = md.Element.withTag('img');
         node.attributes['src'] = '${EnvironmentConfig.IB_BASE_URL}$url';
         node.attributes['alt'] = alt;
+      } else {
+        // Interactions using html
+        node = md.Element.text('interaction', tags[1]);
       }
-
-      // [TODO] interactions that will use webview
     }
 
     parser.advance();

@@ -52,5 +52,39 @@ void main() {
         expect(_model.stateFor(_model.IB_FETCH_PAGE_DATA), ViewState.Error);
       });
     });
+
+    group('fetchHtmlInteraction -', () {
+      test('When called & service returns success response', () async {
+        var _mockIbEngineApi = getAndRegisterIbEngineServiceMock();
+        when(_mockIbEngineApi.getHtmlInteraction('')).thenAnswer(
+          (_) => Future.value('test-data'),
+        );
+
+        var _model = IbPageViewModel();
+        var _result = await _model.fetchHtmlInteraction('');
+
+        // verify call to IbEngineService was made
+        verify(_mockIbEngineApi.getHtmlInteraction(''));
+        expect(_model.stateFor(_model.IB_FETCH_INTERACTION_DATA),
+            ViewState.Success);
+
+        // verify returned data
+        expect(_result, 'test-data');
+      });
+
+      test('When called & service returns error', () async {
+        var _mockIbEngineApi = getAndRegisterIbEngineServiceMock();
+        when(_mockIbEngineApi.getHtmlInteraction(''))
+            .thenThrow(Failure('Some Error Occurred!'));
+
+        var _model = IbPageViewModel();
+        await _model.fetchHtmlInteraction('');
+
+        // verify call to IbEngineService was made
+        verify(_mockIbEngineApi.getHtmlInteraction(''));
+        expect(
+            _model.stateFor(_model.IB_FETCH_INTERACTION_DATA), ViewState.Error);
+      });
+    });
   });
 }

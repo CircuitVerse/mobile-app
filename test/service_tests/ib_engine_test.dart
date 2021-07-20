@@ -1,13 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:http/http.dart';
+import 'package:http/testing.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/models/ib/ib_raw_page_data.dart';
 import 'package:mobile_app/services/ib_engine_service.dart';
+import 'package:mobile_app/utils/api_utils.dart';
 import 'package:mockito/mockito.dart';
 
 import '../setup/test_data/mock_ib_raw_page.dart';
@@ -215,6 +219,36 @@ void main() {
 
         expect(() async => await _ibEngine.getPageData(),
             throwsA(isInstanceOf<Failure>()));
+      });
+    });
+
+    group('getHtmlInteraction -', () {
+      test('When binary embed is called and returns success response',
+          () async {
+        var _mockJsFile = File('test/setup/test_data/mock_module.js');
+        var _mockJs = await _mockJsFile.readAsString();
+
+        var _mockHtmlFile = File('test/setup/test_data/mock_binary.html');
+        var _mockHtml = await _mockHtmlFile.readAsString();
+
+        var _expectedResult =
+            '<script type="text/javascript">\n$_mockJs\n</script>\n$_mockHtml';
+        _expectedResult = _expectedResult.replaceAll(
+            RegExp(r'(\.\.(\/\.\.)?)?(?<!org)\/assets'),
+            '${EnvironmentConfig.IB_BASE_URL}/assets');
+
+        ApiUtils.client = MockClient((_) {
+          if (_.url.toString().endsWith('module.js')) {
+            return Future.value(Response(_mockJs, 200));
+          }
+
+          return Future.value(Response(_mockHtml, 200));
+        });
+
+        var _ibEngine = IbEngineServiceImpl();
+        var _actualResult = await _ibEngine.getHtmlInteraction('binary.html');
+
+        expect(_expectedResult, _actualResult);
       });
     });
   });
