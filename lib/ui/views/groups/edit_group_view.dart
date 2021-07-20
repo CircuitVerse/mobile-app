@@ -41,9 +41,15 @@ class _EditGroupViewState extends State<EditGroupView> {
       if (_model.isSuccess(_model.UPDATE_GROUP)) {
         await Future.delayed(Duration(seconds: 1));
         Get.back(result: _model.updatedGroup);
-        SnackBarUtils.showDark('Group Updated');
+        SnackBarUtils.showDark(
+          'Group Updated',
+          'Group has been successfully updated.',
+        );
       } else if (_model.isError(_model.UPDATE_GROUP)) {
-        SnackBarUtils.showDark(_model.errorMessageFor(_model.UPDATE_GROUP));
+        SnackBarUtils.showDark(
+          'Error',
+          _model.errorMessageFor(_model.UPDATE_GROUP),
+        );
       }
     }
   }

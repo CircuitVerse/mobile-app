@@ -123,7 +123,10 @@ class _SignupViewState extends State<SignupView> {
 
       if (_signUpModel.isSuccess(_signUpModel.SIGNUP)) {
         // show signup successful snackbar..
-        SnackBarUtils.showDark('Signup Successful');
+        SnackBarUtils.showDark(
+          'Signup Successful',
+          'Welcome to CircuitVerse!',
+        );
 
         // move to home view on successful signup..
         await Future.delayed(
@@ -133,7 +136,9 @@ class _SignupViewState extends State<SignupView> {
       } else if (_signUpModel.isError(_signUpModel.SIGNUP)) {
         // show failure snackbar..
         SnackBarUtils.showDark(
-            _signUpModel.errorMessageFor(_signUpModel.SIGNUP));
+          'Error',
+          _signUpModel.errorMessageFor(_signUpModel.SIGNUP),
+        );
         _formKey.currentState.reset();
       }
     }

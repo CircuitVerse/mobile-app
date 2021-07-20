@@ -12,10 +12,19 @@ class ApiUtils {
   static http.Client client = http.Client();
 
   /// Returns JSON GET response
-  static Future<dynamic> get(String uri, {Map<String, String> headers}) async {
+  static Future<dynamic> get(String uri,
+      {Map<String, String> headers,
+      bool utfDecoder = false,
+      bool rawResponse = false}) async {
     try {
-      final response = await client.get(uri, headers: headers);
-      final jsonResponse = ApiUtils.jsonResponse(response);
+      final response = await client.get(Uri.parse(uri), headers: headers);
+
+      if (rawResponse) {
+        return response.body;
+      }
+
+      final jsonResponse =
+          ApiUtils.jsonResponse(response, utfDecoder: utfDecoder);
       return jsonResponse;
     } on SocketException {
       throw Failure(Constants.NO_INTERNET_CONNECTION);
@@ -28,8 +37,8 @@ class ApiUtils {
   static Future<dynamic> post(String uri,
       {Map<String, String> headers, dynamic body}) async {
     try {
-      final response =
-          await client.post(uri, headers: headers, body: jsonEncode(body));
+      final response = await client.post(Uri.parse(uri),
+          headers: headers, body: jsonEncode(body));
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on SocketException {
@@ -44,7 +53,7 @@ class ApiUtils {
       {Map<String, String> headers, dynamic body}) async {
     try {
       final response = await client.put(
-        uri,
+        Uri.parse(uri),
         headers: headers,
         body: jsonEncode(body),
       );
@@ -61,8 +70,11 @@ class ApiUtils {
   static Future<dynamic> patch(String uri,
       {Map<String, String> headers, dynamic body}) async {
     try {
-      final response =
-          await client.patch(uri, headers: headers, body: jsonEncode(body));
+      final response = await client.patch(
+        Uri.parse(uri),
+        headers: headers,
+        body: jsonEncode(body),
+      );
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on SocketException {
@@ -76,7 +88,10 @@ class ApiUtils {
   static Future<dynamic> delete(String uri,
       {Map<String, String> headers}) async {
     try {
-      final response = await client.delete(uri, headers: headers);
+      final response = await client.delete(
+        Uri.parse(uri),
+        headers: headers,
+      );
       final jsonResponse = ApiUtils.jsonResponse(response);
       return jsonResponse;
     } on SocketException {
@@ -86,14 +101,17 @@ class ApiUtils {
     }
   }
 
-  static dynamic jsonResponse(http.Response response) {
+  static dynamic jsonResponse(http.Response response,
+      {bool utfDecoder = false}) {
     switch (response.statusCode) {
       case 200:
       case 201:
       case 202:
       case 204:
-        var responseJson =
-            response.body == '' ? {} : json.decode(response.body);
+        var responseJson = response.body == ''
+            ? {}
+            : json.decode(
+                utfDecoder ? utf8.decode(response.bodyBytes) : response.body);
         return responseJson;
       case 400:
         throw BadRequestException(response.body);

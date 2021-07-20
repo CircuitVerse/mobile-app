@@ -96,7 +96,10 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
       if (_model.isSuccess(_model.SEND_RESET_INSTRUCTIONS)) {
         // show instructions sent snackbar
-        SnackBarUtils.showDark('Instructions Sent to $_email');
+        SnackBarUtils.showDark(
+          'Instructions Sent to $_email',
+          'Please check your mail for password reset link.',
+        );
 
         // route back to previous screen
         await Future.delayed(Duration(seconds: 1));
@@ -104,7 +107,9 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       } else if (_model.isError(_model.SEND_RESET_INSTRUCTIONS)) {
         // show failure snackbar
         SnackBarUtils.showDark(
-            _model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS));
+          'Error',
+          _model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS),
+        );
         _formKey.currentState.reset();
       }
     }
