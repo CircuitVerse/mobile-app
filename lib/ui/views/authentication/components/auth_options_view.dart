@@ -24,7 +24,10 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
     if (_model.isSuccess(_model.GOOGLE_OAUTH)) {
       await Get.offAllNamed(CVLandingView.id);
     } else if (_model.isError(_model.GOOGLE_OAUTH)) {
-      SnackBarUtils.showDark(_model.errorMessageFor(_model.GOOGLE_OAUTH));
+      SnackBarUtils.showDark(
+        'Google Authentication Error',
+        _model.errorMessageFor(_model.GOOGLE_OAUTH),
+      );
     }
   }
 
@@ -34,7 +37,10 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
     if (_model.isSuccess(_model.FB_OAUTH)) {
       await Get.offAllNamed(CVLandingView.id);
     } else if (_model.isError(_model.FB_OAUTH)) {
-      SnackBarUtils.showDark(_model.errorMessageFor(_model.FB_OAUTH));
+      SnackBarUtils.showDark(
+        'Facebook Authentication Error',
+        _model.errorMessageFor(_model.FB_OAUTH),
+      );
     }
   }
 
@@ -44,7 +50,10 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
     if (_model.isSuccess(_model.GITHUB_OAUTH)) {
       await Get.offAllNamed(CVLandingView.id);
     } else if (_model.isError(_model.GITHUB_OAUTH)) {
-      SnackBarUtils.showDark(_model.errorMessageFor(_model.GITHUB_OAUTH));
+      SnackBarUtils.showDark(
+        'GitHub Authentication Error',
+        _model.errorMessageFor(_model.GITHUB_OAUTH),
+      );
     }
   }
 

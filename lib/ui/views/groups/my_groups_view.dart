@@ -63,9 +63,15 @@ class _MyGroupsViewState extends State<MyGroupsView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.DELETE_GROUP)) {
-        SnackBarUtils.showDark('Group Deleted');
+        SnackBarUtils.showDark(
+          'Group Deleted',
+          'Group was successfully deleted.',
+        );
       } else if (_model.isError(_model.DELETE_GROUP)) {
-        SnackBarUtils.showDark(_model.errorMessageFor(_model.DELETE_GROUP));
+        SnackBarUtils.showDark(
+          'Error',
+          _model.errorMessageFor(_model.DELETE_GROUP),
+        );
       }
     }
   }
