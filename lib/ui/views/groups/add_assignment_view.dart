@@ -235,16 +235,10 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         Get.back(result: _model.addedAssignment);
 
         // Show success snackbar..
-        SnackBarUtils.showDark(
-          'Assignment Added',
-          'New assignment was successfully added.',
-        );
+        SnackBarUtils.showDark('Assignment Added');
       } else if (_model.isError(_model.ADD_ASSIGNMENT)) {
         // Show failure snackbar
-        SnackBarUtils.showDark(
-          'Error',
-          _model.errorMessageFor(_model.ADD_ASSIGNMENT),
-        );
+        SnackBarUtils.showDark(_model.errorMessageFor(_model.ADD_ASSIGNMENT));
         _formKey.currentState.reset();
       }
     }

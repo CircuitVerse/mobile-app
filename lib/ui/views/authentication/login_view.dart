@@ -122,20 +122,14 @@ class _LoginViewState extends State<LoginView> {
 
       if (_model.isSuccess(_model.LOGIN)) {
         // show login successful snackbar..
-        SnackBarUtils.showDark(
-          'Login Successful',
-          'Welcome back!',
-        );
+        SnackBarUtils.showDark('Login Successful');
 
         // move to home view on successful login..
         await Future.delayed(Duration(seconds: 1));
         await Get.offAllNamed(CVLandingView.id);
       } else if (_model.isError(_model.LOGIN)) {
         // show failure snackbar..
-        SnackBarUtils.showDark(
-          'Error',
-          _model.errorMessageFor(_model.LOGIN),
-        );
+        SnackBarUtils.showDark(_model.errorMessageFor(_model.LOGIN));
         _formKey.currentState.reset();
       }
     }

@@ -1,4 +1,4 @@
-class Failure implements Exception {
+class Failure {
   final String message;
 
   Failure(this.message);

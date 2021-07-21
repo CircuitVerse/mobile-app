@@ -5,14 +5,12 @@ import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
-import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/contributors/contributors_view.dart';
 import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
 import 'package:mobile_app/ui/views/home/home_view.dart';
-import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
@@ -77,6 +75,19 @@ class _CVLandingViewState extends State<CVLandingView> {
     );
   }
 
+  Widget _buildDrawerTile(String title, IconData iconData) {
+    return ListTile(
+      leading: Icon(
+        iconData,
+        color: CVTheme.drawerIcon(context),
+      ),
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.headline6,
+      ),
+    );
+  }
+
   Future<void> onLogoutPressed() async {
     Get.back();
 
@@ -89,10 +100,7 @@ class _CVLandingViewState extends State<CVLandingView> {
     if (_dialogResponse.confirmed) {
       _model.onLogout();
       setState(() => _selectedIndex = 0);
-      SnackBarUtils.showDark(
-        'Logged Out Successfully',
-        'You have been signed out.',
-      );
+      SnackBarUtils.showDark('Logged Out Successfully');
     }
   }
 
@@ -112,7 +120,7 @@ class _CVLandingViewState extends State<CVLandingView> {
               ),
               InkWell(
                 onTap: () => setSelectedIndexTo(0),
-                child: CVDrawerTile(title: 'Home', iconData: Icons.home),
+                child: _buildDrawerTile('Home', Icons.home),
               ),
               Theme(
                 data: CVTheme.themeData(context),
@@ -132,31 +140,22 @@ class _CVLandingViewState extends State<CVLandingView> {
                   children: <Widget>[
                     InkWell(
                       onTap: () => setSelectedIndexTo(1),
-                      child: CVDrawerTile(
-                          title: 'Featured Circuits', iconData: Icons.star),
+                      child: _buildDrawerTile('Featured Circuits', Icons.star),
                     ),
                   ],
                 ),
               ),
               InkWell(
-                onTap: () => Get.toNamed(IbLandingView.id),
-                child: CVDrawerTile(
-                    title: 'Interactive Book',
-                    iconData: Icons.chrome_reader_mode),
-              ),
-              InkWell(
                 onTap: () => setSelectedIndexTo(2),
-                child: CVDrawerTile(
-                    title: 'About', iconData: FontAwesome5.address_card),
+                child: _buildDrawerTile('About', FontAwesome5.address_card),
               ),
               InkWell(
                 onTap: () => setSelectedIndexTo(3),
-                child: CVDrawerTile(title: 'Contribute', iconData: Icons.add),
+                child: _buildDrawerTile('Contribute', Icons.add),
               ),
               InkWell(
                 onTap: () => setSelectedIndexTo(4),
-                child: CVDrawerTile(
-                    title: 'Teachers', iconData: Icons.account_balance),
+                child: _buildDrawerTile('Teachers', Icons.account_balance),
               ),
               _model.isLoggedIn
                   ? Theme(
@@ -172,28 +171,25 @@ class _CVLandingViewState extends State<CVLandingView> {
                         children: <Widget>[
                           InkWell(
                             onTap: () => setSelectedIndexTo(5),
-                            child: CVDrawerTile(
-                                title: 'Profile', iconData: FontAwesome5.user),
+                            child:
+                                _buildDrawerTile('Profile', FontAwesome5.user),
                           ),
                           InkWell(
                             onTap: () => setSelectedIndexTo(6),
-                            child: CVDrawerTile(
-                                title: 'My Groups',
-                                iconData: FontAwesome5.object_group),
+                            child: _buildDrawerTile(
+                                'My Groups', FontAwesome5.object_group),
                           ),
                           InkWell(
                             onTap: onLogoutPressed,
-                            child: CVDrawerTile(
-                                title: 'Log Out',
-                                iconData: Ionicons.ios_log_out),
+                            child: _buildDrawerTile(
+                                'Log Out', Ionicons.ios_log_out),
                           ),
                         ],
                       ),
                     )
                   : InkWell(
                       onTap: () => Get.offAndToNamed(LoginView.id),
-                      child: CVDrawerTile(
-                          title: 'Login', iconData: Ionicons.ios_log_in),
+                      child: _buildDrawerTile('Login', Ionicons.ios_log_in),
                     )
             ],
           ),

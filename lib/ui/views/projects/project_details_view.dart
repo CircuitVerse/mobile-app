@@ -235,10 +235,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         await Get.toNamed(ProjectDetailsView.id,
             arguments: _model.forkedProject);
       } else if (_model.isError(_model.FORK_PROJECT)) {
-        SnackBarUtils.showDark(
-          'Error',
-          _model.errorMessageFor(_model.FORK_PROJECT),
-        );
+        SnackBarUtils.showDark(_model.errorMessageFor(_model.FORK_PROJECT));
       }
     }
   }
@@ -274,14 +271,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
     if (_model.isSuccess(_model.TOGGLE_STAR)) {
       SnackBarUtils.showDark(
-        'Project ${_model.isProjectStarred ? 'Starred' : 'Unstarred'}',
-        'You have successfully ${_model.isProjectStarred ? 'stared' : 'unstarred'} the project',
-      );
+          'Project ${_model.isProjectStarred ? 'Starred' : 'Unstarred'}');
     } else if (_model.isError(_model.TOGGLE_STAR)) {
-      SnackBarUtils.showDark(
-        'Error',
-        _model.errorMessageFor(_model.TOGGLE_STAR),
-      );
+      SnackBarUtils.showDark(_model.errorMessageFor(_model.TOGGLE_STAR));
     }
   }
 
@@ -315,15 +307,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
       if (_model.isSuccess(_model.ADD_COLLABORATORS) &&
           _model.addedCollaboratorsSuccessMessage.isNotEmpty) {
-        SnackBarUtils.showDark(
-          'Collaborators Added',
-          _model.addedCollaboratorsSuccessMessage,
-        );
+        SnackBarUtils.showDark(_model.addedCollaboratorsSuccessMessage);
       } else if (_model.isError(_model.ADD_COLLABORATORS)) {
         SnackBarUtils.showDark(
-          'Error',
-          _model.errorMessageFor(_model.ADD_COLLABORATORS),
-        );
+            _model.errorMessageFor(_model.ADD_COLLABORATORS));
       }
     }
   }
@@ -446,15 +433,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
       if (_model.isSuccess(_model.DELETE_PROJECT)) {
         Get.back(result: true);
-        SnackBarUtils.showDark(
-          'Project Deleted',
-          'Project is successfully deleted.',
-        );
+        SnackBarUtils.showDark('Project Deleted');
       } else if (_model.isError(_model.DELETE_PROJECT)) {
-        SnackBarUtils.showDark(
-          'Error',
-          _model.errorMessageFor(_model.DELETE_PROJECT),
-        );
+        SnackBarUtils.showDark(_model.errorMessageFor(_model.DELETE_PROJECT));
       }
     }
   }
@@ -495,15 +476,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.DELETE_COLLABORATORS)) {
-        SnackBarUtils.showDark(
-          'Collaborator Deleted',
-          'Collaborator was successfully deleted.',
-        );
+        SnackBarUtils.showDark('Collaborator Deleted');
       } else if (_model.isError(_model.DELETE_COLLABORATORS)) {
         SnackBarUtils.showDark(
-          'Error',
-          _model.errorMessageFor(_model.DELETE_COLLABORATORS),
-        );
+            _model.errorMessageFor(_model.DELETE_COLLABORATORS));
       }
     }
   }

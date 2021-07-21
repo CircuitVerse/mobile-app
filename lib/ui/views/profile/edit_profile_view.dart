@@ -111,15 +111,9 @@ class _EditProfileViewState extends State<EditProfileView> {
       if (_model.isSuccess(_model.UPDATE_PROFILE)) {
         await Future.delayed(Duration(seconds: 1));
         Get.back(result: _model.updatedUser);
-        SnackBarUtils.showDark(
-          'Profile Updated',
-          'Your profile was successfully updated.',
-        );
+        SnackBarUtils.showDark('Profile Updated');
       } else if (_model.isError(_model.UPDATE_PROFILE)) {
-        SnackBarUtils.showDark(
-          'Error',
-          _model.errorMessageFor(_model.UPDATE_PROFILE),
-        );
+        SnackBarUtils.showDark(_model.errorMessageFor(_model.UPDATE_PROFILE));
       }
     }
   }

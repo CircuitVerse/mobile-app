@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - ib
   pull_request:
 
 jobs:
@@ -27,9 +26,6 @@ jobs:
 
       # Get flutter dependencies.
       - run: flutter pub get
-
-      # Run build runner to generate dart files
-      - run: flutter packages pub run --no-sound-null-safety build_runner build --delete-conflicting-outputs
 
       # Check for any formatting issues in the code.
       - run: flutter format --set-exit-if-changed .
