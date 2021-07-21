@@ -7,6 +7,8 @@ import 'package:mobile_app/ui/views/projects/components/featured_project_card.da
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart';
 
+import '../../components/cv_shimmer.dart';
+
 class FeaturedProjectsView extends StatefulWidget {
   static const String id = 'featured_projects_view';
   final bool showAppBar;
@@ -41,6 +43,21 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
               ),
             );
           });
+        } else if (model.isBusy(model.FETCH_FEATURED_PROJECTS)) {
+          var _shimmerWidget = Padding(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * .9,
+              height: 200.0,
+              child: CVShimmer.fromColors(
+                  baseColor: Colors.grey,
+                  highlightColor: Colors.white,
+                  child: Card()),
+            ),
+          );
+          _items.add(_shimmerWidget);
+          _items.add(_shimmerWidget);
+          _items.add(_shimmerWidget);
         }
 
         if (!widget.embed &&
