@@ -43,6 +43,27 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
           });
         }
 
+        if (model.isError(model.FETCH_FEATURED_PROJECTS)) {
+          return Scaffold(
+            appBar: widget.showAppBar
+                ? AppBar(title: Text('Featured Circuits'))
+                : null,
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  CVHeader(
+                    title: 'Editors Picks',
+                    description:
+                        'These circuits have been hand-picked by our authors for their awesomeness.',
+                  ),
+                  Text('Looks like you\'re offline'),
+                ],
+              ),
+            ),
+          );
+        }
+
         if (!widget.embed &&
             model?.previousFeaturedProjectsBatch?.links?.next != null) {
           _items.add(
