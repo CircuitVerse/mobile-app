@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locale/locales.dart';
 import 'package:mobile_app/locator.dart';
-import 'package:mobile_app/services/database_service.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'ui/views/startup_view.dart';
@@ -16,9 +15,6 @@ Future<void> main() async {
 
   // Register all the models and services before the app starts
   await setupLocator();
-
-  // Init Hive
-  await locator<DatabaseService>().init();
 
   runApp(CircuitVerseMobile());
 }

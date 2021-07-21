@@ -5,14 +5,11 @@ import 'package:mobile_app/services/API/fcm_api.dart';
 import 'package:mobile_app/services/API/grades_api.dart';
 import 'package:mobile_app/services/API/group_members_api.dart';
 import 'package:mobile_app/services/API/groups_api.dart';
-import 'package:mobile_app/services/API/ib_api.dart';
 import 'package:mobile_app/services/API/projects_api.dart';
 import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/services/API/country_institute_api.dart';
-import 'package:mobile_app/services/database_service.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/API/contributors_api.dart';
-import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/viewmodels/authentication/auth_options_viewmodel.dart';
 import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.dart';
@@ -27,8 +24,6 @@ import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
 import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
-import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
-import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
@@ -42,15 +37,9 @@ import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
 GetIt locator = GetIt.instance;
 
 Future<void> setupLocator() async {
-  // Dialog Service
   locator.registerLazySingleton(() => DialogService());
-
-  // Local Storage Service
   var localStorageService = await LocalStorageService.getInstance();
   locator.registerSingleton<LocalStorageService>(localStorageService);
-
-  // Database Service
-  locator.registerLazySingleton<DatabaseService>(() => DatabaseServiceImpl());
 
   // API Services
   locator.registerLazySingleton<ContributorsApi>(() => HttpContributorsApi());
@@ -64,10 +53,6 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<FCMApi>(() => HttpFCMApi());
   locator.registerLazySingleton<CountryInstituteAPI>(
       () => HttpCountryInstituteAPI());
-  locator.registerLazySingleton<IbApi>(() => HttpIbApi());
-
-  // Interactive Book Engine Service
-  locator.registerLazySingleton<IbEngineService>(() => IbEngineServiceImpl());
 
   // Startup ViewModel
   locator.registerFactory(() => StartUpViewModel());
@@ -104,8 +89,4 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AddAssignmentViewModel());
   locator.registerFactory(() => UpdateAssignmentViewModel());
   locator.registerFactory(() => AssignmentDetailsViewModel());
-
-  // Interactive Book ViewModels
-  locator.registerFactory(() => IbLandingViewModel());
-  locator.registerFactory(() => IbPageViewModel());
 }
