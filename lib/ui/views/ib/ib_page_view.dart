@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:mobile_app/config/environment_config.dart';
@@ -94,11 +95,39 @@ class _IbPageViewState extends State<IbPageView> {
     launchURL(href);
   }
 
+  Widget _buildMarkdownImage(Uri uri, String title, String alt) {
+    var widgets = <Widget>[];
+
+    // SVG Support
+    if (uri.toString().endsWith('.svg')) {
+      var url = uri.toString();
+
+      if (uri.toString().startsWith('/assets')) {
+        url = EnvironmentConfig.IB_BASE_URL + url;
+      }
+
+      widgets.add(SvgPicture.network(url));
+    } else {
+      // Fallback to default Image Builder
+      return null;
+    }
+
+    // Alternate text for SVGs
+    if (alt != null) {
+      widgets.add(Text(alt));
+    }
+
+    return Column(
+      children: widgets,
+    );
+  }
+
   Widget _buildMarkdown(IbMd data) {
     return MarkdownBody(
       data: data.content,
       selectable: true,
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
+      imageBuilder: _buildMarkdownImage,
       onTapLink: _onTapLink,
       blockBuilders: {
         'chapter_contents': IbChapterContentsBuilder(
