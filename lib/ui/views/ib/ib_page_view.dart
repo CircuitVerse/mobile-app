@@ -11,6 +11,7 @@ import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_chapter_contents_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_interaction_builder.dart';
+import 'package:mobile_app/ui/views/ib/builders/ib_pop_quiz_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_webview_builder.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_embed_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_filter_syntax.dart';
@@ -137,6 +138,7 @@ class _IbPageViewState extends State<IbPageView> {
                 : Container()),
         'iframe': IbWebViewBuilder(context: context),
         'interaction': IbInteractionBuilder(model: _model),
+        'quiz': IbPopQuizBuilder(context: context, model: _model),
       },
       extensionSet: md.ExtensionSet(
         [

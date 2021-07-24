@@ -9,6 +9,7 @@ import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
+import 'package:mobile_app/models/ib/ib_pop_quiz_question.dart';
 import 'package:mobile_app/models/ib/ib_raw_page_data.dart';
 import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/utils/api_utils.dart';
@@ -249,6 +250,78 @@ void main() {
         var _actualResult = await _ibEngine.getHtmlInteraction('binary.html');
 
         expect(_expectedResult, _actualResult);
+      });
+    });
+
+    group('getPopQuiz -', () {
+      test('When a quiz is called and returns success response', () async {
+        var _mockPopContent = '''
+1. An ALU having `n` selection lines can provide upto _____ operations.
+  * 2n
+  * n / 2
+  1. 2^n
+2. Input data can flow in parallel to multiple units inside the ALU.
+  1. True
+  * False
+3. The data is stored in which of the following before ALU accesses it for operation ?
+  * ROM memory
+  1. Internal registers
+  * RAM memory
+''';
+
+        var _actualResult = <IbPopQuizQuestion>[
+          IbPopQuizQuestion(
+            question:
+                'An ALU having `n` selection lines can provide upto _____ operations.',
+            answers: [2],
+            choices: ['2n', 'n / 2', '2^n'],
+          ),
+          IbPopQuizQuestion(
+            question:
+                'Input data can flow in parallel to multiple units inside the ALU.',
+            answers: [0],
+            choices: ['True', 'False'],
+          ),
+          IbPopQuizQuestion(
+            question:
+                'The data is stored in which of the following before ALU accesses it for operation ?',
+            answers: [1],
+            choices: ['ROM memory', 'Internal registers', 'RAM memory'],
+          ),
+        ];
+
+        var _ibEngine = IbEngineServiceImpl();
+        var _expectedResult = _ibEngine.getPopQuiz(_mockPopContent);
+
+        expect(_expectedResult.length, _actualResult.length);
+        expect(_expectedResult[0].question, _actualResult[0].question);
+        expect(
+            _expectedResult[0].answers.length, _actualResult[0].answers.length);
+        expect(_expectedResult[0].answers[0], _actualResult[0].answers[0]);
+        expect(
+            _expectedResult[0].choices.length, _actualResult[0].choices.length);
+        expect(_expectedResult[0].choices[0], _expectedResult[0].choices[0]);
+        expect(_expectedResult[0].choices[1], _expectedResult[0].choices[1]);
+        expect(_expectedResult[0].choices[2], _expectedResult[0].choices[2]);
+
+        expect(_expectedResult[1].question, _actualResult[1].question);
+        expect(
+            _expectedResult[1].answers.length, _actualResult[1].answers.length);
+        expect(_expectedResult[1].answers[0], _actualResult[1].answers[0]);
+        expect(
+            _expectedResult[1].choices.length, _actualResult[1].choices.length);
+        expect(_expectedResult[1].choices[0], _expectedResult[1].choices[0]);
+        expect(_expectedResult[1].choices[1], _expectedResult[1].choices[1]);
+
+        expect(_expectedResult[2].question, _actualResult[2].question);
+        expect(
+            _expectedResult[2].answers.length, _actualResult[2].answers.length);
+        expect(_expectedResult[2].answers[0], _actualResult[2].answers[0]);
+        expect(
+            _expectedResult[2].choices.length, _actualResult[2].choices.length);
+        expect(_expectedResult[2].choices[0], _expectedResult[2].choices[0]);
+        expect(_expectedResult[2].choices[1], _expectedResult[2].choices[1]);
+        expect(_expectedResult[2].choices[2], _expectedResult[2].choices[2]);
       });
     });
   });

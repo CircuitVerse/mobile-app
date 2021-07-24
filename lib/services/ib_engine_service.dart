@@ -6,6 +6,7 @@ import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
+import 'package:mobile_app/models/ib/ib_pop_quiz_question.dart';
 import 'package:mobile_app/models/ib/ib_raw_page_data.dart';
 import 'package:mobile_app/services/API/ib_api.dart';
 import 'package:html_unescape/html_unescape.dart';
@@ -16,6 +17,7 @@ abstract class IbEngineService {
   Future<List<IbChapter>> getChapters();
   Future<IbPageData> getPageData({String id = 'index.md'});
   Future<String> getHtmlInteraction(String id);
+  List<IbPopQuizQuestion> getPopQuiz(String rawPopQuizContent);
 }
 
 class IbEngineServiceImpl implements IbEngineService {
@@ -273,5 +275,40 @@ class IbEngineServiceImpl implements IbEngineService {
         '${EnvironmentConfig.IB_BASE_URL}/assets');
 
     return result;
+  }
+
+  @override
+  List<IbPopQuizQuestion> getPopQuiz(String popQuizContent) {
+    var _pattern = RegExp(r'(\d\.|\*)\s(.+)');
+    var _questions = <IbPopQuizQuestion>[];
+
+    for (var line in popQuizContent.split('\n')) {
+      var match = _pattern.firstMatch(line);
+
+      if (match == null) {
+        continue;
+      }
+
+      if (!line.startsWith(_pattern)) {
+        // Answer Choices
+        var _lastQuestion = _questions.last;
+
+        // If is correct answer
+        if (match[1] != '*') {
+          _lastQuestion.answers.add(_lastQuestion.choices.length);
+        }
+
+        _lastQuestion.choices.add(match[2]);
+      } else {
+        // Question
+        _questions.add(IbPopQuizQuestion(
+          question: match[2],
+          answers: [],
+          choices: [],
+        ));
+      }
+    }
+
+    return _questions;
   }
 }
