@@ -136,7 +136,7 @@ class _IbPageViewState extends State<IbPageView> {
                     false
                 ? _buildTOC(_model.pageData.chapterOfContents, padding: false)
                 : Container()),
-        'iframe': IbWebViewBuilder(context: context),
+        'iframe': IbWebViewBuilder(),
         'interaction': IbInteractionBuilder(model: _model),
         'quiz': IbPopQuizBuilder(context: context, model: _model),
       },

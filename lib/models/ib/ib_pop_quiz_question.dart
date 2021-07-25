@@ -5,8 +5,9 @@ class IbPopQuizQuestion {
   List<int> answers;
   List<String> choices;
 
-  IbPopQuizQuestion(
-      {@required this.question,
-      @required this.answers,
-      @required this.choices});
+  IbPopQuizQuestion({
+    @required this.question,
+    @required this.answers,
+    @required this.choices,
+  });
 }

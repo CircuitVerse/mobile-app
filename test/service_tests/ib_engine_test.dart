@@ -91,7 +91,7 @@ void main() {
           id: mockIbRawPageData1['name'],
           pageUrl: mockIbRawPageData1['http_url'],
           title: mockIbRawPageData1['title'],
-          content: [IbMd(content: mockIbRawPageData1['raw_content'])],
+          content: [IbMd(content: mockIbRawPageData1['raw_content'] + '\n')],
           tableOfContents: [],
         );
 
