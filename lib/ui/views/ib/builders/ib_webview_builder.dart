@@ -6,9 +6,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:markdown/markdown.dart' as md;
 
 class IbWebViewBuilder extends MarkdownElementBuilder {
-  final BuildContext context;
-
-  IbWebViewBuilder({this.context});
+  IbWebViewBuilder();
 
   @override
   Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {
