@@ -24,14 +24,16 @@ class IbMdTagSyntax extends md.BlockSyntax {
 
     // (TODO) Fix Pop Quizes
     if (_tagsStack.contains('.quiz')) {
-      // Ignore parsing quiz content
+      var quizContent = '';
+
+      // Eat all quiz content
       do {
+        quizContent += '\n${parser.current}';
         parser.advance();
-      } while (!parser.isDone);
+      } while (parser.next != null || !parser.isDone);
 
       _tagsStack.remove('.quiz');
-
-      return null;
+      return md.Element.text('quiz', quizContent);
     }
 
     parser.advance();

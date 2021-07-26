@@ -8,10 +8,9 @@ import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class IbInteractionBuilder extends MarkdownElementBuilder {
-  final BuildContext context;
   final IbPageViewModel model;
 
-  IbInteractionBuilder({this.context, this.model});
+  IbInteractionBuilder({this.model});
 
   @override
   Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {
@@ -32,27 +31,28 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
         WebViewController _webViewController;
 
         return StreamBuilder<double>(
-            initialData: 100,
-            stream: _streamController.stream,
-            builder: (context, snapshot) {
-              return Container(
-                height: snapshot.data,
-                child: WebView(
-                  initialUrl:
-                      'data:text/html;base64,${base64Encode(const Utf8Encoder().convert(_textContent))}',
-                  onPageFinished: (some) async {
-                    var height = double.parse(
-                        await _webViewController.evaluateJavascript(
-                            'document.documentElement.scrollHeight;'));
-                    _streamController.add(height);
-                  },
-                  onWebViewCreated: (_controller) {
-                    _webViewController = _controller;
-                  },
-                  javascriptMode: JavascriptMode.unrestricted,
-                ),
-              );
-            });
+          initialData: 100,
+          stream: _streamController.stream,
+          builder: (context, snapshot) {
+            return Container(
+              height: snapshot.data,
+              child: WebView(
+                initialUrl:
+                    'data:text/html;base64,${base64Encode(const Utf8Encoder().convert(_textContent))}',
+                onPageFinished: (some) async {
+                  var height = double.parse(
+                      await _webViewController.evaluateJavascript(
+                          'document.documentElement.scrollHeight;'));
+                  _streamController.add(height);
+                },
+                onWebViewCreated: (_controller) {
+                  _webViewController = _controller;
+                },
+                javascriptMode: JavascriptMode.unrestricted,
+              ),
+            );
+          },
+        );
       },
     );
   }

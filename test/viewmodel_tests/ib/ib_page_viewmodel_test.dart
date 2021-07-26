@@ -86,5 +86,35 @@ void main() {
             _model.stateFor(_model.IB_FETCH_INTERACTION_DATA), ViewState.Error);
       });
     });
+
+    group('fetchPopQuiz -', () {
+      test('When called & service returns success response', () async {
+        var _mockIbEngineApi = getAndRegisterIbEngineServiceMock();
+        when(_mockIbEngineApi.getPopQuiz('')).thenReturn([]);
+
+        var _model = IbPageViewModel();
+        var _result = _model.fetchPopQuiz('');
+
+        // verify call to IbEngineService was made
+        verify(_mockIbEngineApi.getPopQuiz(''));
+        expect(_model.stateFor(_model.IB_FETCH_POP_QUIZ), ViewState.Success);
+
+        // verify returned data
+        expect(_result, []);
+      });
+
+      test('When called & service returns error', () async {
+        var _mockIbEngineApi = getAndRegisterIbEngineServiceMock();
+        when(_mockIbEngineApi.getPopQuiz(''))
+            .thenThrow(Failure('Some Error Occurred!'));
+
+        var _model = IbPageViewModel();
+        _model.fetchPopQuiz('');
+
+        // verify call to IbEngineService was made
+        verify(_mockIbEngineApi.getPopQuiz(''));
+        expect(_model.stateFor(_model.IB_FETCH_POP_QUIZ), ViewState.Error);
+      });
+    });
   });
 }
