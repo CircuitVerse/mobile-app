@@ -12,9 +12,12 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_chapter_contents_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_interaction_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_pop_quiz_builder.dart';
+import 'package:mobile_app/ui/views/ib/builders/ib_subscript_builder.dart';
+import 'package:mobile_app/ui/views/ib/builders/ib_superscript_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_webview_builder.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_embed_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_filter_syntax.dart';
+import 'package:mobile_app/ui/views/ib/syntaxes/ib_inline_html_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_liquid_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_md_tag_syntax.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
@@ -124,6 +127,11 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   Widget _buildMarkdown(IbMd data) {
+    final _inlineBuilders = {
+      'sup': IbSuperscriptBuilder(),
+      'sub': IbSubscriptBuilder(),
+    };
+
     return MarkdownBody(
       data: data.content,
       selectable: true,
@@ -140,15 +148,20 @@ class _IbPageViewState extends State<IbPageView> {
         'interaction': IbInteractionBuilder(model: _model),
         'quiz': IbPopQuizBuilder(context: context, model: _model),
       },
+      builders: _inlineBuilders,
       extensionSet: md.ExtensionSet(
         [
           IbEmbedSyntax(),
           IbFilterSyntax(),
           IbMdTagSyntax(),
           IbLiquidSyntax(),
-          ...md.ExtensionSet.gitHubFlavored.blockSyntaxes
+          ...md.ExtensionSet.gitHubFlavored.blockSyntaxes,
         ],
-        [md.EmojiSyntax(), ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes],
+        [
+          IbInlineHtmlSyntax(builders: _inlineBuilders),
+          md.EmojiSyntax(),
+          ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
+        ],
       ),
       styleSheet: MarkdownStyleSheet(
         h1: Theme.of(context).textTheme.headline4.copyWith(
