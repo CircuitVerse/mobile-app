@@ -88,9 +88,13 @@ void main() {
       expect(find.byType(FloatingActionButton), findsNWidgets(2));
 
       // Finds IbContent Widgets
-      expect(find.text('Interactive-Book'), findsOneWidget);
-      expect(find.text('Learn Digital Logic Design easily.'), findsOneWidget);
-      expect(find.text('Audience'), findsOneWidget);
+      expect(find.byWidgetPredicate((widget) {
+        return widget is RichText &&
+            (widget.text.toPlainText() == 'Interactive-Book' ||
+                widget.text.toPlainText() ==
+                    'Learn Digital Logic Design easily.' ||
+                widget.text.toPlainText() == 'Audience');
+      }), findsNWidgets(3));
       expect(find.byType(Divider), findsNWidgets(1));
     });
   });
