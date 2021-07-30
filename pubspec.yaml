@@ -55,6 +55,7 @@ dependencies:
   html_unescape: ^2.0.0
   hive: ^2.0.4
   hive_flutter: ^1.1.0
+  flutter_math_fork: ^0.3.3+1
 
 dev_dependencies:
   flutter_test:

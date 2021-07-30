@@ -322,7 +322,7 @@ packages:
     source: git
     version: "0.6.2"
   flutter_math_fork:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_math_fork
       url: "https://pub.dartlang.org"
