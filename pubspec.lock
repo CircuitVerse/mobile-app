@@ -272,10 +272,10 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-  flutter_icons:
+  fluttericon:
     dependency: "direct main"
     description:
-      name: flutter_icons
+      name: fluttericon
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:fluttericon/fluttericon.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/cv_landing_view.dart';
