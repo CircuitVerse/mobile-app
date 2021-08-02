@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:markdown/markdown.dart' as md;
+import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -19,10 +20,9 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
     return FutureBuilder<dynamic>(
       future: model.fetchHtmlInteraction(id),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (model.isError(model.IB_FETCH_INTERACTION_DATA)) {
+        if (snapshot.data is Failure) {
           return Text('Error Loading Interaction');
-        } else if (model.isBusy(model.IB_FETCH_INTERACTION_DATA) ||
-            !snapshot.hasData) {
+        } else if (!snapshot.hasData) {
           return Text('Loading Interaction...');
         }
 

@@ -31,22 +31,17 @@ class IbPageViewModel extends BaseModel {
   Future fetchHtmlInteraction(String id) async {
     try {
       var result = await _ibEngineService.getHtmlInteraction(id);
-      setStateFor(IB_FETCH_INTERACTION_DATA, ViewState.Success);
       return result;
     } on Failure catch (f) {
-      setStateFor(IB_FETCH_INTERACTION_DATA, ViewState.Error);
-      setErrorMessageFor(IB_FETCH_INTERACTION_DATA, f.message);
+      return f;
     }
   }
 
   List<IbPopQuizQuestion> fetchPopQuiz(String rawContent) {
     try {
       var result = _ibEngineService.getPopQuiz(rawContent);
-      setStateFor(IB_FETCH_POP_QUIZ, ViewState.Success);
       return result;
-    } on Failure catch (f) {
-      setStateFor(IB_FETCH_POP_QUIZ, ViewState.Error);
-      setErrorMessageFor(IB_FETCH_POP_QUIZ, f.message);
+    } on Failure {
       return [];
     }
   }

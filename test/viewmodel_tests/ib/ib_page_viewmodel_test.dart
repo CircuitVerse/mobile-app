@@ -65,8 +65,6 @@ void main() {
 
         // verify call to IbEngineService was made
         verify(_mockIbEngineApi.getHtmlInteraction(''));
-        expect(_model.stateFor(_model.IB_FETCH_INTERACTION_DATA),
-            ViewState.Success);
 
         // verify returned data
         expect(_result, 'test-data');
@@ -78,12 +76,12 @@ void main() {
             .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = IbPageViewModel();
-        await _model.fetchHtmlInteraction('');
+        var _result = await _model.fetchHtmlInteraction('');
 
         // verify call to IbEngineService was made
         verify(_mockIbEngineApi.getHtmlInteraction(''));
-        expect(
-            _model.stateFor(_model.IB_FETCH_INTERACTION_DATA), ViewState.Error);
+
+        expect(_result is Failure, true);
       });
     });
 
@@ -97,7 +95,6 @@ void main() {
 
         // verify call to IbEngineService was made
         verify(_mockIbEngineApi.getPopQuiz(''));
-        expect(_model.stateFor(_model.IB_FETCH_POP_QUIZ), ViewState.Success);
 
         // verify returned data
         expect(_result, []);
@@ -109,11 +106,13 @@ void main() {
             .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = IbPageViewModel();
-        _model.fetchPopQuiz('');
+        var _result = _model.fetchPopQuiz('');
 
         // verify call to IbEngineService was made
         verify(_mockIbEngineApi.getPopQuiz(''));
-        expect(_model.stateFor(_model.IB_FETCH_POP_QUIZ), ViewState.Error);
+
+        // verify returned data
+        expect(_result, []);
       });
     });
   });
