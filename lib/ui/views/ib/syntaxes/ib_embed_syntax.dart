@@ -12,5 +12,5 @@ class IbEmbedSyntax extends md.BlockSyntax {
   }
 
   @override
-  RegExp get pattern => RegExp(r'^<iframe.+>.+<\/iframe>');
+  RegExp get pattern => RegExp(r'^<iframe[^>]+>((?<!<\/iframe)[^])*<\/iframe>');
 }
