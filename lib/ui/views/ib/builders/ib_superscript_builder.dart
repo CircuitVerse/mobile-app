@@ -4,6 +4,10 @@ import 'package:markdown/markdown.dart' as md;
 import 'package:mobile_app/utils/unicode_map.dart';
 
 class IbSuperscriptBuilder extends MarkdownElementBuilder {
+  final bool selectable;
+
+  IbSuperscriptBuilder({this.selectable = true});
+
   @override
   Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {
     final textContent = element.textContent;
@@ -19,6 +23,12 @@ class IbSuperscriptBuilder extends MarkdownElementBuilder {
       }
     }
 
-    return SelectableText.rich(TextSpan(text: text));
+    var _span = TextSpan(text: text);
+
+    if (selectable) {
+      return SelectableText.rich(_span);
+    }
+
+    return RichText(text: _span);
   }
 }

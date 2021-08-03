@@ -16,6 +16,12 @@ class IbMathjaxBuilder extends MarkdownElementBuilder {
   Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {
     var _content = element.textContent.trim();
 
+    // Remove auto-numbering and custom-numbering tags
+    _content = _content.replaceAll('\\begin{equation}', ' ');
+    _content = _content.replaceAll('\\end{equation}', ' ');
+
+    _content = _content.replaceAll(RegExp(r'\\tag{.+}'), ' ');
+
     return RichText(
       text: TextSpan(
         children: [
