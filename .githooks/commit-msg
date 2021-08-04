@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+green='\e[0;32m'
+red='\033[0;31m'
+nocol='\033[0m'
+
+echo -e "${green}CV: Running Commit lint${nocol}"
+npx --no-install commitlint --edit "$1"
+
+if [ $? -ne 0 ]; then
+    echo -e "${red}CV: Commit lint failed. Please fix the errors and run the command again${nocol}"
+    exit 1
+fi
+
+exit 0
