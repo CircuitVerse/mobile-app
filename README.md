@@ -13,16 +13,29 @@ Follow these instructions to build and run the project
 
 A detailed guide for multiple platforms setup could be find [here](https://flutter.dev/docs/get-started/install/)
 
-### Next Steps
+### Setup Project
 
-- Clone this repository.
+- Clone this repository using `git clone https://github.com/CircuitVerse/mobile-app.git`.
 - `cd` into `mobile_app`.
 - `flutter pub get` to get all the dependencies.
-- `flutter run`
+- Generate files using Builder Runner (**required**) 
+```
+flutter packages pub run --no-sound-null-safety build_runner build
+```
+- Switch to mobile-app's git hooks (**optional but recommended**)
+```
+git config core.hooksPath .githooks/
 
-### Generating Files using Build Runner
+# Make sure npm is installed to run the next command
+npm install -g @commitlint/config-conventional @commitlint/cli
+```
+> Mobile App enforces [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/), make sure to read and follow them.
 
-`flutter packages pub run --no-sound-null-safety build_runner build`
+### Running the app
+
+Make sure you have a connected Android/iOS device/simulator and run the following command to build and run the app in debug mode.
+
+`flutter run`
 
 ### Android OAuth Config
 
