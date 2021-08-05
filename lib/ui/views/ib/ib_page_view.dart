@@ -11,6 +11,7 @@ import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_chapter_contents_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_interaction_builder.dart';
+import 'package:mobile_app/ui/views/ib/builders/ib_mathjax_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_pop_quiz_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_subscript_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_superscript_builder.dart';
@@ -19,6 +20,7 @@ import 'package:mobile_app/ui/views/ib/syntaxes/ib_embed_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_filter_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_inline_html_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_liquid_syntax.dart';
+import 'package:mobile_app/ui/views/ib/syntaxes/ib_mathjax_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_md_tag_syntax.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
@@ -130,11 +132,11 @@ class _IbPageViewState extends State<IbPageView> {
     final _inlineBuilders = {
       'sup': IbSuperscriptBuilder(),
       'sub': IbSubscriptBuilder(),
+      'mathjax': IbMathjaxBuilder(),
     };
 
     return MarkdownBody(
       data: data.content,
-      selectable: true,
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
       imageBuilder: _buildMarkdownImage,
       onTapLink: _onTapLink,
@@ -159,6 +161,7 @@ class _IbPageViewState extends State<IbPageView> {
         ],
         [
           IbInlineHtmlSyntax(builders: _inlineBuilders),
+          IbMathjaxSyntax(),
           md.EmojiSyntax(),
           ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
         ],
