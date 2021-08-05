@@ -14,6 +14,15 @@ import 'package:mobile_app/utils/api_utils.dart';
 
 /// Interactive Book Parser Engine
 abstract class IbEngineService {
+  /// Generates slug from given [text]
+  static String getSlug(String text) {
+    return text
+        .trim()
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^\w\s-]+'), '')
+        .replaceAll(RegExp(r'\s+'), '-');
+  }
+
   Future<List<IbChapter>> getChapters();
   Future<IbPageData> getPageData({String id = 'index.md'});
   Future<String> getHtmlInteraction(String id);
@@ -157,14 +166,16 @@ class IbEngineServiceImpl implements IbEngineService {
       if (li.getElementsByTagName('ol').isNotEmpty) {
         toc.add(
           IbTocItem(
-            content: '$eff_index. ${li.firstChild.text}',
+            leading: '$eff_index.',
+            content: li.firstChild.text,
             items: _parseToc(li.children[1], num: !num),
           ),
         );
       } else {
         toc.add(
           IbTocItem(
-            content: '$eff_index. ${li.text}',
+            leading: '$eff_index.',
+            content: li.text,
           ),
         );
       }
@@ -186,17 +197,21 @@ class IbEngineServiceImpl implements IbEngineService {
 
       for (var node in li.nodes) {
         if (node is Element && node.localName == 'ul') {
-          sublist.addAll(_parseChapterContents(node, num: !num));
+          sublist.addAll(_parseChapterContents(
+            node,
+            num: !num,
+          ));
           break;
         }
       }
 
-      toc.add(IbTocItem(
-        content: root
-            ? '$eff_index. ${li.nodes[0].text.trim()}'
-            : '$eff_index. ${li.text.trim()}',
-        items: sublist.isNotEmpty ? sublist : null,
-      ));
+      toc.add(
+        IbTocItem(
+          leading: '$eff_index.',
+          content: root ? li.nodes[0].text.trim() : li.text.trim(),
+          items: sublist.isNotEmpty ? sublist : null,
+        ),
+      );
 
       index += 1;
     }
