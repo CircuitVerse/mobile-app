@@ -129,14 +129,16 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   Widget _buildMarkdown(IbMd data) {
+    final _selectable = false;
     final _inlineBuilders = {
-      'sup': IbSuperscriptBuilder(),
-      'sub': IbSubscriptBuilder(),
+      'sup': IbSuperscriptBuilder(selectable: _selectable),
+      'sub': IbSubscriptBuilder(selectable: _selectable),
       'mathjax': IbMathjaxBuilder(),
     };
 
     return MarkdownBody(
       data: data.content,
+      selectable: _selectable,
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
       imageBuilder: _buildMarkdownImage,
       onTapLink: _onTapLink,
