@@ -19,6 +19,7 @@ import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:theme_provider/theme_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CVLandingView extends StatefulWidget {
   static const String id = 'cv_landing_view';
@@ -61,7 +62,7 @@ class _CVLandingViewState extends State<CVLandingView> {
         return 'Groups';
         break;
       default:
-        return 'CircuitVerse';
+        return AppLocalizations.of(context).title;
     }
   }
 
