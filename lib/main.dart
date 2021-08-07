@@ -67,11 +67,7 @@ class CircuitVerseMobile extends StatelessWidget {
           child: Builder(
             builder: (themeContext) => GetMaterialApp(
               title: 'CircuitVerse Mobile',
-              localizationsDelegates: [
-                AppLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               onGenerateTitle: (BuildContext context) =>
                   AppLocalizations.of(context).title,
