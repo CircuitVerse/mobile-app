@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
-import 'package:mobile_app/locale/locales.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/database_service.dart';
 import 'package:mobile_app/utils/router.dart';
@@ -67,14 +66,8 @@ class CircuitVerseMobile extends StatelessWidget {
           child: Builder(
             builder: (themeContext) => GetMaterialApp(
               title: 'CircuitVerse Mobile',
-              localizationsDelegates: [
-                AppLocalizationsDelegate(),
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              supportedLocales: [
-                Locale('en', ''),
-              ],
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
               onGenerateTitle: (BuildContext context) =>
                   AppLocalizations.of(context).title,
               debugShowCheckedModeBanner: false,
