@@ -22,6 +22,9 @@
   "about": "About",
   "contribute": "Contribute",
   "teachers": "Teachers",
+  "@teachers": {
+    "@teachers_view": {}
+  },
   "my_groups": "My Groups",
   "login": "Login",
   "@about_view": {
@@ -30,14 +33,14 @@
   "@terms_of_service": {
     "@about_tos_view": {
     },
-    "@about_privacy_policy_view.dart": {  
+    "@about_privacy_policy_view": {
     }
   },
   "privacy_policy": "Privacy Policy",
   "@privacy_policy": {
     "@about_tos_view": {
     },
-  "@about_privacy_policy_view.dart": {  
+  "@about_privacy_policy_view": {
     }
   },
   "loading_contributors": "Loading Contributors ...",
@@ -133,6 +136,18 @@
   "google_analytics": "Google Analytics",
   "privacy_section3_text4_string2": ". The third party analytics companies we work with may combine the information collected with other information they have independently collected from other websites and/or other online products and services. Their collection and use of information is subject to their own privacy policies.\n\n",
   "contact_us": "Contact Us",
-  "contact_us_text": "If you have any questions about our practices or this Privacy Policy, please contact us at "
+  "contact_us_text": "If you have any questions about our practices or this Privacy Policy, please contact us at ",
+  "@teachers_view": {
+  },
+  "teachers_text": "CircuitVerse has been designed to be very easy to use in class. The platform has features to assist teachers in class and assignments.",
+  "teachers_benefits": "Benefits",
+  "teachers_create_group": "Create Groups and add your students",
+  "teachers_create_group_text": "You can create groups and add your students to them! If students are already registered with CircuitVerse they will be added automatically. If they are not registered with CircuitVerse yet, an invitation will be sent to register. Once they register, they will be added automatically.",
+  "teachers_post_assignments": "Post Assignments",
+  "teachers_post_assignment_text": "To create an assignment, simply click an add new assignment button. Give the details of the assignment and the deadline. The assignment will automatically close at deadline. Students cannot continue their assignment unless the teacher reopens the assignment again.",
+  "teachers_grading_assignment": "Grading assignments",
+  "teachers_grading_assignment_text": "Grade assignments very easily with the in build preview. Simply select the student, to his/her assignment work.",
+  "teachers_use_interactive_circuit": "Use Interactive Circuits in your Blogs, Study Materials or PowerPoint presentations",
+  "teachers_use_interactive_circuit_text": "Make sure the project is public. Click on embed, to get the embed HTML5 code, then simply embed the circuit. You may need to use a PowerPoint plugin like Live Slides to embed the live Circuit."
 
 }

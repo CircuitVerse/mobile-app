@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_subheader.dart';
 import 'package:mobile_app/ui/views/teachers/components/teachers_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TeachersView extends StatelessWidget {
   static const String id = 'teachers_view';
@@ -18,35 +19,35 @@ class TeachersView extends StatelessWidget {
         child: Column(
           children: <Widget>[
             CVHeader(
-              title: 'TEACHERS',
+              title: AppLocalizations.of(context).teachers,
               description:
-                  'CircuitVerse has been designed to be very easy to use in class. The platform has features to assist teachers in class and assignments.',
+                  AppLocalizations.of(context).teachers_text,
             ),
-            CVSubheader(title: 'Benefits'),
+            CVSubheader(title: AppLocalizations.of(context).teachers_benefits),
             TeachersCard(
               assetPath: 'assets/images/teachers/groups.png',
-              cardHeading: 'Create Groups and add your students',
+              cardHeading: AppLocalizations.of(context).teachers_create_group,
               cardDescription:
-                  'You can create groups and add your students to them! If students are already registered with CircuitVerse they will be added automatically. If they are not registered with CircuitVerse yet, an invitation will be sent to register. Once they register, they will be added automatically.',
+                  AppLocalizations.of(context).teachers_create_group_text,
             ),
             TeachersCard(
               assetPath: 'assets/images/teachers/assignment.png',
-              cardHeading: 'Post Assignments',
+              cardHeading: AppLocalizations.of(context).teachers_post_assignments,
               cardDescription:
-                  'To create an assignment, simply click an add new assignment button. Give the details of the assignment and the deadline. The assignment will automatically close at deadline. Students cannot continue their assignment unless the teacher reopens the assignment again.',
+                  AppLocalizations.of(context).teachers_post_assignment_text,
             ),
             TeachersCard(
               assetPath: 'assets/images/teachers/grading.png',
-              cardHeading: 'Grading assignments',
+              cardHeading: AppLocalizations.of(context).teachers_grading_assignment,
               cardDescription:
-                  'Grade assignments very easily with the in build preview. Simply select the student, to his/her assignment work.',
+                  AppLocalizations.of(context).teachers_grading_assignment_text,
             ),
             TeachersCard(
               assetPath: 'assets/images/teachers/embed.png',
               cardHeading:
-                  'Use Interactive Circuits in your Blogs, Study Materials or PowerPoint presentations',
+                  AppLocalizations.of(context).teachers_use_interactive_circuit,
               cardDescription:
-                  'Make sure the project is public. Click on embed, to get the embed HTML5 code, then simply embed the circuit. You may need to use a PowerPoint plugin like Live Slides to embed the live Circuit.',
+                  AppLocalizations.of(context).teachers_use_interactive_circuit_text,
             ),
           ],
         ),
