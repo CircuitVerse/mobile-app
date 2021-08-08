@@ -148,6 +148,27 @@
   "teachers_grading_assignment": "Grading assignments",
   "teachers_grading_assignment_text": "Grade assignments very easily with the in build preview. Simply select the student, to his/her assignment work.",
   "teachers_use_interactive_circuit": "Use Interactive Circuits in your Blogs, Study Materials or PowerPoint presentations",
-  "teachers_use_interactive_circuit_text": "Make sure the project is public. Click on embed, to get the embed HTML5 code, then simply embed the circuit. You may need to use a PowerPoint plugin like Live Slides to embed the live Circuit."
+  "teachers_use_interactive_circuit_text": "Make sure the project is public. Click on embed, to get the embed HTML5 code, then simply embed the circuit. You may need to use a PowerPoint plugin like Live Slides to embed the live Circuit.",
+  "@home_view": {
+  },
+  "home_main_heading": "Dive into the world of Logic Circuits for free!",
+  "home_main_description": "From Simple gates to complex sequential circuits, plot timing diagrams, automatic circuit generation, explore standard ICs, and much more",
+  "home_for_teachers": "For Teachers",
+  "home_for_contributors": "For Contributors",
+  "home_features": "Features",
+  "home_features_text": "Design circuits quickly and easily with a modern and intuitive user interface with drag-and-drop, copy/paste, zoom and more.",
+  "home_export_image": "Explore High Resolution Images",
+  "home_export_image_text": "CircuitVerse can export high resolution images in multiple formats including SVG.",
+  "home_combinational_analysis": "Combinational Analysis",
+  "home_combinational_analysis_text": "Automatically generate circuit based on truth table data. This is great to create complex logic circuits and can be easily be made into a subcircuit.",
+  "home_embed": "Embed in Blogs",
+  "home_embed_text": "Since CircuitVerse is built in HTML5, an iFrame can be generated for each project allowing the user to embed it almost anywhere.",
+  "home_sub_circuits": "Use Sub circuits",
+  "home_sub_circuits_text": "Create subcircuits once and use them repeatedly. This allows easier and more structured design.",
+  "home_multi_bit_buses": "Multi Bit Buses and components",
+  "home_multi_bit_buses_text": "CircuitVerse supports multi bit wires, this means circuit design is easier, faster and uncluttered.",
+  "home_editor_picks": "Editor Picks",
+  "home_editor_picks_text": "These circuits have been hand-picked by our authors for their awesomeness",
+  "home_explore_more": "Explore More"
 
 }

@@ -8,6 +8,7 @@ import 'package:mobile_app/ui/views/home/components/feature_card.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeView extends StatefulWidget {
   static const String id = 'home_view';
@@ -23,14 +24,14 @@ class _HomeViewState extends State<HomeView> {
       return Column(
         children: <Widget>[
           Text(
-            'Dive into the world of Logic Circuits for free!',
+            AppLocalizations.of(context).home_main_heading,
             style: Theme.of(context).textTheme.headline4.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
             textAlign: TextAlign.center,
           ),
           Text(
-            'From Simple gates to complex sequential circuits, plot timing diagrams, automatic circuit generation, explore standard ICs, and much more',
+            AppLocalizations.of(context).home_main_description,
             style: Theme.of(context).textTheme.subtitle1,
             textAlign: TextAlign.center,
           ),
@@ -52,14 +53,14 @@ class _HomeViewState extends State<HomeView> {
           alignment: WrapAlignment.center,
           children: <Widget>[
             CVOutlineButton(
-              title: 'For Teachers',
+              title: AppLocalizations.of(context).home_for_teachers,
               isPrimaryDark: true,
               onPressed: () => Get.toNamed(TeachersView.id),
               isBodyText: true,
             ),
             SizedBox(width: 16),
             CVOutlineButton(
-              title: 'For Contributors',
+              title: AppLocalizations.of(context).home_for_contributors,
               isPrimaryDark: true,
               onPressed: () => Get.toNamed(ContributorsView.id),
               isBodyText: true,
@@ -78,49 +79,49 @@ class _HomeViewState extends State<HomeView> {
             _buildHomePageSketch(),
             _buildTeachersAndContributorButtons(),
             CVSubheader(
-              title: 'Features',
+              title: AppLocalizations.of(context).home_features,
               subtitle:
-                  'Design circuits quickly and easily with a modern and intuitive user interface with drag-and-drop, copy/paste, zoom and more.',
+                  AppLocalizations.of(context).home_features_text,
             ),
             FeatureCard(
               assetPath: 'assets/images/homepage/export-hd.png',
-              cardHeading: 'Explore High Resolution Images',
+              cardHeading: AppLocalizations.of(context).home_export_image,
               cardDescription:
-                  'CircuitVerse can export high resolution images in multiple formats including SVG.',
+                  AppLocalizations.of(context).home_export_image_text,
             ),
             FeatureCard(
               assetPath: 'assets/images/homepage/combinational-analysis.png',
-              cardHeading: 'Combinational Analysis',
+              cardHeading: AppLocalizations.of(context).home_combinational_analysis,
               cardDescription:
-                  'Automatically generate circuit based on truth table data. This is great to create complex logic circuits and can be easily be made into a subcircuit.',
+                  AppLocalizations.of(context).home_combinational_analysis_text,
             ),
             FeatureCard(
               assetPath: 'assets/images/homepage/embed.png',
-              cardHeading: 'Embed in Blogs',
+              cardHeading: AppLocalizations.of(context).home_embed,
               cardDescription:
-                  'Since CircuitVerse is built in HTML5, an iFrame can be generated for each project allowing the user to embed it almost anywhere.',
+                  AppLocalizations.of(context).home_embed_text,
             ),
             FeatureCard(
               assetPath: 'assets/images/homepage/sub-circuit.png',
-              cardHeading: 'Use Sub circuits',
+              cardHeading: AppLocalizations.of(context).home_sub_circuits,
               cardDescription:
-                  'Create subcircuits once and use them repeatedly. This allows easier and more structured design.',
+                  AppLocalizations.of(context).home_sub_circuits_text,
             ),
             FeatureCard(
               assetPath: 'assets/images/homepage/multi-bit-bus.png',
-              cardHeading: 'Multi Bit Buses and components',
+              cardHeading: AppLocalizations.of(context).home_multi_bit_buses,
               cardDescription:
-                  'CircuitVerse supports multi bit wires, this means circuit design is easier, faster and uncluttered.',
+                  AppLocalizations.of(context).home_multi_bit_buses_text,
             ),
             SizedBox(height: 16),
             CVSubheader(
-              title: 'Editor Picks',
+              title: AppLocalizations.of(context).home_editor_picks,
               subtitle:
-                  'These circuits have been hand-picked by our authors for their awesomeness',
+                  AppLocalizations.of(context).home_editor_picks_text,
             ),
             FeaturedProjectsView(embed: true),
             CVOutlineButton(
-              title: 'Explore More',
+              title: AppLocalizations.of(context).home_explore_more,
               isPrimaryDark: true,
               onPressed: () => Get.toNamed(FeaturedProjectsView.id),
             ),
