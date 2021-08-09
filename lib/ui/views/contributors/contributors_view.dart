@@ -4,6 +4,7 @@ import 'package:mobile_app/ui/components/cv_social_card.dart';
 import 'package:mobile_app/ui/components/cv_subheader.dart';
 import 'package:mobile_app/ui/views/contributors/components/contributors_donate_card.dart';
 import 'package:mobile_app/ui/views/contributors/components/contributors_support_card.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ContributorsView extends StatelessWidget {
   static const String id = 'contributors_view';
@@ -20,67 +21,67 @@ class ContributorsView extends StatelessWidget {
         child: Column(
           children: <Widget>[
             CVHeader(
-              title: 'CONTRIBUTE',
+              title: AppLocalizations.of(context).contribute,
               description:
-                  "CircuitVerse aims to be free forever and we promise that we won't run any ads! The project is open source and to ensure its continued development and maintenance we need your support.",
+                  AppLocalizations.of(context).contributors_main_description,
             ),
             CircuitVerseSocialCard(
               imagePath: 'assets/images/contribute/email.png',
-              title: 'Email us at',
+              title: AppLocalizations.of(context).email_us_at,
               description: 'support@circuitverse.org',
               url: 'mailto:support@circuitverse.org',
             ),
             CircuitVerseSocialCard(
               imagePath: 'assets/images/contribute/slack.png',
-              title: 'Join and chat with us at',
-              description: 'Slack channel',
+              title: AppLocalizations.of(context).join_slack,
+              description: AppLocalizations.of(context).slack_channel,
               url: 'https://circuitverse.org/slack',
             ),
             CircuitVerseSocialCard(
               imagePath: 'assets/images/contribute/github.png',
-              title: 'Contribute to open source',
-              description: 'Github',
+              title: AppLocalizations.of(context).contributors_contribute_to_open_source,
+              description: AppLocalizations.of(context).contributors_github,
               url: 'https://github.com/CircuitVerse',
             ),
             SizedBox(height: 32),
-            CVSubheader(title: 'How to Support ?'),
+            CVSubheader(title: AppLocalizations.of(context).contributors_how_to_support),
             ContributeSupportCard(
               imagePath: 'assets/images/contribute/person.png',
-              title: 'I am a Student',
+              title: AppLocalizations.of(context).contributors_student_card_title,
               cardDescriptionList: [
-                'Create amazing circuits and share on the platform',
-                'Find and report bugs. Become a bug hunter',
-                'Introduce the platform to your buddie'
+                AppLocalizations.of(context).contributors_student_card_text1,
+                AppLocalizations.of(context).contributors_student_card_text2,
+                AppLocalizations.of(context).contributors_student_card_text3
               ],
             ),
             ContributeSupportCard(
               imagePath: 'assets/images/contribute/professor.png',
-              title: 'I am a Teacher',
+              title: AppLocalizations.of(context).contributors_teacher_card_title,
               cardDescriptionList: [
-                'Introduce the platform to your students',
-                'Promote the platform within your circles',
-                'Create exciting educational content using CircuitVerse'
+                AppLocalizations.of(context).contributors_teacher_card_text1,
+                AppLocalizations.of(context).contributors_teacher_card_text2,
+                AppLocalizations.of(context).contributors_teacher_card_text3
               ],
             ),
             ContributeSupportCard(
               imagePath: 'assets/images/contribute/person.png',
-              title: 'I am a Developer',
+              title: AppLocalizations.of(context).contributors_developer_card_title,
               cardDescriptionList: [
-                'Contribute to the OpenSource projects',
-                'Add and propose new features to the projects',
-                'Find and fix bugs in the CircuitVerse projects'
+                AppLocalizations.of(context).contributors_developer_card_text1,
+                AppLocalizations.of(context).contributors_developer_card_text2,
+                AppLocalizations.of(context).contributors_developer_card_text3
               ],
             ),
             SizedBox(height: 16),
             ContributeDonateCard(
               imagePath: 'assets/images/contribute/patreon-logo.png',
-              title: 'Become a Patreon',
+              title: AppLocalizations.of(context).contributors_become_patreon,
               url: 'https://www.patreon.com/CircuitVerse',
             ),
             SizedBox(height: 16),
             ContributeDonateCard(
               imagePath: 'assets/images/contribute/paypal-logo.jpg',
-              title: 'Donate through PayPal',
+              title: AppLocalizations.of(context).contributors_donate_via_paypal,
               url: 'https://www.paypal.me/satviksr',
             )
           ],

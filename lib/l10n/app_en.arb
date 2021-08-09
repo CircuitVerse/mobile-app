@@ -21,6 +21,9 @@
   "interactive_book": "Interactive Book",
   "about": "About",
   "contribute": "Contribute",
+  "@contribute": {
+    "@contributors_view": {}
+  },
   "teachers": "Teachers",
   "@teachers": {
     "@teachers_view": {}
@@ -48,8 +51,17 @@
   "about_subtitle": "Learn about the Awesome people behind CircuitVerse",
   "about_description": "CircuitVerse is a product developed by students at IIIT-Bangalore. It aims to provide a platform where circuits can be designed and simulated using a graphical user interface. While users can design complete CPU implementations within the simulator, the software is designed primarily for educational use. CircuitVerse is an opensource project with an active community. Checkout the contribute page for more detail.",
   "email_us_at": "Email us at",
+  "@email_us_at": {
+    "@contributors_view": {}
+  },
   "join_slack": "Join and chat with us at",
+  "@join_slack": {
+    "@contributors_view": {}
+  },
   "slack_channel": "Slack channel",
+  "@slack_channel": {
+    "@contributors_view": {}
+  },
   "contributors": "Contributors",
   "contributors_subtitle": "Meet the awesome people of CircuitVerse community that've made this platform what it is now.",
   "@about_tos_view": {
@@ -169,6 +181,26 @@
   "home_multi_bit_buses_text": "CircuitVerse supports multi bit wires, this means circuit design is easier, faster and uncluttered.",
   "home_editor_picks": "Editor Picks",
   "home_editor_picks_text": "These circuits have been hand-picked by our authors for their awesomeness",
-  "home_explore_more": "Explore More"
+  "home_explore_more": "Explore More",
+  "@contributors_view": {
+  },
+  "contributors_main_description": "CircuitVerse aims to be free forever and we promise that we won't run any ads! The project is open source and to ensure its continued development and maintenance we need your support.",
+  "contributors_contribute_to_open_source": "Contribute to open source",
+  "contributors_github": "Github",
+  "contributors_how_to_support": "How to Support ?",
+  "contributors_student_card_title": "I am a Student",
+  "contributors_student_card_text1": "Create amazing circuits and share on the platform",
+  "contributors_student_card_text2": "Find and report bugs. Become a bug hunter",
+  "contributors_student_card_text3": "Introduce the platform to your buddie",
+  "contributors_teacher_card_title": "I am a Teacher",
+  "contributors_teacher_card_text1": "Introduce the platform to your students",
+  "contributors_teacher_card_text2": "Promote the platform within your circles",
+  "contributors_teacher_card_text3": "Create exciting educational content using CircuitVerse",
+  "contributors_developer_card_title": "I am a Developer",
+  "contributors_developer_card_text1": "Contribute to the OpenSource projects",
+  "contributors_developer_card_text2": "Add and propose new features to the projects",
+  "contributors_developer_card_text3": "Find and fix bugs in the CircuitVerse projects",
+  "contributors_become_patreon": "Become a Patreon",
+  "contributors_donate_via_paypal": "Donate through PayPal"
 
 }

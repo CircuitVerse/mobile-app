@@ -21,6 +21,9 @@
   "interactive_book": "इंटरएक्टिव बुक",
   "about": "सर्किटवर्स के बारे में",
   "contribute": "योगदान करे",
+  "@contribute": {
+    "@contribute_view": {}
+  },
   "teachers": "सर्किटवर्स के शिक्षक",
   "@teachers": {
     "@teachers_view": {}
@@ -48,8 +51,17 @@
   "about_subtitle": "सर्किटवर्स के पीछे योगदानकर्ताओं के बारे में जानें",
   "about_description": "सर्किटवर्स आईआईआईटी-बैंगलोर के छात्रों द्वारा विकसित एक प्रोडक्ट है। इसका उद्देश्य एक ऐसा मंच प्रदान करना है जहां ग्राफिकल यूजर इंटरफेस का उपयोग करके सर्किट की रचना और उसका सिमुलेशन किया जा सकता है। जबकि उपयोगकर्ता सिम्युलेटर के द्वारा पूर्ण सीपीयू कार्यान्वयन की रचना कर सकते हैं, सॉफ्टवेयर की रचना प्राथमिक रूप से शैक्षिक उपयोग के लिए की गयी है। सर्किटवर्स एक सक्रिय समुदाय के साथ एक ओपन-सोर्स परियोजना है। अधिक जानकारी के लिए योगदान पृष्ठ देखिये।",
   "email_us_at": "हमें ईमेल करें",
+  "@email_us_at": {
+    "@contributors_view": {}
+  },
   "join_slack": "हमारे साथ जुड़ें और चैट करें",
+  "@join_slack": {
+    "@contributors_view": {}
+  },
   "slack_channel": "स्लैक चैनल",
+  "@slack_channel": {
+    "@contributors_view": {}
+  },
   "contributors": "योगदानकर्ता",
   "contributors_subtitle": "सर्किटवर्स समुदाय के योगदानकर्ताओं से मिलें जिन्होंने इस मंच को बेहतर बनाया है।",
   "@about_tos_view": {
@@ -169,7 +181,28 @@
   "home_multi_bit_buses_text": "सर्किटवर्स मल्टी बिट-वायर का समर्थन करता है, इसका मतलब है कि सर्किट की रचना करना आसान, तेज और व्यवस्थित है।",
   "home_editor_picks": "संपादक की पसंद",
   "home_editor_picks_text": "इन सर्किटों को हमारे लेखकों ने उनकी उत्कृष्टता के लिए चुना है",
-  "home_explore_more": "इसे और अधिक एक्सप्लोर करें"
-
+  "home_explore_more": "इसे और अधिक एक्सप्लोर करें",
+  "@contribute_view": {
+  },
+  "@contributors_view": {
+  },
+  "contributors_main_description": "सर्किटवर्स का लक्ष्य हमेशा के लिए मुफ़्त होना है और हम वादा करते हैं कि हमारे द्वारा विज्ञापन नहीं चलाया जायेगा! परियोजना खुला स्रोत है और इसके निरंतर विकास और रखरखाव को सुनिश्चित करने के लिए हमें आपके समर्थन की आवश्यकता है।",
+  "contributors_contribute_to_open_source": "ओपन सोर्स में योगदान करें",
+  "contributors_github": "गिटहब",
+  "contributors_how_to_support": "कैसे समर्थन करें ?",
+  "contributors_student_card_title": "मैं एक विद्यार्थी हूँ",
+  "contributors_student_card_text1": "अद्भुत सर्किट बनाएं और मंच पर साझा करें",
+  "contributors_student_card_text2": "बग खोजें और रिपोर्ट करें। बग हंटर बनें",
+  "contributors_student_card_text3": "अपने दोस्त को मंच का परिचय दें",
+  "contributors_teacher_card_title": "मैं एक शिक्षक हूं",
+  "contributors_teacher_card_text1": "अपने छात्रों के लिए मंच का परिचय दें",
+  "contributors_teacher_card_text2": "अपनी मंडलियों में मंच का प्रचार करें",
+  "contributors_teacher_card_text3": "सर्किटवर्स का उपयोग करके रोमांचक शैक्षिक कंटेंट बनाएं",
+  "contributors_developer_card_title": "मैं एक डेवलपर हूं",
+  "contributors_developer_card_text1": "ओपन सोर्स प्रोजेक्ट में योगदान करें",
+  "contributors_developer_card_text2": "सर्किटवर्स प्रोजेक्ट में नई सुविधाएँ जोड़ें",
+  "contributors_developer_card_text3": "सर्किटवर्स प्रोजेक्ट में बग ढूंढें और ठीक करें",
+  "contributors_become_patreon": "एक पैट्रियन बनें",
+  "contributors_donate_via_paypal": "पेपैल के माध्यम से दान करें"
 
 }
