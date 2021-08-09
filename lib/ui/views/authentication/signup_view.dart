@@ -11,6 +11,7 @@ import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/signup_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignupView extends StatefulWidget {
   static const String id = 'signup_view';
@@ -50,8 +51,8 @@ class _SignupViewState extends State<SignupView> {
 
   Widget _buildNameInput() {
     return CVTextField(
-      label: 'Name',
-      validator: (value) => value.isEmpty ? 'Name can\'t be empty' : null,
+      label: AppLocalizations.of(context).name,
+      validator: (value) => value.isEmpty ? AppLocalizations.of(context).name_cant_be_empty : null,
       onSaved: (value) => _name = value.trim(),
       onFieldSubmitted: (_) =>
           FocusScope.of(context).requestFocus(_nameFocusNode),
@@ -61,10 +62,10 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildEmailInput() {
     return CVTextField(
       focusNode: _nameFocusNode,
-      label: 'Email',
+      label: AppLocalizations.of(context).email,
       type: TextInputType.emailAddress,
       validator: (value) =>
-          Validators.isEmailValid(value) ? null : 'Please enter a valid email',
+          Validators.isEmailValid(value) ? null : AppLocalizations.of(context).enter_valid_email,
       onSaved: (value) => _email = value.trim(),
       onFieldSubmitted: (_) {
         _nameFocusNode.unfocus();
@@ -76,7 +77,7 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildPasswordInput() {
     return CVPasswordField(
       focusNode: _emailFocusNode,
-      validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
+      validator: (value) => value.isEmpty ? AppLocalizations.of(context).password_cant_be_empty : null,
       onSaved: (value) => _password = value.trim(),
     );
   }
@@ -87,8 +88,8 @@ class _SignupViewState extends State<SignupView> {
       width: double.infinity,
       child: CVPrimaryButton(
         title: _signUpModel.isBusy(_signUpModel.SIGNUP)
-            ? 'Authenticating..'
-            : 'REGISTER',
+            ? AppLocalizations.of(context).authenticating_status
+            : AppLocalizations.of(context).register,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -99,11 +100,11 @@ class _SignupViewState extends State<SignupView> {
       onTap: () => Get.offAllNamed(LoginView.id),
       child: RichText(
         text: TextSpan(
-          text: 'Already Registered? ',
+          text: AppLocalizations.of(context).if_already_registered,
           style: Theme.of(context).textTheme.bodyText1,
           children: <TextSpan>[
             TextSpan(
-              text: 'Login',
+              text: AppLocalizations.of(context).login,
               style: TextStyle(
                 color: CVTheme.highlightText(context),
               ),
@@ -124,8 +125,8 @@ class _SignupViewState extends State<SignupView> {
       if (_signUpModel.isSuccess(_signUpModel.SIGNUP)) {
         // show signup successful snackbar..
         SnackBarUtils.showDark(
-          'Signup Successful',
-          'Welcome to CircuitVerse!',
+          AppLocalizations.of(context).signup_successful,
+          AppLocalizations.of(context).welcome_to_cv,
         );
 
         // move to home view on successful signup..
@@ -136,7 +137,7 @@ class _SignupViewState extends State<SignupView> {
       } else if (_signUpModel.isError(_signUpModel.SIGNUP)) {
         // show failure snackbar..
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context).error,
           _signUpModel.errorMessageFor(_signUpModel.SIGNUP),
         );
         _formKey.currentState.reset();

@@ -30,6 +30,10 @@
   },
   "my_groups": "मेरे समूह",
   "login": "लॉग इन करें",
+   "@login": {
+    "@login_view": {},
+    "@signup_view": {}
+  },
   "@about_view": {
   },
   "terms_of_service": "सेवा की शर्तें",
@@ -203,6 +207,63 @@
   "contributors_developer_card_text2": "सर्किटवर्स प्रोजेक्ट में नई सुविधाएँ जोड़ें",
   "contributors_developer_card_text3": "सर्किटवर्स प्रोजेक्ट में बग ढूंढें और ठीक करें",
   "contributors_become_patreon": "एक पैट्रियन बनें",
-  "contributors_donate_via_paypal": "पेपैल के माध्यम से दान करें"
+  "contributors_donate_via_paypal": "पेपैल के माध्यम से दान करें",
+    "@auth_options_view": {
+  },
+  "signup_or_login_with": "  Or {signup_or_login} with  ",
+  "google_authentication_error": "गूगल ऑथेंटिकेशन एरर",
+  "facebook_authentication_error": "फेसबुक ऑथेंटिकेशन एरर",
+  "github_authentication_error": "गिटहब ऑथेंटिकेशन एरर",
+  "@forgot_password_view":{
+  },
+  "email": "ईमेल",
+  "@email": {
+    "@login_view": {},
+    "@signup_view": {}
+  },
+  "enter_valid_email": "कृपया एक मान्य ईमेल दर्ज करें",
+  "@enter_valid_email": {
+    "@login_view":{},
+    "@signup_view": {}
+  },
+  "sending_status": "भेज रहे है",
+  "send_instructions_btn": "निर्देश भेजें",
+  "if_new_user": "नए उपयोगकर्ता? ",
+  "@if_new_user": {
+    "@login_view": {}
+  },
+  "signup": "साइन अप करें",
+   "@signup": {
+    "@login_view": {}
+  },
+  "sending_instructions_status": "निर्देश भेज रहे है",
+  "instructions_sent_confirmation": "निर्देश $_email पर भेजे गए।",
+  "instructions_sent_acknowledgement": "पासवर्ड रीसेट लिंक के लिए कृपया अपना मेल जांचें।",
+  "error": "कुछ एरर आया",
+  "@error": {
+    "@login_view": {},
+    "@signup_view": {}
+  },
+  "@login_view": {
+  },
+  "password_cant_be_empty": "पासवर्ड खाली नहीं रखा जा सकता",
+   "@password_cant_be_empty": {
+    "@signup_view": {}
+  },
+  "if_forgot_password": "पासवर्ड भूल गए?",
+  "authenticating_status": "ऑथेंटिकेशन किया जा रहा है",
+  "@authenticating_status": {
+    "@signup_view": {}
+  },
+  "login_successful": "लॉग इन सफल",
+  "welcome_back_text": "वापसी पर स्वागत है!",
+  "@signup_view": {
+  },
+  "name": "नाम",
+  "name_cant_be_empty": "नाम खाली नहीं रखा जा सकता",
+  "register": "रजिस्टर करें",
+  "if_already_registered": "पहले से ही रजिस्टर्ड है ? ",
+  "signup_successful": "साइन अप सफल हुआ",
+  "welcome_to_cv": "सर्किटवर्स में आपका स्वागत है!"
 
 }

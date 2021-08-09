@@ -5,6 +5,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/authentication/auth_options_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AuthOptionsView extends StatefulWidget {
   final bool isSignUp;
@@ -25,7 +26,7 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
       await Get.offAllNamed(CVLandingView.id);
     } else if (_model.isError(_model.GOOGLE_OAUTH)) {
       SnackBarUtils.showDark(
-        'Google Authentication Error',
+        AppLocalizations.of(context).google_authentication_error,
         _model.errorMessageFor(_model.GOOGLE_OAUTH),
       );
     }
@@ -38,7 +39,7 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
       await Get.offAllNamed(CVLandingView.id);
     } else if (_model.isError(_model.FB_OAUTH)) {
       SnackBarUtils.showDark(
-        'Facebook Authentication Error',
+        AppLocalizations.of(context).facebook_authentication_error,
         _model.errorMessageFor(_model.FB_OAUTH),
       );
     }
@@ -51,7 +52,7 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
       await Get.offAllNamed(CVLandingView.id);
     } else if (_model.isError(_model.GITHUB_OAUTH)) {
       SnackBarUtils.showDark(
-        'GitHub Authentication Error',
+        AppLocalizations.of(context).github_authentication_error,
         _model.errorMessageFor(_model.GITHUB_OAUTH),
       );
     }

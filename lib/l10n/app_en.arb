@@ -30,6 +30,10 @@
   },
   "my_groups": "My Groups",
   "login": "Login",
+  "@login": {
+    "@login_view": {},
+    "@signup_view": {}
+  },
   "@about_view": {
   },
   "terms_of_service": "Terms Of Service",
@@ -201,6 +205,63 @@
   "contributors_developer_card_text2": "Add and propose new features to the projects",
   "contributors_developer_card_text3": "Find and fix bugs in the CircuitVerse projects",
   "contributors_become_patreon": "Become a Patreon",
-  "contributors_donate_via_paypal": "Donate through PayPal"
+  "contributors_donate_via_paypal": "Donate through PayPal",
+  "@auth_options_view": {
+  },
+  "signup_or_login_with": "  Or {signup_or_login} with  ",
+  "google_authentication_error": "Google Authentication Error",
+  "facebook_authentication_error": "Facebook Authentication Error",
+  "github_authentication_error": "GitHub Authentication Error",
+  "@forgot_password_view":{
+  },
+  "email": "Email",
+  "@email": {
+    "@login_view": {},
+    "@signup_view": {}
+  },
+  "enter_valid_email": "Please enter a valid email",
+  "@enter_valid_email": {
+    "@login_view":{},
+    "@signup_view": {}
+  },
+  "sending_status": "Sending..",
+  "send_instructions_btn": "SEND INSTRUCTIONS",
+  "if_new_user": "New User? ",
+  "@if_new_user": {
+    "@login_view": {}
+  },
+  "signup": "Sign Up",
+   "@signup": {
+    "@login_view": {}
+  },
+  "sending_instructions_status": "Sending Instructions",
+  "instructions_sent_confirmation": "Instructions Sent to $_email",
+  "instructions_sent_acknowledgement": "Please check your mail for password reset link.",
+  "error": "Error",
+  "@error": {
+    "@login_view": {},
+    "@signup_view": {}
+  },
+  "@login_view": {
+  },
+  "password_cant_be_empty": "Password can't be empty",
+   "@password_cant_be_empty": {
+    "@signup_view": {}
+  },
+  "if_forgot_password": "Forgot Password?",
+  "authenticating_status": "Authenticating..",
+  "@authenticating_status": {
+    "@signup_view": {}
+  },
+  "login_successful": "Login Successful",
+  "welcome_back_text": "Welcome back!",
+  "@signup_view": {
+  },
+  "name": "Name",
+  "name_cant_be_empty": "Name can't be empty",
+  "register": "REGISTER",
+  "if_already_registered": "Already Registered? ",
+  "signup_successful": "Signup Successful",
+  "welcome_to_cv": "Welcome to CircuitVerse!"
 
 }
