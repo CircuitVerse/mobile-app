@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobile_app/cv_theme.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CVPasswordField extends StatefulWidget {
   final Function(String) validator;
@@ -51,7 +52,7 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
               color: CVTheme.primaryColorDark,
             ),
           ),
-          labelText: 'Password',
+          labelText: AppLocalizations.of(context).password,
           labelStyle: TextStyle(
             color: CVTheme.textFieldLabelColor(context),
           ),

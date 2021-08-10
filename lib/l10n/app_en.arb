@@ -376,7 +376,8 @@
   },
   "not_available": "N.A",
   "@not_available": {
-    "@profile_view": {}
+    "@profile_view": {},
+    "@cv_typeahead_field": {}
   },
   "description": "Description",
   "submission": "Submissions : ",
@@ -501,11 +502,13 @@
   },
   "country": "Country",
   "@country": {
-    "@profile_view": {}
+    "@profile_view": {},
+    "@cv_typeahead_field": {}
   },
   "educational_institute": "Educational Institute",
   "@educational_institute": {
-    "@profile_view": {}
+    "@profile_view": {},
+    "@cv_typeahead_field": {}
   },
   "if_subscribed_to_mails": "Subscribe to mails?",
   "profile_updated": "Profile Updated",
@@ -564,6 +567,10 @@
   "collaborator_deleted": "Collaborator Deleted",
   "collaborator_deleted_acknowledgement": "Collaborator was successfully deleted.",
   "project_details": "Project Details",
-  "collaborators": "Collaborators"
+  "collaborators": "Collaborators",
+  "@cv_password_field": {
+  },
+  "password": "Password",
+  "no_suggestions_found": "No suggestions found"
 
 }

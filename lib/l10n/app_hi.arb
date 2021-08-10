@@ -376,7 +376,8 @@
   },
   "not_available": "उपलब्ध नहीं है",
   "@not_available": {
-    "@profile_view": {}
+    "@profile_view": {},
+    "@cv_typeahead_field": {}
   },
   "description": "विवरण",
   "submission": "सबमिशन: ",
@@ -501,11 +502,13 @@
   },
   "country": "देश",
   "@country": {
-    "@profile_view": {}
+    "@profile_view": {},
+    "@cv_typeahead_field": {}
   },
   "educational_institute": "शैक्षिक संस्थान",
   "@educational_institute": {
-    "@profile_view": {}
+    "@profile_view": {},
+    "@cv_typeahead_field": {}
   },
   "if_subscribed_to_mails": "मेल की सदस्यता लें?",
   "profile_updated": "प्रोफाइल अपडेट की गयी",
@@ -564,6 +567,10 @@
   "collaborator_deleted": "सहयोगी हटाया गया",
   "collaborator_deleted_acknowledgement": "सहयोगी को सफलतापूर्वक हटा दिया गया",
   "project_details": "परियोजना का विवरण",
-  "collaborators": "सहयोगी"
+  "collaborators": "सहयोगी",
+  "@cv_password_field": {
+  },
+  "password": "पासवर्ड",
+  "no_suggestions_found": "कोई सुझाव नहीं मिला"
 
 }

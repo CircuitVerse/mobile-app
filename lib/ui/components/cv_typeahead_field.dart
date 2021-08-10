@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:mobile_app/services/API/country_institute_api.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CVTypeAheadField extends StatelessWidget {
   final String label;
@@ -88,11 +89,11 @@ class CVTypeAheadField extends StatelessWidget {
                 }
                 //// If there is need of some other API Fetch add another if condition
                 return [
-                  pattern == '' ? 'No suggestions found' : pattern,
+                  pattern == '' ? AppLocalizations.of(context).no_suggestions_found : pattern,
                 ];
               } catch (e) {
                 return [
-                  pattern == '' ? 'No suggestions found' : pattern,
+                  pattern == '' ? AppLocalizations.of(context).no_suggestions_found : pattern,
                 ];
               }
             },
@@ -111,7 +112,7 @@ class CVTypeAheadField extends StatelessWidget {
             },
             onSaved: (value) {
               onSaved(
-                (value == '') ? (text ?? 'N.A') : value,
+                (value == '') ? (text ?? AppLocalizations.of(context).not_available) : value,
               );
             },
           );
