@@ -13,6 +13,7 @@ import 'package:mobile_app/ui/views/groups/edit_group_view.dart';
 import 'package:mobile_app/ui/views/groups/new_group_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyGroupsView extends StatefulWidget {
   static const String id = 'my_groups_view';
@@ -50,13 +51,13 @@ class _MyGroupsViewState extends State<MyGroupsView> {
 
   Future<void> onDeleteGroupPressed(String groupId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: 'Delete Group',
-      description: 'Are you sure you want to delete this group?',
-      confirmationTitle: 'DELETE',
+      title: AppLocalizations.of(context).delete_group,
+      description: AppLocalizations.of(context).delete_group_confirmation,
+      confirmationTitle: AppLocalizations.of(context).delete_btn,
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Deleting Group');
+      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).deleting_group);
 
       await _model.deleteGroup(groupId);
 
@@ -64,12 +65,12 @@ class _MyGroupsViewState extends State<MyGroupsView> {
 
       if (_model.isSuccess(_model.DELETE_GROUP)) {
         SnackBarUtils.showDark(
-          'Group Deleted',
-          'Group was successfully deleted.',
+          AppLocalizations.of(context).group_deleted,
+          AppLocalizations.of(context).group_deleted_acknowledgement,
         );
       } else if (_model.isError(_model.DELETE_GROUP)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context).error,
           _model.errorMessageFor(_model.DELETE_GROUP),
         );
       }
@@ -90,7 +91,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
 
           _items.add(
             Text(
-              'Groups',
+              AppLocalizations.of(context).groups,
               style: Theme.of(context).textTheme.headline4.copyWith(
                     fontWeight: FontWeight.bold,
                     color: CVTheme.textColor(context),
@@ -106,7 +107,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
                   vertical: 8,
                   horizontal: 16,
                 ),
-                title: '+ Make New Group',
+                title: AppLocalizations.of(context).create_new_group,
                 onPressed: onCreateGroupPressed,
               ),
             ),
@@ -114,7 +115,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
 
           _items.add(SizedBox(height: 24));
 
-          _items.add(_buildSubHeader(title: 'Groups You Mentor'));
+          _items.add(_buildSubHeader(title: AppLocalizations.of(context).groups_you_mentor));
 
           if (_model.isSuccess(_model.FETCH_MENTORED_GROUPS)) {
             // creates GroupMentorCard corresponding to each mentor group
@@ -138,7 +139,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
 
           _items.add(SizedBox(height: 24));
 
-          _items.add(_buildSubHeader(title: "Groups You're in"));
+          _items.add(_buildSubHeader(title: AppLocalizations.of(context).groups_you_belong_to));
 
           if (_model.isSuccess(_model.FETCH_MEMBER_GROUPS)) {
             // creates GroupMemberCard corresponding to each member group

@@ -9,6 +9,9 @@
   "@cv_landing_view": {
   },
   "groups": "आपके समूह",
+  "@groups": {
+    "@my_groups_view": {}
+  },
   "profile": "प्रोफ़ाइल",
   "featured_circuits": "विशेष रुप से प्रदर्शित सर्किट",
   "logout": "लॉग आउट करे",
@@ -186,8 +189,6 @@
   "home_editor_picks": "संपादक की पसंद",
   "home_editor_picks_text": "इन सर्किटों को हमारे लेखकों ने उनकी उत्कृष्टता के लिए चुना है",
   "home_explore_more": "इसे और अधिक एक्सप्लोर करें",
-  "@contribute_view": {
-  },
   "@contributors_view": {
   },
   "contributors_main_description": "सर्किटवर्स का लक्ष्य हमेशा के लिए मुफ़्त होना है और हम वादा करते हैं कि हमारे द्वारा विज्ञापन नहीं चलाया जायेगा! परियोजना खुला स्रोत है और इसके निरंतर विकास और रखरखाव को सुनिश्चित करने के लिए हमें आपके समर्थन की आवश्यकता है।",
@@ -224,7 +225,9 @@
   "enter_valid_email": "कृपया एक मान्य ईमेल दर्ज करें",
   "@enter_valid_email": {
     "@login_view":{},
-    "@signup_view": {}
+    "@signup_view": {},
+    "@add_assignment_view": {},
+    "@group_details_view": {}
   },
   "sending_status": "भेज रहे है",
   "send_instructions_btn": "निर्देश भेजें",
@@ -242,7 +245,14 @@
   "error": "कुछ एरर आया",
   "@error": {
     "@login_view": {},
-    "@signup_view": {}
+    "@signup_view": {},
+    "@add_assignment_view": {},
+    "@assignment_details_view": {},
+    "@edit_group_view": {},
+    "@group_details_view": {},
+    "@my_group_view": {},
+    "@new_group_view": {},
+    "@update_assignment_view": {}
   },
   "@login_view": {
   },
@@ -260,10 +270,193 @@
   "@signup_view": {
   },
   "name": "नाम",
+  "@name": {
+    "@add_assignment_view": {},
+    "@assignment_details_view": {},
+    "@update_assignment_view": {}
+  },
   "name_cant_be_empty": "नाम खाली नहीं रखा जा सकता",
   "register": "रजिस्टर करें",
   "if_already_registered": "पहले से ही रजिस्टर्ड है ? ",
   "signup_successful": "साइन अप सफल हुआ",
-  "welcome_to_cv": "सर्किटवर्स में आपका स्वागत है!"
+  "welcome_to_cv": "सर्किटवर्स में आपका स्वागत है!",
+  "@assignment_card": {
+  },
+  "show": "दिखाए",
+  "edit": "एडिट करे",
+  "@edit": {
+    "@group_mentor_card": {},
+    "@assignment_details_view": {},
+    "@group_details_view": {}
+  },
+  "reopen": "फिर से खोले",
+  "delete": "डिलीट करे",
+  "@delete": {
+    "@group_mentor_card": {},
+    "@assignment_details_view": {}
+  },
+  "view_submission": "सबमिशन देखें",
+  "not_submitted": "सबमिट नही किया है!",
+  "view_your_work": "अपना काम देखें",
+  "start_working": "काम शुरू करे",
+  "no_name": "कोई नाम नहीं",
+  "@no_name": {
+    "@member_card": {}
+  },
+  "grading": "ग्रेडिंग",
+  "deadline": "समय सीमा",
+    "@deadline": {
+    "@add_assignment_view": {},
+    "@assignment_details_view": {},
+    "@update_assignment_view": {}
+  },
+  "@group_member_card":{
+  },
+  "total_members": "Total Members: ${group.attributes.memberCount}",
+  "view": "देखे",
+  "@view": {
+    "@group_mentor_card": {}
+  },
+  "@group_mentor_card": {
+  },
+  "total_member_group": "Total Members: ${widget.group.attributes.memberCount}",
+  "@member_card": {
+  },
+  "no_mail": "कोई ईमेल नहीं",
+  "@add_assignment_view": {
+  },
+  "grading_scale": "ग्रेडिंग स्केल",
+  "elements_restriction": "एलिमेंट जो प्रतिबंध है",
+  "@elements_restriction": {
+    "@update_assignment_view": {}
+  },
+  "enable_element_restriction": "एलिमेंट पर प्रतिबंध सक्षम करें",
+  "@enable_element_restriction": {
+    "@update_assignment_view": {}
+  },
+
+  "create_assignment": "असाइनमेंट बनाएं",
+  "adding": "ऐड किया जा रहा है..",
+  "@adding": {
+    "@group_details_view": {}
+  },
+  "handled_html_editor_error": "html_editor एरर को संभाला। नोट: यह केवल परीक्षणों के दौरान दिखाना छाए चाहिए।",
+  "@handled_html_editor_error": {
+    "@update_assignment_view": {}
+  },
+  "assignment_added": "असाइनमेंट ऐड किया गया",
+  "assignment_added_acknowledgement": "नया असाइनमेंट सफलतापूर्वक ऐड किया गया।",
+  "add_assignment": "असाइनमेंट ऐड करे",
+  "@assignment_details_view": {
+  },
+  "not_applicable": "यह लागू नहीं है",
+  "description": "विवरण",
+  "submission": "सबमिशन: ",
+  "no_submissions_yet": "अभी तक कोई सबमिशन नहीं!",
+  "adding_grades": "ग्रेड ऐड कर रहे है",
+  "project_graded": "परियोजना को सफलतापूर्वक ग्रेड किया गया",
+  "project_graded_acknowledgement": "आपने प्रोजेक्ट को ग्रेड दिया है।",
+  "updating_grade": "ग्रेड को अपडेट किया जा रहा है",
+  "grade_updated": "ग्रेड सफलतापूर्वक अपडेट किया गया",
+  "grade_updated_acknowledgement": "ग्रेड सफलतापूर्वक अपडेट कर दिया गया है।",
+  "delete_grade": "ग्रेड डिलीट करे",
+  "delete_grade_confirmation": "क्या आप वाकई ग्रेड डिलीट करना चाहते हैं?",
+  "delete_btn": "डिलीट करे",
+  "@delete_btn": {
+    "@group_details_view": {},
+    "@my_group_view": {}
+  },
+  "deleting_grade": "ग्रेड डिलीट कर रहे है",
+  "grade_deleted": "ग्रेड डिलीट किया गया",
+  "grade_deleted_acknowledgement": "ग्रेड सफलतापूर्वक हटा दिया गया है.",
+  "grades_and_remarks": "ग्रेड और रिमार्क्स",
+  "grade": "ग्रेड",
+  "grade_cant_be_empty": "ग्रेड खाली नहीं हो सकता",
+  "remarks": "रिमार्क्स",
+  "update": "अपडेट करे",
+  "submit": "सबमिट करे",
+  "assignment_details": "असाइनमेंट का विवरण",
+  "time_remaining": "शेष समय",
+  "restricted_elements": "प्रतिबंधित एलिमेंट्स",
+  "@edit_group_view": {
+  },
+  "updating": "अपडेट किया जा रहा है",
+  "@updating": {
+    "@update_assignment_view": {}
+  },
+  "group_updated": "समूह अपडेट किया गया",
+  "group_updated_acknowledgement": "समूह को सफलतापूर्वक अपडेट कर दिया गया है।",
+  "edit_group": "समूह एडिट करें",
+  "edit_group_description": "आप यहां समूह का विवरण अपडेट कर सकते हैं। समूह का नाम खाली न छोड़ें।",
+  "group_name": "समूह का नाम",
+  "@group_name": {
+    "@new_group_view": {}
+  },
+  "enter_group_name": "कृपया समूह का नाम दर्ज करें",
+    "@enter_group_name": {
+    "@new_group_view": {}
+  },
+  "save": "सेव करे",
+  "@group_details_view": {
+  },
+  "mentor": "गुरु : ",
+  "group_member_added": "समूह के सदस्य ऐड किये गए",
+  "add_group_members": "समूह के सदस्यों को ऐड करे",
+  "enter_email_ids": "अल्पविराम से अलग की गई ईमेल आईडी दर्ज करें। यदि उपयोगकर्ता रजिस्टर्ड नहीं हैं, तो उन्हें साइन अप करने का अनुरोध करते हुए एक ईमेल आईडी भेजी जाएगी।",
+  "email_ids": "ईमेल आईडी",
+  "cancel_btn": "कैंसल",
+  "add_btn": "ऐड करे",
+  "remove_group_member": "समूह के सदस्य को हटाएं",
+  "remove_group_member_confirmation": "क्या आप वाकई इस समूह सदस्य को हटाना चाहते हैं?",
+  "remove_btn": "हटाए",
+  "removing": "हटाया जा रहा है",
+  "group_member_removed": "समूह के सदस्य को हटाया गया",
+  "group_member_removed_acknowledgement": "समूह के सदस्य को सफलतापूर्वक हटाया गया.",
+  "add_btn_primary": "+ ऐड करे",
+  "delete_assignment": "असाइनमेंट डिलीट करे",
+  "delete_assignment_confirmation": "क्या आप वाकई इस असाइनमेंट को डिलीट करना चाहते हैं?",
+  "deleting_assignment": "असाइनमेंट डिलीट किया जा रहा है",
+  "assignment_deleted": "असाइनमेंट डिलीट किया गया",
+  "assignment_deleted_acknowledgement": "असाइनमेंट सफलतापूर्वक डिलीट कर दिया गया है।",
+  "reopen_assignment": "असाइनमेंट फिर से खोलें",
+  "reopen_assignment_confirmation": "क्या आप वाकई इस असाइनमेंट को फिर से खोलना चाहते हैं?",
+  "reopen_btn": "फिर से खोले",
+  "reopening_assignment": "असाइनमेंट फिर से खोल रहे है",
+  "assignment_reopened": "असाइनमेंट फिर से खोला गया",
+  "assignment_reopened_acknowledgement": "असाइनमेंट अब फिर से खोल दिया गया है।",
+  "start_assignment": "असाइनमेंट शुरू करें",
+  "start_assignment_confirmation": "क्या आप वाकई इस असाइनमेंट पर काम करना शुरू करना चाहते हैं?",
+  "start_btn": "शुरू करे",
+  "starting_assignment": "असाइनमेंट शुरू कर रहे है",
+  "project_created": "प्रोजेक्ट बनाया गया",
+  "project_created_acknowledgement": "प्रोजेक्ट सफलतापूर्वक बनाया गया।",
+  "group_details": "समूह का विवरण",
+  "members": "सदस्य",
+  "assignments": "असाइनमेंट",
+  "@my_group_view": {
+  },
+  "delete_group": "समूह डिलीट करे ",
+  "delete_group_confirmation": "क्या आप वाकई इस समूह को डिलीट करना चाहते हैं?",
+  "deleting_group": "संहा डिलीट कर रहे है",
+  "group_deleted": "समूह डिलीट किया गया",
+  "group_deleted_acknowledgement": "समूह को सफलतापूर्वक डिलीट कर दिया गया।",
+  "create_new_group": "+ नया समूह बनाएं",
+  "groups_you_mentor": "समूह जिसमें आप मेंटरिंग करते हैं",
+  "groups_you_belong_to": "आप जिन समूहों में हैं",
+  "@new_group_view": {
+  },
+  "creating": "ग्रुप बना रहे है",
+  "group_created": "समूह बनाया गया",
+  "group_created_acknowledgement": "नया समूह सफलतापूर्वक बनाया गया।",
+  "new_group": "नया समूह",
+  "new_group_description": "छात्रों के लिए प्रोजेक्ट सेट करने और ग्रेड देने के लिए मेंटर्स द्वारा उपयोग किए जाने वाले समूह।",
+  "save_btn": "सेव करे",
+  "@update_assignment_view": {
+  },
+  "enter_valid_name": "कृपया कोई मान्य नाम दर्ज करें",
+  "update_assignment": "असाइनमेंट अपडेट करे",
+  "assignment_updated": "असाइनमेंट अपडेट किया गया",
+  "assignment_updated_acknowledgement": "असाइनमेंट सफलतापूर्वक अपडेट किया गया"
+
 
 }

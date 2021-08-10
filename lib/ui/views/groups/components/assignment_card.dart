@@ -5,6 +5,7 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/assignments.dart';
 import 'package:mobile_app/ui/views/groups/assignment_details_view.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AssignmentCard extends StatefulWidget {
   final Assignment assignment;
@@ -58,7 +59,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
     _items.add(
       Flexible(
         child: CardButton(
-          title: 'Show',
+          title: AppLocalizations.of(context).show,
           onPressed: () => Get.toNamed(AssignmentDetailsView.id,
               arguments: widget.assignment),
           color: CVTheme.primaryColor,
@@ -72,7 +73,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
         _items.add(
           Flexible(
             child: CardButton(
-              title: 'Edit',
+              title: AppLocalizations.of(context).edit,
               onPressed: widget.onEditPressed,
               color: CVTheme.blue,
             ),
@@ -83,7 +84,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
         _items.add(
           Flexible(
             child: CardButton(
-              title: 'Reopen',
+              title: AppLocalizations.of(context).reopen,
               onPressed: widget.onReopenPressed,
               color: CVTheme.blue,
             ),
@@ -95,7 +96,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
       _items.add(
         Flexible(
           child: CardButton(
-            title: 'Delete',
+            title: AppLocalizations.of(context).delete,
             onPressed: widget.onDeletePressed,
             color: CVTheme.red,
           ),
@@ -108,7 +109,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
           _items.add(
             Flexible(
               child: CardButton(
-                title: 'View Submission',
+                title: AppLocalizations.of(context).view_submission,
                 onPressed: () {},
                 color: CVTheme.blue,
               ),
@@ -116,7 +117,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
           );
         } else {
           /// Add Not Submitted Button if _isProjectNotPresent & _isDeadlineOver
-          print('Not Submitted!');
+          print(AppLocalizations.of(context).not_submitted);
         }
       } else {
         if (_projectId != null) {
@@ -124,7 +125,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
           _items.add(
             Flexible(
               child: CardButton(
-                title: 'View Your Work',
+                title: AppLocalizations.of(context).view_your_work,
                 onPressed: () {},
                 color: CVTheme.blue,
               ),
@@ -135,7 +136,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
           _items.add(
             Flexible(
               child: CardButton(
-                title: 'Start Working',
+                title: AppLocalizations.of(context).start_working,
                 onPressed: widget.onStartPressed,
                 color: CVTheme.blue,
               ),
@@ -173,7 +174,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
-            widget.assignment.attributes.name ?? 'No Name',
+            widget.assignment.attributes.name ?? AppLocalizations.of(context).no_name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.headline6.copyWith(
@@ -181,11 +182,11 @@ class _AssignmentCardState extends State<AssignmentCard> {
                 ),
           ),
           _buildAssignmentComponent(
-            'Grading',
+            AppLocalizations.of(context).grading,
             widget.assignment.attributes.gradingScale,
           ),
           _buildAssignmentComponent(
-            'Deadline',
+            AppLocalizations.of(context).deadline,
             deadlineFormat.format(widget.assignment.attributes.deadline),
           ),
           SizedBox(height: 8),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/group_members.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MemberCard extends StatelessWidget {
   final GroupMember member;
@@ -36,13 +37,13 @@ class MemberCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  member.attributes.name ?? 'No Name',
+                  member.attributes.name ?? AppLocalizations.of(context).no_name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 Text(
-                  member.attributes.email ?? 'No Email',
+                  member.attributes.email ?? AppLocalizations.of(context).no_mail,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText1,

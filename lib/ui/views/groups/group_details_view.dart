@@ -16,6 +16,7 @@ import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/ui/components/cv_flat_button.dart';
 import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GroupDetailsView extends StatefulWidget {
   static const String id = 'group_details_view';
@@ -64,7 +65,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           Icon(Icons.edit, color: Colors.white),
           SizedBox(width: 8),
           Text(
-            'Edit',
+            AppLocalizations.of(context).edit,
             style: Theme.of(context).textTheme.headline6.copyWith(
                   color: Colors.white,
                 ),
@@ -98,7 +99,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         ),
         RichText(
           text: TextSpan(
-            text: 'Mentor : ',
+            text: AppLocalizations.of(context).mentor,
             style: Theme.of(context).textTheme.headline6.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -119,7 +120,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       FocusScope.of(context).requestFocus(FocusNode());
       Navigator.pop(context);
 
-      _dialogService.showCustomProgressDialog(title: 'Adding');
+      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).adding);
 
       await _model.addMembers(_recievedGroup.id, _emails);
 
@@ -128,12 +129,12 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       if (_model.isSuccess(_model.ADD_GROUP_MEMBERS) &&
           _model.addedMembersSuccessMessage.isNotEmpty) {
         SnackBarUtils.showDark(
-          'Group Members Added',
+          AppLocalizations.of(context).group_member_added,
           _model.addedMembersSuccessMessage,
         );
       } else if (_model.isError(_model.ADD_GROUP_MEMBERS)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context).error,
           _model.errorMessageFor(_model.ADD_GROUP_MEMBERS),
         );
       }
@@ -153,13 +154,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Add Group Members',
+                  AppLocalizations.of(context).add_group_members,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  'Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.',
+                  AppLocalizations.of(context).enter_email_ids,
                   style: Theme.of(context).textTheme.bodyText1,
                 )
               ],
@@ -170,11 +171,11 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 maxLines: 5,
                 autofocus: true,
                 decoration: CVTheme.textFieldDecoration.copyWith(
-                  hintText: 'Email Ids',
+                  hintText: AppLocalizations.of(context).email_ids,
                 ),
                 validator: (emails) => Validators.areEmailsValid(emails)
                     ? null
-                    : 'Enter emails in valid format.',
+                    : AppLocalizations.of(context).enter_valid_email,
                 onSaved: (emails) =>
                     _emails = emails.replaceAll(' ', '').trim(),
               ),
@@ -182,13 +183,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('CANCEL'),
+                child: Text(AppLocalizations.of(context).cancel_btn),
               ),
               CVFlatButton(
                 key: addButtonGlobalKey,
                 triggerFunction: onAddGroupMemberPressed,
                 context: context,
-                buttonText: 'ADD',
+                buttonText: AppLocalizations.of(context).add_btn,
               ),
             ],
           );
@@ -197,13 +198,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
   Future<void> onDeleteGroupMemberPressed(String groupMemberId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: 'Remove Group Member',
-      description: 'Are you sure you want to remove this group member?',
-      confirmationTitle: 'REMOVE',
+      title: AppLocalizations.of(context).remove_group_member,
+      description: AppLocalizations.of(context).remove_group_member_confirmation,
+      confirmationTitle: AppLocalizations.of(context).remove_btn,
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Removing');
+      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).removing);
 
       await _model.deleteGroupMember(groupMemberId);
 
@@ -211,12 +212,12 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       if (_model.isSuccess(_model.DELETE_GROUP_MEMBER)) {
         SnackBarUtils.showDark(
-          'Group Member Removed',
-          'Successfully removed group member.',
+          AppLocalizations.of(context).group_member_removed,
+          AppLocalizations.of(context).group_member_removed_acknowledgement,
         );
       } else if (_model.isError(_model.DELETE_GROUP_MEMBER)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context).error,
           _model.errorMessageFor(_model.DELETE_GROUP_MEMBER),
         );
       }
@@ -237,7 +238,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           ),
           if (_recievedGroup.isMentor)
             CVPrimaryButton(
-              title: '+ Add',
+              title: AppLocalizations.of(context).add_btn_primary,
               onPressed: onAddPressed,
               padding: const EdgeInsets.symmetric(horizontal: 10),
             )
@@ -257,13 +258,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
   Future<void> onDeleteAssignmentPressed(String assignmentId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: 'Delete Assignment',
-      description: 'Are you sure you want to delete this assignment?',
-      confirmationTitle: 'DELETE',
+      title: AppLocalizations.of(context).delete_assignment,
+      description: AppLocalizations.of(context).delete_assignment_confirmation,
+      confirmationTitle: AppLocalizations.of(context).delete_btn,
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Deleting Assignment');
+      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).deleting_assignment);
 
       await _model.deleteAssignment(assignmentId);
 
@@ -271,12 +272,12 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       if (_model.isSuccess(_model.DELETE_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          'Assignment Deleted',
-          'The assignment was successfully deleted.',
+          AppLocalizations.of(context).assignment_deleted,
+          AppLocalizations.of(context).assignment_deleted_acknowledgement,
         );
       } else if (_model.isError(_model.DELETE_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context).error,
           _model.errorMessageFor(_model.DELETE_ASSIGNMENT),
         );
       }
@@ -294,13 +295,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
   Future<void> onReopenAssignmentPressed(String assignmentId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: 'Reopen Assignment',
-      description: 'Are you sure you want to reopen this assignment?',
-      confirmationTitle: 'REOPEN',
+      title: AppLocalizations.of(context).reopen_assignment,
+      description: AppLocalizations.of(context).reopen_assignment_confirmation,
+      confirmationTitle: AppLocalizations.of(context).reopen_btn,
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Reopening Assignment');
+      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).reopening_assignment);
 
       await _model.reopenAssignment(assignmentId);
 
@@ -308,12 +309,12 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       if (_model.isSuccess(_model.REOPEN_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          'Assignment Reopened',
-          'The assignment is reopened now.',
+          AppLocalizations.of(context).assignment_reopened,
+          AppLocalizations.of(context).assignment_reopened_acknowledgement,
         );
       } else if (_model.isError(_model.REOPEN_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context).error,
           _model.errorMessageFor(_model.REOPEN_ASSIGNMENT),
         );
       }
@@ -322,13 +323,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
   Future<void> onStartAssignmentPressed(String assignmentId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: 'Start Assignment',
-      description: 'Are you sure you want to start working on this assignment?',
-      confirmationTitle: 'START',
+      title: AppLocalizations.of(context).start_assignment,
+      description: AppLocalizations.of(context).start_assignment_confirmation,
+      confirmationTitle: AppLocalizations.of(context).start_btn,
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Starting Assignment');
+      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).starting_assignment);
 
       await _model.startAssignment(assignmentId);
 
@@ -336,12 +337,12 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       if (_model.isSuccess(_model.START_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          'Project Created',
-          'Project is successfully created.',
+          AppLocalizations.of(context).project_created,
+          AppLocalizations.of(context).project_created_acknowledgement,
         );
       } else {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context).error,
           _model.errorMessageFor(_model.START_ASSIGNMENT),
         );
       }
@@ -356,7 +357,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         _model.fetchGroupDetails(_recievedGroup.id);
       },
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text('Group Details')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context).group_details)),
         body: Builder(builder: (context) {
           var _items = <Widget>[];
 
@@ -366,7 +367,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
           _items.add(
             _buildSubHeader(
-              title: 'Members',
+              title: AppLocalizations.of(context).members,
               onAddPressed: showAddGroupMemberDialog,
             ),
           );
@@ -387,7 +388,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
           _items.add(
             _buildSubHeader(
-              title: 'Assignments',
+              title: AppLocalizations.of(context).assignments,
               onAddPressed: onAddAssignmentPressed,
             ),
           );

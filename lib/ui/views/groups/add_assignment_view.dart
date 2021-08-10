@@ -14,6 +14,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddAssignmentView extends StatefulWidget {
   static const String id = 'add_assignment_view';
@@ -43,8 +44,8 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
 
   Widget _buildNameInput() {
     return CVTextField(
-      label: 'Name',
-      validator: (name) => name.isEmpty ? 'Please enter a valid name' : null,
+      label: AppLocalizations.of(context).name,
+      validator: (name) => name.isEmpty ? AppLocalizations.of(context).enter_valid_email : null,
       onSaved: (name) => _name = name.trim(),
       action: TextInputAction.done,
     );
@@ -68,7 +69,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: DateTime.now().add(Duration(days: 7)),
         decoration: CVTheme.textFieldDecoration.copyWith(
-          labelText: 'Deadline',
+          labelText: AppLocalizations.of(context).deadline,
         ),
         onShowPicker: (context, currentValue) async {
           final date = await showDatePicker(
@@ -99,7 +100,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       child: DropdownButtonFormField<String>(
         key: Key('cv_assignment_grading_dropdown'),
         decoration: CVTheme.textFieldDecoration.copyWith(
-          labelText: 'Grading Scale',
+          labelText: AppLocalizations.of(context).grading_scale,
         ),
         value: _gradingScale,
         onChanged: (String value) {
@@ -123,12 +124,12 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       child: CheckboxListTile(
         value: _isRestrictionEnabled,
         title: Text(
-          'Elements restriction',
+          AppLocalizations.of(context).elements_restriction,
           style: Theme.of(context).textTheme.headline6.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),
-        subtitle: Text('Enable elements restriction'),
+        subtitle: Text(AppLocalizations.of(context).enable_element_restriction),
         onChanged: (value) {
           setState(() {
             _isRestrictionEnabled = value;
@@ -193,7 +194,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: CVPrimaryButton(
-        title: 'Create Assignment',
+        title: AppLocalizations.of(context).create_assignment,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -204,7 +205,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       FocusScope.of(context).requestFocus(FocusNode());
 
       // Shows progress dialog..
-      _dialogService.showCustomProgressDialog(title: 'Adding..');
+      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).adding);
 
       // [ISSUE] [html_editor] Throws error in Tests
       var _descriptionEditorText;
@@ -213,7 +214,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
             await _descriptionEditor.currentState.getText();
       } on NoSuchMethodError {
         print(
-            'Handled html_editor error. NOTE: This should only throw during tests.');
+            AppLocalizations.of(context).handled_html_editor_error);
         _descriptionEditorText = '';
       }
 
@@ -236,13 +237,13 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
 
         // Show success snackbar..
         SnackBarUtils.showDark(
-          'Assignment Added',
-          'New assignment was successfully added.',
+          AppLocalizations.of(context).assignment_added,
+          AppLocalizations.of(context).assignment_added_acknowledgement,
         );
       } else if (_model.isError(_model.ADD_ASSIGNMENT)) {
         // Show failure snackbar
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context).error,
           _model.errorMessageFor(_model.ADD_ASSIGNMENT),
         );
         _formKey.currentState.reset();
@@ -255,7 +256,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return BaseView<AddAssignmentViewModel>(
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text('Add Assignment')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context).add_assignment)),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Form(

@@ -17,6 +17,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpdateAssignmentView extends StatefulWidget {
   static const String id = 'update_assignment_view';
@@ -48,8 +49,8 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   Widget _buildNameInput() {
     return CVTextField(
       initialValue: widget.assignment.attributes.name,
-      label: 'Name',
-      validator: (name) => name.isEmpty ? 'Please enter a valid name' : null,
+      label: AppLocalizations.of(context).name,
+      validator: (name) => name.isEmpty ? AppLocalizations.of(context).enter_valid_name : null,
       onSaved: (name) => _name = name.trim(),
     );
   }
@@ -72,7 +73,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: widget.assignment.attributes.deadline,
         decoration: CVTheme.textFieldDecoration.copyWith(
-          labelText: 'Deadline',
+          labelText: AppLocalizations.of(context).deadline,
         ),
         onShowPicker: (context, currentValue) async {
           final date = await showDatePicker(
@@ -103,12 +104,12 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       child: CheckboxListTile(
         value: _isRestrictionEnabled,
         title: Text(
-          'Elements restriction',
+          AppLocalizations.of(context).elements_restriction,
           style: Theme.of(context).textTheme.headline6.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),
-        subtitle: Text('Enable elements restriction'),
+        subtitle: Text(AppLocalizations.of(context).enable_element_restriction),
         onChanged: (value) {
           setState(() {
             _isRestrictionEnabled = value;
@@ -172,7 +173,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: CVPrimaryButton(
-        title: 'Update Assignment',
+        title: AppLocalizations.of(context).update_assignment,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -183,7 +184,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       FocusScope.of(context).requestFocus(FocusNode());
 
       // Shows progress dialog..
-      _dialogService.showCustomProgressDialog(title: 'Updating..');
+      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).updating);
 
       // [ISSUE] [html_editor] Throws error in Tests
       var _descriptionEditorText;
@@ -192,7 +193,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
             await _descriptionEditor.currentState.getText();
       } on NoSuchMethodError {
         print(
-            'Handled html_editor error. NOTE: This should only throw during tests.');
+            AppLocalizations.of(context).handled_html_editor_error);
         _descriptionEditorText = '';
       }
 
@@ -210,12 +211,12 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         await Future.delayed(Duration(seconds: 1));
         Get.back(result: _model.updatedAssignment);
         SnackBarUtils.showDark(
-          'Assignment Updated',
-          'Assignment was updated successfully',
+          AppLocalizations.of(context).assignment_updated,
+          AppLocalizations.of(context).assignment_updated_acknowledgement,
         );
       } else if (_model.isError(_model.UPDATE_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context).error,
           _model.errorMessageFor(_model.UPDATE_ASSIGNMENT),
         );
       }
@@ -227,7 +228,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     return BaseView<UpdateAssignmentViewModel>(
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text('Update Assignment')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context).update_assignment)),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Form(

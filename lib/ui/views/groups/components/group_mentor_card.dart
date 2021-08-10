@@ -4,6 +4,7 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/group_details_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GroupMentorCard extends StatefulWidget {
   final Group group;
@@ -51,7 +52,7 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Text(
-              'Total Members: ${widget.group.attributes.memberCount}',
+              AppLocalizations.of(context).total_member_group,
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
@@ -63,21 +64,21 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
                   onPressed: () =>
                       Get.toNamed(GroupDetailsView.id, arguments: widget.group),
                   color: CVTheme.primaryColor,
-                  title: 'View',
+                  title: AppLocalizations.of(context).view,
                 ),
               ),
               Flexible(
                 child: CardButton(
                   onPressed: widget.onEdit,
                   color: CVTheme.blue,
-                  title: 'Edit',
+                  title: AppLocalizations.of(context).edit,
                 ),
               ),
               Flexible(
                 child: CardButton(
                   onPressed: widget.onDelete,
                   color: CVTheme.red,
-                  title: 'Delete',
+                  title: AppLocalizations.of(context).delete,
                 ),
               ),
             ],

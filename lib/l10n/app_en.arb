@@ -9,6 +9,9 @@
   "@cv_landing_view": {
   },
   "groups": "Groups",
+  "@groups": {
+    "@my_groups_view": {}
+  },
   "profile": "Profile",
   "featured_circuits": "Featured Circuits",
   "logout": "Log Out",
@@ -222,7 +225,9 @@
   "enter_valid_email": "Please enter a valid email",
   "@enter_valid_email": {
     "@login_view":{},
-    "@signup_view": {}
+    "@signup_view": {},
+    "@add_assignment_view": {},
+    "@group_details_view": {}
   },
   "sending_status": "Sending..",
   "send_instructions_btn": "SEND INSTRUCTIONS",
@@ -240,7 +245,14 @@
   "error": "Error",
   "@error": {
     "@login_view": {},
-    "@signup_view": {}
+    "@signup_view": {},
+    "@add_assignment_view": {},
+    "@assignment_details_view": {},
+    "@edit_group_view": {},
+    "@group_details_view": {},
+    "@my_group_view": {},
+    "@new_group_view": {},
+    "@update_assignment_view": {}
   },
   "@login_view": {
   },
@@ -258,10 +270,192 @@
   "@signup_view": {
   },
   "name": "Name",
+  "@name": {
+    "@add_assignment_view": {},
+    "@assignment_details_view": {},
+    "@update_assignment_view": {}
+  },
   "name_cant_be_empty": "Name can't be empty",
   "register": "REGISTER",
   "if_already_registered": "Already Registered? ",
   "signup_successful": "Signup Successful",
-  "welcome_to_cv": "Welcome to CircuitVerse!"
+  "welcome_to_cv": "Welcome to CircuitVerse!",
+  "@assignment_card": {
+  },
+  "show": "Show",
+  "edit": "Edit",
+  "@edit": {
+    "@group_mentor_card": {},
+    "@assignment_details_view": {},
+    "@group_details_view": {}
+  },
+  "reopen": "Reopen",
+  "delete": "Delete",
+  "@delete": {
+    "@group_mentor_card": {},
+    "@assignment_details_view": {}
+  },
+  "view_submission": "View Submission",
+  "not_submitted": "Not Submitted!",
+  "view_your_work": "View Your Work",
+  "start_working": "Start Working",
+  "no_name": "No Name",
+  "@no_name": {
+    "@member_card": {}
+  },
+  "grading": "Grading",
+  "deadline": "Deadline",
+    "@deadline": {
+    "@add_assignment_view": {},
+    "@assignment_details_view": {},
+    "@update_assignment_view": {}
+  },
+  "@group_member_card":{
+  },
+  "total_members": "Total Members: ${group.attributes.memberCount}",
+  "view": "View",
+  "@view": {
+    "@group_mentor_card": {}
+  },
+  "@group_mentor_card": {
+  },
+  "total_member_group": "Total Members: ${widget.group.attributes.memberCount}",
+  "@member_card": {
+  },
+  "no_mail": "No Email",
+  "@add_assignment_view": {
+  },
+  "grading_scale": "Grading Scale",
+  "elements_restriction": "Elements restriction",
+  "@elements_restriction": {
+    "@update_assignment_view": {}
+  },
+  "enable_element_restriction": "Enable elements restriction",
+  "@enable_element_restriction": {
+    "@update_assignment_view": {}
+  },
+
+  "create_assignment": "Create Assignment",
+  "adding": "Adding..",
+  "@adding": {
+    "@group_details_view": {}
+  },
+  "handled_html_editor_error": "Handled html_editor error. NOTE: This should only throw during tests.",
+  "@handled_html_editor_error": {
+    "@update_assignment_view": {}
+  },
+  "assignment_added": "Assignment Added",
+  "assignment_added_acknowledgement": "New assignment was successfully added.",
+  "add_assignment": "Add Assignment",
+  "@assignment_details_view": {
+  },
+  "not_applicable": "N.A",
+  "description": "Description",
+  "submission": "Submissions : ",
+  "no_submissions_yet": "No Submissions yet!",
+  "adding_grades": "Adding Grades",
+  "project_graded": "Project Graded Successfully",
+  "project_graded_acknowledgement": "You have graded the project.",
+  "updating_grade": "Updating Grade",
+  "grade_updated": "Grade updated Successfully",
+  "grade_updated_acknowledgement": "Grade has been updated successfully.",
+  "delete_grade": "Delete Grade",
+  "delete_grade_confirmation": "Are you sure you want to delete the grade?",
+  "delete_btn": "DELETE",
+  "@delete_btn": {
+    "@group_details_view": {},
+    "@my_group_view": {}
+  },
+  "deleting_grade": "Deleting Grade",
+  "grade_deleted": "Grade Deleted",
+  "grade_deleted_acknowledgement": "Grade has been removed successfully.",
+  "grades_and_remarks": "Grades & Remarks",
+  "grade": "Grade",
+  "grade_cant_be_empty": "Grade can't be empty",
+  "remarks": "Remarks",
+  "update": "Update",
+  "submit": "Submit",
+  "assignment_details": "Assignment Details",
+  "time_remaining": "Time Remaining",
+  "restricted_elements": "Restricted Elements",
+  "@edit_group_view": {
+  },
+  "updating": "Updating..",
+  "@updating": {
+    "@update_assignment_view": {}
+  },
+  "group_updated": "Group Updated",
+  "group_updated_acknowledgement": "Group has been successfully updated.",
+  "edit_group": "EDIT GROUP",
+  "edit_group_description": "You can update Group details here. Don't leave the Group Name blank.",
+  "group_name": "Group Name",
+  "@group_name": {
+    "@new_group_view": {}
+  },
+  "enter_group_name": "Please enter a Group Name",
+    "@enter_group_name": {
+    "@new_group_view": {}
+  },
+  "save": "Save",
+  "@group_details_view": {
+  },
+  "mentor": "Mentor : ",
+  "group_member_added": "Group Members Added",
+  "add_group_members": "Add Group Members",
+  "enter_email_ids": "Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.",
+  "email_ids": "Email Ids",
+  "cancel_btn": "CANCEL",
+  "add_btn": "ADD",
+  "remove_group_member": "Remove Group Member",
+  "remove_group_member_confirmation": "Are you sure you want to remove this group member?",
+  "remove_btn": "REMOVE",
+  "removing": "Removing",
+  "group_member_removed": "Group Member Removed",
+  "group_member_removed_acknowledgement": "Successfully removed group member.",
+  "add_btn_primary": "+ Add",
+  "delete_assignment": "Delete Assignment",
+  "delete_assignment_confirmation": "Are you sure you want to delete this assignment?",
+  "deleting_assignment": "Deleting Assignment",
+  "assignment_deleted": "Assignment Deleted",
+  "assignment_deleted_acknowledgement": "The assignment was successfully deleted.",
+  "reopen_assignment": "Reopen Assignment",
+  "reopen_assignment_confirmation": "Are you sure you want to reopen this assignment?",
+  "reopen_btn": "REOPEN",
+  "reopening_assignment": "Reopening Assignment",
+  "assignment_reopened": "Assignment Reopened",
+  "assignment_reopened_acknowledgement": "The assignment is reopened now.",
+  "start_assignment": "Start Assignment",
+  "start_assignment_confirmation": "Are you sure you want to start working on this assignment?",
+  "start_btn": "START",
+  "starting_assignment": "Starting Assignment",
+  "project_created": "Project Created",
+  "project_created_acknowledgement": "Project is successfully created.",
+  "group_details": "Group Details",
+  "members": "Members",
+  "assignments": "Assignments",
+  "@my_group_view": {
+  },
+  "delete_group": "Delete Group",
+  "delete_group_confirmation": "Are you sure you want to delete this group?",
+  "deleting_group": "Deleting Group",
+  "group_deleted": "Group Deleted",
+  "group_deleted_acknowledgement": "Group was successfully deleted.",
+  "create_new_group": "+ Make New Group",
+  "groups_you_mentor": "Groups You Mentor",
+  "groups_you_belong_to": "Groups You're in",
+  "@new_group_view": {
+  },
+  "creating": "Creating..",
+  "group_created": "Group Created",
+  "group_created_acknowledgement": "New group was created successfully.",
+  "new_group": "NEW GROUP",
+  "new_group_description": "Groups an be used by mentors to set projects for and give grades to students.",
+  "save_btn": "SAVE",
+  "@update_assignment_view": {
+  },
+  "enter_valid_name": "Please enter a valid name",
+  "update_assignment": "Update Assignment",
+  "assignment_updated": "Assignment Updated",
+  "assignment_updated_acknowledgement": "Assignment was updated successfully"
 
 }
