@@ -13,6 +13,9 @@
     "@my_groups_view": {}
   },
   "profile": "प्रोफ़ाइल",
+  "@profile": {
+    "@profile_view": {}
+  },
   "featured_circuits": "विशेष रुप से प्रदर्शित सर्किट",
   "logout": "लॉग आउट करे",
   "logout_confirmation": "क्या आप लॉग आउट करना चाहते हैं?",
@@ -243,7 +246,7 @@
   "instructions_sent_confirmation": "निर्देश $_email पर भेजे गए।",
   "instructions_sent_acknowledgement": "पासवर्ड रीसेट लिंक के लिए कृपया अपना मेल जांचें।",
   "error": "कुछ एरर आया",
-  "@error": {
+   "@error": {
     "@login_view": {},
     "@signup_view": {},
     "@add_assignment_view": {},
@@ -252,7 +255,8 @@
     "@group_details_view": {},
     "@my_group_view": {},
     "@new_group_view": {},
-    "@update_assignment_view": {}
+    "@update_assignment_view": {},
+    "@edit_profile_view": {}
   },
   "@login_view": {
   },
@@ -273,9 +277,13 @@
   "@name": {
     "@add_assignment_view": {},
     "@assignment_details_view": {},
-    "@update_assignment_view": {}
+    "@update_assignment_view": {},
+    "@edit_profile_view": {}
   },
   "name_cant_be_empty": "नाम खाली नहीं रखा जा सकता",
+  "@name_cant_be_empty": {
+    "@edit_profile_view": {}
+  },
   "register": "रजिस्टर करें",
   "if_already_registered": "पहले से ही रजिस्टर्ड है ? ",
   "signup_successful": "साइन अप सफल हुआ",
@@ -349,7 +357,10 @@
   "add_assignment": "असाइनमेंट ऐड करे",
   "@assignment_details_view": {
   },
-  "not_applicable": "यह लागू नहीं है",
+  "not_available": "उपलब्ध नहीं है",
+  "@not_available": {
+    "@profile_view": {}
+  },
   "description": "विवरण",
   "submission": "सबमिशन: ",
   "no_submissions_yet": "अभी तक कोई सबमिशन नहीं!",
@@ -382,7 +393,8 @@
   },
   "updating": "अपडेट किया जा रहा है",
   "@updating": {
-    "@update_assignment_view": {}
+    "@update_assignment_view": {},
+    "edit_profile_view": {}
   },
   "group_updated": "समूह अपडेट किया गया",
   "group_updated_acknowledgement": "समूह को सफलतापूर्वक अपडेट कर दिया गया है।",
@@ -456,7 +468,28 @@
   "enter_valid_name": "कृपया कोई मान्य नाम दर्ज करें",
   "update_assignment": "असाइनमेंट अपडेट करे",
   "assignment_updated": "असाइनमेंट अपडेट किया गया",
-  "assignment_updated_acknowledgement": "असाइनमेंट सफलतापूर्वक अपडेट किया गया"
-
+  "assignment_updated_acknowledgement": "असाइनमेंट सफलतापूर्वक अपडेट किया गया",
+  "@edit_profile_view": {
+  },
+  "country": "देश",
+  "@country": {
+    "@profile_view": {}
+  },
+  "educational_institute": "शैक्षिक संस्थान",
+  "@educational_institute": {
+    "@profile_view": {}
+  },
+  "if_subscribed_to_mails": "मेल की सदस्यता लें?",
+  "profile_updated": "प्रोफाइल अपडेट की गयी",
+  "profile_updated_acknowledgement": "आपकी प्रोफ़ाइल सफलतापूर्वक अपडेट कर दी गई है",
+  "save_details": "विवरण सेव करे",
+  "update_profile": "प्रोफाइल अपडेट करे",
+  "@profile_view": {
+  },
+  "edit_profile": "प्रोफ़ाइल एडिट करे",
+  "joined": "सदस्यता",
+  "subscribed_to_mails": "मेल की सदस्यता",
+  "circuits": "सर्किट",
+  "favourites": "पसंदीदा सर्किट"
 
 }

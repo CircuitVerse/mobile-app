@@ -11,6 +11,7 @@ import 'package:mobile_app/ui/views/profile/user_projects_view.dart';
 import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfileView extends StatefulWidget {
   static const String id = 'profile_view';
@@ -47,7 +48,7 @@ class _ProfileViewState extends State<ProfileView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Text(
-        _model?.user?.data?.attributes?.name ?? 'N.A',
+        _model?.user?.data?.attributes?.name ?? AppLocalizations.of(context).not_available,
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -73,7 +74,7 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
             ),
             TextSpan(
-              text: description?.isEmpty ?? true ? 'N.A' : description,
+              text: description?.isEmpty ?? true ? AppLocalizations.of(context).not_available : description,
             )
           ],
         ),
@@ -98,7 +99,7 @@ class _ProfileViewState extends State<ProfileView> {
           }
         },
         child: Text(
-          'Edit Profile',
+          AppLocalizations.of(context).edit_profile,
           style: Theme.of(context).textTheme.bodyText1.copyWith(
                 color: Colors.white,
               ),
@@ -136,21 +137,21 @@ class _ProfileViewState extends State<ProfileView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   _buildProfileComponent(
-                    'Joined',
+                    AppLocalizations.of(context).joined,
                     _attrs?.createdAt != null
                         ? timeago.format(_attrs.createdAt)
                         : null,
                   ),
                   _buildProfileComponent(
-                    'Country',
+                    AppLocalizations.of(context).country,
                     _attrs?.country,
                   ),
                   _buildProfileComponent(
-                    'Educational Institute',
+                    AppLocalizations.of(context).educational_institute,
                     _attrs?.educationalInstitute,
                   ),
                   _buildProfileComponent(
-                    'Subscribed to mails',
+                    AppLocalizations.of(context).subscribed_to_mails,
                     _attrs?.subscribed.toString(),
                   ),
                   _buildEditProfileButton()
@@ -184,8 +185,8 @@ class _ProfileViewState extends State<ProfileView> {
                   borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
                 ),
                 tabs: [
-                  Tab(text: 'Circuits'),
-                  Tab(text: 'Favourites'),
+                  Tab(text: AppLocalizations.of(context).circuits),
+                  Tab(text: AppLocalizations.of(context).favourites),
                 ],
               ),
             ),
@@ -211,7 +212,7 @@ class _ProfileViewState extends State<ProfileView> {
       builder: (context, model, child) => Scaffold(
         appBar: widget.userId != null
             ? AppBar(
-                title: Text('Profile'),
+                title: Text(AppLocalizations.of(context).profile),
                 centerTitle: true,
               )
             : null,

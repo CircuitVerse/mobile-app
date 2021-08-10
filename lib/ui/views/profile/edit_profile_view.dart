@@ -11,6 +11,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../components/cv_typeahead_field.dart';
 
@@ -50,9 +51,9 @@ class _EditProfileViewState extends State<EditProfileView> {
 
   Widget _buildNameInput() {
     return CVTextField(
-      label: 'Name',
+      label: AppLocalizations.of(context).name,
       initialValue: _name,
-      validator: (value) => value.isEmpty ? "Name can't be empty" : null,
+      validator: (value) => value.isEmpty ? AppLocalizations.of(context).name_cant_be_empty : null,
       onSaved: (value) => _name = value.trim(),
       onFieldSubmitted: (_) =>
           FocusScope.of(context).requestFocus(_nameFocusNode),
@@ -62,7 +63,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget _buildCountryField() {
     return CVTypeAheadField(
       focusNode: _nameFocusNode,
-      label: 'Country',
+      label: AppLocalizations.of(context).country,
       controller: TextEditingController(text: _country),
       onSaved: (value) => _country = (value != '') ? value.trim() : '',
       onFieldSubmitted: () {
@@ -77,7 +78,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget _buildInstituteField() {
     return CVTypeAheadField(
       focusNode: _countryFocusNode,
-      label: 'Educational Institute',
+      label: AppLocalizations.of(context).educational_institute,
       controller: TextEditingController(text: _educationalInstitute),
       onSaved: (value) =>
           _educationalInstitute = (value != '') ? value.trim() : '',
@@ -90,7 +91,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget _buildSubscribedField() {
     return CheckboxListTile(
       value: _subscribed,
-      title: Text('Subscribe to mails?'),
+      title: Text(AppLocalizations.of(context).if_subscribed_to_mails),
       onChanged: (value) => setState(() {
         _subscribed = value;
       }),
@@ -101,7 +102,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      _dialogService.showCustomProgressDialog(title: 'Updating..');
+      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).updating);
 
       await _model.updateProfile(
           _name, _educationalInstitute, _country, _subscribed);
@@ -112,12 +113,12 @@ class _EditProfileViewState extends State<EditProfileView> {
         await Future.delayed(Duration(seconds: 1));
         Get.back(result: _model.updatedUser);
         SnackBarUtils.showDark(
-          'Profile Updated',
-          'Your profile was successfully updated.',
+          AppLocalizations.of(context).profile_updated,
+          AppLocalizations.of(context).profile_updated_acknowledgement,
         );
       } else if (_model.isError(_model.UPDATE_PROFILE)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context).error,
           _model.errorMessageFor(_model.UPDATE_PROFILE),
         );
       }
@@ -128,7 +129,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: CVPrimaryButton(
-        title: 'Save Details',
+        title: AppLocalizations.of(context).save_details,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -139,7 +140,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     return BaseView<EditProfileViewModel>(
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text('Update Profile')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context).update_profile)),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Form(

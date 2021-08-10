@@ -121,7 +121,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             ),
             TextSpan(
               text: description.isEmpty || description == null
-                  ? AppLocalizations.of(context).not_applicable
+                  ? AppLocalizations.of(context).not_available
                   : description,
               style: TextStyle(fontSize: 18),
             )

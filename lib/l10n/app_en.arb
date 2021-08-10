@@ -13,6 +13,9 @@
     "@my_groups_view": {}
   },
   "profile": "Profile",
+  "@profile": {
+    "@profile_view": {}
+  },
   "featured_circuits": "Featured Circuits",
   "logout": "Log Out",
   "logout_confirmation": "Are you sure you want to logout?",
@@ -252,7 +255,8 @@
     "@group_details_view": {},
     "@my_group_view": {},
     "@new_group_view": {},
-    "@update_assignment_view": {}
+    "@update_assignment_view": {},
+    "@edit_profile_view": {}
   },
   "@login_view": {
   },
@@ -273,9 +277,13 @@
   "@name": {
     "@add_assignment_view": {},
     "@assignment_details_view": {},
-    "@update_assignment_view": {}
+    "@update_assignment_view": {},
+    "@edit_profile_view": {}
   },
   "name_cant_be_empty": "Name can't be empty",
+  "@name_cant_be_empty": {
+    "@edit_profile_view": {}
+  },
   "register": "REGISTER",
   "if_already_registered": "Already Registered? ",
   "signup_successful": "Signup Successful",
@@ -349,7 +357,10 @@
   "add_assignment": "Add Assignment",
   "@assignment_details_view": {
   },
-  "not_applicable": "N.A",
+  "not_available": "N.A",
+  "@not_available": {
+    "@profile_view": {}
+  },
   "description": "Description",
   "submission": "Submissions : ",
   "no_submissions_yet": "No Submissions yet!",
@@ -382,7 +393,8 @@
   },
   "updating": "Updating..",
   "@updating": {
-    "@update_assignment_view": {}
+    "@update_assignment_view": {},
+    "edit_profile_view": {}
   },
   "group_updated": "Group Updated",
   "group_updated_acknowledgement": "Group has been successfully updated.",
@@ -456,6 +468,28 @@
   "enter_valid_name": "Please enter a valid name",
   "update_assignment": "Update Assignment",
   "assignment_updated": "Assignment Updated",
-  "assignment_updated_acknowledgement": "Assignment was updated successfully"
+  "assignment_updated_acknowledgement": "Assignment was updated successfully",
+  "@edit_profile_view": {
+  },
+  "country": "Country",
+  "@country": {
+    "@profile_view": {}
+  },
+  "educational_institute": "Educational Institute",
+  "@educational_institute": {
+    "@profile_view": {}
+  },
+  "if_subscribed_to_mails": "Subscribe to mails?",
+  "profile_updated": "Profile Updated",
+  "profile_updated_acknowledgement": "Your profile was successfully updated.",
+  "save_details": "Save Details",
+  "update_profile": "Update Profile",
+  "@profile_view": {
+  },
+  "edit_profile": "Edit Profile",
+  "joined": "Joined",
+  "subscribed_to_mails": "Subscribed to mails",
+  "circuits": "Circuits",
+  "favourites": "Favourites"
 
 }
