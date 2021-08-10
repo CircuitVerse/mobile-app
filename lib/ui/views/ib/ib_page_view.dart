@@ -8,8 +8,10 @@ import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
+import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_chapter_contents_builder.dart';
+import 'package:mobile_app/ui/views/ib/builders/ib_headings_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_interaction_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_mathjax_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_pop_quiz_builder.dart';
@@ -24,6 +26,7 @@ import 'package:mobile_app/ui/views/ib/syntaxes/ib_mathjax_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_md_tag_syntax.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 typedef TocCallback = void Function(Function);
@@ -48,14 +51,17 @@ class IbPageView extends StatefulWidget {
 
 class _IbPageViewState extends State<IbPageView> {
   IbPageViewModel _model;
-  ScrollController _hideButtonController;
+  AutoScrollController _hideButtonController;
   bool _isFabsVisible = true;
+
+  /// To track index through slug for scroll_to_index
+  final Map<String, int> _slugMap = {};
 
   @override
   void initState() {
     super.initState();
     _isFabsVisible = true;
-    _hideButtonController = ScrollController();
+    _hideButtonController = AutoScrollController(axis: Axis.vertical);
     _hideButtonController.addListener(() {
       if (_hideButtonController.position.userScrollDirection ==
           ScrollDirection.reverse) {
@@ -130,6 +136,12 @@ class _IbPageViewState extends State<IbPageView> {
 
   Widget _buildMarkdown(IbMd data) {
     final _selectable = false;
+    final _headingsBuilder = IbHeadingsBuilder(
+      slugMap: _slugMap,
+      controller: _hideButtonController,
+      selectable: _selectable,
+    );
+
     final _inlineBuilders = {
       'sup': IbSuperscriptBuilder(selectable: _selectable),
       'sub': IbSubscriptBuilder(selectable: _selectable),
@@ -143,6 +155,12 @@ class _IbPageViewState extends State<IbPageView> {
       imageBuilder: _buildMarkdownImage,
       onTapLink: _onTapLink,
       blockBuilders: {
+        'h1': _headingsBuilder,
+        'h2': _headingsBuilder,
+        'h3': _headingsBuilder,
+        'h4': _headingsBuilder,
+        'h5': _headingsBuilder,
+        'h6': _headingsBuilder,
         'chapter_contents': IbChapterContentsBuilder(
             chapterContents: _model.pageData?.chapterOfContents?.isNotEmpty ??
                     false
@@ -213,7 +231,15 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
-  Widget _buildTocListTile(String content,
+  Future _onTocListTileTap(String title) async {
+    var slug = IbEngineService.getSlug(title);
+
+    Navigator.pop(context);
+    await _hideButtonController.scrollToIndex(_slugMap[slug],
+        preferPosition: AutoScrollPosition.begin);
+  }
+
+  Widget _buildTocListTile(String leading, String content,
       {bool root = true, bool padding = true}) {
     if (!root) {
       return ListTile(
@@ -221,14 +247,16 @@ class _IbPageViewState extends State<IbPageView> {
         visualDensity: !padding ? VisualDensity(vertical: -3) : null,
         contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
         minLeadingWidth: 20,
-        title: Text(content),
+        title: Text('$leading $content'),
+        onTap: () async => _onTocListTileTap(content),
       );
     }
 
     return ListTile(
       visualDensity: !padding ? VisualDensity(vertical: -3) : null,
       contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
-      title: Text(content),
+      title: Text('$leading $content'),
+      onTap: () async => _onTocListTileTap(content),
     );
   }
 
@@ -236,6 +264,7 @@ class _IbPageViewState extends State<IbPageView> {
       {bool root = false, bool padding = true}) {
     var items = <Widget>[
       _buildTocListTile(
+        item.leading,
         item.content,
         root: root,
         padding: padding,

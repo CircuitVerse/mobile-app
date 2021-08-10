@@ -126,32 +126,70 @@ void main() {
             content: [],
             tableOfContents: [
               IbTocItem(
-                content: '1. About this guidelines',
-                items: [
-                  IbTocItem(content: 'a. Revision history'),
-                  IbTocItem(content: 'b. Purpose of the guidelines'),
-                  IbTocItem(content: 'c. Acknowledgements'),
-                ],
-              ),
-              IbTocItem(content: '2. Workflow'),
-              IbTocItem(
-                content: '3. Licensing',
+                leading: '1.',
+                content: 'About this guidelines',
                 items: [
                   IbTocItem(
-                      content:
-                          'a. Non-free materials and special requirements'),
-                  IbTocItem(content: 'b. Linking to copyrighted works'),
+                    leading: 'a.',
+                    content: 'Revision history',
+                  ),
+                  IbTocItem(
+                    leading: 'b.',
+                    content: 'Purpose of the guidelines',
+                  ),
+                  IbTocItem(
+                    leading: 'c.',
+                    content: 'Acknowledgements',
+                  ),
                 ],
               ),
-              IbTocItem(content: '4. Proposing a contribution'),
-              IbTocItem(content: '5. Editing existing content'),
-              IbTocItem(content: '6. Writing content'),
-              IbTocItem(content: '7. Style manual'),
-              IbTocItem(content: '8. Templates and examples'),
               IbTocItem(
-                  content:
-                      '9. Code of conduct, interacting with the community / etiquette'),
-              IbTocItem(content: '10. Tools'),
+                leading: '2.',
+                content: 'Workflow',
+              ),
+              IbTocItem(
+                leading: '3.',
+                content: 'Licensing',
+                items: [
+                  IbTocItem(
+                    leading: 'a.',
+                    content: 'Non-free materials and special requirements',
+                  ),
+                  IbTocItem(
+                    leading: 'b.',
+                    content: 'Linking to copyrighted works',
+                  ),
+                ],
+              ),
+              IbTocItem(
+                leading: '4.',
+                content: 'Proposing a contribution',
+              ),
+              IbTocItem(
+                leading: '5.',
+                content: 'Editing existing content',
+              ),
+              IbTocItem(
+                leading: '6.',
+                content: 'Writing content',
+              ),
+              IbTocItem(
+                leading: '7.',
+                content: 'Style manual',
+              ),
+              IbTocItem(
+                leading: '8.',
+                content: 'Templates and examples',
+              ),
+              IbTocItem(
+                leading: '9.',
+                content:
+                    'Code of conduct, interacting with the community / etiquette',
+              ),
+              IbTocItem(
+                leading: '10.',
+                content: 'Tools',
+              ),
             ]);
 
         var _ibApi = getAndRegisterIbApiMock();
@@ -169,45 +207,73 @@ void main() {
         expect(_actualResult.tableOfContents.length,
             _expectedResult.tableOfContents.length);
 
-        // [TODO] Tests for Content
-
         expect(_actualResult.tableOfContents[0].content,
             _expectedResult.tableOfContents[0].content);
+        expect(_actualResult.tableOfContents[0].leading,
+            _expectedResult.tableOfContents[0].leading);
         expect(_actualResult.tableOfContents[0].items.length,
             _expectedResult.tableOfContents[0].items.length);
         expect(_actualResult.tableOfContents[0].items[0].content,
             _expectedResult.tableOfContents[0].items[0].content);
+        expect(_actualResult.tableOfContents[0].items[0].leading,
+            _expectedResult.tableOfContents[0].items[0].leading);
         expect(_actualResult.tableOfContents[0].items[1].content,
             _expectedResult.tableOfContents[0].items[1].content);
+        expect(_actualResult.tableOfContents[0].items[1].leading,
+            _expectedResult.tableOfContents[0].items[1].leading);
         expect(_actualResult.tableOfContents[0].items[2].content,
             _expectedResult.tableOfContents[0].items[2].content);
+        expect(_actualResult.tableOfContents[0].items[2].leading,
+            _expectedResult.tableOfContents[0].items[2].leading);
 
         expect(_actualResult.tableOfContents[1].content,
             _expectedResult.tableOfContents[1].content);
+        expect(_actualResult.tableOfContents[1].leading,
+            _expectedResult.tableOfContents[1].leading);
 
         expect(_actualResult.tableOfContents[2].content,
             _expectedResult.tableOfContents[2].content);
+        expect(_actualResult.tableOfContents[2].leading,
+            _expectedResult.tableOfContents[2].leading);
         expect(_actualResult.tableOfContents[2].items.length,
             _expectedResult.tableOfContents[2].items.length);
         expect(_actualResult.tableOfContents[2].items[0].content,
             _expectedResult.tableOfContents[2].items[0].content);
+        expect(_actualResult.tableOfContents[2].items[0].leading,
+            _expectedResult.tableOfContents[2].items[0].leading);
         expect(_actualResult.tableOfContents[2].items[1].content,
             _expectedResult.tableOfContents[2].items[1].content);
+        expect(_actualResult.tableOfContents[2].items[1].leading,
+            _expectedResult.tableOfContents[2].items[1].leading);
 
         expect(_actualResult.tableOfContents[3].content,
             _expectedResult.tableOfContents[3].content);
+        expect(_actualResult.tableOfContents[3].leading,
+            _expectedResult.tableOfContents[3].leading);
         expect(_actualResult.tableOfContents[4].content,
             _expectedResult.tableOfContents[4].content);
+        expect(_actualResult.tableOfContents[4].leading,
+            _expectedResult.tableOfContents[4].leading);
         expect(_actualResult.tableOfContents[5].content,
             _expectedResult.tableOfContents[5].content);
+        expect(_actualResult.tableOfContents[5].leading,
+            _expectedResult.tableOfContents[5].leading);
         expect(_actualResult.tableOfContents[6].content,
             _expectedResult.tableOfContents[6].content);
+        expect(_actualResult.tableOfContents[6].leading,
+            _expectedResult.tableOfContents[6].leading);
         expect(_actualResult.tableOfContents[7].content,
             _expectedResult.tableOfContents[7].content);
+        expect(_actualResult.tableOfContents[7].leading,
+            _expectedResult.tableOfContents[7].leading);
         expect(_actualResult.tableOfContents[8].content,
             _expectedResult.tableOfContents[8].content);
+        expect(_actualResult.tableOfContents[8].leading,
+            _expectedResult.tableOfContents[8].leading);
         expect(_actualResult.tableOfContents[9].content,
             _expectedResult.tableOfContents[9].content);
+        expect(_actualResult.tableOfContents[9].leading,
+            _expectedResult.tableOfContents[9].leading);
       });
 
       test('When called and throws Failure', () async {
@@ -322,6 +388,20 @@ void main() {
         expect(_expectedResult[2].choices[0], _expectedResult[2].choices[0]);
         expect(_expectedResult[2].choices[1], _expectedResult[2].choices[1]);
         expect(_expectedResult[2].choices[2], _expectedResult[2].choices[2]);
+      });
+    });
+
+    group('getSlug -', () {
+      test('Type 1 - Slug', () {
+        expect(IbEngineService.getSlug('Interactive-Book'), 'interactive-book');
+        expect(IbEngineService.getSlug('Representing real numbers'),
+            'representing-real-numbers');
+      });
+
+      test('Type 2 - Slug', () {
+        expect(IbEngineService.getSlug('The IEEE 754 Standard'),
+            'the-ieee-754-standard');
+        expect(IbEngineService.getSlug('1’s complement'), '1s-complement');
       });
     });
   });
