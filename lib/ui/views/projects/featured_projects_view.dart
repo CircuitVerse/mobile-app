@@ -6,6 +6,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/featured_project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeaturedProjectsView extends StatefulWidget {
   static const String id = 'featured_projects_view';
@@ -47,7 +48,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
             model?.previousFeaturedProjectsBatch?.links?.next != null) {
           _items.add(
             CVPrimaryButton(
-              title: 'Load More',
+              title: AppLocalizations.of(context).load_more,
               onPressed: () => model.fetchFeaturedProjects(),
             ),
           );
@@ -62,15 +63,15 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
         _items.insert(
           0,
           CVHeader(
-            title: 'Editor Picks',
+            title: AppLocalizations.of(context).editor_picks,
             description:
-                'These circuits have been hand-picked by our authors for their awesomeness.',
+                AppLocalizations.of(context).editor_picks_text,
           ),
         );
 
         return Scaffold(
           appBar: widget.showAppBar
-              ? AppBar(title: Text('Featured Circuits'))
+              ? AppBar(title: Text(AppLocalizations.of(context).featured_circuits))
               : null,
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16),

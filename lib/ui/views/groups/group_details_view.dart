@@ -160,7 +160,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                   ),
                 ),
                 Text(
-                  AppLocalizations.of(context).enter_email_ids,
+                  AppLocalizations.of(context).enter_members_email_ids,
                   style: Theme.of(context).textTheme.bodyText1,
                 )
               ],

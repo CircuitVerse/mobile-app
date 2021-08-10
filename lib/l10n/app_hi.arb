@@ -17,6 +17,9 @@
     "@profile_view": {}
   },
   "featured_circuits": "विशेष रुप से प्रदर्शित सर्किट",
+  "@featured_circuits": {
+    "@featured_projects_view": {}
+  },
   "logout": "लॉग आउट करे",
   "logout_confirmation": "क्या आप लॉग आउट करना चाहते हैं?",
   "logout_confirmation_button": "लॉग आउट",
@@ -189,8 +192,14 @@
   "home_sub_circuits_text": "सबसर्किट एक बार बना लें और उनका बार-बार इस्तेमाल करें। यह आसान और अधिक संरचित डिजाइन की अनुमति देता है।",
   "home_multi_bit_buses": "मल्टी बिट बसें और कम्पोनेंट्स",
   "home_multi_bit_buses_text": "सर्किटवर्स मल्टी बिट-वायर का समर्थन करता है, इसका मतलब है कि सर्किट की रचना करना आसान, तेज और व्यवस्थित है।",
-  "home_editor_picks": "संपादक की पसंद",
-  "home_editor_picks_text": "इन सर्किटों को हमारे लेखकों ने उनकी उत्कृष्टता के लिए चुना है",
+  "editor_picks": "संपादक की पसंद",
+  "@editor_picks": {
+    "@featured_projects_view": {}
+  },
+  "editor_picks_text": "इन सर्किटों को हमारे लेखकों ने उनकी उत्कृष्टता के लिए चुना है",
+  "@editor_picks_text": {
+    "@featured_projects_view": {}
+  },
   "home_explore_more": "इसे और अधिक एक्सप्लोर करें",
   "@contributors_view": {
   },
@@ -212,7 +221,7 @@
   "contributors_developer_card_text3": "सर्किटवर्स प्रोजेक्ट में बग ढूंढें और ठीक करें",
   "contributors_become_patreon": "एक पैट्रियन बनें",
   "contributors_donate_via_paypal": "पेपैल के माध्यम से दान करें",
-    "@auth_options_view": {
+  "@auth_options_view": {
   },
   "signup_or_login_with": "  Or {signup_or_login} with  ",
   "google_authentication_error": "गूगल ऑथेंटिकेशन एरर",
@@ -246,7 +255,7 @@
   "instructions_sent_confirmation": "निर्देश $_email पर भेजे गए।",
   "instructions_sent_acknowledgement": "पासवर्ड रीसेट लिंक के लिए कृपया अपना मेल जांचें।",
   "error": "कुछ एरर आया",
-   "@error": {
+  "@error": {
     "@login_view": {},
     "@signup_view": {},
     "@add_assignment_view": {},
@@ -256,12 +265,14 @@
     "@my_group_view": {},
     "@new_group_view": {},
     "@update_assignment_view": {},
-    "@edit_profile_view": {}
+    "@edit_profile_view": {},
+    "@edit_project_view": {},
+    "@project_details_view": {}
   },
   "@login_view": {
   },
   "password_cant_be_empty": "पासवर्ड खाली नहीं रखा जा सकता",
-   "@password_cant_be_empty": {
+  "@password_cant_be_empty": {
     "@signup_view": {}
   },
   "if_forgot_password": "पासवर्ड भूल गए?",
@@ -278,11 +289,13 @@
     "@add_assignment_view": {},
     "@assignment_details_view": {},
     "@update_assignment_view": {},
-    "@edit_profile_view": {}
+    "@edit_profile_view": {},
+    "@edit_project_view": {}
   },
   "name_cant_be_empty": "नाम खाली नहीं रखा जा सकता",
   "@name_cant_be_empty": {
-    "@edit_profile_view": {}
+    "@edit_profile_view": {},
+    "@edit_project_view": {}
   },
   "register": "रजिस्टर करें",
   "if_already_registered": "पहले से ही रजिस्टर्ड है ? ",
@@ -292,16 +305,18 @@
   },
   "show": "दिखाए",
   "edit": "एडिट करे",
-  "@edit": {
+ "@edit": {
     "@group_mentor_card": {},
     "@assignment_details_view": {},
-    "@group_details_view": {}
+    "@group_details_view": {},
+    "@project_details_view": {}
   },
   "reopen": "फिर से खोले",
   "delete": "डिलीट करे",
   "@delete": {
     "@group_mentor_card": {},
-    "@assignment_details_view": {}
+    "@assignment_details_view": {},
+    "@project_details_view": {}
   },
   "view_submission": "सबमिशन देखें",
   "not_submitted": "सबमिट नही किया है!",
@@ -323,7 +338,8 @@
   "total_members": "Total Members: ${group.attributes.memberCount}",
   "view": "देखे",
   "@view": {
-    "@group_mentor_card": {}
+    "@group_mentor_card": {},
+    "@featured_project_card": {}
   },
   "@group_mentor_card": {
   },
@@ -346,7 +362,8 @@
   "create_assignment": "असाइनमेंट बनाएं",
   "adding": "ऐड किया जा रहा है..",
   "@adding": {
-    "@group_details_view": {}
+    "@group_details_view": {},
+    "@project_details_view": {}
   },
   "handled_html_editor_error": "html_editor एरर को संभाला। नोट: यह केवल परीक्षणों के दौरान दिखाना छाए चाहिए।",
   "@handled_html_editor_error": {
@@ -375,7 +392,8 @@
   "delete_btn": "डिलीट करे",
   "@delete_btn": {
     "@group_details_view": {},
-    "@my_group_view": {}
+    "@my_group_view": {},
+    "@project_details_view": {}
   },
   "deleting_grade": "ग्रेड डिलीट कर रहे है",
   "grade_deleted": "ग्रेड डिलीट किया गया",
@@ -394,7 +412,8 @@
   "updating": "अपडेट किया जा रहा है",
   "@updating": {
     "@update_assignment_view": {},
-    "edit_profile_view": {}
+    "edit_profile_view": {},
+    "@edit_project_view": {}
   },
   "group_updated": "समूह अपडेट किया गया",
   "group_updated_acknowledgement": "समूह को सफलतापूर्वक अपडेट कर दिया गया है।",
@@ -414,10 +433,19 @@
   "mentor": "गुरु : ",
   "group_member_added": "समूह के सदस्य ऐड किये गए",
   "add_group_members": "समूह के सदस्यों को ऐड करे",
-  "enter_email_ids": "अल्पविराम से अलग की गई ईमेल आईडी दर्ज करें। यदि उपयोगकर्ता रजिस्टर्ड नहीं हैं, तो उन्हें साइन अप करने का अनुरोध करते हुए एक ईमेल आईडी भेजी जाएगी।",
+  "enter_members_email_ids": "अल्पविराम से अलग की गई ईमेल आईडी दर्ज करें। यदि उपयोगकर्ता रजिस्टर्ड नहीं हैं, तो उन्हें साइन अप करने का अनुरोध करते हुए एक ईमेल आईडी भेजी जाएगी।",
   "email_ids": "ईमेल आईडी",
+  "@email_ids": {
+    "@project_details_view": {}
+  },
   "cancel_btn": "कैंसल",
+  "@cancel_btn": {
+    "@project_details_view": {}
+  },
   "add_btn": "ऐड करे",
+  "@add_btn": {
+    "@project_details_view": {}
+  },
   "remove_group_member": "समूह के सदस्य को हटाएं",
   "remove_group_member_confirmation": "क्या आप वाकई इस समूह सदस्य को हटाना चाहते हैं?",
   "remove_btn": "हटाए",
@@ -490,6 +518,52 @@
   "joined": "सदस्यता",
   "subscribed_to_mails": "मेल की सदस्यता",
   "circuits": "सर्किट",
-  "favourites": "पसंदीदा सर्किट"
+  "favourites": "पसंदीदा सर्किट",
+  "@edit_project_view": {
+  },
+  "tag_list": "टैग लिस्ट",
+  "project_access_type": "प्रोजेक्ट एक्सेस टाइप",
+  "@project_access_type": {
+    "@project_details_view": {}
+  },
+  "choose_project_access_type": "प्रोजेक्ट एक्सेस टाइप चुनें",
+  "project_updated": "परियोजना अपडेट की गयी",
+  "project_updated_acknowledgement": "प्रोजेक्ट को सफलतापूर्वक अपडेट किया गया।",
+  "update_project": "परियोजना अपडेट करे",
+  "edit_project": "Edit ${widget.project.attributes.name}",
+  "@featured_projects_view": {
+  },
+  "load_more": "और लोड करें",
+  "@project_details_view": {
+  },
+  "share": "इसे शेयर करें",
+  "project_stars": " ${_model.starCount} Stars",
+  "project_views": " ${_recievedProject.attributes.view} Views",
+  "author": "रचयिता : ",
+  "description_field": "विवरण : ",
+  "fork_project": "परियोजना फोर्क करे",
+  "fork_project_confirmation": "क्या आप वाकई इस परियोजना को फोर्क करना चाहते हैं?",
+  "fork_btn": "फोर्क करे",
+  "forking": "फोर्क हो रहा है",
+  "fork": "फोर्क करे",
+  "project_starred_or_unstarred": "Project ${_model.isProjectStarred ? 'Starred' : 'Unstarred'}",
+  "project_starred_or_unstarred_acknowledgement": "You have successfully ${_model.isProjectStarred ? 'stared' : 'unstarred'} the project",
+  "collaborators_added": "सहयोगी ऐड किये गए",
+  "add_collaborators": "सहयोगी ऐड करे",
+  "enter_collaborators_email_ids": "अल्पविराम से अलग की गई ईमेल आईडी दर्ज करें। उपयोगकर्ताओं को प्लेटफॉर्म पर पहले से ही रजिस्टर्ड होना आवश्यक है। ध्यान दें कि कोलैबोरेशन अभी रियल टाइम नहीं है । प्रत्येक सेव पिछले डेटा को ओवरराईट कर देती है।",
+  "enter_valid_email_format": "वैध प्रारूप में ईमेल दर्ज करें।",
+  "add_collaborator": "एक सहयोगी ऐड करे",
+  "delete_project": "परियोजना डिलीट करे",
+  "delete_project_confirmation": "क्या आप वाकई इस परियोजना को डिलीट करना चाहते हैं?",
+  "deleting_project": "परियोजना डिलीट कर रहे है",
+  "project_deleted": "परियोजना डिलीट की गयी",
+  "project_deleted_acknowledgement": "परियोजना सफलतापूर्वक डिलीट कर दि गयी है।",
+  "delete_collaborator": "सहयोगी हटाएं",
+  "delete_collaborator_confirmation": "क्या आप वाकई इस सहयोगी को हटाना चाहते हैं?",
+  "deleting": "डिलीट कर रहे है",
+  "collaborator_deleted": "सहयोगी हटाया गया",
+  "collaborator_deleted_acknowledgement": "सहयोगी को सफलतापूर्वक हटा दिया गया",
+  "project_details": "परियोजना का विवरण",
+  "collaborators": "सहयोगी"
 
 }

@@ -4,6 +4,7 @@ import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeaturedProjectCard extends StatefulWidget {
   final Project project;
@@ -74,7 +75,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
             ),
           ),
           CVPrimaryButton(
-            title: 'View',
+            title: AppLocalizations.of(context).view,
             padding: EdgeInsets.all(2),
             onPressed: widget.onViewPressed,
           ),

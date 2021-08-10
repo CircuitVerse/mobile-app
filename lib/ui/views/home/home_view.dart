@@ -115,9 +115,9 @@ class _HomeViewState extends State<HomeView> {
             ),
             SizedBox(height: 16),
             CVSubheader(
-              title: AppLocalizations.of(context).home_editor_picks,
+              title: AppLocalizations.of(context).editor_picks,
               subtitle:
-                  AppLocalizations.of(context).home_editor_picks_text,
+                  AppLocalizations.of(context).editor_picks_text,
             ),
             FeaturedProjectsView(embed: true),
             CVOutlineButton(

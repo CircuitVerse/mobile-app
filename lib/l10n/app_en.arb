@@ -17,6 +17,9 @@
     "@profile_view": {}
   },
   "featured_circuits": "Featured Circuits",
+  "@featured_circuits": {
+    "@featured_projects_view": {}
+  },
   "logout": "Log Out",
   "logout_confirmation": "Are you sure you want to logout?",
   "logout_confirmation_button": "LOGOUT",
@@ -189,8 +192,14 @@
   "home_sub_circuits_text": "Create subcircuits once and use them repeatedly. This allows easier and more structured design.",
   "home_multi_bit_buses": "Multi Bit Buses and components",
   "home_multi_bit_buses_text": "CircuitVerse supports multi bit wires, this means circuit design is easier, faster and uncluttered.",
-  "home_editor_picks": "Editor Picks",
-  "home_editor_picks_text": "These circuits have been hand-picked by our authors for their awesomeness",
+  "editor_picks": "Editor Picks",
+  "@editor_picks": {
+    "@featured_projects_view": {}
+  },
+  "editor_picks_text": "These circuits have been hand-picked by our authors for their awesomeness",
+  "@editor_picks_text": {
+    "@featured_projects_view": {}
+  },
   "home_explore_more": "Explore More",
   "@contributors_view": {
   },
@@ -256,12 +265,14 @@
     "@my_group_view": {},
     "@new_group_view": {},
     "@update_assignment_view": {},
-    "@edit_profile_view": {}
+    "@edit_profile_view": {},
+    "@edit_project_view": {},
+    "@project_details_view": {}
   },
   "@login_view": {
   },
   "password_cant_be_empty": "Password can't be empty",
-   "@password_cant_be_empty": {
+  "@password_cant_be_empty": {
     "@signup_view": {}
   },
   "if_forgot_password": "Forgot Password?",
@@ -278,11 +289,13 @@
     "@add_assignment_view": {},
     "@assignment_details_view": {},
     "@update_assignment_view": {},
-    "@edit_profile_view": {}
+    "@edit_profile_view": {},
+    "@edit_project_view": {}
   },
   "name_cant_be_empty": "Name can't be empty",
   "@name_cant_be_empty": {
-    "@edit_profile_view": {}
+    "@edit_profile_view": {},
+    "@edit_project_view": {}
   },
   "register": "REGISTER",
   "if_already_registered": "Already Registered? ",
@@ -295,13 +308,15 @@
   "@edit": {
     "@group_mentor_card": {},
     "@assignment_details_view": {},
-    "@group_details_view": {}
+    "@group_details_view": {},
+    "@project_details_view": {}
   },
   "reopen": "Reopen",
   "delete": "Delete",
   "@delete": {
     "@group_mentor_card": {},
-    "@assignment_details_view": {}
+    "@assignment_details_view": {},
+    "@project_details_view": {}
   },
   "view_submission": "View Submission",
   "not_submitted": "Not Submitted!",
@@ -323,7 +338,8 @@
   "total_members": "Total Members: ${group.attributes.memberCount}",
   "view": "View",
   "@view": {
-    "@group_mentor_card": {}
+    "@group_mentor_card": {},
+    "@featured_project_card": {}
   },
   "@group_mentor_card": {
   },
@@ -346,7 +362,8 @@
   "create_assignment": "Create Assignment",
   "adding": "Adding..",
   "@adding": {
-    "@group_details_view": {}
+    "@group_details_view": {},
+    "@project_details_view": {}
   },
   "handled_html_editor_error": "Handled html_editor error. NOTE: This should only throw during tests.",
   "@handled_html_editor_error": {
@@ -375,7 +392,8 @@
   "delete_btn": "DELETE",
   "@delete_btn": {
     "@group_details_view": {},
-    "@my_group_view": {}
+    "@my_group_view": {},
+    "@project_details_view": {}
   },
   "deleting_grade": "Deleting Grade",
   "grade_deleted": "Grade Deleted",
@@ -394,7 +412,8 @@
   "updating": "Updating..",
   "@updating": {
     "@update_assignment_view": {},
-    "edit_profile_view": {}
+    "edit_profile_view": {},
+    "@edit_project_view": {}
   },
   "group_updated": "Group Updated",
   "group_updated_acknowledgement": "Group has been successfully updated.",
@@ -414,10 +433,19 @@
   "mentor": "Mentor : ",
   "group_member_added": "Group Members Added",
   "add_group_members": "Add Group Members",
-  "enter_email_ids": "Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.",
+  "enter_members_email_ids": "Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.",
   "email_ids": "Email Ids",
+  "@email_ids": {
+    "@project_details_view": {}
+  },
   "cancel_btn": "CANCEL",
+  "@cancel_btn": {
+    "@project_details_view": {}
+  },
   "add_btn": "ADD",
+   "@add_btn": {
+    "@project_details_view": {}
+  },
   "remove_group_member": "Remove Group Member",
   "remove_group_member_confirmation": "Are you sure you want to remove this group member?",
   "remove_btn": "REMOVE",
@@ -490,6 +518,52 @@
   "joined": "Joined",
   "subscribed_to_mails": "Subscribed to mails",
   "circuits": "Circuits",
-  "favourites": "Favourites"
+  "favourites": "Favourites",
+  "@edit_project_view": {
+  },
+  "tag_list": "Tags List",
+  "project_access_type": "Project Access Type",
+  "@project_access_type": {
+    "@project_details_view": {}
+  },
+  "choose_project_access_type": "Choose a Project Access Type",
+  "project_updated": "Project Updated",
+  "project_updated_acknowledgement": "The project was successfully updated.",
+  "update_project": "Update Project",
+  "edit_project": "Edit ${widget.project.attributes.name}",
+  "@featured_projects_view": {
+  },
+  "load_more": "Load More",
+  "@project_details_view": {
+  },
+  "share": "Share",
+  "project_stars": " ${_model.starCount} Stars",
+  "project_views": " ${_recievedProject.attributes.view} Views",
+  "author": "Author : ",
+  "description_field": "Description : ",
+  "fork_project": "Fork Project",
+  "fork_project_confirmation": "Are you sure you want to fork this project?",
+  "fork_btn": "FORK",
+  "forking": "Forking",
+  "fork": "Fork",
+  "project_starred_or_unstarred": "Project ${_model.isProjectStarred ? 'Starred' : 'Unstarred'}",
+  "project_starred_or_unstarred_acknowledgement": "You have successfully ${_model.isProjectStarred ? 'stared' : 'unstarred'} the project",
+  "collaborators_added": "Collaborators Added",
+  "add_collaborators": "Add Collaborators",
+  "enter_collaborators_email_ids": "Enter Email IDs separated by commas. Users need to be registered already on the platform. Note that collaboration is not real time as of now. Every save overwrites the previous data.",
+  "enter_valid_email_format": "Enter emails in valid format.",
+  "add_collaborator": "Add A Collaborator",
+  "delete_project": "Delete Project",
+  "delete_project_confirmation": "Are you sure you want to delete this project?",
+  "deleting_project": "Deleting Project",
+  "project_deleted": "Project Deleted",
+  "project_deleted_acknowledgement": "Project is successfully deleted.",
+  "delete_collaborator": "Delete Collaborator",
+  "delete_collaborator_confirmation": "Are you sure you want to delete this collaborator?",
+  "deleting": "Deleting..",
+  "collaborator_deleted": "Collaborator Deleted",
+  "collaborator_deleted_acknowledgement": "Collaborator was successfully deleted.",
+  "project_details": "Project Details",
+  "collaborators": "Collaborators"
 
 }
