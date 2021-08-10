@@ -52,7 +52,7 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Text(
-              AppLocalizations.of(context).total_member_group,
+              AppLocalizations.of(context).total_members(widget.group.attributes.memberCount),
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),

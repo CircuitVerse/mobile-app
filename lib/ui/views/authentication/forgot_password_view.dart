@@ -98,7 +98,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       if (_model.isSuccess(_model.SEND_RESET_INSTRUCTIONS)) {
         // show instructions sent snackbar
         SnackBarUtils.showDark(
-          AppLocalizations.of(context).instructions_sent_confirmation,
+          AppLocalizations.of(context).instructions_sent_confirmation(_email),
           AppLocalizations.of(context).instructions_sent_acknowledgement,
         );
 

@@ -97,7 +97,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return Row(
       children: <Widget>[
         Icon(Icons.star, color: Colors.yellow, size: 18),
-        Text(AppLocalizations.of(context).project_stars),
+        Text(AppLocalizations.of(context).project_stars(_model.starCount)),
       ],
     );
   }
@@ -106,7 +106,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return Row(
       children: <Widget>[
         Icon(Icons.visibility, size: 18),
-        Text(AppLocalizations.of(context).project_views),
+        Text(AppLocalizations.of(context).project_views(_recievedProject.attributes.view)),
       ],
     );
   }
@@ -272,11 +272,13 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Future<void> onStarProjectPressed() async {
     await _model.toggleStarForProject(_recievedProject.id);
+    var starred = AppLocalizations.of(context).starred;
+    var unstarred = AppLocalizations.of(context).unstarred;
 
     if (_model.isSuccess(_model.TOGGLE_STAR)) {
       SnackBarUtils.showDark(
-        AppLocalizations.of(context).project_starred_or_unstarred,
-        AppLocalizations.of(context).project_starred_or_unstarred_acknowledgement,
+        AppLocalizations.of(context).project_starred_or_unstarred(_model.isProjectStarred ? starred : unstarred),
+        AppLocalizations.of(context).project_starred_or_unstarred_acknowledgement(_model.isProjectStarred ? starred : unstarred),
       );
     } else if (_model.isError(_model.TOGGLE_STAR)) {
       SnackBarUtils.showDark(

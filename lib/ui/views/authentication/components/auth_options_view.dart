@@ -60,6 +60,8 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
 
   @override
   Widget build(BuildContext context) {
+    var signup = AppLocalizations.of(context).signup;
+    var login = AppLocalizations.of(context).login;
     return BaseView<AuthOptionsViewModel>(
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Column(
@@ -68,7 +70,7 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Row(children: <Widget>[
               Expanded(child: Divider(thickness: 1)),
-              Text('  Or ${widget.isSignUp ? 'SignUp' : 'Login'} with  '),
+              Text(AppLocalizations.of(context).signup_or_login_with(widget.isSignUp ? signup : login)),
               Expanded(child: Divider(thickness: 1)),
             ]),
           ),

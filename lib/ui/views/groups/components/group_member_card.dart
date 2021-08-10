@@ -50,7 +50,7 @@ class GroupMemberCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Text(
-                    AppLocalizations.of(context).total_members,
+                    AppLocalizations.of(context).total_members(group.attributes.memberCount),
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),

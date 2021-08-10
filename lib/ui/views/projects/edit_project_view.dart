@@ -159,7 +159,7 @@ class _EditProjectViewState extends State<EditProjectView> {
     return BaseView<EditProjectViewModel>(
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text('Edit ${widget.project.attributes.name}')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context).edit_project(widget.project.attributes.name))),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Form(

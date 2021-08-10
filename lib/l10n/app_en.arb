@@ -41,7 +41,8 @@
   "login": "Login",
   "@login": {
     "@login_view": {},
-    "@signup_view": {}
+    "@signup_view": {},
+    "@auth_options_view": {}
   },
   "@about_view": {
   },
@@ -224,6 +225,11 @@
   "@auth_options_view": {
   },
   "signup_or_login_with": "  Or {signup_or_login} with  ",
+  "@signup_or_login_with": {
+    "placeholders": {
+      "signup_or_login": {}
+    }
+  },
   "google_authentication_error": "Google Authentication Error",
   "facebook_authentication_error": "Facebook Authentication Error",
   "github_authentication_error": "GitHub Authentication Error",
@@ -249,10 +255,16 @@
   },
   "signup": "Sign Up",
    "@signup": {
-    "@login_view": {}
+    "@login_view": {},
+    "@auth_options_view": {}
   },
   "sending_instructions_status": "Sending Instructions",
-  "instructions_sent_confirmation": "Instructions Sent to $_email",
+  "instructions_sent_confirmation": "Instructions Sent to {email}",
+  "@instructions_sent_confirmation": {
+    "placeholders": {
+      "email": {}
+    }
+  },
   "instructions_sent_acknowledgement": "Please check your mail for password reset link.",
   "error": "Error",
   "@error": {
@@ -335,15 +347,18 @@
   },
   "@group_member_card":{
   },
-  "total_members": "Total Members: ${group.attributes.memberCount}",
+  "total_members": "Total Members: {members}",
+  "@total_members": {
+      "@group_mentor_card": {},
+      "placeholders": {
+      "members": {}
+      }
+  },
   "view": "View",
   "@view": {
     "@group_mentor_card": {},
     "@featured_project_card": {}
   },
-  "@group_mentor_card": {
-  },
-  "total_member_group": "Total Members: ${widget.group.attributes.memberCount}",
   "@member_card": {
   },
   "no_mail": "No Email",
@@ -533,15 +548,30 @@
   "project_updated": "Project Updated",
   "project_updated_acknowledgement": "The project was successfully updated.",
   "update_project": "Update Project",
-  "edit_project": "Edit ${widget.project.attributes.name}",
+  "edit_project": "Edit {project_name}",
+  "@edit_project": {
+    "placeholders": {
+      "project_name": {}
+    }
+  },
   "@featured_projects_view": {
   },
   "load_more": "Load More",
   "@project_details_view": {
   },
   "share": "Share",
-  "project_stars": " ${_model.starCount} Stars",
-  "project_views": " ${_recievedProject.attributes.view} Views",
+  "project_stars": " {star_count} Stars",
+  "@project_stars": {
+    "placeholders": {
+      "star_count": {}
+    }
+  },
+  "project_views": " {views_count} Views",
+  "@project_views": {
+    "placeholders": {
+      "views_count": {}
+    }
+  },
   "author": "Author : ",
   "description_field": "Description : ",
   "fork_project": "Fork Project",
@@ -549,8 +579,20 @@
   "fork_btn": "FORK",
   "forking": "Forking",
   "fork": "Fork",
-  "project_starred_or_unstarred": "Project ${_model.isProjectStarred ? 'Starred' : 'Unstarred'}",
-  "project_starred_or_unstarred_acknowledgement": "You have successfully ${_model.isProjectStarred ? 'stared' : 'unstarred'} the project",
+  "starred": "Starred",
+  "unstarred": "Unstarred",
+  "project_starred_or_unstarred": "Project {starred_or_unstarred}",
+  "@project_starred_or_unstarred": {
+    "placeholders": {
+      "starred_or_unstarred": {}
+    }
+  },
+  "project_starred_or_unstarred_acknowledgement": "You have successfully {starred_or_unstarred} the project",
+  "@project_starred_or_unstarred_acknowledgement": {
+    "placeholders": {
+      "starred_or_unstarred": {}
+    }
+  },
   "collaborators_added": "Collaborators Added",
   "add_collaborators": "Add Collaborators",
   "enter_collaborators_email_ids": "Enter Email IDs separated by commas. Users need to be registered already on the platform. Note that collaboration is not real time as of now. Every save overwrites the previous data.",
