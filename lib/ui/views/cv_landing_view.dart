@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
+import 'package:mobile_app/locale/language_picker.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
@@ -75,6 +76,10 @@ class _CVLandingViewState extends State<CVLandingView> {
         ),
       ),
       centerTitle: true,
+      actions:  [
+        LanguagePickerWidget(),
+        const SizedBox(width: 12),
+      ],
     );
   }
 
