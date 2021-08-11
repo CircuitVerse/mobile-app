@@ -250,7 +250,8 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   }
 
   Future<void> addGrade() async {
-    _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).adding_grades);
+    _dialogService.showCustomProgressDialog(
+        title: AppLocalizations.of(context).adding_grades);
 
     await _model.addGrade(
       _recievedAssignment.id,
@@ -274,7 +275,8 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   }
 
   Future<void> updateGrade(String gradeId) async {
-    _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).updating_grade);
+    _dialogService.showCustomProgressDialog(
+        title: AppLocalizations.of(context).updating_grade);
 
     await _model.updateGrade(
       gradeId,
@@ -305,7 +307,8 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).deleting_grade);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).deleting_grade);
 
       await _model.deleteGrade(gradeId);
 
@@ -364,8 +367,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 type: _recievedAssignment.attributes.gradingScale == 'percent'
                     ? TextInputType.number
                     : TextInputType.text,
-                validator: (value) =>
-                    value.isEmpty ? AppLocalizations.of(context).grade_cant_be_empty : null,
+                validator: (value) => value.isEmpty
+                    ? AppLocalizations.of(context).grade_cant_be_empty
+                    : null,
                 onFieldSubmitted: (_) =>
                     FocusScope.of(context).requestFocus(_gradeFocusNode),
               ),
@@ -380,7 +384,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
               Row(
                 children: <Widget>[
                   CVPrimaryButton(
-                    title: _submittedGrade != null ? AppLocalizations.of(context).update : AppLocalizations.of(context).submit,
+                    title: _submittedGrade != null
+                        ? AppLocalizations.of(context).update
+                        : AppLocalizations.of(context).submit,
                     onPressed: () {
                       if (Validators.validateAndSaveForm(_formKey)) {
                         FocusScope.of(context).requestFocus(FocusNode());
@@ -430,7 +436,8 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         }
       },
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text(AppLocalizations.of(context).assignment_details)),
+        appBar: AppBar(
+            title: Text(AppLocalizations.of(context).assignment_details)),
         body: Builder(builder: (context) {
           var _attrs = _recievedAssignment.attributes;
           var _remainingTime = _attrs.deadline.difference(DateTime.now());
@@ -440,7 +447,8 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             children: <Widget>[
               _buildHeader(),
               SizedBox(height: 16),
-              _buildDetailComponent(AppLocalizations.of(context).name, _attrs.name),
+              _buildDetailComponent(
+                  AppLocalizations.of(context).name, _attrs.name),
               _buildDetailComponent(
                 AppLocalizations.of(context).deadline,
                 DateFormat.yMEd().add_jms().format(_attrs.deadline),

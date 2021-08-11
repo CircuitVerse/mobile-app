@@ -29,7 +29,8 @@ class _NewGroupViewState extends State<NewGroupView> {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).creating);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).creating);
 
       await _model.addGroup(_name);
 
@@ -66,8 +67,7 @@ class _NewGroupViewState extends State<NewGroupView> {
               children: <Widget>[
                 CVSubheader(
                   title: AppLocalizations.of(context).new_group,
-                  subtitle:
-                      AppLocalizations.of(context).new_group_description,
+                  subtitle: AppLocalizations.of(context).new_group_description,
                 ),
                 SizedBox(height: 16),
                 SvgPicture.asset(
@@ -78,8 +78,9 @@ class _NewGroupViewState extends State<NewGroupView> {
                 CVTextField(
                   padding: const EdgeInsets.all(0),
                   label: AppLocalizations.of(context).group_name,
-                  validator: (value) =>
-                      value.isEmpty ? AppLocalizations.of(context).enter_group_name : null,
+                  validator: (value) => value.isEmpty
+                      ? AppLocalizations.of(context).enter_group_name
+                      : null,
                   onSaved: (value) => _name = value.trim(),
                   action: TextInputAction.done,
                 ),

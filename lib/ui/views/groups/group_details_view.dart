@@ -120,7 +120,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       FocusScope.of(context).requestFocus(FocusNode());
       Navigator.pop(context);
 
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).adding);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).adding);
 
       await _model.addMembers(_recievedGroup.id, _emails);
 
@@ -199,12 +200,14 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   Future<void> onDeleteGroupMemberPressed(String groupMemberId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title: AppLocalizations.of(context).remove_group_member,
-      description: AppLocalizations.of(context).remove_group_member_confirmation,
+      description:
+          AppLocalizations.of(context).remove_group_member_confirmation,
       confirmationTitle: AppLocalizations.of(context).remove_btn,
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).removing);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).removing);
 
       await _model.deleteGroupMember(groupMemberId);
 
@@ -264,7 +267,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).deleting_assignment);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).deleting_assignment);
 
       await _model.deleteAssignment(assignmentId);
 
@@ -301,7 +305,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).reopening_assignment);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).reopening_assignment);
 
       await _model.reopenAssignment(assignmentId);
 
@@ -329,7 +334,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).starting_assignment);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).starting_assignment);
 
       await _model.startAssignment(assignmentId);
 

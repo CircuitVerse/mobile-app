@@ -174,7 +174,8 @@ class _AssignmentCardState extends State<AssignmentCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
-            widget.assignment.attributes.name ?? AppLocalizations.of(context).no_name,
+            widget.assignment.attributes.name ??
+                AppLocalizations.of(context).no_name,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.headline6.copyWith(

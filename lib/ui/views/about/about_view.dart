@@ -102,8 +102,7 @@ class _AboutViewState extends State<AboutView> {
               CVHeader(
                 title: AppLocalizations.of(context).about_title,
                 subtitle: AppLocalizations.of(context).about_subtitle,
-                description:
-                    AppLocalizations.of(context).about_description,
+                description: AppLocalizations.of(context).about_description,
               ),
               _buildTosAndPrivacyButtons(),
               CircuitVerseSocialCard(
@@ -121,8 +120,7 @@ class _AboutViewState extends State<AboutView> {
               Divider(),
               CVSubheader(
                 title: AppLocalizations.of(context).contributors,
-                subtitle:
-                    AppLocalizations.of(context).contributors_subtitle,
+                subtitle: AppLocalizations.of(context).contributors_subtitle,
               ),
               _buildContributorsList(),
             ],

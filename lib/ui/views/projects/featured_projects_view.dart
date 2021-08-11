@@ -64,14 +64,14 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
           0,
           CVHeader(
             title: AppLocalizations.of(context).editor_picks,
-            description:
-                AppLocalizations.of(context).editor_picks_text,
+            description: AppLocalizations.of(context).editor_picks_text,
           ),
         );
 
         return Scaffold(
           appBar: widget.showAppBar
-              ? AppBar(title: Text(AppLocalizations.of(context).featured_circuits))
+              ? AppBar(
+                  title: Text(AppLocalizations.of(context).featured_circuits))
               : null,
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16),

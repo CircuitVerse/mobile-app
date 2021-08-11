@@ -51,8 +51,9 @@ class _LoginViewState extends State<LoginView> {
     return CVTextField(
       label: AppLocalizations.of(context).email,
       type: TextInputType.emailAddress,
-      validator: (value) =>
-          Validators.isEmailValid(value) ? null : AppLocalizations.of(context).enter_valid_email,
+      validator: (value) => Validators.isEmailValid(value)
+          ? null
+          : AppLocalizations.of(context).enter_valid_email,
       onSaved: (value) => _email = value.trim(),
       onFieldSubmitted: (_) =>
           FocusScope.of(context).requestFocus(_emailFocusNode),
@@ -62,7 +63,9 @@ class _LoginViewState extends State<LoginView> {
   Widget _buildPasswordInput() {
     return CVPasswordField(
       focusNode: _emailFocusNode,
-      validator: (value) => value.isEmpty ? AppLocalizations.of(context).password_cant_be_empty : null,
+      validator: (value) => value.isEmpty
+          ? AppLocalizations.of(context).password_cant_be_empty
+          : null,
       onSaved: (value) => _password = value.trim(),
     );
   }
@@ -88,7 +91,9 @@ class _LoginViewState extends State<LoginView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _model.isBusy(_model.LOGIN) ? AppLocalizations.of(context).authenticating_status : AppLocalizations.of(context).login,
+        title: _model.isBusy(_model.LOGIN)
+            ? AppLocalizations.of(context).authenticating_status
+            : AppLocalizations.of(context).login,
         onPressed: _validateAndSubmit,
       ),
     );

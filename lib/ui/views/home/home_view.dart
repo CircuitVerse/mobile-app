@@ -80,8 +80,7 @@ class _HomeViewState extends State<HomeView> {
             _buildTeachersAndContributorButtons(),
             CVSubheader(
               title: AppLocalizations.of(context).home_features,
-              subtitle:
-                  AppLocalizations.of(context).home_features_text,
+              subtitle: AppLocalizations.of(context).home_features_text,
             ),
             FeatureCard(
               assetPath: 'assets/images/homepage/export-hd.png',
@@ -91,15 +90,15 @@ class _HomeViewState extends State<HomeView> {
             ),
             FeatureCard(
               assetPath: 'assets/images/homepage/combinational-analysis.png',
-              cardHeading: AppLocalizations.of(context).home_combinational_analysis,
+              cardHeading:
+                  AppLocalizations.of(context).home_combinational_analysis,
               cardDescription:
                   AppLocalizations.of(context).home_combinational_analysis_text,
             ),
             FeatureCard(
               assetPath: 'assets/images/homepage/embed.png',
               cardHeading: AppLocalizations.of(context).home_embed,
-              cardDescription:
-                  AppLocalizations.of(context).home_embed_text,
+              cardDescription: AppLocalizations.of(context).home_embed_text,
             ),
             FeatureCard(
               assetPath: 'assets/images/homepage/sub-circuit.png',
@@ -116,8 +115,7 @@ class _HomeViewState extends State<HomeView> {
             SizedBox(height: 16),
             CVSubheader(
               title: AppLocalizations.of(context).editor_picks,
-              subtitle:
-                  AppLocalizations.of(context).editor_picks_text,
+              subtitle: AppLocalizations.of(context).editor_picks_text,
             ),
             FeaturedProjectsView(embed: true),
             CVOutlineButton(

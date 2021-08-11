@@ -54,7 +54,9 @@ class _EditProjectViewState extends State<EditProjectView> {
     return CVTextField(
       label: AppLocalizations.of(context).name,
       initialValue: _name,
-      validator: (value) => value.isEmpty ? AppLocalizations.of(context).name_cant_be_empty : null,
+      validator: (value) => value.isEmpty
+          ? AppLocalizations.of(context).name_cant_be_empty
+          : null,
       onSaved: (value) => _name = value.trim(),
       onFieldSubmitted: (_) =>
           FocusScope.of(context).requestFocus(_nameFocusNode),
@@ -89,8 +91,9 @@ class _EditProjectViewState extends State<EditProjectView> {
             _projectAccessType = value;
           });
         },
-        validator: (category) =>
-            category == null ? AppLocalizations.of(context).choose_project_access_type : null,
+        validator: (category) => category == null
+            ? AppLocalizations.of(context).choose_project_access_type
+            : null,
         items: ['Public', 'Private', 'Limited Access']
             ?.map<DropdownMenuItem<String>>((var type) {
           return DropdownMenuItem<String>(
@@ -116,7 +119,8 @@ class _EditProjectViewState extends State<EditProjectView> {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).updating);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).updating);
 
       await _model.updateProject(
         widget.project.id,
@@ -159,7 +163,9 @@ class _EditProjectViewState extends State<EditProjectView> {
     return BaseView<EditProjectViewModel>(
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text(AppLocalizations.of(context).edit_project(widget.project.attributes.name))),
+        appBar: AppBar(
+            title: Text(AppLocalizations.of(context)
+                .edit_project(widget.project.attributes.name))),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Form(

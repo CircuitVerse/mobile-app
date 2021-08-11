@@ -145,8 +145,8 @@ class AboutTosView extends StatelessWidget {
                   context,
                   AppLocalizations.of(context).tos_section2_text2,
                 ),
-                _buildText(context,
-                    AppLocalizations.of(context).tos_section2_text3),
+                _buildText(
+                    context, AppLocalizations.of(context).tos_section2_text3),
                 _buildText(
                   context,
                   AppLocalizations.of(context).tos_section2_text4,
@@ -155,7 +155,7 @@ class AboutTosView extends StatelessWidget {
                   'support@CircuitVerse.org',
                   'mailto:support@CircuitVerse.org',
                 ),
-                _buildText(context,AppLocalizations.of(context).full_stop)
+                _buildText(context, AppLocalizations.of(context).full_stop)
               ],
             ),
             _buildSection(
@@ -182,8 +182,8 @@ class AboutTosView extends StatelessWidget {
                   context,
                   AppLocalizations.of(context).tos_section3_item4,
                 ),
-                _buildText(context,
-                    AppLocalizations.of(context).tos_section3_item5)
+                _buildText(
+                    context, AppLocalizations.of(context).tos_section3_item5)
               ],
             ),
             _buildSection(
@@ -214,8 +214,8 @@ class AboutTosView extends StatelessWidget {
                   context,
                   AppLocalizations.of(context).tos_section4_text4,
                 ),
-                _buildText(context,
-                    AppLocalizations.of(context).tos_section4_text5)
+                _buildText(
+                    context, AppLocalizations.of(context).tos_section4_text5)
               ],
             ),
             _buildSection(
@@ -294,18 +294,18 @@ class AboutTosView extends StatelessWidget {
               context: context,
               title: AppLocalizations.of(context).tos_section9_title,
               content: <TextSpan>[
-                _buildText(context,
-                    AppLocalizations.of(context).tos_section9_text1),
-                _buildText(context,
-                    AppLocalizations.of(context).tos_section9_text2)
+                _buildText(
+                    context, AppLocalizations.of(context).tos_section9_text1),
+                _buildText(
+                    context, AppLocalizations.of(context).tos_section9_text2)
               ],
             ),
             _buildSection(
               context: context,
               title: AppLocalizations.of(context).tos_section10_title,
               content: <TextSpan>[
-                _buildText(context,
-                    AppLocalizations.of(context).tos_section10_text1,
+                _buildText(
+                    context, AppLocalizations.of(context).tos_section10_text1,
                     bold: true),
               ],
             ),
@@ -313,8 +313,8 @@ class AboutTosView extends StatelessWidget {
               context: context,
               title: AppLocalizations.of(context).tos_section11_title,
               content: <TextSpan>[
-                _buildText(context,
-                    AppLocalizations.of(context).tos_section11_text1,
+                _buildText(
+                    context, AppLocalizations.of(context).tos_section11_text1,
                     bold: true),
               ],
             ),

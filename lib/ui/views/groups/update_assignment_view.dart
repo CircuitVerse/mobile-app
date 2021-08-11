@@ -50,7 +50,8 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     return CVTextField(
       initialValue: widget.assignment.attributes.name,
       label: AppLocalizations.of(context).name,
-      validator: (name) => name.isEmpty ? AppLocalizations.of(context).enter_valid_name : null,
+      validator: (name) =>
+          name.isEmpty ? AppLocalizations.of(context).enter_valid_name : null,
       onSaved: (name) => _name = name.trim(),
     );
   }
@@ -184,7 +185,8 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       FocusScope.of(context).requestFocus(FocusNode());
 
       // Shows progress dialog..
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).updating);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).updating);
 
       // [ISSUE] [html_editor] Throws error in Tests
       var _descriptionEditorText;
@@ -192,8 +194,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         _descriptionEditorText =
             await _descriptionEditor.currentState.getText();
       } on NoSuchMethodError {
-        print(
-            AppLocalizations.of(context).handled_html_editor_error);
+        print(AppLocalizations.of(context).handled_html_editor_error);
         _descriptionEditorText = '';
       }
 
@@ -228,7 +229,8 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     return BaseView<UpdateAssignmentViewModel>(
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text(AppLocalizations.of(context).update_assignment)),
+        appBar:
+            AppBar(title: Text(AppLocalizations.of(context).update_assignment)),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Form(

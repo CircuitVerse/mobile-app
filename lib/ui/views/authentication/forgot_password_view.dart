@@ -42,8 +42,9 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     return CVTextField(
       label: AppLocalizations.of(context).email,
       type: TextInputType.emailAddress,
-      validator: (value) =>
-          Validators.isEmailValid(value) ? null : AppLocalizations.of(context).enter_valid_email,
+      validator: (value) => Validators.isEmailValid(value)
+          ? null
+          : AppLocalizations.of(context).enter_valid_email,
       onSaved: (value) => _email = value.trim(),
       action: TextInputAction.done,
     );
@@ -89,7 +90,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         !_model.isBusy(_model.SEND_RESET_INSTRUCTIONS)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).sending_instructions_status);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).sending_instructions_status);
 
       await _model.onForgotPassword(_email);
 

@@ -76,7 +76,7 @@ class _CVLandingViewState extends State<CVLandingView> {
         ),
       ),
       centerTitle: true,
-      actions:  [
+      actions: [
         LanguagePickerWidget(),
         const SizedBox(width: 12),
       ],
@@ -89,7 +89,8 @@ class _CVLandingViewState extends State<CVLandingView> {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title: AppLocalizations.of(context).logout,
       description: AppLocalizations.of(context).logout_confirmation,
-      confirmationTitle: AppLocalizations.of(context).logout_confirmation_button,
+      confirmationTitle:
+          AppLocalizations.of(context).logout_confirmation_button,
     );
 
     if (_dialogResponse.confirmed) {
@@ -118,7 +119,9 @@ class _CVLandingViewState extends State<CVLandingView> {
               ),
               InkWell(
                 onTap: () => setSelectedIndexTo(0),
-                child: CVDrawerTile(title: AppLocalizations.of(context).home, iconData: Icons.home),
+                child: CVDrawerTile(
+                    title: AppLocalizations.of(context).home,
+                    iconData: Icons.home),
               ),
               Theme(
                 data: CVTheme.themeData(context),
@@ -139,7 +142,8 @@ class _CVLandingViewState extends State<CVLandingView> {
                     InkWell(
                       onTap: () => setSelectedIndexTo(1),
                       child: CVDrawerTile(
-                          title: AppLocalizations.of(context).featured_circuits, iconData: Icons.star),
+                          title: AppLocalizations.of(context).featured_circuits,
+                          iconData: Icons.star),
                     ),
                   ],
                 ),
@@ -153,16 +157,20 @@ class _CVLandingViewState extends State<CVLandingView> {
               InkWell(
                 onTap: () => setSelectedIndexTo(2),
                 child: CVDrawerTile(
-                    title: AppLocalizations.of(context).about, iconData: FontAwesome5.address_card),
+                    title: AppLocalizations.of(context).about,
+                    iconData: FontAwesome5.address_card),
               ),
               InkWell(
                 onTap: () => setSelectedIndexTo(3),
-                child: CVDrawerTile(title: AppLocalizations.of(context).contribute, iconData: Icons.add),
+                child: CVDrawerTile(
+                    title: AppLocalizations.of(context).contribute,
+                    iconData: Icons.add),
               ),
               InkWell(
                 onTap: () => setSelectedIndexTo(4),
                 child: CVDrawerTile(
-                    title: AppLocalizations.of(context).teachers, iconData: Icons.account_balance),
+                    title: AppLocalizations.of(context).teachers,
+                    iconData: Icons.account_balance),
               ),
               _model.isLoggedIn
                   ? Theme(
@@ -179,7 +187,8 @@ class _CVLandingViewState extends State<CVLandingView> {
                           InkWell(
                             onTap: () => setSelectedIndexTo(5),
                             child: CVDrawerTile(
-                                title: AppLocalizations.of(context).profile, iconData: FontAwesome5.user),
+                                title: AppLocalizations.of(context).profile,
+                                iconData: FontAwesome5.user),
                           ),
                           InkWell(
                             onTap: () => setSelectedIndexTo(6),
@@ -199,7 +208,8 @@ class _CVLandingViewState extends State<CVLandingView> {
                   : InkWell(
                       onTap: () => Get.offAndToNamed(LoginView.id),
                       child: CVDrawerTile(
-                          title: AppLocalizations.of(context).login, iconData: Ionicons.ios_log_in),
+                          title: AppLocalizations.of(context).login,
+                          iconData: Ionicons.ios_log_in),
                     )
             ],
           ),

@@ -39,15 +39,19 @@ class ContributorsView extends StatelessWidget {
             ),
             CircuitVerseSocialCard(
               imagePath: 'assets/images/contribute/github.png',
-              title: AppLocalizations.of(context).contributors_contribute_to_open_source,
+              title: AppLocalizations.of(context)
+                  .contributors_contribute_to_open_source,
               description: AppLocalizations.of(context).contributors_github,
               url: 'https://github.com/CircuitVerse',
             ),
             SizedBox(height: 32),
-            CVSubheader(title: AppLocalizations.of(context).contributors_how_to_support),
+            CVSubheader(
+                title:
+                    AppLocalizations.of(context).contributors_how_to_support),
             ContributeSupportCard(
               imagePath: 'assets/images/contribute/person.png',
-              title: AppLocalizations.of(context).contributors_student_card_title,
+              title:
+                  AppLocalizations.of(context).contributors_student_card_title,
               cardDescriptionList: [
                 AppLocalizations.of(context).contributors_student_card_text1,
                 AppLocalizations.of(context).contributors_student_card_text2,
@@ -56,7 +60,8 @@ class ContributorsView extends StatelessWidget {
             ),
             ContributeSupportCard(
               imagePath: 'assets/images/contribute/professor.png',
-              title: AppLocalizations.of(context).contributors_teacher_card_title,
+              title:
+                  AppLocalizations.of(context).contributors_teacher_card_title,
               cardDescriptionList: [
                 AppLocalizations.of(context).contributors_teacher_card_text1,
                 AppLocalizations.of(context).contributors_teacher_card_text2,
@@ -65,7 +70,8 @@ class ContributorsView extends StatelessWidget {
             ),
             ContributeSupportCard(
               imagePath: 'assets/images/contribute/person.png',
-              title: AppLocalizations.of(context).contributors_developer_card_title,
+              title: AppLocalizations.of(context)
+                  .contributors_developer_card_title,
               cardDescriptionList: [
                 AppLocalizations.of(context).contributors_developer_card_text1,
                 AppLocalizations.of(context).contributors_developer_card_text2,
@@ -81,7 +87,8 @@ class ContributorsView extends StatelessWidget {
             SizedBox(height: 16),
             ContributeDonateCard(
               imagePath: 'assets/images/contribute/paypal-logo.jpg',
-              title: AppLocalizations.of(context).contributors_donate_via_paypal,
+              title:
+                  AppLocalizations.of(context).contributors_donate_via_paypal,
               url: 'https://www.paypal.me/satviksr',
             )
           ],

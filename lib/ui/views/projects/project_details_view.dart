@@ -106,7 +106,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return Row(
       children: <Widget>[
         Icon(Icons.visibility, size: 18),
-        Text(AppLocalizations.of(context).project_views(_recievedProject.attributes.view)),
+        Text(AppLocalizations.of(context)
+            .project_views(_recievedProject.attributes.view)),
       ],
     );
   }
@@ -226,7 +227,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).forking);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).forking);
 
       await _model.forkProject(_recievedProject.id);
 
@@ -277,8 +279,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
     if (_model.isSuccess(_model.TOGGLE_STAR)) {
       SnackBarUtils.showDark(
-        AppLocalizations.of(context).project_starred_or_unstarred(_model.isProjectStarred ? starred : unstarred),
-        AppLocalizations.of(context).project_starred_or_unstarred_acknowledgement(_model.isProjectStarred ? starred : unstarred),
+        AppLocalizations.of(context).project_starred_or_unstarred(
+            _model.isProjectStarred ? starred : unstarred),
+        AppLocalizations.of(context)
+            .project_starred_or_unstarred_acknowledgement(
+                _model.isProjectStarred ? starred : unstarred),
       );
     } else if (_model.isError(_model.TOGGLE_STAR)) {
       SnackBarUtils.showDark(
@@ -310,7 +315,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       FocusScope.of(context).requestFocus(FocusNode());
       Navigator.pop(context);
 
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).adding);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).adding);
 
       await _model.addCollaborators(_recievedProject.id, _emails);
 
@@ -426,7 +432,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           children: <Widget>[
             Icon(Icons.edit, size: 16),
             SizedBox(width: 4),
-            Text(AppLocalizations.of(context).edit, style: Theme.of(context).textTheme.subtitle1),
+            Text(AppLocalizations.of(context).edit,
+                style: Theme.of(context).textTheme.subtitle1),
           ],
         ),
       ),
@@ -441,7 +448,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).deleting_project);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).deleting_project);
 
       await _model.deleteProject(_recievedProject.id);
 
@@ -476,7 +484,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           children: <Widget>[
             Icon(Icons.delete, size: 16),
             SizedBox(width: 4),
-            Text(AppLocalizations.of(context).delete, style: Theme.of(context).textTheme.subtitle1),
+            Text(AppLocalizations.of(context).delete,
+                style: Theme.of(context).textTheme.subtitle1),
           ],
         ),
       ),
@@ -486,12 +495,14 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Future<void> onDeleteCollaboratorPressed(Collaborator collaborator) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title: AppLocalizations.of(context).delete_collaborator,
-      description: AppLocalizations.of(context).delete_collaborator_confirmation,
+      description:
+          AppLocalizations.of(context).delete_collaborator_confirmation,
       confirmationTitle: AppLocalizations.of(context).delete_btn,
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).deleting);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).deleting);
 
       await _model.deleteCollaborator(_model.project.id, collaborator.id);
 
@@ -619,7 +630,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               _model.collaborators.isNotEmpty) {
             _items.add(Divider());
 
-            _items.add(_buildProjectHeader(AppLocalizations.of(context).collaborators));
+            _items.add(_buildProjectHeader(
+                AppLocalizations.of(context).collaborators));
 
             _model.collaborators?.forEach((collaborator) {
               _items.add(

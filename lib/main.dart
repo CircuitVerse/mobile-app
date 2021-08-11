@@ -27,63 +27,63 @@ Future<void> main() async {
 class CircuitVerseMobile extends StatelessWidget {
   // This widget is the root of CircuitVerse Mobile.
   @override
-  Widget build(BuildContext context)  => ChangeNotifierProvider(
-    create: (context) => LocaleProvider(),
-    builder: (context, child) {
-      final provider = Provider.of<LocaleProvider>(context);
-      SystemChrome.setPreferredOrientations([
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+      create: (context) => LocaleProvider(),
+      builder: (context, child) {
+        final provider = Provider.of<LocaleProvider>(context);
+        SystemChrome.setPreferredOrientations([
           DeviceOrientation.portraitUp,
           DeviceOrientation.portraitDown,
         ]);
-      return KeyboardDismissOnTap(
-        child: ThemeProvider(
-          saveThemesOnChange: true,
-          loadThemeOnInit: true,
-          themes: [
-            AppTheme(
-              id: 'light',
-              data: ThemeData(
-                primaryColor: CVTheme.primaryColor,
-                accentColor: CVTheme.primaryColor,
-                fontFamily: 'Poppins',
-                textSelectionTheme: TextSelectionThemeData(
-                  cursorColor: CVTheme.primaryColor,
+        return KeyboardDismissOnTap(
+          child: ThemeProvider(
+            saveThemesOnChange: true,
+            loadThemeOnInit: true,
+            themes: [
+              AppTheme(
+                id: 'light',
+                data: ThemeData(
+                  primaryColor: CVTheme.primaryColor,
+                  accentColor: CVTheme.primaryColor,
+                  fontFamily: 'Poppins',
+                  textSelectionTheme: TextSelectionThemeData(
+                    cursorColor: CVTheme.primaryColor,
+                  ),
                 ),
+                description: 'LightTheme',
               ),
-              description: 'LightTheme',
-            ),
-            AppTheme(
-              id: 'dark',
-              data: ThemeData(
-                primaryColor: CVTheme.secondaryColor,
-                accentColor: CVTheme.secondaryColor,
-                fontFamily: 'Poppins',
-                brightness: Brightness.dark,
-                textSelectionTheme: TextSelectionThemeData(
-                  cursorColor: CVTheme.primaryColor,
+              AppTheme(
+                id: 'dark',
+                data: ThemeData(
+                  primaryColor: CVTheme.secondaryColor,
+                  accentColor: CVTheme.secondaryColor,
+                  fontFamily: 'Poppins',
+                  brightness: Brightness.dark,
+                  textSelectionTheme: TextSelectionThemeData(
+                    cursorColor: CVTheme.primaryColor,
+                  ),
                 ),
+                description: 'DarkTheme',
               ),
-              description: 'DarkTheme',
-            ),
-          ],
-          child: ThemeConsumer(
-            child: Builder(
-              builder: (themeContext) => GetMaterialApp(
-                title: 'CircuitVerse Mobile',
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
-                supportedLocales: AppLocalizations.supportedLocales,
-                locale: provider.locale,
-                onGenerateTitle: (BuildContext context) =>
-                    AppLocalizations.of(context).title,
-                debugShowCheckedModeBanner: false,
-                onGenerateRoute: CVRouter.generateRoute,
-                theme: ThemeProvider.themeOf(themeContext).data,
-                home: StartUpView(),
+            ],
+            child: ThemeConsumer(
+              child: Builder(
+                builder: (themeContext) => GetMaterialApp(
+                  title: 'CircuitVerse Mobile',
+                  localizationsDelegates:
+                      AppLocalizations.localizationsDelegates,
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  locale: provider.locale,
+                  onGenerateTitle: (BuildContext context) =>
+                      AppLocalizations.of(context).title,
+                  debugShowCheckedModeBanner: false,
+                  onGenerateRoute: CVRouter.generateRoute,
+                  theme: ThemeProvider.themeOf(themeContext).data,
+                  home: StartUpView(),
+                ),
               ),
             ),
           ),
-        ),
-      );
-    }
-  );
+        );
+      });
 }

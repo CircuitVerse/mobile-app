@@ -53,7 +53,9 @@ class _EditProfileViewState extends State<EditProfileView> {
     return CVTextField(
       label: AppLocalizations.of(context).name,
       initialValue: _name,
-      validator: (value) => value.isEmpty ? AppLocalizations.of(context).name_cant_be_empty : null,
+      validator: (value) => value.isEmpty
+          ? AppLocalizations.of(context).name_cant_be_empty
+          : null,
       onSaved: (value) => _name = value.trim(),
       onFieldSubmitted: (_) =>
           FocusScope.of(context).requestFocus(_nameFocusNode),
@@ -102,7 +104,8 @@ class _EditProfileViewState extends State<EditProfileView> {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).updating);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).updating);
 
       await _model.updateProfile(
           _name, _educationalInstitute, _country, _subscribed);
@@ -140,7 +143,8 @@ class _EditProfileViewState extends State<EditProfileView> {
     return BaseView<EditProfileViewModel>(
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text(AppLocalizations.of(context).update_profile)),
+        appBar:
+            AppBar(title: Text(AppLocalizations.of(context).update_profile)),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Form(

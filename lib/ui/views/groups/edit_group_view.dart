@@ -33,7 +33,8 @@ class _EditGroupViewState extends State<EditGroupView> {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).updating);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).updating);
 
       await _model.updateGroup(widget.group.id, _name);
 
@@ -70,8 +71,7 @@ class _EditGroupViewState extends State<EditGroupView> {
               children: <Widget>[
                 CVSubheader(
                   title: AppLocalizations.of(context).edit_group,
-                  subtitle:
-                      AppLocalizations.of(context).edit_group_description,
+                  subtitle: AppLocalizations.of(context).edit_group_description,
                 ),
                 SizedBox(height: 16),
                 SvgPicture.asset(
@@ -83,8 +83,9 @@ class _EditGroupViewState extends State<EditGroupView> {
                   padding: const EdgeInsets.all(0),
                   label: AppLocalizations.of(context).group_name,
                   initialValue: widget.group.attributes.name,
-                  validator: (value) =>
-                      value.isEmpty ? AppLocalizations.of(context).enter_group_name : null,
+                  validator: (value) => value.isEmpty
+                      ? AppLocalizations.of(context).enter_group_name
+                      : null,
                   onSaved: (value) => _name = value.trim(),
                   action: TextInputAction.done,
                 ),

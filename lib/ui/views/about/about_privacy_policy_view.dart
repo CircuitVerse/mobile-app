@@ -189,7 +189,8 @@ class AboutPrivacyPolicyView extends StatelessWidget {
                   context,
                   AppLocalizations.of(context).privacy_section3_item6,
                 ),
-                _buildText(context, AppLocalizations.of(context).privacy_section3_text2_title,
+                _buildText(context,
+                    AppLocalizations.of(context).privacy_section3_text2_title,
                     bold: true, italic: true),
                 _buildText(
                   context,

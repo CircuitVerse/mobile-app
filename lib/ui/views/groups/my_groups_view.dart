@@ -57,7 +57,8 @@ class _MyGroupsViewState extends State<MyGroupsView> {
     );
 
     if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: AppLocalizations.of(context).deleting_group);
+      _dialogService.showCustomProgressDialog(
+          title: AppLocalizations.of(context).deleting_group);
 
       await _model.deleteGroup(groupId);
 
@@ -115,7 +116,8 @@ class _MyGroupsViewState extends State<MyGroupsView> {
 
           _items.add(SizedBox(height: 24));
 
-          _items.add(_buildSubHeader(title: AppLocalizations.of(context).groups_you_mentor));
+          _items.add(_buildSubHeader(
+              title: AppLocalizations.of(context).groups_you_mentor));
 
           if (_model.isSuccess(_model.FETCH_MENTORED_GROUPS)) {
             // creates GroupMentorCard corresponding to each mentor group
@@ -139,7 +141,8 @@ class _MyGroupsViewState extends State<MyGroupsView> {
 
           _items.add(SizedBox(height: 24));
 
-          _items.add(_buildSubHeader(title: AppLocalizations.of(context).groups_you_belong_to));
+          _items.add(_buildSubHeader(
+              title: AppLocalizations.of(context).groups_you_belong_to));
 
           if (_model.isSuccess(_model.FETCH_MEMBER_GROUPS)) {
             // creates GroupMemberCard corresponding to each member group

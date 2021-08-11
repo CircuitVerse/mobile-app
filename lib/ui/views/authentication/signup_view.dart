@@ -52,7 +52,9 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildNameInput() {
     return CVTextField(
       label: AppLocalizations.of(context).name,
-      validator: (value) => value.isEmpty ? AppLocalizations.of(context).name_cant_be_empty : null,
+      validator: (value) => value.isEmpty
+          ? AppLocalizations.of(context).name_cant_be_empty
+          : null,
       onSaved: (value) => _name = value.trim(),
       onFieldSubmitted: (_) =>
           FocusScope.of(context).requestFocus(_nameFocusNode),
@@ -64,8 +66,9 @@ class _SignupViewState extends State<SignupView> {
       focusNode: _nameFocusNode,
       label: AppLocalizations.of(context).email,
       type: TextInputType.emailAddress,
-      validator: (value) =>
-          Validators.isEmailValid(value) ? null : AppLocalizations.of(context).enter_valid_email,
+      validator: (value) => Validators.isEmailValid(value)
+          ? null
+          : AppLocalizations.of(context).enter_valid_email,
       onSaved: (value) => _email = value.trim(),
       onFieldSubmitted: (_) {
         _nameFocusNode.unfocus();
@@ -77,7 +80,9 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildPasswordInput() {
     return CVPasswordField(
       focusNode: _emailFocusNode,
-      validator: (value) => value.isEmpty ? AppLocalizations.of(context).password_cant_be_empty : null,
+      validator: (value) => value.isEmpty
+          ? AppLocalizations.of(context).password_cant_be_empty
+          : null,
       onSaved: (value) => _password = value.trim(),
     );
   }

@@ -70,7 +70,8 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Row(children: <Widget>[
               Expanded(child: Divider(thickness: 1)),
-              Text(AppLocalizations.of(context).signup_or_login_with(widget.isSignUp ? signup : login)),
+              Text(AppLocalizations.of(context)
+                  .signup_or_login_with(widget.isSignUp ? signup : login)),
               Expanded(child: Divider(thickness: 1)),
             ]),
           ),

@@ -37,13 +37,15 @@ class MemberCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  member.attributes.name ?? AppLocalizations.of(context).no_name,
+                  member.attributes.name ??
+                      AppLocalizations.of(context).no_name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 Text(
-                  member.attributes.email ?? AppLocalizations.of(context).no_mail,
+                  member.attributes.email ??
+                      AppLocalizations.of(context).no_mail,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText1,

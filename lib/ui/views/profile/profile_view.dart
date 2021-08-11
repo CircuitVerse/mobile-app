@@ -48,7 +48,8 @@ class _ProfileViewState extends State<ProfileView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Text(
-        _model?.user?.data?.attributes?.name ?? AppLocalizations.of(context).not_available,
+        _model?.user?.data?.attributes?.name ??
+            AppLocalizations.of(context).not_available,
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -74,7 +75,9 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
             ),
             TextSpan(
-              text: description?.isEmpty ?? true ? AppLocalizations.of(context).not_available : description,
+              text: description?.isEmpty ?? true
+                  ? AppLocalizations.of(context).not_available
+                  : description,
             )
           ],
         ),

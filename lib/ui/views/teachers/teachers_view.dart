@@ -20,8 +20,7 @@ class TeachersView extends StatelessWidget {
           children: <Widget>[
             CVHeader(
               title: AppLocalizations.of(context).teachers,
-              description:
-                  AppLocalizations.of(context).teachers_text,
+              description: AppLocalizations.of(context).teachers_text,
             ),
             CVSubheader(title: AppLocalizations.of(context).teachers_benefits),
             TeachersCard(
@@ -32,13 +31,15 @@ class TeachersView extends StatelessWidget {
             ),
             TeachersCard(
               assetPath: 'assets/images/teachers/assignment.png',
-              cardHeading: AppLocalizations.of(context).teachers_post_assignments,
+              cardHeading:
+                  AppLocalizations.of(context).teachers_post_assignments,
               cardDescription:
                   AppLocalizations.of(context).teachers_post_assignment_text,
             ),
             TeachersCard(
               assetPath: 'assets/images/teachers/grading.png',
-              cardHeading: AppLocalizations.of(context).teachers_grading_assignment,
+              cardHeading:
+                  AppLocalizations.of(context).teachers_grading_assignment,
               cardDescription:
                   AppLocalizations.of(context).teachers_grading_assignment_text,
             ),
@@ -46,8 +47,8 @@ class TeachersView extends StatelessWidget {
               assetPath: 'assets/images/teachers/embed.png',
               cardHeading:
                   AppLocalizations.of(context).teachers_use_interactive_circuit,
-              cardDescription:
-                  AppLocalizations.of(context).teachers_use_interactive_circuit_text,
+              cardDescription: AppLocalizations.of(context)
+                  .teachers_use_interactive_circuit_text,
             ),
           ],
         ),

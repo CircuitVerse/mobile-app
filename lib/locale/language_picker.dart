@@ -10,9 +10,9 @@ class LanguagePickerWidget extends StatelessWidget {
     return DropdownButtonHideUnderline(
       child: DropdownButton(
         icon: Icon(
-                Icons.language,
-                color: Colors.white,
-              ),
+          Icons.language,
+          color: Colors.white,
+        ),
         items: AppLocalizations.supportedLocales.map(
           (locale) {
             final language = L10n.getLanguage(locale.languageCode);
