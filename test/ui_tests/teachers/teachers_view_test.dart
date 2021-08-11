@@ -7,6 +7,7 @@ import 'package:mobile_app/ui/views/teachers/components/teachers_card.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mockito/mockito.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_helpers.dart';
 
@@ -19,6 +20,8 @@ void main() {
     Future<void> _pumpTeachersView(WidgetTester tester) async {
       await tester.pumpWidget(
         GetMaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          locale: Locale('en'),
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: TeachersView(),

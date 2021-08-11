@@ -12,6 +12,7 @@ import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/edit_group_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_data/mock_groups.dart';
 import '../../setup/test_helpers.dart';
@@ -33,6 +34,8 @@ void main() {
 
       await tester.pumpWidget(
         GetMaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          locale: Locale('en'),
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: EditGroupView(group: group),

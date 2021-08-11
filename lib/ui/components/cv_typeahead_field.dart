@@ -112,7 +112,7 @@ class CVTypeAheadField extends StatelessWidget {
             },
             onSaved: (value) {
               onSaved(
-                (value == '') ? (text ?? AppLocalizations.of(context).not_available) : value,
+                (value == '') ? (text ?? 'N.A') : value,
               );
             },
           );
