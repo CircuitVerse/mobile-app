@@ -83,28 +83,38 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
-  void _onTapLink(String text, String href, String title) async {
-    // Confirm if it's a valid URL
-    if (!(await canLaunch(href))) {
-      print('[IB]: $href is not a valid link');
-      return;
+  Future _scrollToWidget(String slug) async {
+    if (_slugMap.containsKey(slug)) {
+      await _hideButtonController.scrollToIndex(_slugMap[slug],
+          preferPosition: AutoScrollPosition.begin);
+    } else {
+      print('[IB]: $slug not present in map');
     }
+  }
 
-    // If Interactive Book link
+  Future _onTapLink(String text, String href, String title) async {
+    // If Absolute Interactive Book link
     if (href.startsWith(EnvironmentConfig.IB_BASE_URL)) {
       // If URI is same as the current page
       if (_model.pageData.pageUrl.startsWith(href)) {
         // It's local link
-        // (TODO) Scroll to that local widget
-        return;
+        return _scrollToWidget(href.substring(1));
       } else {
         // Try to navigate to another page using url
         // (TODO) We need [IbLandingViewModel] to be able to get Chapter using [httpUrl]
-        return;
+        return launchURL(href);
       }
     }
 
-    launchURL(href);
+    // Local links
+    if (href.startsWith('#')) {
+      return _scrollToWidget(href.substring(1));
+    }
+
+    // Confirm if it's a valid URL
+    if (await canLaunch(href)) {
+      return launchURL(href);
+    }
   }
 
   Widget _buildMarkdownImage(Uri uri, String title, String alt) {
@@ -235,8 +245,7 @@ class _IbPageViewState extends State<IbPageView> {
     var slug = IbEngineService.getSlug(title);
 
     Navigator.pop(context);
-    await _hideButtonController.scrollToIndex(_slugMap[slug],
-        preferPosition: AutoScrollPosition.begin);
+    await _scrollToWidget(slug);
   }
 
   Widget _buildTocListTile(String leading, String content,
