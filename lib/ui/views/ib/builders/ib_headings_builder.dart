@@ -32,7 +32,10 @@ class IbHeadingsBuilder extends MarkdownElementBuilder {
       key: ValueKey(index),
       controller: controller,
       index: index++,
-      child: widget,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 4.0),
+        child: widget,
+      ),
     );
   }
 }

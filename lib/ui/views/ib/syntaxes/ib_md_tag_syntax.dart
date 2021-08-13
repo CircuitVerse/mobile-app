@@ -22,7 +22,7 @@ class IbMdTagSyntax extends md.BlockSyntax {
       return md.Element.text('h5', text);
     }
 
-    // (TODO) Fix Pop Quizes
+    // Pop Quizzes
     if (_tagsStack.contains('.quiz')) {
       var quizContent = '';
 
