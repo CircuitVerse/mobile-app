@@ -1,9 +1,6 @@
 name: CD
 
-on:
-  push:
-    branches:
-      - deploy
+on: [release]
 
 env:
   FB_APP_ID: ${{ secrets.FB_APP_ID }}
@@ -18,9 +15,17 @@ jobs:
   deploy:
     # This job will run on ubuntu virtual machine
     runs-on: ubuntu-latest
+    # This job will run if the release is based on master branch
+    if: github.event.release.target_commitish == 'master'
     steps:
-      # Setup Java environment in order to build the Android app.
       - uses: actions/checkout@v1
+
+      # Extract the release type
+      - name: set release type
+        id: release
+        run: echo ::set-output name=type::${{ contains(github.event.release.tag_name, 'beta') && 'beta' || 'prod' }}
+
+      # Setup Java environment in order to build the Android apps
       - uses: actions/setup-java@v1
         with:
           java-version: "12.x"
@@ -60,8 +65,8 @@ jobs:
       # Build appbundle.
       - run: flutter build appbundle --dart-define=FB_APP_ID=${FB_APP_ID} --dart-define=FB_APP_NAME=${FB_APP_NAME} --dart-define=GITHUB_OAUTH_CLIENT_ID=${GITHUB_OAUTH_CLIENT_ID} --dart-define=GITHUB_OAUTH_CLIENT_SECRET=${GITHUB_OAUTH_CLIENT_SECRET}
 
-      # Run fastlane internal
+      # Ship the appbundle.
       - uses: maierj/fastlane-action@v1.4.0
         with:
-          lane: internal
+          lane: ${{ release.outputs.type }}
           subdirectory: android
