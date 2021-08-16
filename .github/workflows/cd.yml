@@ -15,9 +15,12 @@ jobs:
   deploy:
     # This job will run on ubuntu virtual machine
     runs-on: ubuntu-latest
+    # This job will run if the release is based on master branch
+    if: github.event.release.target_commitish == 'master'
     steps:
       - uses: actions/checkout@v1
 
+      # Extract the release type
       - name: set release type
         id: release
         run: echo ::set-output name=type::${{ endsWith(github.event.release.tag_name, 'beta') && 'beta' || 'prod' }}
