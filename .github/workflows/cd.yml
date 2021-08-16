@@ -23,7 +23,7 @@ jobs:
       # Extract the release type
       - name: set release type
         id: release
-        run: echo ::set-output name=type::${{ endsWith(github.event.release.tag_name, 'beta') && 'beta' || 'prod' }}
+        run: echo ::set-output name=type::${{ contains(github.event.release.tag_name, 'beta') && 'beta' || 'prod' }}
 
       # Setup Java environment in order to build the Android apps
       - uses: actions/setup-java@v1
