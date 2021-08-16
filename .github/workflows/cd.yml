@@ -17,13 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     # This job will run if the release is based on master branch
     if: github.event.release.target_commitish == 'master'
+    env:
+      RELEASE_TYPE: ${{ contains(github.event.release.tag_name, 'beta') && 'beta' || 'prod' }}
     steps:
       - uses: actions/checkout@v1
-
-      # Extract the release type
-      - name: set release type
-        id: release
-        run: echo ::set-output name=type::${{ contains(github.event.release.tag_name, 'beta') && 'beta' || 'prod' }}
 
       # Setup Java environment in order to build the Android apps
       - uses: actions/setup-java@v1
@@ -68,5 +65,5 @@ jobs:
       # Ship the appbundle.
       - uses: maierj/fastlane-action@v1.4.0
         with:
-          lane: ${{ release.outputs.type }}
+          lane: ${{ env.RELEASE_TYPE }}
           subdirectory: android
