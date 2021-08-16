@@ -1,6 +1,8 @@
 name: CD
 
-on: [release]
+on:
+  release:
+    types: [published]
 
 env:
   FB_APP_ID: ${{ secrets.FB_APP_ID }}
