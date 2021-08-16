@@ -27,7 +27,7 @@ dependencies:
   datetime_picker_formfield: ^2.0.0
   flutter_facebook_auth: ^3.5.0
   flutter_html: ^2.0.0
-  flutter_icons: ^1.1.0
+  fluttericon: ^2.0.0
   flutter_keyboard_visibility: ^5.0.2
   flutter_summernote: ^1.0.0
   flutter_svg: ^0.22.0
