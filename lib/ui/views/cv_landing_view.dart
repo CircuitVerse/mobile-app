@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
@@ -185,8 +186,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                           InkWell(
                             onTap: onLogoutPressed,
                             child: CVDrawerTile(
-                                title: 'Log Out',
-                                iconData: Ionicons.ios_log_out),
+                                title: 'Log Out', iconData: FontAwesome.logout),
                           ),
                         ],
                       ),
@@ -194,7 +194,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                   : InkWell(
                       onTap: () => Get.offAndToNamed(LoginView.id),
                       child: CVDrawerTile(
-                          title: 'Login', iconData: Ionicons.ios_log_in),
+                          title: 'Login', iconData: FontAwesome.login),
                     )
             ],
           ),

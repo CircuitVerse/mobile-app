@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/cv_landing_view.dart';
@@ -97,7 +97,7 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(shape: BoxShape.circle),
-                  child: Icon(FontAwesome.github, size: 40),
+                  child: Icon(FontAwesome5.github, size: 40),
                 ),
               ),
             ],
