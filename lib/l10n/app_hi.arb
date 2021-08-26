@@ -1,9 +1,21 @@
 {
   "@@last_modified": "2020-06-18T10:20:35.893315",
+  "@cv_landing_view": {},
   "title": "सर्किटवर्स",
-  "@title": {
-    "description": "Title for CircuitVerse Mobile",
-    "type": "text",
-    "placeholders": {}
-  }
+  "groups": "आपके समूह",
+  "profile": "प्रोफ़ाइल",
+  "featured_circuits": "विशेष रुप से प्रदर्शित सर्किट",
+  "logout": "लॉग आउट करे",
+  "logout_confirmation": "क्या आप लॉग आउट करना चाहते हैं?",
+  "logout_confirmation_button": "लॉग आउट",
+  "logout_success": "सफलतापूर्वक लॉग आउट किया गया",
+  "logout_success_acknowledgement": "आपको साइन आउट कर दिया गया है।",
+  "home": "होम",
+  "explore": "एक्स्प्लोर करे",
+  "interactive_book": "इंटरएक्टिव बुक",
+  "about": "सर्किटवर्स के बारे में",
+  "contribute": "योगदान करे",
+  "teachers": "शिक्षकों के लिए",
+  "my_groups": "मेरे समूह",
+  "login": "लॉग इन करें"
 }
