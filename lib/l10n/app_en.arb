@@ -1,9 +1,21 @@
 {
   "@@last_modified": "2020-06-18T10:20:35.893315",
+  "@cv_landing_view": {},
   "title": "CircuitVerse",
-  "@title": {
-    "description": "Title for CircuitVerse Mobile",
-    "type": "text",
-    "placeholders": {}
-  }
+  "groups": "Groups",
+  "profile": "Profile",
+  "featured_circuits": "Featured Circuits",
+  "logout": "Log Out",
+  "logout_confirmation": "Are you sure you want to logout?",
+  "logout_confirmation_button": "LOGOUT",
+  "logout_success": "Logged Out Successfully",
+  "logout_success_acknowledgement": "You have been signed out.",
+  "home": "Home",
+  "explore": "Explore",
+  "interactive_book": "Interactive Book",
+  "about": "About",
+  "contribute": "Contribute",
+  "teachers": "Teachers",
+  "my_groups": "My Groups",
+  "login": "Login"
 }
