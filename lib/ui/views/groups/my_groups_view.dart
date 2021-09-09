@@ -11,6 +11,7 @@ import 'package:mobile_app/ui/views/groups/components/group_member_card.dart';
 import 'package:mobile_app/ui/views/groups/components/group_mentor_card.dart';
 import 'package:mobile_app/ui/views/groups/edit_group_view.dart';
 import 'package:mobile_app/ui/views/groups/new_group_view.dart';
+import 'package:mobile_app/utils/cv_exception.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
 
@@ -135,6 +136,13 @@ class _MyGroupsViewState extends State<MyGroupsView> {
               );
             }
           }
+          if (_model.isError(_model.FETCH_MENTORED_GROUPS)) {
+            _items.add(
+              CVException(
+                _model.errorMessageFor(_model.FETCH_MENTORED_GROUPS),
+              ),
+            );
+          }
 
           _items.add(SizedBox(height: 24));
 
@@ -152,6 +160,13 @@ class _MyGroupsViewState extends State<MyGroupsView> {
                 CVAddIconButton(onPressed: _model.fetchMemberGroups),
               );
             }
+          }
+          if (_model.isError(_model.FETCH_MEMBER_GROUPS)) {
+            _items.add(
+              CVException(
+                _model.errorMessageFor(_model.FETCH_MEMBER_GROUPS),
+              ),
+            );
           }
 
           return ListView(
