@@ -14,7 +14,7 @@ import 'package:mobile_app/ui/components/cv_flat_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
-import 'package:mobile_app/utils/cv_exception.dart';
+import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';

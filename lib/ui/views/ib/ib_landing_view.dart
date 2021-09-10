@@ -6,7 +6,7 @@ import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
-import 'package:mobile_app/utils/cv_exception.dart';
+import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:theme_provider/theme_provider.dart';
 
