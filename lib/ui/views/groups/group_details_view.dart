@@ -12,6 +12,7 @@ import 'package:mobile_app/ui/views/groups/components/assignment_card.dart';
 import 'package:mobile_app/ui/views/groups/components/member_card.dart';
 import 'package:mobile_app/ui/views/groups/edit_group_view.dart';
 import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
+import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/ui/components/cv_flat_button.dart';
@@ -406,6 +407,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 ),
               );
             });
+          }
+          if (_model.isError(_model.FETCH_GROUP_DETAILS)) {
+            _items.add(
+              CVException(
+                _model.errorMessageFor(_model.FETCH_GROUP_DETAILS),
+              ),
+            );
           }
 
           return ListView(
