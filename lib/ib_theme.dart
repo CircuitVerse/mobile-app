@@ -8,7 +8,6 @@ class IbTheme {
       primaryIconTheme: Theme.of(context).primaryIconTheme.copyWith(
             color: Colors.white,
           ),
-      accentColor: IbTheme.primaryColor,
       primaryColor: IbTheme.primaryColor,
       textTheme: Theme.of(context).textTheme.apply(
             fontFamily: IbTheme.fontFamily,
@@ -18,9 +17,8 @@ class IbTheme {
             fontFamily: IbTheme.fontFamily,
             bodyColor: Colors.white,
           ),
-      accentTextTheme: Theme.of(context).accentTextTheme.apply(
-            fontFamily: IbTheme.fontFamily,
-          ),
+      colorScheme:
+          ColorScheme.fromSwatch().copyWith(secondary: IbTheme.primaryColor),
     );
   }
 

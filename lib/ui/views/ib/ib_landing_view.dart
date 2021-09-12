@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
@@ -68,7 +69,7 @@ class _IbLandingViewState extends State<IbLandingView> {
         ),
       ],
       centerTitle: true,
-      brightness: Brightness.dark,
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
     );
   }
 
