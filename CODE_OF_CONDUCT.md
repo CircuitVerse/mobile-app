@@ -37,5 +37,5 @@ This project is licensed under the [MIT License][5].
 [2]: https://adainitiative.org/2014/02/18/howto-design-a-code-of-conduct-for-your-community/
 [3]: https://geekfeminism.org/about/code-of-conduct/
 [4]: https://events.drupal.org/dublin2016/code-conduct
-[5]: https://github.com/CircuitVerse/CircuitVerse/blob/master/LICENSE
+[5]: https://github.com/CircuitVerse/mobile-app/blob/master/LICENSE
 [6]: https://www.contributor-covenant.org/version/1/3/0/code-of-conduct.html
