@@ -68,7 +68,6 @@ class _IbLandingViewState extends State<IbLandingView> {
         ),
       ],
       centerTitle: true,
-      brightness: Brightness.dark,
     );
   }
 
@@ -146,7 +145,10 @@ class _IbLandingViewState extends State<IbLandingView> {
                   Get.back();
                   Get.back();
                 },
-                child: CVDrawerTile(title: 'Return to Home'),
+                child: CVDrawerTile(
+                  title: 'Return to Home',
+                  color: IbTheme.textColor(context),
+                ),
               ),
               Divider(thickness: 1),
               InkWell(

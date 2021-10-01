@@ -5,10 +5,12 @@ class IbTheme {
 
   static ThemeData getThemeData(context) {
     return Theme.of(context).copyWith(
+      brightness: Theme.of(context).brightness,
       primaryIconTheme: Theme.of(context).primaryIconTheme.copyWith(
             color: Colors.white,
           ),
-      accentColor: IbTheme.primaryColor,
+      appBarTheme: AppBarTheme(
+          foregroundColor: Colors.white, backgroundColor: IbTheme.primaryColor),
       primaryColor: IbTheme.primaryColor,
       textTheme: Theme.of(context).textTheme.apply(
             fontFamily: IbTheme.fontFamily,
@@ -17,9 +19,6 @@ class IbTheme {
       primaryTextTheme: Theme.of(context).primaryTextTheme.apply(
             fontFamily: IbTheme.fontFamily,
             bodyColor: Colors.white,
-          ),
-      accentTextTheme: Theme.of(context).accentTextTheme.apply(
-            fontFamily: IbTheme.fontFamily,
           ),
     );
   }
