@@ -10,7 +10,9 @@ class IbTheme {
             color: Colors.white,
           ),
       appBarTheme: AppBarTheme(
-          foregroundColor: Colors.white, backgroundColor: IbTheme.primaryColor),
+        foregroundColor: Colors.white,
+        backgroundColor: IbTheme.primaryColor,
+      ),
       primaryColor: IbTheme.primaryColor,
       textTheme: Theme.of(context).textTheme.apply(
             fontFamily: IbTheme.fontFamily,
