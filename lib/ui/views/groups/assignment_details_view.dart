@@ -14,7 +14,6 @@ import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
-import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
@@ -462,14 +461,6 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                     _buildSubmissions(),
                     SizedBox(height: 16),
                     _buildGrades(),
-                  ],
-                ),
-              if (_model.isError(_model.FETCH_ASSIGNMENT_DETAILS))
-                Column(
-                  children: <Widget>[
-                    CVException(
-                      _model.errorMessageFor(_model.FETCH_ASSIGNMENT_DETAILS),
-                    ),
                   ],
                 ),
             ],

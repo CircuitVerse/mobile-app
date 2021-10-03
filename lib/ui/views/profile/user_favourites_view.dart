@@ -5,7 +5,6 @@ import 'package:mobile_app/ui/components/cv_add_icon_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
-import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 
 class UserFavouritesView extends StatefulWidget {
@@ -46,13 +45,6 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
               ),
             );
           });
-        }
-        if (model.isError(model.FETCH_USER_FAVOURITES)) {
-          _items.add(
-            CVException(
-              model.errorMessageFor(model.FETCH_USER_FAVOURITES),
-            ),
-          );
         }
 
         if (model?.previousUserFavouritesBatch?.links?.next != null) {
