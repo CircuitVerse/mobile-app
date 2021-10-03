@@ -6,7 +6,6 @@ import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
-import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:theme_provider/theme_provider.dart';
 
@@ -68,7 +67,6 @@ class _IbLandingViewState extends State<IbLandingView> {
         ),
       ],
       centerTitle: true,
-      brightness: Brightness.dark,
     );
   }
 
@@ -146,7 +144,10 @@ class _IbLandingViewState extends State<IbLandingView> {
                   Get.back();
                   Get.back();
                 },
-                child: CVDrawerTile(title: 'Return to Home'),
+                child: CVDrawerTile(
+                  title: 'Return to Home',
+                  color: IbTheme.textColor(context),
+                ),
               ),
               Divider(thickness: 1),
               InkWell(
@@ -160,8 +161,8 @@ class _IbLandingViewState extends State<IbLandingView> {
               ),
               !_model.isSuccess(_model.IB_FETCH_CHAPTERS)
                   ? InkWell(
-                      child: CVException(
-                        _model.errorMessageFor(_model.IB_FETCH_CHAPTERS),
+                      child: CVDrawerTile(
+                        title: 'Loading...',
                       ),
                     )
                   : _buildChapters(_model.chapters),

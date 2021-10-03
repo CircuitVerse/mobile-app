@@ -5,7 +5,6 @@ import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/featured_project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
-import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart';
 
 class FeaturedProjectsView extends StatefulWidget {
@@ -42,13 +41,6 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
               ),
             );
           });
-        }
-        if (model.isError(model.FETCH_FEATURED_PROJECTS)) {
-          _items.add(
-            CVException(
-              model.errorMessageFor(model.FETCH_FEATURED_PROJECTS),
-            ),
-          );
         }
 
         if (!widget.embed &&

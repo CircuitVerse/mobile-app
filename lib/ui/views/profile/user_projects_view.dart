@@ -4,7 +4,6 @@ import 'package:mobile_app/ui/components/cv_add_icon_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
-import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
 
 class UserProjectsView extends StatefulWidget {
@@ -43,14 +42,6 @@ class _UserProjectsViewState extends State<UserProjectsView>
               ),
             );
           });
-        }
-
-        if (model.isError(model.FETCH_USER_PROJECTS)) {
-          _items.add(
-            CVException(
-              model.errorMessageFor(model.FETCH_USER_PROJECTS),
-            ),
-          );
         }
 
         if (model?.previousUserProjectsBatch?.links?.next != null) {

@@ -53,9 +53,12 @@ class CVTheme {
 
   static ThemeData themeData(context) {
     return ThemeData(
-        accentColor: CVTheme.primaryColor,
-        primaryColor: CVTheme.primaryColor,
-        brightness: Theme.of(context).brightness);
+      brightness: Theme.of(context).brightness,
+      colorScheme: ThemeData().colorScheme.copyWith(
+            brightness: Theme.of(context).brightness,
+            primary: CVTheme.secondaryColor,
+          ),
+    );
   }
 
   static const Color primaryColor = Color.fromRGBO(66, 185, 131, 1);
