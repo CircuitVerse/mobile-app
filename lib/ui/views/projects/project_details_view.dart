@@ -96,17 +96,15 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               color: CVTheme.primaryColor,
               child: IconButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            ProjectPreviewFullScreen(
-                          projectImage:
-                              '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _recievedProject.attributes.imagePreview.url}',
-                        ),
-                      ));
+                  Get.toNamed(
+                    ProjectPreviewFullScreen.id,
+                    arguments: _recievedProject,
+                  );
                 },
-                icon: Icon(Icons.fullscreen, color: Colors.white),
+                icon: Icon(
+                  Icons.fullscreen,
+                  color: Colors.white,
+                ),
               ),
             ),
           ],

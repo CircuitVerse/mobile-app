@@ -23,6 +23,7 @@ import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
+import 'package:mobile_app/ui/views/projects/project_preview_fullscreen_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 
 class CVRouter {
@@ -110,6 +111,13 @@ class CVRouter {
         );
       case IbLandingView.id:
         return MaterialPageRoute(builder: (_) => IbLandingView());
+      case ProjectPreviewFullScreen.id:
+        var _project = settings.arguments as Project;
+        return MaterialPageRoute(
+          builder: (_) => ProjectPreviewFullScreen(
+            project: _project,
+          ),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
