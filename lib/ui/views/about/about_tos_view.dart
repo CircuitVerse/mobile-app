@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ui/views/about/about_privacy_policy_view.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../cv_theme.dart';
+import 'package:mobile_app/cv_theme.dart';
 
 class AboutTosView extends StatelessWidget {
   static const String id = 'about_tos_view';
