@@ -12,8 +12,6 @@ import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 
-import '../../components/cv_typeahead_field.dart';
-
 class EditProfileView extends StatefulWidget {
   static const String id = 'edit_profile_view';
 

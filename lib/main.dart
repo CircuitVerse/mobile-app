@@ -8,7 +8,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/database_service.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:theme_provider/theme_provider.dart';
-import 'ui/views/startup_view.dart';
+import 'package:mobile_app/ui/views/startup_view.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

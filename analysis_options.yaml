@@ -1,1 +1,70 @@
-include: package:pedantic/analysis_options.yaml
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude: [lib/generated_plugin_registrant.dart]
+
+linter:
+  rules:
+    # Make constructors the first thing in every class
+    sort_constructors_first: false
+
+    # Use parameter order as in json response
+    always_put_required_named_parameters_first: false
+
+    # Util classes
+    avoid_classes_with_only_static_members: false
+
+    avoid_redundant_argument_values: false
+
+    # Unnecessary use of this in constructors should not be done
+    unnecessary_this: false
+
+    # source files name using lowercase_with_underscores
+    lowercase_with_underscores: true
+
+    leading_newlines_in_multiline_strings: false
+
+    always_declare_return_types: false
+
+    type_annotate_public_apis: false
+    #always_use_package_imports to make a quick navigation to particular files
+    always_use_package_imports: true
+
+    directives_ordering: false
+
+    # In case of production should be set to true
+    avoid_print: false
+
+    avoid_unnecessary_containers: false
+
+    prefer_if_elements_to_conditional_expressions: false
+
+    avoid_function_literals_in_foreach_calls: false
+
+    join_return_with_assignment: false
+
+    prefer_const_literals_to_create_immutables: false
+
+    prefer_const_constructors: false
+
+    prefer_function_declarations_over_variables: false
+
+    unnecessary_string_escapes: false
+
+    non_constant_identifier_names:  false
+
+    use_key_in_widget_constructors: false
+
+    unnecessary_string_interpolations: false
+
+    prefer_const_declarations: false
+
+    constant_identifier_names: false
+
+    sized_box_for_whitespace: false
+
+    prefer_typing_uninitialized_variables: false
+
+    prefer_const_constructors_in_immutables: false
+
+    prefer_single_quotes: false
