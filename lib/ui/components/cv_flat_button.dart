@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CVFlatButton extends StatefulWidget {
-  CVFlatButton({
+  const CVFlatButton({
     @required Key key,
     @required this.triggerFunction,
     @required this.buttonText,
