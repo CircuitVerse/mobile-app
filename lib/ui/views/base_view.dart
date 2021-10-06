@@ -9,7 +9,7 @@ class BaseView<T extends BaseModel> extends StatefulWidget {
   final Function(T) onModelDestroy;
   final T model;
 
-  BaseView({
+  const BaseView({
     @required this.builder,
     this.onModelReady,
     this.onModelDestroy,

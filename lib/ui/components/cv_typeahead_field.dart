@@ -25,7 +25,7 @@ class CVTypeAheadField extends StatelessWidget {
   /// When a [TextInputType] is not specified, it defaults to [TextInputType.text]
   ///
   /// When `maxLines` is not specified, it defaults to 1
-  CVTypeAheadField({
+  const CVTypeAheadField({
     Key key,
     @required this.label,
     this.type = TextInputType.text,

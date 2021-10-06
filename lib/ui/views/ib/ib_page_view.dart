@@ -38,7 +38,7 @@ class IbPageView extends StatefulWidget {
   final SetPageCallback setPage;
   final IbChapter chapter;
 
-  IbPageView({
+  const IbPageView({
     @required Key key,
     @required this.tocCallback,
     @required this.chapter,
