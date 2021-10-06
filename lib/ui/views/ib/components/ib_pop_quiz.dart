@@ -8,7 +8,7 @@ class IbPopQuiz extends StatelessWidget {
   final BuildContext context;
   final List<IbPopQuizQuestion> questions;
 
-  IbPopQuiz({this.context, this.questions});
+  const IbPopQuiz({this.context, this.questions});
 
   Widget _buildQuestion(int questionNumber, IbPopQuizQuestion question) {
     var buttonsWidgets = <Widget>[];

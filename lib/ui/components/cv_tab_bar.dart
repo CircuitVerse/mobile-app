@@ -4,7 +4,7 @@ class CVTabBar extends StatelessWidget implements PreferredSizeWidget {
   final Color color;
   final TabBar tabBar;
 
-  CVTabBar({this.color, this.tabBar});
+  const CVTabBar({this.color, this.tabBar});
 
   @override
   Size get preferredSize => tabBar.preferredSize;
