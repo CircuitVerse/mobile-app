@@ -55,6 +55,7 @@ class AboutPrivacyPolicyView extends StatelessWidget {
         ? Theme.of(context).textTheme.headline5
         : Theme.of(context).textTheme.headline6;
 
+    // ignore: avoid_unnecessary_containers
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

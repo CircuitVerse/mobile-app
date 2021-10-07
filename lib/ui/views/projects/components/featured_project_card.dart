@@ -61,6 +61,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
+            // ignore: avoid_unnecessary_containers
             child: Container(
               child: Text(
                 widget.project.attributes.name,

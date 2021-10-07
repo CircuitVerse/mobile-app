@@ -50,6 +50,7 @@ class AboutTosView extends StatelessWidget {
     @required String title,
     @required List<TextSpan> content,
   }) {
+    // ignore: avoid_unnecessary_containers
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
