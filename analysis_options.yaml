@@ -65,6 +65,4 @@ linter:
 
     prefer_typing_uninitialized_variables: false
 
-    prefer_const_constructors_in_immutables: false
-
-    prefer_single_quotes: false
+    prefer_const_constructors_in_immutables: true
