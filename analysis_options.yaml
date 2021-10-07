@@ -35,7 +35,7 @@ linter:
     # In case of production should be set to true
     avoid_print: false
 
-    avoid_unnecessary_containers: false
+    avoid_unnecessary_containers: true
 
     prefer_if_elements_to_conditional_expressions: false
 
