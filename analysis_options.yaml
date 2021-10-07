@@ -33,7 +33,7 @@ linter:
     directives_ordering: false
 
     # In case of production should be set to true
-    avoid_print: false
+    avoid_print: true
 
     avoid_unnecessary_containers: true
 
