@@ -239,7 +239,10 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
                 _buildDescriptionInput(),
                 _buildDeadlineInput(),
                 _buildRestrictionsHeader(),
-                if (_isRestrictionEnabled) _buildRestrictions() else Container(),
+                if (_isRestrictionEnabled)
+                  _buildRestrictions()
+                else
+                  Container(),
                 _buildUpdateButton(),
               ],
             ),

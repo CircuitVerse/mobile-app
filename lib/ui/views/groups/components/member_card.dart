@@ -50,11 +50,14 @@ class MemberCard extends StatelessWidget {
               ],
             ),
           ),
-          if (hasMentorAccess) IconButton(
-                  icon: Icon(Icons.delete_outline),
-                  color: CVTheme.red,
-                  onPressed: onDeletePressed,
-                ) else Container()
+          if (hasMentorAccess)
+            IconButton(
+              icon: Icon(Icons.delete_outline),
+              color: CVTheme.red,
+              onPressed: onDeletePressed,
+            )
+          else
+            Container()
         ],
       ),
     );

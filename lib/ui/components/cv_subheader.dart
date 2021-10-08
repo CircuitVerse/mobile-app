@@ -19,14 +19,17 @@ class CVSubheader extends StatelessWidget {
               ),
           textAlign: TextAlign.center,
         ),
-        if (subtitle != null) Text(
-                subtitle,
-                style: Theme.of(context).textTheme.subtitle1.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: CVTheme.textColor(context),
-                    ),
-                textAlign: TextAlign.center,
-              ) else Container(),
+        if (subtitle != null)
+          Text(
+            subtitle,
+            style: Theme.of(context).textTheme.subtitle1.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: CVTheme.textColor(context),
+                ),
+            textAlign: TextAlign.center,
+          )
+        else
+          Container(),
       ],
     );
   }
