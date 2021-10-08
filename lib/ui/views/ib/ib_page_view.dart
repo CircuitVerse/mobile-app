@@ -88,7 +88,7 @@ class _IbPageViewState extends State<IbPageView> {
       await _hideButtonController.scrollToIndex(_slugMap[slug],
           preferPosition: AutoScrollPosition.begin);
     } else {
-      print('[IB]: $slug not present in map');
+      debugPrint('[IB]: $slug not present in map');
     }
   }
 
