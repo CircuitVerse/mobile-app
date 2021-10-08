@@ -24,15 +24,11 @@ linter:
 
     leading_newlines_in_multiline_strings: false
 
-    always_declare_return_types: true
-
     type_annotate_public_apis: false
     #always_use_package_imports to make a quick navigation to particular files
     always_use_package_imports: true
 
     directives_ordering: false
-
-    prefer_if_elements_to_conditional_expressions: true
 
     avoid_function_literals_in_foreach_calls: false
 
