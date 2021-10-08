@@ -461,15 +461,16 @@ class _IbPageViewState extends State<IbPageView> {
                 ),
               ),
             ),
-            widget.chapter.prev != null || widget.chapter.next != null
-                ? Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: _buildFloatingActionButtons(),
-                    ),
-                  )
-                : Container(),
+            if (widget.chapter.prev != null || widget.chapter.next != null)
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: _buildFloatingActionButtons(),
+                ),
+              )
+            else
+              Container(),
           ],
         );
       },

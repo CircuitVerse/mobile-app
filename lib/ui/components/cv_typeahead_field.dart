@@ -88,11 +88,11 @@ class CVTypeAheadField extends StatelessWidget {
                 }
                 //// If there is need of some other API Fetch add another if condition
                 return [
-                  pattern == '' ? 'No suggestions found' : pattern,
+                  if (pattern == '') 'No suggestions found' else pattern,
                 ];
               } catch (e) {
                 return [
-                  pattern == '' ? 'No suggestions found' : pattern,
+                  if (pattern == '') 'No suggestions found' else pattern,
                 ];
               }
             },
