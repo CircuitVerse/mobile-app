@@ -236,8 +236,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 child: FadeInImage.memoryNetwork(
                   fit: BoxFit.cover,
                   placeholder: kTransparentImage,
-                  image:
-                      EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _model.focussedProject.attributes.imagePreview.url,
+                  image: EnvironmentConfig.CV_API_BASE_URL.substring(
+                          0, EnvironmentConfig.CV_API_BASE_URL.length - 7) +
+                      _model.focussedProject.attributes.imagePreview.url,
                 ),
               ),
             )
