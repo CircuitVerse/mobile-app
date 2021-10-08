@@ -61,22 +61,23 @@ class IbPopQuizButtonState extends State<IbPopQuizButton> {
               widget.content,
               style: TextStyle(color: _getTextColor(), fontSize: 16),
             ),
-            _isPressed
-                ? Container(
-                    height: 19,
-                    width: 19,
-                    decoration: BoxDecoration(
-                      color: _getTextColor(),
-                      borderRadius: BorderRadius.circular(50),
-                      border: Border.all(color: _getBorderColor()),
-                    ),
-                    child: Icon(
-                      getTheRightIcon(),
-                      size: 16,
-                      color: _getBorderColor(),
-                    ),
-                  )
-                : Container(),
+            if (_isPressed)
+              Container(
+                height: 19,
+                width: 19,
+                decoration: BoxDecoration(
+                  color: _getTextColor(),
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(color: _getBorderColor()),
+                ),
+                child: Icon(
+                  getTheRightIcon(),
+                  size: 16,
+                  color: _getBorderColor(),
+                ),
+              )
+            else
+              Container(),
           ],
         ),
       ),

@@ -174,49 +174,50 @@ class _CVLandingViewState extends State<CVLandingView> {
                   iconData: Icons.account_balance,
                 ),
               ),
-              _model.isLoggedIn
-                  ? Theme(
-                      data: CVTheme.themeData(context),
-                      child: ExpansionTile(
-                        maintainState: true,
-                        title: Text(
-                          _model.currentUser.data.attributes.name ?? '',
-                          style: Theme.of(context).textTheme.headline6.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+              if (_model.isLoggedIn)
+                Theme(
+                  data: CVTheme.themeData(context),
+                  child: ExpansionTile(
+                    maintainState: true,
+                    title: Text(
+                      _model.currentUser.data.attributes.name ?? '',
+                      style: Theme.of(context).textTheme.headline6.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    children: <Widget>[
+                      InkWell(
+                        onTap: () => setSelectedIndexTo(5),
+                        child: CVDrawerTile(
+                          title: AppLocalizations.of(context).profile,
+                          iconData: FontAwesome5.user,
                         ),
-                        children: <Widget>[
-                          InkWell(
-                            onTap: () => setSelectedIndexTo(5),
-                            child: CVDrawerTile(
-                              title: AppLocalizations.of(context).profile,
-                              iconData: FontAwesome5.user,
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () => setSelectedIndexTo(6),
-                            child: CVDrawerTile(
-                              title: AppLocalizations.of(context).my_groups,
-                              iconData: FontAwesome5.object_group,
-                            ),
-                          ),
-                          InkWell(
-                            onTap: onLogoutPressed,
-                            child: CVDrawerTile(
-                              title: AppLocalizations.of(context).logout,
-                              iconData: FontAwesome.logout,
-                            ),
-                          ),
-                        ],
                       ),
-                    )
-                  : InkWell(
-                      onTap: () => Get.offAndToNamed(LoginView.id),
-                      child: CVDrawerTile(
-                        title: AppLocalizations.of(context).login,
-                        iconData: FontAwesome.login,
+                      InkWell(
+                        onTap: () => setSelectedIndexTo(6),
+                        child: CVDrawerTile(
+                          title: AppLocalizations.of(context).my_groups,
+                          iconData: FontAwesome5.object_group,
+                        ),
                       ),
-                    )
+                      InkWell(
+                        onTap: onLogoutPressed,
+                        child: CVDrawerTile(
+                          title: AppLocalizations.of(context).logout,
+                          iconData: FontAwesome.logout,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              else
+                InkWell(
+                  onTap: () => Get.offAndToNamed(LoginView.id),
+                  child: CVDrawerTile(
+                    title: AppLocalizations.of(context).login,
+                    iconData: FontAwesome.login,
+                  ),
+                )
             ],
           ),
           Positioned(
