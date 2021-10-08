@@ -34,7 +34,7 @@ class DatabaseServiceImpl implements DatabaseService {
     try {
       await Hive.initFlutter();
     } catch (e) {
-      print('Hive Initialization Failed');
+      debugPrint('Hive Initialization Failed');
     }
 
     // Register Adapters for Hive

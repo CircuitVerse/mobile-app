@@ -61,16 +61,14 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            child: Container(
-              child: Text(
-                widget.project.attributes.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.start,
-                style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: CVTheme.textColor(context),
-                    ),
-              ),
+            child: Text(
+              widget.project.attributes.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.start,
+              style: Theme.of(context).textTheme.headline6.copyWith(
+                    color: CVTheme.textColor(context),
+                  ),
             ),
           ),
           CVPrimaryButton(

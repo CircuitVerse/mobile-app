@@ -50,26 +50,24 @@ class AboutTosView extends StatelessWidget {
     @required String title,
     @required List<TextSpan> content,
   }) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.headline5.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: CVTheme.primaryHeading(context),
-                ),
-            textAlign: TextAlign.left,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.headline5.copyWith(
+                fontWeight: FontWeight.w400,
+                color: CVTheme.primaryHeading(context),
+              ),
+          textAlign: TextAlign.left,
+        ),
+        RichText(
+          textAlign: TextAlign.justify,
+          text: TextSpan(
+            children: content,
           ),
-          RichText(
-            textAlign: TextAlign.justify,
-            text: TextSpan(
-              children: content,
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 

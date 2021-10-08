@@ -55,28 +55,26 @@ class AboutPrivacyPolicyView extends StatelessWidget {
         ? Theme.of(context).textTheme.headline5
         : Theme.of(context).textTheme.headline6;
 
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          title != ''
-              ? Text(
-                  title,
-                  style: style.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: CVTheme.primaryHeading(context),
-                  ),
-                  textAlign: TextAlign.left,
-                )
-              : Container(),
-          RichText(
-            textAlign: TextAlign.justify,
-            text: TextSpan(
-              children: content,
-            ),
-          )
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        title != ''
+            ? Text(
+                title,
+                style: style.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: CVTheme.primaryHeading(context),
+                ),
+                textAlign: TextAlign.left,
+              )
+            : Container(),
+        RichText(
+          textAlign: TextAlign.justify,
+          text: TextSpan(
+            children: content,
+          ),
+        )
+      ],
     );
   }
 

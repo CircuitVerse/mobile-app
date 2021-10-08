@@ -212,7 +212,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         _descriptionEditorText =
             await _descriptionEditor.currentState.getText();
       } on NoSuchMethodError {
-        print(
+        debugPrint(
             'Handled html_editor error. NOTE: This should only throw during tests.');
         _descriptionEditorText = '';
       }
