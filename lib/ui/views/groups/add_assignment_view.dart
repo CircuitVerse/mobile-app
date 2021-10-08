@@ -268,7 +268,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
                 _buildDeadlineInput(),
                 _buildGradingScaleDropdown(),
                 _buildRestrictionsHeader(),
-                _isRestrictionEnabled ? _buildRestrictions() : Container(),
+                if (_isRestrictionEnabled) _buildRestrictions() else Container(),
                 _buildCreateButton(),
               ],
             ),

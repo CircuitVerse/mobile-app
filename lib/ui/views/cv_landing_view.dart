@@ -174,8 +174,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                   iconData: Icons.account_balance,
                 ),
               ),
-              _model.isLoggedIn
-                  ? Theme(
+              if (_model.isLoggedIn) Theme(
                       data: CVTheme.themeData(context),
                       child: ExpansionTile(
                         maintainState: true,
@@ -209,8 +208,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                           ),
                         ],
                       ),
-                    )
-                  : InkWell(
+                    ) else InkWell(
                       onTap: () => Get.offAndToNamed(LoginView.id),
                       child: CVDrawerTile(
                         title: AppLocalizations.of(context).login,

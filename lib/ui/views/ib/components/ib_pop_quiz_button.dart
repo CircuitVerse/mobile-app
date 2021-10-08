@@ -61,8 +61,7 @@ class IbPopQuizButtonState extends State<IbPopQuizButton> {
               widget.content,
               style: TextStyle(color: _getTextColor(), fontSize: 16),
             ),
-            _isPressed
-                ? Container(
+            if (_isPressed) Container(
                     height: 19,
                     width: 19,
                     decoration: BoxDecoration(
@@ -75,8 +74,7 @@ class IbPopQuizButtonState extends State<IbPopQuizButton> {
                       size: 16,
                       color: _getBorderColor(),
                     ),
-                  )
-                : Container(),
+                  ) else Container(),
           ],
         ),
       ),

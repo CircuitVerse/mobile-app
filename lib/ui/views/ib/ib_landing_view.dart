@@ -159,13 +159,11 @@ class _IbLandingViewState extends State<IbLandingView> {
                       : IbTheme.textColor(context),
                 ),
               ),
-              !_model.isSuccess(_model.IB_FETCH_CHAPTERS)
-                  ? InkWell(
+              if (!_model.isSuccess(_model.IB_FETCH_CHAPTERS)) InkWell(
                       child: CVDrawerTile(
                         title: 'Loading...',
                       ),
-                    )
-                  : _buildChapters(_model.chapters),
+                    ) else _buildChapters(_model.chapters),
             ],
           ),
           Positioned(

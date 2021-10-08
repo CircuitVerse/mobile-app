@@ -22,26 +22,22 @@ class CVHeader extends StatelessWidget {
               ),
           textAlign: TextAlign.center,
         ),
-        subtitle != null
-            ? Text(
+        if (subtitle != null) Text(
                 subtitle,
                 style: Theme.of(context).textTheme.subtitle1.copyWith(
                       fontWeight: FontWeight.bold,
                       color: CVTheme.textColor(context),
                     ),
                 textAlign: TextAlign.center,
-              )
-            : Container(),
-        description != null
-            ? Container(
+              ) else Container(),
+        if (description != null) Container(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(
                   description,
                   style: Theme.of(context).textTheme.subtitle1,
                   textAlign: TextAlign.center,
                 ),
-              )
-            : Container(),
+              ) else Container(),
       ],
     );
   }
