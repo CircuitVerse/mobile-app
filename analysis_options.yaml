@@ -46,8 +46,6 @@ linter:
 
     use_key_in_widget_constructors: false
 
-    unnecessary_string_interpolations: false
-
     prefer_const_declarations: false
 
     constant_identifier_names: false

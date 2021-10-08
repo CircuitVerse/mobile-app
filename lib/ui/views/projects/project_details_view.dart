@@ -88,8 +88,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 height: 100,
                 width: 50,
                 placeholder: kTransparentImage,
-                image:
-                    '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + _recievedProject.attributes.imagePreview.url}',
+                image: EnvironmentConfig.CV_API_BASE_URL.substring(
+                        0, EnvironmentConfig.CV_API_BASE_URL.length - 7) +
+                    _recievedProject.attributes.imagePreview.url,
               ),
             ),
             Material(
@@ -229,7 +230,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                       ),
                 ),
                 Html(
-                  data: """${_recievedProject.attributes.description ?? ''}""",
+                  data: _recievedProject.attributes.description ?? '',
                   style: {'body': Style(fontSize: FontSize(18))},
                 )
               ],

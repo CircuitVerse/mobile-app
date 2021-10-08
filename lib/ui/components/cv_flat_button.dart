@@ -31,7 +31,7 @@ class CVFlatButtonState extends State<CVFlatButton> {
       onPressed: dynamicFunction == null
           ? null
           : () => dynamicFunction.call(widget.context),
-      child: Text('${widget.buttonText}'),
+      child: Text(widget.buttonText),
     );
   }
 }
