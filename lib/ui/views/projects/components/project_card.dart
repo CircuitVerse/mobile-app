@@ -91,7 +91,7 @@ class _ProjectCardState extends State<ProjectCard> {
             fit: BoxFit.cover,
             placeholder: kTransparentImage,
             image:
-                '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + widget.project.attributes.imagePreview.url}',
+                EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + widget.project.attributes.imagePreview.url,
           ),
         ),
       ),

@@ -26,7 +26,7 @@ class ProjectPreviewFullScreen extends StatelessWidget {
             width: 50,
             placeholder: kTransparentImage,
             image:
-                '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + project.attributes.imagePreview.url}',
+                EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + project.attributes.imagePreview.url,
           ),
         ),
       ),
