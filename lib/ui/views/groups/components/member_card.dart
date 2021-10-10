@@ -3,12 +3,12 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/group_members.dart';
 
 class MemberCard extends StatelessWidget {
-  final GroupMember member;
+  final GroupMember? member;
   final bool hasMentorAccess;
-  final VoidCallback onDeletePressed;
+  final VoidCallback? onDeletePressed;
 
   const MemberCard({
-    Key key,
+    Key? key,
     this.member,
     this.hasMentorAccess = false,
     this.onDeletePressed,
@@ -36,13 +36,13 @@ class MemberCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  member.attributes.name ?? 'No Name',
+                  member!.attributes!.name ?? 'No Name',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 Text(
-                  member.attributes.email ?? 'No Email',
+                  member!.attributes!.email ?? 'No Email',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText1,

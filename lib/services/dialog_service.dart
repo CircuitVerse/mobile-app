@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:mobile_app/models/dialog_models.dart';
 
 class DialogService {
-  Completer _dialogCompleter;
+  Completer? _dialogCompleter;
 
-  Completer<DialogResponse> get dialogCompleter => _dialogCompleter;
+  Completer<DialogResponse>? get dialogCompleter => _dialogCompleter as Completer<DialogResponse>?;
 
   void _showDialog(DialogRequest request) {
     Get.dialog(
@@ -16,19 +16,19 @@ class DialogService {
           borderRadius: BorderRadius.circular(8),
         ),
         title: Text(
-          request.title,
+          request.title!,
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        content: Text(request.description),
+        content: Text(request.description!),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               dialogComplete(DialogResponse(confirmed: true));
             },
             child: Text(
-              request.buttonTitle,
+              request.buttonTitle!,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -46,19 +46,19 @@ class DialogService {
           borderRadius: BorderRadius.circular(8),
         ),
         title: Text(
-          request.title,
+          request.title!,
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        content: Text(request.description),
+        content: Text(request.description!),
         actions: <Widget>[
           TextButton(
             onPressed: () {
               dialogComplete(DialogResponse(confirmed: false));
             },
             child: Text(
-              request.cancelTitle,
+              request.cancelTitle!,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -69,7 +69,7 @@ class DialogService {
               dialogComplete(DialogResponse(confirmed: true));
             },
             child: Text(
-              request.buttonTitle,
+              request.buttonTitle!,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -96,7 +96,7 @@ class DialogService {
                 SizedBox(width: 16),
                 Expanded(
                   child: Text(
-                    request.title,
+                    request.title!,
                     style: TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,
                     maxLines: 1,
@@ -113,8 +113,8 @@ class DialogService {
 
   /// Calls the dialog listener and returns a Future that will wait for dialogComplete.
   Future<DialogResponse> showDialog({
-    String title,
-    String description,
+    String? title,
+    String? description,
     String buttonTitle = 'OK',
   }) {
     _dialogCompleter = Completer<DialogResponse>();
@@ -125,13 +125,13 @@ class DialogService {
         buttonTitle: buttonTitle,
       ),
     );
-    return _dialogCompleter.future;
+    return _dialogCompleter!.future.then((value) => value as DialogResponse);
   }
 
   /// Shows a confirmation dialog
   Future<DialogResponse> showConfirmationDialog({
-    String title,
-    String description,
+    String? title,
+    String? description,
     String confirmationTitle = 'OK',
     String cancelTitle = 'CANCEL',
   }) {
@@ -144,10 +144,10 @@ class DialogService {
         cancelTitle: cancelTitle,
       ),
     );
-    return _dialogCompleter.future;
+    return _dialogCompleter!.future.then((value) => value as DialogResponse);
   }
 
-  void showCustomProgressDialog({String title}) {
+  void showCustomProgressDialog({String? title}) {
     _showProgressDialog(
       DialogRequest(title: title),
     );
@@ -155,14 +155,14 @@ class DialogService {
 
   /// Completes the _dialogCompleter to resume the Future's execution call
   void dialogComplete(DialogResponse response) {
-    Get.key.currentState.pop();
-    _dialogCompleter.complete(response);
+    Get.key.currentState!.pop();
+    _dialogCompleter!.complete(response);
     _dialogCompleter = null;
   }
 
   void popDialog() {
-    if (Get.key.currentState.canPop()) {
-      Get.key.currentState.pop();
+    if (Get.key.currentState!.canPop()) {
+      Get.key.currentState!.pop();
     }
   }
 }

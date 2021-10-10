@@ -8,18 +8,16 @@ abstract class CountryInstituteAPI {
 }
 
 class HttpCountryInstituteAPI implements CountryInstituteAPI {
-  List<dynamic> data;
+  List<dynamic>? data;
 
   Future<dynamic> _fetchAPI(String query, String url) async {
     try {
-      data = await ApiUtils.get(
-        url,
-      );
+      data = await ApiUtils.get(url) as List<dynamic>?;
 
       var matches = [];
 
-      for (var i = 0; i < data.length; i++) {
-        matches.add(data[i]['name']);
+      for (var i = 0; i < data!.length; i++) {
+        matches.add(data![i]['name']);
       }
 
       matches.retainWhere(

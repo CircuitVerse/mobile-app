@@ -9,17 +9,17 @@ class FeaturedProjectsViewModel extends BaseModel {
   // ViewState Keys
   String FETCH_FEATURED_PROJECTS = 'fetch_featured_projects';
 
-  final ProjectsApi _projectsApi = locator<ProjectsApi>();
+  final ProjectsApi? _projectsApi = locator<ProjectsApi>();
 
   final List<Project> _featuredProjects = [];
 
   List<Project> get featuredProjects => _featuredProjects;
 
-  Projects _previousFeaturedProjectsBatch;
+  Projects? _previousFeaturedProjectsBatch;
 
-  Projects get previousFeaturedProjectsBatch => _previousFeaturedProjectsBatch;
+  Projects? get previousFeaturedProjectsBatch => _previousFeaturedProjectsBatch;
 
-  set previousFeaturedProjectsBatch(Projects previousFeaturedProjectsBatch) {
+  set previousFeaturedProjectsBatch(Projects? previousFeaturedProjectsBatch) {
     _previousFeaturedProjectsBatch = previousFeaturedProjectsBatch;
     notifyListeners();
   }
@@ -28,13 +28,13 @@ class FeaturedProjectsViewModel extends BaseModel {
     try {
       if (previousFeaturedProjectsBatch?.links?.next != null) {
         // fetch next batch of projects..
-        String _nextPageLink = previousFeaturedProjectsBatch.links.next;
+        String _nextPageLink = previousFeaturedProjectsBatch!.links!.next;
 
         var _nextPageNumber =
             int.parse(_nextPageLink.substring(_nextPageLink.length - 1));
 
         // fetch projects corresponding to next page number..
-        previousFeaturedProjectsBatch = await _projectsApi.getFeaturedProjects(
+        previousFeaturedProjectsBatch = await _projectsApi!.getFeaturedProjects(
           page: _nextPageNumber,
           size: size,
         );
@@ -42,11 +42,11 @@ class FeaturedProjectsViewModel extends BaseModel {
         // Set State as busy only very first time..
         setStateFor(FETCH_FEATURED_PROJECTS, ViewState.Busy);
         // fetch projects for the very first time..
-        previousFeaturedProjectsBatch = await _projectsApi.getFeaturedProjects(
+        previousFeaturedProjectsBatch = await _projectsApi!.getFeaturedProjects(
           size: size,
         );
       }
-      featuredProjects.addAll(previousFeaturedProjectsBatch.data);
+      featuredProjects.addAll(previousFeaturedProjectsBatch!.data!);
       setStateFor(FETCH_FEATURED_PROJECTS, ViewState.Success);
     } on Failure catch (f) {
       setStateFor(FETCH_FEATURED_PROJECTS, ViewState.Error);

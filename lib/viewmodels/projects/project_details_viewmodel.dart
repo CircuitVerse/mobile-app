@@ -16,70 +16,70 @@ class ProjectDetailsViewModel extends BaseModel {
   String ADD_COLLABORATORS = 'add_collaborators';
   String DELETE_COLLABORATORS = 'delete_collaborators';
 
-  final ProjectsApi _projectsApi = locator<ProjectsApi>();
-  final CollaboratorsApi _collaboratorsApi = locator<CollaboratorsApi>();
+  final ProjectsApi? _projectsApi = locator<ProjectsApi>();
+  final CollaboratorsApi? _collaboratorsApi = locator<CollaboratorsApi>();
 
-  Project _project;
+  Project? _project;
 
-  Project get project => _project;
+  Project? get project => _project;
 
-  set project(Project project) {
+  set project(Project? project) {
     _project = project;
     notifyListeners();
   }
 
-  List<Collaborator> _collaborators = [];
+  List<Collaborator>? _collaborators = [];
 
-  List<Collaborator> get collaborators => _collaborators;
+  List<Collaborator>? get collaborators => _collaborators;
 
-  set collaborators(List<Collaborator> collaborators) {
+  set collaborators(List<Collaborator>? collaborators) {
     _collaborators = collaborators;
     notifyListeners();
   }
 
-  bool _isProjectStarred = false;
+  bool? _isProjectStarred = false;
 
-  bool get isProjectStarred => _isProjectStarred;
+  bool? get isProjectStarred => _isProjectStarred;
 
-  set isProjectStarred(bool isProjectStarred) {
+  set isProjectStarred(bool? isProjectStarred) {
     _isProjectStarred = isProjectStarred;
     notifyListeners();
   }
 
-  int _starCount = 0;
+  int? _starCount = 0;
 
-  int get starCount => _starCount;
+  int? get starCount => _starCount;
 
-  set starCount(int starCount) {
+  set starCount(int? starCount) {
     _starCount = starCount;
     notifyListeners();
   }
 
-  Project _forkedProject;
+  Project? _forkedProject;
 
-  Project get forkedProject => _forkedProject;
+  Project? get forkedProject => _forkedProject;
 
-  set forkedProject(Project forkedProject) {
+  set forkedProject(Project? forkedProject) {
     _forkedProject = forkedProject;
     notifyListeners();
   }
 
-  String _addedCollaboratorsSuccessMessage;
+  String? _addedCollaboratorsSuccessMessage;
 
-  String get addedCollaboratorsSuccessMessage =>
+  String? get addedCollaboratorsSuccessMessage =>
       _addedCollaboratorsSuccessMessage;
 
   set addedCollaboratorsSuccessMessage(
-      String addedCollaboratorsSuccessMessage) {
+      String? addedCollaboratorsSuccessMessage) {
     _addedCollaboratorsSuccessMessage = addedCollaboratorsSuccessMessage;
     notifyListeners();
   }
 
-  Future fetchProjectDetails(String projectId) async {
+  Future fetchProjectDetails(String? projectId) async {
     setStateFor(FETCH_PROJECT_DETAILS, ViewState.Busy);
     try {
-      project = await _projectsApi.getProjectDetails(projectId);
-      collaborators = _project.collaborators;
+      project = await _projectsApi!.getProjectDetails(projectId);
+      collaborators = _project!.collaborators;
 
       setStateFor(FETCH_PROJECT_DETAILS, ViewState.Success);
     } on Failure catch (f) {
@@ -88,15 +88,15 @@ class ProjectDetailsViewModel extends BaseModel {
     }
   }
 
-  Future addCollaborators(String projectId, String emails) async {
+  Future addCollaborators(String? projectId, String? emails) async {
     setStateFor(ADD_COLLABORATORS, ViewState.Busy);
     try {
       var addedCollaborators =
-          await _collaboratorsApi.addCollaborators(projectId, emails);
+          await _collaboratorsApi!.addCollaborators(projectId, emails);
 
-      var _addedMembers = addedCollaborators.added.join(', ');
-      var _existingMembers = addedCollaborators.existing.join(', ');
-      var _invalidMembers = addedCollaborators.invalid.join(', ');
+      var _addedMembers = addedCollaborators.added!.join(', ');
+      var _existingMembers = addedCollaborators.existing!.join(', ');
+      var _invalidMembers = addedCollaborators.invalid!.join(', ');
 
       addedCollaboratorsSuccessMessage = (_addedMembers.isNotEmpty
               ? '$_addedMembers was/were added '
@@ -108,7 +108,7 @@ class ProjectDetailsViewModel extends BaseModel {
 
       // Fetch & Update all collaborators..
       var _collaborators =
-          await _collaboratorsApi.fetchProjectCollaborators(projectId);
+          await _collaboratorsApi!.fetchProjectCollaborators(projectId);
       collaborators = _collaborators.data;
 
       setStateFor(ADD_COLLABORATORS, ViewState.Success);
@@ -118,14 +118,14 @@ class ProjectDetailsViewModel extends BaseModel {
     }
   }
 
-  Future deleteCollaborator(String projectId, String collaboratorId) async {
+  Future deleteCollaborator(String? projectId, String? collaboratorId) async {
     setStateFor(DELETE_COLLABORATORS, ViewState.Busy);
     try {
-      var _isDeleted =
-          await _collaboratorsApi.deleteCollaborator(projectId, collaboratorId);
+      var _isDeleted = await _collaboratorsApi!
+          .deleteCollaborator(projectId, collaboratorId);
 
       // Remove Collaborator from the list..
-      collaborators
+      collaborators!
           .removeWhere((collaborator) => collaborator.id == collaboratorId);
       notifyListeners();
 
@@ -142,10 +142,10 @@ class ProjectDetailsViewModel extends BaseModel {
     }
   }
 
-  Future<void> forkProject(String toBeForkedProjectId) async {
+  Future<void> forkProject(String? toBeForkedProjectId) async {
     setStateFor(FORK_PROJECT, ViewState.Busy);
     try {
-      forkedProject = await _projectsApi.forkProject(toBeForkedProjectId);
+      forkedProject = await _projectsApi!.forkProject(toBeForkedProjectId);
 
       setStateFor(FORK_PROJECT, ViewState.Success);
     } on Failure catch (f) {
@@ -154,12 +154,16 @@ class ProjectDetailsViewModel extends BaseModel {
     }
   }
 
-  Future toggleStarForProject(String projectId) async {
+  Future toggleStarForProject(String? projectId) async {
     setStateFor(TOGGLE_STAR, ViewState.Busy);
     try {
-      var _toggleMessage = await _projectsApi.toggleStarProject(projectId);
+      var _toggleMessage =
+          await _projectsApi!.toggleStarProject(projectId) as String;
       isProjectStarred = _toggleMessage.contains('Starred') ? true : false;
-      isProjectStarred ? starCount++ : starCount--;
+
+      isProjectStarred!
+          ? starCount = starCount! + 1
+          : starCount = starCount! - 1;
 
       setStateFor(TOGGLE_STAR, ViewState.Success);
     } on Failure catch (f) {
@@ -168,10 +172,10 @@ class ProjectDetailsViewModel extends BaseModel {
     }
   }
 
-  Future deleteProject(String projectId) async {
+  Future deleteProject(String? projectId) async {
     setStateFor(DELETE_PROJECT, ViewState.Busy);
     try {
-      var _isDeleted = await _projectsApi.deleteProject(projectId);
+      var _isDeleted = await _projectsApi!.deleteProject(projectId);
 
       if (_isDeleted) {
         setStateFor(DELETE_PROJECT, ViewState.Success);

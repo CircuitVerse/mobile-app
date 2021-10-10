@@ -24,7 +24,7 @@ class _HomeViewState extends State<HomeView> {
         children: <Widget>[
           Text(
             'Dive into the world of Logic Circuits for free!',
-            style: Theme.of(context).textTheme.headline4.copyWith(
+            style: Theme.of(context).textTheme.headline4!.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
             textAlign: TextAlign.center,

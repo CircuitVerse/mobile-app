@@ -22,7 +22,7 @@ void main() {
     group('onProjectDeleted -', () {
       test('When called, removes project from _userProjects', () {
         var _model = UserFavouritesViewModel();
-        _model.userFavourites.addAll(_projects.data);
+        _model.userFavourites.addAll(_projects.data!);
         _model.onProjectDeleted('1');
 
         expect(

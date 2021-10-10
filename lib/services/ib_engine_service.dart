@@ -24,14 +24,14 @@ abstract class IbEngineService {
   }
 
   Future<List<IbChapter>> getChapters();
-  Future<IbPageData> getPageData({String id = 'index.md'});
+  Future<IbPageData> getPageData({String? id = 'index.md'});
   Future<String> getHtmlInteraction(String id);
   List<IbPopQuizQuestion> getPopQuiz(String rawPopQuizContent);
 }
 
 class IbEngineServiceImpl implements IbEngineService {
   /// Inject ApiService via locator
-  final IbApi _ibApi = locator<IbApi>();
+  final IbApi? _ibApi = locator<IbApi>();
 
   /// Locally cache Chapters list for the session
   List<IbChapter> _ibChapters = [];
@@ -45,17 +45,17 @@ class IbEngineServiceImpl implements IbEngineService {
       'https://raw.githubusercontent.com/CircuitVerse/Interactive-Book/master/_includes';
 
   /// module.js contents
-  String _intModuleJs;
+  String? _intModuleJs;
 
   /// Fetches Pages inside an API Page
   Future<List<IbChapter>> _fetchPagesInDir({
-    String id = '',
+    String? id = '',
     bool ignoreIndex = false,
   }) async {
     /// Fetch response from API for the given id
     var _apiResponse;
     try {
-      _apiResponse = await _ibApi.fetchApiPage(id: id);
+      _apiResponse = await _ibApi!.fetchApiPage(id: id);
     } catch (_) {
       throw Failure('IbApi: ${_.toString()}');
     }
@@ -109,14 +109,14 @@ class IbEngineServiceImpl implements IbEngineService {
     // but return original list of chapters to keep the order intact
 
     var _flatten = chapters
-        .expand((c) => c.items != null ? [c, ...c.items] : [c])
+        .expand((c) => c.items != null ? [c, ...c.items!] : [c])
         .toList();
 
     if (_flatten.length <= 1) {
       return chapters;
     }
 
-    IbChapter prev;
+    IbChapter? prev;
 
     for (var i = 0; i < _flatten.length; i++) {
       _flatten[i].prevPage = prev;
@@ -167,7 +167,7 @@ class IbEngineServiceImpl implements IbEngineService {
         toc.add(
           IbTocItem(
             leading: '$eff_index.',
-            content: li.firstChild.text,
+            content: li.firstChild!.text,
             items: _parseToc(li.children[1], num: !num),
           ),
         );
@@ -208,7 +208,7 @@ class IbEngineServiceImpl implements IbEngineService {
       toc.add(
         IbTocItem(
           leading: '$eff_index.',
-          content: root ? li.nodes[0].text.trim() : li.text.trim(),
+          content: root ? li.nodes[0].text!.trim() : li.text.trim(),
           items: sublist.isNotEmpty ? sublist : null,
         ),
       );
@@ -220,7 +220,7 @@ class IbEngineServiceImpl implements IbEngineService {
   }
 
   /// Fetches Table of Contents from HTML content
-  List<IbTocItem> _getTableOfContents(String content) {
+  List<IbTocItem> _getTableOfContents(String? content) {
     var document = parse(content);
     var mdElement = document.getElementById('markdown-toc');
 
@@ -232,7 +232,7 @@ class IbEngineServiceImpl implements IbEngineService {
   }
 
   /// Fetches Chapter of Contents from HTML Content
-  List<IbTocItem> _getChapterOfContents(String content) {
+  List<IbTocItem> _getChapterOfContents(String? content) {
     var document = parse(content);
     var mdElement = document.getElementById('chapter-contents-toc');
 
@@ -245,11 +245,11 @@ class IbEngineServiceImpl implements IbEngineService {
 
   /// Fetches "Rich" Page Content
   @override
-  Future<IbPageData> getPageData({String id = 'index.md'}) async {
+  Future<IbPageData> getPageData({String? id = 'index.md'}) async {
     /// Fetch Raw Page Data from API
     IbRawPageData _ibRawPageData;
     try {
-      _ibRawPageData = await _ibApi.fetchRawPageData(id: id);
+      _ibRawPageData = await _ibApi!.fetchRawPageData(id: id);
     } catch (_) {
       throw Failure(_.toString());
     }
@@ -259,12 +259,13 @@ class IbEngineServiceImpl implements IbEngineService {
       pageUrl: _ibRawPageData.httpUrl,
       title: _ibRawPageData.title,
       content: [
-        IbMd(content: HtmlUnescape().convert(_ibRawPageData.rawContent) + '\n'),
+        IbMd(
+            content: HtmlUnescape().convert(_ibRawPageData.rawContent!) + '\n'),
       ],
-      tableOfContents: _ibRawPageData.hasToc
+      tableOfContents: _ibRawPageData.hasToc!
           ? _getTableOfContents(_ibRawPageData.content)
           : [],
-      chapterOfContents: _ibRawPageData.hasChildren
+      chapterOfContents: _ibRawPageData.hasChildren!
           ? _getChapterOfContents(_ibRawPageData.content)
           : [],
     );
@@ -276,10 +277,12 @@ class IbEngineServiceImpl implements IbEngineService {
   @override
   Future<String> getHtmlInteraction(String id) async {
     // Fetch JS content if not already fetched
-    _intModuleJs ??= await ApiUtils.get(_intModuleJsUrl, rawResponse: true);
+    _intModuleJs ??=
+        await ApiUtils.get(_intModuleJsUrl, rawResponse: true) as String?;
 
     // Fetch Interaction HTML
-    String html = await ApiUtils.get('$_intBaseUrl/$id', rawResponse: true);
+    String? html =
+        await ApiUtils.get('$_intBaseUrl/$id', rawResponse: true) as String?;
 
     // concat JS + HTML
     var js = '<script type="text/javascript">\n$_intModuleJs\n</script>';

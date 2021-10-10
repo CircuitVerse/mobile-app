@@ -8,8 +8,8 @@ class Assignments {
     this.links,
   });
 
-  List<Assignment> data;
-  Links links;
+  List<Assignment>? data;
+  Links? links;
 
   factory Assignments.fromJson(Map<String, dynamic> json) => Assignments(
         data: List<Assignment>.from(
@@ -28,11 +28,11 @@ class Assignment {
     this.grades,
   });
 
-  String id;
-  String type;
-  AssignmentAttributes attributes;
-  List<Project> projects;
-  List<Grade> grades;
+  String? id;
+  String? type;
+  AssignmentAttributes? attributes;
+  List<Project>? projects;
+  List<Grade>? grades;
 
   factory Assignment.fromJson(Map<String, dynamic> json) => Assignment(
         id: json['id'] ?? json['data']['id'],
@@ -56,12 +56,12 @@ class Assignment {
       );
 
   bool get canBeGraded =>
-      attributes.gradingScale != 'no_scale' &&
-      !attributes.gradesFinalized &&
-      attributes.deadline.isBefore(DateTime.now());
+      attributes!.gradingScale != 'no_scale' &&
+      !attributes!.gradesFinalized! &&
+      attributes!.deadline!.isBefore(DateTime.now());
 
   String get gradingScaleHint {
-    switch (attributes.gradingScale) {
+    switch (attributes!.gradingScale) {
       case 'letter':
         return 'Assignment can be graded with any of the letters A/B/C/D/E/F';
         break;
@@ -92,17 +92,17 @@ class AssignmentAttributes {
     this.restrictions,
   });
 
-  String name;
-  DateTime deadline;
-  String description;
-  bool hasMentorAccess;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String status;
-  int currentUserProjectId;
-  String gradingScale;
-  bool gradesFinalized;
-  String restrictions;
+  String? name;
+  DateTime? deadline;
+  String? description;
+  bool? hasMentorAccess;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? status;
+  int? currentUserProjectId;
+  String? gradingScale;
+  bool? gradesFinalized;
+  String? restrictions;
 
   factory AssignmentAttributes.fromJson(Map<String, dynamic> json) =>
       AssignmentAttributes(

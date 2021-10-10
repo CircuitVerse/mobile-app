@@ -44,10 +44,10 @@ void main() {
 
         var _ibApi = HttpIbApi();
 
-        ApiUtils.client = MockClient((_) => throw FormatException(''));
+        ApiUtils.client = MockClient(((_) => throw FormatException('')));
         expect(_ibApi.fetchApiPage(), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')));
         expect(_ibApi.fetchApiPage(), throwsA(isInstanceOf<Failure>()));
       });
     });
@@ -65,10 +65,10 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _ibApi = HttpIbApi();
 
-        ApiUtils.client = MockClient((_) => throw FormatException(''));
+        ApiUtils.client = MockClient(((_) => throw FormatException('')));
         expect(_ibApi.fetchRawPageData(), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')));
         expect(_ibApi.fetchRawPageData(), throwsA(isInstanceOf<Failure>()));
       });
     });

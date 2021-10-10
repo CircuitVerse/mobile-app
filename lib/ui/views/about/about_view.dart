@@ -21,7 +21,7 @@ class AboutView extends StatefulWidget {
 }
 
 class _AboutViewState extends State<AboutView> {
-  AboutViewModel _model;
+  late AboutViewModel _model;
 
   Widget _buildTosAndPrivacyButtons() {
     return Container(
@@ -30,7 +30,7 @@ class _AboutViewState extends State<AboutView> {
         children: <Widget>[
           Expanded(
             child: CVPrimaryButton(
-              title: AppLocalizations.of(context).terms_of_service,
+              title: AppLocalizations.of(context)!.terms_of_service,
               isBodyText: true,
               onPressed: () => Get.toNamed(AboutTosView.id),
             ),
@@ -38,7 +38,7 @@ class _AboutViewState extends State<AboutView> {
           SizedBox(width: 8),
           Expanded(
             child: CVPrimaryButton(
-              title: AppLocalizations.of(context).privacy_policy,
+              title: AppLocalizations.of(context)!.privacy_policy,
               isBodyText: true,
               onPressed: () => Get.toNamed(AboutPrivacyPolicyView.id),
             ),
@@ -52,7 +52,7 @@ class _AboutViewState extends State<AboutView> {
     switch (_model.stateFor(_model.FETCH_CONTRIBUTORS)) {
       case ViewState.Success:
         var _contributorsAvatars = <Widget>[];
-        _model.cvContributors.forEach((contributor) {
+        _model.cvContributors!.forEach((contributor) {
           if (contributor.type == Type.USER) {
             _contributorsAvatars.add(
               ContributorAvatar(contributor: contributor),
@@ -68,7 +68,7 @@ class _AboutViewState extends State<AboutView> {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 32),
           child: Text(
-            AppLocalizations.of(context).loading_contributors,
+            AppLocalizations.of(context)!.loading_contributors,
             textAlign: TextAlign.center,
           ),
         );
@@ -100,27 +100,27 @@ class _AboutViewState extends State<AboutView> {
           child: Column(
             children: <Widget>[
               CVHeader(
-                title: AppLocalizations.of(context).about_title,
-                subtitle: AppLocalizations.of(context).about_subtitle,
-                description: AppLocalizations.of(context).about_description,
+                title: AppLocalizations.of(context)!.about_title,
+                subtitle: AppLocalizations.of(context)!.about_subtitle,
+                description: AppLocalizations.of(context)!.about_description,
               ),
               _buildTosAndPrivacyButtons(),
               CircuitVerseSocialCard(
                 imagePath: 'assets/images/contribute/email.png',
-                title: AppLocalizations.of(context).email_us_at,
+                title: AppLocalizations.of(context)!.email_us_at,
                 description: 'support@circuitverse.org',
                 url: 'mailto:support@circuitverse.org',
               ),
               CircuitVerseSocialCard(
                 imagePath: 'assets/images/contribute/slack.png',
-                title: AppLocalizations.of(context).join_slack,
-                description: AppLocalizations.of(context).slack_channel,
+                title: AppLocalizations.of(context)!.join_slack,
+                description: AppLocalizations.of(context)!.slack_channel,
                 url: 'https://circuitverse.org/slack',
               ),
               Divider(),
               CVSubheader(
-                title: AppLocalizations.of(context).contributors,
-                subtitle: AppLocalizations.of(context).contributors_subtitle,
+                title: AppLocalizations.of(context)!.contributors,
+                subtitle: AppLocalizations.of(context)!.contributors_subtitle,
               ),
               _buildContributorsList(),
             ],

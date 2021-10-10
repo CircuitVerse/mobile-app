@@ -6,8 +6,8 @@ import 'package:mobile_app/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
-  static LocalStorageService _instance;
-  static SharedPreferences _preferences;
+  static LocalStorageService? _instance;
+  static SharedPreferences? _preferences;
 
   static const String USER = 'logged_in_user';
   static const String TOKEN = 'token';
@@ -15,7 +15,7 @@ class LocalStorageService {
   static const String IS_FIRST_TIME_LOGIN = 'is_first_time_login';
   static const String AUTH_TYPE = 'auth_type';
 
-  static Future<LocalStorageService> getInstance() async {
+  static Future<LocalStorageService?> getInstance() async {
     _instance ??= LocalStorageService();
 
     _preferences ??= await SharedPreferences.getInstance();
@@ -24,7 +24,7 @@ class LocalStorageService {
   }
 
   dynamic _getFromDisk(String key) {
-    var value = _preferences.get(key);
+    var value = _preferences!.get(key);
     debugPrint('LocalStorageService:_getFromDisk. key: $key value: $value');
     return value;
   }
@@ -33,25 +33,25 @@ class LocalStorageService {
     debugPrint('LocalStorageService:_saveToDisk. key: $key value: $content');
 
     if (content is String) {
-      _preferences.setString(key, content);
+      _preferences!.setString(key, content);
     }
     if (content is bool) {
-      _preferences.setBool(key, content);
+      _preferences!.setBool(key, content);
     }
     if (content is int) {
-      _preferences.setInt(key, content);
+      _preferences!.setInt(key, content);
     }
     if (content is double) {
-      _preferences.setDouble(key, content);
+      _preferences!.setDouble(key, content);
     }
     if (content is List<String>) {
-      _preferences.setStringList(key, content);
+      _preferences!.setStringList(key, content);
     }
   }
 
-  String get token => _getFromDisk(TOKEN);
+  String? get token => _getFromDisk(TOKEN);
 
-  set token(String _token) {
+  set token(String? _token) {
     _saveToDisk(TOKEN, _token);
   }
 
@@ -67,7 +67,7 @@ class LocalStorageService {
     _saveToDisk(IS_FIRST_TIME_LOGIN, isLoggedIn);
   }
 
-  User get currentUser {
+  User? get currentUser {
     var userJson = _getFromDisk(USER);
     if (userJson == null || userJson == 'null') {
       return null;
@@ -76,16 +76,16 @@ class LocalStorageService {
     return User.fromJson(json.decode(userJson));
   }
 
-  set currentUser(User userToSave) {
+  set currentUser(User? userToSave) {
     _saveToDisk(USER, json.encode(userToSave?.toJson()));
   }
 
-  AuthType get authType {
+  AuthType? get authType {
     var _authType = _getFromDisk(AUTH_TYPE);
     return authTypeValues.map[_authType];
   }
 
-  set authType(AuthType authType) {
-    _saveToDisk(AUTH_TYPE, authTypeValues.reverse[authType]);
+  set authType(AuthType? authType) {
+    _saveToDisk(AUTH_TYPE, authTypeValues.reverse![authType!]);
   }
 }

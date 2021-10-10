@@ -18,52 +18,52 @@ class GroupDetailsViewModel extends BaseModel {
   String START_ASSIGNMENT = 'start_assignment';
   String DELETE_ASSIGNMENT = 'delete_assignment';
 
-  final GroupsApi _groupsApi = locator<GroupsApi>();
-  final GroupMembersApi _groupMembersApi = locator<GroupMembersApi>();
-  final AssignmentsApi _assignmentsApi = locator<AssignmentsApi>();
+  final GroupsApi? _groupsApi = locator<GroupsApi>();
+  final GroupMembersApi? _groupMembersApi = locator<GroupMembersApi>();
+  final AssignmentsApi? _assignmentsApi = locator<AssignmentsApi>();
 
-  Group _group;
+  Group? _group;
 
-  Group get group => _group;
+  Group? get group => _group;
 
-  set group(Group group) {
+  set group(Group? group) {
     _group = group;
     notifyListeners();
   }
 
-  List<GroupMember> _groupMembers = [];
+  List<GroupMember>? _groupMembers = [];
 
-  List<GroupMember> get groupMembers => _groupMembers;
+  List<GroupMember>? get groupMembers => _groupMembers;
 
-  set groupMembers(List<GroupMember> groupMembers) {
+  set groupMembers(List<GroupMember>? groupMembers) {
     _groupMembers = groupMembers;
     notifyListeners();
   }
 
-  List<Assignment> _assignments = [];
+  List<Assignment>? _assignments = [];
 
-  List<Assignment> get assignments => _assignments;
+  List<Assignment>? get assignments => _assignments;
 
-  set assignments(List<Assignment> assignments) {
+  set assignments(List<Assignment>? assignments) {
     _assignments = assignments;
     notifyListeners();
   }
 
-  String _addedMembersSuccessMessage;
+  String? _addedMembersSuccessMessage;
 
-  String get addedMembersSuccessMessage => _addedMembersSuccessMessage;
+  String? get addedMembersSuccessMessage => _addedMembersSuccessMessage;
 
-  set addedMembersSuccessMessage(String addedMembersSuccessMessage) {
+  set addedMembersSuccessMessage(String? addedMembersSuccessMessage) {
     _addedMembersSuccessMessage = addedMembersSuccessMessage;
     notifyListeners();
   }
 
-  Future fetchGroupDetails(String groupId) async {
+  Future fetchGroupDetails(String? groupId) async {
     setStateFor(FETCH_GROUP_DETAILS, ViewState.Busy);
     try {
-      group = await _groupsApi.fetchGroupDetails(groupId);
-      groupMembers = _group.groupMembers;
-      assignments = _group.assignments;
+      group = await _groupsApi!.fetchGroupDetails(groupId);
+      groupMembers = _group!.groupMembers;
+      assignments = _group!.assignments;
 
       setStateFor(FETCH_GROUP_DETAILS, ViewState.Success);
     } on Failure catch (f) {
@@ -72,15 +72,15 @@ class GroupDetailsViewModel extends BaseModel {
     }
   }
 
-  Future addMembers(String groupId, String emails) async {
+  Future addMembers(String? groupId, String? emails) async {
     setStateFor(ADD_GROUP_MEMBERS, ViewState.Busy);
     try {
       var addGroupMembers =
-          await _groupMembersApi.addGroupMembers(groupId, emails);
+          await _groupMembersApi!.addGroupMembers(groupId, emails);
 
-      var _addedMembers = addGroupMembers.added.join(', ');
-      var _pendingMembers = addGroupMembers.pending.join(', ');
-      var _invalidMembers = addGroupMembers.invalid.join(', ');
+      var _addedMembers = addGroupMembers.added!.join(', ');
+      var _pendingMembers = addGroupMembers.pending!.join(', ');
+      var _invalidMembers = addGroupMembers.invalid!.join(', ');
 
       addedMembersSuccessMessage = (_addedMembers.isNotEmpty
               ? '$_addedMembers was/were added '
@@ -91,7 +91,7 @@ class GroupDetailsViewModel extends BaseModel {
           (_invalidMembers.isNotEmpty ? '$_invalidMembers is/are invalid' : '');
 
       // Fetch & Update all Group Members..
-      var _members = await _groupMembersApi.fetchGroupMembers(groupId);
+      var _members = await _groupMembersApi!.fetchGroupMembers(groupId);
       groupMembers = _members.data;
 
       setStateFor(ADD_GROUP_MEMBERS, ViewState.Success);
@@ -101,14 +101,14 @@ class GroupDetailsViewModel extends BaseModel {
     }
   }
 
-  Future deleteGroupMember(String groupMemberId) async {
+  Future deleteGroupMember(String? groupMemberId) async {
     setStateFor(DELETE_GROUP_MEMBER, ViewState.Busy);
     try {
-      var _isDeleted = await _groupMembersApi.deleteGroupMember(groupMemberId);
+      var _isDeleted = await _groupMembersApi!.deleteGroupMember(groupMemberId);
 
       if (_isDeleted) {
         // Remove Group Member from the list..
-        groupMembers.removeWhere((member) => member.id == groupMemberId);
+        groupMembers!.removeWhere((member) => member.id == groupMemberId);
         setStateFor(DELETE_GROUP_MEMBER, ViewState.Success);
       } else {
         setStateFor(DELETE_GROUP_MEMBER, ViewState.Error);
@@ -122,27 +122,27 @@ class GroupDetailsViewModel extends BaseModel {
   }
 
   void onAssignmentAdded(Assignment assignment) async {
-    _assignments.add(assignment);
+    _assignments!.add(assignment);
     notifyListeners();
   }
 
   void onAssignmentUpdated(Assignment assignment) async {
     var _index =
-        _assignments.indexWhere((assignment) => assignment.id == assignment.id);
-    _assignments.removeAt(_index);
-    _assignments.insert(_index, assignment);
+        _assignments!.indexWhere((assignment) => assignment.id == assignment.id);
+    _assignments!.removeAt(_index);
+    _assignments!.insert(_index, assignment);
     notifyListeners();
   }
 
-  Future reopenAssignment(String assignmentId) async {
+  Future reopenAssignment(String? assignmentId) async {
     setStateFor(REOPEN_ASSIGNMENT, ViewState.Busy);
     try {
-      await _assignmentsApi.reopenAssignment(assignmentId);
+      await _assignmentsApi!.reopenAssignment(assignmentId);
 
       // Reopen the assignment with id being assignmentId..
-      assignments
+      assignments!
           .firstWhere((assignment) => assignment.id == assignmentId)
-          .attributes
+          .attributes!
           .status = 'open';
       notifyListeners();
 
@@ -153,15 +153,15 @@ class GroupDetailsViewModel extends BaseModel {
     }
   }
 
-  Future startAssignment(String assignmentId) async {
+  Future startAssignment(String? assignmentId) async {
     setStateFor(START_ASSIGNMENT, ViewState.Busy);
     try {
-      await _assignmentsApi.startAssignment(assignmentId);
-      _group = await _groupsApi.fetchGroupDetails(_group.id);
+      await _assignmentsApi!.startAssignment(assignmentId);
+      _group = await _groupsApi!.fetchGroupDetails(_group!.id);
 
       // update assignments after creating a project for any assignment..
-      groupMembers = _group.groupMembers;
-      assignments = _group.assignments;
+      groupMembers = _group!.groupMembers;
+      assignments = _group!.assignments;
 
       setStateFor(START_ASSIGNMENT, ViewState.Success);
     } on Failure catch (f) {
@@ -170,14 +170,14 @@ class GroupDetailsViewModel extends BaseModel {
     }
   }
 
-  Future deleteAssignment(String assignmentId) async {
+  Future deleteAssignment(String? assignmentId) async {
     setStateFor(DELETE_ASSIGNMENT, ViewState.Busy);
     try {
-      var _isDeleted = await _assignmentsApi.deleteAssignment(assignmentId);
+      var _isDeleted = await _assignmentsApi!.deleteAssignment(assignmentId);
 
       if (_isDeleted) {
         // Remove Assignment from the list..
-        assignments.removeWhere((assignment) => assignment.id == assignmentId);
+        assignments!.removeWhere((assignment) => assignment.id == assignmentId);
         setStateFor(DELETE_ASSIGNMENT, ViewState.Success);
       } else {
         setStateFor(DELETE_ASSIGNMENT, ViewState.Error);

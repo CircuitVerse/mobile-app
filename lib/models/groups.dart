@@ -10,8 +10,8 @@ class Groups {
     this.links,
   });
 
-  List<Group> data;
-  Links links;
+  List<Group>? data;
+  Links? links;
 
   factory Groups.fromJson(Map<String, dynamic> json) => Groups(
         data: List<Group>.from(json['data'].map((x) => Group.fromJson(x))),
@@ -28,11 +28,11 @@ class Group {
     this.assignments,
   });
 
-  String id;
-  String type;
-  GroupAttributes attributes;
-  List<GroupMember> groupMembers;
-  List<Assignment> assignments;
+  String? id;
+  String? type;
+  GroupAttributes? attributes;
+  List<GroupMember>? groupMembers;
+  List<Assignment>? assignments;
 
   factory Group.fromJson(Map<String, dynamic> json) => Group(
         id: json['id'] ?? json['data']['id'],
@@ -56,8 +56,8 @@ class Group {
       );
 
   // returns true if the logged in user is mentor for this group
-  bool get isMentor => locator<LocalStorageService>().currentUser.data.id ==
-          attributes.mentorId.toString()
+  bool get isMentor => locator<LocalStorageService>().currentUser!.data!.id ==
+          attributes!.mentorId.toString()
       ? true
       : false;
 }
@@ -72,12 +72,12 @@ class GroupAttributes {
     this.updatedAt,
   });
 
-  int memberCount;
-  String mentorName;
-  String name;
-  int mentorId;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? memberCount;
+  String? mentorName;
+  String? name;
+  int? mentorId;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory GroupAttributes.fromJson(Map<String, dynamic> json) =>
       GroupAttributes(

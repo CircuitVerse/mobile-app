@@ -5,8 +5,8 @@ import 'package:mobile_app/models/ib/ib_pop_quiz_question.dart';
 import 'package:mobile_app/ui/views/ib/components/ib_pop_quiz_button.dart';
 
 class IbPopQuiz extends StatelessWidget {
-  final BuildContext context;
-  final List<IbPopQuizQuestion> questions;
+  final BuildContext? context;
+  final List<IbPopQuizQuestion>? questions;
 
   const IbPopQuiz({this.context, this.questions});
 
@@ -30,11 +30,11 @@ class IbPopQuiz extends StatelessWidget {
           Text(
             'Question $questionNumber',
             textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.subtitle2,
+            style: Theme.of(context!).textTheme.subtitle2,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 6.0),
-            child: MarkdownBody(data: question.question),
+            child: MarkdownBody(data: question.question!),
           ),
           ...buttonsWidgets,
         ],
@@ -46,8 +46,8 @@ class IbPopQuiz extends StatelessWidget {
   Widget build(BuildContext context) {
     var questionsWidgets = <Widget>[];
 
-    for (var i = 0; i < questions.length; i++) {
-      questionsWidgets.add(_buildQuestion(i + 1, questions[i]));
+    for (var i = 0; i < questions!.length; i++) {
+      questionsWidgets.add(_buildQuestion(i + 1, questions![i]));
     }
 
     return Column(
@@ -58,7 +58,7 @@ class IbPopQuiz extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             'Pop Quiz',
-            style: Theme.of(context).textTheme.headline5.copyWith(
+            style: Theme.of(context).textTheme.headline5!.copyWith(
                   color: IbTheme.primaryHeadingColor(context),
                   fontWeight: FontWeight.w600,
                 ),

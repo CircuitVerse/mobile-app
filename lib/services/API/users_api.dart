@@ -8,31 +8,31 @@ import 'package:mobile_app/utils/api_utils.dart';
 import 'package:mobile_app/utils/app_exceptions.dart';
 
 abstract class UsersApi {
-  Future<String> login(String email, String password);
+  Future<String?> login(String? email, String? password);
 
-  Future<String> signup(String name, String email, String password);
+  Future<String?> signup(String? name, String? email, String? password);
 
-  Future<String> oauthLogin({String accessToken, String provider});
+  Future<String?> oauthLogin({String? accessToken, String? provider});
 
-  Future<String> oauthSignup({String accessToken, String provider});
+  Future<String?> oauthSignup({String? accessToken, String? provider});
 
-  Future<User> fetchUser(String userId);
+  Future<User> fetchUser(String? userId);
 
   Future<User> fetchCurrentUser();
 
-  Future<User> updateProfile(String name, String educationalInstitute,
-      String country, bool subscribed);
+  Future<User> updateProfile(String? name, String? educationalInstitute,
+      String? country, bool? subscribed);
 
-  Future<bool> sendResetPasswordInstructions(String email);
+  Future<bool> sendResetPasswordInstructions(String? email);
 }
 
 class HttpUsersApi implements UsersApi {
   var headers = {'Content-Type': 'application/json'};
 
-  final LocalStorageService _storage = locator<LocalStorageService>();
+  final LocalStorageService? _storage = locator<LocalStorageService>();
 
   @override
-  Future<String> login(String email, String password) async {
+  Future<String?> login(String? email, String? password) async {
     var endpoint = '/auth/login';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {
@@ -45,7 +45,7 @@ class HttpUsersApi implements UsersApi {
         headers: headers,
         body: json,
       );
-      String token = jsonResponse['token'];
+      String? token = jsonResponse['token'];
       return token;
     } on UnauthorizedException {
       throw Failure(Constants.USER_AUTH_WRONG_CREDENTIALS);
@@ -59,7 +59,7 @@ class HttpUsersApi implements UsersApi {
   }
 
   @override
-  Future<String> signup(String name, String email, String password) async {
+  Future<String?> signup(String? name, String? email, String? password) async {
     var endpoint = '/auth/signup';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {
@@ -73,7 +73,7 @@ class HttpUsersApi implements UsersApi {
         headers: headers,
         body: json,
       );
-      String token = jsonResponse['token'];
+      String? token = jsonResponse['token'];
       return token;
     } on ConflictException {
       throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
@@ -85,7 +85,7 @@ class HttpUsersApi implements UsersApi {
   }
 
   @override
-  Future<String> oauthLogin({String accessToken, String provider}) async {
+  Future<String?> oauthLogin({String? accessToken, String? provider}) async {
     var endpoint = '/oauth/login';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {
@@ -99,7 +99,7 @@ class HttpUsersApi implements UsersApi {
         headers: headers,
         body: json,
       );
-      String token = jsonResponse['token'];
+      String? token = jsonResponse['token'];
       return token;
     } on NotFoundException {
       throw Failure(Constants.USER_AUTH_USER_NOT_FOUND);
@@ -111,7 +111,7 @@ class HttpUsersApi implements UsersApi {
   }
 
   @override
-  Future<String> oauthSignup({String accessToken, String provider}) async {
+  Future<String?> oauthSignup({String? accessToken, String? provider}) async {
     var endpoint = '/oauth/signup';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {
@@ -125,7 +125,7 @@ class HttpUsersApi implements UsersApi {
         headers: headers,
         body: json,
       );
-      String token = jsonResponse['token'];
+      String? token = jsonResponse['token'];
       return token;
     } on ConflictException {
       throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
@@ -137,7 +137,7 @@ class HttpUsersApi implements UsersApi {
   }
 
   @override
-  Future<User> fetchUser(String userId) async {
+  Future<User> fetchUser(String? userId) async {
     var endpoint = '/users/$userId';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     try {
@@ -177,9 +177,9 @@ class HttpUsersApi implements UsersApi {
   }
 
   @override
-  Future<User> updateProfile(String name, String educationalInstitute,
-      String country, bool isSubscribed) async {
-    var endpoint = '/users/${_storage.currentUser.data.id}';
+  Future<User> updateProfile(String? name, String? educationalInstitute,
+      String? country, bool? isSubscribed) async {
+    var endpoint = '/users/${_storage!.currentUser!.data!.id}';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {
       'name': name,
@@ -204,7 +204,7 @@ class HttpUsersApi implements UsersApi {
   }
 
   @override
-  Future<bool> sendResetPasswordInstructions(String email) async {
+  Future<bool> sendResetPasswordInstructions(String? email) async {
     var endpoint = '/password/forgot';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'email': email};

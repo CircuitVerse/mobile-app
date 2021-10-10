@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ContributeSupportCard extends StatelessWidget {
-  final String imagePath;
-  final String title;
-  final List<String> cardDescriptionList;
+  final String? imagePath;
+  final String? title;
+  final List<String>? cardDescriptionList;
 
   const ContributeSupportCard({
-    Key key,
+    Key? key,
     this.imagePath,
     this.title,
     this.cardDescriptionList,
@@ -21,12 +21,12 @@ class ContributeSupportCard extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
-            Image.asset(imagePath, scale: 2),
+            Image.asset(imagePath!, scale: 2),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                title,
-                style: Theme.of(context).textTheme.headline5.copyWith(
+                title!,
+                style: Theme.of(context).textTheme.headline5!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -34,7 +34,7 @@ class ContributeSupportCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8),
               child: Text(
-                cardDescriptionList
+                cardDescriptionList!
                     .map((x) => '\u2022 $x\n')
                     .reduce((x, y) => '$x$y'),
                 style: Theme.of(context).textTheme.subtitle1,

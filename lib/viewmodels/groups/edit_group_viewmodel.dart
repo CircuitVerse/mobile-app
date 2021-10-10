@@ -9,21 +9,21 @@ class EditGroupViewModel extends BaseModel {
   // ViewState Keys
   String UPDATE_GROUP = 'update_group';
 
-  final GroupsApi _groupsApi = locator<GroupsApi>();
+  final GroupsApi? _groupsApi = locator<GroupsApi>();
 
-  Group _updatedGroup;
+  Group? _updatedGroup;
 
-  Group get updatedGroup => _updatedGroup;
+  Group? get updatedGroup => _updatedGroup;
 
-  set updatedGroup(Group updatedGroup) {
+  set updatedGroup(Group? updatedGroup) {
     _updatedGroup = updatedGroup;
     notifyListeners();
   }
 
-  Future updateGroup(String groupId, String name) async {
+  Future updateGroup(String? groupId, String? name) async {
     setStateFor(UPDATE_GROUP, ViewState.Busy);
     try {
-      updatedGroup = await _groupsApi.updateGroup(groupId, name);
+      updatedGroup = await _groupsApi!.updateGroup(groupId, name);
 
       setStateFor(UPDATE_GROUP, ViewState.Success);
     } on Failure catch (f) {

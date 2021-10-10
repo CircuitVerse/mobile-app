@@ -22,7 +22,7 @@ import '../../setup/test_helpers.dart';
 
 void main() {
   group('AboutViewTest -', () {
-    NavigatorObserver mockObserver;
+    late NavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -44,7 +44,7 @@ void main() {
 
       /// The tester.pumpWidget() call above just built our app widget
       /// and triggered the pushObserver method on the mockObserver once.
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
     }
 
     testWidgets('finds Generic AboutView widgets', (WidgetTester tester) async {
@@ -95,7 +95,7 @@ void main() {
           .tap(find.widgetWithText(CVPrimaryButton, 'Terms Of Service'));
       await tester.pumpAndSettle();
 
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
       expect(find.byType(AboutTosView), findsOneWidget);
     });
 
@@ -107,7 +107,7 @@ void main() {
       await tester.tap(find.widgetWithText(CVPrimaryButton, 'Privacy Policy'));
       await tester.pumpAndSettle();
 
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
       expect(find.byType(AboutPrivacyPolicyView), findsOneWidget);
     });
   });

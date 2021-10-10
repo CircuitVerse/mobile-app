@@ -3,12 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:mobile_app/cv_theme.dart';
 
 class CVPasswordField extends StatefulWidget {
-  final Function(String) validator;
-  final Function(String) onSaved;
-  final FocusNode focusNode;
+  final Function(String)? validator;
+  final Function(String?)? onSaved;
+  final FocusNode? focusNode;
 
   const CVPasswordField({
-    Key key,
+    Key? key,
     this.validator,
     this.onSaved,
     this.focusNode,
@@ -57,7 +57,7 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
           ),
         ),
         textInputAction: TextInputAction.done,
-        validator: widget.validator,
+        validator: widget.validator as String? Function(String?)?,
         onSaved: widget.onSaved,
       ),
     );

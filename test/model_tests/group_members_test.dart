@@ -12,7 +12,7 @@ void main() {
       expect(_groupMembers, isInstanceOf<GroupMembers>());
 
       expect(_groupMembers.data, isInstanceOf<List<GroupMember>>());
-      expect(_groupMembers.data.length, 1);
+      expect(_groupMembers.data!.length, 1);
 
       expect(_groupMembers.links, isInstanceOf<Links>());
     });

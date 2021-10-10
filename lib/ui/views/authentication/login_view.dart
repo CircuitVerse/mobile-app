@@ -21,9 +21,9 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginViewModel _model;
+  late LoginViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _email, _password;
+  String? _email, _password;
   final _emailFocusNode = FocusNode();
 
   @override
@@ -52,7 +52,7 @@ class _LoginViewState extends State<LoginView> {
       type: TextInputType.emailAddress,
       validator: (value) =>
           Validators.isEmailValid(value) ? null : 'Please enter a valid email',
-      onSaved: (value) => _email = value.trim(),
+      onSaved: (value) => _email = value?.trim(),
       onFieldSubmitted: (_) =>
           FocusScope.of(context).requestFocus(_emailFocusNode),
     );
@@ -62,7 +62,7 @@ class _LoginViewState extends State<LoginView> {
     return CVPasswordField(
       focusNode: _emailFocusNode,
       validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
-      onSaved: (value) => _password = value.trim(),
+      onSaved: (value) => _password = value?.trim(),
     );
   }
 
@@ -136,7 +136,7 @@ class _LoginViewState extends State<LoginView> {
           'Error',
           _model.errorMessageFor(_model.LOGIN),
         );
-        _formKey.currentState.reset();
+        _formKey.currentState!.reset();
       }
     }
   }

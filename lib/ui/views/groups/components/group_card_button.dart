@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CardButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final Color color;
   final String title;
 
   const CardButton({
-    Key key,
-    @required this.onPressed,
-    @required this.color,
-    @required this.title,
+    Key? key,
+    required this.onPressed,
+    required this.color,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class CardButton extends StatelessWidget {
           title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.subtitle1.copyWith(
+          style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: Colors.white,
               ),
         ),

@@ -37,7 +37,7 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _countriesApi = HttpCountryInstituteAPI();
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(
             _countriesApi.getCountries(''), throwsA(isInstanceOf<Failure>()));
       });
@@ -70,7 +70,7 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _countriesApi = HttpCountryInstituteAPI();
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(
             _countriesApi.getInstitutes(''), throwsA(isInstanceOf<Failure>()));
       });

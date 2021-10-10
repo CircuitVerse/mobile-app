@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class IbPopQuizButton extends StatefulWidget {
-  final String content;
+  final String? content;
   final bool isCorrect;
 
   const IbPopQuizButton({
-    @required this.content,
-    @required this.isCorrect,
+    required this.content,
+    required this.isCorrect,
   });
 
   @override
@@ -16,15 +16,15 @@ class IbPopQuizButton extends StatefulWidget {
 class IbPopQuizButtonState extends State<IbPopQuizButton> {
   bool _isPressed = false;
 
-  Color _getTextColor() {
+  Color? _getTextColor() {
     if (_isPressed) {
       return Colors.white;
     }
 
-    return Theme.of(context).textTheme.bodyText1.color;
+    return Theme.of(context).textTheme.bodyText1!.color;
   }
 
-  Color _getBorderColor() {
+  Color? _getBorderColor() {
     if (_isPressed) {
       if (widget.isCorrect) {
         return Colors.green[400];
@@ -33,7 +33,7 @@ class IbPopQuizButtonState extends State<IbPopQuizButton> {
       }
     }
 
-    return Theme.of(context).textTheme.bodyText1.color;
+    return Theme.of(context).textTheme.bodyText1!.color;
   }
 
   IconData getTheRightIcon() {
@@ -51,14 +51,14 @@ class IbPopQuizButtonState extends State<IbPopQuizButton> {
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           color: _isPressed ? _getBorderColor() : null,
-          border: Border.all(color: _getBorderColor()),
+          border: Border.all(color: _getBorderColor()!),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.content,
+              widget.content!,
               style: TextStyle(color: _getTextColor(), fontSize: 16),
             ),
             if (_isPressed)
@@ -68,7 +68,7 @@ class IbPopQuizButtonState extends State<IbPopQuizButton> {
                 decoration: BoxDecoration(
                   color: _getTextColor(),
                   borderRadius: BorderRadius.circular(50),
-                  border: Border.all(color: _getBorderColor()),
+                  border: Border.all(color: _getBorderColor()!),
                 ),
                 child: Icon(
                   getTheRightIcon(),

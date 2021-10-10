@@ -7,19 +7,19 @@ import 'package:mobile_app/utils/app_exceptions.dart';
 
 abstract class GradesApi {
   Future<Grade> addGrade(
-    String assignmentId,
-    String projectId,
+    String? assignmentId,
+    String? projectId,
     dynamic grade,
     String remarks,
   );
 
   Future<Grade> updateGrade(
-    String gradeId,
+    String? gradeId,
     dynamic grade,
     String remarks,
   );
 
-  Future<bool> deleteGrade(String gradeId);
+  Future<bool> deleteGrade(String? gradeId);
 }
 
 class HttpGradesApi implements GradesApi {
@@ -27,8 +27,8 @@ class HttpGradesApi implements GradesApi {
 
   @override
   Future<Grade> addGrade(
-    String assignmentId,
-    String projectId,
+    String? assignmentId,
+    String? projectId,
     dynamic grade,
     String remarks,
   ) async {
@@ -63,7 +63,7 @@ class HttpGradesApi implements GradesApi {
 
   @override
   Future<Grade> updateGrade(
-    String gradeId,
+    String? gradeId,
     dynamic grade,
     String remarks,
   ) async {
@@ -97,7 +97,7 @@ class HttpGradesApi implements GradesApi {
   }
 
   @override
-  Future<bool> deleteGrade(String gradeId) async {
+  Future<bool> deleteGrade(String? gradeId) async {
     var endpoint = '/grades/$gradeId';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 

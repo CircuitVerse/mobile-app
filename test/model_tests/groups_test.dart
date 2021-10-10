@@ -14,7 +14,7 @@ void main() {
       expect(_groups, isInstanceOf<Groups>());
 
       expect(_groups.data, isInstanceOf<List<Group>>());
-      expect(_groups.data.length, 1);
+      expect(_groups.data!.length, 1);
 
       expect(_groups.links, isInstanceOf<Links>());
     });
@@ -28,9 +28,9 @@ void main() {
       expect(_group.type, 'group');
       expect(_group.attributes, isInstanceOf<GroupAttributes>());
       expect(_group.groupMembers, isInstanceOf<List<GroupMember>>());
-      expect(_group.groupMembers.length, 1);
+      expect(_group.groupMembers!.length, 1);
       expect(_group.assignments, isInstanceOf<List<Assignment>>());
-      expect(_group.assignments.length, 1);
+      expect(_group.assignments!.length, 1);
     });
 
     test('GroupAttributesTest fromJson', () {

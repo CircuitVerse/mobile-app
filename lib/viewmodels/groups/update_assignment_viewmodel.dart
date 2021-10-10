@@ -12,23 +12,23 @@ class UpdateAssignmentViewModel extends BaseModel {
   // ViewState Keys
   String UPDATE_ASSIGNMENT = 'update_assignment';
 
-  final AssignmentsApi _assignmentsApi = locator<AssignmentsApi>();
+  final AssignmentsApi? _assignmentsApi = locator<AssignmentsApi>();
 
-  Assignment _updatedAssignment;
+  Assignment? _updatedAssignment;
 
-  Assignment get updatedAssignment => _updatedAssignment;
+  Assignment? get updatedAssignment => _updatedAssignment;
 
-  set updatedAssignment(Assignment updatedAssignment) {
+  set updatedAssignment(Assignment? updatedAssignment) {
     _updatedAssignment = updatedAssignment;
     notifyListeners();
   }
 
   Future updateAssignment(
-    String assignmentId,
-    String name,
+    String? assignmentId,
+    String? name,
     DateTime deadline,
     String description,
-    List restrictionsList,
+    List? restrictionsList,
   ) async {
     setStateFor(UPDATE_ASSIGNMENT, ViewState.Busy);
     try {
@@ -36,7 +36,7 @@ class UpdateAssignmentViewModel extends BaseModel {
       var deadlineFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
 
       // Updates Assignment..
-      updatedAssignment = await _assignmentsApi.updateAssignment(
+      updatedAssignment = await _assignmentsApi!.updateAssignment(
         assignmentId,
         name,
         deadlineFormat.format(deadline.subtract(deadline.timeZoneOffset)),

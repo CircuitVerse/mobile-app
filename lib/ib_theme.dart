@@ -25,7 +25,7 @@ class IbTheme {
     );
   }
 
-  static Color textFieldLabelColor(context) {
+  static Color? textFieldLabelColor(context) {
     return Theme.of(context).brightness == Brightness.dark
         ? Colors.grey[300]
         : Colors.grey[600];

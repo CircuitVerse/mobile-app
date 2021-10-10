@@ -37,15 +37,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _collaboratorsApi = HttpCollaboratorsApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException('')) as Future<Response> Function(Request));
         expect(_collaboratorsApi.fetchProjectCollaborators('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(_collaboratorsApi.fetchProjectCollaborators('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_collaboratorsApi.fetchProjectCollaborators('1'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -64,15 +64,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _collaboratorsApi = HttpCollaboratorsApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException('')) as Future<Response> Function(Request));
         expect(_collaboratorsApi.addCollaborators('1', ''),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(_collaboratorsApi.addCollaborators('1', ''),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_collaboratorsApi.addCollaborators('1', ''),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -89,15 +89,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _collaboratorsApi = HttpCollaboratorsApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException('')) as Future<Response> Function(Request));
         expect(_collaboratorsApi.deleteCollaborator('1', '1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(_collaboratorsApi.deleteCollaborator('1', '1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_collaboratorsApi.deleteCollaborator('1', '1'),
             throwsA(isInstanceOf<Failure>()));
       });

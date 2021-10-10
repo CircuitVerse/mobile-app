@@ -5,9 +5,9 @@ class AddCollaboratorsResponse {
     this.invalid,
   });
 
-  List<String> added;
-  List<String> existing;
-  List<String> invalid;
+  List<String>? added;
+  List<String>? existing;
+  List<String>? invalid;
 
   factory AddCollaboratorsResponse.fromJson(Map<String, dynamic> json) =>
       AddCollaboratorsResponse(

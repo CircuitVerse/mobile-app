@@ -19,20 +19,20 @@ import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 
 class GroupDetailsView extends StatefulWidget {
   static const String id = 'group_details_view';
-  final Group group;
+  final Group? group;
 
-  const GroupDetailsView({Key key, this.group}) : super(key: key);
+  const GroupDetailsView({Key? key, this.group}) : super(key: key);
 
   @override
   _GroupDetailsViewState createState() => _GroupDetailsViewState();
 }
 
 class _GroupDetailsViewState extends State<GroupDetailsView> {
-  final DialogService _dialogService = locator<DialogService>();
-  GroupDetailsViewModel _model;
+  final DialogService? _dialogService = locator<DialogService>();
+  late GroupDetailsViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _emails;
-  Group _recievedGroup;
+  String? _emails;
+  Group? _recievedGroup;
   final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
       GlobalKey<CVFlatButtonState>();
 
@@ -65,7 +65,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           SizedBox(width: 8),
           Text(
             'Edit',
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                   color: Colors.white,
                 ),
           )
@@ -82,15 +82,15 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           children: <Widget>[
             Flexible(
               child: Text(
-                _recievedGroup.attributes.name,
-                style: Theme.of(context).textTheme.headline4.copyWith(
+                _recievedGroup!.attributes!.name!,
+                style: Theme.of(context).textTheme.headline4!.copyWith(
                       color: CVTheme.textColor(context),
                       fontWeight: FontWeight.bold,
                     ),
                 textAlign: TextAlign.center,
               ),
             ),
-            if (_recievedGroup.isMentor) ...[
+            if (_recievedGroup!.isMentor) ...[
               SizedBox(width: 12),
               _buildEditGroupButton(),
             ]
@@ -99,12 +99,12 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         RichText(
           text: TextSpan(
             text: 'Mentor : ',
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
             children: <TextSpan>[
               TextSpan(
-                text: _recievedGroup.attributes.mentorName,
+                text: _recievedGroup!.attributes!.mentorName,
                 style: Theme.of(context).textTheme.headline6,
               ),
             ],
@@ -119,17 +119,17 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       FocusScope.of(context).requestFocus(FocusNode());
       Navigator.pop(context);
 
-      _dialogService.showCustomProgressDialog(title: 'Adding');
+      _dialogService!.showCustomProgressDialog(title: 'Adding');
 
-      await _model.addMembers(_recievedGroup.id, _emails);
+      await _model.addMembers(_recievedGroup!.id, _emails);
 
-      _dialogService.popDialog();
+      _dialogService!.popDialog();
 
       if (_model.isSuccess(_model.ADD_GROUP_MEMBERS) &&
-          _model.addedMembersSuccessMessage.isNotEmpty) {
+          _model.addedMembersSuccessMessage!.isNotEmpty) {
         SnackBarUtils.showDark(
           'Group Members Added',
-          _model.addedMembersSuccessMessage,
+          _model.addedMembersSuccessMessage!,
         );
       } else if (_model.isError(_model.ADD_GROUP_MEMBERS)) {
         SnackBarUtils.showDark(
@@ -172,11 +172,11 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 decoration: CVTheme.textFieldDecoration.copyWith(
                   hintText: 'Email Ids',
                 ),
-                validator: (emails) => Validators.areEmailsValid(emails)
+                validator: (emails) => Validators.areEmailsValid(emails!)
                     ? null
                     : 'Enter emails in valid format.',
                 onSaved: (emails) =>
-                    _emails = emails.replaceAll(' ', '').trim(),
+                    _emails = emails!.replaceAll(' ', '').trim(),
               ),
             ),
             actions: <Widget>[
@@ -195,19 +195,19 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         });
   }
 
-  Future<void> onDeleteGroupMemberPressed(String groupMemberId) async {
-    var _dialogResponse = await _dialogService.showConfirmationDialog(
+  Future<void> onDeleteGroupMemberPressed(String? groupMemberId) async {
+    var _dialogResponse = await _dialogService!.showConfirmationDialog(
       title: 'Remove Group Member',
       description: 'Are you sure you want to remove this group member?',
       confirmationTitle: 'REMOVE',
     );
 
-    if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Removing');
+    if (_dialogResponse.confirmed!) {
+      _dialogService!.showCustomProgressDialog(title: 'Removing');
 
       await _model.deleteGroupMember(groupMemberId);
 
-      _dialogService.popDialog();
+      _dialogService!.popDialog();
 
       if (_model.isSuccess(_model.DELETE_GROUP_MEMBER)) {
         SnackBarUtils.showDark(
@@ -223,7 +223,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     }
   }
 
-  Widget _buildSubHeader({String title, VoidCallback onAddPressed}) {
+  Widget _buildSubHeader({required String title, VoidCallback? onAddPressed}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
@@ -231,11 +231,11 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.headline5.copyWith(
+            style: Theme.of(context).textTheme.headline5!.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          if (_recievedGroup.isMentor)
+          if (_recievedGroup!.isMentor)
             CVPrimaryButton(
               title: '+ Add',
               onPressed: onAddPressed,
@@ -249,25 +249,25 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   Future<void> onAddAssignmentPressed() async {
     var _result = await Get.toNamed(
       AddAssignmentView.id,
-      arguments: _recievedGroup.id,
+      arguments: _recievedGroup!.id,
     );
 
     if (_result is Assignment) _model.onAssignmentAdded(_result);
   }
 
-  Future<void> onDeleteAssignmentPressed(String assignmentId) async {
-    var _dialogResponse = await _dialogService.showConfirmationDialog(
+  Future<void> onDeleteAssignmentPressed(String? assignmentId) async {
+    var _dialogResponse = await _dialogService!.showConfirmationDialog(
       title: 'Delete Assignment',
       description: 'Are you sure you want to delete this assignment?',
       confirmationTitle: 'DELETE',
     );
 
-    if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Deleting Assignment');
+    if (_dialogResponse.confirmed!) {
+      _dialogService!.showCustomProgressDialog(title: 'Deleting Assignment');
 
       await _model.deleteAssignment(assignmentId);
 
-      _dialogService.popDialog();
+      _dialogService!.popDialog();
 
       if (_model.isSuccess(_model.DELETE_ASSIGNMENT)) {
         SnackBarUtils.showDark(
@@ -292,19 +292,19 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     if (_result is Assignment) _model.onAssignmentUpdated(_result);
   }
 
-  Future<void> onReopenAssignmentPressed(String assignmentId) async {
-    var _dialogResponse = await _dialogService.showConfirmationDialog(
+  Future<void> onReopenAssignmentPressed(String? assignmentId) async {
+    var _dialogResponse = await _dialogService!.showConfirmationDialog(
       title: 'Reopen Assignment',
       description: 'Are you sure you want to reopen this assignment?',
       confirmationTitle: 'REOPEN',
     );
 
-    if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Reopening Assignment');
+    if (_dialogResponse.confirmed!) {
+      _dialogService!.showCustomProgressDialog(title: 'Reopening Assignment');
 
       await _model.reopenAssignment(assignmentId);
 
-      _dialogService.popDialog();
+      _dialogService!.popDialog();
 
       if (_model.isSuccess(_model.REOPEN_ASSIGNMENT)) {
         SnackBarUtils.showDark(
@@ -320,19 +320,19 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     }
   }
 
-  Future<void> onStartAssignmentPressed(String assignmentId) async {
-    var _dialogResponse = await _dialogService.showConfirmationDialog(
+  Future<void> onStartAssignmentPressed(String? assignmentId) async {
+    var _dialogResponse = await _dialogService!.showConfirmationDialog(
       title: 'Start Assignment',
       description: 'Are you sure you want to start working on this assignment?',
       confirmationTitle: 'START',
     );
 
-    if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Starting Assignment');
+    if (_dialogResponse.confirmed!) {
+      _dialogService!.showCustomProgressDialog(title: 'Starting Assignment');
 
       await _model.startAssignment(assignmentId);
 
-      _dialogService.popDialog();
+      _dialogService!.popDialog();
 
       if (_model.isSuccess(_model.START_ASSIGNMENT)) {
         SnackBarUtils.showDark(
@@ -353,7 +353,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     return BaseView<GroupDetailsViewModel>(
       onModelReady: (model) {
         _model = model;
-        _model.fetchGroupDetails(_recievedGroup.id);
+        _model.fetchGroupDetails(_recievedGroup!.id);
       },
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(title: Text('Group Details')),
@@ -372,11 +372,11 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           );
 
           if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
-            _model.groupMembers.forEach((member) {
+            _model.groupMembers!.forEach((member) {
               _items.add(
                 MemberCard(
                   member: member,
-                  hasMentorAccess: _model.group.isMentor,
+                  hasMentorAccess: _model.group!.isMentor,
                   onDeletePressed: () => onDeleteGroupMemberPressed(member.id),
                 ),
               );
@@ -393,7 +393,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           );
 
           if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
-            _model.assignments.forEach((assignment) {
+            _model.assignments!.forEach((assignment) {
               _items.add(
                 AssignmentCard(
                   assignment: assignment,

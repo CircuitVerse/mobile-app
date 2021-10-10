@@ -10,13 +10,13 @@ abstract class GroupsApi {
 
   Future<Groups> fetchMentoringGroups({int page = 1});
 
-  Future<Group> fetchGroupDetails(String groupId);
+  Future<Group> fetchGroupDetails(String? groupId);
 
-  Future<Group> addGroup(String name);
+  Future<Group> addGroup(String? name);
 
-  Future<Group> updateGroup(String groupId, String name);
+  Future<Group> updateGroup(String? groupId, String? name);
 
-  Future<bool> deleteGroup(String groupId);
+  Future<bool> deleteGroup(String? groupId);
 }
 
 class HttpGroupsApi implements GroupsApi {
@@ -63,7 +63,7 @@ class HttpGroupsApi implements GroupsApi {
   }
 
   @override
-  Future<Group> fetchGroupDetails(String groupId) async {
+  Future<Group> fetchGroupDetails(String? groupId) async {
     var endpoint = '/groups/$groupId?include=group_members,assignments';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 
@@ -87,7 +87,7 @@ class HttpGroupsApi implements GroupsApi {
   }
 
   @override
-  Future<Group> addGroup(String name) async {
+  Future<Group> addGroup(String? name) async {
     var endpoint = '/groups';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'name': name};
@@ -109,7 +109,7 @@ class HttpGroupsApi implements GroupsApi {
   }
 
   @override
-  Future<Group> updateGroup(String groupId, String name) async {
+  Future<Group> updateGroup(String? groupId, String? name) async {
     var endpoint = '/groups/$groupId?include=group_members,assignments';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'name': name};
@@ -135,7 +135,7 @@ class HttpGroupsApi implements GroupsApi {
   }
 
   @override
-  Future<bool> deleteGroup(String groupId) async {
+  Future<bool> deleteGroup(String? groupId) async {
     var endpoint = '/groups/$groupId';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 

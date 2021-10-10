@@ -9,7 +9,7 @@ class IbSubscriptBuilder extends MarkdownElementBuilder {
   IbSubscriptBuilder({this.selectable = true});
 
   @override
-  Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {
+  Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
     final textContent = element.textContent;
 
     // We don't currently have a way to control the vertical alignment of text spans.
@@ -19,7 +19,7 @@ class IbSubscriptBuilder extends MarkdownElementBuilder {
     var text = '';
     for (var i = 0; i < textContent.length; i++) {
       if (UnicodeMap.containsKey(textContent[i])) {
-        text += UnicodeMap[textContent[i]][1];
+        text += UnicodeMap[textContent[i]]![1];
       }
     }
 

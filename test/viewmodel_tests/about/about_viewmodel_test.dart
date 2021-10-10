@@ -32,7 +32,7 @@ void main() {
         expect(_model.stateFor(_model.FETCH_CONTRIBUTORS), ViewState.Success);
 
         // cvContributors was populated
-        expect(_model.cvContributors.length, 3);
+        expect(_model.cvContributors!.length, 3);
       });
 
       test('When called & service returns error', () async {

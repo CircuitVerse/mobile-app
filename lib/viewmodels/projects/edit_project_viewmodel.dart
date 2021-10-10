@@ -9,27 +9,27 @@ class EditProjectViewModel extends BaseModel {
   // ViewState Keys
   String UPDATE_PROJECT = 'update_project';
 
-  final ProjectsApi _projectsApi = locator<ProjectsApi>();
+  final ProjectsApi? _projectsApi = locator<ProjectsApi>();
 
-  Project _updatedProject;
+  Project? _updatedProject;
 
-  Project get updatedProject => _updatedProject;
+  Project? get updatedProject => _updatedProject;
 
-  set updatedProject(Project updatedProject) {
+  set updatedProject(Project? updatedProject) {
     _updatedProject = updatedProject;
     notifyListeners();
   }
 
   Future updateProject(
-    String id, {
-    String name,
-    String projectAccessType,
-    String description,
-    List<String> tagsList,
+    String? id, {
+    String? name,
+    String? projectAccessType,
+    String? description,
+    List<String?>? tagsList,
   }) async {
     setStateFor(UPDATE_PROJECT, ViewState.Busy);
     try {
-      updatedProject = await _projectsApi.updateProject(
+      updatedProject = await _projectsApi!.updateProject(
         id,
         name: name,
         projectAccessType: projectAccessType,

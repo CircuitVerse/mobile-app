@@ -6,8 +6,8 @@ class GroupMembers {
     this.links,
   });
 
-  List<GroupMember> data;
-  Links links;
+  List<GroupMember>? data;
+  Links? links;
 
   factory GroupMembers.fromJson(Map<String, dynamic> json) => GroupMembers(
         data: List<GroupMember>.from(
@@ -23,9 +23,9 @@ class GroupMember {
     this.attributes,
   });
 
-  String id;
-  String type;
-  GroupMemberAttributes attributes;
+  String? id;
+  String? type;
+  GroupMemberAttributes? attributes;
 
   factory GroupMember.fromJson(Map<String, dynamic> json) => GroupMember(
         id: json['id'],
@@ -44,12 +44,12 @@ class GroupMemberAttributes {
     this.email,
   });
 
-  int groupId;
-  int userId;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String name;
-  String email;
+  int? groupId;
+  int? userId;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? name;
+  String? email;
 
   factory GroupMemberAttributes.fromJson(Map<String, dynamic> json) =>
       GroupMemberAttributes(

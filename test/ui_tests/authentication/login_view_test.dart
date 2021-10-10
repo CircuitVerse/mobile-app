@@ -16,7 +16,7 @@ import '../../setup/test_helpers.dart';
 
 void main() {
   group('LoginViewTest -', () {
-    NavigatorObserver mockObserver;
+    late NavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -36,7 +36,7 @@ void main() {
 
       /// The tester.pumpWidget() call above just built our app widget
       /// and triggered the pushObserver method on the mockObserver once.
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
     }
 
     testWidgets('finds Generic LoginView widgets', (WidgetTester tester) async {
@@ -65,7 +65,7 @@ void main() {
       await tester.tap(find.text('Forgot Password?'));
       await tester.pumpAndSettle();
 
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
       expect(find.byType(ForgotPasswordView), findsOneWidget);
     });
 
@@ -80,7 +80,7 @@ void main() {
       }));
       await tester.pumpAndSettle();
 
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
       expect(find.byType(SignupView), findsOneWidget);
     });
 

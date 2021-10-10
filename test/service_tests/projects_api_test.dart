@@ -33,7 +33,8 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(
+            ((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(
             _projectsApi.getPublicProjects(), throwsA(isInstanceOf<Failure>()));
       });
@@ -52,15 +53,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException('')));
         expect(_projectsApi.getUserProjects('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')));
         expect(_projectsApi.getUserProjects('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')));
         expect(_projectsApi.getUserProjects('1'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -79,11 +80,13 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException(''))
+            as Future<Response> Function(Request));
         expect(_projectsApi.getFeaturedProjects(),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(
+            ((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_projectsApi.getFeaturedProjects(),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -102,11 +105,13 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException(''))
+            as Future<Response> Function(Request));
         expect(_projectsApi.getUserFavourites('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(
+            ((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_projectsApi.getUserFavourites('1'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -125,19 +130,23 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException(''))
+            as Future<Response> Function(Request));
         expect(_projectsApi.getProjectDetails('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException(''))
+            as Future<Response> Function(Request));
         expect(_projectsApi.getProjectDetails('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException(''))
+            as Future<Response> Function(Request));
         expect(_projectsApi.getProjectDetails('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(
+            ((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_projectsApi.getProjectDetails('1'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -162,7 +171,8 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
-        ApiUtils.client = MockClient((_) => throw BadRequestException(''));
+        ApiUtils.client = MockClient(((_) => throw BadRequestException(''))
+            as Future<Response> Function(Request));
         expect(
             _projectsApi.updateProject('1',
                 name: 'Test Project',
@@ -171,7 +181,8 @@ void main() {
                 tagsList: []),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException(''))
+            as Future<Response> Function(Request));
         expect(
             _projectsApi.updateProject('1',
                 name: 'Test Project',
@@ -180,7 +191,8 @@ void main() {
                 tagsList: []),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException(''))
+            as Future<Response> Function(Request));
         expect(
             _projectsApi.updateProject('1',
                 name: 'Test Project',
@@ -189,7 +201,8 @@ void main() {
                 tagsList: []),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException(''))
+            as Future<Response> Function(Request));
         expect(
             _projectsApi.updateProject('1',
                 name: 'Test Project',
@@ -198,7 +211,8 @@ void main() {
                 tagsList: []),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(
+            ((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(
             _projectsApi.updateProject('1',
                 name: 'Test Project',
@@ -220,19 +234,23 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException(''))
+            as Future<Response> Function(Request));
         expect(
             _projectsApi.deleteProject('1'), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException(''))
+            as Future<Response> Function(Request));
         expect(
             _projectsApi.deleteProject('1'), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException(''))
+            as Future<Response> Function(Request));
         expect(
             _projectsApi.deleteProject('1'), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(
+            ((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(
             _projectsApi.deleteProject('1'), throwsA(isInstanceOf<Failure>()));
       });
@@ -250,15 +268,18 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException(''))
+            as Future<Response> Function(Request));
         expect(_projectsApi.toggleStarProject('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException(''))
+            as Future<Response> Function(Request));
         expect(_projectsApi.toggleStarProject('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(
+            ((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_projectsApi.toggleStarProject('1'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -277,16 +298,20 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException(''))
+            as Future<Response> Function(Request));
         expect(_projectsApi.forkProject('1'), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException(''))
+            as Future<Response> Function(Request));
         expect(_projectsApi.forkProject('1'), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw ConflictException(''));
+        ApiUtils.client = MockClient(((_) => throw ConflictException(''))
+            as Future<Response> Function(Request));
         expect(_projectsApi.forkProject('1'), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(
+            ((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_projectsApi.forkProject('1'), throwsA(isInstanceOf<Failure>()));
       });
     });

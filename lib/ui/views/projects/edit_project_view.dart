@@ -15,20 +15,20 @@ import 'package:mobile_app/viewmodels/projects/edit_project_viewmodel.dart';
 
 class EditProjectView extends StatefulWidget {
   static const String id = 'edit_project_view';
-  final Project project;
+  final Project? project;
 
-  const EditProjectView({Key key, this.project}) : super(key: key);
+  const EditProjectView({Key? key, this.project}) : super(key: key);
 
   @override
   _EditProjectViewState createState() => _EditProjectViewState();
 }
 
 class _EditProjectViewState extends State<EditProjectView> {
-  final DialogService _dialogService = locator<DialogService>();
-  EditProjectViewModel _model;
+  final DialogService? _dialogService = locator<DialogService>();
+  late EditProjectViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name, _projectAccessType;
-  List<String> _tags;
+  String? _name, _projectAccessType;
+  List<String?>? _tags;
   final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
 
   final _nameFocusNode = FocusNode();
@@ -44,9 +44,9 @@ class _EditProjectViewState extends State<EditProjectView> {
   @override
   void initState() {
     super.initState();
-    _name = widget.project.attributes.name;
-    _tags = widget.project.attributes.tags.map((tag) => tag.name).toList();
-    _projectAccessType = widget.project.attributes.projectAccessType;
+    _name = widget.project!.attributes!.name;
+    _tags = widget.project!.attributes!.tags!.map((tag) => tag.name).toList();
+    _projectAccessType = widget.project!.attributes!.projectAccessType;
   }
 
   Widget _buildNameInput() {
@@ -54,7 +54,7 @@ class _EditProjectViewState extends State<EditProjectView> {
       label: 'Name',
       initialValue: _name,
       validator: (value) => value.isEmpty ? "Name can't be empty" : null,
-      onSaved: (value) => _name = value.trim(),
+      onSaved: (value) => _name = value?.trim(),
       onFieldSubmitted: (_) =>
           FocusScope.of(context).requestFocus(_nameFocusNode),
     );
@@ -64,9 +64,9 @@ class _EditProjectViewState extends State<EditProjectView> {
     return CVTextField(
       label: 'Tags List',
       focusNode: _nameFocusNode,
-      initialValue: _tags.join(' , '),
+      initialValue: _tags!.join(' , '),
       onSaved: (value) =>
-          _tags = value.split(',').map((tag) => tag.trim()).toList(),
+          _tags = value?.split(',').map((tag) => tag.trim()).toList(),
       onFieldSubmitted: (_) {
         _nameFocusNode.unfocus();
         FocusScope.of(context).requestFocus(_tagsListFocusNode);
@@ -83,7 +83,7 @@ class _EditProjectViewState extends State<EditProjectView> {
           labelText: 'Project Access Type',
         ),
         value: _projectAccessType,
-        onChanged: (String value) {
+        onChanged: (String? value) {
           setState(() {
             _projectAccessType = value;
           });
@@ -115,17 +115,17 @@ class _EditProjectViewState extends State<EditProjectView> {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      _dialogService.showCustomProgressDialog(title: 'Updating..');
+      _dialogService!.showCustomProgressDialog(title: 'Updating..');
 
       await _model.updateProject(
-        widget.project.id,
+        widget.project!.id,
         name: _name,
         projectAccessType: _projectAccessType,
-        description: await _descriptionEditor.currentState.getText(),
+        description: await _descriptionEditor.currentState!.getText(),
         tagsList: _tags,
       );
 
-      _dialogService.popDialog();
+      _dialogService!.popDialog();
 
       if (_model.isSuccess(_model.UPDATE_PROJECT)) {
         await Future.delayed(Duration(seconds: 1));
@@ -158,7 +158,7 @@ class _EditProjectViewState extends State<EditProjectView> {
     return BaseView<EditProjectViewModel>(
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text('Edit ${widget.project.attributes.name}')),
+        appBar: AppBar(title: Text('Edit ${widget.project!.attributes!.name}')),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Form(

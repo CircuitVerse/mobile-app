@@ -9,7 +9,7 @@ class IbLandingViewModel extends BaseModel {
   // ViewState Keys
   String IB_FETCH_CHAPTERS = 'ib_fetch_chapters';
 
-  final IbEngineService _ibEngineService = locator<IbEngineService>();
+  final IbEngineService? _ibEngineService = locator<IbEngineService>();
 
   List<IbChapter> _chapters = [];
 
@@ -17,7 +17,7 @@ class IbLandingViewModel extends BaseModel {
 
   Future fetchChapters() async {
     try {
-      _chapters = await _ibEngineService.getChapters();
+      _chapters = await _ibEngineService!.getChapters();
       setStateFor(IB_FETCH_CHAPTERS, ViewState.Success);
     } on Failure catch (f) {
       setStateFor(IB_FETCH_CHAPTERS, ViewState.Error);

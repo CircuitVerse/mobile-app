@@ -8,14 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   group('DatabaseService Test -', () {
-    DatabaseService db;
+    DatabaseService? db;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
       await setupLocator();
 
       db = locator<DatabaseService>();
-      await db.init();
+      await db!.init();
       var path = Directory.current.path;
       Hive.init(path + '/test/hive_testing_path');
     });
@@ -23,8 +23,8 @@ void main() {
     test('Set and Get data from a box', () async {
       await Hive.deleteFromDisk();
 
-      await db.setData(DatabaseBox.IB, 'test', 'test value');
-      var expectedData = await db.getData(DatabaseBox.IB, 'test');
+      await db!.setData(DatabaseBox.IB, 'test', 'test value');
+      var expectedData = await db!.getData(DatabaseBox.IB, 'test');
 
       expect(expectedData, 'test value');
     });
@@ -32,7 +32,7 @@ void main() {
     test('Get non-existent data from a box', () async {
       await Hive.deleteFromDisk();
 
-      var expectedData = await db.getData(DatabaseBox.IB, 'test-2');
+      var expectedData = await db!.getData(DatabaseBox.IB, 'test-2');
       expect(expectedData, null);
     });
 
@@ -40,7 +40,7 @@ void main() {
       await Hive.deleteFromDisk();
 
       var expectedData =
-          await db.getData(DatabaseBox.IB, 'test-3', defaultValue: 'test');
+          await db!.getData(DatabaseBox.IB, 'test-3', defaultValue: 'test');
       expect(expectedData, 'test');
     });
   });

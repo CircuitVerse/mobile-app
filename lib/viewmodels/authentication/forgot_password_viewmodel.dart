@@ -8,13 +8,13 @@ class ForgotPasswordViewModel extends BaseModel {
   // ViewState Keys
   final String SEND_RESET_INSTRUCTIONS = 'send_reset_instructions';
 
-  final UsersApi _usersApi = locator<UsersApi>();
+  final UsersApi? _usersApi = locator<UsersApi>();
 
-  Future onForgotPassword(String email) async {
+  Future onForgotPassword(String? email) async {
     setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Busy);
     try {
       var _areInstructionsSent =
-          await _usersApi.sendResetPasswordInstructions(email);
+          await _usersApi!.sendResetPasswordInstructions(email);
 
       if (_areInstructionsSent) {
         setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Success);

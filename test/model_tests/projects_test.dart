@@ -11,7 +11,7 @@ void main() {
 
       expect(_projects, isInstanceOf<Projects>());
       expect(_projects.data, isInstanceOf<List<Project>>());
-      expect(_projects.data.length, 1);
+      expect(_projects.data!.length, 1);
 
       expect(_projects.links, isInstanceOf<Links>());
     });

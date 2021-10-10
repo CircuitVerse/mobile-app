@@ -13,7 +13,7 @@ class FeaturedProjectsView extends StatefulWidget {
   final bool embed;
 
   const FeaturedProjectsView(
-      {Key key, this.showAppBar = true, this.embed = false})
+      {Key? key, this.showAppBar = true, this.embed = false})
       : super(key: key);
 
   @override

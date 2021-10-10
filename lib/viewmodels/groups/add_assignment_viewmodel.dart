@@ -12,20 +12,20 @@ class AddAssignmentViewModel extends BaseModel {
   // ViewState Keys
   final String ADD_ASSIGNMENT = 'add_assignment';
 
-  final AssignmentsApi _assignmentsApi = locator<AssignmentsApi>();
+  final AssignmentsApi? _assignmentsApi = locator<AssignmentsApi>();
 
-  Assignment _addedAssignment;
+  Assignment? _addedAssignment;
 
-  Assignment get addedAssignment => _addedAssignment;
+  Assignment? get addedAssignment => _addedAssignment;
 
-  set addedAssignment(Assignment addedAssignment) {
+  set addedAssignment(Assignment? addedAssignment) {
     _addedAssignment = addedAssignment;
     notifyListeners();
   }
 
   Future addAssignment(
-    String groupId,
-    String name,
+    String? groupId,
+    String? name,
     DateTime deadline,
     String gradingScale,
     String description,
@@ -40,7 +40,7 @@ class AddAssignmentViewModel extends BaseModel {
       gradingScale = gradingScale.toLowerCase().split(' ').join('_');
 
       // Adds Assignment..
-      addedAssignment = await _assignmentsApi.addAssignment(
+      addedAssignment = await _assignmentsApi!.addAssignment(
         groupId,
         name,
         deadlineFormat.format(deadline.subtract(deadline.timeZoneOffset)),

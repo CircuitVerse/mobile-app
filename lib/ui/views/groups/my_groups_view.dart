@@ -22,10 +22,10 @@ class MyGroupsView extends StatefulWidget {
 }
 
 class _MyGroupsViewState extends State<MyGroupsView> {
-  final DialogService _dialogService = locator<DialogService>();
-  MyGroupsViewModel _model;
+  final DialogService? _dialogService = locator<DialogService>();
+  MyGroupsViewModel? _model;
 
-  Widget _buildSubHeader({String title}) {
+  Widget _buildSubHeader({required String title}) {
     return Text(
       title,
       textAlign: TextAlign.center,
@@ -36,7 +36,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
   Future<void> onCreateGroupPressed() async {
     var _result = await Get.toNamed(NewGroupView.id);
 
-    if (_result is Group) _model.onGroupCreated(_result);
+    if (_result is Group) _model!.onGroupCreated(_result);
   }
 
   Future<void> onEditGroupPressed(Group group) async {
@@ -45,32 +45,32 @@ class _MyGroupsViewState extends State<MyGroupsView> {
       arguments: group,
     );
 
-    if (_result is Group) _model.onGroupUpdated(_result);
+    if (_result is Group) _model!.onGroupUpdated(_result);
   }
 
-  Future<void> onDeleteGroupPressed(String groupId) async {
-    var _dialogResponse = await _dialogService.showConfirmationDialog(
+  Future<void> onDeleteGroupPressed(String? groupId) async {
+    var _dialogResponse = await _dialogService!.showConfirmationDialog(
       title: 'Delete Group',
       description: 'Are you sure you want to delete this group?',
       confirmationTitle: 'DELETE',
     );
 
-    if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Deleting Group');
+    if (_dialogResponse.confirmed!) {
+      _dialogService!.showCustomProgressDialog(title: 'Deleting Group');
 
-      await _model.deleteGroup(groupId);
+      await _model!.deleteGroup(groupId);
 
-      _dialogService.popDialog();
+      _dialogService!.popDialog();
 
-      if (_model.isSuccess(_model.DELETE_GROUP)) {
+      if (_model!.isSuccess(_model!.DELETE_GROUP)) {
         SnackBarUtils.showDark(
           'Group Deleted',
           'Group was successfully deleted.',
         );
-      } else if (_model.isError(_model.DELETE_GROUP)) {
+      } else if (_model!.isError(_model!.DELETE_GROUP)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.DELETE_GROUP),
+          _model!.errorMessageFor(_model!.DELETE_GROUP),
         );
       }
     }
@@ -81,8 +81,8 @@ class _MyGroupsViewState extends State<MyGroupsView> {
     return BaseView<MyGroupsViewModel>(
       onModelReady: (model) {
         _model = model;
-        _model.fetchMentoredGroups();
-        _model.fetchMemberGroups();
+        _model!.fetchMentoredGroups();
+        _model!.fetchMemberGroups();
       },
       builder: (context, model, child) => Scaffold(
         body: Builder(builder: (context) {
@@ -91,7 +91,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
           _items.add(
             Text(
               'Groups',
-              style: Theme.of(context).textTheme.headline4.copyWith(
+              style: Theme.of(context).textTheme.headline4!.copyWith(
                     fontWeight: FontWeight.bold,
                     color: CVTheme.textColor(context),
                   ),
@@ -116,9 +116,9 @@ class _MyGroupsViewState extends State<MyGroupsView> {
 
           _items.add(_buildSubHeader(title: 'Groups You Mentor'));
 
-          if (_model.isSuccess(_model.FETCH_MENTORED_GROUPS)) {
+          if (_model!.isSuccess(_model!.FETCH_MENTORED_GROUPS)) {
             // creates GroupMentorCard corresponding to each mentor group
-            _model.mentoredGroups.forEach((group) {
+            _model!.mentoredGroups.forEach((group) {
               _items.add(
                 GroupMentorCard(
                   group: group,
@@ -131,7 +131,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
             // Adds fetch more groups icon if link to next set exists
             if (_model?.previousMentoredGroupsBatch?.links?.next != null) {
               _items.add(
-                CVAddIconButton(onPressed: _model.fetchMentoredGroups),
+                CVAddIconButton(onPressed: _model!.fetchMentoredGroups),
               );
             }
           }
@@ -140,16 +140,16 @@ class _MyGroupsViewState extends State<MyGroupsView> {
 
           _items.add(_buildSubHeader(title: "Groups You're in"));
 
-          if (_model.isSuccess(_model.FETCH_MEMBER_GROUPS)) {
+          if (_model!.isSuccess(_model!.FETCH_MEMBER_GROUPS)) {
             // creates GroupMemberCard corresponding to each member group
-            _model.memberGroups.forEach((group) {
+            _model!.memberGroups.forEach((group) {
               _items.add(GroupMemberCard(group: group));
             });
 
             // Adds fetch more groups icon if link to next set exists
             if (_model?.previousMemberGroupsBatch?.links?.next != null) {
               _items.add(
-                CVAddIconButton(onPressed: _model.fetchMemberGroups),
+                CVAddIconButton(onPressed: _model!.fetchMemberGroups),
               );
             }
           }

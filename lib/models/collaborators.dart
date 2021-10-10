@@ -6,8 +6,8 @@ class Collaborators {
     this.links,
   });
 
-  List<Collaborator> data;
-  Links links;
+  List<Collaborator>? data;
+  Links? links;
 
   factory Collaborators.fromJson(Map<String, dynamic> json) => Collaborators(
         data: List<Collaborator>.from(
@@ -23,9 +23,9 @@ class Collaborator {
     this.attributes,
   });
 
-  String id;
-  String type;
-  CollaboratorAttributes attributes;
+  String? id;
+  String? type;
+  CollaboratorAttributes? attributes;
 
   factory Collaborator.fromJson(Map<String, dynamic> json) => Collaborator(
         id: json['id'],
@@ -39,7 +39,7 @@ class CollaboratorAttributes {
     this.name,
   });
 
-  String name;
+  String? name;
 
   factory CollaboratorAttributes.fromJson(Map<String, dynamic> json) =>
       CollaboratorAttributes(

@@ -18,7 +18,7 @@ import '../../setup/test_helpers.dart';
 
 void main() {
   group('UserFavouritesViewTest -', () {
-    NavigatorObserver mockObserver;
+    late NavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -55,7 +55,7 @@ void main() {
 
       /// The tester.pumpWidget() call above just built our app widget
       /// and triggered the pushObserver method on the mockObserver once.
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
     }
 
     testWidgets('finds Generic UserFavouritesView widgets',
@@ -80,16 +80,16 @@ void main() {
             projectDetailsViewModel);
 
         when(projectDetailsViewModel.fetchProjectDetails(any)).thenReturn(null);
-        when(projectDetailsViewModel.isSuccess(any)).thenReturn(false);
+        when(projectDetailsViewModel.isSuccess(any!)).thenReturn(false);
 
         expect(find.byType(ProjectCard), findsOneWidget);
 
         // ISSUE: tester.tap() is not working
-        ProjectCard widget = find.byType(ProjectCard).evaluate().first.widget;
-        widget.onPressed();
+        ProjectCard widget = find.byType(ProjectCard).evaluate().first.widget as ProjectCard;
+        widget.onPressed!();
         await tester.pumpAndSettle();
 
-        verify(mockObserver.didPush(any, any));
+        verify(mockObserver.didPush(any!, any));
         expect(find.byType(ProjectDetailsView), findsOneWidget);
       });
     });

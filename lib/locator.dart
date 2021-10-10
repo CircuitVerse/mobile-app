@@ -46,8 +46,10 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => DialogService());
 
   // Local Storage Service
-  var localStorageService = await LocalStorageService.getInstance();
-  locator.registerSingleton<LocalStorageService>(localStorageService);
+  var localStorageService = await (LocalStorageService.getInstance());
+  if (localStorageService != null) {
+    locator.registerSingleton<LocalStorageService>(localStorageService);
+  }
 
   // Database Service
   locator.registerLazySingleton<DatabaseService>(() => DatabaseServiceImpl());

@@ -20,37 +20,37 @@ import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
 
 class UpdateAssignmentView extends StatefulWidget {
   static const String id = 'update_assignment_view';
-  final Assignment assignment;
+  final Assignment? assignment;
 
-  const UpdateAssignmentView({Key key, this.assignment}) : super(key: key);
+  const UpdateAssignmentView({Key? key, this.assignment}) : super(key: key);
 
   @override
   _UpdateAssignmentViewState createState() => _UpdateAssignmentViewState();
 }
 
 class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
-  final DialogService _dialogService = locator<DialogService>();
-  UpdateAssignmentViewModel _model;
+  final DialogService? _dialogService = locator<DialogService>();
+  late UpdateAssignmentViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name;
+  String? _name;
   final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
-  DateTime _deadline;
-  List _restrictions = [];
-  bool _isRestrictionEnabled = false;
+  DateTime? _deadline;
+  List? _restrictions = [];
+  bool? _isRestrictionEnabled = false;
 
   @override
   void initState() {
     super.initState();
-    _restrictions = json.decode(widget.assignment.attributes.restrictions);
-    _isRestrictionEnabled = _restrictions.isNotEmpty;
+    _restrictions = json.decode(widget.assignment!.attributes!.restrictions!);
+    _isRestrictionEnabled = _restrictions!.isNotEmpty;
   }
 
   Widget _buildNameInput() {
     return CVTextField(
-      initialValue: widget.assignment.attributes.name,
+      initialValue: widget.assignment!.attributes!.name,
       label: 'Name',
       validator: (name) => name.isEmpty ? 'Please enter a valid name' : null,
-      onSaved: (name) => _name = name.trim(),
+      onSaved: (name) => _name = name?.trim(),
     );
   }
 
@@ -70,7 +70,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       child: DateTimeField(
         key: Key('cv_assignment_deadline_field'),
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
-        initialValue: widget.assignment.attributes.deadline,
+        initialValue: widget.assignment!.attributes!.deadline,
         decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: 'Deadline',
         ),
@@ -104,7 +104,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         value: _isRestrictionEnabled,
         title: Text(
           'Elements restriction',
-          style: Theme.of(context).textTheme.headline6.copyWith(
+          style: Theme.of(context).textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),
@@ -123,12 +123,12 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Checkbox(
-            value: _restrictions.contains(name),
+            value: _restrictions!.contains(name),
             onChanged: (value) {
-              if (value) {
-                _restrictions.add((name));
+              if (value!) {
+                _restrictions!.add((name));
               } else {
-                _restrictions.remove(name);
+                _restrictions!.remove(name);
               }
               setState(() {});
             }),
@@ -145,7 +145,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.subtitle1.copyWith(
+            style: Theme.of(context).textTheme.subtitle1!.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
@@ -183,13 +183,13 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       FocusScope.of(context).requestFocus(FocusNode());
 
       // Shows progress dialog..
-      _dialogService.showCustomProgressDialog(title: 'Updating..');
+      _dialogService!.showCustomProgressDialog(title: 'Updating..');
 
       // [ISSUE] [html_editor] Throws error in Tests
       var _descriptionEditorText;
       try {
         _descriptionEditorText =
-            await _descriptionEditor.currentState.getText();
+            await _descriptionEditor.currentState!.getText();
       } on NoSuchMethodError {
         debugPrint(
             'Handled html_editor error. NOTE: This should only throw during tests.');
@@ -197,14 +197,14 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       }
 
       await _model.updateAssignment(
-        widget.assignment.id,
+        widget.assignment!.id,
         _name,
-        _deadline,
+        _deadline!,
         _descriptionEditorText,
         _restrictions,
       );
 
-      _dialogService.popDialog();
+      _dialogService!.popDialog();
 
       if (_model.isSuccess(_model.UPDATE_ASSIGNMENT)) {
         await Future.delayed(Duration(seconds: 1));
@@ -239,7 +239,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
                 _buildDescriptionInput(),
                 _buildDeadlineInput(),
                 _buildRestrictionsHeader(),
-                if (_isRestrictionEnabled)
+                if (_isRestrictionEnabled!)
                   _buildRestrictions()
                 else
                   Container(),

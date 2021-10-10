@@ -7,25 +7,25 @@ List<CircuitVerseContributor> circuitVerseContributorsFromJson(String str) =>
         json.decode(str).map((x) => CircuitVerseContributor.fromJson(x)));
 
 class CircuitVerseContributor {
-  String login;
-  int id;
-  String nodeId;
-  String avatarUrl;
-  String gravatarId;
-  String url;
-  String htmlUrl;
-  String followersUrl;
-  String followingUrl;
-  String gistsUrl;
-  String starredUrl;
-  String subscriptionsUrl;
-  String organizationsUrl;
-  String reposUrl;
-  String eventsUrl;
-  String receivedEventsUrl;
-  Type type;
-  bool siteAdmin;
-  int contributions;
+  String? login;
+  int? id;
+  String? nodeId;
+  String? avatarUrl;
+  String? gravatarId;
+  String? url;
+  String? htmlUrl;
+  String? followersUrl;
+  String? followingUrl;
+  String? gistsUrl;
+  String? starredUrl;
+  String? subscriptionsUrl;
+  String? organizationsUrl;
+  String? reposUrl;
+  String? eventsUrl;
+  String? receivedEventsUrl;
+  Type? type;
+  bool? siteAdmin;
+  int? contributions;
 
   CircuitVerseContributor({
     this.login,

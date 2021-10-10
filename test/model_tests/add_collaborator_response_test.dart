@@ -11,12 +11,12 @@ void main() {
 
       expect(_collaboratorResponse, isInstanceOf<AddCollaboratorsResponse>());
 
-      expect(_collaboratorResponse.added.length, 1);
-      expect(_collaboratorResponse.added[0], 'test@test.com');
-      expect(_collaboratorResponse.existing.length, 1);
-      expect(_collaboratorResponse.existing[0], 'existing@test.com');
-      expect(_collaboratorResponse.invalid.length, 1);
-      expect(_collaboratorResponse.invalid[0], 'invalid@test.com');
+      expect(_collaboratorResponse.added!.length, 1);
+      expect(_collaboratorResponse.added![0], 'test@test.com');
+      expect(_collaboratorResponse.existing!.length, 1);
+      expect(_collaboratorResponse.existing![0], 'existing@test.com');
+      expect(_collaboratorResponse.invalid!.length, 1);
+      expect(_collaboratorResponse.invalid![0], 'invalid@test.com');
     });
   });
 }

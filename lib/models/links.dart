@@ -7,11 +7,11 @@ class Links {
     this.last,
   });
 
-  String self;
-  String first;
+  String? self;
+  String? first;
   dynamic prev;
   dynamic next;
-  String last;
+  String? last;
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
         self: json['self'],

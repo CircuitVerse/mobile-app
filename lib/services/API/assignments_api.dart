@@ -8,11 +8,11 @@ import 'package:mobile_app/utils/app_exceptions.dart';
 abstract class AssignmentsApi {
   Future<Assignments> fetchAssignments(String groupId, {int page = 1});
 
-  Future<Assignment> fetchAssignmentDetails(String assignmentId);
+  Future<Assignment> fetchAssignmentDetails(String? assignmentId);
 
   Future<Assignment> addAssignment(
-    String groupId,
-    String name,
+    String? groupId,
+    String? name,
     String deadline,
     String description,
     String gradingScale,
@@ -20,18 +20,18 @@ abstract class AssignmentsApi {
   );
 
   Future<Assignment> updateAssignment(
-    String assignmentId,
-    String name,
+    String? assignmentId,
+    String? name,
     String deadline,
     String description,
     String restrictions,
   );
 
-  Future<bool> deleteAssignment(String assignmentId);
+  Future<bool> deleteAssignment(String? assignmentId);
 
-  Future<String> reopenAssignment(String assignmentId);
+  Future<String?> reopenAssignment(String? assignmentId);
 
-  Future<String> startAssignment(String assignmentId);
+  Future<String?> startAssignment(String? assignmentId);
 }
 
 class HttpAssignmentsApi implements AssignmentsApi {
@@ -60,7 +60,7 @@ class HttpAssignmentsApi implements AssignmentsApi {
   }
 
   @override
-  Future<Assignment> fetchAssignmentDetails(String assignmentId) async {
+  Future<Assignment> fetchAssignmentDetails(String? assignmentId) async {
     var endpoint = '/assignments/$assignmentId?include=grades,projects';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 
@@ -83,8 +83,8 @@ class HttpAssignmentsApi implements AssignmentsApi {
 
   @override
   Future<Assignment> addAssignment(
-    String groupId,
-    String name,
+    String? groupId,
+    String? name,
     String deadline,
     String description,
     String gradingScale,
@@ -122,8 +122,8 @@ class HttpAssignmentsApi implements AssignmentsApi {
 
   @override
   Future<Assignment> updateAssignment(
-    String assignmentId,
-    String name,
+    String? assignmentId,
+    String? name,
     String deadline,
     String description,
     String restrictions,
@@ -158,7 +158,7 @@ class HttpAssignmentsApi implements AssignmentsApi {
   }
 
   @override
-  Future<bool> deleteAssignment(String assignmentId) async {
+  Future<bool> deleteAssignment(String? assignmentId) async {
     var endpoint = '/assignments/$assignmentId';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 
@@ -179,7 +179,7 @@ class HttpAssignmentsApi implements AssignmentsApi {
   }
 
   @override
-  Future<String> reopenAssignment(String assignmentId) async {
+  Future<String?> reopenAssignment(String? assignmentId) async {
     var endpoint = '/assignments/$assignmentId/reopen';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 
@@ -199,7 +199,7 @@ class HttpAssignmentsApi implements AssignmentsApi {
   }
 
   @override
-  Future<String> startAssignment(String assignmentId) async {
+  Future<String?> startAssignment(String? assignmentId) async {
     var endpoint = '/assignments/$assignmentId/start';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 

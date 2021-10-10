@@ -30,8 +30,8 @@ class CVLandingView extends StatefulWidget {
 }
 
 class _CVLandingViewState extends State<CVLandingView> {
-  final DialogService _dialogService = locator<DialogService>();
-  CVLandingViewModel _model;
+  final DialogService? _dialogService = locator<DialogService>();
+  late CVLandingViewModel _model;
   int _selectedIndex = 0;
 
   final List<Widget> _items = [
@@ -54,16 +54,16 @@ class _CVLandingViewState extends State<CVLandingView> {
   String _appBarTitle(int selectedIndex) {
     switch (selectedIndex) {
       case 1:
-        return AppLocalizations.of(context).featured_circuits;
+        return AppLocalizations.of(context)!.featured_circuits;
         break;
       case 5:
-        return AppLocalizations.of(context).profile;
+        return AppLocalizations.of(context)!.profile;
         break;
       case 6:
-        return AppLocalizations.of(context).groups;
+        return AppLocalizations.of(context)!.groups;
         break;
       default:
-        return AppLocalizations.of(context).title;
+        return AppLocalizations.of(context)!.title;
     }
   }
 
@@ -82,19 +82,19 @@ class _CVLandingViewState extends State<CVLandingView> {
   Future<void> onLogoutPressed() async {
     Get.back();
 
-    var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: AppLocalizations.of(context).logout,
-      description: AppLocalizations.of(context).logout_confirmation,
+    var _dialogResponse = await _dialogService!.showConfirmationDialog(
+      title: AppLocalizations.of(context)!.logout,
+      description: AppLocalizations.of(context)!.logout_confirmation,
       confirmationTitle:
-          AppLocalizations.of(context).logout_confirmation_button,
+          AppLocalizations.of(context)!.logout_confirmation_button,
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse.confirmed!) {
       _model.onLogout();
       setState(() => _selectedIndex = 0);
       SnackBarUtils.showDark(
-        AppLocalizations.of(context).logout_success,
-        AppLocalizations.of(context).logout_success_acknowledgement,
+        AppLocalizations.of(context)!.logout_success,
+        AppLocalizations.of(context)!.logout_success_acknowledgement,
       );
     }
   }
@@ -116,7 +116,7 @@ class _CVLandingViewState extends State<CVLandingView> {
               InkWell(
                 onTap: () => setSelectedIndexTo(0),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context).home,
+                  title: AppLocalizations.of(context)!.home,
                   iconData: Icons.home,
                 ),
               ),
@@ -131,7 +131,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                       color: CVTheme.drawerIcon(context),
                     ),
                     title: Text(
-                      AppLocalizations.of(context).explore,
+                      AppLocalizations.of(context)!.explore,
                       style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
@@ -139,7 +139,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                     InkWell(
                       onTap: () => setSelectedIndexTo(1),
                       child: CVDrawerTile(
-                        title: AppLocalizations.of(context).featured_circuits,
+                        title: AppLocalizations.of(context)!.featured_circuits,
                         iconData: Icons.star,
                       ),
                     ),
@@ -149,28 +149,28 @@ class _CVLandingViewState extends State<CVLandingView> {
               InkWell(
                 onTap: () => Get.toNamed(IbLandingView.id),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context).interactive_book,
+                  title: AppLocalizations.of(context)!.interactive_book,
                   iconData: Icons.chrome_reader_mode,
                 ),
               ),
               InkWell(
                 onTap: () => setSelectedIndexTo(2),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context).about,
+                  title: AppLocalizations.of(context)!.about,
                   iconData: FontAwesome5.address_card,
                 ),
               ),
               InkWell(
                 onTap: () => setSelectedIndexTo(3),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context).contribute,
+                  title: AppLocalizations.of(context)!.contribute,
                   iconData: Icons.add,
                 ),
               ),
               InkWell(
                 onTap: () => setSelectedIndexTo(4),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context).teachers,
+                  title: AppLocalizations.of(context)!.teachers,
                   iconData: Icons.account_balance,
                 ),
               ),
@@ -180,8 +180,8 @@ class _CVLandingViewState extends State<CVLandingView> {
                   child: ExpansionTile(
                     maintainState: true,
                     title: Text(
-                      _model.currentUser.data.attributes.name ?? '',
-                      style: Theme.of(context).textTheme.headline6.copyWith(
+                      _model.currentUser!.data!.attributes!.name ?? '',
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                     ),
@@ -189,21 +189,21 @@ class _CVLandingViewState extends State<CVLandingView> {
                       InkWell(
                         onTap: () => setSelectedIndexTo(5),
                         child: CVDrawerTile(
-                          title: AppLocalizations.of(context).profile,
+                          title: AppLocalizations.of(context)!.profile,
                           iconData: FontAwesome5.user,
                         ),
                       ),
                       InkWell(
                         onTap: () => setSelectedIndexTo(6),
                         child: CVDrawerTile(
-                          title: AppLocalizations.of(context).my_groups,
+                          title: AppLocalizations.of(context)!.my_groups,
                           iconData: FontAwesome5.object_group,
                         ),
                       ),
                       InkWell(
                         onTap: onLogoutPressed,
                         child: CVDrawerTile(
-                          title: AppLocalizations.of(context).logout,
+                          title: AppLocalizations.of(context)!.logout,
                           iconData: FontAwesome.logout,
                         ),
                       ),
@@ -214,7 +214,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                 InkWell(
                   onTap: () => Get.offAndToNamed(LoginView.id),
                   child: CVDrawerTile(
-                    title: AppLocalizations.of(context).login,
+                    title: AppLocalizations.of(context)!.login,
                     iconData: FontAwesome.login,
                   ),
                 )
@@ -254,7 +254,7 @@ class _CVLandingViewState extends State<CVLandingView> {
           return Future.value(true);
         },
         child: Scaffold(
-          appBar: _buildAppBar(),
+          appBar: _buildAppBar() as PreferredSizeWidget?,
           drawer: _buildDrawer(),
           body: PageTransitionSwitcher(
             transitionBuilder: (

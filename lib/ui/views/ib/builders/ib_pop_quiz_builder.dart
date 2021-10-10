@@ -5,15 +5,15 @@ import 'package:mobile_app/ui/views/ib/components/ib_pop_quiz.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 
 class IbPopQuizBuilder extends MarkdownElementBuilder {
-  final BuildContext context;
-  final IbPageViewModel model;
+  final BuildContext? context;
+  final IbPageViewModel? model;
 
   IbPopQuizBuilder({this.context, this.model});
 
   @override
-  Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {
+  Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
     var _rawContent = element.textContent;
-    var _popQuizQuestions = model.fetchPopQuiz(_rawContent);
+    var _popQuizQuestions = model!.fetchPopQuiz(_rawContent);
 
     return IbPopQuiz(
       context: context,

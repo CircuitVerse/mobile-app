@@ -9,13 +9,13 @@ class AboutViewModel extends BaseModel {
   // ViewState Keys
   final String FETCH_CONTRIBUTORS = 'fetch_contributors';
 
-  final _contributorsApi = locator<ContributorsApi>();
+  final ContributorsApi? _contributorsApi = locator<ContributorsApi>();
 
-  List<CircuitVerseContributor> _cvContributors;
+  List<CircuitVerseContributor>? _cvContributors;
 
-  List<CircuitVerseContributor> get cvContributors => _cvContributors;
+  List<CircuitVerseContributor>? get cvContributors => _cvContributors;
 
-  set cvContributors(List<CircuitVerseContributor> cvContributors) {
+  set cvContributors(List<CircuitVerseContributor>? cvContributors) {
     _cvContributors = cvContributors;
     notifyListeners();
   }
@@ -23,7 +23,7 @@ class AboutViewModel extends BaseModel {
   Future fetchContributors() async {
     setStateFor(FETCH_CONTRIBUTORS, ViewState.Busy);
     try {
-      cvContributors = await _contributorsApi.fetchContributors();
+      cvContributors = await _contributorsApi!.fetchContributors();
 
       setStateFor(FETCH_CONTRIBUTORS, ViewState.Success);
     } on Failure catch (f) {

@@ -73,7 +73,7 @@ class CircuitVerseMobile extends StatelessWidget {
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               onGenerateTitle: (BuildContext context) =>
-                  AppLocalizations.of(context).title,
+                  AppLocalizations.of(context)!.title,
               debugShowCheckedModeBanner: false,
               onGenerateRoute: CVRouter.generateRoute,
               theme: ThemeProvider.themeOf(themeContext).data,

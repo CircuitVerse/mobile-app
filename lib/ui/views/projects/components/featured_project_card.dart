@@ -7,9 +7,9 @@ import 'package:transparent_image/transparent_image.dart';
 
 class FeaturedProjectCard extends StatefulWidget {
   final Project project;
-  final VoidCallback onViewPressed;
+  final VoidCallback? onViewPressed;
   const FeaturedProjectCard(
-      {Key key, @required this.project, this.onViewPressed})
+      {Key? key, required this.project, this.onViewPressed})
       : super(key: key);
 
   @override
@@ -38,7 +38,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
             placeholder: kTransparentImage,
             image: EnvironmentConfig.CV_API_BASE_URL.substring(
                     0, EnvironmentConfig.CV_API_BASE_URL.length - 7) +
-                widget.project.attributes.imagePreview.url,
+                widget.project.attributes!.imagePreview!.url!,
           ),
         ),
       ),
@@ -63,11 +63,11 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         children: <Widget>[
           Expanded(
             child: Text(
-              widget.project.attributes.name,
+              widget.project.attributes!.name!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.headline6.copyWith(
+              style: Theme.of(context).textTheme.headline6!.copyWith(
                     color: CVTheme.textColor(context),
                   ),
             ),

@@ -13,7 +13,7 @@ class IbMathjaxBuilder extends MarkdownElementBuilder {
   IbMathjaxBuilder();
 
   @override
-  Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {
+  Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
     var _content = element.textContent.trim();
 
     // Remove auto-numbering and custom-numbering tags

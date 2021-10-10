@@ -36,15 +36,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _groupMembersApi = HttpGroupMembersApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException('')));
         expect(_groupMembersApi.fetchGroupMembers('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')));
         expect(_groupMembersApi.fetchGroupMembers('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')));
         expect(_groupMembersApi.fetchGroupMembers('1'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -63,15 +63,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _groupMembersApi = HttpGroupMembersApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException('')));
         expect(_groupMembersApi.addGroupMembers('1', ''),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')));
         expect(_groupMembersApi.addGroupMembers('1', ''),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')));
         expect(_groupMembersApi.addGroupMembers('1', ''),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -88,15 +88,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _groupMembersApi = HttpGroupMembersApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException('')));
         expect(_groupMembersApi.deleteGroupMember('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')));
         expect(_groupMembersApi.deleteGroupMember('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')));
         expect(_groupMembersApi.deleteGroupMember('1'),
             throwsA(isInstanceOf<Failure>()));
       });

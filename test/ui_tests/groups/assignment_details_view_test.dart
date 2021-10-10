@@ -16,7 +16,7 @@ import '../../setup/test_helpers.dart';
 
 void main() {
   group('AssignmentDetailsViewTest -', () {
-    NavigatorObserver mockObserver;
+    late NavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -38,12 +38,12 @@ void main() {
           .thenReturn(null);
       when(_assignmentsDetailsViewModel.assignment).thenReturn(_assignment);
       when(_assignmentsDetailsViewModel.projects)
-          .thenReturn(_assignment.projects);
+          .thenReturn(_assignment.projects!);
       when(_assignmentsDetailsViewModel.focussedProject)
-          .thenReturn(_assignment.projects.first);
-      when(_assignmentsDetailsViewModel.grades).thenReturn(_assignment.grades);
+          .thenReturn(_assignment.projects!.first);
+      when(_assignmentsDetailsViewModel.grades).thenReturn(_assignment.grades!);
 
-      when(_assignmentsDetailsViewModel.isSuccess(any)).thenReturn(true);
+      when(_assignmentsDetailsViewModel.isSuccess(any!)).thenReturn(true);
 
       await tester.pumpWidget(
         GetMaterialApp(
@@ -55,7 +55,7 @@ void main() {
 
       /// The tester.pumpWidget() call above just built our app widget
       /// and triggered the pushObserver method on the mockObserver once.
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
     }
 
     testWidgets('finds Generic UpdateAssignmentView widgets',

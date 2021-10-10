@@ -22,7 +22,7 @@ void main() {
     group('onProjectDeleted -', () {
       test('When called, removes project from _userProjects', () {
         var _model = UserProjectsViewModel();
-        _model.userProjects.addAll(_projects.data);
+        _model.userProjects.addAll(_projects.data!);
         _model.onProjectDeleted('1');
 
         expect(

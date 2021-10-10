@@ -5,7 +5,7 @@ import 'package:markdown/markdown.dart' as md;
 class IbInlineHtmlSyntax extends md.InlineSyntax {
   Map<String, MarkdownElementBuilder> builders;
 
-  IbInlineHtmlSyntax({@required this.builders}) : super(_pattern);
+  IbInlineHtmlSyntax({required this.builders}) : super(_pattern);
 
   static const String _pattern = r'<(\S*?)[^>]*>(.*?)<\/\1>|<.*?\/>';
 
@@ -13,8 +13,8 @@ class IbInlineHtmlSyntax extends md.InlineSyntax {
   bool onMatch(md.InlineParser parser, Match match) {
     if (match[1] != null &&
         match[2] != null &&
-        builders.containsKey(match[1].trim())) {
-      parser.addNode(md.Element.text(match[1].trim(), match[2].trim()));
+        builders.containsKey(match[1]!.trim())) {
+      parser.addNode(md.Element.text(match[1]!.trim(), match[2]!.trim()));
     }
 
     return true;

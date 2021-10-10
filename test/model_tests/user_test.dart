@@ -8,18 +8,18 @@ void main() {
     test('fromJson', () {
       var _user = User.fromJson(mockUser);
 
-      expect(_user.data.id, '1');
-      expect(_user.data.type, 'user');
-      expect(_user.data.attributes.name, 'Test User');
-      expect(_user.data.attributes.email, 'test@test.com');
-      expect(_user.data.attributes.subscribed, true);
-      expect(_user.data.attributes.createdAt,
+      expect(_user.data!.id, '1');
+      expect(_user.data!.type, 'user');
+      expect(_user.data!.attributes!.name, 'Test User');
+      expect(_user.data!.attributes!.email, 'test@test.com');
+      expect(_user.data!.attributes!.subscribed, true);
+      expect(_user.data!.attributes!.createdAt,
           DateTime.parse('2020-02-15T17:20:06.155Z'));
-      expect(_user.data.attributes.updatedAt,
+      expect(_user.data!.attributes!.updatedAt,
           DateTime.parse('2020-08-15T03:16:50.702Z'));
-      expect(_user.data.attributes.admin, false);
-      expect(_user.data.attributes.country, 'India');
-      expect(_user.data.attributes.educationalInstitute, 'Gurukul');
+      expect(_user.data!.attributes!.admin, false);
+      expect(_user.data!.attributes!.country, 'India');
+      expect(_user.data!.attributes!.educationalInstitute, 'Gurukul');
     });
 
     test('toJson', () {

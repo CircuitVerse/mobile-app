@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class TeachersCard extends StatelessWidget {
-  final String assetPath;
-  final String cardHeading;
-  final String cardDescription;
+  final String? assetPath;
+  final String? cardHeading;
+  final String? cardDescription;
 
   const TeachersCard({
-    Key key,
+    Key? key,
     this.assetPath,
     this.cardDescription,
     this.cardHeading,
@@ -23,14 +23,14 @@ class TeachersCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8.0),
             child: Image.asset(
-              assetPath,
+              assetPath!,
               width: MediaQuery.of(context).size.width,
             ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              cardHeading,
+              cardHeading!,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline5,
             ),
@@ -38,7 +38,7 @@ class TeachersCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              cardDescription,
+              cardDescription!,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.subtitle1,
             ),

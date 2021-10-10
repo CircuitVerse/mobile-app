@@ -109,7 +109,7 @@ void main() {
             .thenAnswer((_) => Future.value(true));
 
         var _model = GroupDetailsViewModel();
-        _model.groupMembers.add(_groupMember);
+        _model.groupMembers!.add(_groupMember);
         await _model.deleteGroupMember('1');
 
         // verify API call is made..
@@ -118,7 +118,7 @@ void main() {
 
         // verify group member is deleted..
         expect(
-            _model.groupMembers
+            _model.groupMembers!
                 .where((member) => _groupMember.id == member.id)
                 .isEmpty,
             true);
@@ -130,7 +130,7 @@ void main() {
             .thenAnswer((_) => Future.value(false));
 
         var _model = GroupDetailsViewModel();
-        _model.groupMembers.add(_groupMember);
+        _model.groupMembers!.add(_groupMember);
         await _model.deleteGroupMember('1');
 
         // verify Error ViewState with proper error message..
@@ -145,7 +145,7 @@ void main() {
             .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = GroupDetailsViewModel();
-        _model.groupMembers.add(_groupMember);
+        _model.groupMembers!.add(_groupMember);
         await _model.deleteGroupMember('1');
 
         // verify Error ViewState with proper error message..
@@ -161,21 +161,21 @@ void main() {
         _model.onAssignmentAdded(_assignment);
 
         // verify assignment is added in the list..
-        expect(_model.assignments.contains(_assignment), true);
+        expect(_model.assignments!.contains(_assignment), true);
       });
     });
 
     group('onAssignmentUpdated -', () {
       test('When called, updates assignment', () {
         var _model = GroupDetailsViewModel();
-        _model.assignments.add(_assignment);
+        _model.assignments!.add(_assignment);
         _model.onAssignmentUpdated(
-            _assignment..attributes.name = 'Updated Assignment');
+            _assignment..attributes!.name = 'Updated Assignment');
 
         // verify updated assignment is present in the list..
         expect(
-            _model.assignments
-                .contains(_assignment..attributes.name = 'Updated Assignment'),
+            _model.assignments!
+                .contains(_assignment..attributes!.name = 'Updated Assignment'),
             true);
       });
     });
@@ -187,7 +187,7 @@ void main() {
             .thenAnswer((_) => Future.value(''));
 
         var _model = GroupDetailsViewModel();
-        _model.assignments.add(_assignment..attributes.status = 'closed');
+        _model.assignments!.add(_assignment..attributes!.status = 'closed');
         await _model.reopenAssignment('1');
 
         // verify API call is made..
@@ -196,9 +196,9 @@ void main() {
 
         // verify status of assignment to be "open"..
         expect(
-            _model.assignments
+            _model.assignments!
                 .firstWhere((assignment) => assignment.id == _assignment.id)
-                .attributes
+                .attributes!
                 .status,
             'open');
       });
@@ -209,7 +209,7 @@ void main() {
             .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = GroupDetailsViewModel();
-        _model.assignments.add(_assignment..attributes.status = 'closed');
+        _model.assignments!.add(_assignment..attributes!.status = 'closed');
         await _model.reopenAssignment('1');
 
         // verify Error ViewState with proper error message..
@@ -228,14 +228,14 @@ void main() {
         var _mockGroupsApi = getAndRegisterGroupsApiMock();
         when(_mockGroupsApi.fetchGroupDetails('1')).thenAnswer((_) =>
             Future.value(_group
-              ..assignments
+              ..assignments!
                   .firstWhere((assignment) => assignment.id == _assignment.id)
-                  .attributes
+                  .attributes!
                   .currentUserProjectId = 1));
 
         var _model = GroupDetailsViewModel();
         _model.group = _group;
-        _model.assignments.add(_assignment);
+        _model.assignments!.add(_assignment);
         await _model.startAssignment('1');
 
         // verify API call is made..
@@ -244,9 +244,9 @@ void main() {
 
         // verify status of assignment to be "open"..
         expect(
-            _model.assignments
+            _model.assignments!
                 .firstWhere((assignment) => assignment.id == _assignment.id)
-                .attributes
+                .attributes!
                 .currentUserProjectId,
             isNot(null));
       });
@@ -258,7 +258,7 @@ void main() {
 
         var _model = GroupDetailsViewModel();
         _model.group = _group;
-        _model.assignments.add(_assignment);
+        _model.assignments!.add(_assignment);
         await _model.startAssignment('1');
 
         // verify Error ViewState with proper error message..
@@ -275,7 +275,7 @@ void main() {
             .thenAnswer((_) => Future.value(true));
 
         var _model = GroupDetailsViewModel();
-        _model.assignments.add(_assignment);
+        _model.assignments!.add(_assignment);
         await _model.deleteAssignment('1');
 
         // verify API call is made..
@@ -284,7 +284,7 @@ void main() {
 
         // expect assignment to be deleted..
         expect(
-            _model.assignments
+            _model.assignments!
                 .where((assignment) => assignment.id == _assignment.id)
                 .isEmpty,
             true);
@@ -296,7 +296,7 @@ void main() {
             .thenAnswer((_) => Future.value(false));
 
         var _model = GroupDetailsViewModel();
-        _model.assignments.add(_assignment);
+        _model.assignments!.add(_assignment);
         await _model.deleteAssignment('1');
 
         // verify Error ViewState with proper error message..
@@ -311,7 +311,7 @@ void main() {
             .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = GroupDetailsViewModel();
-        _model.assignments.add(_assignment);
+        _model.assignments!.add(_assignment);
         await _model.deleteAssignment('1');
 
         // verify Error ViewState with proper error message..

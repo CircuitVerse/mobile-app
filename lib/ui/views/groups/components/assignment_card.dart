@@ -7,14 +7,14 @@ import 'package:mobile_app/ui/views/groups/assignment_details_view.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 
 class AssignmentCard extends StatefulWidget {
-  final Assignment assignment;
-  final VoidCallback onDeletePressed;
-  final VoidCallback onEditPressed;
-  final VoidCallback onReopenPressed;
-  final VoidCallback onStartPressed;
+  final Assignment? assignment;
+  final VoidCallback? onDeletePressed;
+  final VoidCallback? onEditPressed;
+  final VoidCallback? onReopenPressed;
+  final VoidCallback? onStartPressed;
 
   const AssignmentCard({
-    Key key,
+    Key? key,
     this.assignment,
     this.onDeletePressed,
     this.onEditPressed,
@@ -27,7 +27,7 @@ class AssignmentCard extends StatefulWidget {
 }
 
 class _AssignmentCardState extends State<AssignmentCard> {
-  Widget _buildAssignmentComponent(String title, String description) {
+  Widget _buildAssignmentComponent(String title, String? description) {
     return RichText(
       text: TextSpan(
         style: Theme.of(context).textTheme.bodyText1,
@@ -47,11 +47,11 @@ class _AssignmentCardState extends State<AssignmentCard> {
 
   Widget _buildAssignmentButtons() {
     var _items = <Widget>[];
-    var _isMentor = widget.assignment.attributes.hasMentorAccess;
-    var _isOpen = widget.assignment.attributes.status != 'closed';
+    var _isMentor = widget.assignment!.attributes!.hasMentorAccess!;
+    var _isOpen = widget.assignment!.attributes!.status != 'closed';
     var _isDeadlineOver =
-        widget.assignment.attributes.deadline.isBefore(DateTime.now());
-    var _projectId = widget.assignment.attributes.currentUserProjectId;
+        widget.assignment!.attributes!.deadline!.isBefore(DateTime.now());
+    var _projectId = widget.assignment!.attributes!.currentUserProjectId;
 
     /// Adds Show assignment details button..
     /// Will be there irrespective of assignment attributes..
@@ -173,20 +173,20 @@ class _AssignmentCardState extends State<AssignmentCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
-            widget.assignment.attributes.name ?? 'No Name',
+            widget.assignment!.attributes!.name ?? 'No Name',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
           _buildAssignmentComponent(
             'Grading',
-            widget.assignment.attributes.gradingScale,
+            widget.assignment!.attributes!.gradingScale,
           ),
           _buildAssignmentComponent(
             'Deadline',
-            deadlineFormat.format(widget.assignment.attributes.deadline),
+            deadlineFormat.format(widget.assignment!.attributes!.deadline!),
           ),
           SizedBox(height: 8),
           _buildAssignmentButtons(),

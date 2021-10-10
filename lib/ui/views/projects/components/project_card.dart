@@ -5,12 +5,12 @@ import 'package:mobile_app/models/projects.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ProjectCard extends StatefulWidget {
-  final Project project;
-  final VoidCallback onPressed;
+  final Project? project;
+  final VoidCallback? onPressed;
   final bool isHeaderFilled;
 
   const ProjectCard(
-      {Key key, this.project, this.onPressed, this.isHeaderFilled = true})
+      {Key? key, this.project, this.onPressed, this.isHeaderFilled = true})
       : super(key: key);
 
   @override
@@ -22,7 +22,7 @@ class _ProjectCardState extends State<ProjectCard> {
     return Chip(
       label: Text(title),
       backgroundColor: Colors.black,
-      labelStyle: Theme.of(context).textTheme.bodyText1.copyWith(
+      labelStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
             color: Colors.white,
           ),
     );
@@ -49,11 +49,11 @@ class _ProjectCardState extends State<ProjectCard> {
         children: <Widget>[
           Flexible(
             child: Text(
-              widget.project.attributes.name,
+              widget.project!.attributes!.name!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline5.copyWith(
+              style: Theme.of(context).textTheme.headline5!.copyWith(
                     color: Theme.of(context).brightness == Brightness.dark
                         ? widget.isHeaderFilled
                             ? Colors.black
@@ -65,7 +65,7 @@ class _ProjectCardState extends State<ProjectCard> {
             ),
           ),
           SizedBox(width: 8),
-          _buildHeaderChip(widget.project.attributes.projectAccessType)
+          _buildHeaderChip(widget.project!.attributes!.projectAccessType!)
         ],
       ),
     );
@@ -92,7 +92,7 @@ class _ProjectCardState extends State<ProjectCard> {
             placeholder: kTransparentImage,
             image: EnvironmentConfig.CV_API_BASE_URL.substring(
                     0, EnvironmentConfig.CV_API_BASE_URL.length - 7) +
-                widget.project.attributes.imagePreview.url,
+                widget.project!.attributes!.imagePreview!.url!,
           ),
         ),
       ),

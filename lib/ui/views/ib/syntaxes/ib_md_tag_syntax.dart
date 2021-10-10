@@ -5,9 +5,9 @@ class IbMdTagSyntax extends md.BlockSyntax {
   IbMdTagSyntax() : super();
 
   @override
-  md.Node parse(md.BlockParser parser) {
-    var match = pattern.firstMatch(parser.current);
-    _tagsStack.addAll(match[1].split(' '));
+  md.Node? parse(md.BlockParser parser) {
+    var match = pattern.firstMatch(parser.current)!;
+    _tagsStack.addAll(match[1]!.split(' '));
 
     // Subtitle Syntax
     // This is a temporary workaround for subtitle

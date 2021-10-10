@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 
 class ContributeDonateCard extends StatelessWidget {
-  final String imagePath;
-  final String title;
-  final String url;
+  final String? imagePath;
+  final String? title;
+  final String? url;
 
   const ContributeDonateCard({
-    Key key,
+    Key? key,
     this.imagePath,
     this.title,
     this.url,
@@ -18,13 +18,13 @@ class ContributeDonateCard extends StatelessWidget {
     return Column(
       children: <Widget>[
         Text(
-          title,
+          title!,
           style: Theme.of(context).textTheme.headline6,
         ),
         SizedBox(height: 10),
         GestureDetector(
           onTap: () async {
-            launchURL(url);
+            launchURL(url!);
           },
           child: Container(
             decoration: BoxDecoration(
@@ -47,7 +47,7 @@ class ContributeDonateCard extends StatelessWidget {
                   Radius.circular(8),
                 ),
                 child: Image.asset(
-                  imagePath,
+                  imagePath!,
                   width: MediaQuery.of(context).size.width / 2,
                 ),
               ),

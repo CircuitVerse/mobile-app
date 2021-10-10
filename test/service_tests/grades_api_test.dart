@@ -32,20 +32,20 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _gradesApi = HttpGradesApi();
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException('')));
         expect(_gradesApi.addGrade('1', '1', 'A', 'Good'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')));
         expect(_gradesApi.addGrade('1', '1', 'A', 'Good'),
             throwsA(isInstanceOf<Failure>()));
 
         ApiUtils.client =
-            MockClient((_) => throw UnprocessableIdentityException(''));
+            MockClient(((_) => throw UnprocessableIdentityException('')));
         expect(_gradesApi.addGrade('1', '1', 'A', 'Good'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')));
         expect(_gradesApi.addGrade('1', '1', 'A', 'Good'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -64,20 +64,20 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _gradesApi = HttpGradesApi();
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException('')));
         expect(_gradesApi.updateGrade('1', 'A', 'Good'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')));
         expect(_gradesApi.updateGrade('1', 'A', 'Good'),
             throwsA(isInstanceOf<Failure>()));
 
         ApiUtils.client =
-            MockClient((_) => throw UnprocessableIdentityException(''));
+            MockClient(((_) => throw UnprocessableIdentityException('')));
         expect(_gradesApi.updateGrade('1', 'A', 'Good'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')));
         expect(_gradesApi.updateGrade('1', 'A', 'Good'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -94,13 +94,13 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _gradesApi = HttpGradesApi();
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException('')));
         expect(_gradesApi.deleteGrade('1'), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')));
         expect(_gradesApi.deleteGrade('1'), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')));
         expect(_gradesApi.deleteGrade('1'), throwsA(isInstanceOf<Failure>()));
       });
     });

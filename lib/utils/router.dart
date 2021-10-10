@@ -48,7 +48,7 @@ class CVRouter {
       case FeaturedProjectsView.id:
         return MaterialPageRoute(builder: (_) => FeaturedProjectsView());
       case ProfileView.id:
-        var _userId = settings.arguments as String;
+        var _userId = settings.arguments as String?;
         return MaterialPageRoute(
           builder: (_) => ProfileView(
             userId: _userId,
@@ -57,14 +57,14 @@ class CVRouter {
       case EditProfileView.id:
         return MaterialPageRoute(builder: (_) => EditProfileView());
       case ProjectDetailsView.id:
-        var _project = settings.arguments as Project;
+        var _project = settings.arguments as Project?;
         return MaterialPageRoute(
           builder: (_) => ProjectDetailsView(
             project: _project,
           ),
         );
       case EditProjectView.id:
-        var _project = settings.arguments as Project;
+        var _project = settings.arguments as Project?;
         return MaterialPageRoute(
           builder: (_) => EditProjectView(
             project: _project,
@@ -73,7 +73,7 @@ class CVRouter {
       case MyGroupsView.id:
         return MaterialPageRoute(builder: (_) => MyGroupsView());
       case GroupDetailsView.id:
-        var group = settings.arguments as Group;
+        var group = settings.arguments as Group?;
         return MaterialPageRoute(
           builder: (_) => GroupDetailsView(
             group: group,
@@ -82,28 +82,28 @@ class CVRouter {
       case NewGroupView.id:
         return MaterialPageRoute(builder: (_) => NewGroupView());
       case EditGroupView.id:
-        var group = settings.arguments as Group;
+        var group = settings.arguments as Group?;
         return MaterialPageRoute(
           builder: (_) => EditGroupView(
             group: group,
           ),
         );
       case AssignmentDetailsView.id:
-        var _assignment = settings.arguments as Assignment;
+        var _assignment = settings.arguments as Assignment?;
         return MaterialPageRoute(
           builder: (_) => AssignmentDetailsView(
             assignment: _assignment,
           ),
         );
       case AddAssignmentView.id:
-        var _groupId = settings.arguments as String;
+        var _groupId = settings.arguments as String?;
         return MaterialPageRoute(
           builder: (_) => AddAssignmentView(
             groupId: _groupId,
           ),
         );
       case UpdateAssignmentView.id:
-        var _assignment = settings.arguments as Assignment;
+        var _assignment = settings.arguments as Assignment?;
         return MaterialPageRoute(
           builder: (_) => UpdateAssignmentView(
             assignment: _assignment,
@@ -112,7 +112,7 @@ class CVRouter {
       case IbLandingView.id:
         return MaterialPageRoute(builder: (_) => IbLandingView());
       case ProjectPreviewFullScreen.id:
-        var _project = settings.arguments as Project;
+        var _project = settings.arguments as Project?;
         return MaterialPageRoute(
           builder: (_) => ProjectPreviewFullScreen(
             project: _project,

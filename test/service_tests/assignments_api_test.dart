@@ -33,15 +33,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _assignmentsApi = HttpAssignmentsApi();
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.fetchAssignments('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.fetchAssignments('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.fetchAssignments('1'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -60,15 +60,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _assignmentsApi = HttpAssignmentsApi();
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.fetchAssignmentDetails('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.fetchAssignmentDetails('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.fetchAssignmentDetails('1'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -90,25 +90,25 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _assignmentsApi = HttpAssignmentsApi();
 
-        ApiUtils.client = MockClient((_) => throw BadRequestException(''));
+        ApiUtils.client = MockClient(((_) => throw BadRequestException('')) as Future<Response> Function(Request));
         expect(
             _assignmentsApi.addAssignment(
                 '1', 'Test', 'deadline', 'description', 'letter', '[]'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException('')) as Future<Response> Function(Request));
         expect(
             _assignmentsApi.addAssignment(
                 '1', 'Test', 'deadline', 'description', 'letter', '[]'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(
             _assignmentsApi.addAssignment(
                 '1', 'Test', 'deadline', 'description', 'letter', '[]'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(
             _assignmentsApi.addAssignment(
                 '1', 'Test', 'deadline', 'description', 'letter', '[]'),
@@ -132,25 +132,25 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _assignmentsApi = HttpAssignmentsApi();
 
-        ApiUtils.client = MockClient((_) => throw BadRequestException(''));
+        ApiUtils.client = MockClient(((_) => throw BadRequestException('')) as Future<Response> Function(Request));
         expect(
             _assignmentsApi.updateAssignment(
                 '1', 'Test', 'deadline', 'description', '[]'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException('')) as Future<Response> Function(Request));
         expect(
             _assignmentsApi.updateAssignment(
                 '1', 'Test', 'deadline', 'description', '[]'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(
             _assignmentsApi.updateAssignment(
                 '1', 'Test', 'deadline', 'description', '[]'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(
             _assignmentsApi.updateAssignment(
                 '1', 'Test', 'deadline', 'description', '[]'),
@@ -169,15 +169,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _assignmentsApi = HttpAssignmentsApi();
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.deleteAssignment('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.deleteAssignment('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.deleteAssignment('1'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -195,19 +195,19 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _assignmentsApi = HttpAssignmentsApi();
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.reopenAssignment('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.reopenAssignment('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw ConflictException(''));
+        ApiUtils.client = MockClient(((_) => throw ConflictException('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.reopenAssignment('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.reopenAssignment('1'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -225,15 +225,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _assignmentsApi = HttpAssignmentsApi();
 
-        ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
+        ApiUtils.client = MockClient(((_) => throw ForbiddenException('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.startAssignment('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.startAssignment('1'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_assignmentsApi.startAssignment('1'),
             throwsA(isInstanceOf<Failure>()));
       });

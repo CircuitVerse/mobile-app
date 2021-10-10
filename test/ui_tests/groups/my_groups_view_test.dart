@@ -26,7 +26,7 @@ import '../../setup/test_helpers.dart';
 
 void main() {
   group('MyGroupsViewTest -', () {
-    NavigatorObserver mockObserver;
+    late NavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -63,7 +63,7 @@ void main() {
 
       /// The tester.pumpWidget() call above just built our app widget
       /// and triggered the pushObserver method on the mockObserver once.
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
     }
 
     testWidgets('finds Generic MyGroupsView widgets',
@@ -103,7 +103,7 @@ void main() {
           .tap(find.widgetWithText(CVPrimaryButton, '+ Make New Group'));
       await tester.pumpAndSettle();
 
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
       expect(find.byType(NewGroupView), findsOneWidget);
     });
 
@@ -130,7 +130,7 @@ void main() {
       await tester.tap(find.widgetWithText(CardButton, 'View').first);
       await tester.pumpAndSettle();
 
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
       expect(find.byType(GroupDetailsView), findsOneWidget);
     });
 
@@ -141,7 +141,7 @@ void main() {
       await tester.tap(find.widgetWithText(CardButton, 'Edit'));
       await tester.pumpAndSettle();
 
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
       expect(find.byType(EditGroupView), findsOneWidget);
     });
 
@@ -154,7 +154,7 @@ void main() {
       when(_dialogService.showConfirmationDialog(
               title: anyNamed('title'),
               description: anyNamed('description'),
-              confirmationTitle: anyNamed('confirmationTitle')))
+              confirmationTitle: anyNamed('confirmationTitle')!))
           .thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
 
       await _pumpMyGroupsView(tester);
@@ -167,7 +167,7 @@ void main() {
       verify(_dialogService.showConfirmationDialog(
               title: anyNamed('title'),
               description: anyNamed('description'),
-              confirmationTitle: anyNamed('confirmationTitle')))
+              confirmationTitle: anyNamed('confirmationTitle')!))
           .called(1);
     });
   });

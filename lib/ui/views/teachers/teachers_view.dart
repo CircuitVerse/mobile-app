@@ -7,7 +7,7 @@ class TeachersView extends StatelessWidget {
   static const String id = 'teachers_view';
   final bool showAppBar;
 
-  const TeachersView({Key key, this.showAppBar = true}) : super(key: key);
+  const TeachersView({Key? key, this.showAppBar = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

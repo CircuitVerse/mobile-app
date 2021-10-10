@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/style.dart';
@@ -21,18 +22,18 @@ import 'package:transparent_image/transparent_image.dart';
 
 class AssignmentDetailsView extends StatefulWidget {
   static const String id = 'assignment_details_view';
-  final Assignment assignment;
+  final Assignment? assignment;
 
-  const AssignmentDetailsView({Key key, this.assignment}) : super(key: key);
+  const AssignmentDetailsView({Key? key, this.assignment}) : super(key: key);
 
   @override
   _AssignmentDetailsViewState createState() => _AssignmentDetailsViewState();
 }
 
 class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
-  final DialogService _dialogService = locator<DialogService>();
-  AssignmentDetailsViewModel _model;
-  Assignment _recievedAssignment;
+  final DialogService? _dialogService = locator<DialogService>();
+  late AssignmentDetailsViewModel _model;
+  Assignment? _recievedAssignment;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _gradesController = TextEditingController();
   final TextEditingController _remarksController = TextEditingController();
@@ -74,7 +75,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           SizedBox(width: 8),
           Text(
             'Edit',
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                   color: Colors.white,
                 ),
           )
@@ -90,15 +91,15 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
       children: <Widget>[
         Flexible(
           child: Text(
-            _recievedAssignment.attributes.name,
-            style: Theme.of(context).textTheme.headline4.copyWith(
+            _recievedAssignment!.attributes!.name!,
+            style: Theme.of(context).textTheme.headline4!.copyWith(
                   color: CVTheme.textColor(context),
                   fontWeight: FontWeight.bold,
                 ),
             textAlign: TextAlign.center,
           ),
         ),
-        if (_recievedAssignment.attributes.hasMentorAccess) ...[
+        if (_recievedAssignment!.attributes!.hasMentorAccess!) ...[
           SizedBox(width: 12),
           _buildEditAssignmentButton(),
         ]
@@ -112,7 +113,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
       alignment: Alignment.centerLeft,
       child: RichText(
         text: TextSpan(
-          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.headline6!.copyWith(fontSize: 18),
           children: <TextSpan>[
             TextSpan(
               text: '$title : ',
@@ -138,13 +139,13 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         children: [
           Text(
             'Description',
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
           ),
           Html(
-            data: _recievedAssignment.attributes.description ?? '',
+            data: _recievedAssignment!.attributes!.description ?? '',
             style: {
               'body': Style(
                 fontSize: FontSize(18),
@@ -180,9 +181,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    submission.attributes.authorName,
+                    submission.attributes!.authorName!,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline6.copyWith(
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
                           color: _model.focussedProject == submission
                               ? Colors.white
                               : CVTheme.textColor(context),
@@ -197,14 +198,14 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   }
 
   Widget _buildSubmissions() {
-    if (_recievedAssignment.attributes.hasMentorAccess) {
+    if (_recievedAssignment!.attributes!.hasMentorAccess!) {
       return Column(
         children: <Widget>[
           Align(
             alignment: Alignment.topLeft,
             child: Text(
               'Submissions : ',
-              style: Theme.of(context).textTheme.headline5.copyWith(
+              style: Theme.of(context).textTheme.headline5!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -238,7 +239,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                   placeholder: kTransparentImage,
                   image: EnvironmentConfig.CV_API_BASE_URL.substring(
                           0, EnvironmentConfig.CV_API_BASE_URL.length - 7) +
-                      _model.focussedProject.attributes.imagePreview.url,
+                      _model.focussedProject!.attributes!.imagePreview!.url!,
                 ),
               ),
             )
@@ -250,15 +251,15 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   }
 
   Future<void> addGrade() async {
-    _dialogService.showCustomProgressDialog(title: 'Adding Grades');
+    _dialogService!.showCustomProgressDialog(title: 'Adding Grades');
 
     await _model.addGrade(
-      _recievedAssignment.id,
+      _recievedAssignment!.id,
       _gradesController.text.trim(),
       _remarksController.text.trim(),
     );
 
-    _dialogService.popDialog();
+    _dialogService!.popDialog();
 
     if (_model.isSuccess(_model.ADD_GRADE)) {
       SnackBarUtils.showDark(
@@ -273,8 +274,8 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
     }
   }
 
-  Future<void> updateGrade(String gradeId) async {
-    _dialogService.showCustomProgressDialog(title: 'Updating Grade');
+  Future<void> updateGrade(String? gradeId) async {
+    _dialogService!.showCustomProgressDialog(title: 'Updating Grade');
 
     await _model.updateGrade(
       gradeId,
@@ -282,7 +283,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
       _remarksController.text.trim(),
     );
 
-    _dialogService.popDialog();
+    _dialogService!.popDialog();
 
     if (_model.isSuccess(_model.UPDATE_GRADE)) {
       SnackBarUtils.showDark(
@@ -297,19 +298,19 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
     }
   }
 
-  Future<void> deleteGrade(String gradeId) async {
-    var _dialogResponse = await _dialogService.showConfirmationDialog(
+  Future<void> deleteGrade(String? gradeId) async {
+    var _dialogResponse = await _dialogService!.showConfirmationDialog(
       title: 'Delete Grade',
       description: 'Are you sure you want to delete the grade?',
       confirmationTitle: 'DELETE',
     );
 
-    if (_dialogResponse.confirmed) {
-      _dialogService.showCustomProgressDialog(title: 'Deleting Grade');
+    if (_dialogResponse.confirmed!) {
+      _dialogService!.showCustomProgressDialog(title: 'Deleting Grade');
 
       await _model.deleteGrade(gradeId);
 
-      _dialogService.popDialog();
+      _dialogService!.popDialog();
 
       if (_model.isSuccess(_model.DELETE_GRADE)) {
         SnackBarUtils.showDark(
@@ -328,16 +329,15 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   }
 
   Widget _buildGrades() {
-    if (_model.focussedProject != null && _recievedAssignment.canBeGraded) {
-      var _submittedGrade = _model.grades.firstWhere(
+    if (_model.focussedProject != null && _recievedAssignment!.canBeGraded) {
+      var _submittedGrade = _model.grades.firstWhereOrNull(
         (grade) =>
-            grade.relationships.project.data.id == _model.focussedProject.id,
-        orElse: () => null,
+            grade.relationships!.project!.data!.id == _model.focussedProject!.id,
       );
 
       if (_submittedGrade != null) {
-        _gradesController.text = _submittedGrade.attributes.grade;
-        _remarksController.text = _submittedGrade.attributes.remarks;
+        _gradesController.text = _submittedGrade.attributes!.grade!;
+        _remarksController.text = _submittedGrade.attributes!.remarks;
       }
 
       return Container(
@@ -353,7 +353,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             children: <Widget>[
               Text(
                 'Grades & Remarks',
-                style: Theme.of(context).textTheme.headline6.copyWith(
+                style: Theme.of(context).textTheme.headline6!.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -361,7 +361,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 label: 'Grade',
                 controller: _gradesController,
                 padding: const EdgeInsets.all(0),
-                type: _recievedAssignment.attributes.gradingScale == 'percent'
+                type: _recievedAssignment!.attributes!.gradingScale == 'percent'
                     ? TextInputType.number
                     : TextInputType.text,
                 validator: (value) =>
@@ -402,7 +402,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                       onPressed: () => deleteGrade(_submittedGrade.id),
                       child: Text(
                         'Delete',
-                        style: Theme.of(context).textTheme.headline6.copyWith(
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
                               color: Colors.white,
                             ),
                       ),
@@ -410,7 +410,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 ],
               ),
               SizedBox(height: 16),
-              Text(_recievedAssignment.gradingScaleHint),
+              Text(_recievedAssignment!.gradingScaleHint),
             ],
           ),
         ),
@@ -425,25 +425,25 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
     return BaseView<AssignmentDetailsViewModel>(
       onModelReady: (model) {
         _model = model;
-        if (_recievedAssignment.attributes.hasMentorAccess) {
-          _model.fetchAssignmentDetails(_recievedAssignment.id);
+        if (_recievedAssignment!.attributes!.hasMentorAccess!) {
+          _model.fetchAssignmentDetails(_recievedAssignment!.id);
         }
       },
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(title: Text('Assignment Details')),
         body: Builder(builder: (context) {
-          var _attrs = _recievedAssignment.attributes;
-          var _remainingTime = _attrs.deadline.difference(DateTime.now());
+          var _attrs = _recievedAssignment!.attributes!;
+          var _remainingTime = _attrs.deadline!.difference(DateTime.now());
 
           return ListView(
             padding: const EdgeInsets.all(16),
             children: <Widget>[
               _buildHeader(),
               SizedBox(height: 16),
-              _buildDetailComponent('Name', _attrs.name),
+              _buildDetailComponent('Name', _attrs.name!),
               _buildDetailComponent(
                 'Deadline',
-                DateFormat.yMEd().add_jms().format(_attrs.deadline),
+                DateFormat.yMEd().add_jms().format(_attrs.deadline!),
               ),
               if (!_remainingTime.isNegative)
                 _buildDetailComponent(
@@ -453,7 +453,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
               _buildAssignmentDescription(),
               _buildDetailComponent(
                 'Restricted Elements',
-                json.decode(_attrs.restrictions).join(' , '),
+                json.decode(_attrs.restrictions!).join(' , '),
               ),
               Divider(height: 32),
               if (_model.isSuccess(_model.FETCH_ASSIGNMENT_DETAILS))

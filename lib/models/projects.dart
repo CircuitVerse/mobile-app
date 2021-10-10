@@ -9,8 +9,8 @@ class Projects {
     this.links,
   });
 
-  List<Project> data;
-  Links links;
+  List<Project>? data;
+  Links? links;
 
   factory Projects.fromJson(Map<String, dynamic> json) => Projects(
         data: List<Project>.from(json['data'].map((x) => Project.fromJson(x))),
@@ -27,11 +27,11 @@ class Project {
     this.collaborators,
   });
 
-  String id;
-  String type;
-  ProjectAttributes attributes;
-  ProjectRelationships relationships;
-  List<Collaborator> collaborators;
+  String? id;
+  String? type;
+  ProjectAttributes? attributes;
+  ProjectRelationships? relationships;
+  List<Collaborator>? collaborators;
 
   factory Project.fromJson(Map<String, dynamic> json) => Project(
         id: json['id'] ?? json['data']['id'],
@@ -53,7 +53,7 @@ class Project {
     var currentUser = locator<LocalStorageService>().currentUser;
 
     if (currentUser != null) {
-      return relationships.author.data.id == currentUser.data.id;
+      return relationships!.author!.data!.id == currentUser.data!.id;
     }
 
     return false;
@@ -75,17 +75,17 @@ class ProjectAttributes {
     this.starsCount,
   });
 
-  String name;
-  String projectAccessType;
-  DateTime createdAt;
-  DateTime updatedAt;
-  ImagePreview imagePreview;
-  String description;
-  int view;
-  List<Tag> tags;
-  bool isStarred;
-  String authorName;
-  int starsCount;
+  String? name;
+  String? projectAccessType;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  ImagePreview? imagePreview;
+  String? description;
+  int? view;
+  List<Tag>? tags;
+  bool? isStarred;
+  String? authorName;
+  int? starsCount;
 
   factory ProjectAttributes.fromJson(Map<String, dynamic> json) =>
       ProjectAttributes(
@@ -108,7 +108,7 @@ class ImagePreview {
     this.url,
   });
 
-  String url;
+  String? url;
 
   factory ImagePreview.fromJson(Map<String, dynamic> json) => ImagePreview(
         url: json['url'],
@@ -120,7 +120,7 @@ class ProjectRelationships {
     this.author,
   });
 
-  Author author;
+  Author? author;
 
   factory ProjectRelationships.fromJson(Map<String, dynamic> json) =>
       ProjectRelationships(
@@ -133,7 +133,7 @@ class Author {
     this.data,
   });
 
-  AuthorData data;
+  AuthorData? data;
 
   factory Author.fromJson(Map<String, dynamic> json) => Author(
         data: AuthorData.fromJson(json['data']),
@@ -146,8 +146,8 @@ class AuthorData {
     this.type,
   });
 
-  String id;
-  String type;
+  String? id;
+  String? type;
 
   factory AuthorData.fromJson(Map<String, dynamic> json) => AuthorData(
         id: json['id'],
@@ -163,10 +163,10 @@ class Tag {
     this.updatedAt,
   });
 
-  int id;
-  String name;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  String? name;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory Tag.fromJson(Map<String, dynamic> json) => Tag(
         id: json['id'],

@@ -19,20 +19,20 @@ class NewGroupView extends StatefulWidget {
 }
 
 class _NewGroupViewState extends State<NewGroupView> {
-  final DialogService _dialogService = locator<DialogService>();
-  NewGroupViewModel _model;
+  final DialogService? _dialogService = locator<DialogService>();
+  late NewGroupViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name;
+  String? _name;
 
   Future<void> _validateAndSubmit() async {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      _dialogService.showCustomProgressDialog(title: 'Creating..');
+      _dialogService!.showCustomProgressDialog(title: 'Creating..');
 
       await _model.addGroup(_name);
 
-      _dialogService.popDialog();
+      _dialogService!.popDialog();
 
       if (_model.isSuccess(_model.ADD_GROUP)) {
         await Future.delayed(Duration(seconds: 1));
@@ -79,7 +79,7 @@ class _NewGroupViewState extends State<NewGroupView> {
                   label: 'Group Name',
                   validator: (value) =>
                       value.isEmpty ? 'Please enter a Group Name' : null,
-                  onSaved: (value) => _name = value.trim(),
+                  onSaved: (value) => _name = value?.trim(),
                   action: TextInputAction.done,
                 ),
                 SizedBox(height: 16),

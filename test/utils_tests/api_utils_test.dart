@@ -16,7 +16,7 @@ void main() {
     tearDown(() => unregisterServices());
 
     test('When http method called & raises SocketException', () {
-      ApiUtils.client = MockClient((_) => throw SocketException(''));
+      ApiUtils.client = MockClient(((_) => throw SocketException('')) as Future<Response> Function(Request));
 
       expect(() => ApiUtils.get('/'), throwsA(isInstanceOf<Failure>()));
       expect(() => ApiUtils.post('/'), throwsA(isInstanceOf<Failure>()));
@@ -26,7 +26,7 @@ void main() {
     });
 
     test('When http method called & raises HttpException', () {
-      ApiUtils.client = MockClient((_) => throw HttpException(''));
+      ApiUtils.client = MockClient(((_) => throw HttpException('')) as Future<Response> Function(Request));
 
       expect(() => ApiUtils.get('/'), throwsA(isInstanceOf<Failure>()));
       expect(() => ApiUtils.post('/'), throwsA(isInstanceOf<Failure>()));

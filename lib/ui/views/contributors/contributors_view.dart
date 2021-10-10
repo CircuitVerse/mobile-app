@@ -9,7 +9,7 @@ class ContributorsView extends StatelessWidget {
   static const String id = 'contributors_view';
   final bool showAppBar;
 
-  const ContributorsView({Key key, this.showAppBar = true}) : super(key: key);
+  const ContributorsView({Key? key, this.showAppBar = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

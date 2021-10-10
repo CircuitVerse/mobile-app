@@ -20,9 +20,9 @@ abstract class DatabaseService {
   Future<void> init();
 
   Future<bool> isExpired(String key);
-  Future<T> getData<T>(DatabaseBox box, String key, {T defaultValue});
+  Future<T> getData<T>(DatabaseBox box, String key, {T? defaultValue});
   Future<void> setData(DatabaseBox box, String key, dynamic value,
-      {bool expireData});
+      {bool? expireData});
 }
 
 class DatabaseServiceImpl implements DatabaseService {
@@ -65,7 +65,7 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   @override
-  Future<T> getData<T>(DatabaseBox box, String key, {T defaultValue}) async {
+  Future<T> getData<T>(DatabaseBox box, String key, {T? defaultValue}) async {
     var openedBox = await _openBox(box);
 
     return openedBox.get(key, defaultValue: defaultValue);
@@ -73,10 +73,10 @@ class DatabaseServiceImpl implements DatabaseService {
 
   @override
   Future<void> setData(DatabaseBox box, String key, dynamic value,
-      {bool expireData = false}) async {
+      {bool? expireData = false}) async {
     var openedBox = await _openBox(box);
 
-    if (expireData) {
+    if (expireData!) {
       await setData(DatabaseBox.Metadata, key, DateTime.now());
     }
 

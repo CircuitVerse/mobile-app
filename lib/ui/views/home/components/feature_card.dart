@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class FeatureCard extends StatelessWidget {
-  final String assetPath;
-  final String cardHeading;
-  final String cardDescription;
+  final String? assetPath;
+  final String? cardHeading;
+  final String? cardDescription;
 
   const FeatureCard({
-    Key key,
+    Key? key,
     this.assetPath,
     this.cardDescription,
     this.cardHeading,
@@ -19,11 +19,11 @@ class FeatureCard extends StatelessWidget {
       elevation: 5,
       child: Column(
         children: <Widget>[
-          Image.asset(assetPath, width: 200),
+          Image.asset(assetPath!, width: 200),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Text(
-              cardHeading,
+              cardHeading!,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline5,
             ),
@@ -31,7 +31,7 @@ class FeatureCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             child: Text(
-              cardDescription,
+              cardDescription!,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.subtitle1,
             ),

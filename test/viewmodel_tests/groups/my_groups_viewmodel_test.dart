@@ -29,12 +29,12 @@ void main() {
       test('When called, updates a particular group', () {
         var _model = MyGroupsViewModel();
         _model.mentoredGroups.add(_group);
-        _model.onGroupUpdated(_group..attributes.name = 'Test Group Updated');
+        _model.onGroupUpdated(_group..attributes!.name = 'Test Group Updated');
 
         expect(
           _model.mentoredGroups
               .firstWhere((group) => group.id == _group.id)
-              .attributes
+              .attributes!
               .name,
           'Test Group Updated',
         );

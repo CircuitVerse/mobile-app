@@ -3,13 +3,13 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 
 class CircuitVerseSocialCard extends StatelessWidget {
-  final String imagePath;
-  final String title;
-  final String description;
-  final String url;
+  final String? imagePath;
+  final String? title;
+  final String? description;
+  final String? url;
 
   const CircuitVerseSocialCard({
-    Key key,
+    Key? key,
     this.imagePath,
     this.title,
     this.description,
@@ -20,7 +20,7 @@ class CircuitVerseSocialCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        launchURL(url);
+        launchURL(url!);
       },
       child: Card(
         color: Theme.of(context).brightness == Brightness.dark
@@ -31,23 +31,23 @@ class CircuitVerseSocialCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Image.asset(imagePath, width: 48),
+              Image.asset(imagePath!, width: 48),
               SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      title,
+                      title!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
                             fontWeight: FontWeight.bold,
                             color: CVTheme.textColor(context),
                           ),
                     ),
                     Text(
-                      description,
+                      description!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.subtitle1,

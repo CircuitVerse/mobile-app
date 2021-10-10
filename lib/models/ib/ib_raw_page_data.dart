@@ -5,46 +5,46 @@ part 'ib_raw_page_data.g.dart';
 @HiveType(typeId: 0)
 class IbRawPageData {
   @HiveField(0)
-  String id;
+  String? id;
 
   @HiveField(1)
-  String title;
+  String? title;
 
   @HiveField(2)
-  String name;
+  String? name;
 
   @HiveField(3)
-  String content;
+  String? content;
 
   @HiveField(4)
-  String rawContent;
+  String? rawContent;
 
   @HiveField(5)
-  String navOrder;
+  String? navOrder;
 
   @HiveField(6)
-  String cvibLevel;
+  String? cvibLevel;
 
   @HiveField(7)
-  String parent;
+  String? parent;
 
   @HiveField(8)
-  bool hasChildren;
+  bool? hasChildren;
 
   @HiveField(9)
-  bool hasToc;
+  bool? hasToc;
 
   @HiveField(10)
-  bool disableComments;
+  bool? disableComments;
 
   @HiveField(11)
-  Map<String, dynamic> frontMatter;
+  Map<String, dynamic>? frontMatter;
 
   @HiveField(12)
-  String httpUrl;
+  String? httpUrl;
 
   @HiveField(13)
-  String apiUrl;
+  String? apiUrl;
 
   IbRawPageData({
     this.id,

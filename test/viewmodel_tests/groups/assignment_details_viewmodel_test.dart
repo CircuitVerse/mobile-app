@@ -95,7 +95,7 @@ void main() {
 
     group('updateGrade -', () {
       test('When called & service returns success response', () async {
-        var _updatedGrade = _grade..attributes.remarks = 'Very Good';
+        var _updatedGrade = _grade..attributes!.remarks = 'Very Good';
 
         var _mockGradesApi = getAndRegisterGradesApiMock();
         when(_mockGradesApi.updateGrade('1', 'A', 'Very Good'))

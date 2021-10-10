@@ -8,8 +8,8 @@ class CVHtmlEditor extends StatelessWidget {
   final bool hasAttachment;
 
   const CVHtmlEditor({
-    Key key,
-    @required this.editorKey,
+    Key? key,
+    required this.editorKey,
     this.hasAttachment = true,
     this.height = 300,
   }) : super(key: key);

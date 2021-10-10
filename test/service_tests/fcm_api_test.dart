@@ -25,14 +25,14 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _fcmApi = HttpFCMApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException('')));
         expect(_fcmApi.sendToken('token'), throwsA(isInstanceOf<Failure>()));
 
         ApiUtils.client =
-            MockClient((_) => throw UnprocessableIdentityException(''));
+            MockClient(((_) => throw UnprocessableIdentityException('')));
         expect(_fcmApi.sendToken('token'), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')));
         expect(_fcmApi.sendToken('token'), throwsA(isInstanceOf<Failure>()));
       });
     });

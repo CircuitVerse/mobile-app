@@ -5,14 +5,14 @@ import 'package:mobile_app/utils/api_utils.dart';
 import 'package:mobile_app/utils/app_exceptions.dart';
 
 abstract class FCMApi {
-  Future<String> sendToken(String fcmToken);
+  Future<String?> sendToken(String fcmToken);
 }
 
 class HttpFCMApi implements FCMApi {
   var headers = {'Content-Type': 'application/json'};
 
   @override
-  Future<String> sendToken(String fcmToken) async {
+  Future<String?> sendToken(String fcmToken) async {
     var endpoint = '/fcm/token';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'token': fcmToken};

@@ -10,25 +10,25 @@ class EditProfileViewModel extends BaseModel {
   // ViewState Keys
   String UPDATE_PROFILE = 'update_profile';
 
-  final UsersApi _userApi = locator<UsersApi>();
-  final LocalStorageService _storage = locator<LocalStorageService>();
+  final UsersApi? _userApi = locator<UsersApi>();
+  final LocalStorageService? _storage = locator<LocalStorageService>();
 
-  User _updatedUser;
+  User? _updatedUser;
 
-  User get updatedUser => _updatedUser;
+  User? get updatedUser => _updatedUser;
 
-  set updatedUser(User updatedUser) {
+  set updatedUser(User? updatedUser) {
     _updatedUser = updatedUser;
     notifyListeners();
   }
 
-  Future updateProfile(String name, String educationalInstitute, String country,
-      bool subscribed) async {
+  Future updateProfile(String? name, String? educationalInstitute, String? country,
+      bool? subscribed) async {
     setStateFor(UPDATE_PROFILE, ViewState.Busy);
     try {
-      updatedUser = await _userApi.updateProfile(
+      updatedUser = await _userApi!.updateProfile(
           name, educationalInstitute, country, subscribed);
-      _storage.currentUser = _updatedUser;
+      _storage!.currentUser = _updatedUser;
 
       setStateFor(UPDATE_PROFILE, ViewState.Success);
     } on Failure catch (f) {

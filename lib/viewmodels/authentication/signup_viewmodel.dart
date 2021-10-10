@@ -9,22 +9,22 @@ class SignupViewModel extends BaseModel {
   // ViewState Keys
   final String SIGNUP = 'signup';
 
-  final UsersApi _userApi = locator<UsersApi>();
-  final LocalStorageService _storage = locator<LocalStorageService>();
+  final UsersApi? _userApi = locator<UsersApi>();
+  final LocalStorageService? _storage = locator<LocalStorageService>();
 
-  Future<void> signup(String name, String email, String password) async {
+  Future<void> signup(String? name, String? email, String? password) async {
     setStateFor(SIGNUP, ViewState.Busy);
     try {
-      var token = await _userApi.signup(name, email, password);
+      var token = await _userApi!.signup(name, email, password);
 
       // store token in local storage..
-      _storage.token = token;
+      _storage!.token = token;
 
       // update is_logged_in status..
-      _storage.isLoggedIn = true;
+      _storage!.isLoggedIn = true;
 
       // save current user to local storage..
-      _storage.currentUser = await _userApi.fetchCurrentUser();
+      _storage!.currentUser = await _userApi!.fetchCurrentUser();
 
       setStateFor(SIGNUP, ViewState.Success);
     } on Failure catch (f) {

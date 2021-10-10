@@ -7,25 +7,25 @@ import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class CVLandingViewModel extends BaseModel {
-  final LocalStorageService _storage = locator<LocalStorageService>();
+  final LocalStorageService? _storage = locator<LocalStorageService>();
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
-  bool get isLoggedIn => _storage.isLoggedIn;
+  bool get isLoggedIn => _storage!.isLoggedIn;
 
-  User get currentUser => _storage.currentUser;
+  User? get currentUser => _storage!.currentUser;
 
   void onLogout() async {
-    _storage.isLoggedIn = false;
-    _storage.currentUser = null;
-    _storage.token = null;
+    _storage!.isLoggedIn = false;
+    _storage!.currentUser = null;
+    _storage!.token = null;
 
     // Perform facebook logout if auth type is facebook..
-    if (_storage.authType == AuthType.FACEBOOK) {
+    if (_storage!.authType == AuthType.FACEBOOK) {
       await FacebookAuth.instance.logOut();
     }
 
     // Perform google signout if auth type is google..
-    if (_storage.authType == AuthType.GOOGLE) {
+    if (_storage!.authType == AuthType.GOOGLE) {
       await _googleSignIn.signOut();
     }
 

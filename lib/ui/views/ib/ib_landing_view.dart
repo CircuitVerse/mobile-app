@@ -22,8 +22,8 @@ class _IbLandingViewState extends State<IbLandingView> {
     navOrder: '1',
     value: 'Interactive Book Home',
   );
-  IbChapter _selectedChapter;
-  ValueNotifier<Function> _tocNotifier;
+  IbChapter? _selectedChapter;
+  late ValueNotifier<Function?> _tocNotifier;
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _IbLandingViewState extends State<IbLandingView> {
 
   void setSelectedChapter(IbChapter chapter) {
     Get.back();
-    if (_selectedChapter.id != chapter.id) {
+    if (_selectedChapter!.id != chapter.id) {
       setState(() => _selectedChapter = chapter);
     }
   }
@@ -48,14 +48,14 @@ class _IbLandingViewState extends State<IbLandingView> {
   Widget _buildAppBar() {
     return AppBar(
       title: Text(
-        _selectedChapter.id == _homeChapter.id
+        _selectedChapter!.id == _homeChapter.id
             ? 'CircuitVerse'
             : 'Interactive Book',
       ),
       actions: [
         ValueListenableBuilder(
           valueListenable: _tocNotifier,
-          builder: (context, value, child) {
+          builder: (context, dynamic value, child) {
             return value != null
                 ? IconButton(
                     icon: const Icon(Icons.menu_book_rounded),
@@ -75,7 +75,7 @@ class _IbLandingViewState extends State<IbLandingView> {
       onTap: () => setSelectedChapter(chapter),
       child: CVDrawerTile(
         title: chapter.value,
-        color: (_selectedChapter.id == chapter.id)
+        color: (_selectedChapter!.id == chapter.id)
             ? IbTheme.getPrimaryColor(context)
             : IbTheme.textColor(context),
       ),
@@ -86,8 +86,8 @@ class _IbLandingViewState extends State<IbLandingView> {
     var nestedPages = <Widget>[];
 
     var hasSelectedChapter = false;
-    for (var nestedChapter in chapter.items) {
-      if (nestedChapter.id == _selectedChapter.id) {
+    for (var nestedChapter in chapter.items!) {
+      if (nestedChapter.id == _selectedChapter!.id) {
         hasSelectedChapter = true;
       }
 
@@ -97,7 +97,7 @@ class _IbLandingViewState extends State<IbLandingView> {
     return ExpansionTile(
       maintainState: true,
       initiallyExpanded:
-          (_selectedChapter.id.startsWith(chapter.id) || hasSelectedChapter)
+          (_selectedChapter!.id!.startsWith(chapter.id!) || hasSelectedChapter)
               ? true
               : false,
       title: ListTile(
@@ -105,10 +105,10 @@ class _IbLandingViewState extends State<IbLandingView> {
         title: GestureDetector(
           onTap: () => setSelectedChapter(chapter),
           child: Text(
-            chapter.value,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            chapter.value!,
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                   fontFamily: 'Poppins',
-                  color: (_selectedChapter.id.startsWith(chapter.id))
+                  color: (_selectedChapter!.id!.startsWith(chapter.id!))
                       ? IbTheme.getPrimaryColor(context)
                       : IbTheme.textColor(context),
                 ),
@@ -123,7 +123,7 @@ class _IbLandingViewState extends State<IbLandingView> {
     var _chapters = <Widget>[];
 
     for (var chapter in chapters) {
-      if (chapter.items != null && chapter.items.isNotEmpty) {
+      if (chapter.items != null && chapter.items!.isNotEmpty) {
         _chapters.add(_buildExpandableChapter(chapter));
       } else {
         _chapters.add(_buildChapter(chapter));
@@ -154,7 +154,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                 onTap: () => setSelectedChapter(_homeChapter),
                 child: CVDrawerTile(
                   title: 'Interactive Book Home',
-                  color: (_selectedChapter.id == _homeChapter.id)
+                  color: (_selectedChapter!.id == _homeChapter.id)
                       ? IbTheme.getPrimaryColor(context)
                       : IbTheme.textColor(context),
                 ),
@@ -213,7 +213,7 @@ class _IbLandingViewState extends State<IbLandingView> {
             data: IbTheme.getThemeData(context),
             child: Scaffold(
               key: Key('IbLandingScaffold'),
-              appBar: _buildAppBar(),
+              appBar: _buildAppBar() as PreferredSizeWidget?,
               drawer: _buildDrawer(model),
               body: PageTransitionSwitcher(
                 transitionBuilder: (

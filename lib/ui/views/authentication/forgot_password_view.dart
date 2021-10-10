@@ -19,9 +19,9 @@ class ForgotPasswordView extends StatefulWidget {
 }
 
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
-  ForgotPasswordViewModel _model;
+  late ForgotPasswordViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _email;
+  String? _email;
 
   Widget _buildForgotPasswordImage() {
     return Container(
@@ -43,7 +43,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       type: TextInputType.emailAddress,
       validator: (value) =>
           Validators.isEmailValid(value) ? null : 'Please enter a valid email',
-      onSaved: (value) => _email = value.trim(),
+      onSaved: (value) => _email = value?.trim(),
       action: TextInputAction.done,
     );
   }
@@ -82,13 +82,13 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   }
 
   Future<void> _validateAndSubmit() async {
-    var _dialogService = locator<DialogService>();
+    DialogService? _dialogService = locator<DialogService>();
 
     if (Validators.validateAndSaveForm(_formKey) &&
         !_model.isBusy(_model.SEND_RESET_INSTRUCTIONS)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      _dialogService.showCustomProgressDialog(title: 'Sending Instructions');
+      _dialogService!.showCustomProgressDialog(title: 'Sending Instructions');
 
       await _model.onForgotPassword(_email);
 
@@ -110,7 +110,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
           'Error',
           _model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS),
         );
-        _formKey.currentState.reset();
+        _formKey.currentState!.reset();
       }
     }
   }

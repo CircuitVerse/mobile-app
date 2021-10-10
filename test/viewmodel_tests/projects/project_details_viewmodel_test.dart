@@ -106,7 +106,7 @@ void main() {
             .thenAnswer((_) => Future.value(true));
 
         var _model = ProjectDetailsViewModel();
-        _model.collaborators.add(_collaborator);
+        _model.collaborators!.add(_collaborator);
         await _model.deleteCollaborator('1', '1');
 
         // verify API call is made..
@@ -115,7 +115,7 @@ void main() {
 
         // verify collaborator is deleted..
         expect(
-            _model.collaborators
+            _model.collaborators!
                 .where((collaborator) => _collaborator.id == collaborator.id)
                 .isEmpty,
             true);
@@ -127,7 +127,7 @@ void main() {
             .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = ProjectDetailsViewModel();
-        _model.collaborators.add(_collaborator);
+        _model.collaborators!.add(_collaborator);
         await _model.deleteCollaborator('1', '1');
 
         // verify Error ViewState with proper error message..

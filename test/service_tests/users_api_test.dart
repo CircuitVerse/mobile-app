@@ -31,19 +31,19 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _usersApi = HttpUsersApi();
 
-        ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
+        ApiUtils.client = MockClient(((_) => throw UnauthorizedException('')) as Future<Response> Function(Request));
         expect(_usersApi.login('test@test.com', 'test'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(_usersApi.login('test@test.com', 'test'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw FormatException(''));
+        ApiUtils.client = MockClient(((_) => throw FormatException('')) as Future<Response> Function(Request));
         expect(_usersApi.login('test@test.com', 'test'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_usersApi.login('test@test.com', 'test'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -62,15 +62,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _usersApi = HttpUsersApi();
 
-        ApiUtils.client = MockClient((_) => throw ConflictException(''));
+        ApiUtils.client = MockClient(((_) => throw ConflictException('')) as Future<Response> Function(Request));
         expect(_usersApi.signup('test', 'test@test.com', 'test'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw FormatException(''));
+        ApiUtils.client = MockClient(((_) => throw FormatException('')) as Future<Response> Function(Request));
         expect(_usersApi.signup('test', 'test@test.com', 'test'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_usersApi.signup('test', 'test@test.com', 'test'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -90,15 +90,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _usersApi = HttpUsersApi();
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(_usersApi.oauthLogin(accessToken: 'token', provider: 'test'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw FormatException(''));
+        ApiUtils.client = MockClient(((_) => throw FormatException('')) as Future<Response> Function(Request));
         expect(_usersApi.oauthLogin(accessToken: 'token', provider: 'test'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_usersApi.oauthLogin(accessToken: 'token', provider: 'test'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -118,15 +118,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _usersApi = HttpUsersApi();
 
-        ApiUtils.client = MockClient((_) => throw ConflictException(''));
+        ApiUtils.client = MockClient(((_) => throw ConflictException('')) as Future<Response> Function(Request));
         expect(_usersApi.oauthSignup(accessToken: 'token', provider: 'test'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw FormatException(''));
+        ApiUtils.client = MockClient(((_) => throw FormatException('')) as Future<Response> Function(Request));
         expect(_usersApi.oauthSignup(accessToken: 'token', provider: 'test'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_usersApi.oauthSignup(accessToken: 'token', provider: 'test'),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -145,13 +145,13 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _usersApi = HttpUsersApi();
 
-        ApiUtils.client = MockClient((_) => throw FormatException(''));
+        ApiUtils.client = MockClient(((_) => throw FormatException('')) as Future<Response> Function(Request));
         expect(_usersApi.fetchUser('1'), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(_usersApi.fetchUser('1'), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_usersApi.fetchUser('1'), throwsA(isInstanceOf<Failure>()));
       });
     });
@@ -169,10 +169,10 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _usersApi = HttpUsersApi();
 
-        ApiUtils.client = MockClient((_) => throw FormatException(''));
+        ApiUtils.client = MockClient(((_) => throw FormatException('')) as Future<Response> Function(Request));
         expect(_usersApi.fetchCurrentUser(), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_usersApi.fetchCurrentUser(), throwsA(isInstanceOf<Failure>()));
       });
     });
@@ -197,11 +197,11 @@ void main() {
         when(_localStorage.currentUser).thenReturn(User.fromJson(mockUser));
         var _usersApi = HttpUsersApi();
 
-        ApiUtils.client = MockClient((_) => throw FormatException(''));
+        ApiUtils.client = MockClient(((_) => throw FormatException('')) as Future<Response> Function(Request));
         expect(_usersApi.updateProfile('Test User', 'Gurukul', 'India', true),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_usersApi.updateProfile('Test User', 'Gurukul', 'India', true),
             throwsA(isInstanceOf<Failure>()));
       });
@@ -220,15 +220,15 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _usersApi = HttpUsersApi();
 
-        ApiUtils.client = MockClient((_) => throw NotFoundException(''));
+        ApiUtils.client = MockClient(((_) => throw NotFoundException('')) as Future<Response> Function(Request));
         expect(_usersApi.sendResetPasswordInstructions('test@test.com'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw FormatException(''));
+        ApiUtils.client = MockClient(((_) => throw FormatException('')) as Future<Response> Function(Request));
         expect(_usersApi.sendResetPasswordInstructions('test@test.com'),
             throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client = MockClient((_) => throw Exception(''));
+        ApiUtils.client = MockClient(((_) => throw Exception('')) as Future<Response> Function(Request));
         expect(_usersApi.sendResetPasswordInstructions('test@test.com'),
             throwsA(isInstanceOf<Failure>()));
       });

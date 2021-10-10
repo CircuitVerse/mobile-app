@@ -7,19 +7,19 @@ import 'package:mobile_app/utils/api_utils.dart';
 import 'package:mobile_app/utils/app_exceptions.dart';
 
 abstract class GroupMembersApi {
-  Future<GroupMembers> fetchGroupMembers(String groupId);
+  Future<GroupMembers> fetchGroupMembers(String? groupId);
 
   Future<AddGroupMembersResponse> addGroupMembers(
-      String groupId, String listOfMails);
+      String? groupId, String? listOfMails);
 
-  Future<bool> deleteGroupMember(String groupMemberId);
+  Future<bool> deleteGroupMember(String? groupMemberId);
 }
 
 class HttpGroupMembersApi implements GroupMembersApi {
   var headers = {'Content-Type': 'application/json'};
 
   @override
-  Future<GroupMembers> fetchGroupMembers(String groupId) async {
+  Future<GroupMembers> fetchGroupMembers(String? groupId) async {
     var endpoint = '/groups/$groupId/members';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 
@@ -42,7 +42,7 @@ class HttpGroupMembersApi implements GroupMembersApi {
 
   @override
   Future<AddGroupMembersResponse> addGroupMembers(
-      String groupId, String listOfMails) async {
+      String? groupId, String? listOfMails) async {
     var endpoint = '/groups/$groupId/members';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'emails': listOfMails};
@@ -66,7 +66,7 @@ class HttpGroupMembersApi implements GroupMembersApi {
   }
 
   @override
-  Future<bool> deleteGroupMember(String groupMemberId) async {
+  Future<bool> deleteGroupMember(String? groupMemberId) async {
     var endpoint = '/group/members/$groupMemberId';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 

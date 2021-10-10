@@ -9,14 +9,14 @@ import 'package:mobile_app/viewmodels/authentication/auth_options_viewmodel.dart
 class AuthOptionsView extends StatefulWidget {
   final bool isSignUp;
 
-  const AuthOptionsView({Key key, this.isSignUp = false}) : super(key: key);
+  const AuthOptionsView({Key? key, this.isSignUp = false}) : super(key: key);
 
   @override
   _AuthOptionsViewState createState() => _AuthOptionsViewState();
 }
 
 class _AuthOptionsViewState extends State<AuthOptionsView> {
-  AuthOptionsViewModel _model;
+  late AuthOptionsViewModel _model;
 
   Future<void> onGoogleAuthPressed() async {
     await _model.googleAuth(isSignUp: widget.isSignUp);

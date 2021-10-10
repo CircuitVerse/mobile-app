@@ -18,8 +18,8 @@ class AuthOptionsViewModel extends BaseModel {
   final String GOOGLE_OAUTH = 'google_oauth';
   final String GITHUB_OAUTH = 'github_oauth';
 
-  final UsersApi _userApi = locator<UsersApi>();
-  final LocalStorageService _storage = locator<LocalStorageService>();
+  final UsersApi? _userApi = locator<UsersApi>();
+  final LocalStorageService? _storage = locator<LocalStorageService>();
 
   Future facebookAuth({bool isSignUp = false}) async {
     final result = await FacebookAuth.instance.login();
@@ -31,24 +31,24 @@ class AuthOptionsViewModel extends BaseModel {
         try {
           // save token & current user to local storage..
           if (isSignUp) {
-            _storage.token = await _userApi.oauthSignup(
-              accessToken: result.accessToken.token,
+            _storage!.token = await _userApi!.oauthSignup(
+              accessToken: result.accessToken!.token,
               provider: 'facebook',
             );
           } else {
-            _storage.token = await _userApi.oauthLogin(
-              accessToken: result.accessToken.token,
+            _storage!.token = await _userApi!.oauthLogin(
+              accessToken: result.accessToken!.token,
               provider: 'facebook',
             );
           }
 
-          _storage.currentUser = await _userApi.fetchCurrentUser();
+          _storage!.currentUser = await _userApi!.fetchCurrentUser();
 
           // update authentication status..
-          _storage.isLoggedIn = true;
+          _storage!.isLoggedIn = true;
 
           // save authentication type to local storage..
-          _storage.authType = AuthType.FACEBOOK;
+          _storage!.authType = AuthType.FACEBOOK;
 
           setStateFor(FB_OAUTH, ViewState.Success);
         } on Failure catch (f) {
@@ -75,30 +75,30 @@ class AuthOptionsViewModel extends BaseModel {
     try {
       await _googleSignIn.signIn();
       var _googleSignInAuthentication =
-          await _googleSignIn.currentUser.authentication;
+          await _googleSignIn.currentUser!.authentication;
 
       setStateFor(GOOGLE_OAUTH, ViewState.Busy);
 
       // save token & current user to local storage..
       if (isSignUp) {
-        _storage.token = await _userApi.oauthSignup(
+        _storage!.token = await _userApi!.oauthSignup(
           accessToken: _googleSignInAuthentication.accessToken,
           provider: 'google',
         );
       } else {
-        _storage.token = await _userApi.oauthLogin(
+        _storage!.token = await _userApi!.oauthLogin(
           accessToken: _googleSignInAuthentication.accessToken,
           provider: 'google',
         );
       }
 
-      _storage.currentUser = await _userApi.fetchCurrentUser();
+      _storage!.currentUser = await _userApi!.fetchCurrentUser();
 
       // update authentication status..
-      _storage.isLoggedIn = true;
+      _storage!.isLoggedIn = true;
 
       // save authentication type to local storage..
-      _storage.authType = AuthType.GOOGLE;
+      _storage!.authType = AuthType.GOOGLE;
 
       setStateFor(GOOGLE_OAUTH, ViewState.Success);
     } on Failure catch (f) {
@@ -130,24 +130,24 @@ class AuthOptionsViewModel extends BaseModel {
 
       // save token & current user to local storage..
       if (isSignUp) {
-        _storage.token = await _userApi.oauthSignup(
-          accessToken: _accessTokenResponse.accessToken,
+        _storage!.token = await _userApi!.oauthSignup(
+          accessToken: _accessTokenResponse!.accessToken,
           provider: 'github',
         );
       } else {
-        _storage.token = await _userApi.oauthLogin(
-          accessToken: _accessTokenResponse.accessToken,
+        _storage!.token = await _userApi!.oauthLogin(
+          accessToken: _accessTokenResponse!.accessToken,
           provider: 'github',
         );
       }
 
-      _storage.currentUser = await _userApi.fetchCurrentUser();
+      _storage!.currentUser = await _userApi!.fetchCurrentUser();
 
       // update authentication status..
-      _storage.isLoggedIn = true;
+      _storage!.isLoggedIn = true;
 
       // save authentication type to local storage..
-      _storage.authType = AuthType.GITHUB;
+      _storage!.authType = AuthType.GITHUB;
 
       setStateFor(GITHUB_OAUTH, ViewState.Success);
     } on Failure catch (f) {

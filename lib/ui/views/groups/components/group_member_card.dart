@@ -6,9 +6,9 @@ import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/group_details_view.dart';
 
 class GroupMemberCard extends StatelessWidget {
-  final Group group;
+  final Group? group;
 
-  const GroupMemberCard({Key key, this.group}) : super(key: key);
+  const GroupMemberCard({Key? key, this.group}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +38,10 @@ class GroupMemberCard extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Text(
-                  group.attributes.name,
+                  group!.attributes!.name!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headline6.copyWith(
+                  style: Theme.of(context).textTheme.headline6!.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                   textAlign: TextAlign.center,
@@ -49,7 +49,7 @@ class GroupMemberCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Text(
-                    'Total Members: ${group.attributes.memberCount}',
+                    'Total Members: ${group!.attributes!.memberCount}',
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),

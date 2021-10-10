@@ -20,7 +20,7 @@ import '../../setup/test_helpers.dart';
 
 void main() {
   group('FeaturedProjectsViewTest -', () {
-    NavigatorObserver mockObserver;
+    late NavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -54,7 +54,7 @@ void main() {
 
       /// The tester.pumpWidget() call above just built our app widget
       /// and triggered the pushObserver method on the mockObserver once.
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
     }
 
     testWidgets('finds Generic MyGroupsView widgets',
@@ -82,7 +82,7 @@ void main() {
             projectDetailsViewModel);
 
         when(projectDetailsViewModel.fetchProjectDetails(any)).thenReturn(null);
-        when(projectDetailsViewModel.isSuccess(any)).thenReturn(false);
+        when(projectDetailsViewModel.isSuccess(any!)).thenReturn(false);
 
         expect(find.widgetWithText(CVPrimaryButton, 'View'), findsOneWidget);
 
@@ -91,11 +91,11 @@ void main() {
             .widgetWithText(CVPrimaryButton, 'View')
             .evaluate()
             .first
-            .widget;
-        button.onPressed();
+            .widget as CVPrimaryButton;
+        button.onPressed!();
         await tester.pumpAndSettle();
 
-        verify(mockObserver.didPush(any, any));
+        verify(mockObserver.didPush(any!, any));
         expect(find.byType(ProjectDetailsView), findsOneWidget);
       });
     });

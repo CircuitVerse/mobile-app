@@ -17,21 +17,21 @@ import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
 
 class AddAssignmentView extends StatefulWidget {
   static const String id = 'add_assignment_view';
-  final String groupId;
+  final String? groupId;
 
-  const AddAssignmentView({Key key, this.groupId}) : super(key: key);
+  const AddAssignmentView({Key? key, this.groupId}) : super(key: key);
 
   @override
   _AddAssignmentViewState createState() => _AddAssignmentViewState();
 }
 
 class _AddAssignmentViewState extends State<AddAssignmentView> {
-  final DialogService _dialogService = locator<DialogService>();
-  AddAssignmentViewModel _model;
+  final DialogService? _dialogService = locator<DialogService>();
+  late AddAssignmentViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name, _gradingScale = 'No Scale';
+  String? _name, _gradingScale = 'No Scale';
   final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
-  DateTime _deadline;
+  DateTime? _deadline;
   final List<String> _restrictions = [];
   final List<String> _gradingOptions = [
     'No Scale',
@@ -39,13 +39,13 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     'Percent',
     'Custom'
   ];
-  bool _isRestrictionEnabled = false;
+  bool? _isRestrictionEnabled = false;
 
   Widget _buildNameInput() {
     return CVTextField(
       label: 'Name',
       validator: (name) => name.isEmpty ? 'Please enter a valid name' : null,
-      onSaved: (name) => _name = name.trim(),
+      onSaved: (name) => _name = name?.trim(),
       action: TextInputAction.done,
     );
   }
@@ -102,7 +102,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
           labelText: 'Grading Scale',
         ),
         value: _gradingScale,
-        onChanged: (String value) {
+        onChanged: (String? value) {
           setState(() {
             _gradingScale = value;
           });
@@ -124,7 +124,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         value: _isRestrictionEnabled,
         title: Text(
           'Elements restriction',
-          style: Theme.of(context).textTheme.headline6.copyWith(
+          style: Theme.of(context).textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),
@@ -145,7 +145,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         Checkbox(
           value: _restrictions.contains(name),
           onChanged: (value) {
-            if (value) {
+            if (value!) {
               _restrictions.add((name));
             } else {
               _restrictions.remove(name);
@@ -166,7 +166,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.subtitle1.copyWith(
+            style: Theme.of(context).textTheme.subtitle1!.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
@@ -204,13 +204,13 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       FocusScope.of(context).requestFocus(FocusNode());
 
       // Shows progress dialog..
-      _dialogService.showCustomProgressDialog(title: 'Adding..');
+      _dialogService!.showCustomProgressDialog(title: 'Adding..');
 
       // [ISSUE] [html_editor] Throws error in Tests
       var _descriptionEditorText;
       try {
         _descriptionEditorText =
-            await _descriptionEditor.currentState.getText();
+            await _descriptionEditor.currentState!.getText();
       } on NoSuchMethodError {
         debugPrint(
             'Handled html_editor error. NOTE: This should only throw during tests.');
@@ -220,13 +220,13 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       await _model.addAssignment(
         widget.groupId,
         _name,
-        _deadline,
-        _gradingScale,
+        _deadline!,
+        _gradingScale!,
         _descriptionEditorText,
         _restrictions,
       );
 
-      _dialogService.popDialog();
+      _dialogService!.popDialog();
 
       if (_model.isSuccess(_model.ADD_ASSIGNMENT)) {
         await Future.delayed(Duration(seconds: 1));
@@ -245,7 +245,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
           'Error',
           _model.errorMessageFor(_model.ADD_ASSIGNMENT),
         );
-        _formKey.currentState.reset();
+        _formKey.currentState!.reset();
       }
     }
   }
@@ -268,7 +268,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
                 _buildDeadlineInput(),
                 _buildGradingScaleDropdown(),
                 _buildRestrictionsHeader(),
-                if (_isRestrictionEnabled)
+                if (_isRestrictionEnabled!)
                   _buildRestrictions()
                 else
                   Container(),

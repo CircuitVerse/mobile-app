@@ -12,14 +12,14 @@ class IbPageViewModel extends BaseModel {
   String IB_FETCH_INTERACTION_DATA = 'ib_fetch_interaction_data';
   String IB_FETCH_POP_QUIZ = 'ib_fetch_pop_quiz';
 
-  final IbEngineService _ibEngineService = locator<IbEngineService>();
+  final IbEngineService? _ibEngineService = locator<IbEngineService>();
 
-  IbPageData _pageData;
-  IbPageData get pageData => _pageData;
+  IbPageData? _pageData;
+  IbPageData? get pageData => _pageData;
 
-  Future fetchPageData({String id = 'index.md'}) async {
+  Future fetchPageData({String? id = 'index.md'}) async {
     try {
-      _pageData = await _ibEngineService.getPageData(id: id);
+      _pageData = await _ibEngineService!.getPageData(id: id);
 
       setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
     } on Failure catch (f) {
@@ -30,7 +30,7 @@ class IbPageViewModel extends BaseModel {
 
   Future fetchHtmlInteraction(String id) async {
     try {
-      var result = await _ibEngineService.getHtmlInteraction(id);
+      var result = await _ibEngineService!.getHtmlInteraction(id);
       return result;
     } on Failure catch (f) {
       return f;
@@ -39,7 +39,7 @@ class IbPageViewModel extends BaseModel {
 
   List<IbPopQuizQuestion> fetchPopQuiz(String rawContent) {
     try {
-      var result = _ibEngineService.getPopQuiz(rawContent);
+      var result = _ibEngineService!.getPopQuiz(rawContent);
       return result;
     } on Failure {
       return [];

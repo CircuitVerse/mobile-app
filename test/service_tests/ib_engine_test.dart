@@ -61,22 +61,22 @@ void main() {
         expect(_actualResult[0].next?.id, _expectedResult[0].next?.id);
         expect(_actualResult[0].items != null, true);
 
-        expect(_actualResult[0].items.length, _expectedResult[0].items.length);
-        expect(_actualResult[0].items[0].id, _expectedResult[0].items[0].id);
+        expect(_actualResult[0].items!.length, _expectedResult[0].items!.length);
+        expect(_actualResult[0].items![0].id, _expectedResult[0].items![0].id);
         expect(
-            _actualResult[0].items[0].value, _expectedResult[0].items[0].value);
-        expect(_actualResult[0].items[0].prev?.id,
-            _expectedResult[0].items[0].prev?.id);
-        expect(_actualResult[0].items[0].next?.id,
-            _expectedResult[0].items[0].next?.id);
-        expect(_actualResult[0].items[0].items, null);
+            _actualResult[0].items![0].value, _expectedResult[0].items![0].value);
+        expect(_actualResult[0].items![0].prev?.id,
+            _expectedResult[0].items![0].prev?.id);
+        expect(_actualResult[0].items![0].next?.id,
+            _expectedResult[0].items![0].next?.id);
+        expect(_actualResult[0].items![0].items, null);
       });
 
       test('When called and throws Failure', () async {
         var _ibApi = getAndRegisterIbApiMock();
 
         when(_ibApi.fetchApiPage(id: ''))
-            .thenAnswer((_) => throw Exception('Service Unavailable'));
+            .thenAnswer(((_) => throw Exception('Service Unavailable')) as Future<List<Map<String, dynamic>>> Function(Invocation));
 
         var _ibEngine = IbEngineServiceImpl();
 
@@ -204,83 +204,83 @@ void main() {
 
         expect(_actualResult.id, _expectedResult.id);
         expect(_actualResult.title, _expectedResult.title);
-        expect(_actualResult.tableOfContents.length,
-            _expectedResult.tableOfContents.length);
+        expect(_actualResult.tableOfContents!.length,
+            _expectedResult.tableOfContents!.length);
 
-        expect(_actualResult.tableOfContents[0].content,
-            _expectedResult.tableOfContents[0].content);
-        expect(_actualResult.tableOfContents[0].leading,
-            _expectedResult.tableOfContents[0].leading);
-        expect(_actualResult.tableOfContents[0].items.length,
-            _expectedResult.tableOfContents[0].items.length);
-        expect(_actualResult.tableOfContents[0].items[0].content,
-            _expectedResult.tableOfContents[0].items[0].content);
-        expect(_actualResult.tableOfContents[0].items[0].leading,
-            _expectedResult.tableOfContents[0].items[0].leading);
-        expect(_actualResult.tableOfContents[0].items[1].content,
-            _expectedResult.tableOfContents[0].items[1].content);
-        expect(_actualResult.tableOfContents[0].items[1].leading,
-            _expectedResult.tableOfContents[0].items[1].leading);
-        expect(_actualResult.tableOfContents[0].items[2].content,
-            _expectedResult.tableOfContents[0].items[2].content);
-        expect(_actualResult.tableOfContents[0].items[2].leading,
-            _expectedResult.tableOfContents[0].items[2].leading);
+        expect(_actualResult.tableOfContents![0].content,
+            _expectedResult.tableOfContents![0].content);
+        expect(_actualResult.tableOfContents![0].leading,
+            _expectedResult.tableOfContents![0].leading);
+        expect(_actualResult.tableOfContents![0].items!.length,
+            _expectedResult.tableOfContents![0].items!.length);
+        expect(_actualResult.tableOfContents![0].items![0].content,
+            _expectedResult.tableOfContents![0].items![0].content);
+        expect(_actualResult.tableOfContents![0].items![0].leading,
+            _expectedResult.tableOfContents![0].items![0].leading);
+        expect(_actualResult.tableOfContents![0].items![1].content,
+            _expectedResult.tableOfContents![0].items![1].content);
+        expect(_actualResult.tableOfContents![0].items![1].leading,
+            _expectedResult.tableOfContents![0].items![1].leading);
+        expect(_actualResult.tableOfContents![0].items![2].content,
+            _expectedResult.tableOfContents![0].items![2].content);
+        expect(_actualResult.tableOfContents![0].items![2].leading,
+            _expectedResult.tableOfContents![0].items![2].leading);
 
-        expect(_actualResult.tableOfContents[1].content,
-            _expectedResult.tableOfContents[1].content);
-        expect(_actualResult.tableOfContents[1].leading,
-            _expectedResult.tableOfContents[1].leading);
+        expect(_actualResult.tableOfContents![1].content,
+            _expectedResult.tableOfContents![1].content);
+        expect(_actualResult.tableOfContents![1].leading,
+            _expectedResult.tableOfContents![1].leading);
 
-        expect(_actualResult.tableOfContents[2].content,
-            _expectedResult.tableOfContents[2].content);
-        expect(_actualResult.tableOfContents[2].leading,
-            _expectedResult.tableOfContents[2].leading);
-        expect(_actualResult.tableOfContents[2].items.length,
-            _expectedResult.tableOfContents[2].items.length);
-        expect(_actualResult.tableOfContents[2].items[0].content,
-            _expectedResult.tableOfContents[2].items[0].content);
-        expect(_actualResult.tableOfContents[2].items[0].leading,
-            _expectedResult.tableOfContents[2].items[0].leading);
-        expect(_actualResult.tableOfContents[2].items[1].content,
-            _expectedResult.tableOfContents[2].items[1].content);
-        expect(_actualResult.tableOfContents[2].items[1].leading,
-            _expectedResult.tableOfContents[2].items[1].leading);
+        expect(_actualResult.tableOfContents![2].content,
+            _expectedResult.tableOfContents![2].content);
+        expect(_actualResult.tableOfContents![2].leading,
+            _expectedResult.tableOfContents![2].leading);
+        expect(_actualResult.tableOfContents![2].items!.length,
+            _expectedResult.tableOfContents![2].items!.length);
+        expect(_actualResult.tableOfContents![2].items![0].content,
+            _expectedResult.tableOfContents![2].items![0].content);
+        expect(_actualResult.tableOfContents![2].items![0].leading,
+            _expectedResult.tableOfContents![2].items![0].leading);
+        expect(_actualResult.tableOfContents![2].items![1].content,
+            _expectedResult.tableOfContents![2].items![1].content);
+        expect(_actualResult.tableOfContents![2].items![1].leading,
+            _expectedResult.tableOfContents![2].items![1].leading);
 
-        expect(_actualResult.tableOfContents[3].content,
-            _expectedResult.tableOfContents[3].content);
-        expect(_actualResult.tableOfContents[3].leading,
-            _expectedResult.tableOfContents[3].leading);
-        expect(_actualResult.tableOfContents[4].content,
-            _expectedResult.tableOfContents[4].content);
-        expect(_actualResult.tableOfContents[4].leading,
-            _expectedResult.tableOfContents[4].leading);
-        expect(_actualResult.tableOfContents[5].content,
-            _expectedResult.tableOfContents[5].content);
-        expect(_actualResult.tableOfContents[5].leading,
-            _expectedResult.tableOfContents[5].leading);
-        expect(_actualResult.tableOfContents[6].content,
-            _expectedResult.tableOfContents[6].content);
-        expect(_actualResult.tableOfContents[6].leading,
-            _expectedResult.tableOfContents[6].leading);
-        expect(_actualResult.tableOfContents[7].content,
-            _expectedResult.tableOfContents[7].content);
-        expect(_actualResult.tableOfContents[7].leading,
-            _expectedResult.tableOfContents[7].leading);
-        expect(_actualResult.tableOfContents[8].content,
-            _expectedResult.tableOfContents[8].content);
-        expect(_actualResult.tableOfContents[8].leading,
-            _expectedResult.tableOfContents[8].leading);
-        expect(_actualResult.tableOfContents[9].content,
-            _expectedResult.tableOfContents[9].content);
-        expect(_actualResult.tableOfContents[9].leading,
-            _expectedResult.tableOfContents[9].leading);
+        expect(_actualResult.tableOfContents![3].content,
+            _expectedResult.tableOfContents![3].content);
+        expect(_actualResult.tableOfContents![3].leading,
+            _expectedResult.tableOfContents![3].leading);
+        expect(_actualResult.tableOfContents![4].content,
+            _expectedResult.tableOfContents![4].content);
+        expect(_actualResult.tableOfContents![4].leading,
+            _expectedResult.tableOfContents![4].leading);
+        expect(_actualResult.tableOfContents![5].content,
+            _expectedResult.tableOfContents![5].content);
+        expect(_actualResult.tableOfContents![5].leading,
+            _expectedResult.tableOfContents![5].leading);
+        expect(_actualResult.tableOfContents![6].content,
+            _expectedResult.tableOfContents![6].content);
+        expect(_actualResult.tableOfContents![6].leading,
+            _expectedResult.tableOfContents![6].leading);
+        expect(_actualResult.tableOfContents![7].content,
+            _expectedResult.tableOfContents![7].content);
+        expect(_actualResult.tableOfContents![7].leading,
+            _expectedResult.tableOfContents![7].leading);
+        expect(_actualResult.tableOfContents![8].content,
+            _expectedResult.tableOfContents![8].content);
+        expect(_actualResult.tableOfContents![8].leading,
+            _expectedResult.tableOfContents![8].leading);
+        expect(_actualResult.tableOfContents![9].content,
+            _expectedResult.tableOfContents![9].content);
+        expect(_actualResult.tableOfContents![9].leading,
+            _expectedResult.tableOfContents![9].leading);
       });
 
       test('When called and throws Failure', () async {
         var _ibApi = getAndRegisterIbApiMock();
 
         when(_ibApi.fetchRawPageData(id: 'index.md'))
-            .thenAnswer((_) => throw Exception('Service Unavailable'));
+            .thenAnswer(((_) => throw Exception('Service Unavailable')) as Future<IbRawPageData> Function(Invocation));
 
         var _ibEngine = IbEngineServiceImpl();
 

@@ -11,12 +11,12 @@ void main() {
 
       expect(_collaboratorResponse, isInstanceOf<AddGroupMembersResponse>());
 
-      expect(_collaboratorResponse.added.length, 1);
-      expect(_collaboratorResponse.added[0], 'test@test.com');
-      expect(_collaboratorResponse.pending.length, 1);
-      expect(_collaboratorResponse.pending[0], 'pending@test.com');
-      expect(_collaboratorResponse.invalid.length, 1);
-      expect(_collaboratorResponse.invalid[0], 'invalid@test.com');
+      expect(_collaboratorResponse.added!.length, 1);
+      expect(_collaboratorResponse.added![0], 'test@test.com');
+      expect(_collaboratorResponse.pending!.length, 1);
+      expect(_collaboratorResponse.pending![0], 'pending@test.com');
+      expect(_collaboratorResponse.invalid!.length, 1);
+      expect(_collaboratorResponse.invalid![0], 'invalid@test.com');
     });
   });
 }

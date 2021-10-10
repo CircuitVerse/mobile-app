@@ -29,20 +29,20 @@ import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-typedef TocCallback = void Function(Function);
-typedef SetPageCallback = void Function(IbChapter);
+typedef TocCallback = void Function(Function?);
+typedef SetPageCallback = void Function(IbChapter?);
 
 class IbPageView extends StatefulWidget {
   static const String id = 'ib_page_view';
   final TocCallback tocCallback;
   final SetPageCallback setPage;
-  final IbChapter chapter;
+  final IbChapter? chapter;
 
   const IbPageView({
-    @required Key key,
-    @required this.tocCallback,
-    @required this.chapter,
-    @required this.setPage,
+    required Key key,
+    required this.tocCallback,
+    required this.chapter,
+    required this.setPage,
   }) : super(key: key);
 
   @override
@@ -50,8 +50,8 @@ class IbPageView extends StatefulWidget {
 }
 
 class _IbPageViewState extends State<IbPageView> {
-  IbPageViewModel _model;
-  AutoScrollController _hideButtonController;
+  IbPageViewModel? _model;
+  AutoScrollController? _hideButtonController;
   bool _isFabsVisible = true;
 
   /// To track index through slug for scroll_to_index
@@ -62,12 +62,12 @@ class _IbPageViewState extends State<IbPageView> {
     super.initState();
     _isFabsVisible = true;
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
-    _hideButtonController.addListener(() {
-      if (_hideButtonController.position.userScrollDirection ==
+    _hideButtonController!.addListener(() {
+      if (_hideButtonController!.position.userScrollDirection ==
           ScrollDirection.reverse) {
         setState(() => _isFabsVisible = false);
       }
-      if (_hideButtonController.position.userScrollDirection ==
+      if (_hideButtonController!.position.userScrollDirection ==
           ScrollDirection.forward) {
         setState(() => _isFabsVisible = true);
       }
@@ -85,18 +85,18 @@ class _IbPageViewState extends State<IbPageView> {
 
   Future _scrollToWidget(String slug) async {
     if (_slugMap.containsKey(slug)) {
-      await _hideButtonController.scrollToIndex(_slugMap[slug],
+      await _hideButtonController!.scrollToIndex(_slugMap[slug]!,
           preferPosition: AutoScrollPosition.begin);
     } else {
       debugPrint('[IB]: $slug not present in map');
     }
   }
 
-  Future _onTapLink(String text, String href, String title) async {
+  Future _onTapLink(String text, String? href, String title) async {
     // If Absolute Interactive Book link
-    if (href.startsWith(EnvironmentConfig.IB_BASE_URL)) {
+    if (href!.startsWith(EnvironmentConfig.IB_BASE_URL)) {
       // If URI is same as the current page
-      if (_model.pageData.pageUrl.startsWith(href)) {
+      if (_model!.pageData!.pageUrl!.startsWith(href)) {
         // It's local link
         return _scrollToWidget(href.substring(1));
       } else {
@@ -117,7 +117,7 @@ class _IbPageViewState extends State<IbPageView> {
     }
   }
 
-  Widget _buildMarkdownImage(Uri uri, String title, String alt) {
+  Widget? _buildMarkdownImage(Uri uri, String? title, String? alt) {
     var widgets = <Widget>[];
 
     // SVG Support
@@ -159,7 +159,7 @@ class _IbPageViewState extends State<IbPageView> {
     };
 
     return MarkdownBody(
-      data: data.content,
+      data: data.content!,
       selectable: _selectable,
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
       imageBuilder: _buildMarkdownImage,
@@ -172,9 +172,9 @@ class _IbPageViewState extends State<IbPageView> {
         'h5': _headingsBuilder,
         'h6': _headingsBuilder,
         'chapter_contents': IbChapterContentsBuilder(
-            chapterContents: _model.pageData?.chapterOfContents?.isNotEmpty ??
+            chapterContents: _model!.pageData?.chapterOfContents?.isNotEmpty ??
                     false
-                ? _buildTOC(_model.pageData.chapterOfContents, padding: false)
+                ? _buildTOC(_model!.pageData!.chapterOfContents!, padding: false)
                 : Container()),
         'iframe': IbWebViewBuilder(),
         'interaction': IbInteractionBuilder(model: _model),
@@ -197,25 +197,25 @@ class _IbPageViewState extends State<IbPageView> {
         ],
       ),
       styleSheet: MarkdownStyleSheet(
-        h1: Theme.of(context).textTheme.headline4.copyWith(
+        h1: Theme.of(context).textTheme.headline4!.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w300,
             ),
-        h2: Theme.of(context).textTheme.headline5.copyWith(
+        h2: Theme.of(context).textTheme.headline5!.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w600,
             ),
-        h3: Theme.of(context).textTheme.headline6.copyWith(
+        h3: Theme.of(context).textTheme.headline6!.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w600,
             ),
-        h4: Theme.of(context).textTheme.subtitle1.copyWith(
+        h4: Theme.of(context).textTheme.subtitle1!.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w600,
             ),
         h5: Theme.of(context)
             .textTheme
-            .headline6
+            .headline6!
             .copyWith(fontWeight: FontWeight.w300),
         horizontalRuleDecoration: BoxDecoration(
           border: Border(
@@ -248,7 +248,7 @@ class _IbPageViewState extends State<IbPageView> {
     await _scrollToWidget(slug);
   }
 
-  Widget _buildTocListTile(String leading, String content,
+  Widget _buildTocListTile(String? leading, String? content,
       {bool root = true, bool padding = true}) {
     if (!root) {
       return ListTile(
@@ -257,7 +257,7 @@ class _IbPageViewState extends State<IbPageView> {
         contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
         minLeadingWidth: 20,
         title: Text('$leading $content'),
-        onTap: () async => _onTocListTileTap(content),
+        onTap: () async => _onTocListTileTap(content!),
       );
     }
 
@@ -265,7 +265,7 @@ class _IbPageViewState extends State<IbPageView> {
       visualDensity: !padding ? VisualDensity(vertical: -3) : null,
       contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
       title: Text('$leading $content'),
-      onTap: () async => _onTocListTileTap(content),
+      onTap: () async => _onTocListTileTap(content!),
     );
   }
 
@@ -281,7 +281,7 @@ class _IbPageViewState extends State<IbPageView> {
     ];
 
     if (item.items != null) {
-      for (var e in item.items) {
+      for (var e in item.items!) {
         items.addAll(
           _buildTocItems(
             e,
@@ -323,14 +323,14 @@ class _IbPageViewState extends State<IbPageView> {
                 'Table of Contents',
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1
+                    .subtitle1!
                     .copyWith(color: Theme.of(context).colorScheme.onPrimary),
               ),
               tileColor: Theme.of(context).primaryColor,
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: _buildTOC(_model.pageData.tableOfContents),
+                child: _buildTOC(_model!.pageData!.tableOfContents!),
               ),
             ),
           ],
@@ -343,8 +343,8 @@ class _IbPageViewState extends State<IbPageView> {
     var alignment = MainAxisAlignment.spaceBetween;
     var buttons = <Widget>[];
 
-    if (widget.chapter.prev != null) {
-      if (widget.chapter.next == null) {
+    if (widget.chapter!.prev != null) {
+      if (widget.chapter!.next == null) {
         alignment = MainAxisAlignment.start;
       }
 
@@ -356,7 +356,7 @@ class _IbPageViewState extends State<IbPageView> {
             heroTag: 'previousPage',
             mini: true,
             backgroundColor: Theme.of(context).primaryIconTheme.color,
-            onPressed: () => widget.setPage(widget.chapter.prev),
+            onPressed: () => widget.setPage(widget.chapter!.prev),
             child: Icon(
               Icons.arrow_back_rounded,
               color: IbTheme.primaryColor,
@@ -366,8 +366,8 @@ class _IbPageViewState extends State<IbPageView> {
       );
     }
 
-    if (widget.chapter.next != null) {
-      if (widget.chapter.prev == null) {
+    if (widget.chapter!.next != null) {
+      if (widget.chapter!.prev == null) {
         alignment = MainAxisAlignment.end;
       }
 
@@ -379,7 +379,7 @@ class _IbPageViewState extends State<IbPageView> {
             heroTag: 'nextPage',
             mini: true,
             backgroundColor: Theme.of(context).primaryIconTheme.color,
-            onPressed: () => widget.setPage(widget.chapter.next),
+            onPressed: () => widget.setPage(widget.chapter!.next),
             child: Icon(
               Icons.arrow_forward_rounded,
               color: IbTheme.primaryColor,
@@ -395,12 +395,12 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
-  List<Widget> _buildPageContent(IbPageData pageData) {
+  List<Widget> _buildPageContent(IbPageData? pageData) {
     if (pageData == null) {
       return [
         Text(
           'Loading ...',
-          style: Theme.of(context).textTheme.headline6.copyWith(
+          style: Theme.of(context).textTheme.headline6!.copyWith(
                 color: IbTheme.primaryHeadingColor(context),
                 fontWeight: FontWeight.w600,
               ),
@@ -428,7 +428,7 @@ class _IbPageViewState extends State<IbPageView> {
 
   @override
   void dispose() {
-    _hideButtonController.dispose();
+    _hideButtonController!.dispose();
     super.dispose();
   }
 
@@ -437,11 +437,11 @@ class _IbPageViewState extends State<IbPageView> {
     return BaseView<IbPageViewModel>(
       onModelReady: (model) {
         _model = model;
-        model.fetchPageData(id: widget.chapter.id);
+        model.fetchPageData(id: widget.chapter!.id);
       },
       builder: (context, model, child) {
         // Set the callback to show bottom sheet for Table of Contents
-        if (_model.isSuccess(_model.IB_FETCH_PAGE_DATA) &&
+        if (_model!.isSuccess(_model!.IB_FETCH_PAGE_DATA) &&
             (model.pageData?.tableOfContents?.isNotEmpty ?? false)) {
           widget.tocCallback(_showBottomSheet);
         } else {
@@ -461,7 +461,7 @@ class _IbPageViewState extends State<IbPageView> {
                 ),
               ),
             ),
-            if (widget.chapter.prev != null || widget.chapter.next != null)
+            if (widget.chapter!.prev != null || widget.chapter!.next != null)
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(

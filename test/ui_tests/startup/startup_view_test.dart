@@ -13,7 +13,7 @@ import '../../setup/test_helpers.dart';
 
 void main() {
   group('StartupViewTest -', () {
-    NavigatorObserver mockObserver;
+    late NavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -35,7 +35,7 @@ void main() {
 
       /// The tester.pumpWidget() call above just built our app widget
       /// and triggered the pushObserver method on the mockObserver once.
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
     }
 
     testWidgets('finds CircuitVerse logo on StartUpView',
@@ -51,7 +51,7 @@ void main() {
       await _pumpStartUpView(tester);
       await tester.pumpAndSettle(Duration(seconds: 1));
 
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
       expect(find.byType(CVLandingView), findsOneWidget);
     });
   });

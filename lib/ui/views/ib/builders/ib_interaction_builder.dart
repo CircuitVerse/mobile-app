@@ -9,16 +9,16 @@ import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class IbInteractionBuilder extends MarkdownElementBuilder {
-  final IbPageViewModel model;
+  final IbPageViewModel? model;
 
   IbInteractionBuilder({this.model});
 
   @override
-  Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {
+  Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
     var id = element.textContent;
 
     return FutureBuilder<dynamic>(
-      future: model.fetchHtmlInteraction(id),
+      future: model!.fetchHtmlInteraction(id),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.data is Failure) {
           return Text('Error Loading Interaction');
@@ -28,7 +28,7 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
 
         var _textContent = snapshot.data.toString();
         var _streamController = StreamController<double>();
-        WebViewController _webViewController;
+        late WebViewController _webViewController;
 
         return StreamBuilder<double>(
           initialData: 100,

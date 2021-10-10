@@ -21,7 +21,7 @@ import '../../setup/test_helpers.dart';
 
 void main() {
   group('UpdateAssignmentViewTest -', () {
-    NavigatorObserver mockObserver;
+    late NavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -44,7 +44,7 @@ void main() {
 
       /// The tester.pumpWidget() call above just built our app widget
       /// and triggered the pushObserver method on the mockObserver once.
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any!, any));
     }
 
     testWidgets('finds Generic UpdateAssignmentView widgets',
@@ -90,10 +90,10 @@ void main() {
       locator.registerSingleton<UpdateAssignmentViewModel>(
           _updateAssignmentViewModel);
 
-      when(_updateAssignmentViewModel.updateAssignment(any, any, any, any, any))
+      when(_updateAssignmentViewModel.updateAssignment(any, any, any!, any!, any))
           .thenReturn(null);
-      when(_updateAssignmentViewModel.isSuccess(any)).thenReturn(false);
-      when(_updateAssignmentViewModel.isError(any)).thenReturn(false);
+      when(_updateAssignmentViewModel.isSuccess(any!)).thenReturn(false);
+      when(_updateAssignmentViewModel.isError(any!)).thenReturn(false);
 
       // Pump UpdateAssignmentView
       await _pumpUpdateAssignmentView(tester);
@@ -105,8 +105,8 @@ void main() {
               (widget) => widget is CVTextField && widget.label == 'Name'),
           'Test');
       CVPrimaryButton widget =
-          find.byType(CVPrimaryButton).evaluate().first.widget;
-      widget.onPressed();
+          find.byType(CVPrimaryButton).evaluate().first.widget as CVPrimaryButton;
+      widget.onPressed!();
       await tester.pumpAndSettle();
 
       await tester.pump(Duration(seconds: 5));

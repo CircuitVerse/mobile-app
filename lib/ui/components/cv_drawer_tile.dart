@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 
 class CVDrawerTile extends StatelessWidget {
-  final String title;
-  final IconData iconData;
-  final Color color;
+  final String? title;
+  final IconData? iconData;
+  final Color? color;
 
-  const CVDrawerTile({Key key, @required this.title, this.iconData, this.color})
+  const CVDrawerTile({Key? key, required this.title, this.iconData, this.color})
       : super(key: key);
 
   @override
@@ -21,8 +21,8 @@ class CVDrawerTile extends StatelessWidget {
               )
             : null,
         title: Text(
-          title,
-          style: Theme.of(context).textTheme.headline6.copyWith(
+          title!,
+          style: Theme.of(context).textTheme.headline6!.copyWith(
                 fontFamily: 'Poppins',
                 color: color ?? CVTheme.textColor(context),
               ),

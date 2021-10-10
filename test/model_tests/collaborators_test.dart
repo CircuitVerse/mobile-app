@@ -12,7 +12,7 @@ void main() {
       expect(_collaborators, isInstanceOf<Collaborators>());
 
       expect(_collaborators.data, isInstanceOf<List<Collaborator>>());
-      expect(_collaborators.data.length, 1);
+      expect(_collaborators.data!.length, 1);
 
       expect(_collaborators.links, isInstanceOf<Links>());
     });

@@ -8,46 +8,46 @@ import 'package:mobile_app/utils/app_exceptions.dart';
 abstract class ProjectsApi {
   Future<Projects> getPublicProjects({
     int page = 1,
-    String filterByTag,
-    String sortBy,
+    String? filterByTag,
+    String? sortBy,
   });
 
   Future<Projects> getUserProjects(
-    String userId, {
+    String? userId, {
     int page = 1,
-    String filterByTag,
-    String sortBy,
+    String? filterByTag,
+    String? sortBy,
   });
 
   Future<Projects> getFeaturedProjects({
     int page = 1,
     int size = 5,
-    String filterByTag,
-    String sortBy,
+    String? filterByTag,
+    String? sortBy,
   });
 
   Future<Projects> getUserFavourites(
-    String userId, {
+    String? userId, {
     int page = 1,
-    String filterByTag,
-    String sortBy,
+    String? filterByTag,
+    String? sortBy,
   });
 
-  Future<Project> getProjectDetails(String id);
+  Future<Project> getProjectDetails(String? id);
 
   Future<Project> updateProject(
-    String id, {
-    String name,
-    String projectAccessType,
-    String description,
-    List<String> tagsList,
+    String? id, {
+    String? name,
+    String? projectAccessType,
+    String? description,
+    List<String?>? tagsList,
   });
 
-  Future<bool> deleteProject(String projectId);
+  Future<bool> deleteProject(String? projectId);
 
-  Future<String> toggleStarProject(String projectId);
+  Future<String?> toggleStarProject(String? projectId);
 
-  Future<Project> forkProject(String toBeForkedProjectId);
+  Future<Project> forkProject(String? toBeForkedProjectId);
 }
 
 class HttpProjectsApi implements ProjectsApi {
@@ -56,8 +56,8 @@ class HttpProjectsApi implements ProjectsApi {
   @override
   Future<Projects> getPublicProjects({
     int page = 1,
-    String filterByTag,
-    String sortBy,
+    String? filterByTag,
+    String? sortBy,
   }) async {
     var endpoint = '/projects?page[number]=$page';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
@@ -78,10 +78,10 @@ class HttpProjectsApi implements ProjectsApi {
 
   @override
   Future<Projects> getUserProjects(
-    String userId, {
+    String? userId, {
     int page = 1,
-    String filterByTag,
-    String sortBy,
+    String? filterByTag,
+    String? sortBy,
   }) async {
     var endpoint = '/users/$userId/projects?page[number]=$page';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
@@ -109,8 +109,8 @@ class HttpProjectsApi implements ProjectsApi {
   Future<Projects> getFeaturedProjects({
     int page = 1,
     int size = 5,
-    String filterByTag,
-    String sortBy,
+    String? filterByTag,
+    String? sortBy,
   }) async {
     var endpoint = '/projects/featured?page[number]=$page&page[size]=$size';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
@@ -134,10 +134,10 @@ class HttpProjectsApi implements ProjectsApi {
 
   @override
   Future<Projects> getUserFavourites(
-    String userId, {
+    String? userId, {
     int page = 1,
-    String filterByTag,
-    String sortBy,
+    String? filterByTag,
+    String? sortBy,
   }) async {
     var endpoint = '/users/$userId/favourites?page[number]=$page';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
@@ -160,7 +160,7 @@ class HttpProjectsApi implements ProjectsApi {
   }
 
   @override
-  Future<Project> getProjectDetails(String id) async {
+  Future<Project> getProjectDetails(String? id) async {
     var endpoint = '/projects/$id?include=collaborators';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 
@@ -185,11 +185,11 @@ class HttpProjectsApi implements ProjectsApi {
 
   @override
   Future<Project> updateProject(
-    String id, {
-    String name,
-    String projectAccessType,
-    String description,
-    List<String> tagsList,
+    String? id, {
+    String? name,
+    String? projectAccessType,
+    String? description,
+    List<String?>? tagsList,
   }) async {
     var endpoint = '/projects/$id';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
@@ -197,7 +197,7 @@ class HttpProjectsApi implements ProjectsApi {
       'name': name,
       'project_access_type': projectAccessType,
       'description': description,
-      'tags_list': tagsList.join(','),
+      'tags_list': tagsList!.join(','),
     };
 
     try {
@@ -223,7 +223,7 @@ class HttpProjectsApi implements ProjectsApi {
   }
 
   @override
-  Future<bool> deleteProject(String projectId) async {
+  Future<bool> deleteProject(String? projectId) async {
     var endpoint = '/projects/$projectId';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 
@@ -246,7 +246,7 @@ class HttpProjectsApi implements ProjectsApi {
   }
 
   @override
-  Future<String> toggleStarProject(String projectId) async {
+  Future<String?> toggleStarProject(String? projectId) async {
     var endpoint = '/projects/$projectId/toggle-star';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 
@@ -267,7 +267,7 @@ class HttpProjectsApi implements ProjectsApi {
   }
 
   @override
-  Future<Project> forkProject(String toBeForkedProjectId) async {
+  Future<Project> forkProject(String? toBeForkedProjectId) async {
     var endpoint = '/projects/$toBeForkedProjectId/fork';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 

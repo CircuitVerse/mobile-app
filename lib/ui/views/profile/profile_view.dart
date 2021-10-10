@@ -14,23 +14,23 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class ProfileView extends StatefulWidget {
   static const String id = 'profile_view';
-  final String userId;
+  final String? userId;
 
-  const ProfileView({Key key, this.userId}) : super(key: key);
+  const ProfileView({Key? key, this.userId}) : super(key: key);
 
   @override
   _ProfileViewState createState() => _ProfileViewState();
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  ProfileViewModel _model;
-  String userId;
+  ProfileViewModel? _model;
+  String? userId;
 
   @override
   void initState() {
     super.initState();
     userId =
-        widget.userId ?? locator<LocalStorageService>().currentUser.data.id;
+        widget.userId ?? locator<LocalStorageService>().currentUser!.data!.id;
   }
 
   Widget _buildProfileImage() {
@@ -51,14 +51,14 @@ class _ProfileViewState extends State<ProfileView> {
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.subtitle1.copyWith(
+        style: Theme.of(context).textTheme.subtitle1!.copyWith(
               fontWeight: FontWeight.bold,
             ),
       ),
     );
   }
 
-  Widget _buildProfileComponent(String title, String description) {
+  Widget _buildProfileComponent(String title, String? description) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4),
       alignment: Alignment.centerLeft,
@@ -68,7 +68,7 @@ class _ProfileViewState extends State<ProfileView> {
           children: <TextSpan>[
             TextSpan(
               text: '$title : ',
-              style: Theme.of(context).textTheme.bodyText1.copyWith(
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -84,7 +84,7 @@ class _ProfileViewState extends State<ProfileView> {
   Widget _buildEditProfileButton() {
     var _localStorageService = locator<LocalStorageService>();
     if (_localStorageService.isLoggedIn &&
-        userId == _localStorageService.currentUser.data.id) {
+        userId == _localStorageService.currentUser!.data!.id) {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: CVTheme.primaryColor,
@@ -93,13 +93,13 @@ class _ProfileViewState extends State<ProfileView> {
           var _updatedUser = await Get.toNamed(EditProfileView.id);
           if (_updatedUser is User) {
             setState(() {
-              _model.user = _updatedUser;
+              _model!.user = _updatedUser;
             });
           }
         },
         child: Text(
           'Edit Profile',
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: Colors.white,
               ),
         ),
@@ -138,7 +138,7 @@ class _ProfileViewState extends State<ProfileView> {
                   _buildProfileComponent(
                     'Joined',
                     _attrs?.createdAt != null
-                        ? timeago.format(_attrs.createdAt)
+                        ? timeago.format(_attrs!.createdAt!)
                         : null,
                   ),
                   _buildProfileComponent(
@@ -206,7 +206,7 @@ class _ProfileViewState extends State<ProfileView> {
     return BaseView<ProfileViewModel>(
       onModelReady: (model) {
         _model = model;
-        _model.fetchUserProfile(userId);
+        _model!.fetchUserProfile(userId);
       },
       builder: (context, model, child) => Scaffold(
         appBar: widget.userId != null
