@@ -41,7 +41,7 @@ class CircuitVerseMobile extends StatelessWidget {
             data: ThemeData(
               fontFamily: 'Poppins',
               brightness: Brightness.light,
-              textSelectionTheme: TextSelectionThemeData(
+              textSelectionTheme: const TextSelectionThemeData(
                 cursorColor: CVTheme.primaryColor,
               ),
               appBarTheme: AppBarTheme(
@@ -59,7 +59,7 @@ class CircuitVerseMobile extends StatelessWidget {
             data: ThemeData(
               fontFamily: 'Poppins',
               brightness: Brightness.dark,
-              textSelectionTheme: TextSelectionThemeData(
+              textSelectionTheme: const TextSelectionThemeData(
                 cursorColor: CVTheme.primaryColor,
               ),
             ),

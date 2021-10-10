@@ -68,7 +68,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: DateTimeField(
-        key: Key('cv_assignment_deadline_field'),
+        key: const Key('cv_assignment_deadline_field'),
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: widget.assignment.attributes.deadline,
         decoration: CVTheme.textFieldDecoration.copyWith(
@@ -108,7 +108,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
                 fontWeight: FontWeight.bold,
               ),
         ),
-        subtitle: Text('Enable elements restriction'),
+        subtitle: const Text('Enable elements restriction'),
         onChanged: (value) {
           setState(() {
             _isRestrictionEnabled = value;
@@ -149,7 +149,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          Divider(),
+          const Divider(),
           Wrap(children: components.map((e) => _buildCheckBox(e)).toList()),
         ],
       ),
@@ -207,7 +207,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.UPDATE_ASSIGNMENT)) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedAssignment);
         SnackBarUtils.showDark(
           'Assignment Updated',
@@ -227,7 +227,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     return BaseView<UpdateAssignmentViewModel>(
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text('Update Assignment')),
+        appBar: AppBar(title: const Text('Update Assignment')),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Form(

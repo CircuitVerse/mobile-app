@@ -36,11 +36,11 @@ class _CVLandingViewState extends State<CVLandingView> {
 
   final List<Widget> _items = [
     HomeView(),
-    FeaturedProjectsView(showAppBar: false),
+    const FeaturedProjectsView(showAppBar: false),
     AboutView(),
-    ContributorsView(showAppBar: false),
-    TeachersView(showAppBar: false),
-    ProfileView(),
+    const ContributorsView(showAppBar: false),
+    const TeachersView(showAppBar: false),
+    const ProfileView(),
     MyGroupsView(),
   ];
 
@@ -125,7 +125,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                 child: ExpansionTile(
                   maintainState: true,
                   title: ListTile(
-                    contentPadding: EdgeInsets.all(0),
+                    contentPadding: const EdgeInsets.all(0),
                     leading: Icon(
                       Icons.explore,
                       color: CVTheme.drawerIcon(context),

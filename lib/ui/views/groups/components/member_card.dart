@@ -24,7 +24,7 @@ class MemberCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: CVTheme.boxShadow(context),
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             blurRadius: 2,
           )
         ],
@@ -52,7 +52,7 @@ class MemberCard extends StatelessWidget {
           ),
           if (hasMentorAccess)
             IconButton(
-              icon: Icon(Icons.delete_outline),
+              icon: const Icon(Icons.delete_outline),
               color: CVTheme.red,
               onPressed: onDeletePressed,
             )

@@ -34,13 +34,13 @@ class _ProjectCardState extends State<ProjectCard> {
       decoration: BoxDecoration(
         color:
             widget.isHeaderFilled ? CVTheme.primaryColor : Colors.transparent,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(4),
           topRight: Radius.circular(4),
         ),
         border: widget.isHeaderFilled
             ? null
-            : Border.fromBorderSide(
+            : const Border.fromBorderSide(
                 BorderSide(color: CVTheme.primaryColor),
               ),
       ),
@@ -64,7 +64,7 @@ class _ProjectCardState extends State<ProjectCard> {
                   ),
             ),
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           _buildHeaderChip(widget.project.attributes.projectAccessType)
         ],
       ),
@@ -75,13 +75,13 @@ class _ProjectCardState extends State<ProjectCard> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: CVTheme.primaryColor),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(4),
           bottomRight: Radius.circular(4),
         ),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(4),
           bottomRight: Radius.circular(4),
         ),

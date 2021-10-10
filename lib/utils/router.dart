@@ -38,15 +38,16 @@ class CVRouter {
       case CVLandingView.id:
         return MaterialPageRoute(builder: (_) => CVLandingView());
       case TeachersView.id:
-        return MaterialPageRoute(builder: (_) => TeachersView());
+        return MaterialPageRoute(builder: (_) => const TeachersView());
       case ContributorsView.id:
-        return MaterialPageRoute(builder: (_) => ContributorsView());
+        return MaterialPageRoute(builder: (_) => const ContributorsView());
       case AboutTosView.id:
-        return MaterialPageRoute(builder: (_) => AboutTosView());
+        return MaterialPageRoute(builder: (_) => const AboutTosView());
       case AboutPrivacyPolicyView.id:
-        return MaterialPageRoute(builder: (_) => AboutPrivacyPolicyView());
+        return MaterialPageRoute(
+            builder: (_) => const AboutPrivacyPolicyView());
       case FeaturedProjectsView.id:
-        return MaterialPageRoute(builder: (_) => FeaturedProjectsView());
+        return MaterialPageRoute(builder: (_) => const FeaturedProjectsView());
       case ProfileView.id:
         var _userId = settings.arguments as String;
         return MaterialPageRoute(

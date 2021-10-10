@@ -16,7 +16,7 @@ class GroupMemberCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        border: Border(
+        border: const Border(
           left: BorderSide(
             width: 10,
             color: CVTheme.primaryColor,
@@ -25,7 +25,7 @@ class GroupMemberCard extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: CVTheme.boxShadow(context),
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             blurRadius: 2,
           ),
         ],

@@ -47,8 +47,8 @@ class IbPopQuizButtonState extends State<IbPopQuizButton> {
         _isPressed = !_isPressed;
       }),
       child: Container(
-        margin: EdgeInsets.only(top: 5.0),
-        padding: EdgeInsets.all(10.0),
+        margin: const EdgeInsets.only(top: 5.0),
+        padding: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
           color: _isPressed ? _getBorderColor() : null,
           border: Border.all(color: _getBorderColor()),

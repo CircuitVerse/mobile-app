@@ -23,7 +23,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: ContributorsView(),
+          home: const ContributorsView(),
         ),
       );
 

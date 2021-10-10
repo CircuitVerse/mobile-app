@@ -64,9 +64,9 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: DateTimeField(
-        key: Key('cv_assignment_deadline_field'),
+        key: const Key('cv_assignment_deadline_field'),
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
-        initialValue: DateTime.now().add(Duration(days: 7)),
+        initialValue: DateTime.now().add(const Duration(days: 7)),
         decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: 'Deadline',
         ),
@@ -97,7 +97,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: DropdownButtonFormField<String>(
-        key: Key('cv_assignment_grading_dropdown'),
+        key: const Key('cv_assignment_grading_dropdown'),
         decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: 'Grading Scale',
         ),
@@ -128,7 +128,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
                 fontWeight: FontWeight.bold,
               ),
         ),
-        subtitle: Text('Enable elements restriction'),
+        subtitle: const Text('Enable elements restriction'),
         onChanged: (value) {
           setState(() {
             _isRestrictionEnabled = value;
@@ -170,7 +170,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          Divider(),
+          const Divider(),
           Wrap(children: components.map((e) => _buildCheckBox(e)).toList()),
         ],
       ),
@@ -229,7 +229,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.ADD_ASSIGNMENT)) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
 
         // returns the added assignment..
         Get.back(result: _model.addedAssignment);
@@ -255,7 +255,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return BaseView<AddAssignmentViewModel>(
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text('Add Assignment')),
+        appBar: AppBar(title: const Text('Add Assignment')),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Form(

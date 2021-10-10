@@ -47,7 +47,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: Scaffold(
+          home: const Scaffold(
             body: UserFavouritesView(),
           ),
         ),

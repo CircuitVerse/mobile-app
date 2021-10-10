@@ -17,7 +17,7 @@ class ProjectPreviewFullScreen extends StatelessWidget {
       ),
       body: Center(
         child: PhotoView.customChild(
-          backgroundDecoration: BoxDecoration(
+          backgroundDecoration: const BoxDecoration(
             color: Colors.white,
           ),
           initialScale: 1.0,

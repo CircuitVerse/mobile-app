@@ -61,7 +61,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
 
         _items.insert(
           0,
-          CVHeader(
+          const CVHeader(
             title: 'Editor Picks',
             description:
                 'These circuits have been hand-picked by our authors for their awesomeness.',
@@ -70,7 +70,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
 
         return Scaffold(
           appBar: widget.showAppBar
-              ? AppBar(title: Text('Featured Circuits'))
+              ? AppBar(title: const Text('Featured Circuits'))
               : null,
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16),

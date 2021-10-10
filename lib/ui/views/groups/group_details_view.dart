@@ -61,8 +61,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       },
       child: Row(
         children: [
-          Icon(Icons.edit, color: Colors.white),
-          SizedBox(width: 8),
+          const Icon(Icons.edit, color: Colors.white),
+          const SizedBox(width: 8),
           Text(
             'Edit',
             style: Theme.of(context).textTheme.headline6.copyWith(
@@ -91,7 +91,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               ),
             ),
             if (_recievedGroup.isMentor) ...[
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               _buildEditGroupButton(),
             ]
           ],
@@ -152,7 +152,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
+                const Text(
                   'Add Group Members',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -182,7 +182,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('CANCEL'),
+                child: const Text('CANCEL'),
               ),
               CVFlatButton(
                 key: addButtonGlobalKey,
@@ -356,13 +356,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         _model.fetchGroupDetails(_recievedGroup.id);
       },
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text('Group Details')),
+        appBar: AppBar(title: const Text('Group Details')),
         body: Builder(builder: (context) {
           var _items = <Widget>[];
 
           _items.add(_buildHeader());
 
-          _items.add(SizedBox(height: 36));
+          _items.add(const SizedBox(height: 36));
 
           _items.add(
             _buildSubHeader(
@@ -383,7 +383,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             });
           }
 
-          _items.add(SizedBox(height: 36));
+          _items.add(const SizedBox(height: 36));
 
           _items.add(
             _buildSubHeader(
