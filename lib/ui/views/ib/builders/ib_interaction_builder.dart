@@ -34,7 +34,7 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
           initialData: 100,
           stream: _streamController.stream,
           builder: (context, snapshot) {
-            return Container(
+            return SizedBox(
               height: snapshot.data,
               child: WebView(
                 initialUrl:
