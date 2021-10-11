@@ -38,7 +38,7 @@ class IbPageView extends StatefulWidget {
   final SetPageCallback setPage;
   final IbChapter chapter;
 
-  IbPageView({
+  const IbPageView({
     @required Key key,
     @required this.tocCallback,
     @required this.chapter,
@@ -88,7 +88,7 @@ class _IbPageViewState extends State<IbPageView> {
       await _hideButtonController.scrollToIndex(_slugMap[slug],
           preferPosition: AutoScrollPosition.begin);
     } else {
-      print('[IB]: $slug not present in map');
+      debugPrint('[IB]: $slug not present in map');
     }
   }
 
@@ -461,15 +461,16 @@ class _IbPageViewState extends State<IbPageView> {
                 ),
               ),
             ),
-            widget.chapter.prev != null || widget.chapter.next != null
-                ? Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: _buildFloatingActionButtons(),
-                    ),
-                  )
-                : Container(),
+            if (widget.chapter.prev != null || widget.chapter.next != null)
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: _buildFloatingActionButtons(),
+                ),
+              )
+            else
+              Container(),
           ],
         );
       },

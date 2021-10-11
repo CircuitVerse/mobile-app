@@ -212,7 +212,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         _descriptionEditorText =
             await _descriptionEditor.currentState.getText();
       } on NoSuchMethodError {
-        print(
+        debugPrint(
             'Handled html_editor error. NOTE: This should only throw during tests.');
         _descriptionEditorText = '';
       }
@@ -268,7 +268,10 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
                 _buildDeadlineInput(),
                 _buildGradingScaleDropdown(),
                 _buildRestrictionsHeader(),
-                _isRestrictionEnabled ? _buildRestrictions() : Container(),
+                if (_isRestrictionEnabled)
+                  _buildRestrictions()
+                else
+                  Container(),
                 _buildCreateButton(),
               ],
             ),

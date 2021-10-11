@@ -24,20 +24,11 @@ linter:
 
     leading_newlines_in_multiline_strings: false
 
-    always_declare_return_types: false
-
     type_annotate_public_apis: false
     #always_use_package_imports to make a quick navigation to particular files
     always_use_package_imports: true
 
     directives_ordering: false
-
-    # In case of production should be set to true
-    avoid_print: false
-
-    avoid_unnecessary_containers: false
-
-    prefer_if_elements_to_conditional_expressions: false
 
     avoid_function_literals_in_foreach_calls: false
 
@@ -55,8 +46,6 @@ linter:
 
     use_key_in_widget_constructors: false
 
-    unnecessary_string_interpolations: false
-
     prefer_const_declarations: false
 
     constant_identifier_names: false
@@ -65,6 +54,4 @@ linter:
 
     prefer_typing_uninitialized_variables: false
 
-    prefer_const_constructors_in_immutables: false
-
-    prefer_single_quotes: false
+    prefer_const_constructors_in_immutables: true

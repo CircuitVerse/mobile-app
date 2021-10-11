@@ -36,8 +36,9 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
           child: FadeInImage.memoryNetwork(
             fit: BoxFit.cover,
             placeholder: kTransparentImage,
-            image:
-                '${EnvironmentConfig.CV_API_BASE_URL.substring(0, EnvironmentConfig.CV_API_BASE_URL.length - 7) + widget.project.attributes.imagePreview.url}',
+            image: EnvironmentConfig.CV_API_BASE_URL.substring(
+                    0, EnvironmentConfig.CV_API_BASE_URL.length - 7) +
+                widget.project.attributes.imagePreview.url,
           ),
         ),
       ),
@@ -61,16 +62,14 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            child: Container(
-              child: Text(
-                widget.project.attributes.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.start,
-                style: Theme.of(context).textTheme.headline6.copyWith(
-                      color: CVTheme.textColor(context),
-                    ),
-              ),
+            child: Text(
+              widget.project.attributes.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.start,
+              style: Theme.of(context).textTheme.headline6.copyWith(
+                    color: CVTheme.textColor(context),
+                  ),
             ),
           ),
           CVPrimaryButton(

@@ -25,7 +25,7 @@ class CVTypeAheadField extends StatelessWidget {
   /// When a [TextInputType] is not specified, it defaults to [TextInputType.text]
   ///
   /// When `maxLines` is not specified, it defaults to 1
-  CVTypeAheadField({
+  const CVTypeAheadField({
     Key key,
     @required this.label,
     this.type = TextInputType.text,
@@ -88,11 +88,11 @@ class CVTypeAheadField extends StatelessWidget {
                 }
                 //// If there is need of some other API Fetch add another if condition
                 return [
-                  pattern == '' ? 'No suggestions found' : pattern,
+                  if (pattern == '') 'No suggestions found' else pattern,
                 ];
               } catch (e) {
                 return [
-                  pattern == '' ? 'No suggestions found' : pattern,
+                  if (pattern == '') 'No suggestions found' else pattern,
                 ];
               }
             },

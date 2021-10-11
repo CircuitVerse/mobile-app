@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CVFlatButton extends StatefulWidget {
-  CVFlatButton({
+  const CVFlatButton({
     @required Key key,
     @required this.triggerFunction,
     @required this.buttonText,
@@ -31,7 +31,7 @@ class CVFlatButtonState extends State<CVFlatButton> {
       onPressed: dynamicFunction == null
           ? null
           : () => dynamicFunction.call(widget.context),
-      child: Text('${widget.buttonText}'),
+      child: Text(widget.buttonText),
     );
   }
 }
