@@ -17,7 +17,7 @@ class DialogService {
         ),
         title: Text(
           request.title,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -29,7 +29,7 @@ class DialogService {
             },
             child: Text(
               request.buttonTitle,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -47,7 +47,7 @@ class DialogService {
         ),
         title: Text(
           request.title,
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -59,7 +59,7 @@ class DialogService {
             },
             child: Text(
               request.cancelTitle,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -70,7 +70,7 @@ class DialogService {
             },
             child: Text(
               request.buttonTitle,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -92,12 +92,12 @@ class DialogService {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                CircularProgressIndicator(),
-                SizedBox(width: 16),
+                const CircularProgressIndicator(),
+                const SizedBox(width: 16),
                 Expanded(
                   child: Text(
                     request.title,
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

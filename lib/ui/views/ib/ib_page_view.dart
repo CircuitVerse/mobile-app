@@ -75,7 +75,7 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   Widget _buildDivider() {
-    return Padding(
+    return const Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Divider(
         thickness: 1.5,
@@ -145,7 +145,7 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   Widget _buildMarkdown(IbMd data) {
-    final _selectable = false;
+    const _selectable = false;
     final _headingsBuilder = IbHeadingsBuilder(
       slugMap: _slugMap,
       controller: _hideButtonController,
@@ -230,7 +230,7 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   Widget _buildFooter() {
-    return Padding(
+    return const Padding(
       padding: EdgeInsets.symmetric(vertical: 4),
       child: Text(
         'Copyright © 2021 Contributors to CircuitVerse. Distributed under a [CC-by-sa] license.',
@@ -252,8 +252,8 @@ class _IbPageViewState extends State<IbPageView> {
       {bool root = true, bool padding = true}) {
     if (!root) {
       return ListTile(
-        leading: Text(''),
-        visualDensity: !padding ? VisualDensity(vertical: -3) : null,
+        leading: const Text(''),
+        visualDensity: !padding ? const VisualDensity(vertical: -3) : null,
         contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
         minLeadingWidth: 20,
         title: Text('$leading $content'),
@@ -262,7 +262,7 @@ class _IbPageViewState extends State<IbPageView> {
     }
 
     return ListTile(
-      visualDensity: !padding ? VisualDensity(vertical: -3) : null,
+      visualDensity: !padding ? const VisualDensity(vertical: -3) : null,
       contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
       title: Text('$leading $content'),
       onTap: () async => _onTocListTileTap(content),
@@ -350,14 +350,14 @@ class _IbPageViewState extends State<IbPageView> {
 
       buttons.add(
         AnimatedOpacity(
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           opacity: _isFabsVisible ? 1.0 : 0.0,
           child: FloatingActionButton(
             heroTag: 'previousPage',
             mini: true,
             backgroundColor: Theme.of(context).primaryIconTheme.color,
             onPressed: () => widget.setPage(widget.chapter.prev),
-            child: Icon(
+            child: const Icon(
               Icons.arrow_back_rounded,
               color: IbTheme.primaryColor,
             ),
@@ -373,14 +373,14 @@ class _IbPageViewState extends State<IbPageView> {
 
       buttons.add(
         AnimatedOpacity(
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           opacity: _isFabsVisible ? 1.0 : 0.0,
           child: FloatingActionButton(
             heroTag: 'nextPage',
             mini: true,
             backgroundColor: Theme.of(context).primaryIconTheme.color,
             onPressed: () => widget.setPage(widget.chapter.next),
-            child: Icon(
+            child: const Icon(
               Icons.arrow_forward_rounded,
               color: IbTheme.primaryColor,
             ),

@@ -112,7 +112,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
             ),
           );
 
-          _items.add(SizedBox(height: 24));
+          _items.add(const SizedBox(height: 24));
 
           _items.add(_buildSubHeader(title: 'Groups You Mentor'));
 
@@ -136,7 +136,7 @@ class _MyGroupsViewState extends State<MyGroupsView> {
             }
           }
 
-          _items.add(SizedBox(height: 24));
+          _items.add(const SizedBox(height: 24));
 
           _items.add(_buildSubHeader(title: "Groups You're in"));
 

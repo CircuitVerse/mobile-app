@@ -13,7 +13,7 @@ class StartUpView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 42),
             child: Image.asset(
               'assets/images/landing/cv_full_logo.png',
-              key: Key('cv_startup_logo'),
+              key: const Key('cv_startup_logo'),
             ),
           ),
         ),

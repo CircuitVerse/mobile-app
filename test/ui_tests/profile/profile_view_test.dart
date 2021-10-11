@@ -57,7 +57,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: ProfileView(),
+          home: const ProfileView(),
         ),
       );
 

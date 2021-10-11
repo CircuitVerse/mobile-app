@@ -66,9 +66,9 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Row(children: <Widget>[
-              Expanded(child: Divider(thickness: 1)),
+              const Expanded(child: Divider(thickness: 1)),
               Text('  Or ${widget.isSignUp ? 'SignUp' : 'Login'} with  '),
-              Expanded(child: Divider(thickness: 1)),
+              const Expanded(child: Divider(thickness: 1)),
             ]),
           ),
           Row(
@@ -78,7 +78,7 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
                 onTap: onGoogleAuthPressed,
                 child: Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(shape: BoxShape.circle),
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
                   child:
                       Image.asset('assets/icons/google_icon.png', height: 40),
                 ),
@@ -87,7 +87,7 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
                 onTap: onFacebookAuthPressed,
                 child: Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(shape: BoxShape.circle),
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
                   child:
                       Image.asset('assets/icons/facebook_icon.png', height: 40),
                 ),
@@ -96,8 +96,8 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
                 onTap: onGithubAuthPressed,
                 child: Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(shape: BoxShape.circle),
-                  child: Icon(FontAwesome5.github, size: 40),
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: const Icon(FontAwesome5.github, size: 40),
                 ),
               ),
             ],

@@ -128,7 +128,7 @@ class _EditProjectViewState extends State<EditProjectView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.UPDATE_PROJECT)) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedProject);
         SnackBarUtils.showDark(
           'Project Updated',
@@ -170,7 +170,7 @@ class _EditProjectViewState extends State<EditProjectView> {
                 _buildTagsInput(),
                 _buildProjectAccessTypeInput(),
                 _buildDescriptionInput(),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 _buildUpdateProjectButton(),
               ],
             ),

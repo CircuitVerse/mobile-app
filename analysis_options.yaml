@@ -19,15 +19,10 @@ linter:
     # Unnecessary use of this in constructors should not be done
     unnecessary_this: false
 
-    # source files name using lowercase_with_underscores
-    lowercase_with_underscores: true
-
     leading_newlines_in_multiline_strings: false
 
     type_annotate_public_apis: false
-    #always_use_package_imports to make a quick navigation to particular files
-    always_use_package_imports: true
-
+    
     directives_ordering: false
 
     avoid_function_literals_in_foreach_calls: false
@@ -35,8 +30,6 @@ linter:
     join_return_with_assignment: false
 
     prefer_const_literals_to_create_immutables: false
-
-    prefer_const_constructors: false
 
     prefer_function_declarations_over_variables: false
 
@@ -46,12 +39,8 @@ linter:
 
     use_key_in_widget_constructors: false
 
-    prefer_const_declarations: false
-
     constant_identifier_names: false
 
     sized_box_for_whitespace: false
 
     prefer_typing_uninitialized_variables: false
-
-    prefer_const_constructors_in_immutables: true

@@ -88,7 +88,7 @@ void main() {
       await tester.tap(find.widgetWithText(CVPrimaryButton, 'Save'));
       await tester.pumpAndSettle();
 
-      await tester.pump(Duration(seconds: 5));
+      await tester.pump(const Duration(seconds: 5));
 
       // Verify Dialog Service is called to show Dialog of Updating
       verify(_dialogService.showCustomProgressDialog(title: anyNamed('title')))

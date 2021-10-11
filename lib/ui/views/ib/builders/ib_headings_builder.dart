@@ -33,7 +33,7 @@ class IbHeadingsBuilder extends MarkdownElementBuilder {
       controller: controller,
       index: index++,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 4.0),
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: widget,
       ),
     );

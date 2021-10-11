@@ -24,7 +24,7 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        border: Border(
+        border: const Border(
           top: BorderSide(
             width: 10,
             color: CVTheme.primaryColor,
@@ -33,7 +33,7 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
         boxShadow: [
           BoxShadow(
             color: CVTheme.boxShadow(context),
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             blurRadius: 2,
           )
         ],
