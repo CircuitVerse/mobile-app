@@ -33,8 +33,8 @@ class ContributeDonateCard extends StatelessWidget {
                   Radius.circular(8),
                 ),
                 color: Colors.white,
-                boxShadow: [
-                  const BoxShadow(
+                boxShadow: const [
+                  BoxShadow(
                     color: Colors.grey,
                     blurRadius: 2.0,
                     offset: Offset(2.0, 2.0),

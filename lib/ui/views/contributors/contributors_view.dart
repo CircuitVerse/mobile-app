@@ -18,33 +18,33 @@ class ContributorsView extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          children: <Widget>[
-            const CVHeader(
+          children: const <Widget>[
+            CVHeader(
               title: 'CONTRIBUTE',
               description:
                   "CircuitVerse aims to be free forever and we promise that we won't run any ads! The project is open source and to ensure its continued development and maintenance we need your support.",
             ),
-            const CircuitVerseSocialCard(
+            CircuitVerseSocialCard(
               imagePath: 'assets/images/contribute/email.png',
               title: 'Email us at',
               description: 'support@circuitverse.org',
               url: 'mailto:support@circuitverse.org',
             ),
-            const CircuitVerseSocialCard(
+            CircuitVerseSocialCard(
               imagePath: 'assets/images/contribute/slack.png',
               title: 'Join and chat with us at',
               description: 'Slack channel',
               url: 'https://circuitverse.org/slack',
             ),
-            const CircuitVerseSocialCard(
+            CircuitVerseSocialCard(
               imagePath: 'assets/images/contribute/github.png',
               title: 'Contribute to open source',
               description: 'Github',
               url: 'https://github.com/CircuitVerse',
             ),
-            const SizedBox(height: 32),
-            const CVSubheader(title: 'How to Support ?'),
-            const ContributeSupportCard(
+            SizedBox(height: 32),
+            CVSubheader(title: 'How to Support ?'),
+            ContributeSupportCard(
               imagePath: 'assets/images/contribute/person.png',
               title: 'I am a Student',
               cardDescriptionList: [
@@ -53,7 +53,7 @@ class ContributorsView extends StatelessWidget {
                 'Introduce the platform to your buddie'
               ],
             ),
-            const ContributeSupportCard(
+            ContributeSupportCard(
               imagePath: 'assets/images/contribute/professor.png',
               title: 'I am a Teacher',
               cardDescriptionList: [
@@ -62,7 +62,7 @@ class ContributorsView extends StatelessWidget {
                 'Create exciting educational content using CircuitVerse'
               ],
             ),
-            const ContributeSupportCard(
+            ContributeSupportCard(
               imagePath: 'assets/images/contribute/person.png',
               title: 'I am a Developer',
               cardDescriptionList: [
@@ -71,14 +71,14 @@ class ContributorsView extends StatelessWidget {
                 'Find and fix bugs in the CircuitVerse projects'
               ],
             ),
-            const SizedBox(height: 16),
-            const ContributeDonateCard(
+            SizedBox(height: 16),
+            ContributeDonateCard(
               imagePath: 'assets/images/contribute/patreon-logo.png',
               title: 'Become a Patreon',
               url: 'https://www.patreon.com/CircuitVerse',
             ),
-            const SizedBox(height: 16),
-            const ContributeDonateCard(
+            SizedBox(height: 16),
+            ContributeDonateCard(
               imagePath: 'assets/images/contribute/paypal-logo.jpg',
               title: 'Donate through PayPal',
               url: 'https://www.paypal.me/satviksr',
