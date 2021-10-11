@@ -68,8 +68,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         text: TextSpan(
           text: 'New User? ',
           style: Theme.of(context).textTheme.bodyText1,
-          children: <TextSpan>[
-            const TextSpan(
+          children: const <TextSpan>[
+            TextSpan(
               text: 'Sign Up',
               style: TextStyle(
                 color: CVTheme.primaryColorDark,

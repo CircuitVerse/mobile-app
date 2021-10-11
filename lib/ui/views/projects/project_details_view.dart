@@ -413,9 +413,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       onTap: showAddCollaboratorsDialog,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          const Icon(Icons.add),
-          const Text('Add A Collaborator'),
+        children: const <Widget>[
+          Icon(Icons.add),
+          Text('Add A Collaborator'),
         ],
       ),
     );

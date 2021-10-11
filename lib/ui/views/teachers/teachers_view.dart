@@ -16,32 +16,32 @@ class TeachersView extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          children: <Widget>[
-            const CVHeader(
+          children: const <Widget>[
+            CVHeader(
               title: 'TEACHERS',
               description:
                   'CircuitVerse has been designed to be very easy to use in class. The platform has features to assist teachers in class and assignments.',
             ),
-            const CVSubheader(title: 'Benefits'),
-            const TeachersCard(
+            CVSubheader(title: 'Benefits'),
+            TeachersCard(
               assetPath: 'assets/images/teachers/groups.png',
               cardHeading: 'Create Groups and add your students',
               cardDescription:
                   'You can create groups and add your students to them! If students are already registered with CircuitVerse they will be added automatically. If they are not registered with CircuitVerse yet, an invitation will be sent to register. Once they register, they will be added automatically.',
             ),
-            const TeachersCard(
+            TeachersCard(
               assetPath: 'assets/images/teachers/assignment.png',
               cardHeading: 'Post Assignments',
               cardDescription:
                   'To create an assignment, simply click an add new assignment button. Give the details of the assignment and the deadline. The assignment will automatically close at deadline. Students cannot continue their assignment unless the teacher reopens the assignment again.',
             ),
-            const TeachersCard(
+            TeachersCard(
               assetPath: 'assets/images/teachers/grading.png',
               cardHeading: 'Grading assignments',
               cardDescription:
                   'Grade assignments very easily with the in build preview. Simply select the student, to his/her assignment work.',
             ),
-            const TeachersCard(
+            TeachersCard(
               assetPath: 'assets/images/teachers/embed.png',
               cardHeading:
                   'Use Interactive Circuits in your Blogs, Study Materials or PowerPoint presentations',
