@@ -10,7 +10,7 @@ class CVAddIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       padding: const EdgeInsets.all(0),
-      icon: Icon(
+      icon: const Icon(
         Icons.add_circle_outline,
         color: CVTheme.grey,
         size: 36,

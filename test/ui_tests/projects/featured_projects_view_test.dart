@@ -48,7 +48,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: FeaturedProjectsView(),
+          home: const FeaturedProjectsView(),
         ),
       );
 

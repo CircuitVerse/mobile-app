@@ -39,7 +39,7 @@ class _EditGroupViewState extends State<EditGroupView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.UPDATE_GROUP)) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedGroup);
         SnackBarUtils.showDark(
           'Group Updated',
@@ -67,17 +67,17 @@ class _EditGroupViewState extends State<EditGroupView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                CVSubheader(
+                const CVSubheader(
                   title: 'EDIT GROUP',
                   subtitle:
                       "You can update Group details here. Don't leave the Group Name blank.",
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 SvgPicture.asset(
                   'assets/images/group/edit_group.svg',
                   height: 200,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 CVTextField(
                   padding: const EdgeInsets.all(0),
                   label: 'Group Name',
@@ -87,7 +87,7 @@ class _EditGroupViewState extends State<EditGroupView> {
                   onSaved: (value) => _name = value.trim(),
                   action: TextInputAction.done,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 CVPrimaryButton(
                   title: 'Save',
                   onPressed: _validateAndSubmit,

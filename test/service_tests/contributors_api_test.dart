@@ -27,7 +27,7 @@ void main() {
       test('When called & http client throws Exceptions', () async {
         var _contributorsApi = HttpContributorsApi();
 
-        ApiUtils.client = MockClient((_) => throw FormatException(''));
+        ApiUtils.client = MockClient((_) => throw const FormatException(''));
         expect(_contributorsApi.fetchContributors(),
             throwsA(isInstanceOf<Failure>()));
 

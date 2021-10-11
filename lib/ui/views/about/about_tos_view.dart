@@ -25,7 +25,7 @@ class AboutTosView extends StatelessWidget {
 
   TextSpan _buildLink(String text, String link, {bool route = false}) {
     return TextSpan(
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.blue,
         fontFamily: 'Poppins',
       ),

@@ -35,7 +35,7 @@ class _AboutViewState extends State<AboutView> {
               onPressed: () => Get.toNamed(AboutTosView.id),
             ),
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Expanded(
             child: CVPrimaryButton(
               title: AppLocalizations.of(context).privacy_policy,
@@ -117,7 +117,7 @@ class _AboutViewState extends State<AboutView> {
                 description: AppLocalizations.of(context).slack_channel,
                 url: 'https://circuitverse.org/slack',
               ),
-              Divider(),
+              const Divider(),
               CVSubheader(
                 title: AppLocalizations.of(context).contributors,
                 subtitle: AppLocalizations.of(context).contributors_subtitle,

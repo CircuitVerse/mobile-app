@@ -33,7 +33,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: AddAssignmentView(),
+          home: const AddAssignmentView(),
         ),
       );
 
@@ -54,9 +54,9 @@ void main() {
         } else if (widget is CVHtmlEditor) {
           return true;
         } else if (widget is DateTimeField) {
-          return widget.key == Key('cv_assignment_deadline_field');
+          return widget.key == const Key('cv_assignment_deadline_field');
         } else if (widget is DropdownButtonFormField) {
-          return widget.key == Key('cv_assignment_grading_dropdown');
+          return widget.key == const Key('cv_assignment_grading_dropdown');
         } else if (widget is CheckboxListTile) {
           return true;
         }
@@ -106,7 +106,7 @@ void main() {
       widget.onPressed();
       await tester.pumpAndSettle();
 
-      await tester.pump(Duration(seconds: 5));
+      await tester.pump(const Duration(seconds: 5));
 
       // Verify Dialog Service is called to show Dialog of Updating
       verify(_dialogService.showCustomProgressDialog(title: anyNamed('title')))

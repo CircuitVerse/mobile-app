@@ -69,7 +69,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
           text: 'New User? ',
           style: Theme.of(context).textTheme.bodyText1,
           children: <TextSpan>[
-            TextSpan(
+            const TextSpan(
               text: 'Sign Up',
               style: TextStyle(
                 color: CVTheme.primaryColorDark,
@@ -102,7 +102,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         );
 
         // route back to previous screen
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         Get.back();
       } else if (_model.isError(_model.SEND_RESET_INSTRUCTIONS)) {
         // show failure snackbar
@@ -126,14 +126,14 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
             child: Column(
               children: <Widget>[
                 _buildForgotPasswordImage(),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 _buildEmailInput(),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 _buildSendInstructionsButton(),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 _buildNewUserSignUpComponent(),
-                SizedBox(height: 32),
-                AuthOptionsView(
+                const SizedBox(height: 32),
+                const AuthOptionsView(
                   isSignUp: false,
                 ),
               ],

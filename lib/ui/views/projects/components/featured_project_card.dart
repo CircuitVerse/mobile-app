@@ -21,13 +21,13 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: CVTheme.primaryColor),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(4),
           topRight: Radius.circular(4),
         ),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(4),
           topRight: Radius.circular(4),
         ),
@@ -48,7 +48,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
   Widget _buildFooter() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(4),
@@ -74,7 +74,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
           ),
           CVPrimaryButton(
             title: 'View',
-            padding: EdgeInsets.all(2),
+            padding: const EdgeInsets.all(2),
             onPressed: widget.onViewPressed,
           ),
         ],

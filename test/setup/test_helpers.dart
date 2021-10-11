@@ -31,7 +31,7 @@ import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart'
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 
-Function deepEq = DeepCollectionEquality().equals;
+Function deepEq = const DeepCollectionEquality().equals;
 
 class NavigatorObserverMock extends Mock implements NavigatorObserver {}
 

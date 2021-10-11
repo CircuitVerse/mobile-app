@@ -70,8 +70,8 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
       },
       child: Row(
         children: [
-          Icon(Icons.edit, color: Colors.white),
-          SizedBox(width: 8),
+          const Icon(Icons.edit, color: Colors.white),
+          const SizedBox(width: 8),
           Text(
             'Edit',
             style: Theme.of(context).textTheme.headline6.copyWith(
@@ -99,7 +99,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           ),
         ),
         if (_recievedAssignment.attributes.hasMentorAccess) ...[
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           _buildEditAssignmentButton(),
         ]
       ],
@@ -116,13 +116,13 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           children: <TextSpan>[
             TextSpan(
               text: '$title : ',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(
               text: description.isEmpty || description == null
                   ? 'N.A'
                   : description,
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             )
           ],
         ),
@@ -147,7 +147,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             data: _recievedAssignment.attributes.description ?? '',
             style: {
               'body': Style(
-                fontSize: FontSize(18),
+                fontSize: const FontSize(18),
               )
             },
           )
@@ -209,7 +209,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                   ),
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
@@ -225,7 +225,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                   )
                 : _buildSubmissionAuthors(),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           if (_model.focussedProject != null)
             AspectRatio(
               aspectRatio: 1.6,
@@ -369,14 +369,14 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 onFieldSubmitted: (_) =>
                     FocusScope.of(context).requestFocus(_gradeFocusNode),
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               CVTextField(
                 label: 'Remarks',
                 focusNode: _gradeFocusNode,
                 controller: _remarksController,
                 padding: const EdgeInsets.all(0),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: <Widget>[
                   CVPrimaryButton(
@@ -392,7 +392,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                       }
                     },
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   if (_submittedGrade != null)
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -409,7 +409,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                     )
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(_recievedAssignment.gradingScaleHint),
             ],
           ),
@@ -430,7 +430,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         }
       },
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text('Assignment Details')),
+        appBar: AppBar(title: const Text('Assignment Details')),
         body: Builder(builder: (context) {
           var _attrs = _recievedAssignment.attributes;
           var _remainingTime = _attrs.deadline.difference(DateTime.now());
@@ -439,7 +439,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             padding: const EdgeInsets.all(16),
             children: <Widget>[
               _buildHeader(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildDetailComponent('Name', _attrs.name),
               _buildDetailComponent(
                 'Deadline',
@@ -455,12 +455,12 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 'Restricted Elements',
                 json.decode(_attrs.restrictions).join(' , '),
               ),
-              Divider(height: 32),
+              const Divider(height: 32),
               if (_model.isSuccess(_model.FETCH_ASSIGNMENT_DETAILS))
                 Column(
                   children: <Widget>[
                     _buildSubmissions(),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     _buildGrades(),
                   ],
                 ),

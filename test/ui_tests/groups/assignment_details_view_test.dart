@@ -65,8 +65,8 @@ void main() {
         await tester.pumpAndSettle();
 
         // Scroll
-        final gesture = await tester.startGesture(Offset(0, 300));
-        await gesture.moveBy(Offset(0, 900));
+        final gesture = await tester.startGesture(const Offset(0, 300));
+        await gesture.moveBy(const Offset(0, 900));
         await tester.pump();
 
         // Finds Author Name and Assignment name who submitted

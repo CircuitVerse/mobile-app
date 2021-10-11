@@ -9,7 +9,7 @@ class IbTheme {
       primaryIconTheme: Theme.of(context).primaryIconTheme.copyWith(
             color: Colors.white,
           ),
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         foregroundColor: Colors.white,
         backgroundColor: IbTheme.primaryColor,
       ),

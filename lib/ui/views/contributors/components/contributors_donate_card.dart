@@ -21,7 +21,7 @@ class ContributeDonateCard extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.headline6,
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         GestureDetector(
           onTap: () async {
             launchURL(url);
@@ -29,12 +29,12 @@ class ContributeDonateCard extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.black, width: 2),
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(8),
                 ),
                 color: Colors.white,
                 boxShadow: [
-                  BoxShadow(
+                  const BoxShadow(
                     color: Colors.grey,
                     blurRadius: 2.0,
                     offset: Offset(2.0, 2.0),
@@ -43,7 +43,7 @@ class ContributeDonateCard extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ClipRRect(
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(8),
                 ),
                 child: Image.asset(
