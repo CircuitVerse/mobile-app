@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_add_icon_button.dart';
-import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/groups/components/group_member_card.dart';
 import 'package:mobile_app/ui/views/groups/components/group_mentor_card.dart';
@@ -21,15 +21,34 @@ class MyGroupsView extends StatefulWidget {
   _MyGroupsViewState createState() => _MyGroupsViewState();
 }
 
-class _MyGroupsViewState extends State<MyGroupsView> {
+class _MyGroupsViewState extends State<MyGroupsView>
+    with SingleTickerProviderStateMixin {
   final DialogService _dialogService = locator<DialogService>();
   MyGroupsViewModel _model;
+  TabController _tabController;
+
+  Widget _emptyState() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        SvgPicture.asset(
+          'assets/images/group/no_group.svg',
+          height: 250,
+        ),
+        _buildSubHeader(
+            title: "Explore and join groups of your school and friends!"),
+      ],
+    );
+  }
 
   Widget _buildSubHeader({String title}) {
-    return Text(
-      title,
-      textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.headline5,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 48.0),
+      child: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.headline6,
+      ),
     );
   }
 
@@ -83,82 +102,83 @@ class _MyGroupsViewState extends State<MyGroupsView> {
         _model = model;
         _model.fetchMentoredGroups();
         _model.fetchMemberGroups();
+        _tabController = TabController(length: 2, vsync: this);
       },
       builder: (context, model, child) => Scaffold(
-        body: Builder(builder: (context) {
-          var _items = <Widget>[];
-
-          _items.add(
-            Text(
-              'Groups',
-              style: Theme.of(context).textTheme.headline4.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: CVTheme.textColor(context),
-                  ),
-              textAlign: TextAlign.center,
-            ),
-          );
-
-          _items.add(
-            Center(
-              child: CVPrimaryButton(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                  horizontal: 16,
-                ),
-                title: '+ Make New Group',
-                onPressed: onCreateGroupPressed,
+        floatingActionButton: FloatingActionButton(
+          onPressed: onCreateGroupPressed,
+          backgroundColor: CVTheme.primaryColor,
+          child: Icon(Icons.add),
+        ),
+        appBar: AppBar(
+          title: TabBar(
+            controller: _tabController,
+            labelColor: CVTheme.textColor(context),
+            indicatorColor: CVTheme.primaryColor,
+            tabs: [
+              Tab(
+                text: 'Mentored',
               ),
-            ),
-          );
+              Tab(
+                text: 'Joined',
+              ),
+            ],
+          ),
+        ),
+        body: Builder(
+          builder: (context) {
+            var _mentoredGroups = <Widget>[];
+            var _joinedGroups = <Widget>[];
 
-          _items.add(SizedBox(height: 24));
-
-          _items.add(_buildSubHeader(title: 'Groups You Mentor'));
-
-          if (_model.isSuccess(_model.FETCH_MENTORED_GROUPS)) {
-            // creates GroupMentorCard corresponding to each mentor group
-            _model.mentoredGroups.forEach((group) {
-              _items.add(
-                GroupMentorCard(
-                  group: group,
-                  onEdit: () => onEditGroupPressed(group),
-                  onDelete: () => onDeleteGroupPressed(group.id),
-                ),
-              );
-            });
-
-            // Adds fetch more groups icon if link to next set exists
-            if (_model?.previousMentoredGroupsBatch?.links?.next != null) {
-              _items.add(
-                CVAddIconButton(onPressed: _model.fetchMentoredGroups),
-              );
+            if (_model.isSuccess(_model.FETCH_MENTORED_GROUPS)) {
+              // creates GroupMentorCard corresponding to each mentor group
+              _model.mentoredGroups.forEach((group) {
+                _mentoredGroups.add(
+                  GroupMentorCard(
+                    group: group,
+                    onEdit: () => onEditGroupPressed(group),
+                    onDelete: () => onDeleteGroupPressed(group.id),
+                  ),
+                );
+              });
+              // Adds fetch more groups icon if link to next set exists
+              if (_model?.previousMentoredGroupsBatch?.links?.next != null) {
+                _mentoredGroups.add(
+                  CVAddIconButton(onPressed: _model.fetchMentoredGroups),
+                );
+              }
             }
-          }
+            if (_model.isSuccess(_model.FETCH_MEMBER_GROUPS)) {
+              // creates GroupMemberCard corresponding to each member group
+              _model.memberGroups.forEach((group) {
+                _joinedGroups.add(GroupMemberCard(group: group));
+              });
 
-          _items.add(SizedBox(height: 24));
-
-          _items.add(_buildSubHeader(title: "Groups You're in"));
-
-          if (_model.isSuccess(_model.FETCH_MEMBER_GROUPS)) {
-            // creates GroupMemberCard corresponding to each member group
-            _model.memberGroups.forEach((group) {
-              _items.add(GroupMemberCard(group: group));
-            });
-
-            // Adds fetch more groups icon if link to next set exists
-            if (_model?.previousMemberGroupsBatch?.links?.next != null) {
-              _items.add(
-                CVAddIconButton(onPressed: _model.fetchMemberGroups),
-              );
+              // Adds fetch more groups icon if link to next set exists
+              if (_model?.previousMemberGroupsBatch?.links?.next != null) {
+                _joinedGroups.add(
+                  CVAddIconButton(onPressed: _model.fetchMemberGroups),
+                );
+              }
             }
-          }
 
-          return ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            children: _items,
-          );
-        }),
+            return TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                _mentoredGroups.isEmpty
+                    ? _emptyState()
+                    : ListView(
+                        children: _mentoredGroups,
+                      ),
+                _joinedGroups.isEmpty
+                    ? _emptyState()
+                    : ListView(
+                        children: _joinedGroups,
+                      ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
