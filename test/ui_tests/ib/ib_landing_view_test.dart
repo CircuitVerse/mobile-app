@@ -62,7 +62,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: IbLandingView(),
+          home: const IbLandingView(),
         ),
       );
 

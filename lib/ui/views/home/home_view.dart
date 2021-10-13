@@ -12,6 +12,8 @@ import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
 class HomeView extends StatefulWidget {
   static const String id = 'home_view';
 
+  const HomeView({Key key}) : super(key: key);
+
   @override
   _HomeViewState createState() => _HomeViewState();
 }

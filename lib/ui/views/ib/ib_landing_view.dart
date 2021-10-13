@@ -12,6 +12,8 @@ import 'package:theme_provider/theme_provider.dart';
 class IbLandingView extends StatefulWidget {
   static const String id = 'ib_landing_view';
 
+  const IbLandingView({Key key}) : super(key: key);
+
   @override
   _IbLandingViewState createState() => _IbLandingViewState();
 }

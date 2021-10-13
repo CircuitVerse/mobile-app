@@ -29,7 +29,7 @@ void main() {
           locale: const Locale('en'),
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: StartUpView(),
+          home: const StartUpView(),
         ),
       );
 
