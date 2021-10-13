@@ -10,11 +10,12 @@ class BaseView<T extends BaseModel> extends StatefulWidget {
   final T model;
 
   const BaseView({
+    Key key,
     @required this.builder,
     this.onModelReady,
     this.onModelDestroy,
     this.model,
-  });
+  }) : super(key: key);
 
   @override
   _BaseViewState<T> createState() => _BaseViewState<T>();

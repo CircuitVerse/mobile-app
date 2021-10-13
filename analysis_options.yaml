@@ -35,8 +35,6 @@ linter:
 
     non_constant_identifier_names:  false
 
-    use_key_in_widget_constructors: false
-
     constant_identifier_names: false
 
     prefer_typing_uninitialized_variables: false
