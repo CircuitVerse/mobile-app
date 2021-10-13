@@ -42,7 +42,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: EditProfileView(),
+          home: const EditProfileView(),
         ),
       );
 

@@ -19,10 +19,12 @@ Future<void> main() async {
   // Init Hive
   await locator<DatabaseService>().init();
 
-  runApp(CircuitVerseMobile());
+  runApp(const CircuitVerseMobile());
 }
 
 class CircuitVerseMobile extends StatelessWidget {
+  const CircuitVerseMobile({Key key}) : super(key: key);
+
   // This widget is the root of CircuitVerse Mobile.
   @override
   Widget build(BuildContext context) {
@@ -77,7 +79,7 @@ class CircuitVerseMobile extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               onGenerateRoute: CVRouter.generateRoute,
               theme: ThemeProvider.themeOf(themeContext).data,
-              home: StartUpView(),
+              home: const StartUpView(),
             ),
           ),
         ),

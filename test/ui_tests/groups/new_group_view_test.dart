@@ -31,7 +31,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: NewGroupView(),
+          home: const NewGroupView(),
         ),
       );
 

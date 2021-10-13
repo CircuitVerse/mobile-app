@@ -28,7 +28,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: ForgotPasswordView(),
+          home: const ForgotPasswordView(),
         ),
       );
 

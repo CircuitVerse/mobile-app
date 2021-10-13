@@ -15,6 +15,8 @@ import 'package:mobile_app/viewmodels/authentication/signup_viewmodel.dart';
 class SignupView extends StatefulWidget {
   static const String id = 'signup_view';
 
+  const SignupView({Key key}) : super(key: key);
+
   @override
   _SignupViewState createState() => _SignupViewState();
 }

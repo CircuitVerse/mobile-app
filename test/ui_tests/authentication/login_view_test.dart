@@ -30,7 +30,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: LoginView(),
+          home: const LoginView(),
         ),
       );
 

@@ -16,6 +16,8 @@ import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
 class LoginView extends StatefulWidget {
   static const String id = 'login_view';
 
+  const LoginView({Key key}) : super(key: key);
+
   @override
   _LoginViewState createState() => _LoginViewState();
 }
