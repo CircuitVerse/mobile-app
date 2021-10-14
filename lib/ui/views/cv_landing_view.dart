@@ -78,6 +78,7 @@ class _CVLandingViewState extends State<CVLandingView> {
         ),
       ),
       centerTitle: true,
+      elevation: _selectedIndex == 6 ? 0 : 4,
     );
   }
 
