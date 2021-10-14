@@ -42,7 +42,6 @@ void main() {
       await _pumpSignupView(tester);
       await tester.pumpAndSettle();
 
-
       // ignore: prefer_function_declarations_over_variables
       var _signupImagePredicate =
           (Widget widget) => widget is Image && widget.height == 300;
