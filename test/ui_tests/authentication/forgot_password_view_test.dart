@@ -42,6 +42,7 @@ void main() {
       await _pumpForgotPasswordView(tester);
       await tester.pumpAndSettle();
 
+      // ignore: prefer_function_declarations_over_variables
       var _forgotPasswordImagePredicate =
           (Widget widget) => widget is Image && widget.height == 300;
 

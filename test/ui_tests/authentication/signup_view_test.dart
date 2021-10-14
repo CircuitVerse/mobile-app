@@ -42,6 +42,8 @@ void main() {
       await _pumpSignupView(tester);
       await tester.pumpAndSettle();
 
+
+      // ignore: prefer_function_declarations_over_variables
       var _signupImagePredicate =
           (Widget widget) => widget is Image && widget.height == 300;
 
@@ -63,8 +65,10 @@ void main() {
       await _pumpSignupView(tester);
       await tester.pumpAndSettle();
 
+      // ignore: prefer_function_declarations_over_variables
       var _nameFieldPredicate =
           (Widget widget) => widget is CVTextField && widget.label == 'Name';
+      // ignore: prefer_function_declarations_over_variables
       var _emailFieldPredicate =
           (Widget widget) => widget is CVTextField && widget.label == 'Email';
 

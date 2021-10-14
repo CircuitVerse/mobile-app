@@ -43,6 +43,7 @@ void main() {
       await _pumpLoginView(tester);
       await tester.pumpAndSettle();
 
+      // ignore: prefer_function_declarations_over_variables
       var _loginImagePredicate =
           (Widget widget) => widget is Image && widget.height == 300;
 
