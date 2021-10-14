@@ -90,7 +90,7 @@ void main() {
       // View Button for Member Group Card
       expect(find.widgetWithText(CardButton, 'View'), findsOneWidget);
 
-      // Tap Joined Groups Tab
+      // Tap Mentored Groups Tab
       await tester.tap(find.widgetWithText(Tab, "Mentored"));
       await tester.pumpAndSettle();
 
