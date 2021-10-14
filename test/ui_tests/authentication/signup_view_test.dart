@@ -42,7 +42,10 @@ void main() {
       await _pumpSignupView(tester);
       await tester.pumpAndSettle();
 
-      expect(find.byWidgetPredicate((Widget widget) => widget is Image && widget.height == 300), findsOneWidget);
+      expect(
+          find.byWidgetPredicate(
+              (Widget widget) => widget is Image && widget.height == 300),
+          findsOneWidget);
       expect(find.byType(CVTextField), findsNWidgets(2));
       expect(find.byType(CVPasswordField), findsOneWidget);
       expect(find.byType(CVPrimaryButton), findsOneWidget);
@@ -60,8 +63,10 @@ void main() {
       await _pumpSignupView(tester);
       await tester.pumpAndSettle();
 
-
-      expect(find.byWidgetPredicate((Widget widget) => widget is CVTextField && widget.label == 'Name'),findsOneWidget);
+      expect(
+          find.byWidgetPredicate((Widget widget) =>
+              widget is CVTextField && widget.label == 'Name'),
+          findsOneWidget);
 
       await tester.tap(find.byType(CVPrimaryButton));
       await tester.pumpAndSettle();
@@ -72,7 +77,9 @@ void main() {
       expect(find.text('Password can\'t be empty'), findsOneWidget);
 
       await tester.enterText(
-          find.byWidgetPredicate((Widget widget) => widget is CVTextField && widget.label == 'Name'), 'test');
+          find.byWidgetPredicate((Widget widget) =>
+              widget is CVTextField && widget.label == 'Name'),
+          'test');
       await tester.tap(find.byType(CVPrimaryButton));
       await tester.pumpAndSettle();
 
@@ -81,7 +88,9 @@ void main() {
       expect(find.text('Password can\'t be empty'), findsOneWidget);
 
       await tester.enterText(
-          find.byWidgetPredicate((Widget widget) => widget is CVTextField && widget.label == 'Email'), 'test@test.com');
+          find.byWidgetPredicate((Widget widget) =>
+              widget is CVTextField && widget.label == 'Email'),
+          'test@test.com');
       await tester.tap(find.byType(CVPrimaryButton));
       await tester.pumpAndSettle();
 

@@ -43,7 +43,9 @@ void main() {
       await _pumpLoginView(tester);
       await tester.pumpAndSettle();
 
-      expect(find.byWidgetPredicate((Widget widget) => widget is Image && widget.height == 300),
+      expect(
+          find.byWidgetPredicate(
+              (Widget widget) => widget is Image && widget.height == 300),
           findsOneWidget);
 
       expect(find.byType(CVTextField), findsOneWidget);
