@@ -6,7 +6,6 @@ import 'package:mobile_app/models/dialog_models.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/dialog_service.dart';
-import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/components/group_member_card.dart';
 import 'package:mobile_app/ui/views/groups/components/group_mentor_card.dart';
@@ -72,35 +71,50 @@ void main() {
       await tester.pumpAndSettle();
 
       // Make New Group Button
-      expect(find.widgetWithText(CVPrimaryButton, '+ Make New Group'),
-          findsOneWidget);
+      expect(find.byType(FloatingActionButton), findsOneWidget);
+
+      // Tap Joined Groups Tab
+      await tester.tap(find.widgetWithText(Tab, "Joined"));
+      await tester.pumpAndSettle();
 
       // Member Group Card (1)
       expect(find.byType(GroupMemberCard), findsOneWidget);
 
+      // Group Names text inside Member Card
+      expect(find.text('Test Group'), findsOneWidget);
+
+      // Total Members text inside Member Card
+      expect(find.text('Total Members: 1'), findsOneWidget);
+
+      // View Button for Member Group Card
+      expect(find.widgetWithText(CardButton, 'View'), findsOneWidget);
+
+      // Tap Mentored Groups Tab
+      await tester.tap(find.widgetWithText(Tab, "Mentored"));
+      await tester.pumpAndSettle();
+
       // Mentored Group Card (1)
       expect(find.byType(GroupMentorCard), findsOneWidget);
 
-      // Group Names text inside Member and Mentor Card
-      expect(find.text('Test Group'), findsNWidgets(2));
+      // Group Names text inside Mentor Card
+      expect(find.text('Test Group'), findsOneWidget);
 
-      // Total Members text inside Member and Mentor Card
-      expect(find.text('Total Members: 1'), findsNWidgets(2));
+      // Total Members text inside Mentor Card
+      expect(find.text('Total Members: 1'), findsOneWidget);
 
       // Edit, Delete Buttons for Mentored Group Card
       expect(find.widgetWithText(CardButton, 'Edit'), findsOneWidget);
       expect(find.widgetWithText(CardButton, 'Delete'), findsOneWidget);
 
-      // View Button for Mentored Group Card and Member Group Card
-      expect(find.widgetWithText(CardButton, 'View'), findsNWidgets(2));
+      // View Button for Mentored Group Card
+      expect(find.widgetWithText(CardButton, 'View'), findsOneWidget);
     });
 
     testWidgets('New Group Page is Pushed onTap', (WidgetTester tester) async {
       await _pumpMyGroupsView(tester);
       await tester.pumpAndSettle();
 
-      await tester
-          .tap(find.widgetWithText(CVPrimaryButton, '+ Make New Group'));
+      await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
 
       verify(mockObserver.didPush(any, any));
