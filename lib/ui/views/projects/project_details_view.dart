@@ -62,7 +62,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: IconButton(
         onPressed: onShareButtonPressed,
-        icon: Icon(Icons.share),
+        icon: const Icon(Icons.share),
         tooltip: 'Share',
       ),
     );
@@ -80,7 +80,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           alignment: Alignment.bottomRight,
           children: [
             PhotoView.customChild(
-              backgroundDecoration: BoxDecoration(
+              backgroundDecoration: const BoxDecoration(
                 color: Colors.white,
               ),
               initialScale: 1.0,
@@ -102,7 +102,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     arguments: _recievedProject,
                   );
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.fullscreen,
                   color: Colors.white,
                 ),
@@ -117,7 +117,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Widget _buildStarsComponent() {
     return Row(
       children: <Widget>[
-        Icon(Icons.star, color: Colors.yellow, size: 18),
+        const Icon(Icons.star, color: Colors.yellow, size: 18),
         Text(' ${_model.starCount} Stars'),
       ],
     );
@@ -126,7 +126,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Widget _buildViewsComponent() {
     return Row(
       children: <Widget>[
-        Icon(Icons.visibility, size: 18),
+        const Icon(Icons.visibility, size: 18),
         Text(' ${_recievedProject.attributes.view} Views'),
       ],
     );
@@ -153,12 +153,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return Column(
       children: <Widget>[
         _buildProjectHeader(_recievedProject.attributes.name),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             _buildStarsComponent(),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             _buildViewsComponent(),
           ],
         ),
@@ -175,11 +175,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           children: <TextSpan>[
             TextSpan(
               text: '$heading : ',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(
               text: description,
-              style: TextStyle(fontSize: 18),
+              style: const TextStyle(fontSize: 18),
             )
           ],
         ),
@@ -194,7 +194,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         text: TextSpan(
           style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
           children: <TextSpan>[
-            TextSpan(
+            const TextSpan(
               text: 'Author : ',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
@@ -203,7 +203,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 ..onTap = () => Get.toNamed(ProfileView.id,
                     arguments: _recievedProject.relationships.author.data.id),
               text: _recievedProject.attributes.authorName,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 decoration: TextDecoration.underline,
                 color: CVTheme.primaryColor,
@@ -231,7 +231,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 ),
                 Html(
                   data: _recievedProject.attributes.description ?? '',
-                  style: {'body': Style(fontSize: FontSize(18))},
+                  style: {'body': Style(fontSize: const FontSize(18))},
                 )
               ],
             ),
@@ -278,7 +278,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Image.asset('assets/icons/fork_project.png', width: 12),
-            SizedBox(width: 4),
+            const SizedBox(width: 4),
             Text(
               'Fork',
               style: Theme.of(context).textTheme.subtitle1.copyWith(
@@ -361,7 +361,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
+                const Text(
                   'Add Collaborators',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -395,7 +395,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('CANCEL'),
+                child: const Text('CANCEL'),
               ),
               CVFlatButton(
                 key: addButtonGlobalKey,
@@ -413,7 +413,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       onTap: showAddCollaboratorsDialog,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
+        children: const <Widget>[
           Icon(Icons.add),
           Text('Add A Collaborator'),
         ],
@@ -443,8 +443,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Icon(Icons.edit, size: 16),
-            SizedBox(width: 4),
+            const Icon(Icons.edit, size: 16),
+            const SizedBox(width: 4),
             Text('Edit', style: Theme.of(context).textTheme.subtitle1),
           ],
         ),
@@ -493,8 +493,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Icon(Icons.delete, size: 16),
-            SizedBox(width: 4),
+            const Icon(Icons.delete, size: 16),
+            const SizedBox(width: 4),
             Text('Delete', style: Theme.of(context).textTheme.subtitle1),
           ],
         ),
@@ -553,7 +553,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           if (_model.project.hasAuthorAccess)
             IconButton(
               padding: const EdgeInsets.all(0),
-              icon: Icon(Icons.delete_outline),
+              icon: const Icon(Icons.delete_outline),
               color: CVTheme.red,
               onPressed: () => onDeleteCollaboratorPressed(collaborator),
             ),
@@ -576,7 +576,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       },
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          title: Text('Project Details'),
+          title: const Text('Project Details'),
           actions: [
             _buildShareActionButton(),
           ],
@@ -588,7 +588,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           // Adds project preview..
           _items.add(_buildProjectPreview());
 
-          _items.add(SizedBox(height: 16));
+          _items.add(const SizedBox(height: 16));
 
           // Adds Project Name, Star & View count..
           _items.add(_buildProjectNameHeader());
@@ -606,7 +606,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     _projectAttrs.projectAccessType,
                   ),
                   _buildProjectDescription(),
-                  Divider(height: 32),
+                  const Divider(height: 32),
                   Wrap(
                     spacing: 8,
                     crossAxisAlignment: WrapCrossAlignment.center,
@@ -620,7 +620,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                         _buildAddCollaboratorsButton(),
                     ],
                   ),
-                  Divider(height: 32),
+                  const Divider(height: 32),
                   if (_recievedProject.hasAuthorAccess)
                     Wrap(
                       spacing: 8,
@@ -636,7 +636,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
           if (_model.isSuccess(_model.FETCH_PROJECT_DETAILS) &&
               _model.collaborators.isNotEmpty) {
-            _items.add(Divider());
+            _items.add(const Divider());
 
             _items.add(_buildProjectHeader('Collaborators'));
 

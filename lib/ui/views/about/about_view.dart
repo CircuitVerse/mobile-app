@@ -16,6 +16,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class AboutView extends StatefulWidget {
   static const String id = 'about_view';
 
+  const AboutView({Key key}) : super(key: key);
+
   @override
   _AboutViewState createState() => _AboutViewState();
 }
@@ -35,7 +37,7 @@ class _AboutViewState extends State<AboutView> {
               onPressed: () => Get.toNamed(AboutTosView.id),
             ),
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Expanded(
             child: CVPrimaryButton(
               title: AppLocalizations.of(context).privacy_policy,
@@ -117,7 +119,7 @@ class _AboutViewState extends State<AboutView> {
                 description: AppLocalizations.of(context).slack_channel,
                 url: 'https://circuitverse.org/slack',
               ),
-              Divider(),
+              const Divider(),
               CVSubheader(
                 title: AppLocalizations.of(context).contributors,
                 subtitle: AppLocalizations.of(context).contributors_subtitle,

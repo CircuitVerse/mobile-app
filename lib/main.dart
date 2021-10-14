@@ -19,10 +19,12 @@ Future<void> main() async {
   // Init Hive
   await locator<DatabaseService>().init();
 
-  runApp(CircuitVerseMobile());
+  runApp(const CircuitVerseMobile());
 }
 
 class CircuitVerseMobile extends StatelessWidget {
+  const CircuitVerseMobile({Key key}) : super(key: key);
+
   // This widget is the root of CircuitVerse Mobile.
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class CircuitVerseMobile extends StatelessWidget {
             data: ThemeData(
               fontFamily: 'Poppins',
               brightness: Brightness.light,
-              textSelectionTheme: TextSelectionThemeData(
+              textSelectionTheme: const TextSelectionThemeData(
                 cursorColor: CVTheme.primaryColor,
               ),
               appBarTheme: AppBarTheme(
@@ -59,7 +61,7 @@ class CircuitVerseMobile extends StatelessWidget {
             data: ThemeData(
               fontFamily: 'Poppins',
               brightness: Brightness.dark,
-              textSelectionTheme: TextSelectionThemeData(
+              textSelectionTheme: const TextSelectionThemeData(
                 cursorColor: CVTheme.primaryColor,
               ),
             ),
@@ -77,7 +79,7 @@ class CircuitVerseMobile extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               onGenerateRoute: CVRouter.generateRoute,
               theme: ThemeProvider.themeOf(themeContext).data,
-              home: StartUpView(),
+              home: const StartUpView(),
             ),
           ),
         ),

@@ -21,9 +21,9 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
       future: model.fetchHtmlInteraction(id),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.data is Failure) {
-          return Text('Error Loading Interaction');
+          return const Text('Error Loading Interaction');
         } else if (!snapshot.hasData) {
-          return Text('Loading Interaction...');
+          return const Text('Loading Interaction...');
         }
 
         var _textContent = snapshot.data.toString();
@@ -34,7 +34,7 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
           initialData: 100,
           stream: _streamController.stream,
           builder: (context, snapshot) {
-            return Container(
+            return SizedBox(
               height: snapshot.data,
               child: WebView(
                 initialUrl:

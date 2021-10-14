@@ -16,6 +16,8 @@ import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
 class LoginView extends StatefulWidget {
   static const String id = 'login_view';
 
+  const LoginView({Key key}) : super(key: key);
+
   @override
   _LoginViewState createState() => _LoginViewState();
 }
@@ -128,7 +130,7 @@ class _LoginViewState extends State<LoginView> {
         );
 
         // move to home view on successful login..
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         await Get.offAllNamed(CVLandingView.id);
       } else if (_model.isError(_model.LOGIN)) {
         // show failure snackbar..
@@ -152,16 +154,16 @@ class _LoginViewState extends State<LoginView> {
             child: Column(
               children: <Widget>[
                 _buildLoginImage(),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 _buildEmailInput(),
                 _buildPasswordInput(),
                 _buildForgotPasswordComponent(),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 _buildLoginButton(),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 _buildNewUserSignUpComponent(),
-                SizedBox(height: 32),
-                AuthOptionsView(isSignUp: false),
+                const SizedBox(height: 32),
+                const AuthOptionsView(isSignUp: false),
               ],
             ),
           ),

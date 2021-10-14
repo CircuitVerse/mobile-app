@@ -25,6 +25,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CVLandingView extends StatefulWidget {
   static const String id = 'cv_landing_view';
 
+  const CVLandingView({Key key}) : super(key: key);
+
   @override
   _CVLandingViewState createState() => _CVLandingViewState();
 }
@@ -35,13 +37,13 @@ class _CVLandingViewState extends State<CVLandingView> {
   int _selectedIndex = 0;
 
   final List<Widget> _items = [
-    HomeView(),
-    FeaturedProjectsView(showAppBar: false),
-    AboutView(),
-    ContributorsView(showAppBar: false),
-    TeachersView(showAppBar: false),
-    ProfileView(),
-    MyGroupsView(),
+    const HomeView(),
+    const FeaturedProjectsView(showAppBar: false),
+    const AboutView(),
+    const ContributorsView(showAppBar: false),
+    const TeachersView(showAppBar: false),
+    const ProfileView(),
+    const MyGroupsView(),
   ];
 
   void setSelectedIndexTo(int index) {
@@ -126,7 +128,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                 child: ExpansionTile(
                   maintainState: true,
                   title: ListTile(
-                    contentPadding: EdgeInsets.all(0),
+                    contentPadding: const EdgeInsets.all(0),
                     leading: Icon(
                       Icons.explore,
                       color: CVTheme.drawerIcon(context),

@@ -6,7 +6,6 @@ import 'package:mobile_app/models/dialog_models.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/dialog_service.dart';
-import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/components/group_member_card.dart';
 import 'package:mobile_app/ui/views/groups/components/group_mentor_card.dart';
@@ -57,7 +56,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: MyGroupsView(),
+          home: const MyGroupsView(),
         ),
       );
 

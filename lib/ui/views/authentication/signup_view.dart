@@ -15,6 +15,8 @@ import 'package:mobile_app/viewmodels/authentication/signup_viewmodel.dart';
 class SignupView extends StatefulWidget {
   static const String id = 'signup_view';
 
+  const SignupView({Key key}) : super(key: key);
+
   @override
   _SignupViewState createState() => _SignupViewState();
 }
@@ -130,7 +132,7 @@ class _SignupViewState extends State<SignupView> {
 
         // move to home view on successful signup..
         await Future.delayed(
-          Duration(seconds: 1),
+          const Duration(seconds: 1),
         );
         await Get.offAllNamed(CVLandingView.id);
       } else if (_signUpModel.isError(_signUpModel.SIGNUP)) {
@@ -155,16 +157,16 @@ class _SignupViewState extends State<SignupView> {
             child: Column(
               children: <Widget>[
                 _buildSignUpImage(),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 _buildNameInput(),
                 _buildEmailInput(),
                 _buildPasswordInput(),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 _buildRegisterButton(),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 _buildAlreadyRegisteredComponent(),
-                SizedBox(height: 32),
-                AuthOptionsView(isSignUp: true),
+                const SizedBox(height: 32),
+                const AuthOptionsView(isSignUp: true),
               ],
             ),
           ),

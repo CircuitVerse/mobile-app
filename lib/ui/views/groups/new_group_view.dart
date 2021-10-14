@@ -14,6 +14,8 @@ import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
 class NewGroupView extends StatefulWidget {
   static const String id = 'new_group_view';
 
+  const NewGroupView({Key key}) : super(key: key);
+
   @override
   _NewGroupViewState createState() => _NewGroupViewState();
 }
@@ -35,7 +37,7 @@ class _NewGroupViewState extends State<NewGroupView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.ADD_GROUP)) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.newGroup);
         SnackBarUtils.showDark(
           'Group Created',
@@ -63,17 +65,17 @@ class _NewGroupViewState extends State<NewGroupView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                CVSubheader(
+                const CVSubheader(
                   title: 'NEW GROUP',
                   subtitle:
                       'Groups an be used by mentors to set projects for and give grades to students.',
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 SvgPicture.asset(
                   'assets/images/group/new_group.svg',
                   height: 200,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 CVTextField(
                   padding: const EdgeInsets.all(0),
                   label: 'Group Name',
@@ -82,7 +84,7 @@ class _NewGroupViewState extends State<NewGroupView> {
                   onSaved: (value) => _name = value.trim(),
                   action: TextInputAction.done,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 CVPrimaryButton(
                   title: 'SAVE',
                   onPressed: _validateAndSubmit,

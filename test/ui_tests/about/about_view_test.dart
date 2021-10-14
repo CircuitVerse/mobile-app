@@ -35,10 +35,10 @@ void main() {
       await tester.pumpWidget(
         GetMaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
-          locale: Locale('en'),
+          locale: const Locale('en'),
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: AboutView(),
+          home: const AboutView(),
         ),
       );
 

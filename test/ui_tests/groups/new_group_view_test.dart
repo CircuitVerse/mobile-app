@@ -31,7 +31,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: NewGroupView(),
+          home: const NewGroupView(),
         ),
       );
 
@@ -84,7 +84,7 @@ void main() {
       await tester.tap(find.widgetWithText(CVPrimaryButton, 'SAVE'));
       await tester.pumpAndSettle();
 
-      await tester.pump(Duration(seconds: 5));
+      await tester.pump(const Duration(seconds: 5));
 
       // Verify Dialog Service is called to show Dialog of Updating
       verify(_dialogService.showCustomProgressDialog(title: anyNamed('title')))

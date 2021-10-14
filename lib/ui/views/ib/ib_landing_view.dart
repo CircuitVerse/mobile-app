@@ -12,6 +12,8 @@ import 'package:theme_provider/theme_provider.dart';
 class IbLandingView extends StatefulWidget {
   static const String id = 'ib_landing_view';
 
+  const IbLandingView({Key key}) : super(key: key);
+
   @override
   _IbLandingViewState createState() => _IbLandingViewState();
 }
@@ -101,7 +103,7 @@ class _IbLandingViewState extends State<IbLandingView> {
               ? true
               : false,
       title: ListTile(
-        contentPadding: EdgeInsets.all(0),
+        contentPadding: const EdgeInsets.all(0),
         title: GestureDetector(
           onTap: () => setSelectedChapter(chapter),
           child: Text(
@@ -149,7 +151,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                   color: IbTheme.textColor(context),
                 ),
               ),
-              Divider(thickness: 1),
+              const Divider(thickness: 1),
               InkWell(
                 onTap: () => setSelectedChapter(_homeChapter),
                 child: CVDrawerTile(
@@ -160,7 +162,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                 ),
               ),
               if (!_model.isSuccess(_model.IB_FETCH_CHAPTERS))
-                InkWell(
+                const InkWell(
                   child: CVDrawerTile(
                     title: 'Loading...',
                   ),
@@ -212,7 +214,7 @@ class _IbLandingViewState extends State<IbLandingView> {
           child: Theme(
             data: IbTheme.getThemeData(context),
             child: Scaffold(
-              key: Key('IbLandingScaffold'),
+              key: const Key('IbLandingScaffold'),
               appBar: _buildAppBar(),
               drawer: _buildDrawer(model),
               body: PageTransitionSwitcher(

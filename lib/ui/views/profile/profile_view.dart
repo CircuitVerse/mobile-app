@@ -114,7 +114,7 @@ class _ProfileViewState extends State<ProfileView> {
 
     return Card(
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: CVTheme.lightGrey),
+        side: const BorderSide(color: CVTheme.lightGrey),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Padding(
@@ -167,7 +167,7 @@ class _ProfileViewState extends State<ProfileView> {
     return Expanded(
       child: Card(
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: CVTheme.lightGrey),
+          side: const BorderSide(color: CVTheme.lightGrey),
           borderRadius: BorderRadius.circular(4),
         ),
         child: DefaultTabController(
@@ -175,7 +175,7 @@ class _ProfileViewState extends State<ProfileView> {
           child: Scaffold(
             appBar: CVTabBar(
               color: CVTheme.lightGrey.withOpacity(0.2),
-              tabBar: TabBar(
+              tabBar: const TabBar(
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.black87,
                 indicatorSize: TabBarIndicatorSize.tab,
@@ -211,7 +211,7 @@ class _ProfileViewState extends State<ProfileView> {
       builder: (context, model, child) => Scaffold(
         appBar: widget.userId != null
             ? AppBar(
-                title: Text('Profile'),
+                title: const Text('Profile'),
                 centerTitle: true,
               )
             : null,
@@ -220,7 +220,7 @@ class _ProfileViewState extends State<ProfileView> {
           child: Column(
             children: <Widget>[
               _buildProfileCard(),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               _buildProjectsTabBar(),
             ],
           ),

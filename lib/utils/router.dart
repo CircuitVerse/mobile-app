@@ -30,23 +30,24 @@ class CVRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case SignupView.id:
-        return MaterialPageRoute(builder: (_) => SignupView());
+        return MaterialPageRoute(builder: (_) => const SignupView());
       case LoginView.id:
-        return MaterialPageRoute(builder: (_) => LoginView());
+        return MaterialPageRoute(builder: (_) => const LoginView());
       case ForgotPasswordView.id:
-        return MaterialPageRoute(builder: (_) => ForgotPasswordView());
+        return MaterialPageRoute(builder: (_) => const ForgotPasswordView());
       case CVLandingView.id:
-        return MaterialPageRoute(builder: (_) => CVLandingView());
+        return MaterialPageRoute(builder: (_) => const CVLandingView());
       case TeachersView.id:
-        return MaterialPageRoute(builder: (_) => TeachersView());
+        return MaterialPageRoute(builder: (_) => const TeachersView());
       case ContributorsView.id:
-        return MaterialPageRoute(builder: (_) => ContributorsView());
+        return MaterialPageRoute(builder: (_) => const ContributorsView());
       case AboutTosView.id:
-        return MaterialPageRoute(builder: (_) => AboutTosView());
+        return MaterialPageRoute(builder: (_) => const AboutTosView());
       case AboutPrivacyPolicyView.id:
-        return MaterialPageRoute(builder: (_) => AboutPrivacyPolicyView());
+        return MaterialPageRoute(
+            builder: (_) => const AboutPrivacyPolicyView());
       case FeaturedProjectsView.id:
-        return MaterialPageRoute(builder: (_) => FeaturedProjectsView());
+        return MaterialPageRoute(builder: (_) => const FeaturedProjectsView());
       case ProfileView.id:
         var _userId = settings.arguments as String;
         return MaterialPageRoute(
@@ -55,7 +56,7 @@ class CVRouter {
           ),
         );
       case EditProfileView.id:
-        return MaterialPageRoute(builder: (_) => EditProfileView());
+        return MaterialPageRoute(builder: (_) => const EditProfileView());
       case ProjectDetailsView.id:
         var _project = settings.arguments as Project;
         return MaterialPageRoute(
@@ -71,7 +72,7 @@ class CVRouter {
           ),
         );
       case MyGroupsView.id:
-        return MaterialPageRoute(builder: (_) => MyGroupsView());
+        return MaterialPageRoute(builder: (_) => const MyGroupsView());
       case GroupDetailsView.id:
         var group = settings.arguments as Group;
         return MaterialPageRoute(
@@ -80,7 +81,7 @@ class CVRouter {
           ),
         );
       case NewGroupView.id:
-        return MaterialPageRoute(builder: (_) => NewGroupView());
+        return MaterialPageRoute(builder: (_) => const NewGroupView());
       case EditGroupView.id:
         var group = settings.arguments as Group;
         return MaterialPageRoute(
@@ -110,7 +111,7 @@ class CVRouter {
           ),
         );
       case IbLandingView.id:
-        return MaterialPageRoute(builder: (_) => IbLandingView());
+        return MaterialPageRoute(builder: (_) => const IbLandingView());
       case ProjectPreviewFullScreen.id:
         var _project = settings.arguments as Project;
         return MaterialPageRoute(

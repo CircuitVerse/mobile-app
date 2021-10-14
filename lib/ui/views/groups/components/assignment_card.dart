@@ -34,7 +34,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
         children: <TextSpan>[
           TextSpan(
             text: '$title : ',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           TextSpan(
             text: description,
@@ -163,7 +163,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
         boxShadow: [
           BoxShadow(
             color: CVTheme.boxShadow(context),
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
             blurRadius: 2,
           )
         ],
@@ -188,7 +188,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
             'Deadline',
             deadlineFormat.format(widget.assignment.attributes.deadline),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           _buildAssignmentButtons(),
         ],
       ),

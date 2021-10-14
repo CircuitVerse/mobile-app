@@ -18,7 +18,7 @@ class ContributorsView extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          children: <Widget>[
+          children: const <Widget>[
             CVHeader(
               title: 'CONTRIBUTE',
               description:

@@ -15,6 +15,8 @@ import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 class EditProfileView extends StatefulWidget {
   static const String id = 'edit_profile_view';
 
+  const EditProfileView({Key key}) : super(key: key);
+
   @override
   _EditProfileViewState createState() => _EditProfileViewState();
 }
@@ -88,7 +90,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget _buildSubscribedField() {
     return CheckboxListTile(
       value: _subscribed,
-      title: Text('Subscribe to mails?'),
+      title: const Text('Subscribe to mails?'),
       onChanged: (value) => setState(() {
         _subscribed = value;
       }),
@@ -107,7 +109,7 @@ class _EditProfileViewState extends State<EditProfileView> {
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.UPDATE_PROFILE)) {
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedUser);
         SnackBarUtils.showDark(
           'Profile Updated',
@@ -137,7 +139,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     return BaseView<EditProfileViewModel>(
       onModelReady: (model) => _model = model,
       builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text('Update Profile')),
+        appBar: AppBar(title: const Text('Update Profile')),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 16),
           child: Form(
@@ -149,7 +151,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                 _buildCountryField(),
                 _buildInstituteField(),
                 _buildSubscribedField(),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 _buildSaveDetailsButton(),
               ],
             ),

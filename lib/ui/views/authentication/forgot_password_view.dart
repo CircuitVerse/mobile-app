@@ -14,6 +14,8 @@ import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.d
 
 class ForgotPasswordView extends StatefulWidget {
   static const String id = 'forgot_password_view';
+
+  const ForgotPasswordView({Key key}) : super(key: key);
   @override
   _ForgotPasswordViewState createState() => _ForgotPasswordViewState();
 }
@@ -68,7 +70,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         text: TextSpan(
           text: 'New User? ',
           style: Theme.of(context).textTheme.bodyText1,
-          children: <TextSpan>[
+          children: const <TextSpan>[
             TextSpan(
               text: 'Sign Up',
               style: TextStyle(
@@ -102,7 +104,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         );
 
         // route back to previous screen
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         Get.back();
       } else if (_model.isError(_model.SEND_RESET_INSTRUCTIONS)) {
         // show failure snackbar
@@ -126,14 +128,14 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
             child: Column(
               children: <Widget>[
                 _buildForgotPasswordImage(),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 _buildEmailInput(),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 _buildSendInstructionsButton(),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 _buildNewUserSignUpComponent(),
-                SizedBox(height: 32),
-                AuthOptionsView(
+                const SizedBox(height: 32),
+                const AuthOptionsView(
                   isSignUp: false,
                 ),
               ],

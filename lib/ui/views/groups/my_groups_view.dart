@@ -17,6 +17,8 @@ import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
 class MyGroupsView extends StatefulWidget {
   static const String id = 'my_groups_view';
 
+  const MyGroupsView({Key key}) : super(key: key);
+
   @override
   _MyGroupsViewState createState() => _MyGroupsViewState();
 }
@@ -108,14 +110,14 @@ class _MyGroupsViewState extends State<MyGroupsView>
         floatingActionButton: FloatingActionButton(
           onPressed: onCreateGroupPressed,
           backgroundColor: CVTheme.primaryColor,
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
         appBar: AppBar(
           title: TabBar(
             controller: _tabController,
             labelColor: CVTheme.textColor(context),
             indicatorColor: CVTheme.primaryColor,
-            tabs: [
+            tabs: const [
               Tab(
                 text: 'Mentored',
               ),

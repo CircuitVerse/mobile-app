@@ -26,10 +26,10 @@ void main() {
       await tester.pumpWidget(
         GetMaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
-          locale: Locale('en'),
+          locale: const Locale('en'),
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: StartUpView(),
+          home: const StartUpView(),
         ),
       );
 
@@ -42,14 +42,14 @@ void main() {
         (WidgetTester tester) async {
       await _pumpStartUpView(tester);
 
-      expect(find.byKey(Key('cv_startup_logo')), findsOneWidget);
-      await tester.pumpAndSettle(Duration(seconds: 1));
+      expect(find.byKey(const Key('cv_startup_logo')), findsOneWidget);
+      await tester.pumpAndSettle(const Duration(seconds: 1));
     });
 
     testWidgets('HomeView is pushed over StartUpView after 1 second',
         (WidgetTester tester) async {
       await _pumpStartUpView(tester);
-      await tester.pumpAndSettle(Duration(seconds: 1));
+      await tester.pumpAndSettle(const Duration(seconds: 1));
 
       verify(mockObserver.didPush(any, any));
       expect(find.byType(CVLandingView), findsOneWidget);
