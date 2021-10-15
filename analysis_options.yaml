@@ -29,10 +29,6 @@ linter:
 
     join_return_with_assignment: false
 
-    prefer_function_declarations_over_variables: false
-
-    unnecessary_string_escapes: false
-
     non_constant_identifier_names:  false
 
     constant_identifier_names: false

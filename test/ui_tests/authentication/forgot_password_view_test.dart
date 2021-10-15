@@ -42,10 +42,9 @@ void main() {
       await _pumpForgotPasswordView(tester);
       await tester.pumpAndSettle();
 
-      var _forgotPasswordImagePredicate =
-          (Widget widget) => widget is Image && widget.height == 300;
-
-      expect(find.byWidgetPredicate(_forgotPasswordImagePredicate),
+      expect(
+          find.byWidgetPredicate(
+              (Widget widget) => widget is Image && widget.height == 300),
           findsOneWidget);
       expect(find.byType(CVTextField), findsOneWidget);
       expect(find.byType(CVPrimaryButton), findsOneWidget);
