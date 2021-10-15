@@ -8,7 +8,7 @@ class IbLiquidSyntax extends md.BlockSyntax {
   md.Node parse(md.BlockParser parser) {
     var match = pattern.firstMatch(parser.current);
     var tags = match[1].split(' ');
-    var node;
+    md.Element node;
 
     // Liquid include tags
     if (tags[0] == 'include') {

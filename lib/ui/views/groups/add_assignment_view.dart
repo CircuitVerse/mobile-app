@@ -207,7 +207,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       _dialogService.showCustomProgressDialog(title: 'Adding..');
 
       // [ISSUE] [html_editor] Throws error in Tests
-      var _descriptionEditorText;
+      String _descriptionEditorText;
       try {
         _descriptionEditorText =
             await _descriptionEditor.currentState.getText();

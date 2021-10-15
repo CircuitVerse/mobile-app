@@ -53,7 +53,7 @@ class IbEngineServiceImpl implements IbEngineService {
     bool ignoreIndex = false,
   }) async {
     /// Fetch response from API for the given id
-    var _apiResponse;
+    List<Map<String, dynamic>> _apiResponse;
     try {
       _apiResponse = await _ibApi.fetchApiPage(id: id);
     } catch (_) {
@@ -138,7 +138,7 @@ class IbEngineServiceImpl implements IbEngineService {
       return _ibChapters;
     }
 
-    var _chapters;
+    List<IbChapter> _chapters;
     try {
       _chapters = await _fetchPagesInDir(ignoreIndex: true);
     } on Failure catch (e) {
