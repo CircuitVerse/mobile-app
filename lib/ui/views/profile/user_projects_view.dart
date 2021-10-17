@@ -29,7 +29,7 @@ class _UserProjectsViewState extends State<UserProjectsView>
         final _items = <Widget>[];
 
         if (model.isSuccess(model.FETCH_USER_PROJECTS)) {
-          model.userProjects.forEach((project) {
+          for (var project in model.userProjects) {
             _items.add(
               ProjectCard(
                 project: project,
@@ -41,7 +41,7 @@ class _UserProjectsViewState extends State<UserProjectsView>
                 },
               ),
             );
-          });
+          }
         }
 
         if (model?.previousUserProjectsBatch?.links?.next != null) {
