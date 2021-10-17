@@ -640,11 +640,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
             _items.add(_buildProjectHeader('Collaborators'));
 
-            _model.collaborators?.forEach((collaborator) {
+            for (var collaborator in _model.collaborators) {
               _items.add(
                 _buildCollaborator(collaborator),
               );
-            });
+            }
           }
           return ListView(
             shrinkWrap: true,

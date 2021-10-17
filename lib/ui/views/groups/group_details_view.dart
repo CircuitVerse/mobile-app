@@ -372,7 +372,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           );
 
           if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
-            _model.groupMembers.forEach((member) {
+            for (var member in _model.groupMembers) {
               _items.add(
                 MemberCard(
                   member: member,
@@ -380,7 +380,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                   onDeletePressed: () => onDeleteGroupMemberPressed(member.id),
                 ),
               );
-            });
+            }
           }
 
           _items.add(const SizedBox(height: 36));
@@ -393,7 +393,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           );
 
           if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
-            _model.assignments.forEach((assignment) {
+            for (var assignment in _model.assignments) {
               _items.add(
                 AssignmentCard(
                   assignment: assignment,
@@ -405,7 +405,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                   onStartPressed: () => onStartAssignmentPressed(assignment.id),
                 ),
               );
-            });
+            }
           }
 
           return ListView(

@@ -31,7 +31,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
         final _items = <Widget>[];
 
         if (model.isSuccess(model.FETCH_FEATURED_PROJECTS)) {
-          model.featuredProjects.forEach((project) {
+          for (var project in model.featuredProjects) {
             _items.add(
               FeaturedProjectCard(
                 project: project,
@@ -40,7 +40,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                 },
               ),
             );
-          });
+          }
         }
 
         if (!widget.embed &&

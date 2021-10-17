@@ -32,7 +32,7 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
         final _items = <Widget>[];
 
         if (model.isSuccess(model.FETCH_USER_FAVOURITES)) {
-          model.userFavourites.forEach((project) {
+          for (var project in model.userFavourites) {
             _items.add(
               ProjectCard(
                 project: project,
@@ -44,7 +44,7 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
                 },
               ),
             );
-          });
+          }
         }
 
         if (model?.previousUserFavouritesBatch?.links?.next != null) {

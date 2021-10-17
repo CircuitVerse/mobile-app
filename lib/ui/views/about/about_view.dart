@@ -54,13 +54,13 @@ class _AboutViewState extends State<AboutView> {
     switch (_model.stateFor(_model.FETCH_CONTRIBUTORS)) {
       case ViewState.Success:
         var _contributorsAvatars = <Widget>[];
-        _model.cvContributors.forEach((contributor) {
+        for (var contributor in _model.cvContributors) {
           if (contributor.type == Type.USER) {
             _contributorsAvatars.add(
               ContributorAvatar(contributor: contributor),
             );
           }
-        });
+        }
         return Wrap(
           alignment: WrapAlignment.center,
           children: _contributorsAvatars,
