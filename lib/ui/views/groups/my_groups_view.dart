@@ -135,14 +135,14 @@ class _MyGroupsViewState extends State<MyGroupsView>
             if (_model.isSuccess(_model.FETCH_MENTORED_GROUPS)) {
               // creates GroupMentorCard corresponding to each mentor group
               for (var group in _model.mentoredGroups) {
-                  _mentoredGroups.add(
-                    GroupMentorCard(
-                      group: group,
-                      onEdit: () => onEditGroupPressed(group),
-                      onDelete: () => onDeleteGroupPressed(group.id),
-                    ),
-                  );
-                }
+                _mentoredGroups.add(
+                  GroupMentorCard(
+                    group: group,
+                    onEdit: () => onEditGroupPressed(group),
+                    onDelete: () => onDeleteGroupPressed(group.id),
+                  ),
+                );
+              }
               // Adds fetch more groups icon if link to next set exists
               if (_model?.previousMentoredGroupsBatch?.links?.next != null) {
                 _mentoredGroups.add(
@@ -153,8 +153,8 @@ class _MyGroupsViewState extends State<MyGroupsView>
             if (_model.isSuccess(_model.FETCH_MEMBER_GROUPS)) {
               // creates GroupMemberCard corresponding to each member group
               for (var group in _model.memberGroups) {
-                  _joinedGroups.add(GroupMemberCard(group: group));
-                }
+                _joinedGroups.add(GroupMemberCard(group: group));
+              }
 
               // Adds fetch more groups icon if link to next set exists
               if (_model?.previousMemberGroupsBatch?.links?.next != null) {
