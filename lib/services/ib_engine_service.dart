@@ -259,7 +259,7 @@ class IbEngineServiceImpl implements IbEngineService {
       pageUrl: _ibRawPageData.httpUrl,
       title: _ibRawPageData.title,
       content: [
-        IbMd(content: HtmlUnescape().convert(_ibRawPageData.rawContent) + '\n'),
+        IbMd(content: '${HtmlUnescape().convert(_ibRawPageData.rawContent)}\n'),
       ],
       tableOfContents: _ibRawPageData.hasToc
           ? _getTableOfContents(_ibRawPageData.content)

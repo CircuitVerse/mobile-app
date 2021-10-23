@@ -17,7 +17,7 @@ void main() {
       db = locator<DatabaseService>();
       await db.init();
       var path = Directory.current.path;
-      Hive.init(path + '/test/hive_testing_path');
+      Hive.init('$path/test/hive_testing_path');
     });
 
     test('Set and Get data from a box', () async {
