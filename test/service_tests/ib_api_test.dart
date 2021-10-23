@@ -25,7 +25,7 @@ void main() {
     group('fetchApiPage -', () {
       setUpAll(() async {
         var path = Directory.current.path;
-        Hive.init(path + '/test/hive_testing_path');
+        Hive.init('$path/test/hive_testing_path');
       });
 
       test('When called & http client returns succes response', () async {
