@@ -4,11 +4,15 @@ class IbTheme {
   IbTheme._();
 
   static ThemeData getThemeData(context) {
+    final theme = ThemeData();
+    final themeAccentTextTheme = Theme.of(context);
     return Theme.of(context).copyWith(
       primaryIconTheme: Theme.of(context).primaryIconTheme.copyWith(
             color: Colors.white,
           ),
-      accentColor: IbTheme.primaryColor,
+      colorScheme: theme.colorScheme.copyWith(
+        secondary: IbTheme.primaryColor,
+      ),
       primaryColor: IbTheme.primaryColor,
       textTheme: Theme.of(context).textTheme.apply(
             fontFamily: IbTheme.fontFamily,
@@ -17,9 +21,6 @@ class IbTheme {
       primaryTextTheme: Theme.of(context).primaryTextTheme.apply(
             fontFamily: IbTheme.fontFamily,
             bodyColor: Colors.white,
-          ),
-      accentTextTheme: Theme.of(context).accentTextTheme.apply(
-            fontFamily: IbTheme.fontFamily,
           ),
     );
   }

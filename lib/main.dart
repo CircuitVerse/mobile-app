@@ -26,6 +26,7 @@ class CircuitVerseMobile extends StatelessWidget {
   // This widget is the root of CircuitVerse Mobile.
   @override
   Widget build(BuildContext context) {
+    final theme = ThemeData();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -40,10 +41,13 @@ class CircuitVerseMobile extends StatelessWidget {
             id: 'light',
             data: ThemeData(
               primaryColor: CVTheme.primaryColor,
-              accentColor: CVTheme.primaryColor,
               fontFamily: 'Poppins',
               textSelectionTheme: TextSelectionThemeData(
                 cursorColor: CVTheme.primaryColor,
+              ),
+            ).copyWith(
+              colorScheme: theme.colorScheme.copyWith(
+                secondary: CVTheme.primaryColor,
               ),
             ),
             description: 'LightTheme',
@@ -52,11 +56,14 @@ class CircuitVerseMobile extends StatelessWidget {
             id: 'dark',
             data: ThemeData(
               primaryColor: CVTheme.secondaryColor,
-              accentColor: CVTheme.secondaryColor,
               fontFamily: 'Poppins',
               brightness: Brightness.dark,
               textSelectionTheme: TextSelectionThemeData(
                 cursorColor: CVTheme.primaryColor,
+              ),
+            ).copyWith(
+              colorScheme: theme.colorScheme.copyWith(
+                secondary: CVTheme.secondaryColor,
               ),
             ),
             description: 'DarkTheme',
