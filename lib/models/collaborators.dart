@@ -1,13 +1,13 @@
 import 'package:mobile_app/models/links.dart';
 
 class Collaborators {
+  List<Collaborator> data;
+  Links links;
   Collaborators({
     this.data,
     this.links,
   });
 
-  List<Collaborator> data;
-  Links links;
 
   factory Collaborators.fromJson(Map<String, dynamic> json) => Collaborators(
         data: List<Collaborator>.from(
@@ -17,15 +17,15 @@ class Collaborators {
 }
 
 class Collaborator {
+  String id;
+  String type;
+  CollaboratorAttributes attributes;
   Collaborator({
     this.id,
     this.type,
     this.attributes,
   });
 
-  String id;
-  String type;
-  CollaboratorAttributes attributes;
 
   factory Collaborator.fromJson(Map<String, dynamic> json) => Collaborator(
         id: json['id'],
@@ -35,11 +35,11 @@ class Collaborator {
 }
 
 class CollaboratorAttributes {
+  String name;
   CollaboratorAttributes({
     this.name,
   });
 
-  String name;
 
   factory CollaboratorAttributes.fromJson(Map<String, dynamic> json) =>
       CollaboratorAttributes(

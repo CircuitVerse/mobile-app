@@ -1,7 +1,7 @@
 class User {
+  Data data;
   User({this.data});
 
-  Data data;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         data: Data.fromJson(json['data']),
@@ -13,15 +13,15 @@ class User {
 }
 
 class Data {
+  String id;
+  String type;
+  UserAttributes attributes;
   Data({
     this.id,
     this.type,
     this.attributes,
   });
 
-  String id;
-  String type;
-  UserAttributes attributes;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json['id'],
@@ -37,6 +37,14 @@ class Data {
 }
 
 class UserAttributes {
+  String name;
+  String email;
+  bool subscribed;
+  DateTime createdAt;
+  DateTime updatedAt;
+  bool admin;
+  dynamic country;
+  dynamic educationalInstitute;
   UserAttributes({
     this.name,
     this.email,
@@ -48,14 +56,6 @@ class UserAttributes {
     this.educationalInstitute,
   });
 
-  String name;
-  String email;
-  bool subscribed;
-  DateTime createdAt;
-  DateTime updatedAt;
-  bool admin;
-  dynamic country;
-  dynamic educationalInstitute;
 
   factory UserAttributes.fromJson(Map<String, dynamic> json) => UserAttributes(
         name: json['name'],

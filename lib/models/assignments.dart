@@ -3,13 +3,13 @@ import 'package:mobile_app/models/links.dart';
 import 'package:mobile_app/models/projects.dart';
 
 class Assignments {
+  List<Assignment> data;
+  Links links;
   Assignments({
     this.data,
     this.links,
   });
 
-  List<Assignment> data;
-  Links links;
 
   factory Assignments.fromJson(Map<String, dynamic> json) => Assignments(
         data: List<Assignment>.from(
@@ -20,6 +20,11 @@ class Assignments {
 }
 
 class Assignment {
+  String id;
+  String type;
+  AssignmentAttributes attributes;
+  List<Project> projects;
+  List<Grade> grades;
   Assignment({
     this.id,
     this.type,
@@ -28,11 +33,6 @@ class Assignment {
     this.grades,
   });
 
-  String id;
-  String type;
-  AssignmentAttributes attributes;
-  List<Project> projects;
-  List<Grade> grades;
 
   factory Assignment.fromJson(Map<String, dynamic> json) => Assignment(
         id: json['id'] ?? json['data']['id'],
@@ -78,6 +78,17 @@ class Assignment {
 }
 
 class AssignmentAttributes {
+  String name;
+  DateTime deadline;
+  String description;
+  bool hasMentorAccess;
+  DateTime createdAt;
+  DateTime updatedAt;
+  String status;
+  int currentUserProjectId;
+  String gradingScale;
+  bool gradesFinalized;
+  String restrictions;
   AssignmentAttributes({
     this.name,
     this.deadline,
@@ -92,17 +103,6 @@ class AssignmentAttributes {
     this.restrictions,
   });
 
-  String name;
-  DateTime deadline;
-  String description;
-  bool hasMentorAccess;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String status;
-  int currentUserProjectId;
-  String gradingScale;
-  bool gradesFinalized;
-  String restrictions;
 
   factory AssignmentAttributes.fromJson(Map<String, dynamic> json) =>
       AssignmentAttributes(

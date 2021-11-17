@@ -1,13 +1,13 @@
 class AddGroupMembersResponse {
+  List<String> added;
+  List<String> pending;
+  List<String> invalid;
   AddGroupMembersResponse({
     this.added,
     this.pending,
     this.invalid,
   });
 
-  List<String> added;
-  List<String> pending;
-  List<String> invalid;
 
   factory AddGroupMembersResponse.fromJson(Map<String, dynamic> json) =>
       AddGroupMembersResponse(

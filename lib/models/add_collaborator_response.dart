@@ -1,13 +1,13 @@
 class AddCollaboratorsResponse {
+  List<String> added;
+  List<String> existing;
+  List<String> invalid;
   AddCollaboratorsResponse({
     this.added,
     this.existing,
     this.invalid,
   });
 
-  List<String> added;
-  List<String> existing;
-  List<String> invalid;
 
   factory AddCollaboratorsResponse.fromJson(Map<String, dynamic> json) =>
       AddCollaboratorsResponse(

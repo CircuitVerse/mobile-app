@@ -5,13 +5,13 @@ import 'package:mobile_app/models/links.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 
 class Groups {
+  List<Group> data;
+  Links links;
   Groups({
     this.data,
     this.links,
   });
 
-  List<Group> data;
-  Links links;
 
   factory Groups.fromJson(Map<String, dynamic> json) => Groups(
         data: List<Group>.from(json['data'].map((x) => Group.fromJson(x))),
@@ -20,6 +20,11 @@ class Groups {
 }
 
 class Group {
+  String id;
+  String type;
+  GroupAttributes attributes;
+  List<GroupMember> groupMembers;
+  List<Assignment> assignments;
   Group({
     this.id,
     this.type,
@@ -28,11 +33,6 @@ class Group {
     this.assignments,
   });
 
-  String id;
-  String type;
-  GroupAttributes attributes;
-  List<GroupMember> groupMembers;
-  List<Assignment> assignments;
 
   factory Group.fromJson(Map<String, dynamic> json) => Group(
         id: json['id'] ?? json['data']['id'],
@@ -63,6 +63,12 @@ class Group {
 }
 
 class GroupAttributes {
+  int memberCount;
+  String mentorName;
+  String name;
+  int mentorId;
+  DateTime createdAt;
+  DateTime updatedAt;
   GroupAttributes({
     this.memberCount,
     this.mentorName,
@@ -72,12 +78,6 @@ class GroupAttributes {
     this.updatedAt,
   });
 
-  int memberCount;
-  String mentorName;
-  String name;
-  int mentorId;
-  DateTime createdAt;
-  DateTime updatedAt;
 
   factory GroupAttributes.fromJson(Map<String, dynamic> json) =>
       GroupAttributes(

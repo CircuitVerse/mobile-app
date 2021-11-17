@@ -1,4 +1,9 @@
 class Links {
+  String self;
+  String first;
+  dynamic prev;
+  dynamic next;
+  String last;
   Links({
     this.self,
     this.first,
@@ -7,11 +12,6 @@ class Links {
     this.last,
   });
 
-  String self;
-  String first;
-  dynamic prev;
-  dynamic next;
-  String last;
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
         self: json['self'],

@@ -4,13 +4,13 @@ import 'package:mobile_app/models/links.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 
 class Projects {
+  List<Project> data;
+  Links links;
   Projects({
     this.data,
     this.links,
   });
 
-  List<Project> data;
-  Links links;
 
   factory Projects.fromJson(Map<String, dynamic> json) => Projects(
         data: List<Project>.from(json['data'].map((x) => Project.fromJson(x))),
@@ -19,6 +19,11 @@ class Projects {
 }
 
 class Project {
+  String id;
+  String type;
+  ProjectAttributes attributes;
+  ProjectRelationships relationships;
+  List<Collaborator> collaborators;
   Project({
     this.id,
     this.type,
@@ -27,11 +32,6 @@ class Project {
     this.collaborators,
   });
 
-  String id;
-  String type;
-  ProjectAttributes attributes;
-  ProjectRelationships relationships;
-  List<Collaborator> collaborators;
 
   factory Project.fromJson(Map<String, dynamic> json) => Project(
         id: json['id'] ?? json['data']['id'],
@@ -61,6 +61,17 @@ class Project {
 }
 
 class ProjectAttributes {
+  String name;
+  String projectAccessType;
+  DateTime createdAt;
+  DateTime updatedAt;
+  ImagePreview imagePreview;
+  String description;
+  int view;
+  List<Tag> tags;
+  bool isStarred;
+  String authorName;
+  int starsCount;
   ProjectAttributes({
     this.name,
     this.projectAccessType,
@@ -75,17 +86,6 @@ class ProjectAttributes {
     this.starsCount,
   });
 
-  String name;
-  String projectAccessType;
-  DateTime createdAt;
-  DateTime updatedAt;
-  ImagePreview imagePreview;
-  String description;
-  int view;
-  List<Tag> tags;
-  bool isStarred;
-  String authorName;
-  int starsCount;
 
   factory ProjectAttributes.fromJson(Map<String, dynamic> json) =>
       ProjectAttributes(
@@ -104,11 +104,11 @@ class ProjectAttributes {
 }
 
 class ImagePreview {
+  String url;
   ImagePreview({
     this.url,
   });
 
-  String url;
 
   factory ImagePreview.fromJson(Map<String, dynamic> json) => ImagePreview(
         url: json['url'],
@@ -116,11 +116,11 @@ class ImagePreview {
 }
 
 class ProjectRelationships {
+  Author author;
   ProjectRelationships({
     this.author,
   });
 
-  Author author;
 
   factory ProjectRelationships.fromJson(Map<String, dynamic> json) =>
       ProjectRelationships(
@@ -129,11 +129,11 @@ class ProjectRelationships {
 }
 
 class Author {
+  AuthorData data;
   Author({
     this.data,
   });
 
-  AuthorData data;
 
   factory Author.fromJson(Map<String, dynamic> json) => Author(
         data: AuthorData.fromJson(json['data']),
@@ -141,13 +141,13 @@ class Author {
 }
 
 class AuthorData {
+  String id;
+  String type;
   AuthorData({
     this.id,
     this.type,
   });
 
-  String id;
-  String type;
 
   factory AuthorData.fromJson(Map<String, dynamic> json) => AuthorData(
         id: json['id'],
@@ -156,6 +156,10 @@ class AuthorData {
 }
 
 class Tag {
+  int id;
+  String name;
+  DateTime createdAt;
+  DateTime updatedAt;
   Tag({
     this.id,
     this.name,
@@ -163,10 +167,6 @@ class Tag {
     this.updatedAt,
   });
 
-  int id;
-  String name;
-  DateTime createdAt;
-  DateTime updatedAt;
 
   factory Tag.fromJson(Map<String, dynamic> json) => Tag(
         id: json['id'],

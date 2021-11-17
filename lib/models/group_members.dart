@@ -1,13 +1,13 @@
 import 'package:mobile_app/models/links.dart';
 
 class GroupMembers {
+  List<GroupMember> data;
+  Links links;
   GroupMembers({
     this.data,
     this.links,
   });
 
-  List<GroupMember> data;
-  Links links;
 
   factory GroupMembers.fromJson(Map<String, dynamic> json) => GroupMembers(
         data: List<GroupMember>.from(
@@ -17,15 +17,15 @@ class GroupMembers {
 }
 
 class GroupMember {
+  String id;
+  String type;
+  GroupMemberAttributes attributes;
   GroupMember({
     this.id,
     this.type,
     this.attributes,
   });
 
-  String id;
-  String type;
-  GroupMemberAttributes attributes;
 
   factory GroupMember.fromJson(Map<String, dynamic> json) => GroupMember(
         id: json['id'],
@@ -35,6 +35,12 @@ class GroupMember {
 }
 
 class GroupMemberAttributes {
+  int groupId;
+  int userId;
+  DateTime createdAt;
+  DateTime updatedAt;
+  String name;
+  String email;
   GroupMemberAttributes({
     this.groupId,
     this.userId,
@@ -44,12 +50,6 @@ class GroupMemberAttributes {
     this.email,
   });
 
-  int groupId;
-  int userId;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String name;
-  String email;
 
   factory GroupMemberAttributes.fromJson(Map<String, dynamic> json) =>
       GroupMemberAttributes(
