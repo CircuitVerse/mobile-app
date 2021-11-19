@@ -5,6 +5,10 @@ import 'package:mobile_app/models/links.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 
 class Groups {
+  factory Groups.fromJson(Map<String, dynamic> json) => Groups(
+        data: List<Group>.from(json['data'].map((x) => Group.fromJson(x))),
+        links: Links.fromJson(json['links']),
+      );
   Groups({
     this.data,
     this.links,
@@ -13,27 +17,9 @@ class Groups {
   List<Group> data;
   Links links;
 
-  factory Groups.fromJson(Map<String, dynamic> json) => Groups(
-        data: List<Group>.from(json['data'].map((x) => Group.fromJson(x))),
-        links: Links.fromJson(json['links']),
-      );
 }
 
 class Group {
-  Group({
-    this.id,
-    this.type,
-    this.attributes,
-    this.groupMembers,
-    this.assignments,
-  });
-
-  String id;
-  String type;
-  GroupAttributes attributes;
-  List<GroupMember> groupMembers;
-  List<Assignment> assignments;
-
   factory Group.fromJson(Map<String, dynamic> json) => Group(
         id: json['id'] ?? json['data']['id'],
         type: json['type'] ?? json['data']['type'],
@@ -54,6 +40,21 @@ class Group {
               )
             : null,
       );
+  
+  Group({
+    this.id,
+    this.type,
+    this.attributes,
+    this.groupMembers,
+    this.assignments,
+  });
+
+  String id;
+  String type;
+  GroupAttributes attributes;
+  List<GroupMember> groupMembers;
+  List<Assignment> assignments;
+
 
   // returns true if the logged in user is mentor for this group
   bool get isMentor => locator<LocalStorageService>().currentUser.data.id ==
@@ -63,6 +64,16 @@ class Group {
 }
 
 class GroupAttributes {
+  factory GroupAttributes.fromJson(Map<String, dynamic> json) =>
+      GroupAttributes(
+        memberCount: json['member_count'],
+        mentorName: json['mentor_name'],
+        name: json['name'],
+        mentorId: json['mentor_id'],
+        createdAt: DateTime.parse(json['created_at']),
+        updatedAt: DateTime.parse(json['updated_at']),
+      );
+ 
   GroupAttributes({
     this.memberCount,
     this.mentorName,
@@ -79,13 +90,4 @@ class GroupAttributes {
   DateTime createdAt;
   DateTime updatedAt;
 
-  factory GroupAttributes.fromJson(Map<String, dynamic> json) =>
-      GroupAttributes(
-        memberCount: json['member_count'],
-        mentorName: json['mentor_name'],
-        name: json['name'],
-        mentorId: json['mentor_id'],
-        createdAt: DateTime.parse(json['created_at']),
-        updatedAt: DateTime.parse(json['updated_at']),
-      );
 }

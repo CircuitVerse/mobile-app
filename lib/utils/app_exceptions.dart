@@ -1,9 +1,10 @@
 class AppException implements Exception {
+  AppException([this._message, this._prefix]);
+  
   final String _message;
 
   final String _prefix;
 
-  AppException([this._message, this._prefix]);
 
   String get message => _message;
 

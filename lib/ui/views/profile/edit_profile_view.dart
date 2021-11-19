@@ -13,9 +13,10 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 
 class EditProfileView extends StatefulWidget {
+  const EditProfileView({Key key}) : super(key: key);
+  
   static const String id = 'edit_profile_view';
 
-  const EditProfileView({Key key}) : super(key: key);
 
   @override
   _EditProfileViewState createState() => _EditProfileViewState();

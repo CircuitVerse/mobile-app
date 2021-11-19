@@ -19,10 +19,11 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
 
 class UpdateAssignmentView extends StatefulWidget {
+  const UpdateAssignmentView({Key key, this.assignment}) : super(key: key);
+  
   static const String id = 'update_assignment_view';
   final Assignment assignment;
 
-  const UpdateAssignmentView({Key key, this.assignment}) : super(key: key);
 
   @override
   _UpdateAssignmentViewState createState() => _UpdateAssignmentViewState();

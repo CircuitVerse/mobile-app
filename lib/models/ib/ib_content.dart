@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 abstract class IbContent {
+  IbContent({@required this.content});
   String content;
 
-  IbContent({@required this.content});
 }
 
 class IbTocItem extends IbContent {
+  IbTocItem({this.leading, @required String content, this.items})
+      : super(content: content);
+  
   final String leading;
   final List<IbTocItem> items;
 
-  IbTocItem({this.leading, @required String content, this.items})
-      : super(content: content);
 }
 
 class IbMd extends IbContent {

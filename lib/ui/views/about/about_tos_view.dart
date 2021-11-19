@@ -7,11 +7,12 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutTosView extends StatelessWidget {
+  const AboutTosView({Key key, this.showAppBar = true}) : super(key: key);
+  
   static const String id = 'about_tos_view';
 
   final bool showAppBar;
 
-  const AboutTosView({Key key, this.showAppBar = true}) : super(key: key);
 
   TextSpan _buildText(BuildContext context, String text, {bool bold = false}) {
     return TextSpan(

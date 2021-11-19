@@ -1,8 +1,9 @@
 import 'package:markdown/markdown.dart' as md;
 
 class IbMdTagSyntax extends md.BlockSyntax {
-  final _tagsStack = <String>[];
   IbMdTagSyntax() : super();
+  
+  final _tagsStack = <String>[];
 
   @override
   md.Node parse(md.BlockParser parser) {

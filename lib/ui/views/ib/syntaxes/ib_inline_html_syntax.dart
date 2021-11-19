@@ -3,9 +3,10 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:markdown/markdown.dart' as md;
 
 class IbInlineHtmlSyntax extends md.InlineSyntax {
+  IbInlineHtmlSyntax({@required this.builders}) : super(_pattern);
+  
   Map<String, MarkdownElementBuilder> builders;
 
-  IbInlineHtmlSyntax({@required this.builders}) : super(_pattern);
 
   static const String _pattern = r'<(\S*?)[^>]*>(.*?)<\/\1>|<.*?\/>';
 

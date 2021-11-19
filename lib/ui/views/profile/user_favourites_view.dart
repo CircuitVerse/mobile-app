@@ -8,9 +8,10 @@ import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 
 class UserFavouritesView extends StatefulWidget {
+  const UserFavouritesView({Key key, this.userId}) : super(key: key);
+  
   final String userId;
 
-  const UserFavouritesView({Key key, this.userId}) : super(key: key);
 
   @override
   _UserFavouritesViewState createState() => _UserFavouritesViewState();

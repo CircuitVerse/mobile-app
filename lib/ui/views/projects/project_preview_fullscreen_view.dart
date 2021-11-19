@@ -5,9 +5,10 @@ import 'package:photo_view/photo_view.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ProjectPreviewFullScreen extends StatelessWidget {
+  const ProjectPreviewFullScreen({Key key, this.project}) : super(key: key);
+  
   static const String id = 'project_preview_fullscreen_view';
   final Project project;
-  const ProjectPreviewFullScreen({Key key, this.project}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

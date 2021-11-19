@@ -6,10 +6,11 @@ import 'package:mobile_app/ui/views/contributors/components/contributors_donate_
 import 'package:mobile_app/ui/views/contributors/components/contributors_support_card.dart';
 
 class ContributorsView extends StatelessWidget {
+  const ContributorsView({Key key, this.showAppBar = true}) : super(key: key);
+
   static const String id = 'contributors_view';
   final bool showAppBar;
 
-  const ContributorsView({Key key, this.showAppBar = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

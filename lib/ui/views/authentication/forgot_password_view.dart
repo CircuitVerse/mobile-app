@@ -13,9 +13,10 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.dart';
 
 class ForgotPasswordView extends StatefulWidget {
+  const ForgotPasswordView({Key key}) : super(key: key);
+  
   static const String id = 'forgot_password_view';
 
-  const ForgotPasswordView({Key key}) : super(key: key);
   @override
   _ForgotPasswordViewState createState() => _ForgotPasswordViewState();
 }

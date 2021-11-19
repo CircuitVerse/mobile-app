@@ -2,17 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 
 class CVTextField extends StatelessWidget {
-  final String label;
-  final TextEditingController controller;
-  final TextInputType type;
-  final TextInputAction action;
-  final int maxLines;
-  final String initialValue;
-  final Function(String) validator;
-  final Function(String) onSaved;
-  final Function(String) onFieldSubmitted;
-  final EdgeInsets padding;
-  final FocusNode focusNode;
 
   /// Creates a [TextField] that is specifically styled for CircuitVerse.
   ///
@@ -36,6 +25,20 @@ class CVTextField extends StatelessWidget {
     this.focusNode,
     this.onFieldSubmitted,
   }) : super(key: key);
+
+  final String label;
+  final TextEditingController controller;
+  final TextInputType type;
+  final TextInputAction action;
+  final int maxLines;
+  final String initialValue;
+  final Function(String) validator;
+  final Function(String) onSaved;
+  final Function(String) onFieldSubmitted;
+  final EdgeInsets padding;
+  final FocusNode focusNode;
+
+  
 
   @override
   Widget build(BuildContext context) {

@@ -3,16 +3,17 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/group_members.dart';
 
 class MemberCard extends StatelessWidget {
-  final GroupMember member;
-  final bool hasMentorAccess;
-  final VoidCallback onDeletePressed;
-
   const MemberCard({
     Key key,
     this.member,
     this.hasMentorAccess = false,
     this.onDeletePressed,
   }) : super(key: key);
+  
+  final GroupMember member;
+  final bool hasMentorAccess;
+  final VoidCallback onDeletePressed;
+
 
   @override
   Widget build(BuildContext context) {

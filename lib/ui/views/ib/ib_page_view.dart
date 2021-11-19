@@ -33,17 +33,18 @@ typedef TocCallback = void Function(Function);
 typedef SetPageCallback = void Function(IbChapter);
 
 class IbPageView extends StatefulWidget {
-  static const String id = 'ib_page_view';
-  final TocCallback tocCallback;
-  final SetPageCallback setPage;
-  final IbChapter chapter;
-
   const IbPageView({
     @required Key key,
     @required this.tocCallback,
     @required this.chapter,
     @required this.setPage,
   }) : super(key: key);
+  
+  static const String id = 'ib_page_view';
+  final TocCallback tocCallback;
+  final SetPageCallback setPage;
+  final IbChapter chapter;
+
 
   @override
   _IbPageViewState createState() => _IbPageViewState();

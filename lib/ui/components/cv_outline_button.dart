@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 
 class CVOutlineButton extends StatelessWidget {
-  final String title;
-  final VoidCallback onPressed;
-  final bool isBodyText;
-  final bool isPrimaryDark;
-
   const CVOutlineButton({
     Key key,
     @required this.title,
@@ -14,6 +9,12 @@ class CVOutlineButton extends StatelessWidget {
     this.isBodyText = false,
     this.isPrimaryDark = false,
   }) : super(key: key);
+  
+  final String title;
+  final VoidCallback onPressed;
+  final bool isBodyText;
+  final bool isPrimaryDark;
+
 
   @override
   Widget build(BuildContext context) {

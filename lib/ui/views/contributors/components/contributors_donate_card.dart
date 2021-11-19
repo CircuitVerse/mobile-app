@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 
 class ContributeDonateCard extends StatelessWidget {
-  final String imagePath;
-  final String title;
-  final String url;
-
   const ContributeDonateCard({
     Key key,
     this.imagePath,
     this.title,
     this.url,
   }) : super(key: key);
+  
+  final String imagePath;
+  final String title;
+  final String url;
+
 
   @override
   Widget build(BuildContext context) {

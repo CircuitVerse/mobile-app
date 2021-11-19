@@ -6,7 +6,7 @@ analyzer:
 linter:
   rules:
     # Make constructors the first thing in every class
-    sort_constructors_first: false
+    sort_constructors_first: true
 
     # Use parameter order as in json response
     always_put_required_named_parameters_first: false

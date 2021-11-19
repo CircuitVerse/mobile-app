@@ -3,6 +3,12 @@ import 'package:mobile_app/models/links.dart';
 import 'package:mobile_app/models/projects.dart';
 
 class Assignments {
+  factory Assignments.fromJson(Map<String, dynamic> json) => Assignments(
+        data: List<Assignment>.from(
+          json['data'].map((x) => Assignment.fromJson(x)),
+        ),
+        links: Links.fromJson(json['links']),
+      );
   Assignments({
     this.data,
     this.links,
@@ -11,29 +17,9 @@ class Assignments {
   List<Assignment> data;
   Links links;
 
-  factory Assignments.fromJson(Map<String, dynamic> json) => Assignments(
-        data: List<Assignment>.from(
-          json['data'].map((x) => Assignment.fromJson(x)),
-        ),
-        links: Links.fromJson(json['links']),
-      );
 }
 
 class Assignment {
-  Assignment({
-    this.id,
-    this.type,
-    this.attributes,
-    this.projects,
-    this.grades,
-  });
-
-  String id;
-  String type;
-  AssignmentAttributes attributes;
-  List<Project> projects;
-  List<Grade> grades;
-
   factory Assignment.fromJson(Map<String, dynamic> json) => Assignment(
         id: json['id'] ?? json['data']['id'],
         type: json['type'] ?? json['data']['type'],
@@ -54,6 +40,21 @@ class Assignment {
               )
             : null,
       );
+  
+  Assignment({
+    this.id,
+    this.type,
+    this.attributes,
+    this.projects,
+    this.grades,
+  });
+
+  String id;
+  String type;
+  AssignmentAttributes attributes;
+  List<Project> projects;
+  List<Grade> grades;
+
 
   bool get canBeGraded =>
       attributes.gradingScale != 'no_scale' &&
@@ -78,6 +79,21 @@ class Assignment {
 }
 
 class AssignmentAttributes {
+  factory AssignmentAttributes.fromJson(Map<String, dynamic> json) =>
+      AssignmentAttributes(
+        name: json['name'],
+        deadline: DateTime.parse(json['deadline']).toLocal(),
+        description: json['description'],
+        hasMentorAccess: json['has_mentor_access'],
+        createdAt: DateTime.parse(json['created_at']).toLocal(),
+        updatedAt: DateTime.parse(json['updated_at']).toLocal(),
+        status: json['status'],
+        currentUserProjectId: json['current_user_project_id'],
+        gradingScale: json['grading_scale'],
+        gradesFinalized: json['grades_finalized'],
+        restrictions: json['restrictions'],
+      );
+  
   AssignmentAttributes({
     this.name,
     this.deadline,
@@ -104,18 +120,4 @@ class AssignmentAttributes {
   bool gradesFinalized;
   String restrictions;
 
-  factory AssignmentAttributes.fromJson(Map<String, dynamic> json) =>
-      AssignmentAttributes(
-        name: json['name'],
-        deadline: DateTime.parse(json['deadline']).toLocal(),
-        description: json['description'],
-        hasMentorAccess: json['has_mentor_access'],
-        createdAt: DateTime.parse(json['created_at']).toLocal(),
-        updatedAt: DateTime.parse(json['updated_at']).toLocal(),
-        status: json['status'],
-        currentUserProjectId: json['current_user_project_id'],
-        gradingScale: json['grading_scale'],
-        gradesFinalized: json['grades_finalized'],
-        restrictions: json['restrictions'],
-      );
 }

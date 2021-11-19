@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 
 class CVAddIconButton extends StatelessWidget {
+  const CVAddIconButton({Key key, this.onPressed}) : super(key: key);
   final VoidCallback onPressed;
 
-  const CVAddIconButton({Key key, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

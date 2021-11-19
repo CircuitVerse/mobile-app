@@ -12,9 +12,10 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
 
 class NewGroupView extends StatefulWidget {
+  const NewGroupView({Key key}) : super(key: key);
+  
   static const String id = 'new_group_view';
 
-  const NewGroupView({Key key}) : super(key: key);
 
   @override
   _NewGroupViewState createState() => _NewGroupViewState();

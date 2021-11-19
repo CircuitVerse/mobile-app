@@ -7,48 +7,6 @@ List<CircuitVerseContributor> circuitVerseContributorsFromJson(String str) =>
         json.decode(str).map((x) => CircuitVerseContributor.fromJson(x)));
 
 class CircuitVerseContributor {
-  String login;
-  int id;
-  String nodeId;
-  String avatarUrl;
-  String gravatarId;
-  String url;
-  String htmlUrl;
-  String followersUrl;
-  String followingUrl;
-  String gistsUrl;
-  String starredUrl;
-  String subscriptionsUrl;
-  String organizationsUrl;
-  String reposUrl;
-  String eventsUrl;
-  String receivedEventsUrl;
-  Type type;
-  bool siteAdmin;
-  int contributions;
-
-  CircuitVerseContributor({
-    this.login,
-    this.id,
-    this.nodeId,
-    this.avatarUrl,
-    this.gravatarId,
-    this.url,
-    this.htmlUrl,
-    this.followersUrl,
-    this.followingUrl,
-    this.gistsUrl,
-    this.starredUrl,
-    this.subscriptionsUrl,
-    this.organizationsUrl,
-    this.reposUrl,
-    this.eventsUrl,
-    this.receivedEventsUrl,
-    this.type,
-    this.siteAdmin,
-    this.contributions,
-  });
-
   factory CircuitVerseContributor.fromJson(Map<String, dynamic> json) =>
       CircuitVerseContributor(
         login: json['login'],
@@ -71,6 +29,49 @@ class CircuitVerseContributor {
         siteAdmin: json['site_admin'],
         contributions: json['contributions'],
       );
+  CircuitVerseContributor({
+    this.login,
+    this.id,
+    this.nodeId,
+    this.avatarUrl,
+    this.gravatarId,
+    this.url,
+    this.htmlUrl,
+    this.followersUrl,
+    this.followingUrl,
+    this.gistsUrl,
+    this.starredUrl,
+    this.subscriptionsUrl,
+    this.organizationsUrl,
+    this.reposUrl,
+    this.eventsUrl,
+    this.receivedEventsUrl,
+    this.type,
+    this.siteAdmin,
+    this.contributions,
+  });
+ 
+  String login;
+  int id;
+  String nodeId;
+  String avatarUrl;
+  String gravatarId;
+  String url;
+  String htmlUrl;
+  String followersUrl;
+  String followingUrl;
+  String gistsUrl;
+  String starredUrl;
+  String subscriptionsUrl;
+  String organizationsUrl;
+  String reposUrl;
+  String eventsUrl;
+  String receivedEventsUrl;
+  Type type;
+  bool siteAdmin;
+  int contributions;
+
+
 }
 
 enum Type { USER, BOT }

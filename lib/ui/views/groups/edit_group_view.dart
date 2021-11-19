@@ -13,10 +13,11 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/edit_group_viewmodel.dart';
 
 class EditGroupView extends StatefulWidget {
+  const EditGroupView({Key key, this.group}) : super(key: key);
+  
   static const String id = 'edit_group_view';
   final Group group;
 
-  const EditGroupView({Key key, this.group}) : super(key: key);
 
   @override
   _EditGroupViewState createState() => _EditGroupViewState();

@@ -1,7 +1,7 @@
 class Failure implements Exception {
+  Failure(this.message);
   final String message;
 
-  Failure(this.message);
 
   @override
   String toString() => message;
