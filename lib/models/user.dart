@@ -4,8 +4,8 @@ class User {
       );
   
   User({this.data});
-
   Data data;
+
 
 
   Map<String, dynamic> toJson() => {
@@ -25,10 +25,10 @@ class Data {
     this.type,
     this.attributes,
   });
-
   String id;
   String type;
   UserAttributes attributes;
+
 
 
   Map<String, dynamic> toJson() => {
@@ -65,7 +65,6 @@ class UserAttributes {
     this.country,
     this.educationalInstitute,
   });
-
   String name;
   String email;
   bool subscribed;
@@ -74,6 +73,7 @@ class UserAttributes {
   bool admin;
   dynamic country;
   dynamic educationalInstitute;
+
 
   
 

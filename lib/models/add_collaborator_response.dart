@@ -11,9 +11,9 @@ class AddCollaboratorsResponse {
     this.existing,
     this.invalid,
   });
-
   List<String> added;
   List<String> existing;
   List<String> invalid;
+
 
 }

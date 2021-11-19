@@ -13,9 +13,9 @@ class Groups {
     this.data,
     this.links,
   });
-
   List<Group> data;
   Links links;
+
 
 }
 
@@ -40,7 +40,6 @@ class Group {
               )
             : null,
       );
-  
   Group({
     this.id,
     this.type,
@@ -48,12 +47,12 @@ class Group {
     this.groupMembers,
     this.assignments,
   });
-
   String id;
   String type;
   GroupAttributes attributes;
   List<GroupMember> groupMembers;
   List<Assignment> assignments;
+
 
 
   // returns true if the logged in user is mentor for this group
@@ -82,12 +81,12 @@ class GroupAttributes {
     this.createdAt,
     this.updatedAt,
   });
-
   int memberCount;
   String mentorName;
   String name;
   int mentorId;
   DateTime createdAt;
   DateTime updatedAt;
+
 
 }

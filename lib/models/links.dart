@@ -15,12 +15,12 @@ class Links {
     this.next,
     this.last,
   });
-
   String self;
   String first;
   dynamic prev;
   dynamic next;
   String last;
+
 
  
 }

@@ -11,9 +11,9 @@ class AddGroupMembersResponse {
     this.pending,
     this.invalid,
   });
-
   List<String> added;
   List<String> pending;
   List<String> invalid;
+
 
 }

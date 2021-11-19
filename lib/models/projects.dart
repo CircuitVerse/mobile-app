@@ -13,9 +13,9 @@ class Projects {
     this.data,
     this.links,
   });
-
   List<Project> data;
   Links links;
+
 
 }
 
@@ -35,7 +35,6 @@ class Project {
               )
             : null,
       );
- 
   Project({
     this.id,
     this.type,
@@ -43,13 +42,11 @@ class Project {
     this.relationships,
     this.collaborators,
   });
-
   String id;
   String type;
   ProjectAttributes attributes;
   ProjectRelationships relationships;
   List<Collaborator> collaborators;
-
 
   bool get hasAuthorAccess {
     var currentUser = locator<LocalStorageService>().currentUser;
@@ -90,7 +87,7 @@ class ProjectAttributes {
     this.authorName,
     this.starsCount,
   });
-
+  
   String name;
   String projectAccessType;
   DateTime createdAt;
@@ -103,18 +100,19 @@ class ProjectAttributes {
   String authorName;
   int starsCount;
 
+
 }
 
 class ImagePreview {
   factory ImagePreview.fromJson(Map<String, dynamic> json) => ImagePreview(
         url: json['url'],
       );
-  
   ImagePreview({
     this.url,
   });
-
+  
   String url;
+
 
 }
 
@@ -128,7 +126,6 @@ class ProjectRelationships {
   ProjectRelationships({
     this.author,
   });
-
   Author author;
 
   
@@ -142,8 +139,8 @@ class Author {
   Author({
     this.data,
   });
-
   AuthorData data;
+
 
   
 }
@@ -159,9 +156,9 @@ class AuthorData {
     this.id,
     this.type,
   });
-
   String id;
   String type;
+
 
   
 }
@@ -181,11 +178,11 @@ class Tag {
     this.createdAt,
     this.updatedAt,
   });
-
   int id;
   String name;
   DateTime createdAt;
   DateTime updatedAt;
+
 
   
 }

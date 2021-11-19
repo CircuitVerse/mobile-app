@@ -11,9 +11,9 @@ class Collaborators {
     this.data,
     this.links,
   });
-
   List<Collaborator> data;
   Links links;
+
 
 }
 
@@ -29,10 +29,10 @@ class Collaborator {
     this.type,
     this.attributes,
   });
-
   String id;
   String type;
   CollaboratorAttributes attributes;
+
 
 }
 
@@ -45,7 +45,7 @@ class CollaboratorAttributes {
   CollaboratorAttributes({
     this.name,
   });
-
   String name;
+
 
 }

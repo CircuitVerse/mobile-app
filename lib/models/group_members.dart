@@ -11,9 +11,9 @@ class GroupMembers {
     this.data,
     this.links,
   });
-
   List<GroupMember> data;
   Links links;
+
 
 }
 
@@ -29,10 +29,10 @@ class GroupMember {
     this.type,
     this.attributes,
   });
-
   String id;
   String type;
   GroupMemberAttributes attributes;
+
 
 }
 
@@ -55,12 +55,12 @@ class GroupMemberAttributes {
     this.name,
     this.email,
   });
-
   int groupId;
   int userId;
   DateTime createdAt;
   DateTime updatedAt;
   String name;
   String email;
+
 
 }
