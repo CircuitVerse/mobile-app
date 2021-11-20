@@ -30,6 +30,8 @@ class _IbLandingViewState extends State<IbLandingView> {
   );
   IbChapter _selectedChapter;
   ValueNotifier<Function> _tocNotifier;
+  // ShowCaseState stores the information of whether the button which is to be
+  // showcased are clicked or not
   IBShowCase _showCaseState;
   final GlobalKey _menu = GlobalKey();
   final LocalStorageService _localStorageService =
