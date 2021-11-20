@@ -5,6 +5,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
+import 'package:mobile_app/models/ib/ib_showcase.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
@@ -51,6 +52,13 @@ void main() {
         navOrder: '1',
       );
 
+      //Mock ShowCase State
+      var showCase = IBShowCase(
+        nextButton: true,
+        prevButton: true,
+        contentButton: true,
+      );
+
       _chapter.prevPage = _chapter;
       _chapter.nextPage = _chapter;
 
@@ -59,11 +67,12 @@ void main() {
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: IbPageView(
-            key: UniqueKey(),
-            chapter: _chapter,
-            tocCallback: (val) {},
-            setPage: (e) {},
-          ),
+              key: UniqueKey(),
+              chapter: _chapter,
+              tocCallback: (val) {},
+              setPage: (e) {},
+              showCase: showCase,
+              setShowCase: (e) {}),
         ),
       );
 
