@@ -8,6 +8,7 @@ import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
+import 'package:mobile_app/models/ib/ib_showcase.dart';
 import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_chapter_contents_builder.dart';
@@ -27,10 +28,12 @@ import 'package:mobile_app/ui/views/ib/syntaxes/ib_md_tag_syntax.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 typedef TocCallback = void Function(Function);
 typedef SetPageCallback = void Function(IbChapter);
+typedef SetShowCaseStateCallback = void Function(IBShowCase);
 
 class IbPageView extends StatefulWidget {
   const IbPageView({
@@ -38,12 +41,16 @@ class IbPageView extends StatefulWidget {
     @required this.tocCallback,
     @required this.chapter,
     @required this.setPage,
+    @required this.showCase,
+    @required this.setShowCase,
   }) : super(key: key);
 
   static const String id = 'ib_page_view';
   final TocCallback tocCallback;
   final SetPageCallback setPage;
   final IbChapter chapter;
+  final IBShowCase showCase;
+  final SetShowCaseStateCallback setShowCase;
 
   @override
   _IbPageViewState createState() => _IbPageViewState();
@@ -53,12 +60,18 @@ class _IbPageViewState extends State<IbPageView> {
   IbPageViewModel _model;
   AutoScrollController _hideButtonController;
   bool _isFabsVisible = true;
+  List<GlobalKey> _list;
 
   /// To track index through slug for scroll_to_index
   final Map<String, int> _slugMap = {};
 
+  //Global Keys
+  final GlobalKey _nextPage = GlobalKey();
+  final GlobalKey _prevPage = GlobalKey();
+
   @override
   void initState() {
+    _list = <GlobalKey>[];
     super.initState();
     _isFabsVisible = true;
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
@@ -72,6 +85,17 @@ class _IbPageViewState extends State<IbPageView> {
         setState(() => _isFabsVisible = true);
       }
     });
+    if (!widget.showCase.nextButton) _list.add(_nextPage);
+    if (!widget.showCase.prevButton) _list.add(_prevPage);
+    if (_list.isNotEmpty) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            ShowCaseWidget.of(context).startShowCase(_list);
+          }
+        });
+      });
+    }
   }
 
   Widget _buildDivider() {
@@ -356,20 +380,30 @@ class _IbPageViewState extends State<IbPageView> {
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
           opacity: _isFabsVisible ? 1.0 : 0.0,
-          child: FloatingActionButton(
-            heroTag: 'previousPage',
-            mini: true,
-            backgroundColor: Theme.of(context).primaryIconTheme.color,
-            onPressed: () {
-              //If FAB are not visible do not do anything.
-              if (!_isFabsVisible) {
-                return;
-              }
+          child: Showcase(
+            key: _prevPage,
+            description: 'Tap to navigate to previous page',
+            shapeBorder: const CircleBorder(),
+            onTargetClick: () {
+              widget.setShowCase(widget.showCase.copyWith(prevButton: true));
               widget.setPage(widget.chapter.prev);
             },
-            child: const Icon(
-              Icons.arrow_back_rounded,
-              color: IbTheme.primaryColor,
+            disposeOnTap: true,
+            child: FloatingActionButton(
+              heroTag: 'previousPage',
+              mini: true,
+              backgroundColor: Theme.of(context).primaryIconTheme.color,
+              onPressed: () {
+                //If FAB are not visible do not do anything.
+                if (!_isFabsVisible) {
+                  return;
+                }
+                widget.setPage(widget.chapter.prev);
+              },
+              child: const Icon(
+                Icons.arrow_back_rounded,
+                color: IbTheme.primaryColor,
+              ),
             ),
           ),
         ),
@@ -385,20 +419,30 @@ class _IbPageViewState extends State<IbPageView> {
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
           opacity: _isFabsVisible ? 1.0 : 0.0,
-          child: FloatingActionButton(
-            heroTag: 'nextPage',
-            mini: true,
-            backgroundColor: Theme.of(context).primaryIconTheme.color,
-            onPressed: () {
-              //If FAB are not visible do not do anything.
-              if (!_isFabsVisible) {
-                return;
-              }
+          child: Showcase(
+            key: _nextPage,
+            description: 'Tap to navigate to next page',
+            shapeBorder: const CircleBorder(),
+            onTargetClick: () {
+              widget.setShowCase(widget.showCase.copyWith(nextButton: true));
               widget.setPage(widget.chapter.next);
             },
-            child: const Icon(
-              Icons.arrow_forward_rounded,
-              color: IbTheme.primaryColor,
+            disposeOnTap: false,
+            child: FloatingActionButton(
+              heroTag: 'nextPage',
+              mini: true,
+              backgroundColor: Theme.of(context).primaryIconTheme.color,
+              onPressed: () {
+                //If FAB are not visible do not do anything.
+                if (!_isFabsVisible) {
+                  return;
+                }
+                widget.setPage(widget.chapter.next);
+              },
+              child: const Icon(
+                Icons.arrow_forward_rounded,
+                color: IbTheme.primaryColor,
+              ),
             ),
           ),
         ),
