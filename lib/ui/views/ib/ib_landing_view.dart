@@ -2,11 +2,15 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ib_theme.dart';
+import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
+import 'package:mobile_app/models/ib/ib_showcase.dart';
+import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class IbLandingView extends StatefulWidget {
@@ -26,11 +30,16 @@ class _IbLandingViewState extends State<IbLandingView> {
   );
   IbChapter _selectedChapter;
   ValueNotifier<Function> _tocNotifier;
+  IBShowCase _showCaseState;
+  final GlobalKey _menu = GlobalKey();
+  final LocalStorageService _localStorageService =
+      locator<LocalStorageService>();
 
   @override
   void initState() {
     _tocNotifier = ValueNotifier(null);
     _selectedChapter = _homeChapter;
+    _showCaseState = IBShowCase.fromJson(_localStorageService.getShowcaseState);
     super.initState();
   }
 
@@ -58,11 +67,31 @@ class _IbLandingViewState extends State<IbLandingView> {
         ValueListenableBuilder(
           valueListenable: _tocNotifier,
           builder: (context, value, child) {
+            if (!_showCaseState.contentButton &&
+                value != null &&
+                ShowCaseWidget.of(context).activeWidgetId == null) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                ShowCaseWidget.of(context).startShowCase([_menu]);
+              });
+            }
+
             return value != null
-                ? IconButton(
-                    icon: const Icon(Icons.menu_book_rounded),
-                    tooltip: 'Show Table of Contents',
-                    onPressed: value,
+                ? Showcase(
+                    key: _menu,
+                    description: 'Show Table of Contents',
+                    child: IconButton(
+                      icon: const Icon(Icons.menu_book_rounded),
+                      onPressed: value,
+                    ),
+                    onTargetClick: () {
+                      setState(() {
+                        _showCaseState = _showCaseState.copyWith(
+                          contentButton: true,
+                        );
+                      });
+                      value();
+                    },
+                    disposeOnTap: true,
                   )
                 : Container();
           },
@@ -209,6 +238,7 @@ class _IbLandingViewState extends State<IbLandingView> {
               setState(() => _selectedChapter = _homeChapter);
               return Future.value(false);
             }
+            _localStorageService.setShowcaseState = _showCaseState.toString();
             return Future.value(true);
           },
           child: Theme(
@@ -242,6 +272,10 @@ class _IbLandingViewState extends State<IbLandingView> {
                     setState(() => _selectedChapter = chapter);
                   },
                   chapter: _selectedChapter,
+                  setShowCase: (updatedState) {
+                    setState(() => _showCaseState = updatedState);
+                  },
+                  showCase: _showCaseState,
                 ),
               ),
             ),

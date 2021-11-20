@@ -24,6 +24,7 @@ import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/ui/views/projects/project_preview_fullscreen_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class CVRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -110,7 +111,15 @@ class CVRouter {
           ),
         );
       case IbLandingView.id:
-        return MaterialPageRoute(builder: (_) => const IbLandingView());
+        return MaterialPageRoute(
+          builder: (_) => ShowCaseWidget(
+            builder: Builder(
+              builder: (context) {
+                return const IbLandingView();
+              },
+            ),
+          ),
+        );
       case ProjectPreviewFullScreen.id:
         var _project = settings.arguments as Project;
         return MaterialPageRoute(
