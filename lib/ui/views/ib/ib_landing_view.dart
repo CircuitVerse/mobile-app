@@ -33,7 +33,10 @@ class _IbLandingViewState extends State<IbLandingView> {
   // ShowCaseState stores the information of whether the button which is to be
   // showcased are clicked or not
   IBShowCase _showCaseState;
+  List<GlobalKey> _list;
   final GlobalKey _menu = GlobalKey();
+  final GlobalKey _drawer = GlobalKey();
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   final LocalStorageService _localStorageService =
       locator<LocalStorageService>();
 
@@ -60,6 +63,22 @@ class _IbLandingViewState extends State<IbLandingView> {
 
   Widget _buildAppBar() {
     return AppBar(
+      leading: IconButton(
+        onPressed: () => _key.currentState.openDrawer(),
+        icon: Showcase(
+          key: _drawer,
+          description: 'Navigate to different chapters',
+          overlayPadding: const EdgeInsets.all(12.0),
+          onTargetClick: () {
+            setState(() {
+              _showCaseState = _showCaseState.copyWith(drawerButton: true);
+            });
+            _key.currentState.openDrawer();
+          },
+          disposeOnTap: true,
+          child: const Icon(Icons.menu),
+        ),
+      ),
       title: Text(
         _selectedChapter.id == _homeChapter.id
             ? 'CircuitVerse'
@@ -69,12 +88,16 @@ class _IbLandingViewState extends State<IbLandingView> {
         ValueListenableBuilder(
           valueListenable: _tocNotifier,
           builder: (context, value, child) {
-            if (!_showCaseState.contentButton &&
-                value != null &&
+            if (value != null &&
                 ShowCaseWidget.of(context).activeWidgetId == null) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                ShowCaseWidget.of(context).startShowCase([_menu]);
-              });
+              _list = <GlobalKey>[];
+              if (!_showCaseState.drawerButton) _list.add(_drawer);
+              if (!_showCaseState.contentButton) _list.add(_menu);
+              if (_list.isNotEmpty) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  ShowCaseWidget.of(context).startShowCase(_list);
+                });
+              }
             }
 
             return value != null
@@ -91,7 +114,10 @@ class _IbLandingViewState extends State<IbLandingView> {
                           contentButton: true,
                         );
                       });
-                      value();
+                      Get.back();
+                      Future.delayed(const Duration(milliseconds: 200), () {
+                        value();
+                      });
                     },
                     disposeOnTap: true,
                   )
@@ -246,7 +272,7 @@ class _IbLandingViewState extends State<IbLandingView> {
           child: Theme(
             data: IbTheme.getThemeData(context),
             child: Scaffold(
-              key: const Key('IbLandingScaffold'),
+              key: _key,
               appBar: _buildAppBar(),
               drawer: _buildDrawer(model),
               body: PageTransitionSwitcher(
