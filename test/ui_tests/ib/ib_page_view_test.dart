@@ -57,6 +57,7 @@ void main() {
         nextButton: true,
         prevButton: true,
         contentButton: true,
+        drawerButton: true,
       );
 
       _chapter.prevPage = _chapter;
