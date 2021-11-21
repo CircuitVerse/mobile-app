@@ -11,7 +11,6 @@ class CardButton extends StatelessWidget {
   final Color color;
   final String title;
 
-
   @override
   Widget build(BuildContext context) {
     return Padding(

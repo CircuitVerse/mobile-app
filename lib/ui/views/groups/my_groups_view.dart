@@ -16,9 +16,8 @@ import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
 
 class MyGroupsView extends StatefulWidget {
   const MyGroupsView({Key key}) : super(key: key);
-  
-  static const String id = 'my_groups_view';
 
+  static const String id = 'my_groups_view';
 
   @override
   _MyGroupsViewState createState() => _MyGroupsViewState();

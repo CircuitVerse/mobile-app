@@ -9,11 +9,10 @@ class MemberCard extends StatelessWidget {
     this.hasMentorAccess = false,
     this.onDeletePressed,
   }) : super(key: key);
-  
+
   final GroupMember member;
   final bool hasMentorAccess;
   final VoidCallback onDeletePressed;
-
 
   @override
   Widget build(BuildContext context) {

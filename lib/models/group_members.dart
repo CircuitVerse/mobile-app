@@ -6,15 +6,13 @@ class GroupMembers {
             json['data'].map((x) => GroupMember.fromJson(x))),
         links: Links.fromJson(json['links']),
       );
- 
+
   GroupMembers({
     this.data,
     this.links,
   });
   List<GroupMember> data;
   Links links;
-
-
 }
 
 class GroupMember {
@@ -23,7 +21,7 @@ class GroupMember {
         type: json['type'],
         attributes: GroupMemberAttributes.fromJson(json['attributes']),
       );
- 
+
   GroupMember({
     this.id,
     this.type,
@@ -32,8 +30,6 @@ class GroupMember {
   String id;
   String type;
   GroupMemberAttributes attributes;
-
-
 }
 
 class GroupMemberAttributes {
@@ -46,7 +42,7 @@ class GroupMemberAttributes {
         name: json['name'],
         email: json['email'],
       );
- 
+
   GroupMemberAttributes({
     this.groupId,
     this.userId,
@@ -61,6 +57,4 @@ class GroupMemberAttributes {
   DateTime updatedAt;
   String name;
   String email;
-
-
 }

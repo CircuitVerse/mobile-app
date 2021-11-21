@@ -8,11 +8,10 @@ class ProjectCard extends StatefulWidget {
   const ProjectCard(
       {Key key, this.project, this.onPressed, this.isHeaderFilled = true})
       : super(key: key);
-      
+
   final Project project;
   final VoidCallback onPressed;
   final bool isHeaderFilled;
-
 
   @override
   _ProjectCardState createState() => _ProjectCardState();

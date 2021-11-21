@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 
 class CVPrimaryButton extends StatelessWidget {
-  
   const CVPrimaryButton({
     Key key,
     @required this.title,
@@ -17,7 +16,6 @@ class CVPrimaryButton extends StatelessWidget {
   final bool isBodyText;
   final bool isPrimaryDark;
   final EdgeInsetsGeometry padding;
-
 
   @override
   Widget build(BuildContext context) {

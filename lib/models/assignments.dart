@@ -13,11 +13,9 @@ class Assignments {
     this.data,
     this.links,
   });
-  
+
   List<Assignment> data;
   Links links;
-
-
 }
 
 class Assignment {
@@ -53,10 +51,6 @@ class Assignment {
   AssignmentAttributes attributes;
   List<Project> projects;
   List<Grade> grades;
-
-
-  
-  
 
   bool get canBeGraded =>
       attributes.gradingScale != 'no_scale' &&
@@ -95,7 +89,7 @@ class AssignmentAttributes {
         gradesFinalized: json['grades_finalized'],
         restrictions: json['restrictions'],
       );
-  
+
   AssignmentAttributes({
     this.name,
     this.deadline,
@@ -109,7 +103,7 @@ class AssignmentAttributes {
     this.gradesFinalized,
     this.restrictions,
   });
-  
+
   String name;
   DateTime deadline;
   String description;
@@ -121,6 +115,4 @@ class AssignmentAttributes {
   String gradingScale;
   bool gradesFinalized;
   String restrictions;
-
-
 }

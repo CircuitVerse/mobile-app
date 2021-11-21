@@ -21,7 +21,6 @@ class AssignmentCard extends StatefulWidget {
   final VoidCallback onReopenPressed;
   final VoidCallback onStartPressed;
 
-
   @override
   _AssignmentCardState createState() => _AssignmentCardState();
 }

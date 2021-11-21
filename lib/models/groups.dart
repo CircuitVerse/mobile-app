@@ -15,8 +15,6 @@ class Groups {
   });
   List<Group> data;
   Links links;
-
-
 }
 
 class Group {
@@ -53,8 +51,6 @@ class Group {
   List<GroupMember> groupMembers;
   List<Assignment> assignments;
 
-
-
   // returns true if the logged in user is mentor for this group
   bool get isMentor => locator<LocalStorageService>().currentUser.data.id ==
           attributes.mentorId.toString()
@@ -72,7 +68,7 @@ class GroupAttributes {
         createdAt: DateTime.parse(json['created_at']),
         updatedAt: DateTime.parse(json['updated_at']),
       );
- 
+
   GroupAttributes({
     this.memberCount,
     this.mentorName,
@@ -87,6 +83,4 @@ class GroupAttributes {
   int mentorId;
   DateTime createdAt;
   DateTime updatedAt;
-
-
 }

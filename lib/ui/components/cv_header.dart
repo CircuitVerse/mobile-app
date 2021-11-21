@@ -5,11 +5,10 @@ class CVHeader extends StatelessWidget {
   const CVHeader(
       {Key key, @required this.title, this.subtitle, this.description})
       : super(key: key);
-  
+
   final String title;
   final String subtitle;
   final String description;
-
 
   @override
   Widget build(BuildContext context) {

@@ -19,10 +19,9 @@ import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 
 class GroupDetailsView extends StatefulWidget {
   const GroupDetailsView({Key key, this.group}) : super(key: key);
-  
+
   static const String id = 'group_details_view';
   final Group group;
-
 
   @override
   _GroupDetailsViewState createState() => _GroupDetailsViewState();

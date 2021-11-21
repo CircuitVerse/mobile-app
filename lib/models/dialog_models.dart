@@ -7,19 +7,17 @@ class DialogRequest {
     this.buttonTitle,
     this.cancelTitle,
   });
-  
+
   final String title;
   final String description;
   final String buttonTitle;
   final String cancelTitle;
-
 }
 
 class DialogResponse {
   DialogResponse({
     this.confirmed,
   });
-  
-  final bool confirmed;
 
+  final bool confirmed;
 }

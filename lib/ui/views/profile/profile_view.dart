@@ -14,10 +14,9 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class ProfileView extends StatefulWidget {
   const ProfileView({Key key, this.userId}) : super(key: key);
-  
+
   static const String id = 'profile_view';
   final String userId;
-
 
   @override
   _ProfileViewState createState() => _ProfileViewState();

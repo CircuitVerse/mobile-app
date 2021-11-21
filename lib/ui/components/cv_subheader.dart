@@ -3,10 +3,9 @@ import 'package:mobile_app/cv_theme.dart';
 
 class CVSubheader extends StatelessWidget {
   const CVSubheader({Key key, this.title, this.subtitle}) : super(key: key);
-  
+
   final String title;
   final String subtitle;
-
 
   @override
   Widget build(BuildContext context) {

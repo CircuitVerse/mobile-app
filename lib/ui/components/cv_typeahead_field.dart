@@ -4,7 +4,6 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:mobile_app/services/API/country_institute_api.dart';
 
 class CVTypeAheadField extends StatelessWidget {
-
   /// Creates a [TextField] that is specifically styled for CircuitVerse.
   ///
   /// When a [TextInputType] is not specified, it defaults to [TextInputType.text]
@@ -44,7 +43,6 @@ class CVTypeAheadField extends StatelessWidget {
 
   static const String COUNTRY = 'country';
   static const String EDUCATIONAL_INSTITUTE = 'educational institute';
-
 
   @override
   Widget build(BuildContext context) {

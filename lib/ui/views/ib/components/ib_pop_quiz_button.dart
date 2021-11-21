@@ -6,10 +6,9 @@ class IbPopQuizButton extends StatefulWidget {
     @required this.content,
     @required this.isCorrect,
   }) : super(key: key);
-  
+
   final String content;
   final bool isCorrect;
-
 
   @override
   IbPopQuizButtonState createState() => IbPopQuizButtonState();

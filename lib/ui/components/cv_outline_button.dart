@@ -9,12 +9,11 @@ class CVOutlineButton extends StatelessWidget {
     this.isBodyText = false,
     this.isPrimaryDark = false,
   }) : super(key: key);
-  
+
   final String title;
   final VoidCallback onPressed;
   final bool isBodyText;
   final bool isPrimaryDark;
-
 
   @override
   Widget build(BuildContext context) {

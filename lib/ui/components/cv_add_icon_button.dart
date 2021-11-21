@@ -5,7 +5,6 @@ class CVAddIconButton extends StatelessWidget {
   const CVAddIconButton({Key key, this.onPressed}) : super(key: key);
   final VoidCallback onPressed;
 
-
   @override
   Widget build(BuildContext context) {
     return IconButton(

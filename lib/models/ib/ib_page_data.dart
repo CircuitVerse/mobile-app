@@ -16,5 +16,4 @@ class IbPageData {
   final List<IbContent> content;
   final List<IbTocItem> tableOfContents;
   final List<IbTocItem> chapterOfContents;
-
 }

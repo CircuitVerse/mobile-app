@@ -7,11 +7,10 @@ class FeatureCard extends StatelessWidget {
     this.cardDescription,
     this.cardHeading,
   }) : super(key: key);
-  
+
   final String assetPath;
   final String cardHeading;
   final String cardDescription;
-
 
   @override
   Widget build(BuildContext context) {

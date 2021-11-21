@@ -10,9 +10,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class IbInteractionBuilder extends MarkdownElementBuilder {
   IbInteractionBuilder({this.model});
-  
-  final IbPageViewModel model;
 
+  final IbPageViewModel model;
 
   @override
   Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {

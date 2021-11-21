@@ -11,11 +11,10 @@ class FeaturedProjectsView extends StatefulWidget {
   const FeaturedProjectsView(
       {Key key, this.showAppBar = true, this.embed = false})
       : super(key: key);
-      
+
   static const String id = 'featured_projects_view';
   final bool showAppBar;
   final bool embed;
-
 
   @override
   _FeaturedProjectsViewState createState() => _FeaturedProjectsViewState();

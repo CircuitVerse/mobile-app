@@ -13,7 +13,6 @@ class HomeView extends StatefulWidget {
   const HomeView({Key key}) : super(key: key);
   static const String id = 'home_view';
 
-
   @override
   _HomeViewState createState() => _HomeViewState();
 }

@@ -8,11 +8,10 @@ class ContributeDonateCard extends StatelessWidget {
     this.title,
     this.url,
   }) : super(key: key);
-  
+
   final String imagePath;
   final String title;
   final String url;
-
 
   @override
   Widget build(BuildContext context) {

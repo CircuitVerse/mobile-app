@@ -8,9 +8,8 @@ import 'package:mobile_app/viewmodels/authentication/auth_options_viewmodel.dart
 
 class AuthOptionsView extends StatefulWidget {
   const AuthOptionsView({Key key, this.isSignUp = false}) : super(key: key);
-  
-  final bool isSignUp;
 
+  final bool isSignUp;
 
   @override
   _AuthOptionsViewState createState() => _AuthOptionsViewState();

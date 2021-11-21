@@ -8,11 +8,10 @@ import 'package:mobile_app/ui/views/groups/group_details_view.dart';
 class GroupMentorCard extends StatefulWidget {
   const GroupMentorCard({Key key, this.group, this.onEdit, this.onDelete})
       : super(key: key);
-      
+
   final Group group;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
-
 
   @override
   _GroupMentorCardState createState() => _GroupMentorCardState();

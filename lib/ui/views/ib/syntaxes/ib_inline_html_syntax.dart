@@ -4,9 +4,8 @@ import 'package:markdown/markdown.dart' as md;
 
 class IbInlineHtmlSyntax extends md.InlineSyntax {
   IbInlineHtmlSyntax({@required this.builders}) : super(_pattern);
-  
-  Map<String, MarkdownElementBuilder> builders;
 
+  Map<String, MarkdownElementBuilder> builders;
 
   static const String _pattern = r'<(\S*?)[^>]*>(.*?)<\/\1>|<.*?\/>';
 

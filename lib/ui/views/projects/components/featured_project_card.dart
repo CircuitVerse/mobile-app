@@ -9,7 +9,7 @@ class FeaturedProjectCard extends StatefulWidget {
   const FeaturedProjectCard(
       {Key key, @required this.project, this.onViewPressed})
       : super(key: key);
-      
+
   final Project project;
   final VoidCallback onViewPressed;
 

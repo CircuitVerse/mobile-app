@@ -11,13 +11,11 @@ class Grade {
         attributes: GradeAttributes.fromJson(json['attributes']),
         relationships: GradeRelationships.fromJson(json['relationships']),
       );
-  
+
   String id;
   String type;
   GradeAttributes attributes;
   GradeRelationships relationships;
-
-
 }
 
 class GradeAttributes {
@@ -34,13 +32,11 @@ class GradeAttributes {
     this.createdAt,
     this.updatedAt,
   });
-  
+
   String grade;
   dynamic remarks;
   DateTime createdAt;
   DateTime updatedAt;
-
-
 }
 
 class GradeRelationships {
@@ -48,13 +44,11 @@ class GradeRelationships {
       GradeRelationships(
         project: GradedProject.fromJson(json['project']),
       );
-  
+
   GradeRelationships({
     this.project,
   });
   GradedProject project;
-
-
 }
 
 class GradedProject {
@@ -65,8 +59,6 @@ class GradedProject {
     this.data,
   });
   GradedProjectData data;
-
-
 }
 
 class GradedProjectData {
@@ -75,13 +67,11 @@ class GradedProjectData {
         id: json['id'],
         type: json['type'],
       );
- 
+
   GradedProjectData({
     this.id,
     this.type,
   });
   String id;
   String type;
-
-
 }

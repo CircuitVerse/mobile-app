@@ -50,7 +50,7 @@ class CircuitVerseContributor {
     this.siteAdmin,
     this.contributions,
   });
- 
+
   String login;
   int id;
   String nodeId;
@@ -70,8 +70,6 @@ class CircuitVerseContributor {
   Type type;
   bool siteAdmin;
   int contributions;
-
-
 }
 
 enum Type { USER, BOT }

@@ -8,15 +8,13 @@ class Projects {
         data: List<Project>.from(json['data'].map((x) => Project.fromJson(x))),
         links: Links.fromJson(json['links']),
       );
- 
+
   Projects({
     this.data,
     this.links,
   });
   List<Project> data;
   Links links;
-
-
 }
 
 class Project {
@@ -87,7 +85,7 @@ class ProjectAttributes {
     this.authorName,
     this.starsCount,
   });
-  
+
   String name;
   String projectAccessType;
   DateTime createdAt;
@@ -99,8 +97,6 @@ class ProjectAttributes {
   bool isStarred;
   String authorName;
   int starsCount;
-
-
 }
 
 class ImagePreview {
@@ -110,14 +106,11 @@ class ImagePreview {
   ImagePreview({
     this.url,
   });
-  
+
   String url;
-
-
 }
 
 class ProjectRelationships {
-
   factory ProjectRelationships.fromJson(Map<String, dynamic> json) =>
       ProjectRelationships(
         author: Author.fromJson(json['author']),
@@ -127,8 +120,6 @@ class ProjectRelationships {
     this.author,
   });
   Author author;
-
-  
 }
 
 class Author {
@@ -140,13 +131,9 @@ class Author {
     this.data,
   });
   AuthorData data;
-
-
-  
 }
 
 class AuthorData {
-
   factory AuthorData.fromJson(Map<String, dynamic> json) => AuthorData(
         id: json['id'],
         type: json['type'],
@@ -158,13 +145,9 @@ class AuthorData {
   });
   String id;
   String type;
-
-
-  
 }
 
 class Tag {
-
   factory Tag.fromJson(Map<String, dynamic> json) => Tag(
         id: json['id'],
         name: json['name'],
@@ -182,7 +165,4 @@ class Tag {
   String name;
   DateTime createdAt;
   DateTime updatedAt;
-
-
-  
 }

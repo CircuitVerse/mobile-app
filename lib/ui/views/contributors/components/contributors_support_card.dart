@@ -7,11 +7,10 @@ class ContributeSupportCard extends StatelessWidget {
     this.title,
     this.cardDescriptionList,
   }) : super(key: key);
-  
+
   final String imagePath;
   final String title;
   final List<String> cardDescriptionList;
-
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ class AddCollaboratorsResponse {
         existing: List<String>.from(json['existing'].map((x) => x)),
         invalid: List<String>.from(json['invalid'].map((x) => x)),
       );
-  
+
   AddCollaboratorsResponse({
     this.added,
     this.existing,
@@ -14,6 +14,4 @@ class AddCollaboratorsResponse {
   List<String> added;
   List<String> existing;
   List<String> invalid;
-
-
 }

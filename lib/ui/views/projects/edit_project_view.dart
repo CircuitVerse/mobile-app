@@ -15,10 +15,9 @@ import 'package:mobile_app/viewmodels/projects/edit_project_viewmodel.dart';
 
 class EditProjectView extends StatefulWidget {
   const EditProjectView({Key key, this.project}) : super(key: key);
-  
+
   static const String id = 'edit_project_view';
   final Project project;
-
 
   @override
   _EditProjectViewState createState() => _EditProjectViewState();

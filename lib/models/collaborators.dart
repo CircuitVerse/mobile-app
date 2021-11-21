@@ -6,15 +6,13 @@ class Collaborators {
             json['data'].map((x) => Collaborator.fromJson(x))),
         links: Links.fromJson(json['links']),
       );
-  
+
   Collaborators({
     this.data,
     this.links,
   });
   List<Collaborator> data;
   Links links;
-
-
 }
 
 class Collaborator {
@@ -23,7 +21,7 @@ class Collaborator {
         type: json['type'],
         attributes: CollaboratorAttributes.fromJson(json['attributes']),
       );
-  
+
   Collaborator({
     this.id,
     this.type,
@@ -32,8 +30,6 @@ class Collaborator {
   String id;
   String type;
   CollaboratorAttributes attributes;
-
-
 }
 
 class CollaboratorAttributes {
@@ -41,11 +37,9 @@ class CollaboratorAttributes {
       CollaboratorAttributes(
         name: json['name'],
       );
- 
+
   CollaboratorAttributes({
     this.name,
   });
   String name;
-
-
 }

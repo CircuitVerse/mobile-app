@@ -11,7 +11,6 @@ class ContributorsView extends StatelessWidget {
   static const String id = 'contributors_view';
   final bool showAppBar;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

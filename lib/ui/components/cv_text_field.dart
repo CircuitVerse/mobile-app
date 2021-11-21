@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 
 class CVTextField extends StatelessWidget {
-
   /// Creates a [TextField] that is specifically styled for CircuitVerse.
   ///
   /// When a [TextInputType] is not specified, it defaults to [TextInputType.text]
@@ -37,8 +36,6 @@ class CVTextField extends StatelessWidget {
   final Function(String) onFieldSubmitted;
   final EdgeInsets padding;
   final FocusNode focusNode;
-
-  
 
   @override
   Widget build(BuildContext context) {

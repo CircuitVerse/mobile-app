@@ -14,7 +14,7 @@ import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.d
 
 class ForgotPasswordView extends StatefulWidget {
   const ForgotPasswordView({Key key}) : super(key: key);
-  
+
   static const String id = 'forgot_password_view';
 
   @override

@@ -17,7 +17,6 @@ class AboutView extends StatefulWidget {
   const AboutView({Key key}) : super(key: key);
   static const String id = 'about_view';
 
-
   @override
   _AboutViewState createState() => _AboutViewState();
 }

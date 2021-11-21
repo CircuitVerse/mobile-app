@@ -21,7 +21,7 @@ class IbRawPageData {
         httpUrl: json['http_url'],
         apiUrl: json['api_url'],
       );
- 
+
   IbRawPageData({
     this.id,
     this.title,
@@ -38,7 +38,7 @@ class IbRawPageData {
     this.httpUrl,
     this.apiUrl,
   });
- 
+
   @HiveField(0)
   String id;
 
@@ -80,7 +80,4 @@ class IbRawPageData {
 
   @HiveField(13)
   String apiUrl;
-
-
-  
 }

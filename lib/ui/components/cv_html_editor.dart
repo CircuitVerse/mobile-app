@@ -9,11 +9,10 @@ class CVHtmlEditor extends StatelessWidget {
     this.hasAttachment = true,
     this.height = 300,
   }) : super(key: key);
-  
+
   final GlobalKey<FlutterSummernoteState> editorKey;
   final double height;
   final bool hasAttachment;
-
 
   @override
   Widget build(BuildContext context) {
