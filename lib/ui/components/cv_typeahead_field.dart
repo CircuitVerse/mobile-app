@@ -4,22 +4,6 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:mobile_app/services/API/country_institute_api.dart';
 
 class CVTypeAheadField extends StatelessWidget {
-  final String label;
-  final TextEditingController controller;
-  final TextInputType type;
-  final TextInputAction action;
-  final int maxLines;
-  final Function(String) validator;
-  final Function(String) onSaved;
-  final Function onFieldSubmitted;
-  final EdgeInsets padding;
-  final FocusNode focusNode;
-  final CountryInstituteAPI countryInstituteObject;
-  final String toggle;
-
-  static const String COUNTRY = 'country';
-  static const String EDUCATIONAL_INSTITUTE = 'educational institute';
-
   /// Creates a [TextField] that is specifically styled for CircuitVerse.
   ///
   /// When a [TextInputType] is not specified, it defaults to [TextInputType.text]
@@ -43,6 +27,22 @@ class CVTypeAheadField extends StatelessWidget {
     this.controller,
     this.toggle,
   }) : super(key: key);
+
+  final String label;
+  final TextEditingController controller;
+  final TextInputType type;
+  final TextInputAction action;
+  final int maxLines;
+  final Function(String) validator;
+  final Function(String) onSaved;
+  final Function onFieldSubmitted;
+  final EdgeInsets padding;
+  final FocusNode focusNode;
+  final CountryInstituteAPI countryInstituteObject;
+  final String toggle;
+
+  static const String COUNTRY = 'country';
+  static const String EDUCATIONAL_INSTITUTE = 'educational institute';
 
   @override
   Widget build(BuildContext context) {

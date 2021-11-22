@@ -20,10 +20,10 @@ import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class AssignmentDetailsView extends StatefulWidget {
+  const AssignmentDetailsView({Key key, this.assignment}) : super(key: key);
+
   static const String id = 'assignment_details_view';
   final Assignment assignment;
-
-  const AssignmentDetailsView({Key key, this.assignment}) : super(key: key);
 
   @override
   _AssignmentDetailsViewState createState() => _AssignmentDetailsViewState();

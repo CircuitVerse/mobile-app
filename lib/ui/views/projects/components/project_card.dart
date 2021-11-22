@@ -5,13 +5,13 @@ import 'package:mobile_app/models/projects.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ProjectCard extends StatefulWidget {
-  final Project project;
-  final VoidCallback onPressed;
-  final bool isHeaderFilled;
-
   const ProjectCard(
       {Key key, this.project, this.onPressed, this.isHeaderFilled = true})
       : super(key: key);
+
+  final Project project;
+  final VoidCallback onPressed;
+  final bool isHeaderFilled;
 
   @override
   _ProjectCardState createState() => _ProjectCardState();

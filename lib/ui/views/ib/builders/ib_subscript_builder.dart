@@ -4,9 +4,9 @@ import 'package:markdown/markdown.dart' as md;
 import 'package:mobile_app/utils/unicode_map.dart';
 
 class IbSubscriptBuilder extends MarkdownElementBuilder {
-  final bool selectable;
-
   IbSubscriptBuilder({this.selectable = true});
+
+  final bool selectable;
 
   @override
   Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {

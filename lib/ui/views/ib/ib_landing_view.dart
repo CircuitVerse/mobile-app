@@ -10,9 +10,9 @@ import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class IbLandingView extends StatefulWidget {
-  static const String id = 'ib_landing_view';
-
   const IbLandingView({Key key}) : super(key: key);
+
+  static const String id = 'ib_landing_view';
 
   @override
   _IbLandingViewState createState() => _IbLandingViewState();

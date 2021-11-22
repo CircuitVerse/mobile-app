@@ -6,11 +6,12 @@ import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class FeaturedProjectCard extends StatefulWidget {
-  final Project project;
-  final VoidCallback onViewPressed;
   const FeaturedProjectCard(
       {Key key, @required this.project, this.onViewPressed})
       : super(key: key);
+
+  final Project project;
+  final VoidCallback onViewPressed;
 
   @override
   _FeaturedProjectCardState createState() => _FeaturedProjectCardState();

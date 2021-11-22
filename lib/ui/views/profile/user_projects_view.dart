@@ -7,9 +7,9 @@ import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
 
 class UserProjectsView extends StatefulWidget {
-  final String userId;
-
   const UserProjectsView({Key key, this.userId}) : super(key: key);
+
+  final String userId;
 
   @override
   _UserProjectsViewState createState() => _UserProjectsViewState();

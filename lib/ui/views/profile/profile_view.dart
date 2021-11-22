@@ -13,10 +13,10 @@ import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ProfileView extends StatefulWidget {
+  const ProfileView({Key key, this.userId}) : super(key: key);
+
   static const String id = 'profile_view';
   final String userId;
-
-  const ProfileView({Key key, this.userId}) : super(key: key);
 
   @override
   _ProfileViewState createState() => _ProfileViewState();

@@ -23,9 +23,8 @@ import 'package:theme_provider/theme_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CVLandingView extends StatefulWidget {
-  static const String id = 'cv_landing_view';
-
   const CVLandingView({Key key}) : super(key: key);
+  static const String id = 'cv_landing_view';
 
   @override
   _CVLandingViewState createState() => _CVLandingViewState();

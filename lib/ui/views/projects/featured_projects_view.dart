@@ -8,13 +8,13 @@ import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart';
 
 class FeaturedProjectsView extends StatefulWidget {
-  static const String id = 'featured_projects_view';
-  final bool showAppBar;
-  final bool embed;
-
   const FeaturedProjectsView(
       {Key key, this.showAppBar = true, this.embed = false})
       : super(key: key);
+
+  static const String id = 'featured_projects_view';
+  final bool showAppBar;
+  final bool embed;
 
   @override
   _FeaturedProjectsViewState createState() => _FeaturedProjectsViewState();

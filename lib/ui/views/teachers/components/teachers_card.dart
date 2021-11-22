@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class TeachersCard extends StatelessWidget {
-  final String assetPath;
-  final String cardHeading;
-  final String cardDescription;
-
   const TeachersCard({
     Key key,
     this.assetPath,
     this.cardDescription,
     this.cardHeading,
   }) : super(key: key);
+
+  final String assetPath;
+  final String cardHeading;
+  final String cardDescription;
 
   @override
   Widget build(BuildContext context) {

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CardButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final Color color;
-  final String title;
-
   const CardButton({
     Key key,
     @required this.onPressed,
     @required this.color,
     @required this.title,
   }) : super(key: key);
+  final VoidCallback onPressed;
+  final Color color;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
