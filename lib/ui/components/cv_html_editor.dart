@@ -3,16 +3,16 @@ import 'package:flutter_summernote/flutter_summernote.dart';
 import 'package:mobile_app/cv_theme.dart';
 
 class CVHtmlEditor extends StatelessWidget {
-  final GlobalKey<FlutterSummernoteState> editorKey;
-  final double height;
-  final bool hasAttachment;
-
   const CVHtmlEditor({
     Key key,
     @required this.editorKey,
     this.hasAttachment = true,
     this.height = 300,
   }) : super(key: key);
+
+  final GlobalKey<FlutterSummernoteState> editorKey;
+  final double height;
+  final bool hasAttachment;
 
   @override
   Widget build(BuildContext context) {

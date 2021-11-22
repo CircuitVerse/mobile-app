@@ -3,11 +3,6 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 
 class CircuitVerseSocialCard extends StatelessWidget {
-  final String imagePath;
-  final String title;
-  final String description;
-  final String url;
-
   const CircuitVerseSocialCard({
     Key key,
     this.imagePath,
@@ -15,6 +10,11 @@ class CircuitVerseSocialCard extends StatelessWidget {
     this.description,
     this.url,
   }) : super(key: key);
+
+  final String imagePath;
+  final String title;
+  final String description;
+  final String url;
 
   @override
   Widget build(BuildContext context) {

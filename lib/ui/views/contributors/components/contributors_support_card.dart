@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class ContributeSupportCard extends StatelessWidget {
-  final String imagePath;
-  final String title;
-  final List<String> cardDescriptionList;
-
   const ContributeSupportCard({
     Key key,
     this.imagePath,
     this.title,
     this.cardDescriptionList,
   }) : super(key: key);
+
+  final String imagePath;
+  final String title;
+  final List<String> cardDescriptionList;
 
   @override
   Widget build(BuildContext context) {

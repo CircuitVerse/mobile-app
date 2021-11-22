@@ -5,10 +5,10 @@ import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ContributorAvatar extends StatelessWidget {
-  final CircuitVerseContributor contributor;
-
   const ContributorAvatar({Key key, @required this.contributor})
       : super(key: key);
+
+  final CircuitVerseContributor contributor;
 
   @override
   Widget build(BuildContext context) {

@@ -7,12 +7,6 @@ import 'package:mobile_app/ui/views/groups/assignment_details_view.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 
 class AssignmentCard extends StatefulWidget {
-  final Assignment assignment;
-  final VoidCallback onDeletePressed;
-  final VoidCallback onEditPressed;
-  final VoidCallback onReopenPressed;
-  final VoidCallback onStartPressed;
-
   const AssignmentCard({
     Key key,
     this.assignment,
@@ -21,6 +15,11 @@ class AssignmentCard extends StatefulWidget {
     this.onReopenPressed,
     this.onStartPressed,
   }) : super(key: key);
+  final Assignment assignment;
+  final VoidCallback onDeletePressed;
+  final VoidCallback onEditPressed;
+  final VoidCallback onReopenPressed;
+  final VoidCallback onStartPressed;
 
   @override
   _AssignmentCardState createState() => _AssignmentCardState();
