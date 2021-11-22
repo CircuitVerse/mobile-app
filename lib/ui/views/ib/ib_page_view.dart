@@ -381,26 +381,27 @@ class _IbPageViewState extends State<IbPageView> {
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
           opacity: _isFabsVisible ? 1.0 : 0.0,
-          child: Showcase(
-            key: _prevPage,
-            description: 'Tap to navigate to previous page',
-            shapeBorder: const CircleBorder(),
-            onTargetClick: () {
-              widget.setShowCase(widget.showCase.copyWith(prevButton: true));
+          child: FloatingActionButton(
+            heroTag: 'previousPage',
+            mini: true,
+            backgroundColor: Theme.of(context).primaryIconTheme.color,
+            onPressed: () {
+              //If FAB are not visible do not do anything.
+              if (!_isFabsVisible) {
+                return;
+              }
               widget.setPage(widget.chapter.prev);
             },
-            disposeOnTap: true,
-            child: FloatingActionButton(
-              heroTag: 'previousPage',
-              mini: true,
-              backgroundColor: Theme.of(context).primaryIconTheme.color,
-              onPressed: () {
-                //If FAB are not visible do not do anything.
-                if (!_isFabsVisible) {
-                  return;
-                }
+            child: Showcase(
+              key: _prevPage,
+              description: 'Tap to navigate to previous page',
+              overlayPadding: const EdgeInsets.all(12.0),
+              shapeBorder: const CircleBorder(),
+              onTargetClick: () {
+                widget.setShowCase(widget.showCase.copyWith(prevButton: true));
                 widget.setPage(widget.chapter.prev);
               },
+              disposeOnTap: true,
               child: const Icon(
                 Icons.arrow_back_rounded,
                 color: IbTheme.primaryColor,
@@ -420,26 +421,27 @@ class _IbPageViewState extends State<IbPageView> {
         AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
           opacity: _isFabsVisible ? 1.0 : 0.0,
-          child: Showcase(
-            key: _nextPage,
-            description: 'Tap to navigate to next page',
-            shapeBorder: const CircleBorder(),
-            onTargetClick: () {
-              widget.setShowCase(widget.showCase.copyWith(nextButton: true));
+          child: FloatingActionButton(
+            heroTag: 'nextPage',
+            mini: true,
+            backgroundColor: Theme.of(context).primaryIconTheme.color,
+            onPressed: () {
+              //If FAB are not visible do not do anything.
+              if (!_isFabsVisible) {
+                return;
+              }
               widget.setPage(widget.chapter.next);
             },
-            disposeOnTap: false,
-            child: FloatingActionButton(
-              heroTag: 'nextPage',
-              mini: true,
-              backgroundColor: Theme.of(context).primaryIconTheme.color,
-              onPressed: () {
-                //If FAB are not visible do not do anything.
-                if (!_isFabsVisible) {
-                  return;
-                }
+            child: Showcase(
+              key: _nextPage,
+              description: 'Tap to navigate to next page',
+              overlayPadding: const EdgeInsets.all(12.0),
+              shapeBorder: const CircleBorder(),
+              onTargetClick: () {
+                widget.setShowCase(widget.showCase.copyWith(nextButton: true));
                 widget.setPage(widget.chapter.next);
               },
+              disposeOnTap: false,
               child: const Icon(
                 Icons.arrow_forward_rounded,
                 color: IbTheme.primaryColor,
