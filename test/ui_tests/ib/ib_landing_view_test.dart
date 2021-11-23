@@ -10,6 +10,7 @@ import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../../setup/test_helpers.dart';
 
@@ -62,7 +63,11 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: const IbLandingView(),
+          home: ShowCaseWidget(
+            builder: Builder(builder: (context) {
+              return const IbLandingView();
+            }),
+          ),
         ),
       );
 

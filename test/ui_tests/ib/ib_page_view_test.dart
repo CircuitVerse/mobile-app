@@ -11,6 +11,7 @@ import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../../setup/test_data/mock_ib_raw_page_data.dart';
 import '../../setup/test_helpers.dart';
@@ -67,13 +68,18 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: IbPageView(
-              key: UniqueKey(),
-              chapter: _chapter,
-              tocCallback: (val) {},
-              setPage: (e) {},
-              showCase: showCase,
-              setShowCase: (e) {}),
+          home: ShowCaseWidget(
+            builder: Builder(builder: (context) {
+              return IbPageView(
+                key: UniqueKey(),
+                chapter: _chapter,
+                tocCallback: (val) {},
+                setPage: (e) {},
+                showCase: showCase,
+                setShowCase: (e) {},
+              );
+            }),
+          ),
         ),
       );
 
