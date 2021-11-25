@@ -5,11 +5,11 @@ import 'package:provider/provider.dart';
 
 class BaseView<T extends BaseModel> extends StatefulWidget {
   const BaseView({
-    Key key,
     @required this.builder,
     this.onModelReady,
     this.onModelDestroy,
     this.model,
+    Key key,
   }) : super(key: key);
 
   final Widget Function(BuildContext context, T model, Widget child) builder;
