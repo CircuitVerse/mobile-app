@@ -55,13 +55,12 @@ class DatabaseServiceImpl implements DatabaseService {
   Future<bool> isExpired(String key) async {
     var data = await getData<DateTime>(DatabaseBox.Metadata, key);
 
-    if (data == null ||
+    return data == null ||
         data.isBefore(
-            DateTime.now().subtract(Duration(hours: _timeoutHours)))) {
-      return true;
-    }
-
-    return false;
+          DateTime.now().subtract(
+            Duration(hours: _timeoutHours),
+          ),
+        );
   }
 
   @override

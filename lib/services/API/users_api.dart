@@ -73,8 +73,7 @@ class HttpUsersApi implements UsersApi {
         headers: headers,
         body: json,
       );
-      String token = jsonResponse['token'];
-      return token;
+      return jsonResponse['token'];
     } on ConflictException {
       throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
     } on FormatException {
@@ -99,8 +98,7 @@ class HttpUsersApi implements UsersApi {
         headers: headers,
         body: json,
       );
-      String token = jsonResponse['token'];
-      return token;
+      return jsonResponse['token'];
     } on NotFoundException {
       throw Failure(Constants.USER_AUTH_USER_NOT_FOUND);
     } on FormatException {
@@ -125,8 +123,7 @@ class HttpUsersApi implements UsersApi {
         headers: headers,
         body: json,
       );
-      String token = jsonResponse['token'];
-      return token;
+      return jsonResponse['token'];
     } on ConflictException {
       throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
     } on FormatException {
@@ -146,8 +143,7 @@ class HttpUsersApi implements UsersApi {
         uri,
         headers: headers,
       );
-      var user = User.fromJson(jsonResponse);
-      return user;
+      return User.fromJson(jsonResponse);
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on NotFoundException {
@@ -167,8 +163,7 @@ class HttpUsersApi implements UsersApi {
         uri,
         headers: headers,
       );
-      var user = User.fromJson(jsonResponse);
-      return user;
+      return User.fromJson(jsonResponse);
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on Exception {
@@ -194,8 +189,7 @@ class HttpUsersApi implements UsersApi {
         headers: headers,
         body: json,
       );
-      var user = User.fromJson(jsonResponse);
-      return user;
+      return User.fromJson(jsonResponse);
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on Exception {

@@ -34,8 +34,7 @@ class HttpCollaboratorsApi implements CollaboratorsApi {
         uri,
         headers: headers,
       );
-      var collaborators = Collaborators.fromJson(jsonResponse);
-      return collaborators;
+      return Collaborators.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
