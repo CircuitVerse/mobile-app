@@ -33,8 +33,7 @@ class HttpGroupsApi implements GroupsApi {
         uri,
         headers: headers,
       );
-      var groups = Groups.fromJson(jsonResponse);
-      return groups;
+      return Groups.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
     } on Exception {
@@ -53,8 +52,7 @@ class HttpGroupsApi implements GroupsApi {
         uri,
         headers: headers,
       );
-      var groups = Groups.fromJson(jsonResponse);
-      return groups;
+      return Groups.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
     } on Exception {
@@ -73,8 +71,7 @@ class HttpGroupsApi implements GroupsApi {
         uri,
         headers: headers,
       );
-      var group = Group.fromJson(jsonResponse);
-      return group;
+      return Group.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on ForbiddenException {
@@ -99,8 +96,7 @@ class HttpGroupsApi implements GroupsApi {
         headers: headers,
         body: json,
       );
-      var group = Group.fromJson(jsonResponse);
-      return group;
+      return Group.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on Exception {
@@ -121,8 +117,7 @@ class HttpGroupsApi implements GroupsApi {
         headers: headers,
         body: json,
       );
-      var group = Group.fromJson(jsonResponse);
-      return group;
+      return Group.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on ForbiddenException {

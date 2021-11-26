@@ -3,11 +3,11 @@ import 'package:mobile_app/cv_theme.dart';
 
 class CVOutlineButton extends StatelessWidget {
   const CVOutlineButton({
-    Key key,
     @required this.title,
     this.onPressed,
     this.isBodyText = false,
     this.isPrimaryDark = false,
+    Key key,
   }) : super(key: key);
 
   final String title;

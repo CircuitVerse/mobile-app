@@ -5,7 +5,7 @@ import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ContributorAvatar extends StatelessWidget {
-  const ContributorAvatar({Key key, @required this.contributor})
+  const ContributorAvatar({@required this.contributor, Key key})
       : super(key: key);
 
   final CircuitVerseContributor contributor;

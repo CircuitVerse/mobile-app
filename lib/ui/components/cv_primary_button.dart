@@ -3,12 +3,12 @@ import 'package:mobile_app/cv_theme.dart';
 
 class CVPrimaryButton extends StatelessWidget {
   const CVPrimaryButton({
-    Key key,
     @required this.title,
     this.onPressed,
     this.isBodyText = false,
     this.isPrimaryDark = false,
     this.padding = const EdgeInsets.all(8),
+    Key key,
   }) : super(key: key);
 
   final String title;

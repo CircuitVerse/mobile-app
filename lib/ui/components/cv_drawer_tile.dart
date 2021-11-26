@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 
 class CVDrawerTile extends StatelessWidget {
-  const CVDrawerTile({Key key, @required this.title, this.iconData, this.color})
+  const CVDrawerTile({@required this.title, this.iconData, this.color, Key key})
       : super(key: key);
 
   final String title;

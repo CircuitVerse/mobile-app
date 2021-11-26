@@ -7,7 +7,7 @@ import 'package:transparent_image/transparent_image.dart';
 
 class FeaturedProjectCard extends StatefulWidget {
   const FeaturedProjectCard(
-      {Key key, @required this.project, this.onViewPressed})
+      {@required this.project, this.onViewPressed, Key key})
       : super(key: key);
 
   final Project project;

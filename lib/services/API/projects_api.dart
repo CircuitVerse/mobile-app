@@ -69,8 +69,7 @@ class HttpProjectsApi implements ProjectsApi {
         uri,
         headers: headers,
       );
-      var projects = Projects.fromJson(jsonResponse);
-      return projects;
+      return Projects.fromJson(jsonResponse);
     } on Exception {
       throw Failure(Constants.GENERIC_FAILURE);
     }
@@ -94,8 +93,7 @@ class HttpProjectsApi implements ProjectsApi {
         uri,
         headers: headers,
       );
-      var projects = Projects.fromJson(jsonResponse);
-      return projects;
+      return Projects.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on NotFoundException {
@@ -123,8 +121,7 @@ class HttpProjectsApi implements ProjectsApi {
         uri,
         headers: headers,
       );
-      var projects = Projects.fromJson(jsonResponse);
-      return projects;
+      return Projects.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on Exception {
@@ -150,8 +147,7 @@ class HttpProjectsApi implements ProjectsApi {
         uri,
         headers: headers,
       );
-      var projects = Projects.fromJson(jsonResponse);
-      return projects;
+      return Projects.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on Exception {
@@ -170,8 +166,7 @@ class HttpProjectsApi implements ProjectsApi {
         uri,
         headers: headers,
       );
-      var project = Project.fromJson(jsonResponse);
-      return project;
+      return Project.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on ForbiddenException {
@@ -207,8 +202,7 @@ class HttpProjectsApi implements ProjectsApi {
         headers: headers,
         body: json,
       );
-      var project = Project.fromJson(jsonResponse['data']);
-      return project;
+      return Project.fromJson(jsonResponse['data']);
     } on BadRequestException {
       throw Failure(Constants.INVALID_PARAMETERS);
     } on UnauthorizedException {
@@ -277,8 +271,7 @@ class HttpProjectsApi implements ProjectsApi {
         uri,
         headers: headers,
       );
-      var project = Project.fromJson(jsonResponse['data']);
-      return project;
+      return Project.fromJson(jsonResponse['data']);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on NotFoundException {

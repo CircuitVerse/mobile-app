@@ -47,9 +47,9 @@ class AboutPrivacyPolicyView extends StatelessWidget {
 
   Widget _buildSection({
     @required BuildContext context,
+    @required List<TextSpan> content,
     String title = '',
     bool heading = false,
-    @required List<TextSpan> content,
   }) {
     var style = heading
         ? Theme.of(context).textTheme.headline5

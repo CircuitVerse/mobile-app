@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class IbPopQuizButton extends StatefulWidget {
   const IbPopQuizButton({
-    Key key,
     @required this.content,
     @required this.isCorrect,
+    Key key,
   }) : super(key: key);
 
   final String content;

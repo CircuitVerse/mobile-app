@@ -3,7 +3,7 @@ import 'package:mobile_app/cv_theme.dart';
 
 class CVHeader extends StatelessWidget {
   const CVHeader(
-      {Key key, @required this.title, this.subtitle, this.description})
+      {@required this.title, this.subtitle, this.description, Key key})
       : super(key: key);
 
   final String title;

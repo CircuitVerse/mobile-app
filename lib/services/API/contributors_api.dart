@@ -19,9 +19,7 @@ class HttpContributorsApi implements ContributorsApi {
 
     try {
       var _jsonResponse = await ApiUtils.get(_url, headers: headers);
-      var _listOfContributors =
-          circuitVerseContributorsFromJson(jsonEncode(_jsonResponse));
-      return _listOfContributors;
+      return circuitVerseContributorsFromJson(jsonEncode(_jsonResponse));
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on Exception {

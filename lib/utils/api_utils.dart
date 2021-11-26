@@ -12,10 +12,12 @@ class ApiUtils {
   static http.Client client = http.Client();
 
   /// Returns JSON GET response
-  static Future<dynamic> get(String uri,
-      {Map<String, String> headers,
-      bool utfDecoder = false,
-      bool rawResponse = false}) async {
+  static Future<dynamic> get(
+    String uri, {
+    Map<String, String> headers,
+    bool utfDecoder = false,
+    bool rawResponse = false,
+  }) async {
     try {
       final response = await client.get(Uri.parse(uri), headers: headers);
 
@@ -23,9 +25,7 @@ class ApiUtils {
         return response.body;
       }
 
-      final jsonResponse =
-          ApiUtils.jsonResponse(response, utfDecoder: utfDecoder);
-      return jsonResponse;
+      return ApiUtils.jsonResponse(response, utfDecoder: utfDecoder);
     } on SocketException {
       throw Failure(Constants.NO_INTERNET_CONNECTION);
     } on HttpException {
@@ -39,8 +39,7 @@ class ApiUtils {
     try {
       final response = await client.post(Uri.parse(uri),
           headers: headers, body: jsonEncode(body));
-      final jsonResponse = ApiUtils.jsonResponse(response);
-      return jsonResponse;
+      return ApiUtils.jsonResponse(response);
     } on SocketException {
       throw Failure(Constants.NO_INTERNET_CONNECTION);
     } on HttpException {
@@ -57,8 +56,7 @@ class ApiUtils {
         headers: headers,
         body: jsonEncode(body),
       );
-      final jsonResponse = ApiUtils.jsonResponse(response);
-      return jsonResponse;
+      return ApiUtils.jsonResponse(response);
     } on SocketException {
       throw Failure(Constants.NO_INTERNET_CONNECTION);
     } on HttpException {
@@ -75,8 +73,7 @@ class ApiUtils {
         headers: headers,
         body: jsonEncode(body),
       );
-      final jsonResponse = ApiUtils.jsonResponse(response);
-      return jsonResponse;
+      return ApiUtils.jsonResponse(response);
     } on SocketException {
       throw Failure(Constants.NO_INTERNET_CONNECTION);
     } on HttpException {
@@ -92,8 +89,7 @@ class ApiUtils {
         Uri.parse(uri),
         headers: headers,
       );
-      final jsonResponse = ApiUtils.jsonResponse(response);
-      return jsonResponse;
+      return ApiUtils.jsonResponse(response);
     } on SocketException {
       throw Failure(Constants.NO_INTERNET_CONNECTION);
     } on HttpException {
@@ -108,11 +104,10 @@ class ApiUtils {
       case 201:
       case 202:
       case 204:
-        var responseJson = response.body == ''
+        return response.body == ''
             ? {}
             : json.decode(
                 utfDecoder ? utf8.decode(response.bodyBytes) : response.body);
-        return responseJson;
       case 400:
         throw BadRequestException(response.body);
       case 401:

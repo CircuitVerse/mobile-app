@@ -48,8 +48,7 @@ class HttpGradesApi implements GradesApi {
         headers: headers,
         body: json,
       );
-      var grade = Grade.fromJson(jsonResponse['data']);
-      return grade;
+      return Grade.fromJson(jsonResponse['data']);
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
