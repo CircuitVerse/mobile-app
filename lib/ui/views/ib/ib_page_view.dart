@@ -87,7 +87,7 @@ class _IbPageViewState extends State<IbPageView> {
     });
     if (!widget.showCase.nextButton) _list.add(_nextPage);
     if (!widget.showCase.prevButton) _list.add(_prevPage);
-    print(ShowCaseWidget.of(context).activeWidgetId);
+
     if (_list.isNotEmpty) {
       Future.delayed(const Duration(milliseconds: 300), () {
         WidgetsBinding.instance.addPostFrameCallback((_) {
