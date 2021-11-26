@@ -6,7 +6,7 @@ abstract class IbContent {
 }
 
 class IbTocItem extends IbContent {
-  IbTocItem({this.leading, @required String content, this.items})
+  IbTocItem({@required String content, this.leading, this.items})
       : super(content: content);
 
   final String leading;

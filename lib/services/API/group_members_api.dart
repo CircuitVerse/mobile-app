@@ -29,8 +29,7 @@ class HttpGroupMembersApi implements GroupMembersApi {
         uri,
         headers: headers,
       );
-      var groupMembers = GroupMembers.fromJson(jsonResponse);
-      return groupMembers;
+      return GroupMembers.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {

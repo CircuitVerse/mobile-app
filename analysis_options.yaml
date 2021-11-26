@@ -5,16 +5,11 @@ analyzer:
 
 linter:
   rules:
-    # Use parameter order as in json response
-    always_put_required_named_parameters_first: false
-
     # Util classes
     avoid_classes_with_only_static_members: false
 
     avoid_redundant_argument_values: false
 
-    join_return_with_assignment: false
-
-    non_constant_identifier_names:  false
+    non_constant_identifier_names: false
 
     constant_identifier_names: false

@@ -48,8 +48,7 @@ class HttpAssignmentsApi implements AssignmentsApi {
         uri,
         headers: headers,
       );
-      var assignments = Assignments.fromJson(jsonResponse);
-      return assignments;
+      return Assignments.fromJson(jsonResponse);
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
@@ -107,8 +106,7 @@ class HttpAssignmentsApi implements AssignmentsApi {
         headers: headers,
         body: json,
       );
-      var assignment = Assignment.fromJson(jsonResponse['data']);
-      return assignment;
+      return Assignment.fromJson(jsonResponse['data']);
     } on BadRequestException {
       throw Failure(Constants.INVALID_PARAMETERS);
     } on ForbiddenException {

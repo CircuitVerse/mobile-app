@@ -152,8 +152,7 @@ class IbEngineServiceImpl implements IbEngineService {
     // Build Navigation
     _chapters = _buildNav(_chapters);
 
-    _ibChapters = _chapters;
-    return _ibChapters;
+    return _ibChapters = _chapters;
   }
 
   /// Recursively parses list of table of contents
@@ -224,11 +223,7 @@ class IbEngineServiceImpl implements IbEngineService {
     var document = parse(content);
     var mdElement = document.getElementById('markdown-toc');
 
-    if (mdElement != null) {
-      return _parseToc(mdElement);
-    } else {
-      return [];
-    }
+    return mdElement != null ? _parseToc(mdElement) : [];
   }
 
   /// Fetches Chapter of Contents from HTML Content
@@ -236,11 +231,9 @@ class IbEngineServiceImpl implements IbEngineService {
     var document = parse(content);
     var mdElement = document.getElementById('chapter-contents-toc');
 
-    if (mdElement != null) {
-      return _parseChapterContents(mdElement, root: true);
-    } else {
-      return [];
-    }
+    return mdElement != null
+        ? _parseChapterContents(mdElement, root: true)
+        : [];
   }
 
   /// Fetches "Rich" Page Content
@@ -286,10 +279,9 @@ class IbEngineServiceImpl implements IbEngineService {
     var result = '$js\n$html';
 
     // Replace local URLs with absolute
-    result = result.replaceAll(RegExp(r'(\.\.(\/\.\.)?)?(?<!org)\/assets'),
+    return result = result.replaceAll(
+        RegExp(r'(\.\.(\/\.\.)?)?(?<!org)\/assets'),
         '${EnvironmentConfig.IB_BASE_URL}/assets');
-
-    return result;
   }
 
   @override

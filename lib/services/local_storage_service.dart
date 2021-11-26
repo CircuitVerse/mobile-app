@@ -16,11 +16,9 @@ class LocalStorageService {
   static const String AUTH_TYPE = 'auth_type';
 
   static Future<LocalStorageService> getInstance() async {
-    _instance ??= LocalStorageService();
-
     _preferences ??= await SharedPreferences.getInstance();
 
-    return _instance;
+    return _instance ??= LocalStorageService();
   }
 
   dynamic _getFromDisk(String key) {

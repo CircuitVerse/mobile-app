@@ -10,7 +10,6 @@ class CVTypeAheadField extends StatelessWidget {
   ///
   /// When `maxLines` is not specified, it defaults to 1
   const CVTypeAheadField({
-    Key key,
     @required this.label,
     this.type = TextInputType.text,
     this.action = TextInputAction.next,
@@ -26,6 +25,7 @@ class CVTypeAheadField extends StatelessWidget {
     this.countryInstituteObject,
     this.controller,
     this.toggle,
+    Key key,
   }) : super(key: key);
 
   final String label;
