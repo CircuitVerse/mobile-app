@@ -13,16 +13,16 @@ class IbLandingViewModel extends BaseModel {
   final IbEngineService _ibEngineService = locator<IbEngineService>();
 
   // Global Keys
-  final GlobalKey _menu = GlobalKey();
+  final GlobalKey _toc = GlobalKey();
   final GlobalKey _drawer = GlobalKey();
 
   // Getter for Global Keys
-  GlobalKey get menu => _menu;
+  GlobalKey get toc => _toc;
   GlobalKey get drawer => _drawer;
 
   // Getter for Global Keys Map
   Map<String, dynamic> get keyMap => <String, dynamic>{
-        'menu': _menu,
+        'toc': _toc,
         'drawer': _drawer,
       };
 

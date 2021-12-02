@@ -33,7 +33,7 @@ class _IbLandingViewState extends State<IbLandingView> {
   // ShowCaseState stores the information of whether the button which is to be
   // showcased are clicked or not
   IBShowCase _showCaseState;
-  
+
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   final LocalStorageService _localStorageService =
       locator<LocalStorageService>();
@@ -88,7 +88,7 @@ class _IbLandingViewState extends State<IbLandingView> {
           builder: (context, value, child) {
             return value != null
                 ? Showcase(
-                    key: _model.menu,
+                    key: _model.toc,
                     description: 'Show Table of Contents',
                     child: IconButton(
                       icon: const Icon(Icons.menu_book_rounded),
@@ -97,7 +97,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                     onTargetClick: () {
                       setState(() {
                         _showCaseState = _showCaseState.copyWith(
-                          contentButton: true,
+                          tocButton: true,
                         );
                       });
                       if (_key.currentState.isDrawerOpen) Get.back();

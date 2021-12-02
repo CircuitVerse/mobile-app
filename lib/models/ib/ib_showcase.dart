@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class IBShowCase {
-  bool nextButton, prevButton, contentButton, drawerButton;
+  bool nextButton, prevButton, tocButton, drawerButton;
 
   IBShowCase({
     @required this.nextButton,
     @required this.prevButton,
-    @required this.contentButton,
+    @required this.tocButton,
     @required this.drawerButton,
   });
 
@@ -16,7 +16,7 @@ class IBShowCase {
     return IBShowCase(
       nextButton: json['next'] ?? false,
       prevButton: json['prev'] ?? false,
-      contentButton: json['content'] ?? false,
+      tocButton: json['content'] ?? false,
       drawerButton: json['drawer'] ?? false,
     );
   }
@@ -24,13 +24,13 @@ class IBShowCase {
   IBShowCase copyWith({
     bool nextButton,
     bool prevButton,
-    bool contentButton,
+    bool tocButton,
     bool drawerButton,
   }) {
     return IBShowCase(
       nextButton: nextButton ?? this.nextButton,
       prevButton: prevButton ?? this.prevButton,
-      contentButton: contentButton ?? this.contentButton,
+      tocButton: tocButton ?? this.tocButton,
       drawerButton: drawerButton ?? this.drawerButton,
     );
   }
@@ -40,7 +40,7 @@ class IBShowCase {
     return json.encode({
       'next': nextButton,
       'prev': prevButton,
-      'content': contentButton,
+      'toc': tocButton,
       'drawer': drawerButton,
     });
   }
