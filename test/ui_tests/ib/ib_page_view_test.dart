@@ -57,7 +57,7 @@ void main() {
       var showCase = IBShowCase(
         nextButton: true,
         prevButton: true,
-        contentButton: true,
+        tocButton: true,
         drawerButton: true,
       );
 

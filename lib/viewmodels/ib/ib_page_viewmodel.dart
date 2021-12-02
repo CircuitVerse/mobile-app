@@ -61,7 +61,7 @@ class IbPageViewModel extends BaseModel {
     if (!state.nextButton) _list.add(_nextPage);
     if (!state.prevButton) _list.add(_prevPage);
     if (!state.drawerButton) _list.add(keysMap['drawer']);
-    if (!state.contentButton) _list.add(keysMap['menu']);
+    if (!state.tocButton) _list.add(keysMap['toc']);
 
     if (_list.isNotEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
