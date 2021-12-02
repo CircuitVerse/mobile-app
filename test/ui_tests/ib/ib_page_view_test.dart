@@ -77,6 +77,7 @@ void main() {
                 setPage: (e) {},
                 showCase: showCase,
                 setShowCase: (e) {},
+                globalKeysMap: const <String, dynamic>{},
               );
             }),
           ),
