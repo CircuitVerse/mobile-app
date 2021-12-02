@@ -1,16 +1,30 @@
+import 'package:flutter/material.dart';
 import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/models/ib/ib_pop_quiz_question.dart';
+import 'package:mobile_app/models/ib/ib_showcase.dart';
 import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class IbPageViewModel extends BaseModel {
   // ViewState Keys
   String IB_FETCH_PAGE_DATA = 'ib_fetch_page_data';
   String IB_FETCH_INTERACTION_DATA = 'ib_fetch_interaction_data';
   String IB_FETCH_POP_QUIZ = 'ib_fetch_pop_quiz';
+
+  // List of Global Keys to be Showcase
+  List<GlobalKey> _list;
+
+  // Global Keys
+  final GlobalKey _nextPage = GlobalKey();
+  final GlobalKey _prevPage = GlobalKey();
+
+  // Getter for Global Keys
+  GlobalKey get nextPage => _nextPage;
+  GlobalKey get prevPage => _prevPage;
 
   final IbEngineService _ibEngineService = locator<IbEngineService>();
 
@@ -34,6 +48,25 @@ class IbPageViewModel extends BaseModel {
       return result;
     } on Failure catch (f) {
       return f;
+    }
+  }
+
+  void showCase(
+    BuildContext context,
+    IBShowCase state,
+    Map<String, dynamic> keysMap,
+  ) {
+    _list = <GlobalKey>[];
+
+    if (!state.nextButton) _list.add(_nextPage);
+    if (!state.prevButton) _list.add(_prevPage);
+    if (!state.drawerButton) _list.add(keysMap['drawer']);
+    if (!state.contentButton) _list.add(keysMap['menu']);
+
+    if (_list.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ShowCaseWidget.of(context).startShowCase(_list);
+      });
     }
   }
 

@@ -43,6 +43,7 @@ class IbPageView extends StatefulWidget {
     @required this.setPage,
     @required this.showCase,
     @required this.setShowCase,
+    @required this.globalKeysMap,
   }) : super(key: key);
 
   static const String id = 'ib_page_view';
@@ -51,6 +52,7 @@ class IbPageView extends StatefulWidget {
   final IbChapter chapter;
   final IBShowCase showCase;
   final SetShowCaseStateCallback setShowCase;
+  final Map<String, dynamic> globalKeysMap;
 
   @override
   _IbPageViewState createState() => _IbPageViewState();
@@ -60,18 +62,13 @@ class _IbPageViewState extends State<IbPageView> {
   IbPageViewModel _model;
   AutoScrollController _hideButtonController;
   bool _isFabsVisible = true;
-  List<GlobalKey> _list;
 
   /// To track index through slug for scroll_to_index
   final Map<String, int> _slugMap = {};
 
-  //Global Keys
-  final GlobalKey _nextPage = GlobalKey();
-  final GlobalKey _prevPage = GlobalKey();
-
   @override
   void initState() {
-    _list = <GlobalKey>[];
+    // _list = <GlobalKey>[];
     super.initState();
     _isFabsVisible = true;
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
@@ -85,18 +82,6 @@ class _IbPageViewState extends State<IbPageView> {
         setState(() => _isFabsVisible = true);
       }
     });
-    if (!widget.showCase.nextButton) _list.add(_nextPage);
-    if (!widget.showCase.prevButton) _list.add(_prevPage);
-
-    if (_list.isNotEmpty) {
-      Future.delayed(const Duration(milliseconds: 300), () {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted) {
-            ShowCaseWidget.of(context).startShowCase(_list);
-          }
-        });
-      });
-    }
   }
 
   Widget _buildDivider() {
@@ -393,7 +378,7 @@ class _IbPageViewState extends State<IbPageView> {
               widget.setPage(widget.chapter.prev);
             },
             child: Showcase(
-              key: _prevPage,
+              key: _model.prevPage,
               description: 'Tap to navigate to previous page',
               overlayPadding: const EdgeInsets.all(12.0),
               shapeBorder: const CircleBorder(),
@@ -433,7 +418,7 @@ class _IbPageViewState extends State<IbPageView> {
               widget.setPage(widget.chapter.next);
             },
             child: Showcase(
-              key: _nextPage,
+              key: _model.nextPage,
               description: 'Tap to navigate to next page',
               overlayPadding: const EdgeInsets.all(12.0),
               shapeBorder: const CircleBorder(),
@@ -501,6 +486,7 @@ class _IbPageViewState extends State<IbPageView> {
       onModelReady: (model) {
         _model = model;
         model.fetchPageData(id: widget.chapter.id);
+        model.showCase(context, widget.showCase, widget.globalKeysMap);
       },
       builder: (context, model, child) {
         // Set the callback to show bottom sheet for Table of Contents
