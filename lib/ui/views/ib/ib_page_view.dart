@@ -356,7 +356,13 @@ class _IbPageViewState extends State<IbPageView> {
             heroTag: 'previousPage',
             mini: true,
             backgroundColor: Theme.of(context).primaryIconTheme.color,
-            onPressed: () => widget.setPage(widget.chapter.prev),
+            onPressed: () {
+              //If FAB are not visible do not do anything.
+              if (!_isFabsVisible) {
+                return;
+              }
+              widget.setPage(widget.chapter.prev);
+            },
             child: const Icon(
               Icons.arrow_back_rounded,
               color: IbTheme.primaryColor,
@@ -379,7 +385,13 @@ class _IbPageViewState extends State<IbPageView> {
             heroTag: 'nextPage',
             mini: true,
             backgroundColor: Theme.of(context).primaryIconTheme.color,
-            onPressed: () => widget.setPage(widget.chapter.next),
+            onPressed: () {
+              //If FAB are not visible do not do anything.
+              if (!_isFabsVisible) {
+                return;
+              }
+              widget.setPage(widget.chapter.next);
+            },
             child: const Icon(
               Icons.arrow_forward_rounded,
               color: IbTheme.primaryColor,
