@@ -30,7 +30,7 @@ void main() {
 
         // verify call to IbEngineService was made
         verify(_mockIbEngineApi.getChapters());
-        expect(_model.stateFor(_model.IB_FETCH_CHAPTERS), ViewState.Success);
+        expect(_model.stateFor(_model.ibFetchChaptersKey), ViewState.Success);
 
         // verify returned chapters
         expect(_model.chapters.length, 1);
@@ -46,7 +46,7 @@ void main() {
 
         // verify call to IbEngineService was made
         verify(_mockIbEngineApi.getChapters());
-        expect(_model.stateFor(_model.IB_FETCH_CHAPTERS), ViewState.Error);
+        expect(_model.stateFor(_model.ibFetchChaptersKey), ViewState.Error);
       });
     });
   });

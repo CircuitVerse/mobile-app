@@ -228,7 +228,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.ADD_ASSIGNMENT)) {
+      if (_model.isSuccess(_model.addAssignmentKey)) {
         await Future.delayed(const Duration(seconds: 1));
 
         // returns the added assignment..
@@ -239,11 +239,11 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
           'Assignment Added',
           'New assignment was successfully added.',
         );
-      } else if (_model.isError(_model.ADD_ASSIGNMENT)) {
+      } else if (_model.isError(_model.addAssignmentKey)) {
         // Show failure snackbar
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.ADD_ASSIGNMENT),
+          _model.errorMessageFor(_model.addAssignmentKey),
         );
         _formKey.currentState.reset();
       }

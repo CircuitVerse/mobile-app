@@ -7,13 +7,13 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class LoginViewModel extends BaseModel {
   // ViewState Keys
-  final String LOGIN = 'login';
+  final String loginKey = 'login';
 
   final UsersApi _userApi = locator<UsersApi>();
   final LocalStorageService _storage = locator<LocalStorageService>();
 
   Future<void> login(String email, String password) async {
-    setStateFor(LOGIN, ViewState.Busy);
+    setStateFor(loginKey, ViewState.Busy);
     try {
       var token = await _userApi.login(email, password);
 
@@ -26,10 +26,10 @@ class LoginViewModel extends BaseModel {
       // save current user to local storage..
       _storage.currentUser = await _userApi.fetchCurrentUser();
 
-      setStateFor(LOGIN, ViewState.Success);
+      setStateFor(loginKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(LOGIN, ViewState.Error);
-      setErrorMessageFor(LOGIN, f.message);
+      setStateFor(loginKey, ViewState.Error);
+      setErrorMessageFor(loginKey, f.message);
     }
   }
 }

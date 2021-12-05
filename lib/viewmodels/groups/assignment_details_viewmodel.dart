@@ -10,10 +10,10 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class AssignmentDetailsViewModel extends BaseModel {
   // ViewState Keys
-  String FETCH_ASSIGNMENT_DETAILS = 'fetch_assignment_details';
-  String ADD_GRADE = 'add_grade';
-  String UPDATE_GRADE = 'update_grade';
-  String DELETE_GRADE = 'delete_grade';
+  String fetchAssignmentDetailsKey = 'fetch_assignment_details';
+  String addGradeKey = 'add_grade';
+  String updateGradeKey = 'update_grade';
+  String deleteGradeKey = 'delete_grade';
 
   final AssignmentsApi _assignmentsApi = locator<AssignmentsApi>();
   final GradesApi _gradesApi = locator<GradesApi>();
@@ -55,21 +55,21 @@ class AssignmentDetailsViewModel extends BaseModel {
   }
 
   Future fetchAssignmentDetails(String assignmentId) async {
-    setStateFor(FETCH_ASSIGNMENT_DETAILS, ViewState.Busy);
+    setStateFor(fetchAssignmentDetailsKey, ViewState.Busy);
     try {
       assignment = await _assignmentsApi.fetchAssignmentDetails(assignmentId);
       projects = _assignment.projects ?? [];
       grades = _assignment.grades ?? [];
 
-      setStateFor(FETCH_ASSIGNMENT_DETAILS, ViewState.Success);
+      setStateFor(fetchAssignmentDetailsKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FETCH_ASSIGNMENT_DETAILS, ViewState.Error);
-      setErrorMessageFor(FETCH_ASSIGNMENT_DETAILS, f.message);
+      setStateFor(fetchAssignmentDetailsKey, ViewState.Error);
+      setErrorMessageFor(fetchAssignmentDetailsKey, f.message);
     }
   }
 
   Future addGrade(String assignmentId, dynamic grade, String remarks) async {
-    setStateFor(ADD_GRADE, ViewState.Busy);
+    setStateFor(addGradeKey, ViewState.Busy);
     try {
       var _addedGrade = await _gradesApi.addGrade(
           assignmentId, _focussedProject.id, grade, remarks);
@@ -77,15 +77,15 @@ class AssignmentDetailsViewModel extends BaseModel {
       _grades.add(_addedGrade);
       notifyListeners();
 
-      setStateFor(ADD_GRADE, ViewState.Success);
+      setStateFor(addGradeKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(ADD_GRADE, ViewState.Error);
-      setErrorMessageFor(ADD_GRADE, f.message);
+      setStateFor(addGradeKey, ViewState.Error);
+      setErrorMessageFor(addGradeKey, f.message);
     }
   }
 
   Future updateGrade(String gradeId, dynamic grade, String remarks) async {
-    setStateFor(UPDATE_GRADE, ViewState.Busy);
+    setStateFor(updateGradeKey, ViewState.Busy);
     try {
       var _updatedGrade = await _gradesApi.updateGrade(gradeId, grade, remarks);
 
@@ -93,15 +93,15 @@ class AssignmentDetailsViewModel extends BaseModel {
       _grades.add(_updatedGrade);
       notifyListeners();
 
-      setStateFor(UPDATE_GRADE, ViewState.Success);
+      setStateFor(updateGradeKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(UPDATE_GRADE, ViewState.Error);
-      setErrorMessageFor(UPDATE_GRADE, f.message);
+      setStateFor(updateGradeKey, ViewState.Error);
+      setErrorMessageFor(updateGradeKey, f.message);
     }
   }
 
   Future deleteGrade(String gradeId) async {
-    setStateFor(DELETE_GRADE, ViewState.Busy);
+    setStateFor(deleteGradeKey, ViewState.Busy);
 
     try {
       var _isDeleted = await _gradesApi.deleteGrade(gradeId);
@@ -109,14 +109,14 @@ class AssignmentDetailsViewModel extends BaseModel {
       if (_isDeleted) {
         // Remove Grade from the list..
         _grades.removeWhere((grade) => grade.id == gradeId);
-        setStateFor(DELETE_GRADE, ViewState.Success);
+        setStateFor(deleteGradeKey, ViewState.Success);
       } else {
-        setStateFor(DELETE_GRADE, ViewState.Error);
-        setErrorMessageFor(DELETE_GRADE, 'Grade can\'t be deleted');
+        setStateFor(deleteGradeKey, ViewState.Error);
+        setErrorMessageFor(deleteGradeKey, 'Grade can\'t be deleted');
       }
     } on Failure catch (f) {
-      setStateFor(DELETE_GRADE, ViewState.Error);
-      setErrorMessageFor(DELETE_GRADE, f.message);
+      setStateFor(deleteGradeKey, ViewState.Error);
+      setErrorMessageFor(deleteGradeKey, f.message);
     }
   }
 }

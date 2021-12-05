@@ -7,9 +7,9 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class MyGroupsViewModel extends BaseModel {
   // ViewState Keys
-  String FETCH_MENTORED_GROUPS = 'fetch_mentored_groups';
-  String FETCH_MEMBER_GROUPS = 'fetch_member_groups';
-  String DELETE_GROUP = 'delete_group';
+  String fetchMentoredGroupsKey = 'fetch_mentored_groups';
+  String fetchMemberGroupsKey = 'fetch_member_groups';
+  String deleteGroupKey = 'delete_group';
 
   final GroupsApi _groupsApi = locator<GroupsApi>();
 
@@ -67,17 +67,17 @@ class MyGroupsViewModel extends BaseModel {
         );
       } else {
         // Set State as busy only very first time..
-        setStateFor(FETCH_MENTORED_GROUPS, ViewState.Busy);
+        setStateFor(fetchMentoredGroupsKey, ViewState.Busy);
         // fetch mentoring groups for the very first time..
         previousMentoredGroupsBatch = await _groupsApi.fetchMentoringGroups();
       }
 
       mentoredGroups.addAll(previousMentoredGroupsBatch.data);
 
-      setStateFor(FETCH_MENTORED_GROUPS, ViewState.Success);
+      setStateFor(fetchMentoredGroupsKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FETCH_MENTORED_GROUPS, ViewState.Error);
-      setErrorMessageFor(FETCH_MENTORED_GROUPS, f.message);
+      setStateFor(fetchMentoredGroupsKey, ViewState.Error);
+      setErrorMessageFor(fetchMentoredGroupsKey, f.message);
     }
   }
 
@@ -94,36 +94,36 @@ class MyGroupsViewModel extends BaseModel {
         );
       } else {
         // Set State as busy only very first time..
-        setStateFor(FETCH_MEMBER_GROUPS, ViewState.Busy);
+        setStateFor(fetchMemberGroupsKey, ViewState.Busy);
         // fetch mentoring groups for the very first time..
         previousMemberGroupsBatch = await _groupsApi.fetchMemberGroups();
       }
 
       memberGroups.addAll(previousMemberGroupsBatch.data);
 
-      setStateFor(FETCH_MEMBER_GROUPS, ViewState.Success);
+      setStateFor(fetchMemberGroupsKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FETCH_MEMBER_GROUPS, ViewState.Error);
-      setErrorMessageFor(FETCH_MEMBER_GROUPS, f.message);
+      setStateFor(fetchMemberGroupsKey, ViewState.Error);
+      setErrorMessageFor(fetchMemberGroupsKey, f.message);
     }
   }
 
   Future deleteGroup(String groupId) async {
-    setStateFor(DELETE_GROUP, ViewState.Busy);
+    setStateFor(deleteGroupKey, ViewState.Busy);
     try {
       var _isDeleted = await _groupsApi.deleteGroup(groupId);
 
       if (_isDeleted) {
         // remove the group from the list of groups..
         mentoredGroups.removeWhere((group) => group.id == groupId);
-        setStateFor(DELETE_GROUP, ViewState.Success);
+        setStateFor(deleteGroupKey, ViewState.Success);
       } else {
-        setStateFor(DELETE_GROUP, ViewState.Error);
-        setErrorMessageFor(DELETE_GROUP, 'Group can\'t be deleted');
+        setStateFor(deleteGroupKey, ViewState.Error);
+        setErrorMessageFor(deleteGroupKey, 'Group can\'t be deleted');
       }
     } on Failure catch (f) {
-      setStateFor(DELETE_GROUP, ViewState.Error);
-      setErrorMessageFor(DELETE_GROUP, f.message);
+      setStateFor(deleteGroupKey, ViewState.Error);
+      setErrorMessageFor(deleteGroupKey, f.message);
     }
   }
 }

@@ -69,7 +69,7 @@ void main() {
       locator.registerSingleton<NewGroupViewModel>(_newGroupViewModel);
 
       when(_newGroupViewModel.addGroup(any)).thenReturn(null);
-      when(_newGroupViewModel.isSuccess(_newGroupViewModel.ADD_GROUP))
+      when(_newGroupViewModel.isSuccess(_newGroupViewModel.addGroupKey))
           .thenReturn(true);
 
       // Pump New Group View

@@ -8,9 +8,9 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class IbPageViewModel extends BaseModel {
   // ViewState Keys
-  String IB_FETCH_PAGE_DATA = 'ib_fetch_page_data';
-  String IB_FETCH_INTERACTION_DATA = 'ib_fetch_interaction_data';
-  String IB_FETCH_POP_QUIZ = 'ib_fetch_pop_quiz';
+  String ibFetchPageDataKey = 'ib_fetch_page_data';
+  String ibFetchInteractionDataKey = 'ib_fetch_interaction_data';
+  String ibFetchPopQuizKey = 'ib_fetch_pop_quiz';
 
   final IbEngineService _ibEngineService = locator<IbEngineService>();
 
@@ -21,10 +21,10 @@ class IbPageViewModel extends BaseModel {
     try {
       _pageData = await _ibEngineService.getPageData(id: id);
 
-      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+      setStateFor(ibFetchPageDataKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
-      setErrorMessageFor(IB_FETCH_PAGE_DATA, f.message);
+      setStateFor(ibFetchPageDataKey, ViewState.Error);
+      setErrorMessageFor(ibFetchPageDataKey, f.message);
     }
   }
 

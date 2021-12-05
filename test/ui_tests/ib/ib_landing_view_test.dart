@@ -35,14 +35,14 @@ void main() {
 
       // Mock Page View Model
       when(pageViewModel.fetchPageData()).thenReturn(null);
-      when(pageViewModel.isSuccess(pageViewModel.IB_FETCH_PAGE_DATA))
+      when(pageViewModel.isSuccess(pageViewModel.ibFetchPageDataKey))
           .thenAnswer((_) => true);
       when(pageViewModel.pageData).thenReturn(
           IbPageData(id: 'test', pageUrl: 'test', title: 'test', content: []));
 
       // Mock Page Drawer List
       when(model.fetchChapters()).thenReturn(null);
-      when(model.isSuccess(model.IB_FETCH_CHAPTERS)).thenAnswer((_) => true);
+      when(model.isSuccess(model.ibFetchChaptersKey)).thenAnswer((_) => true);
       when(model.chapters).thenAnswer((_) => [
             IbChapter(
               id: 'test',

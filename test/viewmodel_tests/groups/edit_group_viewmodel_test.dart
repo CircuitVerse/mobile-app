@@ -26,7 +26,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockGroupsApi.updateGroup('1', 'Test'));
-        expect(_model.stateFor(_model.UPDATE_GROUP), ViewState.Success);
+        expect(_model.stateFor(_model.updateGroupKey), ViewState.Success);
 
         // verify group is updated..
         expect(_model.updatedGroup, _group);
@@ -41,8 +41,8 @@ void main() {
         await _model.updateGroup('1', 'Test');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.UPDATE_GROUP), ViewState.Error);
-        expect(_model.errorMessageFor(_model.UPDATE_GROUP),
+        expect(_model.stateFor(_model.updateGroupKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.updateGroupKey),
             'Some Error Occurred!');
 
         // verify group is not populated on failure

@@ -7,7 +7,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class EditGroupViewModel extends BaseModel {
   // ViewState Keys
-  String UPDATE_GROUP = 'update_group';
+  String updateGroupKey = 'update_group';
 
   final GroupsApi _groupsApi = locator<GroupsApi>();
 
@@ -21,14 +21,14 @@ class EditGroupViewModel extends BaseModel {
   }
 
   Future updateGroup(String groupId, String name) async {
-    setStateFor(UPDATE_GROUP, ViewState.Busy);
+    setStateFor(updateGroupKey, ViewState.Busy);
     try {
       updatedGroup = await _groupsApi.updateGroup(groupId, name);
 
-      setStateFor(UPDATE_GROUP, ViewState.Success);
+      setStateFor(updateGroupKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(UPDATE_GROUP, ViewState.Error);
-      setErrorMessageFor(UPDATE_GROUP, f.message);
+      setStateFor(updateGroupKey, ViewState.Error);
+      setErrorMessageFor(updateGroupKey, f.message);
     }
   }
 }

@@ -36,17 +36,17 @@ class _NewGroupViewState extends State<NewGroupView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.ADD_GROUP)) {
+      if (_model.isSuccess(_model.addGroupKey)) {
         await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.newGroup);
         SnackBarUtils.showDark(
           'Group Created',
           'New group was created successfully.',
         );
-      } else if (_model.isError(_model.ADD_GROUP)) {
+      } else if (_model.isError(_model.addGroupKey)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.ADD_GROUP),
+          _model.errorMessageFor(_model.addGroupKey),
         );
       }
     }

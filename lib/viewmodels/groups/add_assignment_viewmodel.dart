@@ -10,7 +10,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class AddAssignmentViewModel extends BaseModel {
   // ViewState Keys
-  final String ADD_ASSIGNMENT = 'add_assignment';
+  final String addAssignmentKey = 'add_assignment';
 
   final AssignmentsApi _assignmentsApi = locator<AssignmentsApi>();
 
@@ -31,7 +31,7 @@ class AddAssignmentViewModel extends BaseModel {
     String description,
     List restrictionsList,
   ) async {
-    setStateFor(ADD_ASSIGNMENT, ViewState.Busy);
+    setStateFor(addAssignmentKey, ViewState.Busy);
     try {
       // deadline format..
       var deadlineFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
@@ -49,10 +49,10 @@ class AddAssignmentViewModel extends BaseModel {
         jsonEncode(restrictionsList),
       );
 
-      setStateFor(ADD_ASSIGNMENT, ViewState.Success);
+      setStateFor(addAssignmentKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(ADD_ASSIGNMENT, ViewState.Error);
-      setErrorMessageFor(ADD_ASSIGNMENT, f.message);
+      setStateFor(addAssignmentKey, ViewState.Error);
+      setErrorMessageFor(addAssignmentKey, f.message);
     }
   }
 }

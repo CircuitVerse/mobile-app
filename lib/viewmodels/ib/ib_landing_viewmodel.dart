@@ -7,7 +7,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class IbLandingViewModel extends BaseModel {
   // ViewState Keys
-  String IB_FETCH_CHAPTERS = 'ib_fetch_chapters';
+  String ibFetchChaptersKey = 'ib_fetch_chapters';
 
   final IbEngineService _ibEngineService = locator<IbEngineService>();
 
@@ -18,10 +18,10 @@ class IbLandingViewModel extends BaseModel {
   Future fetchChapters() async {
     try {
       _chapters = await _ibEngineService.getChapters();
-      setStateFor(IB_FETCH_CHAPTERS, ViewState.Success);
+      setStateFor(ibFetchChaptersKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(IB_FETCH_CHAPTERS, ViewState.Error);
-      setErrorMessageFor(IB_FETCH_CHAPTERS, f.message);
+      setStateFor(ibFetchChaptersKey, ViewState.Error);
+      setErrorMessageFor(ibFetchChaptersKey, f.message);
     }
   }
 }

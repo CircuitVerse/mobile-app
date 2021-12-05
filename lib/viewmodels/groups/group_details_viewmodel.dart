@@ -11,12 +11,12 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class GroupDetailsViewModel extends BaseModel {
   // ViewState Keys
-  String FETCH_GROUP_DETAILS = 'fetch_group_details';
-  String ADD_GROUP_MEMBERS = 'add_group_members';
-  String DELETE_GROUP_MEMBER = 'delete_group_member';
-  String REOPEN_ASSIGNMENT = 'reopen_assignment';
-  String START_ASSIGNMENT = 'start_assignment';
-  String DELETE_ASSIGNMENT = 'delete_assignment';
+  String fetchGroupDetailsKey = 'fetch_group_details';
+  String addGroupMembersKey = 'add_group_members';
+  String deleteGroupMemberKey = 'delete_group_member';
+  String reopenAssignmentKey = 'reopen_assignment';
+  String startAssignmentKey = 'start_assignment';
+  String deleteAssignmentKey = 'delete_assignment';
 
   final GroupsApi _groupsApi = locator<GroupsApi>();
   final GroupMembersApi _groupMembersApi = locator<GroupMembersApi>();
@@ -59,21 +59,21 @@ class GroupDetailsViewModel extends BaseModel {
   }
 
   Future fetchGroupDetails(String groupId) async {
-    setStateFor(FETCH_GROUP_DETAILS, ViewState.Busy);
+    setStateFor(fetchGroupDetailsKey, ViewState.Busy);
     try {
       group = await _groupsApi.fetchGroupDetails(groupId);
       groupMembers = _group.groupMembers;
       assignments = _group.assignments;
 
-      setStateFor(FETCH_GROUP_DETAILS, ViewState.Success);
+      setStateFor(fetchGroupDetailsKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FETCH_GROUP_DETAILS, ViewState.Error);
-      setErrorMessageFor(FETCH_GROUP_DETAILS, f.message);
+      setStateFor(fetchGroupDetailsKey, ViewState.Error);
+      setErrorMessageFor(fetchGroupDetailsKey, f.message);
     }
   }
 
   Future addMembers(String groupId, String emails) async {
-    setStateFor(ADD_GROUP_MEMBERS, ViewState.Busy);
+    setStateFor(addGroupMembersKey, ViewState.Busy);
     try {
       var addGroupMembers =
           await _groupMembersApi.addGroupMembers(groupId, emails);
@@ -94,30 +94,30 @@ class GroupDetailsViewModel extends BaseModel {
       var _members = await _groupMembersApi.fetchGroupMembers(groupId);
       groupMembers = _members.data;
 
-      setStateFor(ADD_GROUP_MEMBERS, ViewState.Success);
+      setStateFor(addGroupMembersKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(ADD_GROUP_MEMBERS, ViewState.Error);
-      setErrorMessageFor(ADD_GROUP_MEMBERS, f.message);
+      setStateFor(addGroupMembersKey, ViewState.Error);
+      setErrorMessageFor(addGroupMembersKey, f.message);
     }
   }
 
   Future deleteGroupMember(String groupMemberId) async {
-    setStateFor(DELETE_GROUP_MEMBER, ViewState.Busy);
+    setStateFor(deleteGroupMemberKey, ViewState.Busy);
     try {
       var _isDeleted = await _groupMembersApi.deleteGroupMember(groupMemberId);
 
       if (_isDeleted) {
         // Remove Group Member from the list..
         groupMembers.removeWhere((member) => member.id == groupMemberId);
-        setStateFor(DELETE_GROUP_MEMBER, ViewState.Success);
+        setStateFor(deleteGroupMemberKey, ViewState.Success);
       } else {
-        setStateFor(DELETE_GROUP_MEMBER, ViewState.Error);
+        setStateFor(deleteGroupMemberKey, ViewState.Error);
         setErrorMessageFor(
-            DELETE_GROUP_MEMBER, 'Group Member can\'t be deleted');
+            deleteGroupMemberKey, 'Group Member can\'t be deleted');
       }
     } on Failure catch (f) {
-      setStateFor(DELETE_GROUP_MEMBER, ViewState.Error);
-      setErrorMessageFor(DELETE_GROUP_MEMBER, f.message);
+      setStateFor(deleteGroupMemberKey, ViewState.Error);
+      setErrorMessageFor(deleteGroupMemberKey, f.message);
     }
   }
 
@@ -135,7 +135,7 @@ class GroupDetailsViewModel extends BaseModel {
   }
 
   Future reopenAssignment(String assignmentId) async {
-    setStateFor(REOPEN_ASSIGNMENT, ViewState.Busy);
+    setStateFor(reopenAssignmentKey, ViewState.Busy);
     try {
       await _assignmentsApi.reopenAssignment(assignmentId);
 
@@ -146,15 +146,15 @@ class GroupDetailsViewModel extends BaseModel {
           .status = 'open';
       notifyListeners();
 
-      setStateFor(REOPEN_ASSIGNMENT, ViewState.Success);
+      setStateFor(reopenAssignmentKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(REOPEN_ASSIGNMENT, ViewState.Error);
-      setErrorMessageFor(REOPEN_ASSIGNMENT, f.message);
+      setStateFor(reopenAssignmentKey, ViewState.Error);
+      setErrorMessageFor(reopenAssignmentKey, f.message);
     }
   }
 
   Future startAssignment(String assignmentId) async {
-    setStateFor(START_ASSIGNMENT, ViewState.Busy);
+    setStateFor(startAssignmentKey, ViewState.Busy);
     try {
       await _assignmentsApi.startAssignment(assignmentId);
       _group = await _groupsApi.fetchGroupDetails(_group.id);
@@ -163,29 +163,29 @@ class GroupDetailsViewModel extends BaseModel {
       groupMembers = _group.groupMembers;
       assignments = _group.assignments;
 
-      setStateFor(START_ASSIGNMENT, ViewState.Success);
+      setStateFor(startAssignmentKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(START_ASSIGNMENT, ViewState.Error);
-      setErrorMessageFor(START_ASSIGNMENT, f.message);
+      setStateFor(startAssignmentKey, ViewState.Error);
+      setErrorMessageFor(startAssignmentKey, f.message);
     }
   }
 
   Future deleteAssignment(String assignmentId) async {
-    setStateFor(DELETE_ASSIGNMENT, ViewState.Busy);
+    setStateFor(deleteAssignmentKey, ViewState.Busy);
     try {
       var _isDeleted = await _assignmentsApi.deleteAssignment(assignmentId);
 
       if (_isDeleted) {
         // Remove Assignment from the list..
         assignments.removeWhere((assignment) => assignment.id == assignmentId);
-        setStateFor(DELETE_ASSIGNMENT, ViewState.Success);
+        setStateFor(deleteAssignmentKey, ViewState.Success);
       } else {
-        setStateFor(DELETE_ASSIGNMENT, ViewState.Error);
-        setErrorMessageFor(DELETE_ASSIGNMENT, 'Assignment can\'t be deleted');
+        setStateFor(deleteAssignmentKey, ViewState.Error);
+        setErrorMessageFor(deleteAssignmentKey, 'Assignment can\'t be deleted');
       }
     } on Failure catch (f) {
-      setStateFor(DELETE_ASSIGNMENT, ViewState.Error);
-      setErrorMessageFor(DELETE_ASSIGNMENT, f.message);
+      setStateFor(deleteAssignmentKey, ViewState.Error);
+      setErrorMessageFor(deleteAssignmentKey, f.message);
     }
   }
 }

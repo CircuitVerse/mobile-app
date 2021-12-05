@@ -31,7 +31,7 @@ void main() {
 
         // verify call to IbEngineService was made
         verify(_mockIbEngineApi.getPageData(id: ''));
-        expect(_model.stateFor(_model.IB_FETCH_PAGE_DATA), ViewState.Success);
+        expect(_model.stateFor(_model.ibFetchPageDataKey), ViewState.Success);
 
         // verify returned data
         expect(_model.pageData.id, '');
@@ -49,7 +49,7 @@ void main() {
 
         // verify call to IbEngineService was made
         verify(_mockIbEngineApi.getPageData(id: ''));
-        expect(_model.stateFor(_model.IB_FETCH_PAGE_DATA), ViewState.Error);
+        expect(_model.stateFor(_model.ibFetchPageDataKey), ViewState.Error);
       });
     });
 

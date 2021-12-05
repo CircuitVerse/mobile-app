@@ -38,17 +38,17 @@ class _EditGroupViewState extends State<EditGroupView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.UPDATE_GROUP)) {
+      if (_model.isSuccess(_model.updateGroupKey)) {
         await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedGroup);
         SnackBarUtils.showDark(
           'Group Updated',
           'Group has been successfully updated.',
         );
-      } else if (_model.isError(_model.UPDATE_GROUP)) {
+      } else if (_model.isError(_model.updateGroupKey)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.UPDATE_GROUP),
+          _model.errorMessageFor(_model.updateGroupKey),
         );
       }
     }

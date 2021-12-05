@@ -33,7 +33,7 @@ void main() {
 
       // Mock Page Data
       when(model.fetchPageData()).thenReturn(null);
-      when(model.isSuccess(model.IB_FETCH_PAGE_DATA)).thenAnswer((_) => true);
+      when(model.isSuccess(model.ibFetchPageDataKey)).thenAnswer((_) => true);
       when(model.pageData).thenAnswer(
         (_) => IbPageData(
           id: mockIbRawPageData1['path'],

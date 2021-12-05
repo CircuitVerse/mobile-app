@@ -45,9 +45,10 @@ void main() {
       when(model.fetchMentoredGroups()).thenReturn(null);
       when(model.fetchMemberGroups()).thenReturn(null);
 
-      when(model.isSuccess(model.FETCH_MENTORED_GROUPS))
+      when(model.isSuccess(model.fetchMentoredGroupsKey))
           .thenAnswer((_) => true);
-      when(model.isSuccess(model.FETCH_MEMBER_GROUPS)).thenAnswer((_) => true);
+      when(model.isSuccess(model.fetchMentoredGroupsKey))
+          .thenAnswer((_) => true);
 
       when(model.mentoredGroups).thenAnswer((_) => groups);
       when(model.memberGroups).thenAnswer((_) => groups);
@@ -138,7 +139,7 @@ void main() {
 
       when(_groupDetailsViewModel.fetchGroupDetails(any)).thenReturn(null);
       when(_groupDetailsViewModel
-              .isSuccess(_groupDetailsViewModel.FETCH_GROUP_DETAILS))
+              .isSuccess(_groupDetailsViewModel.fetchGroupDetailsKey))
           .thenAnswer((_) => false);
 
       await tester.tap(find.widgetWithText(CardButton, 'View').first);

@@ -10,8 +10,4 @@ linter:
 
     avoid_redundant_argument_values: false
 
-    non_constant_identifier_names: true
-
     constant_identifier_names: false
-
-    unnecessary_parenthesis: true

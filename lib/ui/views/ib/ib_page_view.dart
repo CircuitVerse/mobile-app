@@ -453,7 +453,7 @@ class _IbPageViewState extends State<IbPageView> {
       },
       builder: (context, model, child) {
         // Set the callback to show bottom sheet for Table of Contents
-        if (_model.isSuccess(_model.IB_FETCH_PAGE_DATA) &&
+        if (_model.isSuccess(_model.ibFetchPageDataKey) &&
             (model.pageData?.tableOfContents?.isNotEmpty ?? false)) {
           widget.tocCallback(_showBottomSheet);
         } else {

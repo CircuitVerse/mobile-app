@@ -6,26 +6,26 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class ForgotPasswordViewModel extends BaseModel {
   // ViewState Keys
-  final String SEND_RESET_INSTRUCTIONS = 'send_reset_instructions';
+  final String sendResetInstructionsKey = 'send_reset_instructions';
 
   final UsersApi _usersApi = locator<UsersApi>();
 
   Future onForgotPassword(String email) async {
-    setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Busy);
+    setStateFor(sendResetInstructionsKey, ViewState.Busy);
     try {
       var _areInstructionsSent =
           await _usersApi.sendResetPasswordInstructions(email);
 
       if (_areInstructionsSent) {
-        setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Success);
+        setStateFor(sendResetInstructionsKey, ViewState.Success);
       } else {
-        setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Error);
+        setStateFor(sendResetInstructionsKey, ViewState.Error);
         setErrorMessageFor(
-            SEND_RESET_INSTRUCTIONS, "Instructions couldn't be sent!");
+            sendResetInstructionsKey, "Instructions couldn't be sent!");
       }
     } on Failure catch (f) {
-      setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Error);
-      setErrorMessageFor(SEND_RESET_INSTRUCTIONS, f.message);
+      setStateFor(sendResetInstructionsKey, ViewState.Error);
+      setErrorMessageFor(sendResetInstructionsKey, f.message);
     }
   }
 }

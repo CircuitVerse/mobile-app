@@ -56,7 +56,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _model.isBusy(_model.SEND_RESET_INSTRUCTIONS)
+        title: _model.isBusy(_model.sendResetInstructionsKey)
             ? 'Sending..'
             : 'SEND INSTRUCTIONS',
         onPressed: _validateAndSubmit,
@@ -88,7 +88,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     var _dialogService = locator<DialogService>();
 
     if (Validators.validateAndSaveForm(_formKey) &&
-        !_model.isBusy(_model.SEND_RESET_INSTRUCTIONS)) {
+        !_model.isBusy(_model.sendResetInstructionsKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
       _dialogService.showCustomProgressDialog(title: 'Sending Instructions');
@@ -97,7 +97,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.SEND_RESET_INSTRUCTIONS)) {
+      if (_model.isSuccess(_model.sendResetInstructionsKey)) {
         // show instructions sent snackbar
         SnackBarUtils.showDark(
           'Instructions Sent to $_email',
@@ -107,11 +107,11 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         // route back to previous screen
         await Future.delayed(const Duration(seconds: 1));
         Get.back();
-      } else if (_model.isError(_model.SEND_RESET_INSTRUCTIONS)) {
+      } else if (_model.isError(_model.sendResetInstructionsKey)) {
         // show failure snackbar
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS),
+          _model.errorMessageFor(_model.sendResetInstructionsKey),
         );
         _formKey.currentState.reset();
       }

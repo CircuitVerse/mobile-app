@@ -73,7 +73,7 @@ void main() {
       locator.registerSingleton<EditGroupViewModel>(_editGroupViewModel);
 
       when(_editGroupViewModel.updateGroup(any, any)).thenReturn(null);
-      when(_editGroupViewModel.isSuccess(_editGroupViewModel.UPDATE_GROUP))
+      when(_editGroupViewModel.isSuccess(_editGroupViewModel.updateGroupKey))
           .thenReturn(true);
 
       // Pump New Group View

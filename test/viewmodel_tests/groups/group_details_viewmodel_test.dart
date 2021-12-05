@@ -37,7 +37,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockGroupsApi.fetchGroupDetails('1'));
-        expect(_model.stateFor(_model.FETCH_GROUP_DETAILS), ViewState.Success);
+        expect(_model.stateFor(_model.fetchGroupDetailsKey), ViewState.Success);
 
         // verify group data is populated..
         expect(_model.group, _group);
@@ -54,8 +54,8 @@ void main() {
         await _model.fetchGroupDetails('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.FETCH_GROUP_DETAILS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_GROUP_DETAILS),
+        expect(_model.stateFor(_model.fetchGroupDetailsKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.fetchGroupDetailsKey),
             'Some Error Occurred!');
       });
     });
@@ -78,7 +78,7 @@ void main() {
         verify(_mockGroupMembersApi.addGroupMembers(
             '1', 'test@test.com,pending@test.com,invalid@test.com'));
         verify(_mockGroupMembersApi.fetchGroupMembers('1'));
-        expect(_model.stateFor(_model.ADD_GROUP_MEMBERS), ViewState.Success);
+        expect(_model.stateFor(_model.addGroupMembersKey), ViewState.Success);
 
         expect(_model.addedMembersSuccessMessage,
             'test@test.com was/were added pending@test.com is/are pending invalid@test.com is/are invalid');
@@ -96,8 +96,8 @@ void main() {
             '1', 'test@test.com,pending@test.com,invalid@test.com');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.ADD_GROUP_MEMBERS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.ADD_GROUP_MEMBERS),
+        expect(_model.stateFor(_model.addGroupMembersKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.addGroupMembersKey),
             'Some Error Occurred!');
       });
     });
@@ -114,7 +114,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockGroupMembersApi.deleteGroupMember('1'));
-        expect(_model.stateFor(_model.DELETE_GROUP_MEMBER), ViewState.Success);
+        expect(_model.stateFor(_model.deleteGroupMemberKey), ViewState.Success);
 
         // verify group member is deleted..
         expect(
@@ -134,8 +134,8 @@ void main() {
         await _model.deleteGroupMember('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.DELETE_GROUP_MEMBER), ViewState.Error);
-        expect(_model.errorMessageFor(_model.DELETE_GROUP_MEMBER),
+        expect(_model.stateFor(_model.deleteGroupMemberKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.deleteGroupMemberKey),
             'Group Member can\'t be deleted');
       });
 
@@ -149,8 +149,8 @@ void main() {
         await _model.deleteGroupMember('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.DELETE_GROUP_MEMBER), ViewState.Error);
-        expect(_model.errorMessageFor(_model.DELETE_GROUP_MEMBER),
+        expect(_model.stateFor(_model.deleteGroupMemberKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.deleteGroupMemberKey),
             'Some Error Occurred!');
       });
     });
@@ -192,7 +192,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockAssignmentsApi.reopenAssignment('1'));
-        expect(_model.stateFor(_model.REOPEN_ASSIGNMENT), ViewState.Success);
+        expect(_model.stateFor(_model.reopenAssignmentKey), ViewState.Success);
 
         // verify status of assignment to be "open"..
         expect(
@@ -213,8 +213,8 @@ void main() {
         await _model.reopenAssignment('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.REOPEN_ASSIGNMENT), ViewState.Error);
-        expect(_model.errorMessageFor(_model.REOPEN_ASSIGNMENT),
+        expect(_model.stateFor(_model.reopenAssignmentKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.reopenAssignmentKey),
             'Some Error Occurred!');
       });
     });
@@ -240,7 +240,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockAssignmentsApi.startAssignment('1'));
-        expect(_model.stateFor(_model.START_ASSIGNMENT), ViewState.Success);
+        expect(_model.stateFor(_model.startAssignmentKey), ViewState.Success);
 
         // verify status of assignment to be "open"..
         expect(
@@ -262,8 +262,8 @@ void main() {
         await _model.startAssignment('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.START_ASSIGNMENT), ViewState.Error);
-        expect(_model.errorMessageFor(_model.START_ASSIGNMENT),
+        expect(_model.stateFor(_model.startAssignmentKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.startAssignmentKey),
             'Some Error Occurred!');
       });
     });
@@ -280,7 +280,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockAssignmentsApi.deleteAssignment('1'));
-        expect(_model.stateFor(_model.DELETE_ASSIGNMENT), ViewState.Success);
+        expect(_model.stateFor(_model.deleteAssignmentKey), ViewState.Success);
 
         // expect assignment to be deleted..
         expect(
@@ -300,8 +300,8 @@ void main() {
         await _model.deleteAssignment('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.DELETE_ASSIGNMENT), ViewState.Error);
-        expect(_model.errorMessageFor(_model.DELETE_ASSIGNMENT),
+        expect(_model.stateFor(_model.deleteAssignmentKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.deleteAssignmentKey),
             'Assignment can\'t be deleted');
       });
 
@@ -315,8 +315,8 @@ void main() {
         await _model.deleteAssignment('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.DELETE_ASSIGNMENT), ViewState.Error);
-        expect(_model.errorMessageFor(_model.DELETE_ASSIGNMENT),
+        expect(_model.stateFor(_model.deleteAssignmentKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.deleteAssignmentKey),
             'Some Error Occurred!');
       });
     });
