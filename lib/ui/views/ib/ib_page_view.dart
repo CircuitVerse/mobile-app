@@ -172,10 +172,11 @@ class _IbPageViewState extends State<IbPageView> {
         'h5': _headingsBuilder,
         'h6': _headingsBuilder,
         'chapter_contents': IbChapterContentsBuilder(
-            chapterContents: _model.pageData?.chapterOfContents?.isNotEmpty ??
-                    false
-                ? _buildTOC(_model.pageData.chapterOfContents, padding: false)
-                : Container()),
+            chapterContents:
+                _model.pageData?.chapterOfContents?.isNotEmpty ?? false
+                    ? _buildTOC(_model.pageData.chapterOfContents,
+                        padding: false, isEnabled: false)
+                    : Container()),
         'iframe': IbWebViewBuilder(),
         'interaction': IbInteractionBuilder(model: _model),
         'quiz': IbPopQuizBuilder(context: context, model: _model),
@@ -243,13 +244,12 @@ class _IbPageViewState extends State<IbPageView> {
 
   Future _onTocListTileTap(String title) async {
     var slug = IbEngineService.getSlug(title);
-
     Navigator.pop(context);
     await _scrollToWidget(slug);
   }
 
   Widget _buildTocListTile(String leading, String content,
-      {bool root = true, bool padding = true}) {
+      {bool root = true, bool padding = true, bool isEnabled = true}) {
     if (!root) {
       return ListTile(
         leading: const Text(''),
@@ -257,7 +257,7 @@ class _IbPageViewState extends State<IbPageView> {
         contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
         minLeadingWidth: 20,
         title: Text('$leading $content'),
-        onTap: () async => _onTocListTileTap(content),
+        onTap: isEnabled ? () async => _onTocListTileTap(content) : () {},
       );
     }
 
@@ -265,18 +265,19 @@ class _IbPageViewState extends State<IbPageView> {
       visualDensity: !padding ? const VisualDensity(vertical: -3) : null,
       contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
       title: Text('$leading $content'),
-      onTap: () async => _onTocListTileTap(content),
+      onTap: isEnabled ? () async => _onTocListTileTap(content) : () {},
     );
   }
 
   List<Widget> _buildTocItems(IbTocItem item,
-      {bool root = false, bool padding = true}) {
+      {bool root = false, bool padding = true, bool isEnabled = true}) {
     var items = <Widget>[
       _buildTocListTile(
         item.leading,
         item.content,
         root: root,
         padding: padding,
+        isEnabled: isEnabled,
       ),
     ];
 
@@ -286,6 +287,7 @@ class _IbPageViewState extends State<IbPageView> {
           _buildTocItems(
             e,
             padding: padding,
+            isEnabled: isEnabled,
           ),
         );
       }
@@ -294,7 +296,8 @@ class _IbPageViewState extends State<IbPageView> {
     return items;
   }
 
-  Widget _buildTOC(List<IbTocItem> toc, {bool padding = true}) {
+  Widget _buildTOC(List<IbTocItem> toc,
+      {bool padding = true, bool isEnabled = true}) {
     var items = <Widget>[];
 
     for (var item in toc) {
@@ -303,6 +306,7 @@ class _IbPageViewState extends State<IbPageView> {
           item,
           root: true,
           padding: padding,
+          isEnabled: isEnabled,
         ),
       );
     }
