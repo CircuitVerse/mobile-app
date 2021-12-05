@@ -13,3 +13,5 @@ linter:
     non_constant_identifier_names: false
 
     constant_identifier_names: false
+
+    unnecessary_parenthesis: true
