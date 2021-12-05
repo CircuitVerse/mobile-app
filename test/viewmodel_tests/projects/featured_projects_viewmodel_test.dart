@@ -26,8 +26,8 @@ void main() {
         await _model.fetchFeaturedProjects();
 
         verify(_mockProjectsApi.getFeaturedProjects());
-        expect(
-            _model.stateFor(_model.fetchFeaturedProjectsKey), ViewState.Success);
+        expect(_model.stateFor(_model.fetchFeaturedProjectsKey),
+            ViewState.Success);
         expect(_model.previousFeaturedProjectsBatch, _projects);
         expect(deepEq(_model.featuredProjects, _projects.data), true);
       });
@@ -44,8 +44,8 @@ void main() {
 
         // verify API call to page 2 is made
         verify(_mockProjectsApi.getFeaturedProjects(page: 2));
-        expect(
-            _model.stateFor(_model.fetchFeaturedProjectsKey), ViewState.Success);
+        expect(_model.stateFor(_model.fetchFeaturedProjectsKey),
+            ViewState.Success);
         expect(_model.previousFeaturedProjectsBatch, _projects);
       });
 
