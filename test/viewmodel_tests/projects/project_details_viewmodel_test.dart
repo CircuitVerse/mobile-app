@@ -35,7 +35,7 @@ void main() {
         // verify API call is made..
         verify(_mockProjectsApi.getProjectDetails('1'));
         expect(
-            _model.stateFor(_model.FETCH_PROJECT_DETAILS), ViewState.Success);
+            _model.stateFor(_model.fetchProjectDetailsKey), ViewState.Success);
 
         // verify project data is populated..
         expect(_model.project, _project);
@@ -51,8 +51,8 @@ void main() {
         await _model.fetchProjectDetails('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.FETCH_PROJECT_DETAILS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_PROJECT_DETAILS),
+        expect(_model.stateFor(_model.fetchProjectDetailsKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.fetchProjectDetailsKey),
             'Some Error Occurred!');
       });
     });
@@ -75,7 +75,7 @@ void main() {
         verify(_mockCollaboratorsApi.addCollaborators(
             '1', 'test@test.com,existing@test.com,invalid@test.com'));
         verify(_mockCollaboratorsApi.fetchProjectCollaborators('1'));
-        expect(_model.stateFor(_model.ADD_COLLABORATORS), ViewState.Success);
+        expect(_model.stateFor(_model.addCollaboratorsKey), ViewState.Success);
 
         expect(_model.addedCollaboratorsSuccessMessage,
             'test@test.com was/were added existing@test.com is/are existing invalid@test.com is/are invalid');
@@ -93,8 +93,8 @@ void main() {
             '1', 'test@test.com,existing@test.com,invalid@test.com');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.ADD_COLLABORATORS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.ADD_COLLABORATORS),
+        expect(_model.stateFor(_model.addCollaboratorsKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.addCollaboratorsKey),
             'Some Error Occurred!');
       });
     });
@@ -111,7 +111,8 @@ void main() {
 
         // verify API call is made..
         verify(_mockCollaboratorsApi.deleteCollaborator('1', '1'));
-        expect(_model.stateFor(_model.DELETE_COLLABORATORS), ViewState.Success);
+        expect(
+            _model.stateFor(_model.deleteCollaboartorsKey), ViewState.Success);
 
         // verify collaborator is deleted..
         expect(
@@ -131,8 +132,8 @@ void main() {
         await _model.deleteCollaborator('1', '1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.DELETE_COLLABORATORS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.DELETE_COLLABORATORS),
+        expect(_model.stateFor(_model.deleteCollaboartorsKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.deleteCollaboartorsKey),
             'Some Error Occurred!');
       });
     });
@@ -148,7 +149,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockProjectsApi.forkProject('1'));
-        expect(_model.stateFor(_model.FORK_PROJECT), ViewState.Success);
+        expect(_model.stateFor(_model.forkProjectKey), ViewState.Success);
 
         // verify forkedProject data is populated..
         expect(_model.forkedProject, _project);
@@ -163,8 +164,8 @@ void main() {
         await _model.forkProject('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.FORK_PROJECT), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FORK_PROJECT),
+        expect(_model.stateFor(_model.forkProjectKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.forkProjectKey),
             'Some Error Occurred!');
       });
     });
@@ -180,7 +181,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockProjectsApi.toggleStarProject('1'));
-        expect(_model.stateFor(_model.TOGGLE_STAR), ViewState.Success);
+        expect(_model.stateFor(_model.toggleStarKey), ViewState.Success);
 
         // verify starCount to increment by 1..
         expect(_model.starCount, 1);
@@ -196,7 +197,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockProjectsApi.toggleStarProject('1'));
-        expect(_model.stateFor(_model.TOGGLE_STAR), ViewState.Success);
+        expect(_model.stateFor(_model.toggleStarKey), ViewState.Success);
 
         // verify starCount to decrement by 1..
         expect(_model.starCount, -1);
@@ -211,9 +212,9 @@ void main() {
         await _model.toggleStarForProject('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.TOGGLE_STAR), ViewState.Error);
-        expect(
-            _model.errorMessageFor(_model.TOGGLE_STAR), 'Some Error Occurred!');
+        expect(_model.stateFor(_model.toggleStarKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.toggleStarKey),
+            'Some Error Occurred!');
       });
     });
 
@@ -229,7 +230,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockProjectsApi.deleteProject('1'));
-        expect(_model.stateFor(_model.DELETE_PROJECT), ViewState.Success);
+        expect(_model.stateFor(_model.deleteProjectKey), ViewState.Success);
       });
 
       test('When called & service returns error', () async {
@@ -242,8 +243,8 @@ void main() {
         await _model.deleteProject('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.DELETE_PROJECT), ViewState.Error);
-        expect(_model.errorMessageFor(_model.DELETE_PROJECT),
+        expect(_model.stateFor(_model.deleteProjectKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.deleteProjectKey),
             'Some Error Occurred!');
       });
     });

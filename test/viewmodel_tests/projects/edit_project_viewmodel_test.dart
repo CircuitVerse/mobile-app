@@ -37,7 +37,7 @@ void main() {
             projectAccessType: 'Public',
             description: 'description',
             tagsList: []));
-        expect(_model.stateFor(_model.UPDATE_PROJECT), ViewState.Success);
+        expect(_model.stateFor(_model.updateProjectKey), ViewState.Success);
 
         // verify project is updated..
         expect(_model.updatedProject, _project);
@@ -59,8 +59,8 @@ void main() {
             tagsList: []);
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.UPDATE_PROJECT), ViewState.Error);
-        expect(_model.errorMessageFor(_model.UPDATE_PROJECT),
+        expect(_model.stateFor(_model.updateProjectKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.updateProjectKey),
             'Some Error Occurred!');
 
         // verify project is not populated on failure

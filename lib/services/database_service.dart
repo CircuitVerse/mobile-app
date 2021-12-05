@@ -8,7 +8,7 @@ enum DatabaseBox {
   IB,
 }
 
-List<TypeAdapter> DatabaseAdapters = <TypeAdapter>[
+List<TypeAdapter> databaseAdapters = <TypeAdapter>[
   IbRawPageDataAdapter(),
 ];
 
@@ -38,7 +38,7 @@ class DatabaseServiceImpl implements DatabaseService {
     }
 
     // Register Adapters for Hive
-    for (var adapter in DatabaseAdapters) {
+    for (var adapter in databaseAdapters) {
       Hive.registerAdapter(adapter);
     }
   }

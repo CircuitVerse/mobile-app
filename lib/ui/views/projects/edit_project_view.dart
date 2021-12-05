@@ -127,17 +127,17 @@ class _EditProjectViewState extends State<EditProjectView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.UPDATE_PROJECT)) {
+      if (_model.isSuccess(_model.updateProjectKey)) {
         await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedProject);
         SnackBarUtils.showDark(
           'Project Updated',
           'The project was successfully updated.',
         );
-      } else if (_model.isError(_model.UPDATE_PROJECT)) {
+      } else if (_model.isError(_model.updateProjectKey)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.UPDATE_PROJECT),
+          _model.errorMessageFor(_model.updateProjectKey),
         );
       }
     }

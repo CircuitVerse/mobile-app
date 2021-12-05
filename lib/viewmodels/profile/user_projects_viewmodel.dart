@@ -8,7 +8,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class UserProjectsViewModel extends BaseModel {
   // ViewState Keys
-  String FETCH_USER_PROJECTS = 'fetch_user_projects';
+  String fetchUserProjectsKey = 'fetch_user_projects';
 
   final ProjectsApi _projectsApi = locator<ProjectsApi>();
   final LocalStorageService _localStorageService =
@@ -48,16 +48,16 @@ class UserProjectsViewModel extends BaseModel {
         );
       } else {
         // Set State as busy only very first time..
-        setStateFor(FETCH_USER_PROJECTS, ViewState.Busy);
+        setStateFor(fetchUserProjectsKey, ViewState.Busy);
         // fetch projects for the very first time..
         previousUserProjectsBatch = await _projectsApi.getUserProjects(
             userId ?? _localStorageService.currentUser.data.id);
       }
       userProjects.addAll(previousUserProjectsBatch.data);
-      setStateFor(FETCH_USER_PROJECTS, ViewState.Success);
+      setStateFor(fetchUserProjectsKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FETCH_USER_PROJECTS, ViewState.Error);
-      setErrorMessageFor(FETCH_USER_PROJECTS, f.message);
+      setStateFor(fetchUserProjectsKey, ViewState.Error);
+      setErrorMessageFor(fetchUserProjectsKey, f.message);
     }
   }
 }

@@ -90,7 +90,7 @@ void main() {
       when(_editProfileViewModel.updateProfile(any, any, any, any))
           .thenReturn(null);
       when(_editProfileViewModel
-              .isSuccess(_editProfileViewModel.UPDATE_PROFILE))
+              .isSuccess(_editProfileViewModel.updateProfileKey))
           .thenReturn(true);
 
       // Pump Edit Profile View

@@ -26,7 +26,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockUsersApi.fetchUser('1'));
-        expect(_model.stateFor(_model.FETCH_USER_PROFILE), ViewState.Success);
+        expect(_model.stateFor(_model.fetchUserProfileKey), ViewState.Success);
 
         // verify profile/user is populated..
         expect(_model.user, _user);
@@ -41,8 +41,8 @@ void main() {
         await _model.fetchUserProfile('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.FETCH_USER_PROFILE), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_USER_PROFILE),
+        expect(_model.stateFor(_model.fetchUserProfileKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.fetchUserProfileKey),
             'Some Error Occurred!');
 
         // verify user is not populated on failure

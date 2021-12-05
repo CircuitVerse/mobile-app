@@ -108,17 +108,17 @@ class _EditProfileViewState extends State<EditProfileView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.UPDATE_PROFILE)) {
+      if (_model.isSuccess(_model.updateProfileKey)) {
         await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedUser);
         SnackBarUtils.showDark(
           'Profile Updated',
           'Your profile was successfully updated.',
         );
-      } else if (_model.isError(_model.UPDATE_PROFILE)) {
+      } else if (_model.isError(_model.updateProfileKey)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.UPDATE_PROFILE),
+          _model.errorMessageFor(_model.updateProfileKey),
         );
       }
     }

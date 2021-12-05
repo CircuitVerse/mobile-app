@@ -8,7 +8,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class EditProfileViewModel extends BaseModel {
   // ViewState Keys
-  String UPDATE_PROFILE = 'update_profile';
+  String updateProfileKey = 'update_profile';
 
   final UsersApi _userApi = locator<UsersApi>();
   final LocalStorageService _storage = locator<LocalStorageService>();
@@ -24,16 +24,16 @@ class EditProfileViewModel extends BaseModel {
 
   Future updateProfile(String name, String educationalInstitute, String country,
       bool subscribed) async {
-    setStateFor(UPDATE_PROFILE, ViewState.Busy);
+    setStateFor(updateProfileKey, ViewState.Busy);
     try {
       updatedUser = await _userApi.updateProfile(
           name, educationalInstitute, country, subscribed);
       _storage.currentUser = _updatedUser;
 
-      setStateFor(UPDATE_PROFILE, ViewState.Success);
+      setStateFor(updateProfileKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(UPDATE_PROFILE, ViewState.Error);
-      setErrorMessageFor(UPDATE_PROFILE, f.message);
+      setStateFor(updateProfileKey, ViewState.Error);
+      setErrorMessageFor(updateProfileKey, f.message);
     }
   }
 }

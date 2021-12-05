@@ -9,12 +9,12 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class ProjectDetailsViewModel extends BaseModel {
   // ViewState Keys
-  String FETCH_PROJECT_DETAILS = 'fetch_project_details';
-  String FORK_PROJECT = 'fork_project';
-  String TOGGLE_STAR = 'toggle_star';
-  String DELETE_PROJECT = 'delete_project';
-  String ADD_COLLABORATORS = 'add_collaborators';
-  String DELETE_COLLABORATORS = 'delete_collaborators';
+  String fetchProjectDetailsKey = 'fetch_project_details';
+  String forkProjectKey = 'fork_project';
+  String toggleStarKey = 'toggle_star';
+  String deleteProjectKey = 'delete_project';
+  String addCollaboratorsKey = 'add_collaborators';
+  String deleteCollaboartorsKey = 'delete_collaborators';
 
   final ProjectsApi _projectsApi = locator<ProjectsApi>();
   final CollaboratorsApi _collaboratorsApi = locator<CollaboratorsApi>();
@@ -76,20 +76,20 @@ class ProjectDetailsViewModel extends BaseModel {
   }
 
   Future fetchProjectDetails(String projectId) async {
-    setStateFor(FETCH_PROJECT_DETAILS, ViewState.Busy);
+    setStateFor(fetchProjectDetailsKey, ViewState.Busy);
     try {
       project = await _projectsApi.getProjectDetails(projectId);
       collaborators = _project.collaborators;
 
-      setStateFor(FETCH_PROJECT_DETAILS, ViewState.Success);
+      setStateFor(fetchProjectDetailsKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FETCH_PROJECT_DETAILS, ViewState.Error);
-      setErrorMessageFor(FETCH_PROJECT_DETAILS, f.message);
+      setStateFor(fetchProjectDetailsKey, ViewState.Error);
+      setErrorMessageFor(fetchProjectDetailsKey, f.message);
     }
   }
 
   Future addCollaborators(String projectId, String emails) async {
-    setStateFor(ADD_COLLABORATORS, ViewState.Busy);
+    setStateFor(addCollaboratorsKey, ViewState.Busy);
     try {
       var addedCollaborators =
           await _collaboratorsApi.addCollaborators(projectId, emails);
@@ -111,15 +111,15 @@ class ProjectDetailsViewModel extends BaseModel {
           await _collaboratorsApi.fetchProjectCollaborators(projectId);
       collaborators = _collaborators.data;
 
-      setStateFor(ADD_COLLABORATORS, ViewState.Success);
+      setStateFor(addCollaboratorsKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(ADD_COLLABORATORS, ViewState.Error);
-      setErrorMessageFor(ADD_COLLABORATORS, f.message);
+      setStateFor(addCollaboratorsKey, ViewState.Error);
+      setErrorMessageFor(addCollaboratorsKey, f.message);
     }
   }
 
   Future deleteCollaborator(String projectId, String collaboratorId) async {
-    setStateFor(DELETE_COLLABORATORS, ViewState.Busy);
+    setStateFor(deleteCollaboartorsKey, ViewState.Busy);
     try {
       var _isDeleted =
           await _collaboratorsApi.deleteCollaborator(projectId, collaboratorId);
@@ -130,58 +130,58 @@ class ProjectDetailsViewModel extends BaseModel {
       notifyListeners();
 
       if (_isDeleted) {
-        setStateFor(DELETE_COLLABORATORS, ViewState.Success);
+        setStateFor(deleteCollaboartorsKey, ViewState.Success);
       } else {
-        setStateFor(DELETE_COLLABORATORS, ViewState.Error);
+        setStateFor(deleteCollaboartorsKey, ViewState.Error);
         setErrorMessageFor(
-            DELETE_COLLABORATORS, 'Collaborator can\'t be deleted');
+            deleteCollaboartorsKey, 'Collaborator can\'t be deleted');
       }
     } on Failure catch (f) {
-      setStateFor(DELETE_COLLABORATORS, ViewState.Error);
-      setErrorMessageFor(DELETE_COLLABORATORS, f.message);
+      setStateFor(deleteCollaboartorsKey, ViewState.Error);
+      setErrorMessageFor(deleteCollaboartorsKey, f.message);
     }
   }
 
   Future<void> forkProject(String toBeForkedProjectId) async {
-    setStateFor(FORK_PROJECT, ViewState.Busy);
+    setStateFor(forkProjectKey, ViewState.Busy);
     try {
       forkedProject = await _projectsApi.forkProject(toBeForkedProjectId);
 
-      setStateFor(FORK_PROJECT, ViewState.Success);
+      setStateFor(forkProjectKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FORK_PROJECT, ViewState.Error);
-      setErrorMessageFor(FORK_PROJECT, f.message);
+      setStateFor(forkProjectKey, ViewState.Error);
+      setErrorMessageFor(forkProjectKey, f.message);
     }
   }
 
   Future toggleStarForProject(String projectId) async {
-    setStateFor(TOGGLE_STAR, ViewState.Busy);
+    setStateFor(toggleStarKey, ViewState.Busy);
     try {
       var _toggleMessage = await _projectsApi.toggleStarProject(projectId);
       isProjectStarred = _toggleMessage.contains('Starred') ? true : false;
       isProjectStarred ? starCount++ : starCount--;
 
-      setStateFor(TOGGLE_STAR, ViewState.Success);
+      setStateFor(toggleStarKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(TOGGLE_STAR, ViewState.Error);
-      setErrorMessageFor(TOGGLE_STAR, f.message);
+      setStateFor(toggleStarKey, ViewState.Error);
+      setErrorMessageFor(toggleStarKey, f.message);
     }
   }
 
   Future deleteProject(String projectId) async {
-    setStateFor(DELETE_PROJECT, ViewState.Busy);
+    setStateFor(deleteProjectKey, ViewState.Busy);
     try {
       var _isDeleted = await _projectsApi.deleteProject(projectId);
 
       if (_isDeleted) {
-        setStateFor(DELETE_PROJECT, ViewState.Success);
+        setStateFor(deleteProjectKey, ViewState.Success);
       } else {
-        setStateFor(DELETE_PROJECT, ViewState.Error);
-        setErrorMessageFor(DELETE_PROJECT, 'Project cannot be deleted');
+        setStateFor(deleteProjectKey, ViewState.Error);
+        setErrorMessageFor(deleteProjectKey, 'Project cannot be deleted');
       }
     } on Failure catch (f) {
-      setStateFor(DELETE_PROJECT, ViewState.Error);
-      setErrorMessageFor(DELETE_PROJECT, f.message);
+      setStateFor(deleteProjectKey, ViewState.Error);
+      setErrorMessageFor(deleteProjectKey, f.message);
     }
   }
 }

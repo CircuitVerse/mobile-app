@@ -7,7 +7,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class EditProjectViewModel extends BaseModel {
   // ViewState Keys
-  String UPDATE_PROJECT = 'update_project';
+  String updateProjectKey = 'update_project';
 
   final ProjectsApi _projectsApi = locator<ProjectsApi>();
 
@@ -27,7 +27,7 @@ class EditProjectViewModel extends BaseModel {
     String description,
     List<String> tagsList,
   }) async {
-    setStateFor(UPDATE_PROJECT, ViewState.Busy);
+    setStateFor(updateProjectKey, ViewState.Busy);
     try {
       updatedProject = await _projectsApi.updateProject(
         id,
@@ -37,10 +37,10 @@ class EditProjectViewModel extends BaseModel {
         tagsList: tagsList,
       );
 
-      setStateFor(UPDATE_PROJECT, ViewState.Success);
+      setStateFor(updateProjectKey, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(UPDATE_PROJECT, ViewState.Error);
-      setErrorMessageFor(UPDATE_PROJECT, f.message);
+      setStateFor(updateProjectKey, ViewState.Error);
+      setErrorMessageFor(updateProjectKey, f.message);
     }
   }
 }

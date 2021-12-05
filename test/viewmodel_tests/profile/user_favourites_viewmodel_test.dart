@@ -45,7 +45,7 @@ void main() {
 
         verify(_mockProjectsApi.getUserFavourites('1'));
         expect(
-            _model.stateFor(_model.FETCH_USER_FAVOURITES), ViewState.Success);
+            _model.stateFor(_model.fetchUserFavouritesKey), ViewState.Success);
         expect(_model.previousUserFavouritesBatch, _projects);
         expect(deepEq(_model.userFavourites, _projects.data), true);
       });
@@ -63,7 +63,7 @@ void main() {
         // verify API call to page 2 is made
         verify(_mockProjectsApi.getUserFavourites('1', page: 2));
         expect(
-            _model.stateFor(_model.FETCH_USER_FAVOURITES), ViewState.Success);
+            _model.stateFor(_model.fetchUserFavouritesKey), ViewState.Success);
         expect(_model.previousUserFavouritesBatch, _projects);
       });
 
@@ -82,7 +82,7 @@ void main() {
         // verify API call is made with _currentUser.data.id i.e '1'..
         verify(_mockProjectsApi.getUserFavourites('1'));
         expect(
-            _model.stateFor(_model.FETCH_USER_FAVOURITES), ViewState.Success);
+            _model.stateFor(_model.fetchUserFavouritesKey), ViewState.Success);
         expect(_model.previousUserFavouritesBatch, _projects);
         expect(deepEq(_model.userFavourites, _projects.data), true);
       });
@@ -96,8 +96,8 @@ void main() {
         await _model.fetchUserFavourites(userId: '1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.FETCH_USER_FAVOURITES), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_USER_FAVOURITES),
+        expect(_model.stateFor(_model.fetchUserFavouritesKey), ViewState.Error);
+        expect(_model.errorMessageFor(_model.fetchUserFavouritesKey),
             'Some Error Occurred!');
       });
     });
