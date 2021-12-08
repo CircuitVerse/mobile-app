@@ -58,6 +58,10 @@ void main() {
               ],
             )
           ]);
+      when(model.drawer).thenAnswer((_) => GlobalKey());
+      when(model.toc).thenAnswer((_) => GlobalKey());
+      when(pageViewModel.nextPage).thenAnswer((_) => GlobalKey());
+      when(pageViewModel.prevPage).thenAnswer((_) => GlobalKey());
 
       await tester.pumpWidget(
         GetMaterialApp(
