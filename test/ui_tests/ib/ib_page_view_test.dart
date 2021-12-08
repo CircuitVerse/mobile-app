@@ -16,13 +16,17 @@ import 'package:showcaseview/showcaseview.dart';
 import '../../setup/test_data/mock_ib_raw_page_data.dart';
 import '../../setup/test_helpers.dart';
 
+class MockBuildContext extends Mock implements BuildContext {}
+
 void main() {
   group('IbPageViewTest -', () {
     NavigatorObserver mockObserver;
+    MockBuildContext _mockContext;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
       await setupLocator();
+      _mockContext = MockBuildContext();
       locator.allowReassignment = true;
     });
 
@@ -32,6 +36,17 @@ void main() {
       // Mock ViewModel
       var model = MockIbPageViewModel();
       locator.registerSingleton<IbPageViewModel>(model);
+
+      // Mock ShowCase State
+      var showCase = IBShowCase(
+        nextButton: true,
+        prevButton: true,
+        tocButton: true,
+        drawerButton: true,
+      );
+
+      // Mock Global Key Map
+      const Map<String, dynamic> globalKeyMap = <String, dynamic>{};
 
       // Mock Page Data
       when(model.fetchPageData()).thenReturn(null);
@@ -45,20 +60,19 @@ void main() {
           tableOfContents: [],
         ),
       );
+      when(model.nextPage).thenAnswer((_) => GlobalKey());
+      when(model.prevPage).thenAnswer((_) => GlobalKey());
+      when(model.showCase(
+        _mockContext,
+        showCase,
+        globalKeyMap,
+      )).thenReturn(null);      
 
       // Mock Page Data
       var _chapter = IbChapter(
         id: mockIbRawPageData1['path'],
         value: mockIbRawPageData1['title'],
         navOrder: '1',
-      );
-
-      //Mock ShowCase State
-      var showCase = IBShowCase(
-        nextButton: true,
-        prevButton: true,
-        tocButton: true,
-        drawerButton: true,
       );
 
       _chapter.prevPage = _chapter;
@@ -77,7 +91,7 @@ void main() {
                 setPage: (e) {},
                 showCase: showCase,
                 setShowCase: (e) {},
-                globalKeysMap: const <String, dynamic>{},
+                globalKeysMap: globalKeyMap,
               );
             }),
           ),

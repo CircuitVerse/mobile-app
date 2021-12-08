@@ -30,6 +30,7 @@ class _IbLandingViewState extends State<IbLandingView> {
   );
   IbChapter _selectedChapter;
   ValueNotifier<Function> _tocNotifier;
+  IbLandingViewModel _model;
   // ShowCaseState stores the information of whether the button which is to be
   // showcased are clicked or not
   IBShowCase _showCaseState;
@@ -59,7 +60,7 @@ class _IbLandingViewState extends State<IbLandingView> {
     }
   }
 
-  Widget _buildAppBar(IbLandingViewModel _model) {
+  Widget _buildAppBar() {
     return AppBar(
       leading: IconButton(
         onPressed: () => _key.currentState.openDrawer(),
@@ -178,7 +179,7 @@ class _IbLandingViewState extends State<IbLandingView> {
     return Column(children: _chapters);
   }
 
-  Widget _buildDrawer(IbLandingViewModel _model) {
+  Widget _buildDrawer() {
     return Drawer(
       child: Stack(
         children: [
@@ -237,7 +238,10 @@ class _IbLandingViewState extends State<IbLandingView> {
   @override
   Widget build(BuildContext context) {
     return BaseView<IbLandingViewModel>(
-      onModelReady: (model) => model.fetchChapters(),
+      onModelReady: (model) {
+        _model = model;
+        model.fetchChapters();
+      },
       builder: (context, model, child) {
         // Set next page for home page
         if (model.isSuccess(model.IB_FETCH_CHAPTERS) &&
@@ -259,8 +263,8 @@ class _IbLandingViewState extends State<IbLandingView> {
             data: IbTheme.getThemeData(context),
             child: Scaffold(
               key: _key,
-              appBar: _buildAppBar(model),
-              drawer: _buildDrawer(model),
+              appBar: _buildAppBar(),
+              drawer: _buildDrawer(),
               body: PageTransitionSwitcher(
                 transitionBuilder: (
                   Widget child,

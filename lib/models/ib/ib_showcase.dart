@@ -16,7 +16,7 @@ class IBShowCase {
     return IBShowCase(
       nextButton: json['next'] ?? false,
       prevButton: json['prev'] ?? false,
-      tocButton: json['content'] ?? false,
+      tocButton: json['toc'] ?? false,
       drawerButton: json['drawer'] ?? false,
     );
   }

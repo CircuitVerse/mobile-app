@@ -68,7 +68,6 @@ class _IbPageViewState extends State<IbPageView> {
 
   @override
   void initState() {
-    // _list = <GlobalKey>[];
     super.initState();
     _isFabsVisible = true;
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
