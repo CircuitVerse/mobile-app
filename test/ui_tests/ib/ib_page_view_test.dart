@@ -66,7 +66,7 @@ void main() {
         _mockContext,
         showCase,
         globalKeyMap,
-      )).thenReturn(null);      
+      )).thenReturn(null);
 
       // Mock Page Data
       var _chapter = IbChapter(
