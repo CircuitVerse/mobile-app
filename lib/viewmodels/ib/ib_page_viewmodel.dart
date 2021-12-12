@@ -19,8 +19,8 @@ class IbPageViewModel extends BaseModel {
   List<GlobalKey> _list;
 
   // Global Keys
-  final GlobalKey _nextPage = GlobalKey();
-  final GlobalKey _prevPage = GlobalKey();
+  final GlobalKey _nextPage = GlobalKey(debugLabel: 'next');
+  final GlobalKey _prevPage = GlobalKey(debugLabel: 'prev');
 
   // Getter for Global Keys
   GlobalKey get nextPage => _nextPage;

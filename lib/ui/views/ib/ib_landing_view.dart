@@ -235,6 +235,39 @@ class _IbLandingViewState extends State<IbLandingView> {
     );
   }
 
+  void onShowCased(String key) {
+    switch (key) {
+      case 'next':
+        if (!_showCaseState.nextButton) {
+          setState(() {
+            _showCaseState = _showCaseState.copyWith(nextButton: true);
+          });
+        }
+        break;
+      case 'prev':
+        if (!_showCaseState.prevButton) {
+          setState(() {
+            _showCaseState = _showCaseState.copyWith(prevButton: true);
+          });
+        }
+        break;
+      case 'toc':
+        if (!_showCaseState.tocButton) {
+          setState(() {
+            _showCaseState = _showCaseState.copyWith(tocButton: true);
+          });
+        }
+        break;
+      case 'drawer':
+        if (!_showCaseState.drawerButton) {
+          setState(() {
+            _showCaseState = _showCaseState.copyWith(drawerButton: true);
+          });
+        }
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<IbLandingViewModel>(
@@ -261,42 +294,54 @@ class _IbLandingViewState extends State<IbLandingView> {
           },
           child: Theme(
             data: IbTheme.getThemeData(context),
-            child: Scaffold(
-              key: _key,
-              appBar: _buildAppBar(),
-              drawer: _buildDrawer(),
-              body: PageTransitionSwitcher(
-                transitionBuilder: (
-                  Widget child,
-                  Animation<double> animation,
-                  Animation<double> secondaryAnimation,
-                ) {
-                  return FadeThroughTransition(
-                    animation: animation,
-                    secondaryAnimation: secondaryAnimation,
-                    child: child,
-                  );
-                },
-                child: IbPageView(
-                  key: Key(_selectedChapter.toString()),
-                  tocCallback: (val) {
-                    Future.delayed(Duration.zero, () async {
-                      if (mounted) {
-                        _tocNotifier.value = val;
-                      }
-                    });
-                  },
-                  setPage: (chapter) {
-                    setState(() => _selectedChapter = chapter);
-                  },
-                  chapter: _selectedChapter,
-                  setShowCase: (updatedState) {
-                    setState(() => _showCaseState = updatedState);
-                  },
-                  showCase: _showCaseState,
-                  globalKeysMap: model.keyMap,
-                ),
-              ),
+            child: ShowCaseWidget(
+              onComplete: (index, globalKey) {
+                final String key = globalKey
+                    .toString()
+                    .substring(1, globalKey.toString().length - 1)
+                    .split(" ")
+                    .last;
+                onShowCased(key);
+              },
+              builder: Builder(builder: (context) {
+                return Scaffold(
+                  key: _key,
+                  appBar: _buildAppBar(),
+                  drawer: _buildDrawer(),
+                  body: PageTransitionSwitcher(
+                    transitionBuilder: (
+                      Widget child,
+                      Animation<double> animation,
+                      Animation<double> secondaryAnimation,
+                    ) {
+                      return FadeThroughTransition(
+                        animation: animation,
+                        secondaryAnimation: secondaryAnimation,
+                        child: child,
+                      );
+                    },
+                    child: IbPageView(
+                      key: Key(_selectedChapter.toString()),
+                      tocCallback: (val) {
+                        Future.delayed(Duration.zero, () async {
+                          if (mounted) {
+                            _tocNotifier.value = val;
+                          }
+                        });
+                      },
+                      setPage: (chapter) {
+                        setState(() => _selectedChapter = chapter);
+                      },
+                      chapter: _selectedChapter,
+                      setShowCase: (updatedState) {
+                        setState(() => _showCaseState = updatedState);
+                      },
+                      showCase: _showCaseState,
+                      globalKeysMap: model.keyMap,
+                    ),
+                  ),
+                );
+              }),
             ),
           ),
         );
