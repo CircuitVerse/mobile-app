@@ -13,8 +13,8 @@ class IbLandingViewModel extends BaseModel {
   final IbEngineService _ibEngineService = locator<IbEngineService>();
 
   // Global Keys
-  final GlobalKey _toc = GlobalKey();
-  final GlobalKey _drawer = GlobalKey();
+  final GlobalKey _toc = GlobalKey(debugLabel: 'toc');
+  final GlobalKey _drawer = GlobalKey(debugLabel: 'drawer');
 
   // Getter for Global Keys
   GlobalKey get toc => _toc;
