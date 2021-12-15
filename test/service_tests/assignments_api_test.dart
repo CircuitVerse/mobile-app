@@ -189,7 +189,7 @@ void main() {
             (_) => Future.value(Response('{"message": "reopened"}', 200)));
         var _assignmentsApi = HttpAssignmentsApi();
 
-        expect((await _assignmentsApi.reopenAssignment('1')), 'reopened');
+        expect(await _assignmentsApi.reopenAssignment('1'), 'reopened');
       });
 
       test('When called & http client throws Exceptions', () async {
@@ -219,7 +219,7 @@ void main() {
             Future.value(Response('{"message": "project created"}', 200)));
         var _assignmentsApi = HttpAssignmentsApi();
 
-        expect((await _assignmentsApi.startAssignment('1')), 'project created');
+        expect(await _assignmentsApi.startAssignment('1'), 'project created');
       });
 
       test('When called & http client throws Exceptions', () async {
