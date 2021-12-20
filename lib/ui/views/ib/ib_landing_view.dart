@@ -2,10 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ib_theme.dart';
-import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
-import 'package:mobile_app/models/ib/ib_showcase.dart';
-import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
@@ -31,19 +28,13 @@ class _IbLandingViewState extends State<IbLandingView> {
   IbChapter _selectedChapter;
   ValueNotifier<Function> _tocNotifier;
   IbLandingViewModel _model;
-  // ShowCaseState stores the information of whether the button which is to be
-  // showcased are clicked or not
-  IBShowCase _showCaseState;
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-  final LocalStorageService _localStorageService =
-      locator<LocalStorageService>();
 
   @override
   void initState() {
     _tocNotifier = ValueNotifier(null);
     _selectedChapter = _homeChapter;
-    _showCaseState = IBShowCase.fromJson(_localStorageService.getShowcaseState);
     super.initState();
   }
 
@@ -63,15 +54,18 @@ class _IbLandingViewState extends State<IbLandingView> {
   Widget _buildAppBar() {
     return AppBar(
       leading: IconButton(
-        onPressed: () => _key.currentState.openDrawer(),
+        onPressed: () {
+          if (!_model.showCaseState.drawerButton) {
+            _model.onShowCased('drawer');
+          }
+          _key.currentState.openDrawer();
+        },
         icon: Showcase(
           key: _model.drawer,
           description: 'Navigate to different chapters',
           overlayPadding: const EdgeInsets.all(12.0),
           onTargetClick: () {
-            setState(() {
-              _showCaseState = _showCaseState.copyWith(drawerButton: true);
-            });
+            _model.onShowCased('drawer');
             _key.currentState.openDrawer();
           },
           disposeOnTap: true,
@@ -96,11 +90,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                       onPressed: value,
                     ),
                     onTargetClick: () {
-                      setState(() {
-                        _showCaseState = _showCaseState.copyWith(
-                          tocButton: true,
-                        );
-                      });
+                      _model.onShowCased('toc');
                       if (_key.currentState.isDrawerOpen) Get.back();
                       Future.delayed(const Duration(milliseconds: 200), () {
                         value();
@@ -235,45 +225,12 @@ class _IbLandingViewState extends State<IbLandingView> {
     );
   }
 
-  void onShowCased(String key) {
-    switch (key) {
-      case 'next':
-        if (!_showCaseState.nextButton) {
-          setState(() {
-            _showCaseState = _showCaseState.copyWith(nextButton: true);
-          });
-        }
-        break;
-      case 'prev':
-        if (!_showCaseState.prevButton) {
-          setState(() {
-            _showCaseState = _showCaseState.copyWith(prevButton: true);
-          });
-        }
-        break;
-      case 'toc':
-        if (!_showCaseState.tocButton) {
-          setState(() {
-            _showCaseState = _showCaseState.copyWith(tocButton: true);
-          });
-        }
-        break;
-      case 'drawer':
-        if (!_showCaseState.drawerButton) {
-          setState(() {
-            _showCaseState = _showCaseState.copyWith(drawerButton: true);
-          });
-        }
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BaseView<IbLandingViewModel>(
       onModelReady: (model) {
         _model = model;
-        model.fetchChapters();
+        model.init();
       },
       builder: (context, model, child) {
         // Set next page for home page
@@ -289,7 +246,7 @@ class _IbLandingViewState extends State<IbLandingView> {
               setState(() => _selectedChapter = _homeChapter);
               return Future.value(false);
             }
-            _localStorageService.setShowcaseState = _showCaseState.toString();
+            _model.saveShowcaseState();
             return Future.value(true);
           },
           child: Theme(
@@ -301,7 +258,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                     .substring(1, globalKey.toString().length - 1)
                     .split(" ")
                     .last;
-                onShowCased(key);
+                model.onShowCased(key);
               },
               builder: Builder(builder: (context) {
                 return Scaffold(
@@ -334,9 +291,9 @@ class _IbLandingViewState extends State<IbLandingView> {
                       },
                       chapter: _selectedChapter,
                       setShowCase: (updatedState) {
-                        setState(() => _showCaseState = updatedState);
+                        model.showCaseState = updatedState;
                       },
-                      showCase: _showCaseState,
+                      showCase: model.showCaseState,
                       globalKeysMap: model.keyMap,
                     ),
                   ),
