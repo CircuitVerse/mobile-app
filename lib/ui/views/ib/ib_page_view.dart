@@ -62,6 +62,7 @@ class _IbPageViewState extends State<IbPageView> {
   IbPageViewModel _model;
   AutoScrollController _hideButtonController;
   bool _isFabsVisible = true;
+  ShowCaseWidgetState _showCaseWidgetState;
 
   /// To track index through slug for scroll_to_index
   final Map<String, int> _slugMap = {};
@@ -69,6 +70,7 @@ class _IbPageViewState extends State<IbPageView> {
   @override
   void initState() {
     super.initState();
+    _showCaseWidgetState = ShowCaseWidget.of(context);
     _isFabsVisible = true;
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
     _hideButtonController.addListener(() {
@@ -81,6 +83,12 @@ class _IbPageViewState extends State<IbPageView> {
         setState(() => _isFabsVisible = true);
       }
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    _showCaseWidgetState = ShowCaseWidget.of(context);
+    super.didChangeDependencies();
   }
 
   Widget _buildDivider() {
@@ -485,7 +493,11 @@ class _IbPageViewState extends State<IbPageView> {
       onModelReady: (model) {
         _model = model;
         model.fetchPageData(id: widget.chapter.id);
-        model.showCase(context, widget.showCase, widget.globalKeysMap);
+        model.showCase(
+          _showCaseWidgetState,
+          widget.showCase,
+          widget.globalKeysMap,
+        );
       },
       builder: (context, model, child) {
         // Set the callback to show bottom sheet for Table of Contents
