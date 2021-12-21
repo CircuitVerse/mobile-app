@@ -16,17 +16,13 @@ import 'package:showcaseview/showcaseview.dart';
 import '../../setup/test_data/mock_ib_raw_page_data.dart';
 import '../../setup/test_helpers.dart';
 
-class MockBuildContext extends Mock implements BuildContext {}
-
 void main() {
   group('IbPageViewTest -', () {
     NavigatorObserver mockObserver;
-    MockBuildContext _mockContext;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
       await setupLocator();
-      _mockContext = MockBuildContext();
       locator.allowReassignment = true;
     });
 
@@ -62,11 +58,6 @@ void main() {
       );
       when(model.nextPage).thenAnswer((_) => GlobalKey());
       when(model.prevPage).thenAnswer((_) => GlobalKey());
-      when(model.showCase(
-        _mockContext,
-        showCase,
-        globalKeyMap,
-      )).thenReturn(null);
 
       // Mock Page Data
       var _chapter = IbChapter(
