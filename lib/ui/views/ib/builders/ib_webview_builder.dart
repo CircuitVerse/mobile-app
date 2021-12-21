@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/html_parser.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:markdown/markdown.dart' as md;
