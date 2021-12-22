@@ -5,11 +5,13 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
+import 'package:mobile_app/models/ib/ib_showcase.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../../setup/test_data/mock_ib_raw_page_data.dart';
 import '../../setup/test_helpers.dart';
@@ -31,6 +33,17 @@ void main() {
       var model = MockIbPageViewModel();
       locator.registerSingleton<IbPageViewModel>(model);
 
+      // Mock ShowCase State
+      var showCase = IBShowCase(
+        nextButton: true,
+        prevButton: true,
+        tocButton: true,
+        drawerButton: true,
+      );
+
+      // Mock Global Key Map
+      const Map<String, dynamic> globalKeyMap = <String, dynamic>{};
+
       // Mock Page Data
       when(model.fetchPageData()).thenReturn(null);
       when(model.isSuccess(model.IB_FETCH_PAGE_DATA)).thenAnswer((_) => true);
@@ -43,6 +56,8 @@ void main() {
           tableOfContents: [],
         ),
       );
+      when(model.nextPage).thenAnswer((_) => GlobalKey());
+      when(model.prevPage).thenAnswer((_) => GlobalKey());
 
       // Mock Page Data
       var _chapter = IbChapter(
@@ -58,11 +73,18 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: IbPageView(
-            key: UniqueKey(),
-            chapter: _chapter,
-            tocCallback: (val) {},
-            setPage: (e) {},
+          home: ShowCaseWidget(
+            builder: Builder(builder: (context) {
+              return IbPageView(
+                key: UniqueKey(),
+                chapter: _chapter,
+                tocCallback: (val) {},
+                setPage: (e) {},
+                showCase: showCase,
+                setShowCase: (e) {},
+                globalKeysMap: globalKeyMap,
+              );
+            }),
           ),
         ),
       );

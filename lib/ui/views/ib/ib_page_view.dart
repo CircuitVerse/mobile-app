@@ -8,6 +8,7 @@ import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
+import 'package:mobile_app/models/ib/ib_showcase.dart';
 import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_chapter_contents_builder.dart';
@@ -27,10 +28,12 @@ import 'package:mobile_app/ui/views/ib/syntaxes/ib_md_tag_syntax.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 typedef TocCallback = void Function(Function);
 typedef SetPageCallback = void Function(IbChapter);
+typedef SetShowCaseStateCallback = void Function(IBShowCase);
 
 class IbPageView extends StatefulWidget {
   const IbPageView({
@@ -38,12 +41,18 @@ class IbPageView extends StatefulWidget {
     @required this.tocCallback,
     @required this.chapter,
     @required this.setPage,
+    @required this.showCase,
+    @required this.setShowCase,
+    @required this.globalKeysMap,
   }) : super(key: key);
 
   static const String id = 'ib_page_view';
   final TocCallback tocCallback;
   final SetPageCallback setPage;
   final IbChapter chapter;
+  final IBShowCase showCase;
+  final SetShowCaseStateCallback setShowCase;
+  final Map<String, dynamic> globalKeysMap;
 
   @override
   _IbPageViewState createState() => _IbPageViewState();
@@ -53,6 +62,7 @@ class _IbPageViewState extends State<IbPageView> {
   IbPageViewModel _model;
   AutoScrollController _hideButtonController;
   bool _isFabsVisible = true;
+  ShowCaseWidgetState _showCaseWidgetState;
 
   /// To track index through slug for scroll_to_index
   final Map<String, int> _slugMap = {};
@@ -60,6 +70,7 @@ class _IbPageViewState extends State<IbPageView> {
   @override
   void initState() {
     super.initState();
+    _showCaseWidgetState = ShowCaseWidget.of(context);
     _isFabsVisible = true;
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
     _hideButtonController.addListener(() {
@@ -72,6 +83,12 @@ class _IbPageViewState extends State<IbPageView> {
         setState(() => _isFabsVisible = true);
       }
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    _showCaseWidgetState = ShowCaseWidget.of(context);
+    super.didChangeDependencies();
   }
 
   Widget _buildDivider() {
@@ -367,9 +384,20 @@ class _IbPageViewState extends State<IbPageView> {
               }
               widget.setPage(widget.chapter.prev);
             },
-            child: const Icon(
-              Icons.arrow_back_rounded,
-              color: IbTheme.primaryColor,
+            child: Showcase(
+              key: _model.prevPage,
+              description: 'Tap to navigate to previous page',
+              overlayPadding: const EdgeInsets.all(12.0),
+              shapeBorder: const CircleBorder(),
+              onTargetClick: () {
+                widget.setShowCase(widget.showCase.copyWith(prevButton: true));
+                widget.setPage(widget.chapter.prev);
+              },
+              disposeOnTap: true,
+              child: const Icon(
+                Icons.arrow_back_rounded,
+                color: IbTheme.primaryColor,
+              ),
             ),
           ),
         ),
@@ -396,9 +424,20 @@ class _IbPageViewState extends State<IbPageView> {
               }
               widget.setPage(widget.chapter.next);
             },
-            child: const Icon(
-              Icons.arrow_forward_rounded,
-              color: IbTheme.primaryColor,
+            child: Showcase(
+              key: _model.nextPage,
+              description: 'Tap to navigate to next page',
+              overlayPadding: const EdgeInsets.all(12.0),
+              shapeBorder: const CircleBorder(),
+              onTargetClick: () {
+                widget.setShowCase(widget.showCase.copyWith(nextButton: true));
+                widget.setPage(widget.chapter.next);
+              },
+              disposeOnTap: false,
+              child: const Icon(
+                Icons.arrow_forward_rounded,
+                color: IbTheme.primaryColor,
+              ),
             ),
           ),
         ),
@@ -454,6 +493,11 @@ class _IbPageViewState extends State<IbPageView> {
       onModelReady: (model) {
         _model = model;
         model.fetchPageData(id: widget.chapter.id);
+        model.showCase(
+          _showCaseWidgetState,
+          widget.showCase,
+          widget.globalKeysMap,
+        );
       },
       builder: (context, model, child) {
         // Set the callback to show bottom sheet for Table of Contents
