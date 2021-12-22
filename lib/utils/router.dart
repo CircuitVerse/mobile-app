@@ -110,7 +110,9 @@ class CVRouter {
           ),
         );
       case IbLandingView.id:
-        return MaterialPageRoute(builder: (_) => const IbLandingView());
+        return MaterialPageRoute(
+          builder: (_) => const IbLandingView(),
+        );
       case ProjectPreviewFullScreen.id:
         var _project = settings.arguments as Project;
         return MaterialPageRoute(

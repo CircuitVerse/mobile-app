@@ -14,6 +14,7 @@ class LocalStorageService {
   static const String IS_LOGGED_IN = 'is_logged_in';
   static const String IS_FIRST_TIME_LOGIN = 'is_first_time_login';
   static const String AUTH_TYPE = 'auth_type';
+  static const String IB_SHOWCASE_STATE = 'ib_showcase_state';
 
   static Future<LocalStorageService> getInstance() async {
     _preferences ??= await SharedPreferences.getInstance();
@@ -85,5 +86,17 @@ class LocalStorageService {
 
   set authType(AuthType authType) {
     _saveToDisk(AUTH_TYPE, authTypeValues.reverse[authType]);
+  }
+
+  Map<String, dynamic> get getShowcaseState {
+    final Map<String, dynamic> result =
+        Map.castFrom<dynamic, dynamic, String, dynamic>(
+            json.decode(_getFromDisk(IB_SHOWCASE_STATE) ?? '{}')
+                as Map<dynamic, dynamic>);
+    return result;
+  }
+
+  set setShowcaseState(String state) {
+    _saveToDisk(IB_SHOWCASE_STATE, state);
   }
 }
