@@ -50,21 +50,25 @@ class IbLandingViewModel extends BaseModel {
       case 'next':
         if (!_showCaseState.nextButton) {
           _showCaseState = _showCaseState.copyWith(nextButton: true);
+          saveShowcaseState();
         }
         break;
       case 'prev':
         if (!_showCaseState.prevButton) {
           _showCaseState = _showCaseState.copyWith(prevButton: true);
+          saveShowcaseState();
         }
         break;
       case 'toc':
         if (!_showCaseState.tocButton) {
           _showCaseState = _showCaseState.copyWith(tocButton: true);
+          saveShowcaseState();
         }
         break;
       case 'drawer':
         if (!_showCaseState.drawerButton) {
           _showCaseState = _showCaseState.copyWith(drawerButton: true);
+          saveShowcaseState();
         }
         break;
     }
