@@ -7,6 +7,7 @@ import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class IbLandingView extends StatefulWidget {
@@ -26,6 +27,9 @@ class _IbLandingViewState extends State<IbLandingView> {
   );
   IbChapter _selectedChapter;
   ValueNotifier<Function> _tocNotifier;
+  IbLandingViewModel _model;
+
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
   void initState() {
@@ -49,6 +53,25 @@ class _IbLandingViewState extends State<IbLandingView> {
 
   Widget _buildAppBar() {
     return AppBar(
+      leading: IconButton(
+        onPressed: () {
+          if (!_model.showCaseState.drawerButton) {
+            _model.onShowCased('drawer');
+          }
+          _key.currentState.openDrawer();
+        },
+        icon: Showcase(
+          key: _model.drawer,
+          description: 'Navigate to different chapters',
+          overlayPadding: const EdgeInsets.all(12.0),
+          onTargetClick: () {
+            _model.onShowCased('drawer');
+            _key.currentState.openDrawer();
+          },
+          disposeOnTap: true,
+          child: const Icon(Icons.menu),
+        ),
+      ),
       title: Text(
         _selectedChapter.id == _homeChapter.id
             ? 'CircuitVerse'
@@ -59,10 +82,21 @@ class _IbLandingViewState extends State<IbLandingView> {
           valueListenable: _tocNotifier,
           builder: (context, value, child) {
             return value != null
-                ? IconButton(
-                    icon: const Icon(Icons.menu_book_rounded),
-                    tooltip: 'Show Table of Contents',
-                    onPressed: value,
+                ? Showcase(
+                    key: _model.toc,
+                    description: 'Show Table of Contents',
+                    child: IconButton(
+                      icon: const Icon(Icons.menu_book_rounded),
+                      onPressed: value,
+                    ),
+                    onTargetClick: () {
+                      _model.onShowCased('toc');
+                      if (_key.currentState.isDrawerOpen) Get.back();
+                      Future.delayed(const Duration(milliseconds: 200), () {
+                        value();
+                      });
+                    },
+                    disposeOnTap: true,
                   )
                 : Container();
           },
@@ -135,7 +169,7 @@ class _IbLandingViewState extends State<IbLandingView> {
     return Column(children: _chapters);
   }
 
-  Widget _buildDrawer(IbLandingViewModel _model) {
+  Widget _buildDrawer() {
     return Drawer(
       child: Stack(
         children: [
@@ -194,7 +228,10 @@ class _IbLandingViewState extends State<IbLandingView> {
   @override
   Widget build(BuildContext context) {
     return BaseView<IbLandingViewModel>(
-      onModelReady: (model) => model.fetchChapters(),
+      onModelReady: (model) {
+        _model = model;
+        model.init();
+      },
       builder: (context, model, child) {
         // Set next page for home page
         if (model.isSuccess(model.IB_FETCH_CHAPTERS) &&
@@ -209,41 +246,59 @@ class _IbLandingViewState extends State<IbLandingView> {
               setState(() => _selectedChapter = _homeChapter);
               return Future.value(false);
             }
+            _model.saveShowcaseState();
             return Future.value(true);
           },
           child: Theme(
             data: IbTheme.getThemeData(context),
-            child: Scaffold(
-              key: const Key('IbLandingScaffold'),
-              appBar: _buildAppBar(),
-              drawer: _buildDrawer(model),
-              body: PageTransitionSwitcher(
-                transitionBuilder: (
-                  Widget child,
-                  Animation<double> animation,
-                  Animation<double> secondaryAnimation,
-                ) {
-                  return FadeThroughTransition(
-                    animation: animation,
-                    secondaryAnimation: secondaryAnimation,
-                    child: child,
-                  );
-                },
-                child: IbPageView(
-                  key: Key(_selectedChapter.toString()),
-                  tocCallback: (val) {
-                    Future.delayed(Duration.zero, () async {
-                      if (mounted) {
-                        _tocNotifier.value = val;
-                      }
-                    });
-                  },
-                  setPage: (chapter) {
-                    setState(() => _selectedChapter = chapter);
-                  },
-                  chapter: _selectedChapter,
-                ),
-              ),
+            child: ShowCaseWidget(
+              onComplete: (index, globalKey) {
+                final String key = globalKey
+                    .toString()
+                    .substring(1, globalKey.toString().length - 1)
+                    .split(" ")
+                    .last;
+                model.onShowCased(key);
+              },
+              builder: Builder(builder: (context) {
+                return Scaffold(
+                  key: _key,
+                  appBar: _buildAppBar(),
+                  drawer: _buildDrawer(),
+                  body: PageTransitionSwitcher(
+                    transitionBuilder: (
+                      Widget child,
+                      Animation<double> animation,
+                      Animation<double> secondaryAnimation,
+                    ) {
+                      return FadeThroughTransition(
+                        animation: animation,
+                        secondaryAnimation: secondaryAnimation,
+                        child: child,
+                      );
+                    },
+                    child: IbPageView(
+                      key: Key(_selectedChapter.toString()),
+                      tocCallback: (val) {
+                        Future.delayed(Duration.zero, () async {
+                          if (mounted) {
+                            _tocNotifier.value = val;
+                          }
+                        });
+                      },
+                      setPage: (chapter) {
+                        setState(() => _selectedChapter = chapter);
+                      },
+                      chapter: _selectedChapter,
+                      setShowCase: (updatedState) {
+                        model.showCaseState = updatedState;
+                      },
+                      showCase: model.showCaseState,
+                      globalKeysMap: model.keyMap,
+                    ),
+                  ),
+                );
+              }),
             ),
           ),
         );

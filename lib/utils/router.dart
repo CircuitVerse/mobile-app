@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/models/assignments.dart';
 import 'package:mobile_app/models/groups.dart';
@@ -111,7 +110,9 @@ class CVRouter {
           ),
         );
       case IbLandingView.id:
-        return MaterialPageRoute(builder: (_) => const IbLandingView());
+        return MaterialPageRoute(
+          builder: (_) => const IbLandingView(),
+        );
       case ProjectPreviewFullScreen.id:
         var _project = settings.arguments as Project;
         return MaterialPageRoute(
