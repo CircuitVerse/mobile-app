@@ -213,7 +213,7 @@ void main() {
 
         ApiUtils.client = MockClient((_) =>
             Future.value(Response('{"message": "instructions sent"}', 200)));
-        expect((await _usersApi.sendResetPasswordInstructions('test@test.com')),
+        expect(await _usersApi.sendResetPasswordInstructions('test@test.com'),
             true);
       });
 
