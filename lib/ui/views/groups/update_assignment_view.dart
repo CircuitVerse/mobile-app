@@ -126,7 +126,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
             value: _restrictions.contains(name),
             onChanged: (value) {
               if (value) {
-                _restrictions.add((name));
+                _restrictions.add(name);
               } else {
                 _restrictions.remove(name);
               }
