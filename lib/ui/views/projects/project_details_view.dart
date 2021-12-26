@@ -22,7 +22,7 @@ import 'package:share/share.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ProjectDetailsView extends StatefulWidget {
-  const ProjectDetailsView({Key key, this.project}) : super(key: key);
+  const ProjectDetailsView({Key? key, required this.project}) : super(key: key);
 
   static const String id = 'project_details_view';
   final Project project;
@@ -35,10 +35,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   final LocalStorageService _localStorageService =
       locator<LocalStorageService>();
   final DialogService _dialogService = locator<DialogService>();
-  ProjectDetailsViewModel _model;
+  late ProjectDetailsViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _emails;
-  Project _recievedProject;
+  late String _emails;
+  late Project _recievedProject;
   final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
       GlobalKey<CVFlatButtonState>();
 
@@ -49,11 +49,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   }
 
   void onShareButtonPressed() {
-    final RenderBox box = context.findRenderObject();
+    final RenderBox? box = context.findRenderObject() as RenderBox?;
     var URL =
         'https://circuitverse.org/users/${widget.project.relationships.author.data.id}/projects/${widget.project.id}';
     Share.share(URL,
-        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+        sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
   }
 
   Widget _buildShareActionButton() {
@@ -141,7 +141,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         textAlign: TextAlign.center,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.headline5.copyWith(
+        style: Theme.of(context).textTheme.headline5?.copyWith(
               color: Colors.white,
             ),
       ),
@@ -170,7 +170,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: RichText(
         text: TextSpan(
-          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.headline6?.copyWith(fontSize: 18),
           children: <TextSpan>[
             TextSpan(
               text: '$heading : ',
@@ -191,7 +191,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: RichText(
         text: TextSpan(
-          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.headline6?.copyWith(fontSize: 18),
           children: <TextSpan>[
             const TextSpan(
               text: 'Author : ',
@@ -223,7 +223,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               children: [
                 Text(
                   'Description :',
-                  style: Theme.of(context).textTheme.headline6.copyWith(
+                  style: Theme.of(context).textTheme.headline6?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
@@ -280,7 +280,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             const SizedBox(width: 4),
             Text(
               'Fork',
-              style: Theme.of(context).textTheme.subtitle1.copyWith(
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
                     color: Colors.white,
                   ),
             ),
@@ -316,7 +316,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           borderRadius: BorderRadius.circular(4),
         ),
         child: Icon(
-          _model.isProjectStarred ?? false ? Icons.star : Icons.star_border,
+          _model.isProjectStarred ? Icons.star : Icons.star_border,
           color: Colors.white,
         ),
       ),
@@ -378,7 +378,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 maxLines: 5,
                 onChanged: (emailValue) {
                   addButtonGlobalKey.currentState
-                      .setDynamicFunction(emailValue.isNotEmpty);
+                      ?.setDynamicFunction(emailValue.isNotEmpty);
                 },
                 autofocus: true,
                 decoration: CVTheme.textFieldDecoration.copyWith(
@@ -388,7 +388,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     ? null
                     : 'Enter emails in valid format.',
                 onSaved: (emails) =>
-                    _emails = emails.replaceAll(' ', '').trim(),
+                    _emails = emails!.replaceAll(' ', '').trim(),
               ),
             ),
             actions: <Widget>[
@@ -541,7 +541,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   Get.toNamed(ProfileView.id, arguments: collaborator.id),
               child: Text(
                 collaborator.attributes.name,
-                style: Theme.of(context).textTheme.headline6.copyWith(
+                style: Theme.of(context).textTheme.headline6?.copyWith(
                       decoration: TextDecoration.underline,
                       color: CVTheme.highlightText(context),
                       fontWeight: FontWeight.bold,
@@ -568,7 +568,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         _model = model;
         // initialize collaborators & isStarred for the project..
         _model.collaborators = _recievedProject.collaborators;
-        _model.isProjectStarred = _recievedProject.attributes.isStarred;
+        _model.isProjectStarred =
+            _recievedProject.attributes.isStarred ?? false;
         _model.starCount = _recievedProject.attributes.starsCount;
 
         _model.fetchProjectDetails(_recievedProject.id);

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class CardButton extends StatelessWidget {
   const CardButton({
-    @required this.onPressed,
-    @required this.color,
-    @required this.title,
-    Key key,
+    required this.onPressed,
+    required this.color,
+    required this.title,
+    Key? key,
   }) : super(key: key);
   final VoidCallback onPressed;
   final Color color;
@@ -25,7 +25,7 @@ class CardButton extends StatelessWidget {
           title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.subtitle1.copyWith(
+          style: Theme.of(context).textTheme.subtitle1?.copyWith(
                 color: Colors.white,
               ),
         ),

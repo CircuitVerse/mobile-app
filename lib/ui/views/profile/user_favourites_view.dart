@@ -8,7 +8,10 @@ import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 
 class UserFavouritesView extends StatefulWidget {
-  const UserFavouritesView({Key key, this.userId}) : super(key: key);
+  const UserFavouritesView({
+    Key? key,
+    required this.userId,
+  }) : super(key: key);
 
   final String userId;
 
@@ -47,7 +50,7 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
           }
         }
 
-        if (model?.previousUserFavouritesBatch?.links?.next != null) {
+        if (model.previousUserFavouritesBatch.links.next != null) {
           _items.add(
             CVAddIconButton(
               onPressed: () => model.fetchUserFavourites(userId: widget.userId),

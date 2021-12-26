@@ -13,7 +13,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.dart';
 
 class ForgotPasswordView extends StatefulWidget {
-  const ForgotPasswordView({Key key}) : super(key: key);
+  const ForgotPasswordView({Key? key}) : super(key: key);
 
   static const String id = 'forgot_password_view';
 
@@ -22,9 +22,9 @@ class ForgotPasswordView extends StatefulWidget {
 }
 
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
-  ForgotPasswordViewModel _model;
+  late ForgotPasswordViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _email;
+  late String _email;
 
   Widget _buildForgotPasswordImage() {
     return Container(
@@ -46,7 +46,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       type: TextInputType.emailAddress,
       validator: (value) =>
           Validators.isEmailValid(value) ? null : 'Please enter a valid email',
-      onSaved: (value) => _email = value.trim(),
+      onSaved: (value) => _email = value!.trim(),
       action: TextInputAction.done,
     );
   }
@@ -113,7 +113,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
           'Error',
           _model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS),
         );
-        _formKey.currentState.reset();
+        _formKey.currentState?.reset();
       }
     }
   }

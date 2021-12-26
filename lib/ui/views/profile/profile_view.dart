@@ -13,24 +13,24 @@ import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({Key key, this.userId}) : super(key: key);
+  const ProfileView({Key? key, this.userId}) : super(key: key);
 
   static const String id = 'profile_view';
-  final String userId;
+  final String? userId;
 
   @override
   _ProfileViewState createState() => _ProfileViewState();
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  ProfileViewModel _model;
-  String userId;
+  late ProfileViewModel _model;
+  late String userId;
 
   @override
   void initState() {
     super.initState();
     userId =
-        widget.userId ?? locator<LocalStorageService>().currentUser.data.id;
+        widget.userId ?? locator<LocalStorageService>().currentUser!.data.id;
   }
 
   Widget _buildProfileImage() {
@@ -47,18 +47,18 @@ class _ProfileViewState extends State<ProfileView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Text(
-        _model?.user?.data?.attributes?.name ?? 'N.A',
+        _model.user.data.attributes.name ?? 'N.A',
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.subtitle1.copyWith(
+        style: Theme.of(context).textTheme.subtitle1?.copyWith(
               fontWeight: FontWeight.bold,
             ),
       ),
     );
   }
 
-  Widget _buildProfileComponent(String title, String description) {
+  Widget _buildProfileComponent(String title, String? description) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4),
       alignment: Alignment.centerLeft,
@@ -68,7 +68,7 @@ class _ProfileViewState extends State<ProfileView> {
           children: <TextSpan>[
             TextSpan(
               text: '$title : ',
-              style: Theme.of(context).textTheme.bodyText1.copyWith(
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -84,7 +84,7 @@ class _ProfileViewState extends State<ProfileView> {
   Widget _buildEditProfileButton() {
     var _localStorageService = locator<LocalStorageService>();
     if (_localStorageService.isLoggedIn &&
-        userId == _localStorageService.currentUser.data.id) {
+        userId == _localStorageService.currentUser!.data.id) {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: CVTheme.primaryColor,
@@ -99,7 +99,7 @@ class _ProfileViewState extends State<ProfileView> {
         },
         child: Text(
           'Edit Profile',
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1?.copyWith(
                 color: Colors.white,
               ),
         ),
@@ -110,7 +110,7 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Widget _buildProfileCard() {
-    var _attrs = _model?.user?.data?.attributes;
+    var _attrs = _model.user.data.attributes;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -137,21 +137,21 @@ class _ProfileViewState extends State<ProfileView> {
                 children: <Widget>[
                   _buildProfileComponent(
                     'Joined',
-                    _attrs?.createdAt != null
-                        ? timeago.format(_attrs.createdAt)
+                    _attrs.createdAt != null
+                        ? timeago.format(_attrs.createdAt!)
                         : null,
                   ),
                   _buildProfileComponent(
                     'Country',
-                    _attrs?.country,
+                    _attrs.country,
                   ),
                   _buildProfileComponent(
                     'Educational Institute',
-                    _attrs?.educationalInstitute,
+                    _attrs.educationalInstitute,
                   ),
                   _buildProfileComponent(
                     'Subscribed to mails',
-                    _attrs?.subscribed.toString(),
+                    _attrs.subscribed.toString(),
                   ),
                   _buildEditProfileButton()
                 ],

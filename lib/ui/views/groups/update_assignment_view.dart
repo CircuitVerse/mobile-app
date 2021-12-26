@@ -19,7 +19,10 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
 
 class UpdateAssignmentView extends StatefulWidget {
-  const UpdateAssignmentView({Key key, this.assignment}) : super(key: key);
+  const UpdateAssignmentView({
+    Key? key,
+    required this.assignment,
+  }) : super(key: key);
 
   static const String id = 'update_assignment_view';
   final Assignment assignment;
@@ -30,11 +33,11 @@ class UpdateAssignmentView extends StatefulWidget {
 
 class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   final DialogService _dialogService = locator<DialogService>();
-  UpdateAssignmentViewModel _model;
+  late UpdateAssignmentViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name;
+  late String _name;
   final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
-  DateTime _deadline;
+  late DateTime _deadline;
   List _restrictions = [];
   bool _isRestrictionEnabled = false;
 
@@ -49,8 +52,9 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     return CVTextField(
       initialValue: widget.assignment.attributes.name,
       label: 'Name',
-      validator: (name) => name.isEmpty ? 'Please enter a valid name' : null,
-      onSaved: (name) => _name = name.trim(),
+      validator: (name) =>
+          name?.isEmpty ?? true ? 'Please enter a valid name' : null,
+      onSaved: (name) => _name = name!.trim(),
     );
   }
 
@@ -92,7 +96,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
             return currentValue;
           }
         },
-        onSaved: (deadline) => _deadline = deadline,
+        onSaved: (deadline) => _deadline = deadline!,
       ),
     );
   }
@@ -104,12 +108,13 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         value: _isRestrictionEnabled,
         title: Text(
           'Elements restriction',
-          style: Theme.of(context).textTheme.headline6.copyWith(
+          style: Theme.of(context).textTheme.headline6?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),
         subtitle: const Text('Enable elements restriction'),
         onChanged: (value) {
+          if (value == null) return;
           setState(() {
             _isRestrictionEnabled = value;
           });
@@ -125,6 +130,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         Checkbox(
             value: _restrictions.contains(name),
             onChanged: (value) {
+              if (value == null) return;
               if (value) {
                 _restrictions.add(name);
               } else {
@@ -145,7 +151,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.subtitle1.copyWith(
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
@@ -189,7 +195,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       String _descriptionEditorText;
       try {
         _descriptionEditorText =
-            await _descriptionEditor.currentState.getText();
+            await _descriptionEditor.currentState!.getText();
       } on NoSuchMethodError {
         debugPrint(
             'Handled html_editor error. NOTE: This should only throw during tests.');

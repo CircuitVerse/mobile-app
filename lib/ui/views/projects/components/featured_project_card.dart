@@ -6,9 +6,11 @@ import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class FeaturedProjectCard extends StatefulWidget {
-  const FeaturedProjectCard(
-      {@required this.project, this.onViewPressed, Key key})
-      : super(key: key);
+  const FeaturedProjectCard({
+    required this.project,
+    required this.onViewPressed,
+    Key? key,
+  }) : super(key: key);
 
   final Project project;
   final VoidCallback onViewPressed;
@@ -68,7 +70,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.headline6.copyWith(
+              style: Theme.of(context).textTheme.headline6?.copyWith(
                     color: CVTheme.textColor(context),
                   ),
             ),

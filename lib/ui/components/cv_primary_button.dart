@@ -3,16 +3,16 @@ import 'package:mobile_app/cv_theme.dart';
 
 class CVPrimaryButton extends StatelessWidget {
   const CVPrimaryButton({
-    @required this.title,
+    required this.title,
     this.onPressed,
     this.isBodyText = false,
     this.isPrimaryDark = false,
     this.padding = const EdgeInsets.all(8),
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final String title;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final bool isBodyText;
   final bool isPrimaryDark;
   final EdgeInsetsGeometry padding;
@@ -29,10 +29,10 @@ class CVPrimaryButton extends StatelessWidget {
       child: Text(
         title,
         style: isBodyText
-            ? Theme.of(context).textTheme.bodyText1.copyWith(
+            ? Theme.of(context).textTheme.bodyText1?.copyWith(
                   color: Colors.white,
                 )
-            : Theme.of(context).textTheme.headline6.copyWith(
+            : Theme.of(context).textTheme.headline6?.copyWith(
                   color: Colors.white,
                 ),
       ),

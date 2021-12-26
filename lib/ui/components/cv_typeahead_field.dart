@@ -10,7 +10,7 @@ class CVTypeAheadField extends StatelessWidget {
   ///
   /// When `maxLines` is not specified, it defaults to 1
   const CVTypeAheadField({
-    @required this.label,
+    required this.label,
     this.type = TextInputType.text,
     this.action = TextInputAction.next,
     this.maxLines = 1,
@@ -22,22 +22,22 @@ class CVTypeAheadField extends StatelessWidget {
     ),
     this.focusNode,
     this.onFieldSubmitted,
-    this.countryInstituteObject,
+    required this.countryInstituteObject,
     this.controller,
-    this.toggle,
-    Key key,
+    required this.toggle,
+    Key? key,
   }) : super(key: key);
 
   final String label;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final TextInputType type;
   final TextInputAction action;
   final int maxLines;
-  final Function(String) validator;
-  final Function(String) onSaved;
-  final Function onFieldSubmitted;
+  final String? Function(String?)? validator;
+  final Function(String?)? onSaved;
+  final Function? onFieldSubmitted;
   final EdgeInsets padding;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final CountryInstituteAPI countryInstituteObject;
   final String toggle;
 
@@ -46,7 +46,7 @@ class CVTypeAheadField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String text;
+    String? text;
 
     return Padding(
       padding: padding,
@@ -101,16 +101,16 @@ class CVTypeAheadField extends StatelessWidget {
             },
             itemBuilder: (context, suggestion) {
               return ListTile(
-                title: Text(suggestion),
+                title: Text(suggestion as String),
               );
             },
             onSuggestionSelected: (value) {
               if (value != '') {
-                controller.text = value;
+                controller?.text = value as String;
               }
             },
             onSaved: (value) {
-              onSaved(
+              onSaved!(
                 (value == '') ? (text ?? 'N.A') : value,
               );
             },

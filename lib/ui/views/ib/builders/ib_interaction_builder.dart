@@ -9,12 +9,12 @@ import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class IbInteractionBuilder extends MarkdownElementBuilder {
-  IbInteractionBuilder({this.model});
+  IbInteractionBuilder({required this.model});
 
   final IbPageViewModel model;
 
   @override
-  Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {
+  Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
     var id = element.textContent;
 
     return FutureBuilder<dynamic>(
@@ -28,7 +28,7 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
 
         var _textContent = snapshot.data.toString();
         var _streamController = StreamController<double>();
-        WebViewController _webViewController;
+        late WebViewController _webViewController;
 
         return StreamBuilder<double>(
           initialData: 100,
@@ -39,14 +39,14 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
               child: WebView(
                 initialUrl:
                     'data:text/html;base64,${base64Encode(const Utf8Encoder().convert(_textContent))}',
+                onWebViewCreated: (_controller) {
+                  _webViewController = _controller;
+                },
                 onPageFinished: (some) async {
                   var height = double.parse(
                       await _webViewController.evaluateJavascript(
                           'document.documentElement.scrollHeight;'));
                   _streamController.add(height);
-                },
-                onWebViewCreated: (_controller) {
-                  _webViewController = _controller;
                 },
                 javascriptMode: JavascriptMode.unrestricted,
               ),

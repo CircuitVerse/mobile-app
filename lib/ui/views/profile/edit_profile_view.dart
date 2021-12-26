@@ -13,7 +13,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 
 class EditProfileView extends StatefulWidget {
-  const EditProfileView({Key key}) : super(key: key);
+  const EditProfileView({Key? key}) : super(key: key);
 
   static const String id = 'edit_profile_view';
 
@@ -23,10 +23,10 @@ class EditProfileView extends StatefulWidget {
 
 class _EditProfileViewState extends State<EditProfileView> {
   final DialogService _dialogService = locator<DialogService>();
-  EditProfileViewModel _model;
+  late EditProfileViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name, _educationalInstitute, _country;
-  bool _subscribed;
+  late String _name, _educationalInstitute, _country;
+  late bool _subscribed;
 
   final _nameFocusNode = FocusNode();
   final _countryFocusNode = FocusNode();
@@ -41,8 +41,9 @@ class _EditProfileViewState extends State<EditProfileView> {
   @override
   void initState() {
     super.initState();
-    var _userAttrs = locator<LocalStorageService>().currentUser.data.attributes;
-    _name = _userAttrs.name;
+    var _userAttrs =
+        locator<LocalStorageService>().currentUser!.data.attributes;
+    _name = _userAttrs.name!;
     _educationalInstitute = _userAttrs.educationalInstitute;
     _country = _userAttrs.country;
     _subscribed = _userAttrs.subscribed;
@@ -52,8 +53,9 @@ class _EditProfileViewState extends State<EditProfileView> {
     return CVTextField(
       label: 'Name',
       initialValue: _name,
-      validator: (value) => value.isEmpty ? "Name can't be empty" : null,
-      onSaved: (value) => _name = value.trim(),
+      validator: (value) =>
+          value?.isEmpty ?? true ? "Name can't be empty" : null,
+      onSaved: (value) => _name = value!.trim(),
       onFieldSubmitted: (_) =>
           FocusScope.of(context).requestFocus(_nameFocusNode),
     );
@@ -64,7 +66,7 @@ class _EditProfileViewState extends State<EditProfileView> {
       focusNode: _nameFocusNode,
       label: 'Country',
       controller: TextEditingController(text: _country),
-      onSaved: (value) => _country = (value != '') ? value.trim() : '',
+      onSaved: (value) => _country = (value != '') ? value!.trim() : '',
       onFieldSubmitted: () {
         _nameFocusNode.unfocus();
         FocusScope.of(context).requestFocus(_countryFocusNode);
@@ -80,7 +82,7 @@ class _EditProfileViewState extends State<EditProfileView> {
       label: 'Educational Institute',
       controller: TextEditingController(text: _educationalInstitute),
       onSaved: (value) =>
-          _educationalInstitute = (value != '') ? value.trim() : '',
+          _educationalInstitute = (value != '') ? value!.trim() : '',
       toggle: CVTypeAheadField.EDUCATIONAL_INSTITUTE,
       action: TextInputAction.done,
       countryInstituteObject: locator<CountryInstituteAPI>(),
@@ -91,9 +93,12 @@ class _EditProfileViewState extends State<EditProfileView> {
     return CheckboxListTile(
       value: _subscribed,
       title: const Text('Subscribe to mails?'),
-      onChanged: (value) => setState(() {
-        _subscribed = value;
-      }),
+      onChanged: (value) {
+        if (value == null) return;
+        setState(() {
+          _subscribed = value;
+        });
+      },
     );
   }
 

@@ -4,10 +4,10 @@ import 'package:mobile_app/cv_theme.dart';
 
 class CVHtmlEditor extends StatelessWidget {
   const CVHtmlEditor({
-    @required this.editorKey,
+    required this.editorKey,
     this.hasAttachment = true,
     this.height = 300,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final GlobalKey<FlutterSummernoteState> editorKey;

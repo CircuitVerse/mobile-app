@@ -11,7 +11,7 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class IbLandingView extends StatefulWidget {
-  const IbLandingView({Key key}) : super(key: key);
+  const IbLandingView({Key? key}) : super(key: key);
 
   static const String id = 'ib_landing_view';
 
@@ -25,9 +25,9 @@ class _IbLandingViewState extends State<IbLandingView> {
     navOrder: '1',
     value: 'Interactive Book Home',
   );
-  IbChapter _selectedChapter;
-  ValueNotifier<Function> _tocNotifier;
-  IbLandingViewModel _model;
+  late IbChapter _selectedChapter;
+  late ValueNotifier<Function?> _tocNotifier;
+  late IbLandingViewModel _model;
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
 
@@ -51,14 +51,14 @@ class _IbLandingViewState extends State<IbLandingView> {
     }
   }
 
-  Widget _buildAppBar() {
+  AppBar _buildAppBar() {
     return AppBar(
       leading: IconButton(
         onPressed: () {
           if (!_model.showCaseState.drawerButton) {
             _model.onShowCased('drawer');
           }
-          _key.currentState.openDrawer();
+          _key.currentState?.openDrawer();
         },
         icon: Showcase(
           key: _model.drawer,
@@ -66,7 +66,7 @@ class _IbLandingViewState extends State<IbLandingView> {
           overlayPadding: const EdgeInsets.all(12.0),
           onTargetClick: () {
             _model.onShowCased('drawer');
-            _key.currentState.openDrawer();
+            _key.currentState?.openDrawer();
           },
           disposeOnTap: true,
           child: const Icon(Icons.menu),
@@ -87,14 +87,15 @@ class _IbLandingViewState extends State<IbLandingView> {
                     description: 'Show Table of Contents',
                     child: IconButton(
                       icon: const Icon(Icons.menu_book_rounded),
-                      onPressed: value,
+                      onPressed: value as VoidCallback,
                     ),
                     onTargetClick: () {
                       _model.onShowCased('toc');
-                      if (_key.currentState.isDrawerOpen) Get.back();
-                      Future.delayed(const Duration(milliseconds: 200), () {
-                        value();
-                      });
+                      if (_key.currentState!.isDrawerOpen) Get.back();
+                      Future.delayed(
+                        const Duration(milliseconds: 200),
+                        value,
+                      );
                     },
                     disposeOnTap: true,
                   )
@@ -122,7 +123,7 @@ class _IbLandingViewState extends State<IbLandingView> {
     var nestedPages = <Widget>[];
 
     var hasSelectedChapter = false;
-    for (var nestedChapter in chapter.items) {
+    for (var nestedChapter in chapter.items ?? <IbChapter>[]) {
       if (nestedChapter.id == _selectedChapter.id) {
         hasSelectedChapter = true;
       }
@@ -142,7 +143,7 @@ class _IbLandingViewState extends State<IbLandingView> {
           onTap: () => setSelectedChapter(chapter),
           child: Text(
             chapter.value,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6?.copyWith(
                   fontFamily: 'Poppins',
                   color: (_selectedChapter.id.startsWith(chapter.id))
                       ? IbTheme.getPrimaryColor(context)
@@ -159,7 +160,7 @@ class _IbLandingViewState extends State<IbLandingView> {
     var _chapters = <Widget>[];
 
     for (var chapter in chapters) {
-      if (chapter.items != null && chapter.items.isNotEmpty) {
+      if (chapter.items != null && chapter.items!.isNotEmpty) {
         _chapters.add(_buildExpandableChapter(chapter));
       } else {
         _chapters.add(_buildChapter(chapter));
@@ -287,6 +288,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                         });
                       },
                       setPage: (chapter) {
+                        if (chapter == null) return;
                         setState(() => _selectedChapter = chapter);
                       },
                       chapter: _selectedChapter,

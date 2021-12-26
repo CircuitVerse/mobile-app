@@ -8,9 +8,11 @@ import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart';
 
 class FeaturedProjectsView extends StatefulWidget {
-  const FeaturedProjectsView(
-      {Key key, this.showAppBar = true, this.embed = false})
-      : super(key: key);
+  const FeaturedProjectsView({
+    Key? key,
+    this.showAppBar = true,
+    this.embed = false,
+  }) : super(key: key);
 
   static const String id = 'featured_projects_view';
   final bool showAppBar;
@@ -44,7 +46,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
         }
 
         if (!widget.embed &&
-            model?.previousFeaturedProjectsBatch?.links?.next != null) {
+            model.previousFeaturedProjectsBatch?.links.next != null) {
           _items.add(
             CVPrimaryButton(
               title: 'Load More',

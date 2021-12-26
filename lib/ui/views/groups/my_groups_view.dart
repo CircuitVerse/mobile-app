@@ -15,7 +15,7 @@ import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
 
 class MyGroupsView extends StatefulWidget {
-  const MyGroupsView({Key key}) : super(key: key);
+  const MyGroupsView({Key? key}) : super(key: key);
 
   static const String id = 'my_groups_view';
 
@@ -26,8 +26,8 @@ class MyGroupsView extends StatefulWidget {
 class _MyGroupsViewState extends State<MyGroupsView>
     with SingleTickerProviderStateMixin {
   final DialogService _dialogService = locator<DialogService>();
-  MyGroupsViewModel _model;
-  TabController _tabController;
+  late MyGroupsViewModel _model;
+  late TabController _tabController;
 
   Widget _emptyState() {
     return Column(
@@ -43,7 +43,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
     );
   }
 
-  Widget _buildSubHeader({String title}) {
+  Widget _buildSubHeader({required String title}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 48.0),
       child: Text(
@@ -144,7 +144,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
                 );
               }
               // Adds fetch more groups icon if link to next set exists
-              if (_model?.previousMentoredGroupsBatch?.links?.next != null) {
+              if (_model.previousMentoredGroupsBatch.links.next != null) {
                 _mentoredGroups.add(
                   CVAddIconButton(onPressed: _model.fetchMentoredGroups),
                 );
@@ -157,7 +157,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
               }
 
               // Adds fetch more groups icon if link to next set exists
-              if (_model?.previousMemberGroupsBatch?.links?.next != null) {
+              if (_model.previousMemberGroupsBatch.links.next != null) {
                 _joinedGroups.add(
                   CVAddIconButton(onPressed: _model.fetchMemberGroups),
                 );
