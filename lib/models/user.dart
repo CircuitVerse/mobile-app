@@ -3,7 +3,7 @@ class User {
         data: Data.fromJson(json['data']),
       );
 
-  User({this.data});
+  User({required this.data});
   Data data;
 
   Map<String, dynamic> toJson() => {
@@ -19,9 +19,9 @@ class Data {
       );
 
   Data({
-    this.id,
-    this.type,
-    this.attributes,
+    required this.id,
+    required this.type,
+    required this.attributes,
   });
   String id;
   String type;
@@ -52,19 +52,19 @@ class UserAttributes {
 
   UserAttributes({
     this.name,
-    this.email,
-    this.subscribed,
+    required this.email,
+    required this.subscribed,
     this.createdAt,
     this.updatedAt,
-    this.admin,
+    required this.admin,
     this.country,
     this.educationalInstitute,
   });
-  String name;
+  String? name;
   String email;
   bool subscribed;
-  DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
   bool admin;
   dynamic country;
   dynamic educationalInstitute;

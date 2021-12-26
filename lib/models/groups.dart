@@ -10,8 +10,8 @@ class Groups {
         links: Links.fromJson(json['links']),
       );
   Groups({
-    this.data,
-    this.links,
+    required this.data,
+    required this.links,
   });
   List<Group> data;
   Links links;
@@ -39,20 +39,20 @@ class Group {
             : null,
       );
   Group({
-    this.id,
-    this.type,
-    this.attributes,
+    required this.id,
+    required this.type,
+    required this.attributes,
     this.groupMembers,
     this.assignments,
   });
   String id;
   String type;
   GroupAttributes attributes;
-  List<GroupMember> groupMembers;
-  List<Assignment> assignments;
+  List<GroupMember>? groupMembers;
+  List<Assignment>? assignments;
 
   // returns true if the logged in user is mentor for this group
-  bool get isMentor => locator<LocalStorageService>().currentUser.data.id ==
+  bool get isMentor => locator<LocalStorageService>().currentUser!.data.id ==
           attributes.mentorId.toString()
       ? true
       : false;
@@ -70,12 +70,12 @@ class GroupAttributes {
       );
 
   GroupAttributes({
-    this.memberCount,
-    this.mentorName,
-    this.name,
-    this.mentorId,
-    this.createdAt,
-    this.updatedAt,
+    required this.memberCount,
+    required this.mentorName,
+    required this.name,
+    required this.mentorId,
+    required this.createdAt,
+    required this.updatedAt,
   });
   int memberCount;
   String mentorName;
