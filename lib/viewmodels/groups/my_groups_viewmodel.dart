@@ -21,7 +21,7 @@ class MyGroupsViewModel extends BaseModel {
 
   List<Group> get memberGroups => _memberGroups;
 
-  Groups _previousMentoredGroupsBatch;
+  late Groups _previousMentoredGroupsBatch;
 
   Groups get previousMentoredGroupsBatch => _previousMentoredGroupsBatch;
 
@@ -30,7 +30,7 @@ class MyGroupsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Groups _previousMemberGroupsBatch;
+  late Groups _previousMemberGroupsBatch;
 
   Groups get previousMemberGroupsBatch => _previousMemberGroupsBatch;
 
@@ -56,7 +56,7 @@ class MyGroupsViewModel extends BaseModel {
 
   Future fetchMentoredGroups() async {
     try {
-      if (previousMentoredGroupsBatch?.links?.next != null) {
+      if (previousMentoredGroupsBatch.links.next != null) {
         // fetch next batch of mentoring groups..
         String _nextPageLink = previousMentoredGroupsBatch.links.next;
         var _nextPageNumber =
@@ -83,7 +83,7 @@ class MyGroupsViewModel extends BaseModel {
 
   Future fetchMemberGroups() async {
     try {
-      if (previousMemberGroupsBatch?.links?.next != null) {
+      if (previousMemberGroupsBatch.links.next != null) {
         // fetch next batch of member groups..
         String _nextPageLink = previousMemberGroupsBatch.links.next;
         var _nextPageNumber =

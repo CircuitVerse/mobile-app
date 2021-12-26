@@ -13,7 +13,7 @@ class EditProfileViewModel extends BaseModel {
   final UsersApi _userApi = locator<UsersApi>();
   final LocalStorageService _storage = locator<LocalStorageService>();
 
-  User _updatedUser;
+  late User _updatedUser;
 
   User get updatedUser => _updatedUser;
 

@@ -15,20 +15,20 @@ class FeaturedProjectsViewModel extends BaseModel {
 
   List<Project> get featuredProjects => _featuredProjects;
 
-  Projects _previousFeaturedProjectsBatch;
+  Projects? _previousFeaturedProjectsBatch;
 
-  Projects get previousFeaturedProjectsBatch => _previousFeaturedProjectsBatch;
+  Projects? get previousFeaturedProjectsBatch => _previousFeaturedProjectsBatch;
 
-  set previousFeaturedProjectsBatch(Projects previousFeaturedProjectsBatch) {
+  set previousFeaturedProjectsBatch(Projects? previousFeaturedProjectsBatch) {
     _previousFeaturedProjectsBatch = previousFeaturedProjectsBatch;
     notifyListeners();
   }
 
   Future fetchFeaturedProjects({int size = 5}) async {
     try {
-      if (previousFeaturedProjectsBatch?.links?.next != null) {
+      if (previousFeaturedProjectsBatch?.links.next != null) {
         // fetch next batch of projects..
-        String _nextPageLink = previousFeaturedProjectsBatch.links.next;
+        String _nextPageLink = previousFeaturedProjectsBatch?.links.next;
 
         var _nextPageNumber =
             int.parse(_nextPageLink.substring(_nextPageLink.length - 1));
@@ -46,7 +46,7 @@ class FeaturedProjectsViewModel extends BaseModel {
           size: size,
         );
       }
-      featuredProjects.addAll(previousFeaturedProjectsBatch.data);
+      featuredProjects.addAll(previousFeaturedProjectsBatch!.data);
       setStateFor(FETCH_FEATURED_PROJECTS, ViewState.Success);
     } on Failure catch (f) {
       setStateFor(FETCH_FEATURED_PROJECTS, ViewState.Error);

@@ -18,7 +18,7 @@ class UserFavouritesViewModel extends BaseModel {
 
   List<Project> get userFavourites => _userFavourites;
 
-  Projects _previousUserFavouritesBatch;
+  late Projects _previousUserFavouritesBatch;
 
   Projects get previousUserFavouritesBatch => _previousUserFavouritesBatch;
 
@@ -32,9 +32,9 @@ class UserFavouritesViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future fetchUserFavourites({String userId}) async {
+  Future fetchUserFavourites({String? userId}) async {
     try {
-      if (previousUserFavouritesBatch?.links?.next != null) {
+      if (previousUserFavouritesBatch.links.next != null) {
         // fetch next batch of projects..
         String _nextPageLink = previousUserFavouritesBatch.links.next;
 
@@ -43,7 +43,7 @@ class UserFavouritesViewModel extends BaseModel {
 
         // fetch projects corresponding to next page number..
         previousUserFavouritesBatch = await _projectsApi.getUserFavourites(
-          userId ?? _localStorageService.currentUser.data.id,
+          userId ?? _localStorageService.currentUser!.data.id,
           page: _nextPageNumber,
         );
       } else {
@@ -51,7 +51,7 @@ class UserFavouritesViewModel extends BaseModel {
         setStateFor(FETCH_USER_FAVOURITES, ViewState.Busy);
         // fetch projects for the very first time..
         previousUserFavouritesBatch = await _projectsApi.getUserFavourites(
-            userId ?? _localStorageService.currentUser.data.id);
+            userId ?? _localStorageService.currentUser!.data.id);
       }
 
       userFavourites.addAll(previousUserFavouritesBatch.data);

@@ -19,7 +19,7 @@ class ProjectDetailsViewModel extends BaseModel {
   final ProjectsApi _projectsApi = locator<ProjectsApi>();
   final CollaboratorsApi _collaboratorsApi = locator<CollaboratorsApi>();
 
-  Project _project;
+  late Project _project;
 
   Project get project => _project;
 
@@ -32,7 +32,8 @@ class ProjectDetailsViewModel extends BaseModel {
 
   List<Collaborator> get collaborators => _collaborators;
 
-  set collaborators(List<Collaborator> collaborators) {
+  set collaborators(List<Collaborator>? collaborators) {
+    if (collaborators == null) return;
     _collaborators = collaborators;
     notifyListeners();
   }
@@ -55,7 +56,7 @@ class ProjectDetailsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Project _forkedProject;
+  late Project _forkedProject;
 
   Project get forkedProject => _forkedProject;
 
@@ -64,7 +65,7 @@ class ProjectDetailsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  String _addedCollaboratorsSuccessMessage;
+  late String _addedCollaboratorsSuccessMessage;
 
   String get addedCollaboratorsSuccessMessage =>
       _addedCollaboratorsSuccessMessage;
@@ -79,7 +80,7 @@ class ProjectDetailsViewModel extends BaseModel {
     setStateFor(FETCH_PROJECT_DETAILS, ViewState.Busy);
     try {
       project = await _projectsApi.getProjectDetails(projectId);
-      collaborators = _project.collaborators;
+      collaborators = _project.collaborators!;
 
       setStateFor(FETCH_PROJECT_DETAILS, ViewState.Success);
     } on Failure catch (f) {

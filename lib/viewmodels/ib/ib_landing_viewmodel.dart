@@ -36,7 +36,7 @@ class IbLandingViewModel extends BaseModel {
 
   // ShowCaseState stores the information of whether the button which is to be
   // showcased are clicked or not
-  IBShowCase _showCaseState;
+  late IBShowCase _showCaseState;
 
   IBShowCase get showCaseState => _showCaseState;
 

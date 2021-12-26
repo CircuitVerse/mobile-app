@@ -11,7 +11,7 @@ class EditGroupViewModel extends BaseModel {
 
   final GroupsApi _groupsApi = locator<GroupsApi>();
 
-  Group _updatedGroup;
+  late Group _updatedGroup;
 
   Group get updatedGroup => _updatedGroup;
 

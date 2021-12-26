@@ -16,7 +16,7 @@ class IbPageViewModel extends BaseModel {
   String IB_FETCH_POP_QUIZ = 'ib_fetch_pop_quiz';
 
   // List of Global Keys to be Showcase
-  List<GlobalKey> _list;
+  late List<GlobalKey> _list;
 
   // Global Keys
   final GlobalKey _nextPage = GlobalKey(debugLabel: 'next');
@@ -28,8 +28,8 @@ class IbPageViewModel extends BaseModel {
 
   final IbEngineService _ibEngineService = locator<IbEngineService>();
 
-  IbPageData _pageData;
-  IbPageData get pageData => _pageData;
+  IbPageData? _pageData;
+  IbPageData? get pageData => _pageData;
 
   Future fetchPageData({String id = 'index.md'}) async {
     try {
@@ -64,7 +64,7 @@ class IbPageViewModel extends BaseModel {
     if (!state.tocButton) _list.add(keysMap['toc']);
 
     if (_list.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 800), () {
           showCaseWidgetState.startShowCase(_list);
         });

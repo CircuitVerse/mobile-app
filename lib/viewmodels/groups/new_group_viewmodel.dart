@@ -11,7 +11,7 @@ class NewGroupViewModel extends BaseModel {
 
   final GroupsApi _groupsApi = locator<GroupsApi>();
 
-  Group _newGroup;
+  late Group _newGroup;
 
   Group get newGroup => _newGroup;
 

@@ -18,7 +18,7 @@ class UserProjectsViewModel extends BaseModel {
 
   List<Project> get userProjects => _userProjects;
 
-  Projects _previousUserProjectsBatch;
+  late Projects _previousUserProjectsBatch;
 
   Projects get previousUserProjectsBatch => _previousUserProjectsBatch;
 
@@ -32,9 +32,9 @@ class UserProjectsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future fetchUserProjects({String userId}) async {
+  Future fetchUserProjects({String? userId}) async {
     try {
-      if (previousUserProjectsBatch?.links?.next != null) {
+      if (previousUserProjectsBatch.links.next != null) {
         // fetch next batch of projects..
         String _nextPageLink = previousUserProjectsBatch.links.next;
 
@@ -43,7 +43,7 @@ class UserProjectsViewModel extends BaseModel {
 
         // fetch projects corresponding to next page number..
         previousUserProjectsBatch = await _projectsApi.getUserProjects(
-          userId ?? _localStorageService.currentUser.data.id,
+          userId ?? _localStorageService.currentUser!.data.id,
           page: _nextPageNumber,
         );
       } else {
@@ -51,7 +51,7 @@ class UserProjectsViewModel extends BaseModel {
         setStateFor(FETCH_USER_PROJECTS, ViewState.Busy);
         // fetch projects for the very first time..
         previousUserProjectsBatch = await _projectsApi.getUserProjects(
-            userId ?? _localStorageService.currentUser.data.id);
+            userId ?? _localStorageService.currentUser!.data.id);
       }
       userProjects.addAll(previousUserProjectsBatch.data);
       setStateFor(FETCH_USER_PROJECTS, ViewState.Success);

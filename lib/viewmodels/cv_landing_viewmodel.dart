@@ -12,7 +12,7 @@ class CVLandingViewModel extends BaseModel {
 
   bool get isLoggedIn => _storage.isLoggedIn;
 
-  User get currentUser => _storage.currentUser;
+  User? get currentUser => _storage.currentUser;
 
   void onLogout() async {
     _storage.isLoggedIn = false;

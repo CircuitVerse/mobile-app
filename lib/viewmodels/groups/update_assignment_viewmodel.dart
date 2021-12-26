@@ -14,7 +14,7 @@ class UpdateAssignmentViewModel extends BaseModel {
 
   final AssignmentsApi _assignmentsApi = locator<AssignmentsApi>();
 
-  Assignment _updatedAssignment;
+  late Assignment _updatedAssignment;
 
   Assignment get updatedAssignment => _updatedAssignment;
 

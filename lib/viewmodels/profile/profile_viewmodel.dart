@@ -11,7 +11,7 @@ class ProfileViewModel extends BaseModel {
 
   final UsersApi _usersApi = locator<UsersApi>();
 
-  User _user;
+  late User _user;
 
   User get user => _user;
 

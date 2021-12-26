@@ -22,7 +22,7 @@ class GroupDetailsViewModel extends BaseModel {
   final GroupMembersApi _groupMembersApi = locator<GroupMembersApi>();
   final AssignmentsApi _assignmentsApi = locator<AssignmentsApi>();
 
-  Group _group;
+  late Group _group;
 
   Group get group => _group;
 
@@ -49,7 +49,7 @@ class GroupDetailsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  String _addedMembersSuccessMessage;
+  late String _addedMembersSuccessMessage;
 
   String get addedMembersSuccessMessage => _addedMembersSuccessMessage;
 
@@ -62,8 +62,8 @@ class GroupDetailsViewModel extends BaseModel {
     setStateFor(FETCH_GROUP_DETAILS, ViewState.Busy);
     try {
       group = await _groupsApi.fetchGroupDetails(groupId);
-      groupMembers = _group.groupMembers;
-      assignments = _group.assignments;
+      groupMembers = _group.groupMembers!;
+      assignments = _group.assignments!;
 
       setStateFor(FETCH_GROUP_DETAILS, ViewState.Success);
     } on Failure catch (f) {
@@ -160,8 +160,8 @@ class GroupDetailsViewModel extends BaseModel {
       _group = await _groupsApi.fetchGroupDetails(_group.id);
 
       // update assignments after creating a project for any assignment..
-      groupMembers = _group.groupMembers;
-      assignments = _group.assignments;
+      groupMembers = _group.groupMembers!;
+      assignments = _group.assignments!;
 
       setStateFor(START_ASSIGNMENT, ViewState.Success);
     } on Failure catch (f) {

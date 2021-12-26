@@ -18,7 +18,7 @@ class AssignmentDetailsViewModel extends BaseModel {
   final AssignmentsApi _assignmentsApi = locator<AssignmentsApi>();
   final GradesApi _gradesApi = locator<GradesApi>();
 
-  Assignment _assignment;
+  late Assignment _assignment;
 
   Assignment get assignment => _assignment;
 
@@ -45,16 +45,16 @@ class AssignmentDetailsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Project _focussedProject;
+  late Project? _focussedProject;
 
-  Project get focussedProject => _focussedProject;
+  Project? get focussedProject => _focussedProject;
 
-  set focussedProject(Project focussedProject) {
+  set focussedProject(Project? focussedProject) {
     _focussedProject = focussedProject;
     notifyListeners();
   }
 
-  Future fetchAssignmentDetails(String assignmentId) async {
+  void fetchAssignmentDetails(String assignmentId) async {
     setStateFor(FETCH_ASSIGNMENT_DETAILS, ViewState.Busy);
     try {
       assignment = await _assignmentsApi.fetchAssignmentDetails(assignmentId);
@@ -72,7 +72,11 @@ class AssignmentDetailsViewModel extends BaseModel {
     setStateFor(ADD_GRADE, ViewState.Busy);
     try {
       var _addedGrade = await _gradesApi.addGrade(
-          assignmentId, _focussedProject.id, grade, remarks);
+        assignmentId,
+        _focussedProject!.id,
+        grade,
+        remarks,
+      );
 
       _grades.add(_addedGrade);
       notifyListeners();
