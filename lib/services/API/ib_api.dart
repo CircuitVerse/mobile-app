@@ -34,7 +34,7 @@ class HttpIbApi implements IbApi {
         return _jsonResponse;
       } else {
         var data = await _db.getData<List<dynamic>>(DatabaseBox.IB, _url);
-        return data.map((e) => Map<String, dynamic>.from(e))?.toList();
+        return data.map((e) => Map<String, dynamic>.from(e)).toList();
       }
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);

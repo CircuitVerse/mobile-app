@@ -6,14 +6,14 @@ import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/utils/api_utils.dart';
 
 abstract class ContributorsApi {
-  Future<List<CircuitVerseContributor>> fetchContributors();
+  Future<List<CircuitVerseContributor>>? fetchContributors();
 }
 
 class HttpContributorsApi implements ContributorsApi {
   var headers = {'Content-Type': 'application/json'};
 
   @override
-  Future<List<CircuitVerseContributor>> fetchContributors() async {
+  Future<List<CircuitVerseContributor>>? fetchContributors() async {
     var _url =
         'https://api.github.com/repos/CircuitVerse/CircuitVerse/contributors';
 

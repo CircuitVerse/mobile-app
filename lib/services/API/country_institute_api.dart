@@ -8,7 +8,7 @@ abstract class CountryInstituteAPI {
 }
 
 class HttpCountryInstituteAPI implements CountryInstituteAPI {
-  List<dynamic> data;
+  late List<dynamic> data;
 
   Future<dynamic> _fetchAPI(String query, String url) async {
     try {

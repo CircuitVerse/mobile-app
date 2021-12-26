@@ -37,10 +37,10 @@ abstract class ProjectsApi {
 
   Future<Project> updateProject(
     String id, {
-    String name,
-    String projectAccessType,
-    String description,
-    List<String> tagsList,
+    required String name,
+    required String projectAccessType,
+    required String description,
+    required List<String> tagsList,
   });
 
   Future<bool> deleteProject(String projectId);
@@ -56,8 +56,8 @@ class HttpProjectsApi implements ProjectsApi {
   @override
   Future<Projects> getPublicProjects({
     int page = 1,
-    String filterByTag,
-    String sortBy,
+    String? filterByTag,
+    String? sortBy,
   }) async {
     var endpoint = '/projects?page[number]=$page';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
@@ -79,8 +79,8 @@ class HttpProjectsApi implements ProjectsApi {
   Future<Projects> getUserProjects(
     String userId, {
     int page = 1,
-    String filterByTag,
-    String sortBy,
+    String? filterByTag,
+    String? sortBy,
   }) async {
     var endpoint = '/users/$userId/projects?page[number]=$page';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
@@ -107,8 +107,8 @@ class HttpProjectsApi implements ProjectsApi {
   Future<Projects> getFeaturedProjects({
     int page = 1,
     int size = 5,
-    String filterByTag,
-    String sortBy,
+    String? filterByTag,
+    String? sortBy,
   }) async {
     var endpoint = '/projects/featured?page[number]=$page&page[size]=$size';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
@@ -133,8 +133,8 @@ class HttpProjectsApi implements ProjectsApi {
   Future<Projects> getUserFavourites(
     String userId, {
     int page = 1,
-    String filterByTag,
-    String sortBy,
+    String? filterByTag,
+    String? sortBy,
   }) async {
     var endpoint = '/users/$userId/favourites?page[number]=$page';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
@@ -181,10 +181,10 @@ class HttpProjectsApi implements ProjectsApi {
   @override
   Future<Project> updateProject(
     String id, {
-    String name,
-    String projectAccessType,
-    String description,
-    List<String> tagsList,
+    required String name,
+    required String projectAccessType,
+    required String description,
+    required List<String> tagsList,
   }) async {
     var endpoint = '/projects/$id';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;

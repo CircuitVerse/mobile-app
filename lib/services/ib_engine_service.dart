@@ -45,7 +45,7 @@ class IbEngineServiceImpl implements IbEngineService {
       'https://raw.githubusercontent.com/CircuitVerse/Interactive-Book/master/_includes';
 
   /// module.js contents
-  String _intModuleJs;
+  String? _intModuleJs;
 
   /// Fetches Pages inside an API Page
   Future<List<IbChapter>> _fetchPagesInDir({
@@ -109,14 +109,14 @@ class IbEngineServiceImpl implements IbEngineService {
     // but return original list of chapters to keep the order intact
 
     var _flatten = chapters
-        .expand((c) => c.items != null ? [c, ...c.items] : [c])
+        .expand((c) => c.items != null ? [c, ...c.items!] : [c])
         .toList();
 
     if (_flatten.length <= 1) {
       return chapters;
     }
 
-    IbChapter prev;
+    IbChapter? prev;
 
     for (var i = 0; i < _flatten.length; i++) {
       _flatten[i].prevPage = prev;
@@ -166,7 +166,7 @@ class IbEngineServiceImpl implements IbEngineService {
         toc.add(
           IbTocItem(
             leading: '$eff_index.',
-            content: li.firstChild.text,
+            content: li.firstChild!.text!,
             items: _parseToc(li.children[1], num: !num),
           ),
         );
@@ -207,7 +207,7 @@ class IbEngineServiceImpl implements IbEngineService {
       toc.add(
         IbTocItem(
           leading: '$eff_index.',
-          content: root ? li.nodes[0].text.trim() : li.text.trim(),
+          content: root ? li.nodes[0].text!.trim() : li.text.trim(),
           items: sublist.isNotEmpty ? sublist : null,
         ),
       );
@@ -255,10 +255,10 @@ class IbEngineServiceImpl implements IbEngineService {
         IbMd(content: '${HtmlUnescape().convert(_ibRawPageData.rawContent)}\n'),
       ],
       tableOfContents: _ibRawPageData.hasToc
-          ? _getTableOfContents(_ibRawPageData.content)
+          ? _getTableOfContents(_ibRawPageData.content!)
           : [],
       chapterOfContents: _ibRawPageData.hasChildren
-          ? _getChapterOfContents(_ibRawPageData.content)
+          ? _getChapterOfContents(_ibRawPageData.content!)
           : [],
     );
   }
@@ -305,11 +305,11 @@ class IbEngineServiceImpl implements IbEngineService {
           _lastQuestion.answers.add(_lastQuestion.choices.length);
         }
 
-        _lastQuestion.choices.add(match[2]);
+        _lastQuestion.choices.add(match[2]!);
       } else {
         // Question
         _questions.add(IbPopQuizQuestion(
-          question: match[2],
+          question: match[2]!,
           answers: [],
           choices: [],
         ));

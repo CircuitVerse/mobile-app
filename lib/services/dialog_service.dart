@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import 'package:mobile_app/models/dialog_models.dart';
 
 class DialogService {
-  Completer _dialogCompleter;
+  late Completer<DialogResponse>? _dialogCompleter;
 
-  Completer<DialogResponse> get dialogCompleter => _dialogCompleter;
+  Completer<DialogResponse>? get dialogCompleter => _dialogCompleter;
 
   void _showDialog(DialogRequest request) {
     Get.dialog(
@@ -21,14 +21,15 @@ class DialogService {
             fontWeight: FontWeight.bold,
           ),
         ),
-        content: Text(request.description),
+        content:
+            request.description != null ? Text(request.description!) : null,
         actions: <Widget>[
           TextButton(
             onPressed: () {
               dialogComplete(DialogResponse(confirmed: true));
             },
             child: Text(
-              request.buttonTitle,
+              request.buttonTitle!,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -51,14 +52,15 @@ class DialogService {
             fontWeight: FontWeight.bold,
           ),
         ),
-        content: Text(request.description),
+        content:
+            request.description != null ? Text(request.description!) : null,
         actions: <Widget>[
           TextButton(
             onPressed: () {
               dialogComplete(DialogResponse(confirmed: false));
             },
             child: Text(
-              request.cancelTitle,
+              request.cancelTitle!,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -69,7 +71,7 @@ class DialogService {
               dialogComplete(DialogResponse(confirmed: true));
             },
             child: Text(
-              request.buttonTitle,
+              request.buttonTitle!,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
@@ -113,8 +115,8 @@ class DialogService {
 
   /// Calls the dialog listener and returns a Future that will wait for dialogComplete.
   Future<DialogResponse> showDialog({
-    String title,
-    String description,
+    String title = 'Title',
+    String? description,
     String buttonTitle = 'OK',
   }) {
     _dialogCompleter = Completer<DialogResponse>();
@@ -125,13 +127,13 @@ class DialogService {
         buttonTitle: buttonTitle,
       ),
     );
-    return _dialogCompleter.future;
+    return _dialogCompleter!.future;
   }
 
   /// Shows a confirmation dialog
   Future<DialogResponse> showConfirmationDialog({
-    String title,
-    String description,
+    required String title,
+    String? description,
     String confirmationTitle = 'OK',
     String cancelTitle = 'CANCEL',
   }) {
@@ -144,10 +146,10 @@ class DialogService {
         cancelTitle: cancelTitle,
       ),
     );
-    return _dialogCompleter.future;
+    return _dialogCompleter!.future;
   }
 
-  void showCustomProgressDialog({String title}) {
+  void showCustomProgressDialog({String title = 'Title'}) {
     _showProgressDialog(
       DialogRequest(title: title),
     );
@@ -155,14 +157,14 @@ class DialogService {
 
   /// Completes the _dialogCompleter to resume the Future's execution call
   void dialogComplete(DialogResponse response) {
-    Get.key.currentState.pop();
-    _dialogCompleter.complete(response);
+    Get.key.currentState?.pop();
+    _dialogCompleter!.complete(response);
     _dialogCompleter = null;
   }
 
   void popDialog() {
-    if (Get.key.currentState.canPop()) {
-      Get.key.currentState.pop();
+    if (Get.key.currentState!.canPop()) {
+      Get.key.currentState!.pop();
     }
   }
 }
