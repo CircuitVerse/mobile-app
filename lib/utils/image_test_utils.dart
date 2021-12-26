@@ -3,7 +3,10 @@ import 'dart:io';
 import 'package:mockito/mockito.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-R provideMockedNetworkImages<R>(R Function() body, {List<int> imageBytes}) {
+R provideMockedNetworkImages<R>(
+  R Function() body, {
+  List<int>? imageBytes,
+}) {
   return HttpOverrides.runZoned(
     body,
     createHttpClient: (_) => _createMockImageHttpClient(_, imageBytes),
@@ -20,13 +23,13 @@ class MockHttpHeaders extends Mock implements HttpHeaders {}
 
 // Returns a mock HTTP client that responds with an image to all requests.
 MockHttpClient _createMockImageHttpClient(
-    SecurityContext _, List<int> imageBytes) {
+    SecurityContext? _, List<int>? imageBytes) {
   final client = MockHttpClient();
   final request = MockHttpClientRequest();
   final response = MockHttpClientResponse();
   final headers = MockHttpHeaders();
 
-  when(client.getUrl(any))
+  when(client.getUrl(Uri()))
       .thenAnswer((_) => Future<HttpClientRequest>.value(request));
   when(request.headers).thenReturn(headers);
   when(request.close())
@@ -42,7 +45,7 @@ MockHttpClient _createMockImageHttpClient(
         invocation.namedArguments[#onError];
     final bool cancelOnError = invocation.namedArguments[#cancelOnError];
 
-    return Stream<List<int>>.fromIterable(<List<int>>[imageBytes]).listen(
+    return Stream<List<int>>.fromIterable(<List<int>>[imageBytes ?? []]).listen(
         onData,
         onDone: onDone,
         onError: onError,
