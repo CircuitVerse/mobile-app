@@ -39,12 +39,13 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildSignUpImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * 0.43,
       color: CVTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
         child: Image.asset(
           'assets/images/signup/cv_signup.png',
-          height: MediaQuery.of(context).size.height * 0.345,
+          height: 300,
         ),
       ),
     );

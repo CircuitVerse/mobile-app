@@ -37,12 +37,13 @@ class _LoginViewState extends State<LoginView> {
   Widget _buildLoginImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * 0.475,
       color: CVTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
         child: Image.asset(
           'assets/images/login/cv_login.png',
-          height: MediaQuery.of(context).size.height * 0.385,
+          height: 300,
         ),
       ),
     );
