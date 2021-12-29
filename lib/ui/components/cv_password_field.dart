@@ -46,7 +46,7 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
           suffixIcon: GestureDetector(
             onTap: _toggle,
             child: Icon(
-              _obscureText ? Icons.visibility_off : Icons.visibility,
+              _obscureText ? Icons.visibility : Icons.visibility_off,
               color: CVTheme.primaryColorDark,
             ),
           ),
