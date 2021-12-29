@@ -12,6 +12,7 @@ import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
+import 'package:sizer/sizer.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key key}) : super(key: key);
@@ -42,7 +43,7 @@ class _LoginViewState extends State<LoginView> {
       child: SafeArea(
         child: Image.asset(
           'assets/images/login/cv_login.png',
-          height: 300,
+          height: MediaQuery.of(context).size.height * 0.385,
         ),
       ),
     );
@@ -107,6 +108,7 @@ class _LoginViewState extends State<LoginView> {
               text: 'Sign Up',
               style: TextStyle(
                 color: CVTheme.highlightText(context),
+                fontSize: 16,
               ),
             ),
           ],
@@ -162,7 +164,7 @@ class _LoginViewState extends State<LoginView> {
                 _buildLoginButton(),
                 const SizedBox(height: 8),
                 _buildNewUserSignUpComponent(),
-                const SizedBox(height: 32),
+                const SizedBox(height: 25),
                 const AuthOptionsView(isSignUp: false),
               ],
             ),

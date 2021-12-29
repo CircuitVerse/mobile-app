@@ -44,7 +44,7 @@ class _SignupViewState extends State<SignupView> {
       child: SafeArea(
         child: Image.asset(
           'assets/images/signup/cv_signup.png',
-          height: 300,
+          height: MediaQuery.of(context).size.height * 0.345,
         ),
       ),
     );
@@ -108,6 +108,7 @@ class _SignupViewState extends State<SignupView> {
               text: 'Login',
               style: TextStyle(
                 color: CVTheme.highlightText(context),
+                fontSize: 16,
               ),
             ),
           ],
@@ -161,11 +162,11 @@ class _SignupViewState extends State<SignupView> {
                 _buildNameInput(),
                 _buildEmailInput(),
                 _buildPasswordInput(),
-                const SizedBox(height: 16),
+                const SizedBox(height: 14),
                 _buildRegisterButton(),
                 const SizedBox(height: 8),
                 _buildAlreadyRegisteredComponent(),
-                const SizedBox(height: 32),
+                const SizedBox(height: 15),
                 const AuthOptionsView(isSignUp: true),
               ],
             ),
