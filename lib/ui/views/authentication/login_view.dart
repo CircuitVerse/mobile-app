@@ -12,7 +12,6 @@ import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
-import 'package:sizer/sizer.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key key}) : super(key: key);
