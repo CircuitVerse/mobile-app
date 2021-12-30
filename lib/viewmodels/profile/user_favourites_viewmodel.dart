@@ -18,11 +18,11 @@ class UserFavouritesViewModel extends BaseModel {
 
   List<Project> get userFavourites => _userFavourites;
 
-  late Projects _previousUserFavouritesBatch;
+  Projects? _previousUserFavouritesBatch;
 
-  Projects get previousUserFavouritesBatch => _previousUserFavouritesBatch;
+  Projects? get previousUserFavouritesBatch => _previousUserFavouritesBatch;
 
-  set previousUserFavouritesBatch(Projects previousUserFavouritesBatch) {
+  set previousUserFavouritesBatch(Projects? previousUserFavouritesBatch) {
     _previousUserFavouritesBatch = previousUserFavouritesBatch;
     notifyListeners();
   }
@@ -34,9 +34,9 @@ class UserFavouritesViewModel extends BaseModel {
 
   Future fetchUserFavourites({String? userId}) async {
     try {
-      if (previousUserFavouritesBatch.links.next != null) {
+      if (previousUserFavouritesBatch?.links.next != null) {
         // fetch next batch of projects..
-        String _nextPageLink = previousUserFavouritesBatch.links.next;
+        String _nextPageLink = previousUserFavouritesBatch!.links.next;
 
         var _nextPageNumber =
             int.parse(_nextPageLink.substring(_nextPageLink.length - 1));
@@ -54,7 +54,7 @@ class UserFavouritesViewModel extends BaseModel {
             userId ?? _localStorageService.currentUser!.data.id);
       }
 
-      userFavourites.addAll(previousUserFavouritesBatch.data);
+      userFavourites.addAll(previousUserFavouritesBatch!.data);
 
       setStateFor(FETCH_USER_FAVOURITES, ViewState.Success);
     } on Failure catch (f) {

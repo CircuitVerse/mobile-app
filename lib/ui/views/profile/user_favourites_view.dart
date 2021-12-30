@@ -50,7 +50,7 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
           }
         }
 
-        if (model.previousUserFavouritesBatch.links.next != null) {
+        if (model.previousUserFavouritesBatch?.links.next != null) {
           _items.add(
             CVAddIconButton(
               onPressed: () => model.fetchUserFavourites(userId: widget.userId),

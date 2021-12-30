@@ -18,11 +18,11 @@ class UserProjectsViewModel extends BaseModel {
 
   List<Project> get userProjects => _userProjects;
 
-  late Projects _previousUserProjectsBatch;
+  Projects? _previousUserProjectsBatch;
 
-  Projects get previousUserProjectsBatch => _previousUserProjectsBatch;
+  Projects? get previousUserProjectsBatch => _previousUserProjectsBatch;
 
-  set previousUserProjectsBatch(Projects previousUserProjectsBatch) {
+  set previousUserProjectsBatch(Projects? previousUserProjectsBatch) {
     _previousUserProjectsBatch = previousUserProjectsBatch;
     notifyListeners();
   }
@@ -34,9 +34,9 @@ class UserProjectsViewModel extends BaseModel {
 
   Future fetchUserProjects({String? userId}) async {
     try {
-      if (previousUserProjectsBatch.links.next != null) {
+      if (previousUserProjectsBatch?.links.next != null) {
         // fetch next batch of projects..
-        String _nextPageLink = previousUserProjectsBatch.links.next;
+        String _nextPageLink = previousUserProjectsBatch!.links.next;
 
         var _nextPageNumber =
             int.parse(_nextPageLink.substring(_nextPageLink.length - 1));
@@ -53,7 +53,7 @@ class UserProjectsViewModel extends BaseModel {
         previousUserProjectsBatch = await _projectsApi.getUserProjects(
             userId ?? _localStorageService.currentUser!.data.id);
       }
-      userProjects.addAll(previousUserProjectsBatch.data);
+      userProjects.addAll(previousUserProjectsBatch!.data);
       setStateFor(FETCH_USER_PROJECTS, ViewState.Success);
     } on Failure catch (f) {
       setStateFor(FETCH_USER_PROJECTS, ViewState.Error);

@@ -22,8 +22,8 @@ class EditProfileViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future updateProfile(String name, String educationalInstitute, String country,
-      bool subscribed) async {
+  Future updateProfile(String name, String? educationalInstitute,
+      String? country, bool subscribed) async {
     setStateFor(UPDATE_PROFILE, ViewState.Busy);
     try {
       updatedUser = await _userApi.updateProfile(

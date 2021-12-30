@@ -215,16 +215,20 @@ class _ProfileViewState extends State<ProfileView> {
                 centerTitle: true,
               )
             : null,
-        body: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: <Widget>[
-              _buildProfileCard(),
-              const SizedBox(height: 8),
-              _buildProjectsTabBar(),
-            ],
-          ),
-        ),
+        body: model.isBusy(model.FETCH_USER_PROFILE)
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: <Widget>[
+                    _buildProfileCard(),
+                    const SizedBox(height: 8),
+                    _buildProjectsTabBar(),
+                  ],
+                ),
+              ),
       ),
     );
   }

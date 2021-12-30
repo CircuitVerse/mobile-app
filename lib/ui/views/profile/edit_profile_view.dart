@@ -25,7 +25,8 @@ class _EditProfileViewState extends State<EditProfileView> {
   final DialogService _dialogService = locator<DialogService>();
   late EditProfileViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  late String _name, _educationalInstitute, _country;
+  late String _name;
+  String? _educationalInstitute, _country;
   late bool _subscribed;
 
   final _nameFocusNode = FocusNode();

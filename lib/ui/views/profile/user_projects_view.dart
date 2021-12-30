@@ -47,7 +47,7 @@ class _UserProjectsViewState extends State<UserProjectsView>
           }
         }
 
-        if (model.previousUserProjectsBatch.links.next != null) {
+        if (model.previousUserProjectsBatch?.links.next != null) {
           _items.add(
             CVAddIconButton(
               onPressed: () => model.fetchUserProjects(userId: widget.userId),
