@@ -225,7 +225,7 @@ void unregisterServices() {
   locator.unregister<IbEngineService>();
 }
 
-void _removeRegistrationIfExists<T>() {
+void _removeRegistrationIfExists<T extends Object>() {
   if (locator.isRegistered<T>()) {
     locator.unregister<T>();
   }

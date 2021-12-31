@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
+import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/ui/components/cv_password_field.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
@@ -9,21 +10,28 @@ import 'package:mobile_app/ui/views/authentication/forgot_password_view.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/utils/router.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../setup/test_helpers.dart';
+import 'login_view_test.mocks.dart';
 
+@GenerateMocks(
+  [UsersApi],
+  customMocks: [
+    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+  ],
+)
 void main() {
   group('LoginViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
       await setupLocator();
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpLoginView(WidgetTester tester) async {
       await tester.pumpWidget(
@@ -88,7 +96,8 @@ void main() {
     testWidgets(
         'When email/password is not valid or empty, proper error message should be shown',
         (WidgetTester tester) async {
-      var _usersApiMock = getAndRegisterUsersApiMock();
+      // var _usersApiMock = getAndRegisterUsersApiMock();
+      var _usersApiMock = MockUsersApi();
 
       await _pumpLoginView(tester);
       await tester.pumpAndSettle();

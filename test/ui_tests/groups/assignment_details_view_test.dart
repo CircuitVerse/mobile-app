@@ -8,15 +8,23 @@ import 'package:mobile_app/ui/views/groups/assignment_details_view.dart';
 import 'package:mobile_app/utils/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_assignments.dart';
-import '../../setup/test_helpers.dart';
+// import '../../setup/test_helpers.dart';
+import 'assignment_details_view_test.mocks.dart';
 
+@GenerateMocks(
+  [AssignmentDetailsViewModel],
+  customMocks: [
+    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+  ],
+)
 void main() {
   group('AssignmentDetailsViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -24,7 +32,7 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpAssignmentDetailsView(WidgetTester tester) async {
       var _assignment = Assignment.fromJson(mockAssignment);
@@ -34,14 +42,16 @@ void main() {
       locator.registerSingleton<AssignmentDetailsViewModel>(
           _assignmentsDetailsViewModel);
 
+      when(_assignmentsDetailsViewModel.FETCH_ASSIGNMENT_DETAILS)
+          .thenAnswer((_) => 'fetch_assignment');
       when(_assignmentsDetailsViewModel.fetchAssignmentDetails(any))
           .thenReturn(null);
       when(_assignmentsDetailsViewModel.assignment).thenReturn(_assignment);
       when(_assignmentsDetailsViewModel.projects)
-          .thenReturn(_assignment.projects);
+          .thenReturn(_assignment.projects!);
       when(_assignmentsDetailsViewModel.focussedProject)
-          .thenReturn(_assignment.projects.first);
-      when(_assignmentsDetailsViewModel.grades).thenReturn(_assignment.grades);
+          .thenReturn(_assignment.projects?.first);
+      when(_assignmentsDetailsViewModel.grades).thenReturn(_assignment.grades!);
 
       when(_assignmentsDetailsViewModel.isSuccess(any)).thenReturn(true);
 

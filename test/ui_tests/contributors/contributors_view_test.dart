@@ -8,15 +8,22 @@ import 'package:mobile_app/ui/views/contributors/components/contributors_donate_
 import 'package:mobile_app/ui/views/contributors/components/contributors_support_card.dart';
 import 'package:mobile_app/ui/views/contributors/contributors_view.dart';
 import 'package:mobile_app/utils/router.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../setup/test_helpers.dart';
+import 'contributors_view_test.mocks.dart';
 
+@GenerateMocks(
+  [],
+  customMocks: [
+    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+  ],
+)
 void main() {
   group('ContributorsViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpHomeView(WidgetTester tester) async {
       await tester.pumpWidget(

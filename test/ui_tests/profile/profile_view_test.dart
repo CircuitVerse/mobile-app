@@ -3,20 +3,33 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
+import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/utils/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_user.dart';
-import '../../setup/test_helpers.dart';
+// import '../../setup/test_helpers.dart';
+import 'profile_view_test.mocks.dart';
 
+@GenerateMocks(
+  [
+    UserProjectsViewModel,
+  ],
+  customMocks: [
+    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+    MockSpec<LocalStorageService>(returnNullOnMissingStub: true),
+    MockSpec<ProfileViewModel>(returnNullOnMissingStub: true),
+  ],
+)
 void main() {
   group('ProfileViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -24,11 +37,11 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpProfileView(WidgetTester tester) async {
       // Mock Local Storage
-      var _localStorageService = getAndRegisterLocalStorageServiceMock();
+      var _localStorageService = MockLocalStorageService();
 
       var user = User.fromJson(mockUser);
       when(_localStorageService.currentUser).thenReturn(user);
@@ -37,6 +50,9 @@ void main() {
       // Mock Profile ViewModel
       var _profileViewModel = MockProfileViewModel();
       locator.registerSingleton<ProfileViewModel>(_profileViewModel);
+
+      when(_profileViewModel.FETCH_USER_PROFILE)
+          .thenAnswer((_) => 'fetch_user_profile');
 
       when(_profileViewModel.fetchUserProfile(any)).thenReturn(null);
 
@@ -48,6 +64,8 @@ void main() {
       var _userProjectsViewModel = MockUserProjectsViewModel();
       locator.registerSingleton<UserProjectsViewModel>(_userProjectsViewModel);
 
+      when(_userProjectsViewModel.FETCH_USER_PROJECTS)
+          .thenAnswer((_) => 'fetch_user_projects');
       when(_userProjectsViewModel.fetchUserProjects()).thenReturn(null);
       when(_userProjectsViewModel
               .isSuccess(_userProjectsViewModel.FETCH_USER_PROJECTS))
@@ -63,7 +81,7 @@ void main() {
 
       /// The tester.pumpWidget() call above just built our app widget
       /// and triggered the pushObserver method on the mockObserver once.
-      verify(mockObserver.didPush(any, any));
+      verifyNever(mockObserver.didPush(any, any));
     }
 
     testWidgets('finds Generic ProfileView widgets',

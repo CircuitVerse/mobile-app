@@ -10,15 +10,26 @@ import 'package:mobile_app/utils/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_projects.dart';
-import '../../setup/test_helpers.dart';
+// import '../../setup/test_helpers.dart';
+import 'user_projects_view_test.mocks.dart';
 
+@GenerateMocks(
+  [
+    ProjectDetailsViewModel,
+  ],
+  customMocks: [
+    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+    MockSpec<UserProjectsViewModel>(returnNullOnMissingStub: true),
+  ],
+)
 void main() {
   group('UserProjectsViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -26,7 +37,7 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpUserProjectsView(WidgetTester tester) async {
       // Mock User Projects ViewModel
@@ -47,7 +58,9 @@ void main() {
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: const Scaffold(
-            body: UserProjectsView(),
+            body: UserProjectsView(
+              userId: 'user_id',
+            ),
           ),
         ),
       );
@@ -84,8 +97,8 @@ void main() {
         expect(find.byType(ProjectCard), findsOneWidget);
 
         // ISSUE: tester.tap() is not working
-        ProjectCard widget = find.byType(ProjectCard).evaluate().first.widget;
-        widget.onPressed();
+        Widget widget = find.byType(ProjectCard).evaluate().first.widget;
+        (widget as ProjectCard).onPressed();
         await tester.pumpAndSettle();
 
         verify(mockObserver.didPush(any, any));

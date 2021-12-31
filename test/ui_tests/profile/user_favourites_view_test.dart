@@ -10,15 +10,24 @@ import 'package:mobile_app/utils/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_projects.dart';
-import '../../setup/test_helpers.dart';
+// import '../../setup/test_helpers.dart';
+import 'user_favourites_view_test.mocks.dart';
 
+@GenerateMocks(
+  [ProjectDetailsViewModel],
+  customMocks: [
+    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+    MockSpec<UserFavouritesViewModel>(returnNullOnMissingStub: true),
+  ],
+)
 void main() {
   group('UserFavouritesViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -26,7 +35,7 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpUserFavouritesView(WidgetTester tester) async {
       // Mock User Favorites ViewModel
@@ -37,10 +46,10 @@ void main() {
       var projects = <Project>[];
       projects.add(Project.fromJson(mockProject));
 
+      when(_userFavoritesViewModel.FETCH_USER_FAVOURITES)
+          .thenAnswer((_) => 'fetch_user_favorites');
       when(_userFavoritesViewModel.fetchUserFavourites()).thenReturn(null);
-      when(_userFavoritesViewModel
-              .isSuccess(_userFavoritesViewModel.FETCH_USER_FAVOURITES))
-          .thenReturn(true);
+      when(_userFavoritesViewModel.isSuccess(any)).thenReturn(true);
       when(_userFavoritesViewModel.userFavourites).thenAnswer((_) => projects);
 
       await tester.pumpWidget(
@@ -48,7 +57,9 @@ void main() {
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: const Scaffold(
-            body: UserFavouritesView(),
+            body: UserFavouritesView(
+              userId: 'user_id',
+            ),
           ),
         ),
       );
@@ -85,8 +96,8 @@ void main() {
         expect(find.byType(ProjectCard), findsOneWidget);
 
         // ISSUE: tester.tap() is not working
-        ProjectCard widget = find.byType(ProjectCard).evaluate().first.widget;
-        widget.onPressed();
+        Widget widget = find.byType(ProjectCard).evaluate().first.widget;
+        (widget as ProjectCard).onPressed();
         await tester.pumpAndSettle();
 
         verify(mockObserver.didPush(any, any));

@@ -5,6 +5,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/dialog_models.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/dialog_service.dart';
+import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/components/cv_typeahead_field.dart';
@@ -12,15 +13,24 @@ import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
 import 'package:mobile_app/utils/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_user.dart';
-import '../../setup/test_helpers.dart';
+import 'edit_profile_view_test.mocks.dart';
+// import 'profile_view_test.mocks.dart';
 
+@GenerateMocks(
+  [EditProfileViewModel, DialogService],
+  customMocks: [
+    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+    MockSpec<LocalStorageService>(returnNullOnMissingStub: true),
+  ],
+)
 void main() {
   group('EditProfileViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -28,11 +38,12 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpEditProfileView(WidgetTester tester) async {
       // Mock Local Storage
-      var _localStorageService = getAndRegisterLocalStorageServiceMock();
+      // var _localStorageService = test.getAndRegisterLocalStorageServiceMock();
+      var _localStorageService = MockLocalStorageService();
 
       var user = User.fromJson(mockUser);
       when(_localStorageService.currentUser).thenReturn(user);

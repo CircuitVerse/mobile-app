@@ -12,15 +12,23 @@ import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_assignments.dart';
-import '../../setup/test_helpers.dart';
+// import '../../setup/test_helpers.dart';
+import 'update_assignment_view_test.mocks.dart';
 
+@GenerateMocks(
+  [UpdateAssignmentViewModel, DialogService],
+  customMocks: [
+    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+  ],
+)
 void main() {
   group('UpdateAssignmentViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -28,7 +36,7 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpUpdateAssignmentView(WidgetTester tester) async {
       var _assignment = Assignment.fromJson(mockAssignment);
@@ -89,6 +97,8 @@ void main() {
       locator.registerSingleton<UpdateAssignmentViewModel>(
           _updateAssignmentViewModel);
 
+      when(_updateAssignmentViewModel.UPDATE_ASSIGNMENT)
+          .thenAnswer((_) => 'update_assignment');
       when(_updateAssignmentViewModel.updateAssignment(any, any, any, any, any))
           .thenReturn(null);
       when(_updateAssignmentViewModel.isSuccess(any)).thenReturn(false);
@@ -103,9 +113,8 @@ void main() {
           find.byWidgetPredicate(
               (widget) => widget is CVTextField && widget.label == 'Name'),
           'Test');
-      CVPrimaryButton widget =
-          find.byType(CVPrimaryButton).evaluate().first.widget;
-      widget.onPressed();
+      Widget widget = find.byType(CVPrimaryButton).evaluate().first.widget;
+      (widget as CVPrimaryButton).onPressed!();
       await tester.pumpAndSettle();
 
       await tester.pump(const Duration(seconds: 5));

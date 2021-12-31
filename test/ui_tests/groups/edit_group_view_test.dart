@@ -10,15 +10,24 @@ import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/groups/edit_group_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/edit_group_viewmodel.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_groups.dart';
-import '../../setup/test_helpers.dart';
+import '../../setup/test_helpers.dart' as test;
 
+import 'edit_group_view_test.mocks.dart';
+
+@GenerateMocks(
+  [EditGroupViewModel],
+  customMocks: [
+    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+  ],
+)
 void main() {
   group('EditGroupViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -26,7 +35,7 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpEditGroupView(WidgetTester tester) async {
       var group = Group.fromJson(mockGroup);
@@ -61,10 +70,10 @@ void main() {
 
     testWidgets('on Save button is Tapped', (WidgetTester tester) async {
       // Mock Dialog Service
-      var _dialogService = MockDialogService();
+      var _dialogService = test.MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
-      when(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
+      when(_dialogService.showCustomProgressDialog())
           .thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(_dialogService.popDialog()).thenReturn(null);
 
@@ -72,9 +81,10 @@ void main() {
       var _editGroupViewModel = MockEditGroupViewModel();
       locator.registerSingleton<EditGroupViewModel>(_editGroupViewModel);
 
+      when(_editGroupViewModel.UPDATE_GROUP).thenAnswer((_) => 'update_group');
       when(_editGroupViewModel.updateGroup(any, any)).thenReturn(null);
-      when(_editGroupViewModel.isSuccess(_editGroupViewModel.UPDATE_GROUP))
-          .thenReturn(true);
+      when(_editGroupViewModel.isSuccess(any)).thenReturn(true);
+      when(_editGroupViewModel.updatedGroup).thenReturn(null);
 
       // Pump New Group View
       await _pumpEditGroupView(tester);

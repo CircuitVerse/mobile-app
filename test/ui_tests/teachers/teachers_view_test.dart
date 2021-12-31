@@ -6,15 +6,21 @@ import 'package:mobile_app/ui/components/cv_subheader.dart';
 import 'package:mobile_app/ui/views/teachers/components/teachers_card.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/utils/router.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../setup/test_helpers.dart';
+// import '../../setup/test_helpers.dart';
+import 'teachers_view_test.mocks.dart';
 
+@GenerateMocks(
+  [],
+  customMocks: [MockSpec<NavigatorObserver>(returnNullOnMissingStub: true)],
+)
 void main() {
   group('TeachersViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpTeachersView(WidgetTester tester) async {
       await tester.pumpWidget(

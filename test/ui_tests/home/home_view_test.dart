@@ -7,21 +7,28 @@ import 'package:mobile_app/ui/components/cv_subheader.dart';
 import 'package:mobile_app/ui/views/home/components/feature_card.dart';
 import 'package:mobile_app/ui/views/home/home_view.dart';
 import 'package:mobile_app/utils/router.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../setup/test_helpers.dart';
+import 'home_view_test.mocks.dart';
 
+@GenerateMocks(
+  [],
+  customMocks: [
+    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+  ],
+)
 void main() {
   group('HomeViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
       await setupLocator();
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpHomeView(WidgetTester tester) async {
       await tester.pumpWidget(

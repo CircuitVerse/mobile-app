@@ -5,22 +5,28 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/ui/views/startup_view.dart';
 import 'package:mobile_app/utils/router.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../setup/test_helpers.dart';
+// import '../../setup/test_helpers.dart';
+import 'startup_view_test.mocks.dart';
 
+@GenerateMocks(
+  [],
+  customMocks: [MockSpec<NavigatorObserver>(returnNullOnMissingStub: true)],
+)
 void main() {
   group('StartupViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
       await setupLocator();
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpStartUpView(WidgetTester tester) async {
       await tester.pumpWidget(

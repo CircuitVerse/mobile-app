@@ -9,14 +9,22 @@ import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/groups/new_group_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../setup/test_helpers.dart';
+import '../../setup/test_helpers.dart' as test;
+import 'new_group_view_test.mocks.dart';
 
+@GenerateMocks(
+  [NewGroupViewModel],
+  customMocks: [
+    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+  ],
+)
 void main() {
   group('NewGroupViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -24,7 +32,7 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpNewGroupView(WidgetTester tester) async {
       await tester.pumpWidget(
@@ -57,10 +65,10 @@ void main() {
 
     testWidgets('on Save button is Tapped', (WidgetTester tester) async {
       // Mock Dialog Service
-      var _dialogService = MockDialogService();
+      var _dialogService = test.MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
-      when(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
+      when(_dialogService.showCustomProgressDialog(title: 'title'))
           .thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(_dialogService.popDialog()).thenReturn(null);
 
@@ -68,6 +76,7 @@ void main() {
       var _newGroupViewModel = MockNewGroupViewModel();
       locator.registerSingleton<NewGroupViewModel>(_newGroupViewModel);
 
+      when(_newGroupViewModel.ADD_GROUP).thenAnswer((_) => 'add_group');
       when(_newGroupViewModel.addGroup(any)).thenReturn(null);
       when(_newGroupViewModel.isSuccess(_newGroupViewModel.ADD_GROUP))
           .thenReturn(true);
@@ -87,8 +96,7 @@ void main() {
       await tester.pump(const Duration(seconds: 5));
 
       // Verify Dialog Service is called to show Dialog of Updating
-      verify(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
-          .called(1);
+      verify(_dialogService.showCustomProgressDialog(title: 'title')).called(1);
     });
   });
 }
