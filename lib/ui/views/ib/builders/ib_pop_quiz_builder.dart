@@ -15,6 +15,8 @@ class IbPopQuizBuilder extends MarkdownElementBuilder {
     var _rawContent = element.textContent;
     var _popQuizQuestions = model.fetchPopQuiz(_rawContent);
 
+    if (_popQuizQuestions == null) return Container();
+
     return IbPopQuiz(
       context: context,
       questions: _popQuizQuestions,

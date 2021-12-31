@@ -511,7 +511,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     if (_dialogResponse.confirmed) {
       _dialogService.showCustomProgressDialog(title: 'Deleting..');
 
-      await _model.deleteCollaborator(_model.project.id, collaborator.id);
+      await _model.deleteCollaborator(_model.project!.id, collaborator.id);
 
       _dialogService.popDialog();
 
@@ -549,7 +549,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               ),
             ),
           ),
-          if (_model.project.hasAuthorAccess)
+          if (_model.project!.hasAuthorAccess)
             IconButton(
               padding: const EdgeInsets.all(0),
               icon: const Icon(Icons.delete_outline),

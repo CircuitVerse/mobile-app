@@ -26,7 +26,8 @@ class GroupDetailsViewModel extends BaseModel {
 
   Group get group => _group;
 
-  set group(Group group) {
+  set group(Group? group) {
+    if (group == null) return;
     _group = group;
     notifyListeners();
   }
@@ -58,7 +59,7 @@ class GroupDetailsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future fetchGroupDetails(String groupId) async {
+  Future? fetchGroupDetails(String groupId) async {
     setStateFor(FETCH_GROUP_DETAILS, ViewState.Busy);
     try {
       group = await _groupsApi.fetchGroupDetails(groupId);
@@ -78,7 +79,7 @@ class GroupDetailsViewModel extends BaseModel {
       var addGroupMembers =
           await _groupMembersApi.addGroupMembers(groupId, emails);
 
-      var _addedMembers = addGroupMembers.added.join(', ');
+      var _addedMembers = addGroupMembers!.added.join(', ');
       var _pendingMembers = addGroupMembers.pending.join(', ');
       var _invalidMembers = addGroupMembers.invalid.join(', ');
 
@@ -92,7 +93,7 @@ class GroupDetailsViewModel extends BaseModel {
 
       // Fetch & Update all Group Members..
       var _members = await _groupMembersApi.fetchGroupMembers(groupId);
-      groupMembers = _members.data;
+      if (_members != null) groupMembers = _members.data;
 
       setStateFor(ADD_GROUP_MEMBERS, ViewState.Success);
     } on Failure catch (f) {
@@ -106,7 +107,7 @@ class GroupDetailsViewModel extends BaseModel {
     try {
       var _isDeleted = await _groupMembersApi.deleteGroupMember(groupMemberId);
 
-      if (_isDeleted) {
+      if (_isDeleted ?? false) {
         // Remove Group Member from the list..
         groupMembers.removeWhere((member) => member.id == groupMemberId);
         setStateFor(DELETE_GROUP_MEMBER, ViewState.Success);
@@ -157,7 +158,7 @@ class GroupDetailsViewModel extends BaseModel {
     setStateFor(START_ASSIGNMENT, ViewState.Busy);
     try {
       await _assignmentsApi.startAssignment(assignmentId);
-      _group = await _groupsApi.fetchGroupDetails(_group.id);
+      _group = await _groupsApi.fetchGroupDetails(_group.id)!;
 
       // update assignments after creating a project for any assignment..
       groupMembers = _group.groupMembers!;
@@ -175,7 +176,7 @@ class GroupDetailsViewModel extends BaseModel {
     try {
       var _isDeleted = await _assignmentsApi.deleteAssignment(assignmentId);
 
-      if (_isDeleted) {
+      if (_isDeleted ?? false) {
         // Remove Assignment from the list..
         assignments.removeWhere((assignment) => assignment.id == assignmentId);
         setStateFor(DELETE_ASSIGNMENT, ViewState.Success);

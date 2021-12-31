@@ -7,7 +7,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class NewGroupViewModel extends BaseModel {
   // ViewState Keys
-  String ADD_GROUP = 'add_group';
+  final String ADD_GROUP = 'add_group';
 
   final GroupsApi _groupsApi = locator<GroupsApi>();
 
@@ -15,15 +15,16 @@ class NewGroupViewModel extends BaseModel {
 
   Group get newGroup => _newGroup;
 
-  set newGroup(Group newGroup) {
+  set newGroup(Group? newGroup) {
+    if (newGroup == null) return;
     _newGroup = newGroup;
     notifyListeners();
   }
 
-  Future addGroup(String name) async {
+  Future? addGroup(String? name) async {
     setStateFor(ADD_GROUP, ViewState.Busy);
     try {
-      newGroup = await _groupsApi.addGroup(name);
+      newGroup = await _groupsApi.addGroup(name!);
 
       setStateFor(ADD_GROUP, ViewState.Success);
     } on Failure catch (f) {

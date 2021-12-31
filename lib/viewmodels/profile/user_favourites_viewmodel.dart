@@ -32,7 +32,7 @@ class UserFavouritesViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future fetchUserFavourites({String? userId}) async {
+  Future? fetchUserFavourites({String? userId}) async {
     try {
       if (previousUserFavouritesBatch?.links.next != null) {
         // fetch next batch of projects..

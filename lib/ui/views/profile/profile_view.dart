@@ -24,13 +24,13 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   late ProfileViewModel _model;
-  late String userId;
+  String? userId;
 
   @override
   void initState() {
     super.initState();
     userId =
-        widget.userId ?? locator<LocalStorageService>().currentUser!.data.id;
+        widget.userId ?? locator<LocalStorageService>().currentUser?.data.id;
   }
 
   Widget _buildProfileImage() {
@@ -47,7 +47,7 @@ class _ProfileViewState extends State<ProfileView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Text(
-        _model.user.data.attributes.name ?? 'N.A',
+        _model.user?.data.attributes.name ?? 'N.A',
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -110,7 +110,7 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Widget _buildProfileCard() {
-    var _attrs = _model.user.data.attributes;
+    var _attrs = _model.user?.data.attributes;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -137,21 +137,21 @@ class _ProfileViewState extends State<ProfileView> {
                 children: <Widget>[
                   _buildProfileComponent(
                     'Joined',
-                    _attrs.createdAt != null
-                        ? timeago.format(_attrs.createdAt!)
+                    _attrs?.createdAt != null
+                        ? timeago.format(_attrs!.createdAt!)
                         : null,
                   ),
                   _buildProfileComponent(
                     'Country',
-                    _attrs.country,
+                    _attrs?.country,
                   ),
                   _buildProfileComponent(
                     'Educational Institute',
-                    _attrs.educationalInstitute,
+                    _attrs?.educationalInstitute,
                   ),
                   _buildProfileComponent(
                     'Subscribed to mails',
-                    _attrs.subscribed.toString(),
+                    _attrs?.subscribed.toString(),
                   ),
                   _buildEditProfileButton()
                 ],
@@ -164,6 +164,7 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Widget _buildProjectsTabBar() {
+    if (userId == null) return Container();
     return Expanded(
       child: Card(
         shape: RoundedRectangleBorder(
@@ -191,8 +192,8 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             body: TabBarView(
               children: [
-                UserProjectsView(userId: userId),
-                UserFavouritesView(userId: userId),
+                UserProjectsView(userId: userId!),
+                UserFavouritesView(userId: userId!),
               ],
             ),
           ),
@@ -215,20 +216,16 @@ class _ProfileViewState extends State<ProfileView> {
                 centerTitle: true,
               )
             : null,
-        body: model.isBusy(model.FETCH_USER_PROFILE)
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: <Widget>[
-                    _buildProfileCard(),
-                    const SizedBox(height: 8),
-                    _buildProjectsTabBar(),
-                  ],
-                ),
-              ),
+        body: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: <Widget>[
+              _buildProfileCard(),
+              const SizedBox(height: 8),
+              _buildProjectsTabBar(),
+            ],
+          ),
+        ),
       ),
     );
   }

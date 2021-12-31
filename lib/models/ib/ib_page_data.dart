@@ -5,14 +5,14 @@ class IbPageData {
     required this.id,
     required this.pageUrl,
     required this.title,
-    required this.content,
+    this.content,
     this.tableOfContents,
     this.chapterOfContents,
   });
   final String id;
   final String pageUrl;
   final String title;
-  final List<IbContent> content;
+  final List<IbContent>? content;
   final List<IbTocItem>? tableOfContents;
   final List<IbTocItem>? chapterOfContents;
 }

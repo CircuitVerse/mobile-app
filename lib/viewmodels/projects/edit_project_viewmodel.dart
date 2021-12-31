@@ -11,11 +11,11 @@ class EditProjectViewModel extends BaseModel {
 
   final ProjectsApi _projectsApi = locator<ProjectsApi>();
 
-  late Project _updatedProject;
+  Project? _updatedProject;
 
-  Project get updatedProject => _updatedProject;
+  Project? get updatedProject => _updatedProject;
 
-  set updatedProject(Project updatedProject) {
+  set updatedProject(Project? updatedProject) {
     _updatedProject = updatedProject;
     notifyListeners();
   }

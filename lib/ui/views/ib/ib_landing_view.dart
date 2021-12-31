@@ -215,9 +215,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                   : const Icon(Icons.brightness_high),
               iconSize: 28.0,
               onPressed: () {
-                if (ThemeProvider != null) {
-                  ThemeProvider.controllerOf(context).nextTheme();
-                }
+                ThemeProvider.controllerOf(context).nextTheme();
               },
             ),
           ),

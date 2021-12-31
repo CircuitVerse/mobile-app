@@ -23,10 +23,10 @@ abstract class IbEngineService {
         .replaceAll(RegExp(r'\s+'), '-');
   }
 
-  Future<List<IbChapter>> getChapters();
-  Future<IbPageData> getPageData({String id = 'index.md'});
-  Future<String> getHtmlInteraction(String id);
-  List<IbPopQuizQuestion> getPopQuiz(String rawPopQuizContent);
+  Future<List<IbChapter>>? getChapters();
+  Future<IbPageData?>? getPageData({String id = 'index.md'});
+  Future<String>? getHtmlInteraction(String id);
+  List<IbPopQuizQuestion>? getPopQuiz(String rawPopQuizContent);
 }
 
 class IbEngineServiceImpl implements IbEngineService {
@@ -53,7 +53,7 @@ class IbEngineServiceImpl implements IbEngineService {
     bool ignoreIndex = false,
   }) async {
     /// Fetch response from API for the given id
-    List<Map<String, dynamic>> _apiResponse;
+    List<Map<String, dynamic>>? _apiResponse;
     try {
       _apiResponse = await _ibApi.fetchApiPage(id: id);
     } catch (_) {
@@ -64,7 +64,7 @@ class IbEngineServiceImpl implements IbEngineService {
     var childPages = <IbChapter>[];
 
     // Iterate over the list of pages present inside this response
-    for (var page in _apiResponse) {
+    for (var page in _apiResponse ?? []) {
       // Recursive scan if the page is directory
       if (page['type'] == 'directory') {
         childPages.addAll(await _fetchPagesInDir(id: page['path']));
@@ -132,7 +132,7 @@ class IbEngineServiceImpl implements IbEngineService {
 
   /// Get Chapters and Build Navigation for Interactive Book
   @override
-  Future<List<IbChapter>> getChapters() async {
+  Future<List<IbChapter>>? getChapters() async {
     // Load cached chapters if present
     if (_ibChapters.isNotEmpty) {
       return _ibChapters;
@@ -238,14 +238,16 @@ class IbEngineServiceImpl implements IbEngineService {
 
   /// Fetches "Rich" Page Content
   @override
-  Future<IbPageData> getPageData({String id = 'index.md'}) async {
+  Future<IbPageData?>? getPageData({String id = 'index.md'}) async {
     /// Fetch Raw Page Data from API
-    IbRawPageData _ibRawPageData;
+    IbRawPageData? _ibRawPageData;
     try {
       _ibRawPageData = await _ibApi.fetchRawPageData(id: id);
     } catch (_) {
       throw Failure(_.toString());
     }
+
+    if (_ibRawPageData == null) return null;
 
     return IbPageData(
       id: _ibRawPageData.id,
@@ -267,7 +269,7 @@ class IbEngineServiceImpl implements IbEngineService {
   /// id is basically the file-name of the HTML interaction
   /// Every Interaction uses module.js which also has to be used
   @override
-  Future<String> getHtmlInteraction(String id) async {
+  Future<String>? getHtmlInteraction(String id) async {
     // Fetch JS content if not already fetched
     _intModuleJs ??= await ApiUtils.get(_intModuleJsUrl, rawResponse: true);
 
@@ -285,7 +287,7 @@ class IbEngineServiceImpl implements IbEngineService {
   }
 
   @override
-  List<IbPopQuizQuestion> getPopQuiz(String popQuizContent) {
+  List<IbPopQuizQuestion>? getPopQuiz(String popQuizContent) {
     var _pattern = RegExp(r'(\d\.|\*)\s(.+)');
     var _questions = <IbPopQuizQuestion>[];
 

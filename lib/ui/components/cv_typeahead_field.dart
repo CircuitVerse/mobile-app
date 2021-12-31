@@ -53,7 +53,7 @@ class CVTypeAheadField extends StatelessWidget {
       child: FutureBuilder(
         builder: (context, projectSnap) {
           if (projectSnap.connectionState == ConnectionState.none &&
-              projectSnap.hasData == null) {
+              projectSnap.hasData) {
             return Container();
           }
           return TypeAheadFormField(

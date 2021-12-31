@@ -18,12 +18,13 @@ class AddAssignmentViewModel extends BaseModel {
 
   Assignment get addedAssignment => _addedAssignment;
 
-  set addedAssignment(Assignment addedAssignment) {
+  set addedAssignment(Assignment? addedAssignment) {
+    if (addedAssignment == null) return;
     _addedAssignment = addedAssignment;
     notifyListeners();
   }
 
-  Future addAssignment(
+  Future? addAssignment(
     String groupId,
     String name,
     DateTime deadline,

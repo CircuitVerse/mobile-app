@@ -144,7 +144,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
                 );
               }
               // Adds fetch more groups icon if link to next set exists
-              if (_model.previousMentoredGroupsBatch.links.next != null) {
+              if (_model.previousMentoredGroupsBatch?.links.next != null) {
                 _mentoredGroups.add(
                   CVAddIconButton(onPressed: _model.fetchMentoredGroups),
                 );
@@ -157,7 +157,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
               }
 
               // Adds fetch more groups icon if link to next set exists
-              if (_model.previousMemberGroupsBatch.links.next != null) {
+              if (_model.previousMemberGroupsBatch?.links.next != null) {
                 _joinedGroups.add(
                   CVAddIconButton(onPressed: _model.fetchMemberGroups),
                 );

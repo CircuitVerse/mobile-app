@@ -24,7 +24,7 @@ class FeaturedProjectsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future fetchFeaturedProjects({int size = 5}) async {
+  Future? fetchFeaturedProjects({int size = 5}) async {
     try {
       if (previousFeaturedProjectsBatch?.links.next != null) {
         // fetch next batch of projects..

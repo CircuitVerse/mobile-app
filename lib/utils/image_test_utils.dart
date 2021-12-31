@@ -1,8 +1,20 @@
 import 'dart:io';
 
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:transparent_image/transparent_image.dart';
 
+import 'image_test_utils.mocks.dart';
+
+@GenerateMocks(
+  [],
+  customMocks: [
+    MockSpec<HttpClient>(returnNullOnMissingStub: true),
+    MockSpec<HttpClientRequest>(returnNullOnMissingStub: true),
+    MockSpec<HttpClientResponse>(returnNullOnMissingStub: true),
+    MockSpec<HttpHeaders>(returnNullOnMissingStub: true),
+  ],
+)
 R provideMockedNetworkImages<R>(
   R Function() body, {
   List<int>? imageBytes,
@@ -12,14 +24,6 @@ R provideMockedNetworkImages<R>(
     createHttpClient: (_) => _createMockImageHttpClient(_, imageBytes),
   );
 }
-
-class MockHttpClient extends Mock implements HttpClient {}
-
-class MockHttpClientRequest extends Mock implements HttpClientRequest {}
-
-class MockHttpClientResponse extends Mock implements HttpClientResponse {}
-
-class MockHttpHeaders extends Mock implements HttpHeaders {}
 
 // Returns a mock HTTP client that responds with an image to all requests.
 MockHttpClient _createMockImageHttpClient(

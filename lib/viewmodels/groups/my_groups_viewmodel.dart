@@ -21,20 +21,20 @@ class MyGroupsViewModel extends BaseModel {
 
   List<Group> get memberGroups => _memberGroups;
 
-  late Groups _previousMentoredGroupsBatch;
+  Groups? _previousMentoredGroupsBatch;
 
-  Groups get previousMentoredGroupsBatch => _previousMentoredGroupsBatch;
+  Groups? get previousMentoredGroupsBatch => _previousMentoredGroupsBatch;
 
-  set previousMentoredGroupsBatch(Groups previousMentoredGroupsBatch) {
+  set previousMentoredGroupsBatch(Groups? previousMentoredGroupsBatch) {
     _previousMentoredGroupsBatch = previousMentoredGroupsBatch;
     notifyListeners();
   }
 
-  late Groups _previousMemberGroupsBatch;
+  Groups? _previousMemberGroupsBatch;
 
-  Groups get previousMemberGroupsBatch => _previousMemberGroupsBatch;
+  Groups? get previousMemberGroupsBatch => _previousMemberGroupsBatch;
 
-  set previousMemberGroupsBatch(Groups previousMemberGroupsBatch) {
+  set previousMemberGroupsBatch(Groups? previousMemberGroupsBatch) {
     _previousMemberGroupsBatch = previousMemberGroupsBatch;
     notifyListeners();
   }
@@ -54,11 +54,11 @@ class MyGroupsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future fetchMentoredGroups() async {
+  Future? fetchMentoredGroups() async {
     try {
-      if (previousMentoredGroupsBatch.links.next != null) {
+      if (previousMentoredGroupsBatch?.links.next != null) {
         // fetch next batch of mentoring groups..
-        String _nextPageLink = previousMentoredGroupsBatch.links.next;
+        String _nextPageLink = previousMentoredGroupsBatch!.links.next;
         var _nextPageNumber =
             int.parse(_nextPageLink.substring(_nextPageLink.length - 1));
         // fetch groups corresponding to next page number..
@@ -72,7 +72,7 @@ class MyGroupsViewModel extends BaseModel {
         previousMentoredGroupsBatch = await _groupsApi.fetchMentoringGroups();
       }
 
-      mentoredGroups.addAll(previousMentoredGroupsBatch.data);
+      mentoredGroups.addAll(previousMentoredGroupsBatch?.data ?? []);
 
       setStateFor(FETCH_MENTORED_GROUPS, ViewState.Success);
     } on Failure catch (f) {
@@ -81,11 +81,11 @@ class MyGroupsViewModel extends BaseModel {
     }
   }
 
-  Future fetchMemberGroups() async {
+  Future? fetchMemberGroups() async {
     try {
-      if (previousMemberGroupsBatch.links.next != null) {
+      if (previousMemberGroupsBatch?.links.next != null) {
         // fetch next batch of member groups..
-        String _nextPageLink = previousMemberGroupsBatch.links.next;
+        String _nextPageLink = previousMemberGroupsBatch!.links.next;
         var _nextPageNumber =
             int.parse(_nextPageLink.substring(_nextPageLink.length - 1));
         // fetch groups corresponding to next page number..
@@ -99,7 +99,7 @@ class MyGroupsViewModel extends BaseModel {
         previousMemberGroupsBatch = await _groupsApi.fetchMemberGroups();
       }
 
-      memberGroups.addAll(previousMemberGroupsBatch.data);
+      memberGroups.addAll(previousMemberGroupsBatch?.data ?? []);
 
       setStateFor(FETCH_MEMBER_GROUPS, ViewState.Success);
     } on Failure catch (f) {
@@ -113,7 +113,7 @@ class MyGroupsViewModel extends BaseModel {
     try {
       var _isDeleted = await _groupsApi.deleteGroup(groupId);
 
-      if (_isDeleted) {
+      if (_isDeleted ?? false) {
         // remove the group from the list of groups..
         mentoredGroups.removeWhere((group) => group.id == groupId);
         setStateFor(DELETE_GROUP, ViewState.Success);

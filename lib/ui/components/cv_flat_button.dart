@@ -15,7 +15,7 @@ class CVFlatButton extends StatefulWidget {
 }
 
 class CVFlatButtonState extends State<CVFlatButton> {
-  late Function? dynamicFunction;
+  Function? dynamicFunction;
   void setDynamicFunction(bool isActive) {
     setState(() {
       dynamicFunction = isActive ? widget.triggerFunction : null;

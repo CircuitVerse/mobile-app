@@ -18,12 +18,13 @@ class UpdateAssignmentViewModel extends BaseModel {
 
   Assignment get updatedAssignment => _updatedAssignment;
 
-  set updatedAssignment(Assignment updatedAssignment) {
+  set updatedAssignment(Assignment? updatedAssignment) {
+    if (updatedAssignment == null) return;
     _updatedAssignment = updatedAssignment;
     notifyListeners();
   }
 
-  Future updateAssignment(
+  Future? updateAssignment(
     String assignmentId,
     String name,
     DateTime deadline,

@@ -32,7 +32,7 @@ class UserProjectsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future fetchUserProjects({String? userId}) async {
+  Future? fetchUserProjects({String? userId}) async {
     try {
       if (previousUserProjectsBatch?.links.next != null) {
         // fetch next batch of projects..

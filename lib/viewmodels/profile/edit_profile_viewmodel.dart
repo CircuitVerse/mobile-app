@@ -13,17 +13,21 @@ class EditProfileViewModel extends BaseModel {
   final UsersApi _userApi = locator<UsersApi>();
   final LocalStorageService _storage = locator<LocalStorageService>();
 
-  late User _updatedUser;
+  User? _updatedUser;
 
-  User get updatedUser => _updatedUser;
+  User? get updatedUser => _updatedUser;
 
-  set updatedUser(User updatedUser) {
+  set updatedUser(User? updatedUser) {
     _updatedUser = updatedUser;
     notifyListeners();
   }
 
-  Future updateProfile(String name, String? educationalInstitute,
-      String? country, bool subscribed) async {
+  Future? updateProfile(
+    String name,
+    String? educationalInstitute,
+    String? country,
+    bool subscribed,
+  ) async {
     setStateFor(UPDATE_PROFILE, ViewState.Busy);
     try {
       updatedUser = await _userApi.updateProfile(

@@ -44,7 +44,7 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
                 },
                 onPageFinished: (some) async {
                   var height = double.parse(
-                      await _webViewController.evaluateJavascript(
+                      await _webViewController.runJavascriptReturningResult(
                           'document.documentElement.scrollHeight;'));
                   _streamController.add(height);
                 },

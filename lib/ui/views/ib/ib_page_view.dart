@@ -481,7 +481,7 @@ class _IbPageViewState extends State<IbPageView> {
 
     var contents = <Widget>[];
 
-    for (var content in pageData.content) {
+    for (var content in pageData.content ?? []) {
       switch (content.runtimeType) {
         case IbMd:
           contents.add(_buildMarkdown(content as IbMd));
