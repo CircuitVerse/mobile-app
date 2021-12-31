@@ -54,7 +54,7 @@ void main() {
         var _ibEngine = IbEngineServiceImpl();
         var _actualResult = await _ibEngine.getChapters();
 
-        expect(_actualResult.length, _expectedResult.length);
+        expect(_actualResult!.length, _expectedResult.length);
         expect(_actualResult[0].id, _expectedResult[0].id);
         expect(_actualResult[0].value, _expectedResult[0].value);
         expect(_actualResult[0].prev?.id, _expectedResult[0].prev?.id);
@@ -105,13 +105,13 @@ void main() {
         var _ibEngine = IbEngineServiceImpl();
         var _actualResult = await _ibEngine.getPageData();
 
-        expect(_actualResult.id, _expectedResult.id);
+        expect(_actualResult!.id, _expectedResult.id);
         expect(_actualResult.title, _expectedResult.title);
         expect(_actualResult.tableOfContents, _expectedResult.tableOfContents);
         expect(_actualResult.content != null, true);
 
-        expect(_actualResult.content[0].content,
-            _expectedResult.content[0].content);
+        expect(_actualResult.content?[0].content,
+            _expectedResult.content?[0].content);
       });
 
       test('When a regular page called and returns success response', () async {
@@ -203,7 +203,7 @@ void main() {
         var _actualResult =
             await _ibEngine.getPageData(id: mockIbRawPageData2['path']);
 
-        expect(_actualResult.id, _expectedResult.id);
+        expect(_actualResult!.id, _expectedResult.id);
         expect(_actualResult.title, _expectedResult.title);
         expect(_actualResult.tableOfContents?.length,
             _expectedResult.tableOfContents?.length);
@@ -360,7 +360,7 @@ void main() {
         var _ibEngine = IbEngineServiceImpl();
         var _expectedResult = _ibEngine.getPopQuiz(_mockPopContent);
 
-        expect(_expectedResult.length, _actualResult.length);
+        expect(_expectedResult!.length, _actualResult.length);
         expect(_expectedResult[0].question, _actualResult[0].question);
         expect(
             _expectedResult[0].answers.length, _actualResult[0].answers.length);
