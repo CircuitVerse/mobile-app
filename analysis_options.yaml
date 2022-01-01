@@ -3,6 +3,10 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude: [lib/generated_plugin_registrant.dart]
 
+language:
+   strict-interference: true
+   strict-raw-types: true
+
 linter:
   rules:
     # Util classes
