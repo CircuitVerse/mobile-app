@@ -39,7 +39,9 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildSignUpImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.43,
+      height: MediaQuery.of(context).size.height > 800
+          ? MediaQuery.of(context).size.height * 0.52
+          : MediaQuery.of(context).size.height * 0.43,
       color: CVTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
@@ -167,7 +169,7 @@ class _SignupViewState extends State<SignupView> {
                 _buildRegisterButton(),
                 const SizedBox(height: 8),
                 _buildAlreadyRegisteredComponent(),
-                const SizedBox(height: 15),
+                const SizedBox(height: 20),
                 const AuthOptionsView(isSignUp: true),
               ],
             ),
