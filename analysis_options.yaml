@@ -24,7 +24,7 @@ linter:
 
     constant_identifier_names: false
 
-    camel_case_types: true
+    camel_case_types: false
 
-    empty_statements: true
+    empty_statements: false
   
