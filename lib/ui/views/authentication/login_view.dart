@@ -15,9 +15,7 @@ import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key key}) : super(key: key);
-
   static const String id = 'login_view';
-
   @override
   _LoginViewState createState() => _LoginViewState();
 }
@@ -27,7 +25,6 @@ class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
   String _email, _password;
   final _emailFocusNode = FocusNode();
-
   @override
   void dispose() {
     _emailFocusNode.dispose();
@@ -37,6 +34,9 @@ class _LoginViewState extends State<LoginView> {
   Widget _buildLoginImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height > 800
+          ? MediaQuery.of(context).size.height * 0.56
+          : MediaQuery.of(context).size.height * 0.475,
       color: CVTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
@@ -107,6 +107,7 @@ class _LoginViewState extends State<LoginView> {
               text: 'Sign Up',
               style: TextStyle(
                 color: CVTheme.highlightText(context),
+                fontSize: 16,
               ),
             ),
           ],
@@ -119,16 +120,13 @@ class _LoginViewState extends State<LoginView> {
     if (Validators.validateAndSaveForm(_formKey) &&
         !_model.isBusy(_model.LOGIN)) {
       FocusScope.of(context).requestFocus(FocusNode());
-
       await _model.login(_email, _password);
-
       if (_model.isSuccess(_model.LOGIN)) {
         // show login successful snackbar..
         SnackBarUtils.showDark(
           'Login Successful',
           'Welcome back!',
         );
-
         // move to home view on successful login..
         await Future.delayed(const Duration(seconds: 1));
         await Get.offAllNamed(CVLandingView.id);
@@ -162,7 +160,7 @@ class _LoginViewState extends State<LoginView> {
                 _buildLoginButton(),
                 const SizedBox(height: 8),
                 _buildNewUserSignUpComponent(),
-                const SizedBox(height: 32),
+                const SizedBox(height: 30),
                 const AuthOptionsView(isSignUp: false),
               ],
             ),
