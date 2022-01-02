@@ -7,6 +7,14 @@ language:
    strict-interference: true
    strict-raw-types: true
 
+errors:
+  missing_required_param: error
+  missing_return: error
+  dead_code: error
+  unused_element: error
+  unused_import: error
+  unused_local_variable: error
+
 linter:
   rules:
     # Util classes
@@ -15,3 +23,12 @@ linter:
     non_constant_identifier_names: false
 
     constant_identifier_names: false
+
+    camel_case_types: true
+
+    empty_statements: true
+
+    avoid_print: true
+
+    avoid_unnecessary_containers: true
+  
