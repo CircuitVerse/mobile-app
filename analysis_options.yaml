@@ -27,8 +27,4 @@ linter:
     camel_case_types: true
 
     empty_statements: true
-
-    avoid_print: true
-
-    avoid_unnecessary_containers: true
   
