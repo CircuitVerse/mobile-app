@@ -132,7 +132,7 @@ class DialogService {
   }
 
   /// Shows a confirmation dialog
-  Future<DialogResponse> showConfirmationDialog({
+  Future<DialogResponse>? showConfirmationDialog({
     String? title,
     String? description,
     String confirmationTitle = 'OK',

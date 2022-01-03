@@ -10,10 +10,10 @@ import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 class UserFavouritesView extends StatefulWidget {
   const UserFavouritesView({
     Key? key,
-    required this.userId,
+    this.userId,
   }) : super(key: key);
 
-  final String userId;
+  final String? userId;
 
   @override
   _UserFavouritesViewState createState() => _UserFavouritesViewState();

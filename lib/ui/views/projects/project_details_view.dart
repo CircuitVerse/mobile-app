@@ -245,7 +245,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       confirmationTitle: 'FORK',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Forking');
 
       await _model.forkProject(_recievedProject.id);
@@ -458,7 +458,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       confirmationTitle: 'DELETE',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Deleting Project');
 
       await _model.deleteProject(_recievedProject.id);
@@ -508,7 +508,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       confirmationTitle: 'DELETE',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Deleting..');
 
       await _model.deleteCollaborator(_model.project!.id, collaborator.id);

@@ -202,7 +202,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       confirmationTitle: 'REMOVE',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Removing');
 
       await _model.deleteGroupMember(groupMemberId);
@@ -262,7 +262,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       confirmationTitle: 'DELETE',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Deleting Assignment');
 
       await _model.deleteAssignment(assignmentId);
@@ -299,7 +299,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       confirmationTitle: 'REOPEN',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Reopening Assignment');
 
       await _model.reopenAssignment(assignmentId);
@@ -327,7 +327,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       confirmationTitle: 'START',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Starting Assignment');
 
       await _model.startAssignment(assignmentId);

@@ -11,12 +11,11 @@ class NewGroupViewModel extends BaseModel {
 
   final GroupsApi _groupsApi = locator<GroupsApi>();
 
-  late Group _newGroup;
+  Group? _newGroup;
 
-  Group get newGroup => _newGroup;
+  Group? get newGroup => _newGroup;
 
   set newGroup(Group? newGroup) {
-    if (newGroup == null) return;
     _newGroup = newGroup;
     notifyListeners();
   }

@@ -76,7 +76,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
       confirmationTitle: 'DELETE',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Deleting Group');
 
       await _model.deleteGroup(groupId);

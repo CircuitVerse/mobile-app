@@ -307,7 +307,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
       confirmationTitle: 'DELETE',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Deleting Grade');
 
       await _model.deleteGrade(gradeId);

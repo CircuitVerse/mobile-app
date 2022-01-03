@@ -88,7 +88,7 @@ class _CVLandingViewState extends State<CVLandingView> {
           AppLocalizations.of(context)!.logout_confirmation_button,
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _model.onLogout();
       setState(() => _selectedIndex = 0);
       SnackBarUtils.showDark(
