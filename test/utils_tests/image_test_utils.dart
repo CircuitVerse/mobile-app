@@ -15,10 +15,7 @@ import 'image_test_utils.mocks.dart';
     MockSpec<HttpHeaders>(returnNullOnMissingStub: true),
   ],
 )
-R provideMockedNetworkImages<R>(
-  R Function() body, {
-  List<int>? imageBytes,
-}) {
+R provideMockedNetworkImages<R>(R Function() body, {List<int>? imageBytes}) {
   return HttpOverrides.runZoned(
     body,
     createHttpClient: (_) => _createMockImageHttpClient(_, imageBytes),
@@ -33,7 +30,7 @@ MockHttpClient _createMockImageHttpClient(
   final response = MockHttpClientResponse();
   final headers = MockHttpHeaders();
 
-  when(client.getUrl(Uri()))
+  when(client.getUrl(any))
       .thenAnswer((_) => Future<HttpClientRequest>.value(request));
   when(request.headers).thenReturn(headers);
   when(request.close())
@@ -42,18 +39,22 @@ MockHttpClient _createMockImageHttpClient(
       .thenReturn(HttpClientResponseCompressionState.notCompressed);
   when(response.contentLength).thenReturn(kTransparentImage.length);
   when(response.statusCode).thenReturn(HttpStatus.ok);
-  when(response.listen(any)).thenAnswer((Invocation invocation) {
+  when(response.listen(
+    any,
+    cancelOnError: anyNamed('cancelOnError'),
+    onDone: anyNamed('onDone'),
+    onError: anyNamed('onError'),
+  )).thenAnswer((Invocation invocation) {
     final void Function(List<int>) onData = invocation.positionalArguments[0];
     final void Function() onDone = invocation.namedArguments[#onDone];
     final void Function(Object, [StackTrace]) onError =
         invocation.namedArguments[#onError];
     final bool cancelOnError = invocation.namedArguments[#cancelOnError];
 
-    return Stream<List<int>>.fromIterable(<List<int>>[imageBytes ?? []]).listen(
-        onData,
-        onDone: onDone,
-        onError: onError,
-        cancelOnError: cancelOnError);
+    return Stream<List<int>>.fromIterable(
+            <List<int>>[imageBytes ?? kTransparentImage])
+        .listen(onData,
+            onDone: onDone, onError: onError, cancelOnError: cancelOnError);
   });
 
   return client;
