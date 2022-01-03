@@ -23,16 +23,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../setup/test_data/mock_groups.dart';
 import '../../setup/test_data/mock_user.dart';
 import '../../setup/test_helpers.dart';
+import 'my_groups_view_test.mocks.dart' as mock;
 
 @GenerateMocks(
-  [MyGroupsViewModel],
+  [MyGroupsViewModel, GroupDetailsViewModel],
   customMocks: [
     MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+    MockSpec<DialogService>(returnNullOnMissingStub: true),
   ],
 )
 void main() {
   group('MyGroupsViewTest -', () {
-    late NavigatorObserver mockObserver;
+    late mock.MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -40,21 +42,25 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = mock.MockNavigatorObserver());
 
     Future<void> _pumpMyGroupsView(WidgetTester tester) async {
-      var model = MockMyGroupsViewModel();
+      var model = mock.MockMyGroupsViewModel();
       locator.registerSingleton<MyGroupsViewModel>(model);
 
       var groups = <Group>[];
       groups.add(Group.fromJson(mockGroup));
 
+      when(model.FETCH_MENTORED_GROUPS)
+          .thenAnswer((_) => 'fetch_mentored_groups');
+      when(model.FETCH_MEMBER_GROUPS).thenAnswer((_) => 'fetch_member_groups');
+      when(model.previousMemberGroupsBatch).thenReturn(null);
+      when(model.previousMentoredGroupsBatch).thenReturn(null);
       when(model.fetchMentoredGroups()).thenReturn(null);
       when(model.fetchMemberGroups()).thenReturn(null);
 
-      when(model.isSuccess(model.FETCH_MENTORED_GROUPS))
-          .thenAnswer((_) => true);
-      when(model.isSuccess(model.FETCH_MEMBER_GROUPS)).thenAnswer((_) => true);
+      when(model.isSuccess(any)).thenAnswer((_) => true);
+      when(model.isSuccess(any)).thenAnswer((_) => true);
 
       when(model.mentoredGroups).thenAnswer((_) => groups);
       when(model.memberGroups).thenAnswer((_) => groups);
@@ -69,7 +75,7 @@ void main() {
 
       /// The tester.pumpWidget() call above just built our app widget
       /// and triggered the pushObserver method on the mockObserver once.
-      // verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any, any));
     }
 
     testWidgets('finds Generic MyGroupsView widgets',
@@ -124,7 +130,7 @@ void main() {
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
 
-      // verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any, any));
       expect(find.byType(NewGroupView), findsOneWidget);
     });
 
@@ -140,18 +146,18 @@ void main() {
           .thenAnswer((_) => User.fromJson(mockUser));
 
       // Mock View Model
-      var _groupDetailsViewModel = MockGroupDetailsViewModel();
+      var _groupDetailsViewModel = mock.MockGroupDetailsViewModel();
       locator.registerSingleton<GroupDetailsViewModel>(_groupDetailsViewModel);
 
-      when(_groupDetailsViewModel.fetchGroupDetails('')).thenReturn(null);
-      when(_groupDetailsViewModel
-              .isSuccess(_groupDetailsViewModel.FETCH_GROUP_DETAILS))
-          .thenAnswer((_) => false);
+      when(_groupDetailsViewModel.FETCH_GROUP_DETAILS)
+          .thenAnswer((_) => 'fetch_group_details');
+      when(_groupDetailsViewModel.fetchGroupDetails(any)).thenReturn(null);
+      when(_groupDetailsViewModel.isSuccess(any)).thenAnswer((_) => false);
 
       await tester.tap(find.widgetWithText(CardButton, 'View').first);
       await tester.pumpAndSettle();
 
-      // verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any, any));
       expect(find.byType(GroupDetailsView), findsOneWidget);
     });
 
@@ -162,13 +168,13 @@ void main() {
       await tester.tap(find.widgetWithText(CardButton, 'Edit'));
       await tester.pumpAndSettle();
 
-      // verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any, any));
       expect(find.byType(EditGroupView), findsOneWidget);
     });
 
     testWidgets('Delete Group Dialog is visible onTap',
         (WidgetTester tester) async {
-      var _dialogService = MockDialogService();
+      var _dialogService = mock.MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
       // Mock Dialog Service
@@ -185,9 +191,10 @@ void main() {
 
       // Verify Dialog Service was called after Delete Button is pressed
       verify(_dialogService.showConfirmationDialog(
-        title: anyNamed('title'),
-        description: anyNamed('description'),
-      )).called(1);
+              title: anyNamed('title'),
+              description: anyNamed('description'),
+              confirmationTitle: anyNamed('confirmationTitle')))
+          .called(1);
     });
   });
 }

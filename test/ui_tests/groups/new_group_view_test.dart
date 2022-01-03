@@ -68,7 +68,7 @@ void main() {
       var _dialogService = test.MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
-      when(_dialogService.showCustomProgressDialog(title: 'title'))
+      when(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
           .thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(_dialogService.popDialog()).thenReturn(null);
 
@@ -78,8 +78,8 @@ void main() {
 
       when(_newGroupViewModel.ADD_GROUP).thenAnswer((_) => 'add_group');
       when(_newGroupViewModel.addGroup(any)).thenReturn(null);
-      when(_newGroupViewModel.isSuccess(_newGroupViewModel.ADD_GROUP))
-          .thenReturn(true);
+      when(_newGroupViewModel.isSuccess(any)).thenReturn(true);
+      when(_newGroupViewModel.newGroup).thenAnswer((_) => null);
 
       // Pump New Group View
       await _pumpNewGroupView(tester);
@@ -96,7 +96,8 @@ void main() {
       await tester.pump(const Duration(seconds: 5));
 
       // Verify Dialog Service is called to show Dialog of Updating
-      verify(_dialogService.showCustomProgressDialog(title: 'title')).called(1);
+      verify(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
+          .called(1);
     });
   });
 }

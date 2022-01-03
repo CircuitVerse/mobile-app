@@ -8,7 +8,7 @@ import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/views/projects/components/featured_project_card.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
-import 'package:mobile_app/utils/image_test_utils.dart';
+import '../../utils_tests/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
@@ -21,12 +21,9 @@ import '../../setup/test_data/mock_projects.dart';
 import 'featured_projects_view_test.mocks.dart';
 
 @GenerateMocks(
-  [
-    ProjectDetailsViewModel,
-  ],
+  [ProjectDetailsViewModel, FeaturedProjectsViewModel],
   customMocks: [
     MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-    MockSpec<FeaturedProjectsViewModel>(returnNullOnMissingStub: true),
   ],
 )
 void main() {
@@ -55,6 +52,7 @@ void main() {
       when(model.isSuccess(any)).thenAnswer((_) => true);
 
       when(model.featuredProjects).thenAnswer((_) => projects);
+      when(model.previousFeaturedProjectsBatch).thenAnswer((_) => null);
 
       await tester.pumpWidget(
         GetMaterialApp(

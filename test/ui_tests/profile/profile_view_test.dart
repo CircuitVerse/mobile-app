@@ -5,7 +5,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
-import 'package:mobile_app/utils/image_test_utils.dart';
+import '../../utils_tests/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
@@ -18,13 +18,12 @@ import '../../setup/test_data/mock_user.dart';
 import 'profile_view_test.mocks.dart';
 
 @GenerateMocks(
-  [
-    UserProjectsViewModel,
-  ],
+  [],
   customMocks: [
     MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
     MockSpec<LocalStorageService>(returnNullOnMissingStub: true),
     MockSpec<ProfileViewModel>(returnNullOnMissingStub: true),
+    MockSpec<UserProjectsViewModel>(returnNullOnMissingStub: true),
   ],
 )
 void main() {
@@ -42,6 +41,11 @@ void main() {
     Future<void> _pumpProfileView(WidgetTester tester) async {
       // Mock Local Storage
       var _localStorageService = MockLocalStorageService();
+      var isRegistered = locator.isRegistered<LocalStorageService>();
+      if (isRegistered) {
+        locator.unregister<LocalStorageService>();
+      }
+      locator.registerSingleton<LocalStorageService>(_localStorageService);
 
       var user = User.fromJson(mockUser);
       when(_localStorageService.currentUser).thenReturn(user);
@@ -67,9 +71,7 @@ void main() {
       when(_userProjectsViewModel.FETCH_USER_PROJECTS)
           .thenAnswer((_) => 'fetch_user_projects');
       when(_userProjectsViewModel.fetchUserProjects()).thenReturn(null);
-      when(_userProjectsViewModel
-              .isSuccess(_userProjectsViewModel.FETCH_USER_PROJECTS))
-          .thenReturn(false);
+      when(_userProjectsViewModel.isSuccess(any)).thenReturn(false);
 
       await tester.pumpWidget(
         GetMaterialApp(
@@ -81,7 +83,7 @@ void main() {
 
       /// The tester.pumpWidget() call above just built our app widget
       /// and triggered the pushObserver method on the mockObserver once.
-      verifyNever(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any, any));
     }
 
     testWidgets('finds Generic ProfileView widgets',

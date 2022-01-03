@@ -6,7 +6,7 @@ import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/views/profile/user_projects_view.dart';
 import 'package:mobile_app/ui/views/projects/components/project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
-import 'package:mobile_app/utils/image_test_utils.dart';
+import '../../utils_tests/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
@@ -15,16 +15,12 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_projects.dart';
-// import '../../setup/test_helpers.dart';
 import 'user_projects_view_test.mocks.dart';
 
 @GenerateMocks(
-  [
-    ProjectDetailsViewModel,
-  ],
+  [ProjectDetailsViewModel, UserProjectsViewModel],
   customMocks: [
     MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-    MockSpec<UserProjectsViewModel>(returnNullOnMissingStub: true),
   ],
 )
 void main() {
@@ -47,11 +43,14 @@ void main() {
       var projects = <Project>[];
       projects.add(Project.fromJson(mockProject));
 
-      when(_userProjectsViewModel.fetchUserProjects()).thenReturn(null);
-      when(_userProjectsViewModel
-              .isSuccess(_userProjectsViewModel.FETCH_USER_PROJECTS))
-          .thenReturn(true);
+      when(_userProjectsViewModel.FETCH_USER_PROJECTS)
+          .thenAnswer((_) => 'fetch_user_projects');
+      when(_userProjectsViewModel.fetchUserProjects(userId: anyNamed('userId')))
+          .thenReturn(null);
+      when(_userProjectsViewModel.isSuccess(any)).thenReturn(true);
       when(_userProjectsViewModel.userProjects).thenAnswer((_) => projects);
+      when(_userProjectsViewModel.previousUserProjectsBatch)
+          .thenAnswer((_) => null);
 
       await tester.pumpWidget(
         GetMaterialApp(
@@ -91,6 +90,9 @@ void main() {
         locator.registerSingleton<ProjectDetailsViewModel>(
             projectDetailsViewModel);
 
+        when(projectDetailsViewModel.starCount).thenAnswer((_) => 0);
+        when(projectDetailsViewModel.FETCH_PROJECT_DETAILS)
+            .thenAnswer((_) => 'fetch_project_details');
         when(projectDetailsViewModel.fetchProjectDetails(any)).thenReturn(null);
         when(projectDetailsViewModel.isSuccess(any)).thenReturn(false);
 

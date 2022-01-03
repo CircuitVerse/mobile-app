@@ -10,7 +10,7 @@ import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/components/cv_typeahead_field.dart';
 import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
-import 'package:mobile_app/utils/image_test_utils.dart';
+import '../../utils_tests/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 import 'package:mockito/annotations.dart';
@@ -18,11 +18,11 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_user.dart';
+import '../../setup/test_helpers.dart' as test;
 import 'edit_profile_view_test.mocks.dart';
-// import 'profile_view_test.mocks.dart';
 
 @GenerateMocks(
-  [EditProfileViewModel, DialogService],
+  [EditProfileViewModel],
   customMocks: [
     MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
     MockSpec<LocalStorageService>(returnNullOnMissingStub: true),
@@ -44,6 +44,11 @@ void main() {
       // Mock Local Storage
       // var _localStorageService = test.getAndRegisterLocalStorageServiceMock();
       var _localStorageService = MockLocalStorageService();
+      var isRegistered = locator.isRegistered<LocalStorageService>();
+      if (isRegistered) {
+        locator.unregister<LocalStorageService>();
+      }
+      locator.registerSingleton<LocalStorageService>(_localStorageService);
 
       var user = User.fromJson(mockUser);
       when(_localStorageService.currentUser).thenReturn(user);
@@ -87,7 +92,7 @@ void main() {
 
     testWidgets('on Save Details is Tapped', (WidgetTester tester) async {
       // Mock Dialog Service
-      var _dialogService = MockDialogService();
+      var _dialogService = test.MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
       when(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
@@ -98,11 +103,12 @@ void main() {
       var _editProfileViewModel = MockEditProfileViewModel();
       locator.registerSingleton<EditProfileViewModel>(_editProfileViewModel);
 
+      when(_editProfileViewModel.UPDATE_PROFILE)
+          .thenAnswer((_) => 'update_profile');
       when(_editProfileViewModel.updateProfile(any, any, any, any))
           .thenReturn(null);
-      when(_editProfileViewModel
-              .isSuccess(_editProfileViewModel.UPDATE_PROFILE))
-          .thenReturn(true);
+      when(_editProfileViewModel.isSuccess(any)).thenReturn(true);
+      when(_editProfileViewModel.updatedUser).thenAnswer((_) => null);
 
       // Pump Edit Profile View
       await _pumpEditProfileView(tester);
