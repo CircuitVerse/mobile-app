@@ -3,29 +3,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
-import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
+import '../../setup/test_helpers.mocks.dart';
 import '../../utils_tests/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_user.dart';
-// import '../../setup/test_helpers.dart';
-import 'profile_view_test.mocks.dart';
+import '../../setup/test_helpers.dart';
 
-@GenerateMocks(
-  [],
-  customMocks: [
-    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-    MockSpec<LocalStorageService>(returnNullOnMissingStub: true),
-    MockSpec<ProfileViewModel>(returnNullOnMissingStub: true),
-    MockSpec<UserProjectsViewModel>(returnNullOnMissingStub: true),
-  ],
-)
 void main() {
   group('ProfileViewTest -', () {
     late MockNavigatorObserver mockObserver;
@@ -40,12 +29,7 @@ void main() {
 
     Future<void> _pumpProfileView(WidgetTester tester) async {
       // Mock Local Storage
-      var _localStorageService = MockLocalStorageService();
-      var isRegistered = locator.isRegistered<LocalStorageService>();
-      if (isRegistered) {
-        locator.unregister<LocalStorageService>();
-      }
-      locator.registerSingleton<LocalStorageService>(_localStorageService);
+      var _localStorageService = getAndRegisterLocalStorageServiceMock();
 
       var user = User.fromJson(mockUser);
       when(_localStorageService.currentUser).thenReturn(user);
@@ -70,8 +54,11 @@ void main() {
 
       when(_userProjectsViewModel.FETCH_USER_PROJECTS)
           .thenAnswer((_) => 'fetch_user_projects');
-      when(_userProjectsViewModel.fetchUserProjects()).thenReturn(null);
+      when(_userProjectsViewModel.fetchUserProjects(userId: anyNamed('userId')))
+          .thenReturn(null);
       when(_userProjectsViewModel.isSuccess(any)).thenReturn(false);
+      when(_userProjectsViewModel.previousUserProjectsBatch)
+          .thenAnswer((_) => null);
 
       await tester.pumpWidget(
         GetMaterialApp(

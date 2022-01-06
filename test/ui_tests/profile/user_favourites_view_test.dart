@@ -6,23 +6,16 @@ import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/views/profile/user_favourites_view.dart';
 import 'package:mobile_app/ui/views/projects/components/project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
+import '../../setup/test_helpers.mocks.dart';
 import '../../utils_tests/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_projects.dart';
-import 'user_favourites_view_test.mocks.dart';
 
-@GenerateMocks(
-  [UserFavouritesViewModel, ProjectDetailsViewModel],
-  customMocks: [
-    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-  ],
-)
 void main() {
   group('UserFavouritesViewTest -', () {
     late MockNavigatorObserver mockObserver;

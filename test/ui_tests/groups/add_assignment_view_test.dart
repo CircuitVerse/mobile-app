@@ -11,20 +11,11 @@ import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/groups/add_assignment_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// import '../../setup/test_helpers.dart';
-import 'add_assignment_view_test.mocks.dart';
+import '../../setup/test_helpers.mocks.dart';
 
-@GenerateMocks(
-  [DialogService],
-  customMocks: [
-    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-    MockSpec<AddAssignmentViewModel>(returnNullOnMissingStub: true),
-  ],
-)
 void main() {
   group('AddAssignmentViewTest -', () {
     late MockNavigatorObserver mockObserver;
@@ -121,7 +112,8 @@ void main() {
       await tester.pump(const Duration(seconds: 5));
 
       // Verify Dialog Service is called to show Dialog of Updating
-      // verify(_dialogService.showCustomProgressDialog()).called(1);
+      verify(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
+          .called(1);
     });
   });
 }

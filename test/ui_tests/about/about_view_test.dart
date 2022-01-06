@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/cv_contributors.dart';
-import 'package:mobile_app/services/API/contributors_api.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_subheader.dart';
@@ -14,21 +13,13 @@ import 'package:mobile_app/ui/views/about/about_view.dart';
 // import 'package:mobile_app/ui/views/about/components/contributor_avatar.dart';
 import '../../utils_tests/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_data/mock_contributors.dart';
-// import '../../setup/test_helpers.dart';
-import 'about_view_test.mocks.dart';
+import '../../setup/test_helpers.mocks.dart';
 
-@GenerateMocks(
-  [ContributorsApi],
-  customMocks: [
-    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-  ],
-)
 void main() {
   group('AboutViewTest -', () {
     late MockNavigatorObserver mockObserver;

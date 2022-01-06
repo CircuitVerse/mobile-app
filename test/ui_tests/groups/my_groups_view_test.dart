@@ -16,25 +16,17 @@ import 'package:mobile_app/ui/views/groups/new_group_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_groups.dart';
 import '../../setup/test_data/mock_user.dart';
 import '../../setup/test_helpers.dart';
-import 'my_groups_view_test.mocks.dart' as mock;
+import '../../setup/test_helpers.mocks.dart';
 
-@GenerateMocks(
-  [MyGroupsViewModel, GroupDetailsViewModel],
-  customMocks: [
-    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-    MockSpec<DialogService>(returnNullOnMissingStub: true),
-  ],
-)
 void main() {
   group('MyGroupsViewTest -', () {
-    late mock.MockNavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -42,10 +34,10 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = mock.MockNavigatorObserver());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpMyGroupsView(WidgetTester tester) async {
-      var model = mock.MockMyGroupsViewModel();
+      var model = MockMyGroupsViewModel();
       locator.registerSingleton<MyGroupsViewModel>(model);
 
       var groups = <Group>[];
@@ -146,7 +138,7 @@ void main() {
           .thenAnswer((_) => User.fromJson(mockUser));
 
       // Mock View Model
-      var _groupDetailsViewModel = mock.MockGroupDetailsViewModel();
+      var _groupDetailsViewModel = MockGroupDetailsViewModel();
       locator.registerSingleton<GroupDetailsViewModel>(_groupDetailsViewModel);
 
       when(_groupDetailsViewModel.FETCH_GROUP_DETAILS)
@@ -174,13 +166,14 @@ void main() {
 
     testWidgets('Delete Group Dialog is visible onTap',
         (WidgetTester tester) async {
-      var _dialogService = mock.MockDialogService();
+      var _dialogService = MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
       // Mock Dialog Service
       when(_dialogService.showConfirmationDialog(
         title: anyNamed('title'),
         description: anyNamed('description'),
+        confirmationTitle: anyNamed('confirmationTitle'),
       )).thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
 
       await _pumpMyGroupsView(tester);
@@ -191,10 +184,10 @@ void main() {
 
       // Verify Dialog Service was called after Delete Button is pressed
       verify(_dialogService.showConfirmationDialog(
-              title: anyNamed('title'),
-              description: anyNamed('description'),
-              confirmationTitle: anyNamed('confirmationTitle')))
-          .called(1);
+        title: anyNamed('title'),
+        description: anyNamed('description'),
+        confirmationTitle: anyNamed('confirmationTitle'),
+      )).called(1);
     });
   });
 }

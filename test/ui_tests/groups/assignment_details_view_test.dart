@@ -8,21 +8,12 @@ import 'package:mobile_app/ui/views/groups/assignment_details_view.dart';
 import '../../utils_tests/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_assignments.dart';
-// import '../../setup/test_helpers.dart';
-import 'assignment_details_view_test.mocks.dart';
+import '../../setup/test_helpers.mocks.dart';
 
-@GenerateMocks(
-  [],
-  customMocks: [
-    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-    MockSpec<AssignmentDetailsViewModel>(returnNullOnMissingStub: true),
-  ],
-)
 void main() {
   group('AssignmentDetailsViewTest -', () {
     late MockNavigatorObserver mockObserver;

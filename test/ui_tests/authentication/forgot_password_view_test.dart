@@ -2,24 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
-import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/authentication/forgot_password_view.dart';
 import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/utils/router.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'forgot_password_view_test.mocks.dart';
+import '../../setup/test_helpers.dart';
+import '../../setup/test_helpers.mocks.dart';
 
-@GenerateMocks(
-  [UsersApi],
-  customMocks: [
-    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-  ],
-)
 void main() {
   group('ForgotPasswordViewTest -', () {
     late MockNavigatorObserver mockObserver;
@@ -79,8 +72,8 @@ void main() {
     testWidgets(
         'When email is not valid or empty, proper error message should be shown',
         (WidgetTester tester) async {
-      // var _usersApiMock = getAndRegisterUsersApiMock();
-      var _usersApiMock = MockUsersApi();
+      var _usersApiMock = getAndRegisterUsersApiMock();
+      // var _usersApiMock = MockUsersApi();
 
       await _pumpForgotPasswordView(tester);
       await tester.pumpAndSettle();

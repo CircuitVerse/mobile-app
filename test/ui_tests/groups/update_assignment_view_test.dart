@@ -12,20 +12,12 @@ import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_assignments.dart';
-// import '../../setup/test_helpers.dart';
-import 'update_assignment_view_test.mocks.dart';
+import '../../setup/test_helpers.mocks.dart';
 
-@GenerateMocks(
-  [UpdateAssignmentViewModel, DialogService],
-  customMocks: [
-    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-  ],
-)
 void main() {
   group('UpdateAssignmentViewTest -', () {
     late MockNavigatorObserver mockObserver;

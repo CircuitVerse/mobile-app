@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
@@ -9,19 +8,11 @@ import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/groups/new_group_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../setup/test_helpers.dart' as test;
-import 'new_group_view_test.mocks.dart';
+import '../../setup/test_helpers.mocks.dart';
 
-@GenerateMocks(
-  [NewGroupViewModel],
-  customMocks: [
-    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-  ],
-)
 void main() {
   group('NewGroupViewTest -', () {
     late MockNavigatorObserver mockObserver;
@@ -65,7 +56,7 @@ void main() {
 
     testWidgets('on Save button is Tapped', (WidgetTester tester) async {
       // Mock Dialog Service
-      var _dialogService = test.MockDialogService();
+      var _dialogService = MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
       when(_dialogService.showCustomProgressDialog(title: anyNamed('title')))

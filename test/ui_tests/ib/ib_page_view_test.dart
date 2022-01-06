@@ -9,20 +9,13 @@ import 'package:mobile_app/models/ib/ib_showcase.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 import '../../setup/test_data/mock_ib_raw_page_data.dart';
-import 'ib_page_view_test.mocks.dart';
+import '../../setup/test_helpers.mocks.dart';
 
-@GenerateMocks(
-  [IbPageViewModel],
-  customMocks: [
-    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-  ],
-)
 void main() {
   group('IbPageViewTest -', () {
     late MockNavigatorObserver mockObserver;

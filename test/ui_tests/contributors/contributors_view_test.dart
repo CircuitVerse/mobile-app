@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
@@ -8,17 +7,10 @@ import 'package:mobile_app/ui/views/contributors/components/contributors_donate_
 import 'package:mobile_app/ui/views/contributors/components/contributors_support_card.dart';
 import 'package:mobile_app/ui/views/contributors/contributors_view.dart';
 import 'package:mobile_app/utils/router.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'contributors_view_test.mocks.dart';
+import '../../setup/test_helpers.mocks.dart';
 
-@GenerateMocks(
-  [],
-  customMocks: [
-    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
-  ],
-)
 void main() {
   group('ContributorsViewTest -', () {
     late MockNavigatorObserver mockObserver;

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
@@ -6,16 +5,10 @@ import 'package:mobile_app/ui/components/cv_subheader.dart';
 import 'package:mobile_app/ui/views/teachers/components/teachers_card.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/utils/router.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-// import '../../setup/test_helpers.dart';
-import 'teachers_view_test.mocks.dart';
+import '../../setup/test_helpers.mocks.dart';
 
-@GenerateMocks(
-  [],
-  customMocks: [MockSpec<NavigatorObserver>(returnNullOnMissingStub: true)],
-)
 void main() {
   group('TeachersViewTest -', () {
     late MockNavigatorObserver mockObserver;
