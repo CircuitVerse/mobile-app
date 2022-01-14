@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
+import 'package:mobile_app/models/ib/ib_showcase.dart';
 import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
@@ -12,11 +13,12 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
-import '../../setup/test_helpers.dart';
+// import '../../setup/test_helpers.dart';
+import '../../setup/test_helpers.mocks.dart';
 
 void main() {
   group('IbLandingViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -24,7 +26,7 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpHomeView(WidgetTester tester) async {
       // Mock ViewModel
@@ -34,16 +36,29 @@ void main() {
       var pageViewModel = MockIbPageViewModel();
       locator.registerSingleton<IbPageViewModel>(pageViewModel);
 
+      when(model.IB_FETCH_CHAPTERS).thenAnswer((_) => 'ib_fetch_chapters');
+      when(model.showCaseState).thenAnswer((_) => IBShowCase(
+            nextButton: true,
+            prevButton: true,
+            tocButton: true,
+            drawerButton: true,
+          ));
+      when(model.keyMap).thenAnswer((_) => {});
+
       // Mock Page View Model
+      when(pageViewModel.IB_FETCH_PAGE_DATA)
+          .thenAnswer((_) => 'mock_fetch_page_data');
       when(pageViewModel.fetchPageData()).thenReturn(null);
-      when(pageViewModel.isSuccess(pageViewModel.IB_FETCH_PAGE_DATA))
-          .thenAnswer((_) => true);
+      when(pageViewModel.IB_FETCH_PAGE_DATA)
+          .thenAnswer((_) => 'mock_fetch_page_data');
+
+      when(pageViewModel.isSuccess(any)).thenAnswer((_) => true);
       when(pageViewModel.pageData).thenReturn(
           IbPageData(id: 'test', pageUrl: 'test', title: 'test', content: []));
 
       // Mock Page Drawer List
       when(model.fetchChapters()).thenReturn(null);
-      when(model.isSuccess(model.IB_FETCH_CHAPTERS)).thenAnswer((_) => true);
+      when(model.isSuccess(any)).thenAnswer((_) => true);
       when(model.chapters).thenAnswer((_) => [
             IbChapter(
               id: 'test',

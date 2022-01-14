@@ -19,18 +19,18 @@ class IbRawPageDataAdapter extends TypeAdapter<IbRawPageData> {
     return IbRawPageData(
       id: fields[0] as String,
       title: fields[1] as String,
-      name: fields[2] as String,
-      content: fields[3] as String,
+      name: fields[2] as String?,
+      content: fields[3] as String?,
       rawContent: fields[4] as String,
-      navOrder: fields[5] as String,
-      cvibLevel: fields[6] as String,
-      parent: fields[7] as String,
+      navOrder: fields[5] as String?,
+      cvibLevel: fields[6] as String?,
+      parent: fields[7] as String?,
       hasChildren: fields[8] as bool,
       hasToc: fields[9] as bool,
       disableComments: fields[10] as bool,
-      frontMatter: (fields[11] as Map)?.cast<String, dynamic>(),
+      frontMatter: (fields[11] as Map).cast<String, dynamic>(),
       httpUrl: fields[12] as String,
-      apiUrl: fields[13] as String,
+      apiUrl: fields[13] as String?,
     );
   }
 

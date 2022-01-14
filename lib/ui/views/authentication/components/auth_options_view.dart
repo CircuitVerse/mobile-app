@@ -7,7 +7,7 @@ import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/authentication/auth_options_viewmodel.dart';
 
 class AuthOptionsView extends StatefulWidget {
-  const AuthOptionsView({Key key, this.isSignUp = false}) : super(key: key);
+  const AuthOptionsView({Key? key, this.isSignUp = false}) : super(key: key);
 
   final bool isSignUp;
 
@@ -16,7 +16,7 @@ class AuthOptionsView extends StatefulWidget {
 }
 
 class _AuthOptionsViewState extends State<AuthOptionsView> {
-  AuthOptionsViewModel _model;
+  late AuthOptionsViewModel _model;
 
   Future<void> onGoogleAuthPressed() async {
     await _model.googleAuth(isSignUp: widget.isSignUp);

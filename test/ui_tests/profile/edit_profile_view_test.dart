@@ -9,7 +9,8 @@ import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/components/cv_typeahead_field.dart';
 import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
-import 'package:mobile_app/utils/image_test_utils.dart';
+import '../../setup/test_helpers.mocks.dart';
+import '../../utils_tests/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 import 'package:mockito/mockito.dart';
@@ -20,7 +21,7 @@ import '../../setup/test_helpers.dart';
 
 void main() {
   group('EditProfileViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -28,7 +29,7 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpEditProfileView(WidgetTester tester) async {
       // Mock Local Storage
@@ -87,11 +88,12 @@ void main() {
       var _editProfileViewModel = MockEditProfileViewModel();
       locator.registerSingleton<EditProfileViewModel>(_editProfileViewModel);
 
+      when(_editProfileViewModel.UPDATE_PROFILE)
+          .thenAnswer((_) => 'update_profile');
       when(_editProfileViewModel.updateProfile(any, any, any, any))
           .thenReturn(null);
-      when(_editProfileViewModel
-              .isSuccess(_editProfileViewModel.UPDATE_PROFILE))
-          .thenReturn(true);
+      when(_editProfileViewModel.isSuccess(any)).thenReturn(true);
+      when(_editProfileViewModel.updatedUser).thenAnswer((_) => null);
 
       // Pump Edit Profile View
       await _pumpEditProfileView(tester);

@@ -5,7 +5,11 @@ import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 class IbHeadingsBuilder extends MarkdownElementBuilder {
-  IbHeadingsBuilder({this.slugMap, this.controller, this.selectable = true});
+  IbHeadingsBuilder({
+    required this.slugMap,
+    required this.controller,
+    this.selectable = true,
+  });
 
   final Map<String, int> slugMap;
   final AutoScrollController controller;
@@ -13,7 +17,7 @@ class IbHeadingsBuilder extends MarkdownElementBuilder {
   var index = 0;
 
   @override
-  Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {
+  Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
     var text = element.textContent;
 
     var widget = selectable

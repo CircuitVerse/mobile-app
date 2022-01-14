@@ -4,10 +4,10 @@ import 'package:mobile_app/models/group_members.dart';
 
 class MemberCard extends StatelessWidget {
   const MemberCard({
-    Key key,
-    this.member,
+    Key? key,
+    required this.member,
     this.hasMentorAccess = false,
-    this.onDeletePressed,
+    required this.onDeletePressed,
   }) : super(key: key);
 
   final GroupMember member;

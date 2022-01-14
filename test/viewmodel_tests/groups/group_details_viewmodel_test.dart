@@ -229,7 +229,7 @@ void main() {
         when(_mockGroupsApi.fetchGroupDetails('1')).thenAnswer((_) =>
             Future.value(_group
               ..assignments
-                  .firstWhere((assignment) => assignment.id == _assignment.id)
+                  ?.firstWhere((assignment) => assignment.id == _assignment.id)
                   .attributes
                   .currentUserProjectId = 1));
 

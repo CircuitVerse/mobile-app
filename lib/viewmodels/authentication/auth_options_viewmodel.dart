@@ -32,12 +32,12 @@ class AuthOptionsViewModel extends BaseModel {
           // save token & current user to local storage..
           if (isSignUp) {
             _storage.token = await _userApi.oauthSignup(
-              accessToken: result.accessToken.token,
+              accessToken: result.accessToken!.token,
               provider: 'facebook',
             );
           } else {
             _storage.token = await _userApi.oauthLogin(
-              accessToken: result.accessToken.token,
+              accessToken: result.accessToken!.token,
               provider: 'facebook',
             );
           }
@@ -75,19 +75,19 @@ class AuthOptionsViewModel extends BaseModel {
     try {
       await _googleSignIn.signIn();
       var _googleSignInAuthentication =
-          await _googleSignIn.currentUser.authentication;
+          await _googleSignIn.currentUser!.authentication;
 
       setStateFor(GOOGLE_OAUTH, ViewState.Busy);
 
       // save token & current user to local storage..
       if (isSignUp) {
         _storage.token = await _userApi.oauthSignup(
-          accessToken: _googleSignInAuthentication.accessToken,
+          accessToken: _googleSignInAuthentication.accessToken!,
           provider: 'google',
         );
       } else {
         _storage.token = await _userApi.oauthLogin(
-          accessToken: _googleSignInAuthentication.accessToken,
+          accessToken: _googleSignInAuthentication.accessToken!,
           provider: 'google',
         );
       }
@@ -131,12 +131,12 @@ class AuthOptionsViewModel extends BaseModel {
       // save token & current user to local storage..
       if (isSignUp) {
         _storage.token = await _userApi.oauthSignup(
-          accessToken: _accessTokenResponse.accessToken,
+          accessToken: _accessTokenResponse!.accessToken!,
           provider: 'github',
         );
       } else {
         _storage.token = await _userApi.oauthLogin(
-          accessToken: _accessTokenResponse.accessToken,
+          accessToken: _accessTokenResponse!.accessToken!,
           provider: 'github',
         );
       }

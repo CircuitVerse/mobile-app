@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class FeatureCard extends StatelessWidget {
   const FeatureCard({
-    Key key,
-    this.assetPath,
-    this.cardDescription,
-    this.cardHeading,
+    Key? key,
+    required this.assetPath,
+    required this.cardDescription,
+    required this.cardHeading,
   }) : super(key: key);
 
   final String assetPath;

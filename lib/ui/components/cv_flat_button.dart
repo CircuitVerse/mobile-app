@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 class CVFlatButton extends StatefulWidget {
   const CVFlatButton({
-    @required Key key,
-    @required this.triggerFunction,
-    @required this.buttonText,
+    required Key key,
+    required this.triggerFunction,
+    required this.buttonText,
     this.context,
   }) : super(key: key);
   final Function triggerFunction;
   final String buttonText;
-  final BuildContext context;
+  final BuildContext? context;
   @override
   CVFlatButtonState createState() => CVFlatButtonState();
 }
 
 class CVFlatButtonState extends State<CVFlatButton> {
-  Function dynamicFunction;
+  Function? dynamicFunction;
   void setDynamicFunction(bool isActive) {
     setState(() {
       dynamicFunction = isActive ? widget.triggerFunction : null;
@@ -30,7 +30,7 @@ class CVFlatButtonState extends State<CVFlatButton> {
       ),
       onPressed: dynamicFunction == null
           ? null
-          : () => dynamicFunction.call(widget.context),
+          : () => dynamicFunction!.call(widget.context),
       child: Text(widget.buttonText),
     );
   }

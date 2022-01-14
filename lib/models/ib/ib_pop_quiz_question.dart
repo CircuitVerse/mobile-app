@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
-
 class IbPopQuizQuestion {
   IbPopQuizQuestion({
-    @required this.question,
-    @required this.answers,
-    @required this.choices,
+    required this.question,
+    required this.answers,
+    required this.choices,
   });
 
   final String question;

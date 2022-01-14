@@ -1,16 +1,19 @@
 class AppException implements Exception {
   AppException([this._message, this._prefix]);
 
-  final String _message;
+  final String? _message;
 
-  final String _prefix;
+  final String? _prefix;
 
-  String get message => _message;
+  String? get message => _message;
 
-  String get prefix => _prefix;
+  String? get prefix => _prefix;
 
   @override
-  String toString() => '$_prefix : $_message';
+  String toString() {
+    if (_message == null) return _prefix!;
+    return '$_prefix : $_message';
+  }
 }
 
 class BadRequestException extends AppException {
@@ -22,37 +25,37 @@ class UnauthorizedException extends AppException {
 }
 
 class ForbiddenException extends AppException {
-  ForbiddenException([String message]) : super(message, 'Forbidden');
+  ForbiddenException([String? message]) : super(message, 'Forbidden');
 }
 
 class NotFoundException extends AppException {
-  NotFoundException([String message]) : super(message, 'Not Found');
+  NotFoundException([String? message]) : super(message, 'Not Found');
 }
 
 class ConflictException extends AppException {
-  ConflictException([String message]) : super(message, 'Conflict');
+  ConflictException([String? message]) : super(message, 'Conflict');
 }
 
 class UnprocessableIdentityException extends AppException {
-  UnprocessableIdentityException([String message])
+  UnprocessableIdentityException([String? message])
       : super(message, 'Unprocessable Identity');
 }
 
 class InternalServerErrorException extends AppException {
-  InternalServerErrorException([String message])
+  InternalServerErrorException([String? message])
       : super(message, 'Internal Server Error');
 }
 
 class ServiceUnavailableException extends AppException {
-  ServiceUnavailableException([String message])
+  ServiceUnavailableException([String? message])
       : super(message, 'Service Unavailable');
 }
 
 class InvalidInputException extends AppException {
-  InvalidInputException([String message]) : super(message, 'Invalid Input');
+  InvalidInputException([String? message]) : super(message, 'Invalid Input');
 }
 
 class FetchDataException extends AppException {
-  FetchDataException([String message])
+  FetchDataException([String? message])
       : super(message, 'Error During Communication');
 }

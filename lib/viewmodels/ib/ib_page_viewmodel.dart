@@ -11,12 +11,12 @@ import 'package:showcaseview/showcaseview.dart';
 
 class IbPageViewModel extends BaseModel {
   // ViewState Keys
-  String IB_FETCH_PAGE_DATA = 'ib_fetch_page_data';
-  String IB_FETCH_INTERACTION_DATA = 'ib_fetch_interaction_data';
-  String IB_FETCH_POP_QUIZ = 'ib_fetch_pop_quiz';
+  final String IB_FETCH_PAGE_DATA = 'ib_fetch_page_data';
+  final String IB_FETCH_INTERACTION_DATA = 'ib_fetch_interaction_data';
+  final String IB_FETCH_POP_QUIZ = 'ib_fetch_pop_quiz';
 
   // List of Global Keys to be Showcase
-  List<GlobalKey> _list;
+  late List<GlobalKey> _list;
 
   // Global Keys
   final GlobalKey _nextPage = GlobalKey(debugLabel: 'next');
@@ -28,10 +28,10 @@ class IbPageViewModel extends BaseModel {
 
   final IbEngineService _ibEngineService = locator<IbEngineService>();
 
-  IbPageData _pageData;
-  IbPageData get pageData => _pageData;
+  IbPageData? _pageData;
+  IbPageData? get pageData => _pageData;
 
-  Future fetchPageData({String id = 'index.md'}) async {
+  Future? fetchPageData({String id = 'index.md'}) async {
     try {
       _pageData = await _ibEngineService.getPageData(id: id);
 
@@ -64,7 +64,7 @@ class IbPageViewModel extends BaseModel {
     if (!state.tocButton) _list.add(keysMap['toc']);
 
     if (_list.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 800), () {
           showCaseWidgetState.startShowCase(_list);
         });
@@ -72,7 +72,7 @@ class IbPageViewModel extends BaseModel {
     }
   }
 
-  List<IbPopQuizQuestion> fetchPopQuiz(String rawContent) {
+  List<IbPopQuizQuestion>? fetchPopQuiz(String rawContent) {
     try {
       var result = _ibEngineService.getPopQuiz(rawContent);
       return result;

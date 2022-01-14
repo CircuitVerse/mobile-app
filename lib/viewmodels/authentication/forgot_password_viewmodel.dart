@@ -16,7 +16,7 @@ class ForgotPasswordViewModel extends BaseModel {
       var _areInstructionsSent =
           await _usersApi.sendResetPasswordInstructions(email);
 
-      if (_areInstructionsSent) {
+      if (_areInstructionsSent ?? false) {
         setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Success);
       } else {
         setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Error);

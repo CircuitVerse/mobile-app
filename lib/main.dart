@@ -23,7 +23,7 @@ Future<void> main() async {
 }
 
 class CircuitVerseMobile extends StatelessWidget {
-  const CircuitVerseMobile({Key key}) : super(key: key);
+  const CircuitVerseMobile({Key? key}) : super(key: key);
 
   // This widget is the root of CircuitVerse Mobile.
   @override
@@ -75,7 +75,7 @@ class CircuitVerseMobile extends StatelessWidget {
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               onGenerateTitle: (BuildContext context) =>
-                  AppLocalizations.of(context).title,
+                  AppLocalizations.of(context)!.title,
               debugShowCheckedModeBanner: false,
               onGenerateRoute: CVRouter.generateRoute,
               theme: ThemeProvider.themeOf(themeContext).data,

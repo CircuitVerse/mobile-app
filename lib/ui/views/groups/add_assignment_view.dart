@@ -16,7 +16,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
 
 class AddAssignmentView extends StatefulWidget {
-  const AddAssignmentView({Key key, this.groupId}) : super(key: key);
+  const AddAssignmentView({Key? key, required this.groupId}) : super(key: key);
 
   static const String id = 'add_assignment_view';
   final String groupId;
@@ -27,11 +27,12 @@ class AddAssignmentView extends StatefulWidget {
 
 class _AddAssignmentViewState extends State<AddAssignmentView> {
   final DialogService _dialogService = locator<DialogService>();
-  AddAssignmentViewModel _model;
+  late AddAssignmentViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name, _gradingScale = 'No Scale';
+  String _gradingScale = 'No Scale';
+  late String _name;
   final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
-  DateTime _deadline;
+  late DateTime _deadline;
   final List<String> _restrictions = [];
   final List<String> _gradingOptions = [
     'No Scale',
@@ -44,8 +45,9 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   Widget _buildNameInput() {
     return CVTextField(
       label: 'Name',
-      validator: (name) => name.isEmpty ? 'Please enter a valid name' : null,
-      onSaved: (name) => _name = name.trim(),
+      validator: (name) =>
+          name?.isEmpty ?? true ? 'Please enter a valid name' : null,
+      onSaved: (name) => _name = name!.trim(),
       action: TextInputAction.done,
     );
   }
@@ -88,7 +90,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
             return currentValue;
           }
         },
-        onSaved: (deadline) => _deadline = deadline,
+        onSaved: (deadline) => _deadline = deadline!,
       ),
     );
   }
@@ -102,7 +104,8 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
           labelText: 'Grading Scale',
         ),
         value: _gradingScale,
-        onChanged: (String value) {
+        onChanged: (String? value) {
+          if (value == null) return;
           setState(() {
             _gradingScale = value;
           });
@@ -124,12 +127,13 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         value: _isRestrictionEnabled,
         title: Text(
           'Elements restriction',
-          style: Theme.of(context).textTheme.headline6.copyWith(
+          style: Theme.of(context).textTheme.headline6?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),
         subtitle: const Text('Enable elements restriction'),
         onChanged: (value) {
+          if (value == null) return;
           setState(() {
             _isRestrictionEnabled = value;
           });
@@ -145,6 +149,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         Checkbox(
           value: _restrictions.contains(name),
           onChanged: (value) {
+            if (value == null) return;
             if (value) {
               _restrictions.add(name);
             } else {
@@ -166,7 +171,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.subtitle1.copyWith(
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
@@ -210,7 +215,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       String _descriptionEditorText;
       try {
         _descriptionEditorText =
-            await _descriptionEditor.currentState.getText();
+            await _descriptionEditor.currentState!.getText();
       } on NoSuchMethodError {
         debugPrint(
             'Handled html_editor error. NOTE: This should only throw during tests.');
@@ -245,7 +250,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
           'Error',
           _model.errorMessageFor(_model.ADD_ASSIGNMENT),
         );
-        _formKey.currentState.reset();
+        _formKey.currentState?.reset();
       }
     }
   }

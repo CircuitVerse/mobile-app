@@ -11,16 +11,17 @@ class ProfileViewModel extends BaseModel {
 
   final UsersApi _usersApi = locator<UsersApi>();
 
-  User _user;
+  User? _user;
 
-  User get user => _user;
+  User? get user => _user;
 
-  set user(User user) {
+  set user(User? user) {
     _user = user;
     notifyListeners();
   }
 
-  Future fetchUserProfile(String userId) async {
+  Future? fetchUserProfile(String? userId) async {
+    if (userId == null) return;
     setStateFor(FETCH_USER_PROFILE, ViewState.Busy);
     try {
       user = await _usersApi.fetchUser(userId);

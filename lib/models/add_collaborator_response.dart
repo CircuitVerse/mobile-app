@@ -7,9 +7,9 @@ class AddCollaboratorsResponse {
       );
 
   AddCollaboratorsResponse({
-    this.added,
-    this.existing,
-    this.invalid,
+    required this.added,
+    required this.existing,
+    required this.invalid,
   });
   List<String> added;
   List<String> existing;

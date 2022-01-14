@@ -3,7 +3,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/startup/startup_viewmodel.dart';
 
 class StartUpView extends StatelessWidget {
-  const StartUpView({Key key}) : super(key: key);
+  const StartUpView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

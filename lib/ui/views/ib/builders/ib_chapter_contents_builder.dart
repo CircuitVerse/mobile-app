@@ -5,10 +5,10 @@ import 'package:markdown/markdown.dart' as md;
 class IbChapterContentsBuilder extends MarkdownElementBuilder {
   IbChapterContentsBuilder({this.chapterContents});
 
-  final Widget chapterContents;
+  final Widget? chapterContents;
 
   @override
-  Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {
+  Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
     return chapterContents;
   }
 }

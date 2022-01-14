@@ -8,7 +8,7 @@ class IbWebViewBuilder extends MarkdownElementBuilder {
   IbWebViewBuilder();
 
   @override
-  Widget visitElementAfter(md.Element element, TextStyle preferredStyle) {
+  Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
     var textContent = element.textContent;
 
     return Html(
@@ -22,7 +22,7 @@ class IbWebViewBuilder extends MarkdownElementBuilder {
             width: width,
             height: height,
             child: WebView(
-              initialUrl: context.tree.element.attributes['src'],
+              initialUrl: context.tree.element?.attributes['src'],
               javascriptMode: JavascriptMode.unrestricted,
               initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
             ),

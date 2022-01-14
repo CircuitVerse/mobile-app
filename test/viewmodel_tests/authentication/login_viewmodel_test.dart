@@ -19,6 +19,7 @@ void main() {
             .thenAnswer((_) => Future.value('token'));
 
         var _model = LoginViewModel();
+        when(_usersApiMock.fetchCurrentUser()).thenAnswer((_) => null);
         await _model.login('test@test.com', 'password');
 
         // should call login with expected variables

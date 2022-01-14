@@ -34,9 +34,9 @@ void main() {
         expect(_model.stateFor(_model.IB_FETCH_PAGE_DATA), ViewState.Success);
 
         // verify returned data
-        expect(_model.pageData.id, '');
-        expect(_model.pageData.title, 'Home');
-        expect(_model.pageData.content.length, 0);
+        expect(_model.pageData!.id, '');
+        expect(_model.pageData!.title, 'Home');
+        expect(_model.pageData!.content?.length ?? 0, 0);
       });
 
       test('When called & service returns error', () async {

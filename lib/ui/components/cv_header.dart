@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 
 class CVHeader extends StatelessWidget {
-  const CVHeader(
-      {@required this.title, this.subtitle, this.description, Key key})
-      : super(key: key);
+  const CVHeader({
+    required this.title,
+    this.subtitle,
+    this.description,
+    Key? key,
+  }) : super(key: key);
 
   final String title;
-  final String subtitle;
-  final String description;
+  final String? subtitle;
+  final String? description;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class CVHeader extends StatelessWidget {
       children: <Widget>[
         Text(
           title,
-          style: Theme.of(context).textTheme.headline3.copyWith(
+          style: Theme.of(context).textTheme.headline3?.copyWith(
                 fontWeight: FontWeight.w400,
                 color: CVTheme.primaryColorDark,
               ),
@@ -24,8 +27,8 @@ class CVHeader extends StatelessWidget {
         ),
         if (subtitle != null)
           Text(
-            subtitle,
-            style: Theme.of(context).textTheme.subtitle1.copyWith(
+            subtitle!,
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: CVTheme.textColor(context),
                 ),
@@ -37,7 +40,7 @@ class CVHeader extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: Text(
-              description,
+              description!,
               style: Theme.of(context).textTheme.subtitle1,
               textAlign: TextAlign.center,
             ),

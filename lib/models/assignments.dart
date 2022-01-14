@@ -14,8 +14,8 @@ class Assignments {
     this.links,
   });
 
-  List<Assignment> data;
-  Links links;
+  List<Assignment>? data;
+  Links? links;
 }
 
 class Assignment {
@@ -40,34 +40,31 @@ class Assignment {
             : null,
       );
   Assignment({
-    this.id,
-    this.type,
-    this.attributes,
+    required this.id,
+    required this.type,
+    required this.attributes,
     this.projects,
     this.grades,
   });
   String id;
   String type;
   AssignmentAttributes attributes;
-  List<Project> projects;
-  List<Grade> grades;
+  List<Project>? projects;
+  List<Grade>? grades;
 
   bool get canBeGraded =>
       attributes.gradingScale != 'no_scale' &&
-      !attributes.gradesFinalized &&
+      !attributes.gradesFinalized! &&
       attributes.deadline.isBefore(DateTime.now());
 
   String get gradingScaleHint {
     switch (attributes.gradingScale) {
       case 'letter':
         return 'Assignment can be graded with any of the letters A/B/C/D/E/F';
-        break;
       case 'percent':
         return 'Assignment can be graded from 0 - 100 %';
-        break;
       case 'custom':
         return 'Assignment can be graded with any of custom grades';
-        break;
       default:
         return '';
     }
@@ -92,27 +89,27 @@ class AssignmentAttributes {
 
   AssignmentAttributes({
     this.name,
-    this.deadline,
+    required this.deadline,
     this.description,
-    this.hasMentorAccess,
+    required this.hasMentorAccess,
     this.createdAt,
     this.updatedAt,
     this.status,
     this.currentUserProjectId,
-    this.gradingScale,
+    required this.gradingScale,
     this.gradesFinalized,
-    this.restrictions,
+    required this.restrictions,
   });
 
-  String name;
+  String? name;
   DateTime deadline;
-  String description;
+  String? description;
   bool hasMentorAccess;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String status;
-  int currentUserProjectId;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? status;
+  int? currentUserProjectId;
   String gradingScale;
-  bool gradesFinalized;
+  bool? gradesFinalized;
   String restrictions;
 }

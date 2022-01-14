@@ -14,16 +14,17 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
 
 class LoginView extends StatefulWidget {
-  const LoginView({Key key}) : super(key: key);
+  const LoginView({Key? key}) : super(key: key);
+
   static const String id = 'login_view';
   @override
   _LoginViewState createState() => _LoginViewState();
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginViewModel _model;
+  late LoginViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _email, _password;
+  late String _email, _password;
   final _emailFocusNode = FocusNode();
   @override
   void dispose() {
@@ -54,7 +55,7 @@ class _LoginViewState extends State<LoginView> {
       type: TextInputType.emailAddress,
       validator: (value) =>
           Validators.isEmailValid(value) ? null : 'Please enter a valid email',
-      onSaved: (value) => _email = value.trim(),
+      onSaved: (value) => _email = value!.trim(),
       onFieldSubmitted: (_) =>
           FocusScope.of(context).requestFocus(_emailFocusNode),
     );
@@ -63,8 +64,9 @@ class _LoginViewState extends State<LoginView> {
   Widget _buildPasswordInput() {
     return CVPasswordField(
       focusNode: _emailFocusNode,
-      validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null,
-      onSaved: (value) => _password = value.trim(),
+      validator: (value) =>
+          value?.isEmpty ?? true ? 'Password can\'t be empty' : null,
+      onSaved: (value) => _password = value!.trim(),
     );
   }
 
@@ -136,7 +138,7 @@ class _LoginViewState extends State<LoginView> {
           'Error',
           _model.errorMessageFor(_model.LOGIN),
         );
-        _formKey.currentState.reset();
+        _formKey.currentState?.reset();
       }
     }
   }

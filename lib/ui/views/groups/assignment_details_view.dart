@@ -8,6 +8,7 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/assignments.dart';
+import 'package:mobile_app/models/grade.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
@@ -19,7 +20,10 @@ import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class AssignmentDetailsView extends StatefulWidget {
-  const AssignmentDetailsView({Key key, this.assignment}) : super(key: key);
+  const AssignmentDetailsView({
+    Key? key,
+    required this.assignment,
+  }) : super(key: key);
 
   static const String id = 'assignment_details_view';
   final Assignment assignment;
@@ -30,8 +34,8 @@ class AssignmentDetailsView extends StatefulWidget {
 
 class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   final DialogService _dialogService = locator<DialogService>();
-  AssignmentDetailsViewModel _model;
-  Assignment _recievedAssignment;
+  late AssignmentDetailsViewModel _model;
+  late Assignment _recievedAssignment;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _gradesController = TextEditingController();
   final TextEditingController _remarksController = TextEditingController();
@@ -73,7 +77,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           const SizedBox(width: 8),
           Text(
             'Edit',
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6?.copyWith(
                   color: Colors.white,
                 ),
           )
@@ -89,8 +93,8 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
       children: <Widget>[
         Flexible(
           child: Text(
-            _recievedAssignment.attributes.name,
-            style: Theme.of(context).textTheme.headline4.copyWith(
+            _recievedAssignment.attributes.name!,
+            style: Theme.of(context).textTheme.headline4?.copyWith(
                   color: CVTheme.textColor(context),
                   fontWeight: FontWeight.bold,
                 ),
@@ -105,20 +109,20 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
     );
   }
 
-  Widget _buildDetailComponent(String title, String description) {
+  Widget _buildDetailComponent(String title, String? description) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4),
       alignment: Alignment.centerLeft,
       child: RichText(
         text: TextSpan(
-          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.headline6?.copyWith(fontSize: 18),
           children: <TextSpan>[
             TextSpan(
               text: '$title : ',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: description.isEmpty || description == null
+              text: description == null || description.isEmpty
                   ? 'N.A'
                   : description,
               style: const TextStyle(fontSize: 18),
@@ -137,7 +141,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         children: [
           Text(
             'Description',
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -181,7 +185,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                   child: Text(
                     submission.attributes.authorName,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline6.copyWith(
+                    style: Theme.of(context).textTheme.headline6?.copyWith(
                           color: _model.focussedProject == submission
                               ? Colors.white
                               : CVTheme.textColor(context),
@@ -203,7 +207,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             alignment: Alignment.topLeft,
             child: Text(
               'Submissions : ',
-              style: Theme.of(context).textTheme.headline5.copyWith(
+              style: Theme.of(context).textTheme.headline5?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -237,7 +241,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                   placeholder: kTransparentImage,
                   image: EnvironmentConfig.CV_API_BASE_URL.substring(
                           0, EnvironmentConfig.CV_API_BASE_URL.length - 7) +
-                      _model.focussedProject.attributes.imagePreview.url,
+                      _model.focussedProject!.attributes.imagePreview.url,
                 ),
               ),
             )
@@ -303,7 +307,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
       confirmationTitle: 'DELETE',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Deleting Grade');
 
       await _model.deleteGrade(gradeId);
@@ -328,10 +332,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
   Widget _buildGrades() {
     if (_model.focussedProject != null && _recievedAssignment.canBeGraded) {
-      var _submittedGrade = _model.grades.firstWhere(
+      final Grade? _submittedGrade = _model.grades.firstWhereOrNull(
         (grade) =>
-            grade.relationships.project.data.id == _model.focussedProject.id,
-        orElse: () => null,
+            grade.relationships!.project.data.id == _model.focussedProject!.id,
       );
 
       if (_submittedGrade != null) {
@@ -352,7 +355,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             children: <Widget>[
               Text(
                 'Grades & Remarks',
-                style: Theme.of(context).textTheme.headline6.copyWith(
+                style: Theme.of(context).textTheme.headline6?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -364,7 +367,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                     ? TextInputType.number
                     : TextInputType.text,
                 validator: (value) =>
-                    value.isEmpty ? "Grade can't be empty" : null,
+                    value?.isEmpty ?? true ? "Grade can't be empty" : null,
                 onFieldSubmitted: (_) =>
                     FocusScope.of(context).requestFocus(_gradeFocusNode),
               ),
@@ -401,7 +404,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                       onPressed: () => deleteGrade(_submittedGrade.id),
                       child: Text(
                         'Delete',
-                        style: Theme.of(context).textTheme.headline6.copyWith(
+                        style: Theme.of(context).textTheme.headline6?.copyWith(
                               color: Colors.white,
                             ),
                       ),

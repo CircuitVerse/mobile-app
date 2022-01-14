@@ -8,8 +8,8 @@ class GroupMembers {
       );
 
   GroupMembers({
-    this.data,
-    this.links,
+    required this.data,
+    required this.links,
   });
   List<GroupMember> data;
   Links links;
@@ -23,9 +23,9 @@ class GroupMember {
       );
 
   GroupMember({
-    this.id,
-    this.type,
-    this.attributes,
+    required this.id,
+    required this.type,
+    required this.attributes,
   });
   String id;
   String type;
@@ -44,10 +44,10 @@ class GroupMemberAttributes {
       );
 
   GroupMemberAttributes({
-    this.groupId,
-    this.userId,
-    this.createdAt,
-    this.updatedAt,
+    required this.groupId,
+    required this.userId,
+    required this.createdAt,
+    required this.updatedAt,
     this.name,
     this.email,
   });
@@ -55,6 +55,6 @@ class GroupMemberAttributes {
   int userId;
   DateTime createdAt;
   DateTime updatedAt;
-  String name;
-  String email;
+  String? name;
+  String? email;
 }

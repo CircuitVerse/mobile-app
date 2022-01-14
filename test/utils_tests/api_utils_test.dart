@@ -19,30 +19,38 @@ void main() {
       ApiUtils.client = MockClient((_) => throw const SocketException(''));
 
       expect(() => ApiUtils.get('/'), throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.post('/'), throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.put('/'), throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.patch('/'), throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.delete('/'), throwsA(isInstanceOf<Failure>()));
+      expect(() => ApiUtils.post('/', headers: {}),
+          throwsA(isInstanceOf<Failure>()));
+      expect(() => ApiUtils.put('/', headers: {}),
+          throwsA(isInstanceOf<Failure>()));
+      expect(() => ApiUtils.patch('/', headers: {}),
+          throwsA(isInstanceOf<Failure>()));
+      expect(() => ApiUtils.delete('/', headers: {}),
+          throwsA(isInstanceOf<Failure>()));
     });
 
     test('When http method called & raises HttpException', () {
       ApiUtils.client = MockClient((_) => throw const HttpException(''));
 
       expect(() => ApiUtils.get('/'), throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.post('/'), throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.put('/'), throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.patch('/'), throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.delete('/'), throwsA(isInstanceOf<Failure>()));
+      expect(() => ApiUtils.post('/', headers: {}),
+          throwsA(isInstanceOf<Failure>()));
+      expect(() => ApiUtils.put('/', headers: {}),
+          throwsA(isInstanceOf<Failure>()));
+      expect(() => ApiUtils.patch('/', headers: {}),
+          throwsA(isInstanceOf<Failure>()));
+      expect(() => ApiUtils.delete('/', headers: {}),
+          throwsA(isInstanceOf<Failure>()));
     });
 
     test('When http method called & status success', () async {
       ApiUtils.client = MockClient((_) => Future.value(Response('', 200)));
 
       expect(await ApiUtils.get('/'), {});
-      expect(await ApiUtils.post('/'), {});
-      expect(await ApiUtils.put('/'), {});
-      expect(await ApiUtils.patch('/'), {});
-      expect(await ApiUtils.delete('/'), {});
+      expect(await ApiUtils.post('/', headers: {}), {});
+      expect(await ApiUtils.put('/', headers: {}), {});
+      expect(await ApiUtils.patch('/', headers: {}), {});
+      expect(await ApiUtils.delete('/', headers: {}), {});
     });
 
     group('jsonResponse -', () {

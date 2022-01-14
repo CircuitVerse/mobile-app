@@ -13,7 +13,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/edit_group_viewmodel.dart';
 
 class EditGroupView extends StatefulWidget {
-  const EditGroupView({Key key, this.group}) : super(key: key);
+  const EditGroupView({Key? key, required this.group}) : super(key: key);
 
   static const String id = 'edit_group_view';
   final Group group;
@@ -24,9 +24,9 @@ class EditGroupView extends StatefulWidget {
 
 class _EditGroupViewState extends State<EditGroupView> {
   final DialogService _dialogService = locator<DialogService>();
-  EditGroupViewModel _model;
+  late EditGroupViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name;
+  late String _name;
 
   Future<void> _validateAndSubmit() async {
     if (Validators.validateAndSaveForm(_formKey)) {
@@ -82,9 +82,10 @@ class _EditGroupViewState extends State<EditGroupView> {
                   padding: const EdgeInsets.all(0),
                   label: 'Group Name',
                   initialValue: widget.group.attributes.name,
-                  validator: (value) =>
-                      value.isEmpty ? 'Please enter a Group Name' : null,
-                  onSaved: (value) => _name = value.trim(),
+                  validator: (value) => value?.isEmpty ?? true
+                      ? 'Please enter a Group Name'
+                      : null,
+                  onSaved: (value) => _name = value!.trim(),
                   action: TextInputAction.done,
                 ),
                 const SizedBox(height: 16),

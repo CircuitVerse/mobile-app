@@ -31,12 +31,12 @@ class CircuitVerseContributor {
       );
   CircuitVerseContributor({
     this.login,
-    this.id,
+    required this.id,
     this.nodeId,
-    this.avatarUrl,
+    required this.avatarUrl,
     this.gravatarId,
     this.url,
-    this.htmlUrl,
+    required this.htmlUrl,
     this.followersUrl,
     this.followingUrl,
     this.gistsUrl,
@@ -48,27 +48,27 @@ class CircuitVerseContributor {
     this.receivedEventsUrl,
     this.type,
     this.siteAdmin,
-    this.contributions,
+    required this.contributions,
   });
 
-  String login;
+  String? login;
   int id;
-  String nodeId;
+  String? nodeId;
   String avatarUrl;
-  String gravatarId;
-  String url;
+  String? gravatarId;
+  String? url;
   String htmlUrl;
-  String followersUrl;
-  String followingUrl;
-  String gistsUrl;
-  String starredUrl;
-  String subscriptionsUrl;
-  String organizationsUrl;
-  String reposUrl;
-  String eventsUrl;
-  String receivedEventsUrl;
-  Type type;
-  bool siteAdmin;
+  String? followersUrl;
+  String? followingUrl;
+  String? gistsUrl;
+  String? starredUrl;
+  String? subscriptionsUrl;
+  String? organizationsUrl;
+  String? reposUrl;
+  String? eventsUrl;
+  String? receivedEventsUrl;
+  Type? type;
+  bool? siteAdmin;
   int contributions;
 }
 

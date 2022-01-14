@@ -1,8 +1,8 @@
 class Grade {
   Grade({
-    this.id,
+    required this.id,
     this.type,
-    this.attributes,
+    required this.attributes,
     this.relationships,
   });
   factory Grade.fromJson(Map<String, dynamic> json) => Grade(
@@ -13,9 +13,9 @@ class Grade {
       );
 
   String id;
-  String type;
+  String? type;
   GradeAttributes attributes;
-  GradeRelationships relationships;
+  GradeRelationships? relationships;
 }
 
 class GradeAttributes {
@@ -27,16 +27,16 @@ class GradeAttributes {
         updatedAt: DateTime.parse(json['updated_at']),
       );
   GradeAttributes({
-    this.grade,
+    required this.grade,
     this.remarks,
-    this.createdAt,
+    required this.createdAt,
     this.updatedAt,
   });
 
   String grade;
   dynamic remarks;
   DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? updatedAt;
 }
 
 class GradeRelationships {
@@ -46,7 +46,7 @@ class GradeRelationships {
       );
 
   GradeRelationships({
-    this.project,
+    required this.project,
   });
   GradedProject project;
 }
@@ -56,7 +56,7 @@ class GradedProject {
         data: GradedProjectData.fromJson(json['data']),
       );
   GradedProject({
-    this.data,
+    required this.data,
   });
   GradedProjectData data;
 }
@@ -69,8 +69,8 @@ class GradedProjectData {
       );
 
   GradedProjectData({
-    this.id,
-    this.type,
+    required this.id,
+    required this.type,
   });
   String id;
   String type;

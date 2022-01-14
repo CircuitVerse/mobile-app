@@ -23,19 +23,19 @@ class IbRawPageData {
       );
 
   IbRawPageData({
-    this.id,
-    this.title,
+    required this.id,
+    required this.title,
     this.name,
     this.content,
-    this.rawContent,
+    required this.rawContent,
     this.navOrder,
     this.cvibLevel,
     this.parent,
-    this.hasChildren,
-    this.hasToc,
-    this.disableComments,
-    this.frontMatter,
-    this.httpUrl,
+    required this.hasChildren,
+    required this.hasToc,
+    required this.disableComments,
+    required this.frontMatter,
+    required this.httpUrl,
     this.apiUrl,
   });
 
@@ -46,22 +46,22 @@ class IbRawPageData {
   String title;
 
   @HiveField(2)
-  String name;
+  String? name;
 
   @HiveField(3)
-  String content;
+  String? content;
 
   @HiveField(4)
   String rawContent;
 
   @HiveField(5)
-  String navOrder;
+  String? navOrder;
 
   @HiveField(6)
-  String cvibLevel;
+  String? cvibLevel;
 
   @HiveField(7)
-  String parent;
+  String? parent;
 
   @HiveField(8)
   bool hasChildren;
@@ -79,5 +79,5 @@ class IbRawPageData {
   String httpUrl;
 
   @HiveField(13)
-  String apiUrl;
+  String? apiUrl;
 }

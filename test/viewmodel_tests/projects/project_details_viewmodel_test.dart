@@ -39,7 +39,7 @@ void main() {
 
         // verify project data is populated..
         expect(_model.project, _project);
-        expect(_model.collaborators, _project.collaborators);
+        expect(_model.collaborators, _project.collaborators ?? []);
       });
 
       test('When called & service returns error', () async {

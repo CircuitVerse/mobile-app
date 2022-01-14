@@ -14,7 +14,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/edit_project_viewmodel.dart';
 
 class EditProjectView extends StatefulWidget {
-  const EditProjectView({Key key, this.project}) : super(key: key);
+  const EditProjectView({Key? key, required this.project}) : super(key: key);
 
   static const String id = 'edit_project_view';
   final Project project;
@@ -25,10 +25,10 @@ class EditProjectView extends StatefulWidget {
 
 class _EditProjectViewState extends State<EditProjectView> {
   final DialogService _dialogService = locator<DialogService>();
-  EditProjectViewModel _model;
+  late EditProjectViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name, _projectAccessType;
-  List<String> _tags;
+  late String _name, _projectAccessType;
+  late List<String> _tags;
   final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
 
   final _nameFocusNode = FocusNode();
@@ -53,8 +53,9 @@ class _EditProjectViewState extends State<EditProjectView> {
     return CVTextField(
       label: 'Name',
       initialValue: _name,
-      validator: (value) => value.isEmpty ? "Name can't be empty" : null,
-      onSaved: (value) => _name = value.trim(),
+      validator: (value) =>
+          value?.isEmpty ?? true ? "Name can't be empty" : null,
+      onSaved: (value) => _name = value!.trim(),
       onFieldSubmitted: (_) =>
           FocusScope.of(context).requestFocus(_nameFocusNode),
     );
@@ -66,7 +67,7 @@ class _EditProjectViewState extends State<EditProjectView> {
       focusNode: _nameFocusNode,
       initialValue: _tags.join(' , '),
       onSaved: (value) =>
-          _tags = value.split(',').map((tag) => tag.trim()).toList(),
+          _tags = value!.split(',').map((tag) => tag.trim()).toList(),
       onFieldSubmitted: (_) {
         _nameFocusNode.unfocus();
         FocusScope.of(context).requestFocus(_tagsListFocusNode);
@@ -83,7 +84,8 @@ class _EditProjectViewState extends State<EditProjectView> {
           labelText: 'Project Access Type',
         ),
         value: _projectAccessType,
-        onChanged: (String value) {
+        onChanged: (String? value) {
+          if (value == null) return;
           setState(() {
             _projectAccessType = value;
           });
@@ -91,12 +93,12 @@ class _EditProjectViewState extends State<EditProjectView> {
         validator: (category) =>
             category == null ? 'Choose a Project Access Type' : null,
         items: ['Public', 'Private', 'Limited Access']
-            ?.map<DropdownMenuItem<String>>((var type) {
+            .map<DropdownMenuItem<String>>((var type) {
           return DropdownMenuItem<String>(
             value: type,
             child: Text(type),
           );
-        })?.toList(),
+        }).toList(),
       ),
     );
   }
@@ -121,7 +123,7 @@ class _EditProjectViewState extends State<EditProjectView> {
         widget.project.id,
         name: _name,
         projectAccessType: _projectAccessType,
-        description: await _descriptionEditor.currentState.getText(),
+        description: await _descriptionEditor.currentState!.getText(),
         tagsList: _tags,
       );
 

@@ -6,7 +6,7 @@ import 'package:mobile_app/ui/views/contributors/components/contributors_donate_
 import 'package:mobile_app/ui/views/contributors/components/contributors_support_card.dart';
 
 class ContributorsView extends StatelessWidget {
-  const ContributorsView({Key key, this.showAppBar = true}) : super(key: key);
+  const ContributorsView({Key? key, this.showAppBar = true}) : super(key: key);
 
   static const String id = 'contributors_view';
   final bool showAppBar;
@@ -82,7 +82,7 @@ class ContributorsView extends StatelessWidget {
               imagePath: 'assets/images/contribute/paypal-logo.jpg',
               title: 'Donate through PayPal',
               url: 'https://www.paypal.me/satviksr',
-            )
+            ),
           ],
         ),
       ),

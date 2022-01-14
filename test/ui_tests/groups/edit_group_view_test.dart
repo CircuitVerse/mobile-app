@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
@@ -14,11 +13,13 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_data/mock_groups.dart';
-import '../../setup/test_helpers.dart';
+// import '../../setup/test_helpers.dart';
+
+import '../../setup/test_helpers.mocks.dart';
 
 void main() {
   group('EditGroupViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -26,7 +27,7 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpEditGroupView(WidgetTester tester) async {
       var group = Group.fromJson(mockGroup);
@@ -64,7 +65,7 @@ void main() {
       var _dialogService = MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
-      when(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
+      when(_dialogService.showCustomProgressDialog())
           .thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(_dialogService.popDialog()).thenReturn(null);
 
@@ -72,9 +73,10 @@ void main() {
       var _editGroupViewModel = MockEditGroupViewModel();
       locator.registerSingleton<EditGroupViewModel>(_editGroupViewModel);
 
+      when(_editGroupViewModel.UPDATE_GROUP).thenAnswer((_) => 'update_group');
       when(_editGroupViewModel.updateGroup(any, any)).thenReturn(null);
-      when(_editGroupViewModel.isSuccess(_editGroupViewModel.UPDATE_GROUP))
-          .thenReturn(true);
+      when(_editGroupViewModel.isSuccess(any)).thenReturn(true);
+      when(_editGroupViewModel.updatedGroup).thenReturn(null);
 
       // Pump New Group View
       await _pumpEditGroupView(tester);

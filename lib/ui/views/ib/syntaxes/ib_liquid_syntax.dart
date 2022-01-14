@@ -5,10 +5,11 @@ class IbLiquidSyntax extends md.BlockSyntax {
   IbLiquidSyntax() : super();
 
   @override
-  md.Node parse(md.BlockParser parser) {
+  md.Node? parse(md.BlockParser parser) {
     var match = pattern.firstMatch(parser.current);
-    var tags = match[1].split(' ');
-    md.Element node;
+    if (match == null) return null;
+    var tags = match[1]!.split(' ');
+    md.Element? node;
 
     // Liquid include tags
     if (tags[0] == 'include') {
@@ -18,13 +19,13 @@ class IbLiquidSyntax extends md.BlockSyntax {
       } else if (tags[1] == 'image.html' && tags.length >= 3) {
         // Images
         var url =
-            RegExp(r'''url=("|')([^"'\n\r]+)("|')''').firstMatch(match[1])[2];
+            RegExp(r'''url=("|')([^"'\n\r]+)("|')''').firstMatch(match[1]!)![2];
         var alt = RegExp(r'''description=("|')([^"'\n\r]*)("|')''')
-            .firstMatch(match[1])[2];
+            .firstMatch(match[1]!)![2];
 
         node = md.Element.withTag('img');
         node.attributes['src'] = '${EnvironmentConfig.IB_BASE_URL}$url';
-        node.attributes['alt'] = alt;
+        node.attributes['alt'] = alt!;
       } else {
         // Interactions using html
         node = md.Element.text('interaction', tags[1]);

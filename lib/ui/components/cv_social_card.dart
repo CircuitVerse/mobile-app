@@ -4,11 +4,11 @@ import 'package:mobile_app/utils/url_launcher.dart';
 
 class CircuitVerseSocialCard extends StatelessWidget {
   const CircuitVerseSocialCard({
-    Key key,
-    this.imagePath,
-    this.title,
-    this.description,
-    this.url,
+    required this.imagePath,
+    required this.title,
+    required this.description,
+    required this.url,
+    Key? key,
   }) : super(key: key);
 
   final String imagePath;
@@ -41,7 +41,7 @@ class CircuitVerseSocialCard extends StatelessWidget {
                       title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: CVTheme.textColor(context),
                           ),

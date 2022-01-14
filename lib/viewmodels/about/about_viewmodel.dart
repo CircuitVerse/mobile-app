@@ -11,7 +11,7 @@ class AboutViewModel extends BaseModel {
 
   final _contributorsApi = locator<ContributorsApi>();
 
-  List<CircuitVerseContributor> _cvContributors;
+  late List<CircuitVerseContributor> _cvContributors;
 
   List<CircuitVerseContributor> get cvContributors => _cvContributors;
 
@@ -23,7 +23,7 @@ class AboutViewModel extends BaseModel {
   Future fetchContributors() async {
     setStateFor(FETCH_CONTRIBUTORS, ViewState.Busy);
     try {
-      cvContributors = await _contributorsApi.fetchContributors();
+      cvContributors = await _contributorsApi.fetchContributors() ?? [];
 
       setStateFor(FETCH_CONTRIBUTORS, ViewState.Success);
     } on Failure catch (f) {

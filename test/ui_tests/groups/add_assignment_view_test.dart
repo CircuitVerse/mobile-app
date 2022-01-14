@@ -14,11 +14,11 @@ import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../setup/test_helpers.dart';
+import '../../setup/test_helpers.mocks.dart';
 
 void main() {
   group('AddAssignmentViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -26,14 +26,16 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpAddAssignmentView(WidgetTester tester) async {
       await tester.pumpWidget(
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: const AddAssignmentView(),
+          home: const AddAssignmentView(
+            groupId: 'Test',
+          ),
         ),
       );
 
@@ -78,7 +80,7 @@ void main() {
       var _dialogService = MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
-      when(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
+      when(_dialogService.showCustomProgressDialog())
           .thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(_dialogService.popDialog()).thenReturn(null);
 
@@ -87,6 +89,8 @@ void main() {
       locator
           .registerSingleton<AddAssignmentViewModel>(_addAssignmentViewModel);
 
+      when(_addAssignmentViewModel.ADD_ASSIGNMENT)
+          .thenAnswer((_) => 'add_assignment');
       when(_addAssignmentViewModel.addAssignment(any, any, any, any, any, any))
           .thenReturn(null);
       when(_addAssignmentViewModel.isSuccess(any)).thenReturn(false);
@@ -101,9 +105,8 @@ void main() {
           find.byWidgetPredicate(
               (widget) => widget is CVTextField && widget.label == 'Name'),
           'Test');
-      CVPrimaryButton widget =
-          find.byType(CVPrimaryButton).evaluate().first.widget;
-      widget.onPressed();
+      Widget widget = find.byType(CVPrimaryButton).evaluate().first.widget;
+      (widget as CVPrimaryButton).onPressed!();
       await tester.pumpAndSettle();
 
       await tester.pump(const Duration(seconds: 5));

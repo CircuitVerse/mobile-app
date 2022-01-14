@@ -52,7 +52,7 @@ class DatabaseServiceImpl implements DatabaseService {
 
   @override
   Future<bool> isExpired(String key) async {
-    var data = await getData<DateTime>(DatabaseBox.Metadata, key);
+    var data = await getData<DateTime?>(DatabaseBox.Metadata, key);
 
     return data == null ||
         data.isBefore(
@@ -63,7 +63,7 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   @override
-  Future<T> getData<T>(DatabaseBox box, String key, {T defaultValue}) async {
+  Future<T> getData<T>(DatabaseBox box, String key, {T? defaultValue}) async {
     var openedBox = await _openBox(box);
 
     return openedBox.get(key, defaultValue: defaultValue);

@@ -11,21 +11,21 @@ class EditProjectViewModel extends BaseModel {
 
   final ProjectsApi _projectsApi = locator<ProjectsApi>();
 
-  Project _updatedProject;
+  Project? _updatedProject;
 
-  Project get updatedProject => _updatedProject;
+  Project? get updatedProject => _updatedProject;
 
-  set updatedProject(Project updatedProject) {
+  set updatedProject(Project? updatedProject) {
     _updatedProject = updatedProject;
     notifyListeners();
   }
 
   Future updateProject(
     String id, {
-    String name,
-    String projectAccessType,
-    String description,
-    List<String> tagsList,
+    required String name,
+    required String projectAccessType,
+    required String description,
+    required List<String> tagsList,
   }) async {
     setStateFor(UPDATE_PROJECT, ViewState.Busy);
     try {

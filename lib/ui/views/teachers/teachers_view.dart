@@ -4,7 +4,7 @@ import 'package:mobile_app/ui/components/cv_subheader.dart';
 import 'package:mobile_app/ui/views/teachers/components/teachers_card.dart';
 
 class TeachersView extends StatelessWidget {
-  const TeachersView({Key key, this.showAppBar = true}) : super(key: key);
+  const TeachersView({Key? key, this.showAppBar = true}) : super(key: key);
 
   static const String id = 'teachers_view';
   final bool showAppBar;
