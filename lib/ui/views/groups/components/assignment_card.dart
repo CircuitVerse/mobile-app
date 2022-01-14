@@ -8,12 +8,12 @@ import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 
 class AssignmentCard extends StatefulWidget {
   const AssignmentCard({
-    Key? key,
     required this.assignment,
     required this.onDeletePressed,
     required this.onEditPressed,
     required this.onReopenPressed,
     required this.onStartPressed,
+    Key? key,
   }) : super(key: key);
   final Assignment assignment;
   final VoidCallback onDeletePressed;
@@ -169,7 +169,6 @@ class _AssignmentCardState extends State<AssignmentCard> {
         color: CVTheme.boxBg(context),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(
             widget.assignment.attributes.name ?? 'No Name',

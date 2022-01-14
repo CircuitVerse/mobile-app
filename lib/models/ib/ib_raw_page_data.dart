@@ -25,17 +25,17 @@ class IbRawPageData {
   IbRawPageData({
     required this.id,
     required this.title,
-    this.name,
-    this.content,
     required this.rawContent,
-    this.navOrder,
-    this.cvibLevel,
-    this.parent,
     required this.hasChildren,
     required this.hasToc,
     required this.disableComments,
     required this.frontMatter,
     required this.httpUrl,
+    this.name,
+    this.content,
+    this.navOrder,
+    this.cvibLevel,
+    this.parent,
     this.apiUrl,
   });
 

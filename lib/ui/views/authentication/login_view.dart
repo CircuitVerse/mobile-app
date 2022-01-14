@@ -163,7 +163,7 @@ class _LoginViewState extends State<LoginView> {
                 const SizedBox(height: 8),
                 _buildNewUserSignUpComponent(),
                 const SizedBox(height: 30),
-                const AuthOptionsView(isSignUp: false),
+                const AuthOptionsView(),
               ],
             ),
           ),

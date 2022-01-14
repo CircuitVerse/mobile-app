@@ -1,8 +1,8 @@
 class Grade {
   Grade({
     required this.id,
-    this.type,
     required this.attributes,
+    this.type,
     this.relationships,
   });
   factory Grade.fromJson(Map<String, dynamic> json) => Grade(
@@ -28,8 +28,8 @@ class GradeAttributes {
       );
   GradeAttributes({
     required this.grade,
-    this.remarks,
     required this.createdAt,
+    this.remarks,
     this.updatedAt,
   });
 

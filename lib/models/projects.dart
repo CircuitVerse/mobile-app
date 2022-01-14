@@ -78,12 +78,12 @@ class ProjectAttributes {
     required this.createdAt,
     required this.updatedAt,
     required this.imagePreview,
-    this.description,
     required this.view,
     required this.tags,
-    this.isStarred,
     required this.authorName,
     required this.starsCount,
+    this.isStarred,
+    this.description,
   });
 
   String name;

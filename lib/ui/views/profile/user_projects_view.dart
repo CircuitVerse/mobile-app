@@ -8,8 +8,8 @@ import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
 
 class UserProjectsView extends StatefulWidget {
   const UserProjectsView({
-    Key? key,
     required this.userId,
+    Key? key,
   }) : super(key: key);
 
   final String userId;

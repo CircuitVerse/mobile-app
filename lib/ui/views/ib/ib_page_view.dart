@@ -178,7 +178,6 @@ class _IbPageViewState extends State<IbPageView> {
 
     return MarkdownBody(
       data: data.content,
-      selectable: _selectable,
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
       imageBuilder: _buildMarkdownImage,
       onTapLink: _onTapLink,

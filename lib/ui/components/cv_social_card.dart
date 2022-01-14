@@ -29,7 +29,6 @@ class CircuitVerseSocialCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Image.asset(imagePath, width: 48),
               const SizedBox(width: 16),

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class TeachersCard extends StatelessWidget {
   const TeachersCard({
-    Key? key,
     required this.assetPath,
     required this.cardDescription,
     required this.cardHeading,
+    Key? key,
   }) : super(key: key);
 
   final String assetPath;

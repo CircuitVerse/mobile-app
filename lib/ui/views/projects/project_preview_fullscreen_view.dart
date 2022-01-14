@@ -6,8 +6,8 @@ import 'package:transparent_image/transparent_image.dart';
 
 class ProjectPreviewFullScreen extends StatelessWidget {
   const ProjectPreviewFullScreen({
-    Key? key,
     required this.project,
+    Key? key,
   }) : super(key: key);
 
   static const String id = 'project_preview_fullscreen_view';

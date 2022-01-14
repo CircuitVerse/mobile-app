@@ -6,9 +6,9 @@ import 'package:mobile_app/ui/views/ib/components/ib_pop_quiz_button.dart';
 
 class IbPopQuiz extends StatelessWidget {
   const IbPopQuiz({
-    Key? key,
     required this.context,
     required this.questions,
+    Key? key,
   }) : super(key: key);
 
   final BuildContext context;
@@ -55,7 +55,6 @@ class IbPopQuiz extends StatelessWidget {
     }
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(

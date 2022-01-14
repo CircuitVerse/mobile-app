@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 class IBShowCase {
-  bool nextButton, prevButton, tocButton, drawerButton;
-
   IBShowCase({
     required this.nextButton,
     required this.prevButton,
@@ -18,6 +16,8 @@ class IBShowCase {
       drawerButton: json['drawer'] ?? false,
     );
   }
+
+  bool nextButton, prevButton, tocButton, drawerButton;
 
   IBShowCase copyWith({
     bool? nextButton,

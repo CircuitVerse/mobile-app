@@ -79,7 +79,7 @@ void main() {
       expect(find.byType(FloatingActionButton), findsOneWidget);
 
       // Tap Joined Groups Tab
-      await tester.tap(find.widgetWithText(Tab, "Joined"));
+      await tester.tap(find.widgetWithText(Tab, 'Joined'));
       await tester.pumpAndSettle();
 
       // Member Group Card (1)
@@ -95,7 +95,7 @@ void main() {
       expect(find.widgetWithText(CardButton, 'View'), findsOneWidget);
 
       // Tap Mentored Groups Tab
-      await tester.tap(find.widgetWithText(Tab, "Mentored"));
+      await tester.tap(find.widgetWithText(Tab, 'Mentored'));
       await tester.pumpAndSettle();
 
       // Mentored Group Card (1)

@@ -6,10 +6,10 @@ import 'package:transparent_image/transparent_image.dart';
 
 class ProjectCard extends StatefulWidget {
   const ProjectCard({
-    Key? key,
     required this.project,
     required this.onPressed,
     this.isHeaderFilled = true,
+    Key? key,
   }) : super(key: key);
 
   final Project project;
@@ -112,7 +112,6 @@ class _ProjectCardState extends State<ProjectCard> {
           elevation: 5,
           shadowColor: CVTheme.primaryColorLight,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               _buildHeader(),
               _buildPreview(),

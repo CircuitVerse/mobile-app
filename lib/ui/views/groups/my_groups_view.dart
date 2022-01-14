@@ -38,7 +38,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
           height: 250,
         ),
         _buildSubHeader(
-            title: "Explore and join groups of your school and friends!"),
+            title: 'Explore and join groups of your school and friends!'),
       ],
     );
   }
@@ -167,16 +167,18 @@ class _MyGroupsViewState extends State<MyGroupsView>
             return TabBarView(
               controller: _tabController,
               children: <Widget>[
-                _mentoredGroups.isEmpty
-                    ? _emptyState()
-                    : ListView(
-                        children: _mentoredGroups,
-                      ),
-                _joinedGroups.isEmpty
-                    ? _emptyState()
-                    : ListView(
-                        children: _joinedGroups,
-                      ),
+                if (_mentoredGroups.isEmpty)
+                  _emptyState()
+                else
+                  ListView(
+                    children: _mentoredGroups,
+                  ),
+                if (_joinedGroups.isEmpty)
+                  _emptyState()
+                else
+                  ListView(
+                    children: _joinedGroups,
+                  ),
               ],
             );
           },

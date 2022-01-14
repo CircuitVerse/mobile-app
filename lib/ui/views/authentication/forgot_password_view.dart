@@ -136,9 +136,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 const SizedBox(height: 8),
                 _buildNewUserSignUpComponent(),
                 const SizedBox(height: 32),
-                const AuthOptionsView(
-                  isSignUp: false,
-                ),
+                const AuthOptionsView(),
               ],
             ),
           ),

@@ -30,13 +30,14 @@ class CircuitVerseContributor {
         contributions: json['contributions'],
       );
   CircuitVerseContributor({
-    this.login,
     required this.id,
-    this.nodeId,
     required this.avatarUrl,
+    required this.htmlUrl,
+    required this.contributions,
+    this.nodeId,
+    this.login,
     this.gravatarId,
     this.url,
-    required this.htmlUrl,
     this.followersUrl,
     this.followingUrl,
     this.gistsUrl,
@@ -48,7 +49,6 @@ class CircuitVerseContributor {
     this.receivedEventsUrl,
     this.type,
     this.siteAdmin,
-    required this.contributions,
   });
 
   String? login;

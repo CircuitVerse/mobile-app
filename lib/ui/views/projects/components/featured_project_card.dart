@@ -93,7 +93,6 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         elevation: 5,
         shadowColor: CVTheme.primaryColorLight,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             _buildPreview(),
             _buildFooter(),

@@ -16,7 +16,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
 
 class AddAssignmentView extends StatefulWidget {
-  const AddAssignmentView({Key? key, required this.groupId}) : super(key: key);
+  const AddAssignmentView({required this.groupId, Key? key}) : super(key: key);
 
   static const String id = 'add_assignment_view';
   final String groupId;

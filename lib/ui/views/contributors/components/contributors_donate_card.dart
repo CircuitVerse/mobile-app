@@ -3,10 +3,10 @@ import 'package:mobile_app/utils/url_launcher.dart';
 
 class ContributeDonateCard extends StatelessWidget {
   const ContributeDonateCard({
-    Key? key,
     required this.imagePath,
     required this.title,
     required this.url,
+    Key? key,
   }) : super(key: key);
 
   final String imagePath;
@@ -28,7 +28,7 @@ class ContributeDonateCard extends StatelessWidget {
           },
           child: Container(
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.black, width: 2),
+                border: Border.all(width: 2),
                 borderRadius: const BorderRadius.all(
                   Radius.circular(8),
                 ),

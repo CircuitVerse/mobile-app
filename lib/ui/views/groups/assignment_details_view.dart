@@ -21,8 +21,8 @@ import 'package:transparent_image/transparent_image.dart';
 
 class AssignmentDetailsView extends StatefulWidget {
   const AssignmentDetailsView({
-    Key? key,
     required this.assignment,
+    Key? key,
   }) : super(key: key);
 
   static const String id = 'assignment_details_view';

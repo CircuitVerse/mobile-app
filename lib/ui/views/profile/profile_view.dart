@@ -122,7 +122,6 @@ class _ProfileViewState extends State<ProfileView> {
         child: Row(
           children: <Widget>[
             Expanded(
-              flex: 1,
               child: Column(
                 children: <Widget>[
                   _buildProfileImage(),

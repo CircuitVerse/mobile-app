@@ -7,7 +7,26 @@ linter:
   rules:
     # Util classes
     avoid_classes_with_only_static_members: false
-
     non_constant_identifier_names: false
-
     constant_identifier_names: false
+    always_declare_return_types: true
+    avoid_print: true
+    avoid_unnecessary_containers: true
+    prefer_if_elements_to_conditional_expressions: true
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    unnecessary_string_interpolations: true
+    sized_box_for_whitespace: true
+    prefer_single_quotes: true
+    prefer_const_constructors_in_immutables: true
+    use_key_in_widget_constructors: true
+    prefer_function_declarations_over_variables: true
+    unnecessary_string_escapes: true
+    avoid_function_literals_in_foreach_calls: true
+    prefer_interpolation_to_compose_strings: true
+    unnecessary_parenthesis: true
+    sort_constructors_first: true
+    always_put_required_named_parameters_first: true
+    avoid_redundant_argument_values: true
+    join_return_with_assignment: true
+

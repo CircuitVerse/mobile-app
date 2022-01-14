@@ -51,12 +51,12 @@ class UserAttributes {
       );
 
   UserAttributes({
-    this.name,
+    required this.admin,
     required this.email,
     required this.subscribed,
     this.createdAt,
+    this.name,
     this.updatedAt,
-    required this.admin,
     this.country,
     this.educationalInstitute,
   });

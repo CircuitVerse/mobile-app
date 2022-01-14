@@ -36,7 +36,6 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
       ),
       child: TextFormField(
         focusNode: widget.focusNode,
-        maxLines: 1,
         obscureText: _obscureText,
         keyboardType: TextInputType.visiblePassword,
         style: TextStyle(

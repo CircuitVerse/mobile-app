@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class CVTabBar extends StatelessWidget implements PreferredSizeWidget {
   const CVTabBar({
-    Key? key,
-    this.color,
     required this.tabBar,
+    this.color,
+    Key? key,
   }) : super(key: key);
 
   final Color? color;

@@ -88,17 +88,17 @@ class AssignmentAttributes {
       );
 
   AssignmentAttributes({
-    this.name,
     required this.deadline,
-    this.description,
     required this.hasMentorAccess,
+    required this.gradingScale,
+    required this.restrictions,
+    this.name,
+    this.description,
     this.createdAt,
     this.updatedAt,
     this.status,
     this.currentUserProjectId,
-    required this.gradingScale,
     this.gradesFinalized,
-    required this.restrictions,
   });
 
   String? name;

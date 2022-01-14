@@ -255,7 +255,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                 final String key = globalKey
                     .toString()
                     .substring(1, globalKey.toString().length - 1)
-                    .split(" ")
+                    .split(' ')
                     .last;
                 model.onShowCased(key);
               },

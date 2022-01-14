@@ -14,7 +14,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/edit_project_viewmodel.dart';
 
 class EditProjectView extends StatefulWidget {
-  const EditProjectView({Key? key, required this.project}) : super(key: key);
+  const EditProjectView({required this.project, Key? key}) : super(key: key);
 
   static const String id = 'edit_project_view';
   final Project project;
