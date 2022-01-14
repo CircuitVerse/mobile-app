@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
@@ -12,11 +11,11 @@ import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../setup/test_helpers.dart';
+import '../../setup/test_helpers.mocks.dart';
 
 void main() {
   group('NewGroupViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -24,7 +23,7 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpNewGroupView(WidgetTester tester) async {
       await tester.pumpWidget(
@@ -68,9 +67,10 @@ void main() {
       var _newGroupViewModel = MockNewGroupViewModel();
       locator.registerSingleton<NewGroupViewModel>(_newGroupViewModel);
 
+      when(_newGroupViewModel.ADD_GROUP).thenAnswer((_) => 'add_group');
       when(_newGroupViewModel.addGroup(any)).thenReturn(null);
-      when(_newGroupViewModel.isSuccess(_newGroupViewModel.ADD_GROUP))
-          .thenReturn(true);
+      when(_newGroupViewModel.isSuccess(any)).thenReturn(true);
+      when(_newGroupViewModel.newGroup).thenAnswer((_) => null);
 
       // Pump New Group View
       await _pumpNewGroupView(tester);

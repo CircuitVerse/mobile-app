@@ -10,7 +10,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class IbLandingViewModel extends BaseModel {
   // ViewState Keys
-  String IB_FETCH_CHAPTERS = 'ib_fetch_chapters';
+  final String IB_FETCH_CHAPTERS = 'ib_fetch_chapters';
 
   final IbEngineService _ibEngineService = locator<IbEngineService>();
   final LocalStorageService _localStorageService =
@@ -36,7 +36,7 @@ class IbLandingViewModel extends BaseModel {
 
   // ShowCaseState stores the information of whether the button which is to be
   // showcased are clicked or not
-  IBShowCase _showCaseState;
+  late IBShowCase _showCaseState;
 
   IBShowCase get showCaseState => _showCaseState;
 
@@ -84,9 +84,9 @@ class IbLandingViewModel extends BaseModel {
     fetchChapters();
   }
 
-  Future fetchChapters() async {
+  Future? fetchChapters() async {
     try {
-      _chapters = await _ibEngineService.getChapters();
+      _chapters = await _ibEngineService.getChapters()!;
       setStateFor(IB_FETCH_CHAPTERS, ViewState.Success);
     } on Failure catch (f) {
       setStateFor(IB_FETCH_CHAPTERS, ViewState.Error);

@@ -8,8 +8,8 @@ class Collaborators {
       );
 
   Collaborators({
-    this.data,
-    this.links,
+    required this.data,
+    required this.links,
   });
   List<Collaborator> data;
   Links links;
@@ -23,9 +23,9 @@ class Collaborator {
       );
 
   Collaborator({
-    this.id,
-    this.type,
-    this.attributes,
+    required this.id,
+    required this.type,
+    required this.attributes,
   });
   String id;
   String type;
@@ -39,7 +39,7 @@ class CollaboratorAttributes {
       );
 
   CollaboratorAttributes({
-    this.name,
+    required this.name,
   });
   String name;
 }

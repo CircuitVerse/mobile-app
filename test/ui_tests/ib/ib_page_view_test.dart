@@ -14,11 +14,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 import '../../setup/test_data/mock_ib_raw_page_data.dart';
-import '../../setup/test_helpers.dart';
+import '../../setup/test_helpers.mocks.dart';
 
 void main() {
   group('IbPageViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -26,7 +26,7 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpIbPageView(WidgetTester tester) async {
       // Mock ViewModel
@@ -45,8 +45,9 @@ void main() {
       const Map<String, dynamic> globalKeyMap = <String, dynamic>{};
 
       // Mock Page Data
+      when(model.IB_FETCH_PAGE_DATA).thenAnswer((_) => 'in_fetch_page_data');
       when(model.fetchPageData()).thenReturn(null);
-      when(model.isSuccess(model.IB_FETCH_PAGE_DATA)).thenAnswer((_) => true);
+      when(model.isSuccess(any)).thenAnswer((_) => true);
       when(model.pageData).thenAnswer(
         (_) => IbPageData(
           id: mockIbRawPageData1['path'],

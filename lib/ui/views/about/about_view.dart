@@ -14,7 +14,7 @@ import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutView extends StatefulWidget {
-  const AboutView({Key key}) : super(key: key);
+  const AboutView({Key? key}) : super(key: key);
   static const String id = 'about_view';
 
   @override
@@ -22,7 +22,7 @@ class AboutView extends StatefulWidget {
 }
 
 class _AboutViewState extends State<AboutView> {
-  AboutViewModel _model;
+  late AboutViewModel _model;
 
   Widget _buildTosAndPrivacyButtons() {
     return Container(
@@ -31,7 +31,7 @@ class _AboutViewState extends State<AboutView> {
         children: <Widget>[
           Expanded(
             child: CVPrimaryButton(
-              title: AppLocalizations.of(context).terms_of_service,
+              title: AppLocalizations.of(context)!.terms_of_service,
               isBodyText: true,
               onPressed: () => Get.toNamed(AboutTosView.id),
             ),
@@ -39,7 +39,7 @@ class _AboutViewState extends State<AboutView> {
           const SizedBox(width: 8),
           Expanded(
             child: CVPrimaryButton(
-              title: AppLocalizations.of(context).privacy_policy,
+              title: AppLocalizations.of(context)!.privacy_policy,
               isBodyText: true,
               onPressed: () => Get.toNamed(AboutPrivacyPolicyView.id),
             ),
@@ -64,16 +64,14 @@ class _AboutViewState extends State<AboutView> {
           alignment: WrapAlignment.center,
           children: _contributorsAvatars,
         );
-        break;
       case ViewState.Busy:
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 32),
           child: Text(
-            AppLocalizations.of(context).loading_contributors,
+            AppLocalizations.of(context)!.loading_contributors,
             textAlign: TextAlign.center,
           ),
         );
-        break;
       case ViewState.Error:
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 32),
@@ -82,7 +80,6 @@ class _AboutViewState extends State<AboutView> {
             textAlign: TextAlign.center,
           ),
         );
-        break;
       default:
         return Container();
     }
@@ -101,27 +98,27 @@ class _AboutViewState extends State<AboutView> {
           child: Column(
             children: <Widget>[
               CVHeader(
-                title: AppLocalizations.of(context).about_title,
-                subtitle: AppLocalizations.of(context).about_subtitle,
-                description: AppLocalizations.of(context).about_description,
+                title: AppLocalizations.of(context)!.about_title,
+                subtitle: AppLocalizations.of(context)?.about_subtitle,
+                description: AppLocalizations.of(context)?.about_description,
               ),
               _buildTosAndPrivacyButtons(),
               CircuitVerseSocialCard(
                 imagePath: 'assets/images/contribute/email.png',
-                title: AppLocalizations.of(context).email_us_at,
+                title: AppLocalizations.of(context)!.email_us_at,
                 description: 'support@circuitverse.org',
                 url: 'mailto:support@circuitverse.org',
               ),
               CircuitVerseSocialCard(
                 imagePath: 'assets/images/contribute/slack.png',
-                title: AppLocalizations.of(context).join_slack,
-                description: AppLocalizations.of(context).slack_channel,
+                title: AppLocalizations.of(context)!.join_slack,
+                description: AppLocalizations.of(context)!.slack_channel,
                 url: 'https://circuitverse.org/slack',
               ),
               const Divider(),
               CVSubheader(
-                title: AppLocalizations.of(context).contributors,
-                subtitle: AppLocalizations.of(context).contributors_subtitle,
+                title: AppLocalizations.of(context)!.contributors,
+                subtitle: AppLocalizations.of(context)?.contributors_subtitle,
               ),
               _buildContributorsList(),
             ],

@@ -8,11 +8,11 @@ class Links {
       );
 
   Links({
-    this.self,
-    this.first,
+    required this.self,
+    required this.first,
+    required this.last,
     this.prev,
     this.next,
-    this.last,
   });
   String self;
   String first;

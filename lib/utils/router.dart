@@ -44,7 +44,8 @@ class CVRouter {
         return MaterialPageRoute(builder: (_) => const AboutTosView());
       case AboutPrivacyPolicyView.id:
         return MaterialPageRoute(
-            builder: (_) => const AboutPrivacyPolicyView());
+          builder: (_) => const AboutPrivacyPolicyView(),
+        );
       case FeaturedProjectsView.id:
         return MaterialPageRoute(builder: (_) => const FeaturedProjectsView());
       case ProfileView.id:

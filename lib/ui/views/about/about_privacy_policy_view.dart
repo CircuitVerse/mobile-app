@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutPrivacyPolicyView extends StatelessWidget {
-  const AboutPrivacyPolicyView({Key key, this.showAppBar = true})
+  const AboutPrivacyPolicyView({Key? key, this.showAppBar = true})
       : super(key: key);
 
   static const String id = 'about_privacy_policy_view';
@@ -15,7 +15,7 @@ class AboutPrivacyPolicyView extends StatelessWidget {
   TextSpan _buildText(BuildContext context, String text,
       {bool bold = false, bool italic = false}) {
     return TextSpan(
-      style: Theme.of(context).textTheme.bodyText1.copyWith(
+      style: Theme.of(context).textTheme.bodyText1?.copyWith(
             fontWeight: bold ? FontWeight.bold : FontWeight.normal,
             fontStyle: italic ? FontStyle.italic : FontStyle.normal,
             fontFamily: 'Poppins',
@@ -46,8 +46,8 @@ class AboutPrivacyPolicyView extends StatelessWidget {
   }
 
   Widget _buildSection({
-    @required BuildContext context,
-    @required List<TextSpan> content,
+    required BuildContext context,
+    required List<TextSpan> content,
     String title = '',
     bool heading = false,
   }) {
@@ -61,7 +61,7 @@ class AboutPrivacyPolicyView extends StatelessWidget {
         if (title != '')
           Text(
             title,
-            style: style.copyWith(
+            style: style?.copyWith(
               fontWeight: FontWeight.w400,
               color: CVTheme.primaryHeading(context),
             ),
@@ -85,7 +85,7 @@ class AboutPrivacyPolicyView extends StatelessWidget {
       appBar: showAppBar
           ? AppBar(
               title: Text(
-                AppLocalizations.of(context).privacy_policy,
+                AppLocalizations.of(context)!.privacy_policy,
                 style: TextStyle(
                   color: CVTheme.primaryHeading(context),
                 ),
@@ -101,150 +101,150 @@ class AboutPrivacyPolicyView extends StatelessWidget {
               content: [
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section1_text,
+                  AppLocalizations.of(context)!.privacy_section1_text,
                 ),
                 _buildLink(
-                  AppLocalizations.of(context).terms_of_service,
+                  AppLocalizations.of(context)!.terms_of_service,
                   'https://circuitverse.org/tos',
                   italic: true,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).full_stop,
+                  AppLocalizations.of(context)!.full_stop,
                 ),
               ],
             ),
             _buildSection(
-              title: AppLocalizations.of(context).privacy_section_2_title,
+              title: AppLocalizations.of(context)!.privacy_section_2_title,
               context: context,
               content: [
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section2_text,
+                  AppLocalizations.of(context)!.privacy_section2_text,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section2_item1,
+                  AppLocalizations.of(context)!.privacy_section2_item1,
                   bold: true,
                   italic: true,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section2_item1_text,
+                  AppLocalizations.of(context)!.privacy_section2_item1_text,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section2_item2,
+                  AppLocalizations.of(context)!.privacy_section2_item2,
                   bold: true,
                   italic: true,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section2_item2_text,
+                  AppLocalizations.of(context)!.privacy_section2_item2_text,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section2_item3,
+                  AppLocalizations.of(context)!.privacy_section2_item3,
                   bold: true,
                   italic: true,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section2_item3_text,
+                  AppLocalizations.of(context)!.privacy_section2_item3_text,
                 ),
               ],
             ),
             _buildSection(
-              title: AppLocalizations.of(context).privacy_section3_title,
+              title: AppLocalizations.of(context)!.privacy_section3_title,
               context: context,
               content: [
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_text,
+                  AppLocalizations.of(context)!.privacy_section3_text,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_list_header,
+                  AppLocalizations.of(context)!.privacy_section3_list_header,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_item1,
+                  AppLocalizations.of(context)!.privacy_section3_item1,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_item2,
+                  AppLocalizations.of(context)!.privacy_section3_item2,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_item3,
+                  AppLocalizations.of(context)!.privacy_section3_item3,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_item4,
+                  AppLocalizations.of(context)!.privacy_section3_item4,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_item5,
+                  AppLocalizations.of(context)!.privacy_section3_item5,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_item6,
+                  AppLocalizations.of(context)!.privacy_section3_item6,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_text2_title,
+                  AppLocalizations.of(context)!.privacy_section3_text2_title,
                   bold: true,
                   italic: true,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_text2,
+                  AppLocalizations.of(context)!.privacy_section3_text2,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_text3_title,
+                  AppLocalizations.of(context)!.privacy_section3_text3_title,
                   bold: true,
                   italic: true,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_text3,
+                  AppLocalizations.of(context)!.privacy_section3_text3,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_text4_title,
+                  AppLocalizations.of(context)!.privacy_section3_text4_title,
                   bold: true,
                   italic: true,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_text4_string1,
+                  AppLocalizations.of(context)!.privacy_section3_text4_string1,
                 ),
                 _buildLink(
-                  AppLocalizations.of(context).google_analytics,
+                  AppLocalizations.of(context)!.google_analytics,
                   'https://support.google.com/analytics/answer/6004245?hl=en',
                   italic: true,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).privacy_section3_text4_string2,
+                  AppLocalizations.of(context)!.privacy_section3_text4_string2,
                 )
               ],
             ),
             _buildSection(
-              title: AppLocalizations.of(context).contact_us,
+              title: AppLocalizations.of(context)!.contact_us,
               context: context,
               content: [
                 _buildText(
                   context,
-                  AppLocalizations.of(context).contact_us_text,
+                  AppLocalizations.of(context)!.contact_us_text,
                 ),
                 _buildLink('support@circuitverse.org',
                     'mailto:privacy@CircuitVerse.com',
                     italic: true),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).full_stop,
+                  AppLocalizations.of(context)!.full_stop,
                 ),
               ],
             ),

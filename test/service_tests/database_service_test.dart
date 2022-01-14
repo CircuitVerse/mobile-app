@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   group('DatabaseService Test -', () {
-    DatabaseService db;
+    late DatabaseService db;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});

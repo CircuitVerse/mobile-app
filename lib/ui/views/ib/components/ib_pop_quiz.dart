@@ -5,7 +5,11 @@ import 'package:mobile_app/models/ib/ib_pop_quiz_question.dart';
 import 'package:mobile_app/ui/views/ib/components/ib_pop_quiz_button.dart';
 
 class IbPopQuiz extends StatelessWidget {
-  const IbPopQuiz({Key key, this.context, this.questions}) : super(key: key);
+  const IbPopQuiz({
+    Key? key,
+    required this.context,
+    required this.questions,
+  }) : super(key: key);
 
   final BuildContext context;
   final List<IbPopQuizQuestion> questions;
@@ -58,7 +62,7 @@ class IbPopQuiz extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             'Pop Quiz',
-            style: Theme.of(context).textTheme.headline5.copyWith(
+            style: Theme.of(context).textTheme.headline5?.copyWith(
                   color: IbTheme.primaryHeadingColor(context),
                   fontWeight: FontWeight.w600,
                 ),

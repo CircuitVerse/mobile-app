@@ -18,11 +18,11 @@ class AssignmentDetailsViewModel extends BaseModel {
   final AssignmentsApi _assignmentsApi = locator<AssignmentsApi>();
   final GradesApi _gradesApi = locator<GradesApi>();
 
-  Assignment _assignment;
+  Assignment? _assignment;
 
-  Assignment get assignment => _assignment;
+  Assignment? get assignment => _assignment;
 
-  set assignment(Assignment assignment) {
+  set assignment(Assignment? assignment) {
     _assignment = assignment;
     notifyListeners();
   }
@@ -45,21 +45,22 @@ class AssignmentDetailsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Project _focussedProject;
+  late Project? _focussedProject;
 
-  Project get focussedProject => _focussedProject;
+  Project? get focussedProject => _focussedProject;
 
-  set focussedProject(Project focussedProject) {
+  set focussedProject(Project? focussedProject) {
     _focussedProject = focussedProject;
     notifyListeners();
   }
 
-  Future fetchAssignmentDetails(String assignmentId) async {
+  Future? fetchAssignmentDetails(String? assignmentId) async {
+    if (assignmentId == null) return;
     setStateFor(FETCH_ASSIGNMENT_DETAILS, ViewState.Busy);
     try {
       assignment = await _assignmentsApi.fetchAssignmentDetails(assignmentId);
-      projects = _assignment.projects ?? [];
-      grades = _assignment.grades ?? [];
+      projects = _assignment?.projects ?? [];
+      grades = _assignment?.grades ?? [];
 
       setStateFor(FETCH_ASSIGNMENT_DETAILS, ViewState.Success);
     } on Failure catch (f) {
@@ -72,9 +73,13 @@ class AssignmentDetailsViewModel extends BaseModel {
     setStateFor(ADD_GRADE, ViewState.Busy);
     try {
       var _addedGrade = await _gradesApi.addGrade(
-          assignmentId, _focussedProject.id, grade, remarks);
+        assignmentId,
+        _focussedProject!.id,
+        grade,
+        remarks,
+      );
 
-      _grades.add(_addedGrade);
+      if (_addedGrade != null) _grades.add(_addedGrade);
       notifyListeners();
 
       setStateFor(ADD_GRADE, ViewState.Success);
@@ -90,7 +95,7 @@ class AssignmentDetailsViewModel extends BaseModel {
       var _updatedGrade = await _gradesApi.updateGrade(gradeId, grade, remarks);
 
       _grades.removeWhere((grade) => grade.id == gradeId);
-      _grades.add(_updatedGrade);
+      _grades.add(_updatedGrade!);
       notifyListeners();
 
       setStateFor(UPDATE_GRADE, ViewState.Success);
@@ -104,7 +109,7 @@ class AssignmentDetailsViewModel extends BaseModel {
     setStateFor(DELETE_GRADE, ViewState.Busy);
 
     try {
-      var _isDeleted = await _gradesApi.deleteGrade(gradeId);
+      var _isDeleted = await _gradesApi.deleteGrade(gradeId)!;
 
       if (_isDeleted) {
         // Remove Grade from the list..

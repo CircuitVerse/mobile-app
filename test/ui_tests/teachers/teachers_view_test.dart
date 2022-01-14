@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
@@ -8,13 +7,13 @@ import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../setup/test_helpers.dart';
+import '../../setup/test_helpers.mocks.dart';
 
 void main() {
   group('TeachersViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpTeachersView(WidgetTester tester) async {
       await tester.pumpWidget(

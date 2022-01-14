@@ -22,10 +22,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../setup/test_data/mock_groups.dart';
 import '../../setup/test_data/mock_user.dart';
 import '../../setup/test_helpers.dart';
+import '../../setup/test_helpers.mocks.dart';
 
 void main() {
   group('MyGroupsViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -33,7 +34,7 @@ void main() {
       locator.allowReassignment = true;
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpMyGroupsView(WidgetTester tester) async {
       var model = MockMyGroupsViewModel();
@@ -42,12 +43,16 @@ void main() {
       var groups = <Group>[];
       groups.add(Group.fromJson(mockGroup));
 
+      when(model.FETCH_MENTORED_GROUPS)
+          .thenAnswer((_) => 'fetch_mentored_groups');
+      when(model.FETCH_MEMBER_GROUPS).thenAnswer((_) => 'fetch_member_groups');
+      when(model.previousMemberGroupsBatch).thenReturn(null);
+      when(model.previousMentoredGroupsBatch).thenReturn(null);
       when(model.fetchMentoredGroups()).thenReturn(null);
       when(model.fetchMemberGroups()).thenReturn(null);
 
-      when(model.isSuccess(model.FETCH_MENTORED_GROUPS))
-          .thenAnswer((_) => true);
-      when(model.isSuccess(model.FETCH_MEMBER_GROUPS)).thenAnswer((_) => true);
+      when(model.isSuccess(any)).thenAnswer((_) => true);
+      when(model.isSuccess(any)).thenAnswer((_) => true);
 
       when(model.mentoredGroups).thenAnswer((_) => groups);
       when(model.memberGroups).thenAnswer((_) => groups);
@@ -136,10 +141,10 @@ void main() {
       var _groupDetailsViewModel = MockGroupDetailsViewModel();
       locator.registerSingleton<GroupDetailsViewModel>(_groupDetailsViewModel);
 
+      when(_groupDetailsViewModel.FETCH_GROUP_DETAILS)
+          .thenAnswer((_) => 'fetch_group_details');
       when(_groupDetailsViewModel.fetchGroupDetails(any)).thenReturn(null);
-      when(_groupDetailsViewModel
-              .isSuccess(_groupDetailsViewModel.FETCH_GROUP_DETAILS))
-          .thenAnswer((_) => false);
+      when(_groupDetailsViewModel.isSuccess(any)).thenAnswer((_) => false);
 
       await tester.tap(find.widgetWithText(CardButton, 'View').first);
       await tester.pumpAndSettle();
@@ -166,10 +171,10 @@ void main() {
 
       // Mock Dialog Service
       when(_dialogService.showConfirmationDialog(
-              title: anyNamed('title'),
-              description: anyNamed('description'),
-              confirmationTitle: anyNamed('confirmationTitle')))
-          .thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
+        title: anyNamed('title'),
+        description: anyNamed('description'),
+        confirmationTitle: anyNamed('confirmationTitle'),
+      )).thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
 
       await _pumpMyGroupsView(tester);
       await tester.pumpAndSettle();
@@ -179,10 +184,10 @@ void main() {
 
       // Verify Dialog Service was called after Delete Button is pressed
       verify(_dialogService.showConfirmationDialog(
-              title: anyNamed('title'),
-              description: anyNamed('description'),
-              confirmationTitle: anyNamed('confirmationTitle')))
-          .called(1);
+        title: anyNamed('title'),
+        description: anyNamed('description'),
+        confirmationTitle: anyNamed('confirmationTitle'),
+      )).called(1);
     });
   });
 }

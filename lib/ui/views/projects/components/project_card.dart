@@ -5,9 +5,12 @@ import 'package:mobile_app/models/projects.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ProjectCard extends StatefulWidget {
-  const ProjectCard(
-      {Key key, this.project, this.onPressed, this.isHeaderFilled = true})
-      : super(key: key);
+  const ProjectCard({
+    Key? key,
+    required this.project,
+    required this.onPressed,
+    this.isHeaderFilled = true,
+  }) : super(key: key);
 
   final Project project;
   final VoidCallback onPressed;
@@ -22,7 +25,7 @@ class _ProjectCardState extends State<ProjectCard> {
     return Chip(
       label: Text(title),
       backgroundColor: Colors.black,
-      labelStyle: Theme.of(context).textTheme.bodyText1.copyWith(
+      labelStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
             color: Colors.white,
           ),
     );
@@ -53,7 +56,7 @@ class _ProjectCardState extends State<ProjectCard> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline5.copyWith(
+              style: Theme.of(context).textTheme.headline5?.copyWith(
                     color: Theme.of(context).brightness == Brightness.dark
                         ? widget.isHeaderFilled
                             ? Colors.black

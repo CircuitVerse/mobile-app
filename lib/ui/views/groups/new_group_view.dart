@@ -12,7 +12,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
 
 class NewGroupView extends StatefulWidget {
-  const NewGroupView({Key key}) : super(key: key);
+  const NewGroupView({Key? key}) : super(key: key);
 
   static const String id = 'new_group_view';
 
@@ -22,9 +22,9 @@ class NewGroupView extends StatefulWidget {
 
 class _NewGroupViewState extends State<NewGroupView> {
   final DialogService _dialogService = locator<DialogService>();
-  NewGroupViewModel _model;
+  late NewGroupViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _name;
+  late String _name;
 
   Future<void> _validateAndSubmit() async {
     if (Validators.validateAndSaveForm(_formKey)) {
@@ -79,9 +79,10 @@ class _NewGroupViewState extends State<NewGroupView> {
                 CVTextField(
                   padding: const EdgeInsets.all(0),
                   label: 'Group Name',
-                  validator: (value) =>
-                      value.isEmpty ? 'Please enter a Group Name' : null,
-                  onSaved: (value) => _name = value.trim(),
+                  validator: (value) => value?.isEmpty ?? true
+                      ? 'Please enter a Group Name'
+                      : null,
+                  onSaved: (value) => _name = value!.trim(),
                   action: TextInputAction.done,
                 ),
                 const SizedBox(height: 16),

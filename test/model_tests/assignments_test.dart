@@ -13,10 +13,10 @@ void main() {
 
       expect(_assignments, isInstanceOf<Assignments>());
 
-      expect(_assignments.data, isInstanceOf<List<Assignment>>());
-      expect(_assignments.data.length, 1);
+      expect(_assignments.data, isInstanceOf<List<Assignment>?>());
+      expect(_assignments.data?.length, 1);
 
-      expect(_assignments.links, isInstanceOf<Links>());
+      expect(_assignments.links, isInstanceOf<Links?>());
     });
 
     test('AssignmentTest', () {
@@ -28,9 +28,9 @@ void main() {
       expect(_assignment.type, 'assignment');
       expect(_assignment.attributes, isInstanceOf<AssignmentAttributes>());
       expect(_assignment.projects, isInstanceOf<List<Project>>());
-      expect(_assignment.projects.length, 1);
+      expect(_assignment.projects?.length, 1);
       expect(_assignment.grades, isInstanceOf<List<Grade>>());
-      expect(_assignment.grades.length, 1);
+      expect(_assignment.grades?.length, 1);
 
       expect(_assignment.canBeGraded, true);
       expect(_assignment.gradingScaleHint,

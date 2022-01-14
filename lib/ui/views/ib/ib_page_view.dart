@@ -31,19 +31,19 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-typedef TocCallback = void Function(Function);
-typedef SetPageCallback = void Function(IbChapter);
+typedef TocCallback = void Function(Function?);
+typedef SetPageCallback = void Function(IbChapter?);
 typedef SetShowCaseStateCallback = void Function(IBShowCase);
 
 class IbPageView extends StatefulWidget {
   const IbPageView({
-    @required Key key,
-    @required this.tocCallback,
-    @required this.chapter,
-    @required this.setPage,
-    @required this.showCase,
-    @required this.setShowCase,
-    @required this.globalKeysMap,
+    required Key key,
+    required this.tocCallback,
+    required this.chapter,
+    required this.setPage,
+    required this.showCase,
+    required this.setShowCase,
+    required this.globalKeysMap,
   }) : super(key: key);
 
   static const String id = 'ib_page_view';
@@ -59,10 +59,10 @@ class IbPageView extends StatefulWidget {
 }
 
 class _IbPageViewState extends State<IbPageView> {
-  IbPageViewModel _model;
-  AutoScrollController _hideButtonController;
+  late IbPageViewModel _model;
+  late AutoScrollController _hideButtonController;
   bool _isFabsVisible = true;
-  ShowCaseWidgetState _showCaseWidgetState;
+  late ShowCaseWidgetState _showCaseWidgetState;
 
   /// To track index through slug for scroll_to_index
   final Map<String, int> _slugMap = {};
@@ -70,7 +70,7 @@ class _IbPageViewState extends State<IbPageView> {
   @override
   void initState() {
     super.initState();
-    _showCaseWidgetState = ShowCaseWidget.of(context);
+    _showCaseWidgetState = ShowCaseWidget.of(context)!;
     _isFabsVisible = true;
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
     _hideButtonController.addListener(() {
@@ -87,7 +87,7 @@ class _IbPageViewState extends State<IbPageView> {
 
   @override
   void didChangeDependencies() {
-    _showCaseWidgetState = ShowCaseWidget.of(context);
+    _showCaseWidgetState = ShowCaseWidget.of(context)!;
     super.didChangeDependencies();
   }
 
@@ -102,24 +102,25 @@ class _IbPageViewState extends State<IbPageView> {
 
   Future _scrollToWidget(String slug) async {
     if (_slugMap.containsKey(slug)) {
-      await _hideButtonController.scrollToIndex(_slugMap[slug],
+      await _hideButtonController.scrollToIndex(_slugMap[slug]!,
           preferPosition: AutoScrollPosition.begin);
     } else {
       debugPrint('[IB]: $slug not present in map');
     }
   }
 
-  Future _onTapLink(String text, String href, String title) async {
+  void _onTapLink(String text, String? href, String title) async {
+    if (href == null) return;
     // If Absolute Interactive Book link
     if (href.startsWith(EnvironmentConfig.IB_BASE_URL)) {
       // If URI is same as the current page
-      if (_model.pageData.pageUrl.startsWith(href)) {
+      if (_model.pageData!.pageUrl.startsWith(href)) {
         // It's local link
         return _scrollToWidget(href.substring(1));
       } else {
         // Try to navigate to another page using url
         // (TODO) We need [IbLandingViewModel] to be able to get Chapter using [httpUrl]
-        return launchURL(href);
+        launchURL(href);
       }
     }
 
@@ -134,7 +135,7 @@ class _IbPageViewState extends State<IbPageView> {
     }
   }
 
-  Widget _buildMarkdownImage(Uri uri, String title, String alt) {
+  Widget? _buildMarkdownImage(Uri uri, String? title, String? alt) {
     var widgets = <Widget>[];
 
     // SVG Support
@@ -191,8 +192,11 @@ class _IbPageViewState extends State<IbPageView> {
         'chapter_contents': IbChapterContentsBuilder(
             chapterContents:
                 _model.pageData?.chapterOfContents?.isNotEmpty ?? false
-                    ? _buildTOC(_model.pageData.chapterOfContents,
-                        padding: false, isEnabled: false)
+                    ? _buildTOC(
+                        _model.pageData!.chapterOfContents!,
+                        padding: false,
+                        isEnabled: false,
+                      )
                     : Container()),
         'iframe': IbWebViewBuilder(),
         'interaction': IbInteractionBuilder(model: _model),
@@ -215,26 +219,26 @@ class _IbPageViewState extends State<IbPageView> {
         ],
       ),
       styleSheet: MarkdownStyleSheet(
-        h1: Theme.of(context).textTheme.headline4.copyWith(
+        h1: Theme.of(context).textTheme.headline4?.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w300,
             ),
-        h2: Theme.of(context).textTheme.headline5.copyWith(
+        h2: Theme.of(context).textTheme.headline5?.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w600,
             ),
-        h3: Theme.of(context).textTheme.headline6.copyWith(
+        h3: Theme.of(context).textTheme.headline6?.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w600,
             ),
-        h4: Theme.of(context).textTheme.subtitle1.copyWith(
+        h4: Theme.of(context).textTheme.subtitle1?.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w600,
             ),
         h5: Theme.of(context)
             .textTheme
             .headline6
-            .copyWith(fontWeight: FontWeight.w300),
+            ?.copyWith(fontWeight: FontWeight.w300),
         horizontalRuleDecoration: BoxDecoration(
           border: Border(
             top: BorderSide(
@@ -265,8 +269,13 @@ class _IbPageViewState extends State<IbPageView> {
     await _scrollToWidget(slug);
   }
 
-  Widget _buildTocListTile(String leading, String content,
-      {bool root = true, bool padding = true, bool isEnabled = true}) {
+  Widget _buildTocListTile(
+    String leading,
+    String content, {
+    bool root = true,
+    bool padding = true,
+    bool isEnabled = true,
+  }) {
     if (!root) {
       return ListTile(
         leading: const Text(''),
@@ -286,8 +295,12 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
-  List<Widget> _buildTocItems(IbTocItem item,
-      {bool root = false, bool padding = true, bool isEnabled = true}) {
+  List<Widget> _buildTocItems(
+    IbTocItem item, {
+    bool root = false,
+    bool padding = true,
+    bool isEnabled = true,
+  }) {
     var items = <Widget>[
       _buildTocListTile(
         item.leading,
@@ -299,7 +312,7 @@ class _IbPageViewState extends State<IbPageView> {
     ];
 
     if (item.items != null) {
-      for (var e in item.items) {
+      for (var e in item.items!) {
         items.addAll(
           _buildTocItems(
             e,
@@ -313,8 +326,11 @@ class _IbPageViewState extends State<IbPageView> {
     return items;
   }
 
-  Widget _buildTOC(List<IbTocItem> toc,
-      {bool padding = true, bool isEnabled = true}) {
+  Widget _buildTOC(
+    List<IbTocItem> toc, {
+    bool padding = true,
+    bool isEnabled = true,
+  }) {
     var items = <Widget>[];
 
     for (var item in toc) {
@@ -345,13 +361,13 @@ class _IbPageViewState extends State<IbPageView> {
                 style: Theme.of(context)
                     .textTheme
                     .subtitle1
-                    .copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                    ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
               ),
               tileColor: Theme.of(context).primaryColor,
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: _buildTOC(_model.pageData.tableOfContents),
+                child: _buildTOC(_model.pageData!.tableOfContents!),
               ),
             ),
           ],
@@ -450,12 +466,12 @@ class _IbPageViewState extends State<IbPageView> {
     );
   }
 
-  List<Widget> _buildPageContent(IbPageData pageData) {
+  List<Widget> _buildPageContent(IbPageData? pageData) {
     if (pageData == null) {
       return [
         Text(
           'Loading ...',
-          style: Theme.of(context).textTheme.headline6.copyWith(
+          style: Theme.of(context).textTheme.headline6?.copyWith(
                 color: IbTheme.primaryHeadingColor(context),
                 fontWeight: FontWeight.w600,
               ),
@@ -465,7 +481,7 @@ class _IbPageViewState extends State<IbPageView> {
 
     var contents = <Widget>[];
 
-    for (var content in pageData.content) {
+    for (var content in pageData.content ?? []) {
       switch (content.runtimeType) {
         case IbMd:
           contents.add(_buildMarkdown(content as IbMd));

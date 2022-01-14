@@ -23,10 +23,10 @@ abstract class IbEngineService {
         .replaceAll(RegExp(r'\s+'), '-');
   }
 
-  Future<List<IbChapter>> getChapters();
-  Future<IbPageData> getPageData({String id = 'index.md'});
-  Future<String> getHtmlInteraction(String id);
-  List<IbPopQuizQuestion> getPopQuiz(String rawPopQuizContent);
+  Future<List<IbChapter>>? getChapters();
+  Future<IbPageData?>? getPageData({String id = 'index.md'});
+  Future<String>? getHtmlInteraction(String id);
+  List<IbPopQuizQuestion>? getPopQuiz(String rawPopQuizContent);
 }
 
 class IbEngineServiceImpl implements IbEngineService {
@@ -45,7 +45,7 @@ class IbEngineServiceImpl implements IbEngineService {
       'https://raw.githubusercontent.com/CircuitVerse/Interactive-Book/master/_includes';
 
   /// module.js contents
-  String _intModuleJs;
+  String? _intModuleJs;
 
   /// Fetches Pages inside an API Page
   Future<List<IbChapter>> _fetchPagesInDir({
@@ -53,7 +53,7 @@ class IbEngineServiceImpl implements IbEngineService {
     bool ignoreIndex = false,
   }) async {
     /// Fetch response from API for the given id
-    List<Map<String, dynamic>> _apiResponse;
+    List<Map<String, dynamic>>? _apiResponse;
     try {
       _apiResponse = await _ibApi.fetchApiPage(id: id);
     } catch (_) {
@@ -64,7 +64,7 @@ class IbEngineServiceImpl implements IbEngineService {
     var childPages = <IbChapter>[];
 
     // Iterate over the list of pages present inside this response
-    for (var page in _apiResponse) {
+    for (var page in _apiResponse ?? []) {
       // Recursive scan if the page is directory
       if (page['type'] == 'directory') {
         childPages.addAll(await _fetchPagesInDir(id: page['path']));
@@ -109,14 +109,14 @@ class IbEngineServiceImpl implements IbEngineService {
     // but return original list of chapters to keep the order intact
 
     var _flatten = chapters
-        .expand((c) => c.items != null ? [c, ...c.items] : [c])
+        .expand((c) => c.items != null ? [c, ...c.items!] : [c])
         .toList();
 
     if (_flatten.length <= 1) {
       return chapters;
     }
 
-    IbChapter prev;
+    IbChapter? prev;
 
     for (var i = 0; i < _flatten.length; i++) {
       _flatten[i].prevPage = prev;
@@ -132,7 +132,7 @@ class IbEngineServiceImpl implements IbEngineService {
 
   /// Get Chapters and Build Navigation for Interactive Book
   @override
-  Future<List<IbChapter>> getChapters() async {
+  Future<List<IbChapter>>? getChapters() async {
     // Load cached chapters if present
     if (_ibChapters.isNotEmpty) {
       return _ibChapters;
@@ -166,7 +166,7 @@ class IbEngineServiceImpl implements IbEngineService {
         toc.add(
           IbTocItem(
             leading: '$eff_index.',
-            content: li.firstChild.text,
+            content: li.firstChild!.text!,
             items: _parseToc(li.children[1], num: !num),
           ),
         );
@@ -207,7 +207,7 @@ class IbEngineServiceImpl implements IbEngineService {
       toc.add(
         IbTocItem(
           leading: '$eff_index.',
-          content: root ? li.nodes[0].text.trim() : li.text.trim(),
+          content: root ? li.nodes[0].text!.trim() : li.text.trim(),
           items: sublist.isNotEmpty ? sublist : null,
         ),
       );
@@ -238,14 +238,16 @@ class IbEngineServiceImpl implements IbEngineService {
 
   /// Fetches "Rich" Page Content
   @override
-  Future<IbPageData> getPageData({String id = 'index.md'}) async {
+  Future<IbPageData?>? getPageData({String id = 'index.md'}) async {
     /// Fetch Raw Page Data from API
-    IbRawPageData _ibRawPageData;
+    IbRawPageData? _ibRawPageData;
     try {
       _ibRawPageData = await _ibApi.fetchRawPageData(id: id);
     } catch (_) {
       throw Failure(_.toString());
     }
+
+    if (_ibRawPageData == null) return null;
 
     return IbPageData(
       id: _ibRawPageData.id,
@@ -255,10 +257,10 @@ class IbEngineServiceImpl implements IbEngineService {
         IbMd(content: '${HtmlUnescape().convert(_ibRawPageData.rawContent)}\n'),
       ],
       tableOfContents: _ibRawPageData.hasToc
-          ? _getTableOfContents(_ibRawPageData.content)
+          ? _getTableOfContents(_ibRawPageData.content!)
           : [],
       chapterOfContents: _ibRawPageData.hasChildren
-          ? _getChapterOfContents(_ibRawPageData.content)
+          ? _getChapterOfContents(_ibRawPageData.content!)
           : [],
     );
   }
@@ -267,7 +269,7 @@ class IbEngineServiceImpl implements IbEngineService {
   /// id is basically the file-name of the HTML interaction
   /// Every Interaction uses module.js which also has to be used
   @override
-  Future<String> getHtmlInteraction(String id) async {
+  Future<String>? getHtmlInteraction(String id) async {
     // Fetch JS content if not already fetched
     _intModuleJs ??= await ApiUtils.get(_intModuleJsUrl, rawResponse: true);
 
@@ -285,7 +287,7 @@ class IbEngineServiceImpl implements IbEngineService {
   }
 
   @override
-  List<IbPopQuizQuestion> getPopQuiz(String popQuizContent) {
+  List<IbPopQuizQuestion>? getPopQuiz(String popQuizContent) {
     var _pattern = RegExp(r'(\d\.|\*)\s(.+)');
     var _questions = <IbPopQuizQuestion>[];
 
@@ -305,11 +307,11 @@ class IbEngineServiceImpl implements IbEngineService {
           _lastQuestion.answers.add(_lastQuestion.choices.length);
         }
 
-        _lastQuestion.choices.add(match[2]);
+        _lastQuestion.choices.add(match[2]!);
       } else {
         // Question
         _questions.add(IbPopQuizQuestion(
-          question: match[2],
+          question: match[2]!,
           answers: [],
           choices: [],
         ));

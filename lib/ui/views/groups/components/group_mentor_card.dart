@@ -6,8 +6,12 @@ import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/group_details_view.dart';
 
 class GroupMentorCard extends StatefulWidget {
-  const GroupMentorCard({Key key, this.group, this.onEdit, this.onDelete})
-      : super(key: key);
+  const GroupMentorCard({
+    Key? key,
+    required this.group,
+    required this.onEdit,
+    required this.onDelete,
+  }) : super(key: key);
 
   final Group group;
   final VoidCallback onEdit;
@@ -43,7 +47,7 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
         children: <Widget>[
           Text(
             widget.group.attributes.name,
-            style: Theme.of(context).textTheme.headline5.copyWith(
+            style: Theme.of(context).textTheme.headline5?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
             textAlign: TextAlign.center,

@@ -14,16 +14,17 @@ class UpdateAssignmentViewModel extends BaseModel {
 
   final AssignmentsApi _assignmentsApi = locator<AssignmentsApi>();
 
-  Assignment _updatedAssignment;
+  late Assignment _updatedAssignment;
 
   Assignment get updatedAssignment => _updatedAssignment;
 
-  set updatedAssignment(Assignment updatedAssignment) {
+  set updatedAssignment(Assignment? updatedAssignment) {
+    if (updatedAssignment == null) return;
     _updatedAssignment = updatedAssignment;
     notifyListeners();
   }
 
-  Future updateAssignment(
+  Future? updateAssignment(
     String assignmentId,
     String name,
     DateTime deadline,

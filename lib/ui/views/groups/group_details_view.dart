@@ -18,7 +18,7 @@ import 'package:mobile_app/ui/components/cv_flat_button.dart';
 import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 
 class GroupDetailsView extends StatefulWidget {
-  const GroupDetailsView({Key key, this.group}) : super(key: key);
+  const GroupDetailsView({Key? key, required this.group}) : super(key: key);
 
   static const String id = 'group_details_view';
   final Group group;
@@ -29,10 +29,10 @@ class GroupDetailsView extends StatefulWidget {
 
 class _GroupDetailsViewState extends State<GroupDetailsView> {
   final DialogService _dialogService = locator<DialogService>();
-  GroupDetailsViewModel _model;
+  late GroupDetailsViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _emails;
-  Group _recievedGroup;
+  String? _emails;
+  late Group _recievedGroup;
   final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
       GlobalKey<CVFlatButtonState>();
 
@@ -65,7 +65,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           const SizedBox(width: 8),
           Text(
             'Edit',
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6?.copyWith(
                   color: Colors.white,
                 ),
           )
@@ -83,7 +83,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             Flexible(
               child: Text(
                 _recievedGroup.attributes.name,
-                style: Theme.of(context).textTheme.headline4.copyWith(
+                style: Theme.of(context).textTheme.headline4?.copyWith(
                       color: CVTheme.textColor(context),
                       fontWeight: FontWeight.bold,
                     ),
@@ -99,7 +99,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         RichText(
           text: TextSpan(
             text: 'Mentor : ',
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
             children: <TextSpan>[
@@ -121,7 +121,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       _dialogService.showCustomProgressDialog(title: 'Adding');
 
-      await _model.addMembers(_recievedGroup.id, _emails);
+      await _model.addMembers(_recievedGroup.id, _emails!);
 
       _dialogService.popDialog();
 
@@ -176,7 +176,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                     ? null
                     : 'Enter emails in valid format.',
                 onSaved: (emails) =>
-                    _emails = emails.replaceAll(' ', '').trim(),
+                    _emails = emails!.replaceAll(' ', '').trim(),
               ),
             ),
             actions: <Widget>[
@@ -202,7 +202,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       confirmationTitle: 'REMOVE',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Removing');
 
       await _model.deleteGroupMember(groupMemberId);
@@ -223,7 +223,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     }
   }
 
-  Widget _buildSubHeader({String title, VoidCallback onAddPressed}) {
+  Widget _buildSubHeader({required String title, VoidCallback? onAddPressed}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
@@ -231,7 +231,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.headline5.copyWith(
+            style: Theme.of(context).textTheme.headline5?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
@@ -262,7 +262,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       confirmationTitle: 'DELETE',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Deleting Assignment');
 
       await _model.deleteAssignment(assignmentId);
@@ -299,7 +299,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       confirmationTitle: 'REOPEN',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Reopening Assignment');
 
       await _model.reopenAssignment(assignmentId);
@@ -327,7 +327,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       confirmationTitle: 'START',
     );
 
-    if (_dialogResponse.confirmed) {
+    if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Starting Assignment');
 
       await _model.startAssignment(assignmentId);
