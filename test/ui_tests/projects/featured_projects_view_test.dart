@@ -39,7 +39,7 @@ void main() {
 
       when(model.fetchFeaturedProjects()).thenReturn(null);
 
-      when(model.isSuccess(model.FETCH_FEATURED_PROJECTS))
+      when(model.isSuccess(model.fetchFEATUREDPROJECTS))
           .thenAnswer((_) => true);
 
       when(model.featuredProjects).thenAnswer((_) => projects);

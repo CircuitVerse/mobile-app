@@ -50,7 +50,7 @@ void main() {
           ),
         );
 
-        expect(_model.stateFor(_model.UPDATE_ASSIGNMENT), ViewState.Success);
+        expect(_model.stateFor(_model.updateASSIGNMENT), ViewState.Success);
 
         // updatedAssignment was populated
         expect(_model.updatedAssignment, _assignment);
@@ -72,8 +72,8 @@ void main() {
         await _model
             .updateAssignment('1', 'Test', _localDeadline, 'description', []);
 
-        expect(_model.stateFor(_model.UPDATE_ASSIGNMENT), ViewState.Error);
-        expect(_model.errorMessageFor(_model.UPDATE_ASSIGNMENT),
+        expect(_model.stateFor(_model.updateASSIGNMENT), ViewState.Error);
+        expect(_model.errorMessageFor(_model.updateASSIGNMENT),
             'Some Error Occurred!');
       });
     });

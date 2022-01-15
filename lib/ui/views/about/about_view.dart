@@ -50,7 +50,7 @@ class _AboutViewState extends State<AboutView> {
   }
 
   Widget _buildContributorsList() {
-    switch (_model.stateFor(_model.FETCH_CONTRIBUTORS)) {
+    switch (_model.stateFor(_model.fetchCONTRIBUTORS)) {
       case ViewState.Success:
         var _contributorsAvatars = <Widget>[];
         for (var contributor in _model.cvContributors) {
@@ -78,7 +78,7 @@ class _AboutViewState extends State<AboutView> {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 32),
           child: Text(
-            _model.errorMessageFor(_model.FETCH_CONTRIBUTORS),
+            _model.errorMessageFor(_model.fetchCONTRIBUTORS),
             textAlign: TextAlign.center,
           ),
         );

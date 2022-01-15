@@ -6,6 +6,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class ForgotPasswordViewModel extends BaseModel {
   // ViewState Keys
+  // ignore: non_constant_identifier_names
   final String SEND_RESET_INSTRUCTIONS = 'send_reset_instructions';
 
   final UsersApi _usersApi = locator<UsersApi>();

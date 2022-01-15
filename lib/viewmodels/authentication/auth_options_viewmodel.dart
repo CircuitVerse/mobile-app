@@ -14,9 +14,9 @@ import 'package:oauth2_client/oauth2_helper.dart';
 
 class AuthOptionsViewModel extends BaseModel {
   // ViewState Keys
-  final String FB_OAUTH = 'fb_oauth';
-  final String GOOGLE_OAUTH = 'google_oauth';
-  final String GITHUB_OAUTH = 'github_oauth';
+  final String fbOAUTH = 'fb_oauth';
+  final String googleOAUTH = 'google_oauth';
+  final String githubOAUTH = 'github_oauth';
 
   final UsersApi _userApi = locator<UsersApi>();
   final LocalStorageService _storage = locator<LocalStorageService>();
@@ -26,7 +26,7 @@ class AuthOptionsViewModel extends BaseModel {
 
     switch (result.status) {
       case LoginStatus.success:
-        setStateFor(FB_OAUTH, ViewState.Busy);
+        setStateFor(fbOAUTH, ViewState.Busy);
 
         try {
           // save token & current user to local storage..
@@ -50,19 +50,19 @@ class AuthOptionsViewModel extends BaseModel {
           // save authentication type to local storage..
           _storage.authType = AuthType.FACEBOOK;
 
-          setStateFor(FB_OAUTH, ViewState.Success);
+          setStateFor(fbOAUTH, ViewState.Success);
         } on Failure catch (f) {
-          setStateFor(FB_OAUTH, ViewState.Error);
-          setErrorMessageFor(FB_OAUTH, f.message);
+          setStateFor(fbOAUTH, ViewState.Error);
+          setErrorMessageFor(fbOAUTH, f.message);
         }
         break;
       case LoginStatus.cancelled:
-        setStateFor(FB_OAUTH, ViewState.Error);
-        setErrorMessageFor(FB_OAUTH, 'Login Cancelled By User!');
+        setStateFor(fbOAUTH, ViewState.Error);
+        setErrorMessageFor(fbOAUTH, 'Login Cancelled By User!');
         break;
       case LoginStatus.failed:
-        setStateFor(FB_OAUTH, ViewState.Error);
-        setErrorMessageFor(FB_OAUTH, 'Unable to authenticate!');
+        setStateFor(fbOAUTH, ViewState.Error);
+        setErrorMessageFor(fbOAUTH, 'Unable to authenticate!');
         break;
       case LoginStatus.operationInProgress:
         break;
@@ -77,7 +77,7 @@ class AuthOptionsViewModel extends BaseModel {
       var _googleSignInAuthentication =
           await _googleSignIn.currentUser.authentication;
 
-      setStateFor(GOOGLE_OAUTH, ViewState.Busy);
+      setStateFor(googleOAUTH, ViewState.Busy);
 
       // save token & current user to local storage..
       if (isSignUp) {
@@ -100,13 +100,13 @@ class AuthOptionsViewModel extends BaseModel {
       // save authentication type to local storage..
       _storage.authType = AuthType.GOOGLE;
 
-      setStateFor(GOOGLE_OAUTH, ViewState.Success);
+      setStateFor(googleOAUTH, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(GOOGLE_OAUTH, ViewState.Error);
-      setErrorMessageFor(GOOGLE_OAUTH, f.message);
+      setStateFor(googleOAUTH, ViewState.Error);
+      setErrorMessageFor(googleOAUTH, f.message);
     } catch (e) {
-      setStateFor(GOOGLE_OAUTH, ViewState.Error);
-      setErrorMessageFor(GOOGLE_OAUTH, 'Unable to authenticate!');
+      setStateFor(googleOAUTH, ViewState.Error);
+      setErrorMessageFor(googleOAUTH, 'Unable to authenticate!');
     }
   }
 
@@ -126,7 +126,7 @@ class AuthOptionsViewModel extends BaseModel {
     try {
       var _accessTokenResponse = await _oauthHelper.getToken();
 
-      setStateFor(GITHUB_OAUTH, ViewState.Busy);
+      setStateFor(githubOAUTH, ViewState.Busy);
 
       // save token & current user to local storage..
       if (isSignUp) {
@@ -149,13 +149,13 @@ class AuthOptionsViewModel extends BaseModel {
       // save authentication type to local storage..
       _storage.authType = AuthType.GITHUB;
 
-      setStateFor(GITHUB_OAUTH, ViewState.Success);
+      setStateFor(githubOAUTH, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(GITHUB_OAUTH, ViewState.Error);
-      setErrorMessageFor(GITHUB_OAUTH, f.message);
+      setStateFor(githubOAUTH, ViewState.Error);
+      setErrorMessageFor(githubOAUTH, f.message);
     } catch (e) {
-      setStateFor(GITHUB_OAUTH, ViewState.Error);
-      setErrorMessageFor(GITHUB_OAUTH, 'Unable to authenticate!');
+      setStateFor(githubOAUTH, ViewState.Error);
+      setErrorMessageFor(githubOAUTH, 'Unable to authenticate!');
     }
   }
 }

@@ -50,9 +50,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   void onShareButtonPressed() {
     final RenderBox box = context.findRenderObject();
-    var URL =
+    var url =
         'https://circuitverse.org/users/${widget.project.relationships.author.data.id}/projects/${widget.project.id}';
-    Share.share(URL,
+    Share.share(url,
         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   }
 
@@ -252,13 +252,13 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.FORK_PROJECT)) {
+      if (_model.isSuccess(_model.forkPROJECT)) {
         await Get.toNamed(ProjectDetailsView.id,
             arguments: _model.forkedProject);
-      } else if (_model.isError(_model.FORK_PROJECT)) {
+      } else if (_model.isError(_model.forkPROJECT)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.FORK_PROJECT),
+          _model.errorMessageFor(_model.forkPROJECT),
         );
       }
     }
@@ -293,15 +293,15 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Future<void> onStarProjectPressed() async {
     await _model.toggleStarForProject(_recievedProject.id);
 
-    if (_model.isSuccess(_model.TOGGLE_STAR)) {
+    if (_model.isSuccess(_model.toggleSTAR)) {
       SnackBarUtils.showDark(
         'Project ${_model.isProjectStarred ? 'Starred' : 'Unstarred'}',
         'You have successfully ${_model.isProjectStarred ? 'stared' : 'unstarred'} the project',
       );
-    } else if (_model.isError(_model.TOGGLE_STAR)) {
+    } else if (_model.isError(_model.toggleSTAR)) {
       SnackBarUtils.showDark(
         'Error',
-        _model.errorMessageFor(_model.TOGGLE_STAR),
+        _model.errorMessageFor(_model.toggleSTAR),
       );
     }
   }
@@ -334,16 +334,16 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.ADD_COLLABORATORS) &&
+      if (_model.isSuccess(_model.addCOLLABORATORS) &&
           _model.addedCollaboratorsSuccessMessage.isNotEmpty) {
         SnackBarUtils.showDark(
           'Collaborators Added',
           _model.addedCollaboratorsSuccessMessage,
         );
-      } else if (_model.isError(_model.ADD_COLLABORATORS)) {
+      } else if (_model.isError(_model.addCOLLABORATORS)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.ADD_COLLABORATORS),
+          _model.errorMessageFor(_model.addCOLLABORATORS),
         );
       }
     }
@@ -465,16 +465,16 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.DELETE_PROJECT)) {
+      if (_model.isSuccess(_model.deletePROJECT)) {
         Get.back(result: true);
         SnackBarUtils.showDark(
           'Project Deleted',
           'Project is successfully deleted.',
         );
-      } else if (_model.isError(_model.DELETE_PROJECT)) {
+      } else if (_model.isError(_model.deletePROJECT)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.DELETE_PROJECT),
+          _model.errorMessageFor(_model.deletePROJECT),
         );
       }
     }
@@ -515,15 +515,15 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.DELETE_COLLABORATORS)) {
+      if (_model.isSuccess(_model.deleteCOLLABORATORS)) {
         SnackBarUtils.showDark(
           'Collaborator Deleted',
           'Collaborator was successfully deleted.',
         );
-      } else if (_model.isError(_model.DELETE_COLLABORATORS)) {
+      } else if (_model.isError(_model.deleteCOLLABORATORS)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.DELETE_COLLABORATORS),
+          _model.errorMessageFor(_model.deleteCOLLABORATORS),
         );
       }
     }
@@ -633,7 +633,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             ),
           );
 
-          if (_model.isSuccess(_model.FETCH_PROJECT_DETAILS) &&
+          if (_model.isSuccess(_model.fetchPROJECTDETAILS) &&
               _model.collaborators.isNotEmpty) {
             _items.add(const Divider());
 

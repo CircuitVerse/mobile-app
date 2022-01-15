@@ -25,7 +25,7 @@ void main() {
         await _model.addGroup('Test Group');
 
         verify(_mockGroupsApi.addGroup('Test Group'));
-        expect(_model.stateFor(_model.ADD_GROUP), ViewState.Success);
+        expect(_model.stateFor(_model.addGROUP), ViewState.Success);
         expect(_model.newGroup, _group);
       });
 
@@ -38,9 +38,8 @@ void main() {
         await _model.addGroup('Test Group');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.ADD_GROUP), ViewState.Error);
-        expect(
-            _model.errorMessageFor(_model.ADD_GROUP), 'Some Error Occurred!');
+        expect(_model.stateFor(_model.addGROUP), ViewState.Error);
+        expect(_model.errorMessageFor(_model.addGROUP), 'Some Error Occurred!');
       });
     });
   });

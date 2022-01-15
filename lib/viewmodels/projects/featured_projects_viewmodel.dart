@@ -7,7 +7,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class FeaturedProjectsViewModel extends BaseModel {
   // ViewState Keys
-  String FETCH_FEATURED_PROJECTS = 'fetch_featured_projects';
+  String fetchFEATUREDPROJECTS = 'fetch_featured_projects';
 
   final ProjectsApi _projectsApi = locator<ProjectsApi>();
 
@@ -40,17 +40,17 @@ class FeaturedProjectsViewModel extends BaseModel {
         );
       } else {
         // Set State as busy only very first time..
-        setStateFor(FETCH_FEATURED_PROJECTS, ViewState.Busy);
+        setStateFor(fetchFEATUREDPROJECTS, ViewState.Busy);
         // fetch projects for the very first time..
         previousFeaturedProjectsBatch = await _projectsApi.getFeaturedProjects(
           size: size,
         );
       }
       featuredProjects.addAll(previousFeaturedProjectsBatch.data);
-      setStateFor(FETCH_FEATURED_PROJECTS, ViewState.Success);
+      setStateFor(fetchFEATUREDPROJECTS, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FETCH_FEATURED_PROJECTS, ViewState.Error);
-      setErrorMessageFor(FETCH_FEATURED_PROJECTS, f.message);
+      setStateFor(fetchFEATUREDPROJECTS, ViewState.Error);
+      setErrorMessageFor(fetchFEATUREDPROJECTS, f.message);
     }
   }
 }

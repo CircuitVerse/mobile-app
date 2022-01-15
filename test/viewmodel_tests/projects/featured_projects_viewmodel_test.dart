@@ -27,7 +27,7 @@ void main() {
 
         verify(_mockProjectsApi.getFeaturedProjects());
         expect(
-            _model.stateFor(_model.FETCH_FEATURED_PROJECTS), ViewState.Success);
+            _model.stateFor(_model.fetchFEATUREDPROJECTS), ViewState.Success);
         expect(_model.previousFeaturedProjectsBatch, _projects);
         expect(deepEq(_model.featuredProjects, _projects.data), true);
       });
@@ -45,7 +45,7 @@ void main() {
         // verify API call to page 2 is made
         verify(_mockProjectsApi.getFeaturedProjects(page: 2));
         expect(
-            _model.stateFor(_model.FETCH_FEATURED_PROJECTS), ViewState.Success);
+            _model.stateFor(_model.fetchFEATUREDPROJECTS), ViewState.Success);
         expect(_model.previousFeaturedProjectsBatch, _projects);
       });
 
@@ -58,9 +58,8 @@ void main() {
         await _model.fetchFeaturedProjects();
 
         // verify Error ViewState with proper error message..
-        expect(
-            _model.stateFor(_model.FETCH_FEATURED_PROJECTS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_FEATURED_PROJECTS),
+        expect(_model.stateFor(_model.fetchFEATUREDPROJECTS), ViewState.Error);
+        expect(_model.errorMessageFor(_model.fetchFEATUREDPROJECTS),
             'Some Error Occurred!');
       });
     });

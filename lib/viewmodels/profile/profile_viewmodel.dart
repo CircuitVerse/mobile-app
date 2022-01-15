@@ -7,7 +7,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class ProfileViewModel extends BaseModel {
   // ViewState Keys
-  String FETCH_USER_PROFILE = 'fetch_user_profile';
+  String fetchUSERPROFILE = 'fetch_user_profile';
 
   final UsersApi _usersApi = locator<UsersApi>();
 
@@ -21,14 +21,14 @@ class ProfileViewModel extends BaseModel {
   }
 
   Future fetchUserProfile(String userId) async {
-    setStateFor(FETCH_USER_PROFILE, ViewState.Busy);
+    setStateFor(fetchUSERPROFILE, ViewState.Busy);
     try {
       user = await _usersApi.fetchUser(userId);
 
-      setStateFor(FETCH_USER_PROFILE, ViewState.Success);
+      setStateFor(fetchUSERPROFILE, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FETCH_USER_PROFILE, ViewState.Error);
-      setErrorMessageFor(FETCH_USER_PROFILE, f.message);
+      setStateFor(fetchUSERPROFILE, ViewState.Error);
+      setErrorMessageFor(fetchUSERPROFILE, f.message);
     }
   }
 }

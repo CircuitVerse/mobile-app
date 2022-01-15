@@ -38,7 +38,7 @@ void main() {
 
       when(_userProjectsViewModel.fetchUserProjects()).thenReturn(null);
       when(_userProjectsViewModel
-              .isSuccess(_userProjectsViewModel.FETCH_USER_PROJECTS))
+              .isSuccess(_userProjectsViewModel.fetchUSERPROJECTS))
           .thenReturn(true);
       when(_userProjectsViewModel.userProjects).thenAnswer((_) => projects);
 

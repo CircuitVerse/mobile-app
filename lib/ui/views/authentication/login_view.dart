@@ -89,7 +89,7 @@ class _LoginViewState extends State<LoginView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _model.isBusy(_model.LOGIN) ? 'Authenticating..' : 'LOGIN',
+        title: _model.isBusy(_model.logIN) ? 'Authenticating..' : 'LOGIN',
         onPressed: _validateAndSubmit,
       ),
     );
@@ -118,10 +118,10 @@ class _LoginViewState extends State<LoginView> {
 
   Future<void> _validateAndSubmit() async {
     if (Validators.validateAndSaveForm(_formKey) &&
-        !_model.isBusy(_model.LOGIN)) {
+        !_model.isBusy(_model.logIN)) {
       FocusScope.of(context).requestFocus(FocusNode());
       await _model.login(_email, _password);
-      if (_model.isSuccess(_model.LOGIN)) {
+      if (_model.isSuccess(_model.logIN)) {
         // show login successful snackbar..
         SnackBarUtils.showDark(
           'Login Successful',
@@ -130,11 +130,11 @@ class _LoginViewState extends State<LoginView> {
         // move to home view on successful login..
         await Future.delayed(const Duration(seconds: 1));
         await Get.offAllNamed(CVLandingView.id);
-      } else if (_model.isError(_model.LOGIN)) {
+      } else if (_model.isError(_model.logIN)) {
         // show failure snackbar..
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.LOGIN),
+          _model.errorMessageFor(_model.logIN),
         );
         _formKey.currentState.reset();
       }

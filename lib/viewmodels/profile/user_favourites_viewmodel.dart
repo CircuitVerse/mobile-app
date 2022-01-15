@@ -8,7 +8,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class UserFavouritesViewModel extends BaseModel {
   // ViewState Keys
-  String FETCH_USER_FAVOURITES = 'fetch_user_favourites';
+  String fetchUSERFAVOURITES = 'fetch_user_favourites';
 
   final ProjectsApi _projectsApi = locator<ProjectsApi>();
   final LocalStorageService _localStorageService =
@@ -48,7 +48,7 @@ class UserFavouritesViewModel extends BaseModel {
         );
       } else {
         // Set State as busy only very first time..
-        setStateFor(FETCH_USER_FAVOURITES, ViewState.Busy);
+        setStateFor(fetchUSERFAVOURITES, ViewState.Busy);
         // fetch projects for the very first time..
         previousUserFavouritesBatch = await _projectsApi.getUserFavourites(
             userId ?? _localStorageService.currentUser.data.id);
@@ -56,10 +56,10 @@ class UserFavouritesViewModel extends BaseModel {
 
       userFavourites.addAll(previousUserFavouritesBatch.data);
 
-      setStateFor(FETCH_USER_FAVOURITES, ViewState.Success);
+      setStateFor(fetchUSERFAVOURITES, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FETCH_USER_FAVOURITES, ViewState.Error);
-      setErrorMessageFor(FETCH_USER_FAVOURITES, f.message);
+      setStateFor(fetchUSERFAVOURITES, ViewState.Error);
+      setErrorMessageFor(fetchUSERFAVOURITES, f.message);
     }
   }
 }

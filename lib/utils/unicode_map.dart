@@ -1,5 +1,5 @@
 /// Unicode Map for Subscript and Subscript character
-var UnicodeMap = {
+var unicodeMap = {
   ' ': [' ', ' '],
   '0': ['\u2070', '\u2080'],
   '1': ['\u00B9', '\u2081'],

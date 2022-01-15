@@ -8,6 +8,4 @@ linter:
     # Util classes
     avoid_classes_with_only_static_members: false
 
-    non_constant_identifier_names: false
-
     constant_identifier_names: false

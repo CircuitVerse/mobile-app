@@ -32,8 +32,8 @@ void main() {
 
         // verify API call is made..
         verify(_mockAssignmentsApi.fetchAssignmentDetails('1'));
-        expect(_model.stateFor(_model.FETCH_ASSIGNMENT_DETAILS),
-            ViewState.Success);
+        expect(
+            _model.stateFor(_model.fetchASSIGNMENTDETAILS), ViewState.Success);
 
         // verify assignment data is populated..
         expect(_model.assignment, _assignment);
@@ -50,9 +50,8 @@ void main() {
         await _model.fetchAssignmentDetails('1');
 
         // verify Error ViewState with proper error message..
-        expect(
-            _model.stateFor(_model.FETCH_ASSIGNMENT_DETAILS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_ASSIGNMENT_DETAILS),
+        expect(_model.stateFor(_model.fetchASSIGNMENTDETAILS), ViewState.Error);
+        expect(_model.errorMessageFor(_model.fetchASSIGNMENTDETAILS),
             'Some Error Occurred!');
       });
     });
@@ -71,7 +70,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockGradesApi.addGrade('1', '1', 'A', 'Good'));
-        expect(_model.stateFor(_model.ADD_GRADE), ViewState.Success);
+        expect(_model.stateFor(_model.addGRADE), ViewState.Success);
 
         // expect grade to be appended to the end of list..
         expect(_model.grades.last, _grade);
@@ -87,9 +86,8 @@ void main() {
         await _model.addGrade('1', 'A', 'Good');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.ADD_GRADE), ViewState.Error);
-        expect(
-            _model.errorMessageFor(_model.ADD_GRADE), 'Some Error Occurred!');
+        expect(_model.stateFor(_model.addGRADE), ViewState.Error);
+        expect(_model.errorMessageFor(_model.addGRADE), 'Some Error Occurred!');
       });
     });
 
@@ -107,7 +105,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockGradesApi.updateGrade('1', 'A', 'Very Good'));
-        expect(_model.stateFor(_model.UPDATE_GRADE), ViewState.Success);
+        expect(_model.stateFor(_model.updateGRADE), ViewState.Success);
 
         // expect grade to be updated..
         expect(_model.grades.firstWhere((grade) => grade.id == _grade.id),
@@ -123,9 +121,9 @@ void main() {
         await _model.updateGrade('1', 'A', 'Very Good');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.UPDATE_GRADE), ViewState.Error);
-        expect(_model.errorMessageFor(_model.UPDATE_GRADE),
-            'Some Error Occurred!');
+        expect(_model.stateFor(_model.updateGRADE), ViewState.Error);
+        expect(
+            _model.errorMessageFor(_model.updateGRADE), 'Some Error Occurred!');
       });
     });
 
@@ -141,7 +139,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockGradesApi.deleteGrade('1'));
-        expect(_model.stateFor(_model.DELETE_GRADE), ViewState.Success);
+        expect(_model.stateFor(_model.deleteGRADE), ViewState.Success);
 
         // expect grade to be deleted..
         expect(_model.grades.where((grade) => grade.id == _grade.id).isEmpty,
@@ -157,8 +155,8 @@ void main() {
         await _model.deleteGrade('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.DELETE_GRADE), ViewState.Error);
-        expect(_model.errorMessageFor(_model.DELETE_GRADE),
+        expect(_model.stateFor(_model.deleteGRADE), ViewState.Error);
+        expect(_model.errorMessageFor(_model.deleteGRADE),
             'Grade can\'t be deleted');
       });
 
@@ -171,9 +169,9 @@ void main() {
         await _model.deleteGrade('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.DELETE_GRADE), ViewState.Error);
-        expect(_model.errorMessageFor(_model.DELETE_GRADE),
-            'Some Error Occurred!');
+        expect(_model.stateFor(_model.deleteGRADE), ViewState.Error);
+        expect(
+            _model.errorMessageFor(_model.deleteGRADE), 'Some Error Occurred!');
       });
     });
   });

@@ -18,8 +18,8 @@ class IbSuperscriptBuilder extends MarkdownElementBuilder {
 
     var text = '';
     for (var i = 0; i < textContent.length; i++) {
-      if (UnicodeMap.containsKey(textContent[i])) {
-        text += UnicodeMap[textContent[i]][0];
+      if (unicodeMap.containsKey(textContent[i])) {
+        text += unicodeMap[textContent[i]][0];
       }
     }
 

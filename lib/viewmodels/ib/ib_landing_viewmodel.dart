@@ -10,6 +10,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class IbLandingViewModel extends BaseModel {
   // ViewState Keys
+  // ignore: non_constant_identifier_names
   String IB_FETCH_CHAPTERS = 'ib_fetch_chapters';
 
   final IbEngineService _ibEngineService = locator<IbEngineService>();

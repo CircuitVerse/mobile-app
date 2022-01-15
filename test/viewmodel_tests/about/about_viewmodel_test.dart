@@ -29,7 +29,7 @@ void main() {
 
         // verify call to fetchContributors was made
         verify(_mockContributorsApi.fetchContributors());
-        expect(_model.stateFor(_model.FETCH_CONTRIBUTORS), ViewState.Success);
+        expect(_model.stateFor(_model.fetchCONTRIBUTORS), ViewState.Success);
 
         // cvContributors was populated
         expect(_model.cvContributors.length, 3);
@@ -45,7 +45,7 @@ void main() {
 
         // verify call to fetchContributors was made
         verify(_mockContributorsApi.fetchContributors());
-        expect(_model.stateFor(_model.FETCH_CONTRIBUTORS), ViewState.Error);
+        expect(_model.stateFor(_model.fetchCONTRIBUTORS), ViewState.Error);
       });
     });
   });

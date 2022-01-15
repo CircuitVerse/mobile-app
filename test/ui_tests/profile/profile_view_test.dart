@@ -40,7 +40,7 @@ void main() {
 
       when(_profileViewModel.fetchUserProfile(any)).thenReturn(null);
 
-      when(_profileViewModel.isSuccess(_profileViewModel.FETCH_USER_PROFILE))
+      when(_profileViewModel.isSuccess(_profileViewModel.fetchUSERPROFILE))
           .thenReturn(true);
       when(_profileViewModel.user).thenReturn(user);
 
@@ -50,7 +50,7 @@ void main() {
 
       when(_userProjectsViewModel.fetchUserProjects()).thenReturn(null);
       when(_userProjectsViewModel
-              .isSuccess(_userProjectsViewModel.FETCH_USER_PROJECTS))
+              .isSuccess(_userProjectsViewModel.fetchUSERPROJECTS))
           .thenReturn(false);
 
       await tester.pumpWidget(

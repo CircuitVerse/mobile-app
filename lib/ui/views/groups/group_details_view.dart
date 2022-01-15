@@ -125,16 +125,16 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.ADD_GROUP_MEMBERS) &&
+      if (_model.isSuccess(_model.addGROUPMEMBERS) &&
           _model.addedMembersSuccessMessage.isNotEmpty) {
         SnackBarUtils.showDark(
           'Group Members Added',
           _model.addedMembersSuccessMessage,
         );
-      } else if (_model.isError(_model.ADD_GROUP_MEMBERS)) {
+      } else if (_model.isError(_model.addGROUPMEMBERS)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.ADD_GROUP_MEMBERS),
+          _model.errorMessageFor(_model.addGROUPMEMBERS),
         );
       }
     }
@@ -209,15 +209,15 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.DELETE_GROUP_MEMBER)) {
+      if (_model.isSuccess(_model.deleteGROUPMEMBER)) {
         SnackBarUtils.showDark(
           'Group Member Removed',
           'Successfully removed group member.',
         );
-      } else if (_model.isError(_model.DELETE_GROUP_MEMBER)) {
+      } else if (_model.isError(_model.deleteGROUPMEMBER)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.DELETE_GROUP_MEMBER),
+          _model.errorMessageFor(_model.deleteGROUPMEMBER),
         );
       }
     }
@@ -269,15 +269,15 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.DELETE_ASSIGNMENT)) {
+      if (_model.isSuccess(_model.deleteASSIGNMENT)) {
         SnackBarUtils.showDark(
           'Assignment Deleted',
           'The assignment was successfully deleted.',
         );
-      } else if (_model.isError(_model.DELETE_ASSIGNMENT)) {
+      } else if (_model.isError(_model.deleteASSIGNMENT)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.DELETE_ASSIGNMENT),
+          _model.errorMessageFor(_model.deleteASSIGNMENT),
         );
       }
     }
@@ -306,15 +306,15 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.REOPEN_ASSIGNMENT)) {
+      if (_model.isSuccess(_model.reopenASSIGNMENT)) {
         SnackBarUtils.showDark(
           'Assignment Reopened',
           'The assignment is reopened now.',
         );
-      } else if (_model.isError(_model.REOPEN_ASSIGNMENT)) {
+      } else if (_model.isError(_model.reopenASSIGNMENT)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.REOPEN_ASSIGNMENT),
+          _model.errorMessageFor(_model.reopenASSIGNMENT),
         );
       }
     }
@@ -334,7 +334,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.START_ASSIGNMENT)) {
+      if (_model.isSuccess(_model.startASSIGNMENT)) {
         SnackBarUtils.showDark(
           'Project Created',
           'Project is successfully created.',
@@ -342,7 +342,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       } else {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.START_ASSIGNMENT),
+          _model.errorMessageFor(_model.startASSIGNMENT),
         );
       }
     }
@@ -371,7 +371,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             ),
           );
 
-          if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
+          if (_model.isSuccess(_model.fetchGROUPDETAILS)) {
             for (var member in _model.groupMembers) {
               _items.add(
                 MemberCard(
@@ -392,7 +392,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             ),
           );
 
-          if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
+          if (_model.isSuccess(_model.fetchGROUPDETAILS)) {
             for (var assignment in _model.assignments) {
               _items.add(
                 AssignmentCard(

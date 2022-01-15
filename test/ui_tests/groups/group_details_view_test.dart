@@ -51,7 +51,7 @@ void main() {
       when(_groupDetailsViewModel.groupMembers).thenReturn(group.groupMembers);
       when(_groupDetailsViewModel.assignments).thenReturn([assignments]);
       when(_groupDetailsViewModel
-              .isSuccess(_groupDetailsViewModel.FETCH_GROUP_DETAILS))
+              .isSuccess(_groupDetailsViewModel.fetchGROUPDETAILS))
           .thenAnswer((_) => true);
 
       await tester.pumpWidget(

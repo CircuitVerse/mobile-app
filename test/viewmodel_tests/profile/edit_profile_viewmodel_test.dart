@@ -31,7 +31,7 @@ void main() {
 
         // verify _user is stored in localStorage..
         verify(_mockLocalStorageService.currentUser = _user);
-        expect(_model.stateFor(_model.UPDATE_PROFILE), ViewState.Success);
+        expect(_model.stateFor(_model.updatePROFILE), ViewState.Success);
 
         // verify profile is updated..
         expect(_model.updatedUser, _user);
@@ -47,8 +47,8 @@ void main() {
         await _model.updateProfile('Test User', 'Gurukul', 'India', true);
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.UPDATE_PROFILE), ViewState.Error);
-        expect(_model.errorMessageFor(_model.UPDATE_PROFILE),
+        expect(_model.stateFor(_model.updatePROFILE), ViewState.Error);
+        expect(_model.errorMessageFor(_model.updatePROFILE),
             'Some Error Occurred!');
 
         // verify user is not populated on failure

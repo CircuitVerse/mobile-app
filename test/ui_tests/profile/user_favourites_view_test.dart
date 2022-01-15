@@ -39,7 +39,7 @@ void main() {
 
       when(_userFavoritesViewModel.fetchUserFavourites()).thenReturn(null);
       when(_userFavoritesViewModel
-              .isSuccess(_userFavoritesViewModel.FETCH_USER_FAVOURITES))
+              .isSuccess(_userFavoritesViewModel.fetchUSERFAVOURITES))
           .thenReturn(true);
       when(_userFavoritesViewModel.userFavourites).thenAnswer((_) => projects);
 

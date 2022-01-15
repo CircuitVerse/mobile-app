@@ -161,11 +161,11 @@ class IbEngineServiceImpl implements IbEngineService {
     var toc = <IbTocItem>[];
 
     for (var li in element.children) {
-      var eff_index = num ? index.toString() : String.fromCharCode(index);
+      var effIndex = num ? index.toString() : String.fromCharCode(index);
       if (li.getElementsByTagName('ol').isNotEmpty) {
         toc.add(
           IbTocItem(
-            leading: '$eff_index.',
+            leading: '$effIndex.',
             content: li.firstChild.text,
             items: _parseToc(li.children[1], num: !num),
           ),
@@ -173,7 +173,7 @@ class IbEngineServiceImpl implements IbEngineService {
       } else {
         toc.add(
           IbTocItem(
-            leading: '$eff_index.',
+            leading: '$effIndex.',
             content: li.text,
           ),
         );
@@ -191,7 +191,7 @@ class IbEngineServiceImpl implements IbEngineService {
     var toc = <IbTocItem>[];
 
     for (var li in element.children) {
-      var eff_index = num ? index.toString() : String.fromCharCode(index);
+      var effIndex = num ? index.toString() : String.fromCharCode(index);
       var sublist = <IbTocItem>[];
 
       for (var node in li.nodes) {
@@ -206,7 +206,7 @@ class IbEngineServiceImpl implements IbEngineService {
 
       toc.add(
         IbTocItem(
-          leading: '$eff_index.',
+          leading: '$effIndex.',
           content: root ? li.nodes[0].text.trim() : li.text.trim(),
           items: sublist.isNotEmpty ? sublist : null,
         ),

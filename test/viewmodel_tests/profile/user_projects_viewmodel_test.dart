@@ -44,7 +44,7 @@ void main() {
         await _model.fetchUserProjects(userId: '1');
 
         verify(_mockProjectsApi.getUserProjects('1'));
-        expect(_model.stateFor(_model.FETCH_USER_PROJECTS), ViewState.Success);
+        expect(_model.stateFor(_model.fetchUSERPROJECTS), ViewState.Success);
         expect(_model.previousUserProjectsBatch, _projects);
         expect(deepEq(_model.userProjects, _projects.data), true);
       });
@@ -61,7 +61,7 @@ void main() {
 
         // verify API call to page 2 is made
         verify(_mockProjectsApi.getUserProjects('1', page: 2));
-        expect(_model.stateFor(_model.FETCH_USER_PROJECTS), ViewState.Success);
+        expect(_model.stateFor(_model.fetchUSERPROJECTS), ViewState.Success);
         expect(_model.previousUserProjectsBatch, _projects);
       });
 
@@ -79,7 +79,7 @@ void main() {
 
         // verify API call is made with _currentUser.data.id i.e '1'..
         verify(_mockProjectsApi.getUserProjects('1'));
-        expect(_model.stateFor(_model.FETCH_USER_PROJECTS), ViewState.Success);
+        expect(_model.stateFor(_model.fetchUSERPROJECTS), ViewState.Success);
         expect(_model.previousUserProjectsBatch, _projects);
         expect(deepEq(_model.userProjects, _projects.data), true);
       });
@@ -93,8 +93,8 @@ void main() {
         await _model.fetchUserProjects(userId: '1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.FETCH_USER_PROJECTS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_USER_PROJECTS),
+        expect(_model.stateFor(_model.fetchUSERPROJECTS), ViewState.Error);
+        expect(_model.errorMessageFor(_model.fetchUSERPROJECTS),
             'Some Error Occurred!');
       });
     });
