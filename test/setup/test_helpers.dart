@@ -29,17 +29,14 @@ import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
 import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+
+import 'test_helpers.mocks.dart';
 
 Function deepEq = const DeepCollectionEquality().equals;
 
-class NavigatorObserverMock extends Mock implements NavigatorObserver {}
-
-class LocalStorageServiceMock extends Mock implements LocalStorageService {}
-
 class DatabaseServiceMock extends Mock implements DatabaseService {}
-
-class ContributorsApiMock extends Mock implements ContributorsApi {}
 
 class GroupsApiMock extends Mock implements GroupsApi {}
 
@@ -49,8 +46,6 @@ class AssignmentsApiMock extends Mock implements AssignmentsApi {}
 
 class GradesApiMock extends Mock implements GradesApi {}
 
-class UsersApiMock extends Mock implements UsersApi {}
-
 class ProjectsApiMock extends Mock implements ProjectsApi {}
 
 class CollaboratorsApiMock extends Mock implements CollaboratorsApi {}
@@ -59,49 +54,9 @@ class IbApiMock extends Mock implements IbApi {}
 
 class IbEngineServiceMock extends Mock implements IbEngineService {}
 
-class MockDialogService extends Mock implements DialogService {}
-
-class MockLocalStorageService extends Mock implements LocalStorageService {}
-
-class MockMyGroupsViewModel extends Mock implements MyGroupsViewModel {}
-
-class MockGroupDetailsViewModel extends Mock implements GroupDetailsViewModel {}
-
-class MockFeaturedProjectsViewModel extends Mock
-    implements FeaturedProjectsViewModel {}
-
-class MockProjectDetailsViewModel extends Mock
-    implements ProjectDetailsViewModel {}
-
-class MockProfileViewModel extends Mock implements ProfileViewModel {}
-
-class MockUserProjectsViewModel extends Mock implements UserProjectsViewModel {}
-
-class MockUserFavouritesViewModel extends Mock
-    implements UserFavouritesViewModel {}
-
-class MockEditProfileViewModel extends Mock implements EditProfileViewModel {}
-
-class MockNewGroupViewModel extends Mock implements NewGroupViewModel {}
-
-class MockEditGroupViewModel extends Mock implements EditGroupViewModel {}
-
-class MockAddAssignmentViewModel extends Mock
-    implements AddAssignmentViewModel {}
-
-class MockUpdateAssignmentViewModel extends Mock
-    implements UpdateAssignmentViewModel {}
-
-class MockAssignmentDetailsViewModel extends Mock
-    implements AssignmentDetailsViewModel {}
-
-class MockIbLandingViewModel extends Mock implements IbLandingViewModel {}
-
-class MockIbPageViewModel extends Mock implements IbPageViewModel {}
-
 LocalStorageService getAndRegisterLocalStorageServiceMock() {
   _removeRegistrationIfExists<LocalStorageService>();
-  var _localStorageService = LocalStorageServiceMock();
+  var _localStorageService = MockLocalStorageService();
 
   locator.registerSingleton<LocalStorageService>(_localStorageService);
   return _localStorageService;
@@ -117,7 +72,7 @@ DatabaseService getAndRegisterDatabaseServiceMock() {
 
 ContributorsApi getAndRegisterContributorsApiMock() {
   _removeRegistrationIfExists<ContributorsApi>();
-  var _contributorsApi = ContributorsApiMock();
+  var _contributorsApi = MockContributorsApi();
 
   locator.registerSingleton<ContributorsApi>(_contributorsApi);
   return _contributorsApi;
@@ -157,7 +112,7 @@ GradesApi getAndRegisterGradesApiMock() {
 
 UsersApi getAndRegisterUsersApiMock() {
   _removeRegistrationIfExists<UsersApi>();
-  var _usersApi = UsersApiMock();
+  var _usersApi = MockUsersApi();
 
   locator.registerSingleton<UsersApi>(_usersApi);
   return _usersApi;
@@ -195,6 +150,32 @@ IbEngineService getAndRegisterIbEngineServiceMock() {
   return _ibEngineService;
 }
 
+@GenerateMocks(
+  [
+    IbLandingViewModel,
+    IbPageViewModel,
+    UserFavouritesViewModel,
+    ProjectDetailsViewModel,
+    EditProfileViewModel,
+    UserProjectsViewModel,
+    FeaturedProjectsViewModel,
+    ContributorsApi,
+    UsersApi,
+    EditGroupViewModel,
+    MyGroupsViewModel,
+    GroupDetailsViewModel,
+    NewGroupViewModel,
+    UpdateAssignmentViewModel,
+    AddAssignmentViewModel,
+    AssignmentDetailsViewModel,
+    ProfileViewModel,
+    DialogService,
+  ],
+  customMocks: [
+    MockSpec<NavigatorObserver>(returnNullOnMissingStub: true),
+    MockSpec<LocalStorageService>(returnNullOnMissingStub: true),
+  ],
+)
 void registerServices() {
   getAndRegisterLocalStorageServiceMock();
   getAndRegisterDatabaseServiceMock();
@@ -225,7 +206,7 @@ void unregisterServices() {
   locator.unregister<IbEngineService>();
 }
 
-void _removeRegistrationIfExists<T>() {
+void _removeRegistrationIfExists<T extends Object>() {
   if (locator.isRegistered<T>()) {
     locator.unregister<T>();
   }

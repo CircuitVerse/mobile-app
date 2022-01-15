@@ -1,15 +1,13 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
 class IBShowCase {
   bool nextButton, prevButton, tocButton, drawerButton;
 
   IBShowCase({
-    @required this.nextButton,
-    @required this.prevButton,
-    @required this.tocButton,
-    @required this.drawerButton,
+    required this.nextButton,
+    required this.prevButton,
+    required this.tocButton,
+    required this.drawerButton,
   });
 
   factory IBShowCase.fromJson(Map<String, dynamic> json) {
@@ -22,10 +20,10 @@ class IBShowCase {
   }
 
   IBShowCase copyWith({
-    bool nextButton,
-    bool prevButton,
-    bool tocButton,
-    bool drawerButton,
+    bool? nextButton,
+    bool? prevButton,
+    bool? tocButton,
+    bool? drawerButton,
   }) {
     return IBShowCase(
       nextButton: nextButton ?? this.nextButton,

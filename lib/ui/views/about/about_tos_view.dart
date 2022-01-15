@@ -7,7 +7,7 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutTosView extends StatelessWidget {
-  const AboutTosView({Key key, this.showAppBar = true}) : super(key: key);
+  const AboutTosView({Key? key, this.showAppBar = true}) : super(key: key);
 
   static const String id = 'about_tos_view';
 
@@ -15,7 +15,7 @@ class AboutTosView extends StatelessWidget {
 
   TextSpan _buildText(BuildContext context, String text, {bool bold = false}) {
     return TextSpan(
-      style: Theme.of(context).textTheme.bodyText1.copyWith(
+      style: Theme.of(context).textTheme.bodyText1?.copyWith(
             fontWeight: bold ? FontWeight.bold : FontWeight.normal,
             fontFamily: 'Poppins',
           ),
@@ -46,16 +46,16 @@ class AboutTosView extends StatelessWidget {
   }
 
   Widget _buildSection({
-    @required BuildContext context,
-    @required String title,
-    @required List<TextSpan> content,
+    required BuildContext context,
+    required String title,
+    required List<TextSpan> content,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headline5.copyWith(
+          style: Theme.of(context).textTheme.headline5?.copyWith(
                 fontWeight: FontWeight.w400,
                 color: CVTheme.primaryHeading(context),
               ),
@@ -77,7 +77,7 @@ class AboutTosView extends StatelessWidget {
       appBar: showAppBar
           ? AppBar(
               title: Text(
-                AppLocalizations.of(context).terms_of_service,
+                AppLocalizations.of(context)!.terms_of_service,
                 style: TextStyle(
                   color: CVTheme.primaryHeading(context),
                 ),
@@ -90,11 +90,11 @@ class AboutTosView extends StatelessWidget {
           children: <Widget>[
             _buildSection(
               context: context,
-              title: AppLocalizations.of(context).tos_section1_title,
+              title: AppLocalizations.of(context)!.tos_section1_title,
               content: <TextSpan>[
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section1_text1_string1,
+                  AppLocalizations.of(context)!.tos_section1_text1_string1,
                 ),
                 _buildLink(
                   'CircuitVerse.org',
@@ -102,58 +102,58 @@ class AboutTosView extends StatelessWidget {
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section1_text1_string2,
+                  AppLocalizations.of(context)!.tos_section1_text1_string2,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section1_text2,
+                  AppLocalizations.of(context)!.tos_section1_text2,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section1_text3,
+                  AppLocalizations.of(context)!.tos_section1_text3,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section1_text4_string1,
+                  AppLocalizations.of(context)!.tos_section1_text4_string1,
                 ),
                 _buildLink(
-                  AppLocalizations.of(context).terms_of_service,
+                  AppLocalizations.of(context)!.terms_of_service,
                   'https://CircuitVerse.org/tos',
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section1_text4_string2,
+                  AppLocalizations.of(context)!.tos_section1_text4_string2,
                 ),
               ],
             ),
             _buildSection(
               context: context,
-              title: AppLocalizations.of(context).tos_section2_title,
+              title: AppLocalizations.of(context)!.tos_section2_title,
               content: <TextSpan>[
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section2_text1_string1,
+                  AppLocalizations.of(context)!.tos_section2_text1_string1,
                 ),
                 _buildLink(
-                  AppLocalizations.of(context).privacy_policy,
+                  AppLocalizations.of(context)!.privacy_policy,
                   AboutPrivacyPolicyView.id,
                   route: true,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section2_text1_string2,
+                  AppLocalizations.of(context)!.tos_section2_text1_string2,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section2_text2,
+                  AppLocalizations.of(context)!.tos_section2_text2,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section2_text3,
+                  AppLocalizations.of(context)!.tos_section2_text3,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section2_text4,
+                  AppLocalizations.of(context)!.tos_section2_text4,
                 ),
                 _buildLink(
                   'support@CircuitVerse.org',
@@ -161,91 +161,91 @@ class AboutTosView extends StatelessWidget {
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).full_stop,
+                  AppLocalizations.of(context)!.full_stop,
                 ),
               ],
             ),
             _buildSection(
               context: context,
-              title: AppLocalizations.of(context).tos_section3_title,
+              title: AppLocalizations.of(context)!.tos_section3_title,
               content: <TextSpan>[
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section3_text1,
+                  AppLocalizations.of(context)!.tos_section3_text1,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section3_item1,
+                  AppLocalizations.of(context)!.tos_section3_item1,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section3_item2,
+                  AppLocalizations.of(context)!.tos_section3_item2,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section3_item3,
+                  AppLocalizations.of(context)!.tos_section3_item3,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section3_item4,
+                  AppLocalizations.of(context)!.tos_section3_item4,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section3_item5,
+                  AppLocalizations.of(context)!.tos_section3_item5,
                 ),
               ],
             ),
             _buildSection(
               context: context,
-              title: AppLocalizations.of(context).tos_section4_title,
+              title: AppLocalizations.of(context)!.tos_section4_title,
               content: <TextSpan>[
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section4_text1,
+                  AppLocalizations.of(context)!.tos_section4_text1,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section4_text2,
+                  AppLocalizations.of(context)!.tos_section4_text2,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section4_text3_string1,
+                  AppLocalizations.of(context)!.tos_section4_text3_string1,
                 ),
                 _buildLink(
-                  AppLocalizations.of(context).tos_section4_text3_link,
+                  AppLocalizations.of(context)!.tos_section4_text3_link,
                   'https://creativecommons.org/licenses/by-sa/2.0/',
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section4_text3_string2,
+                  AppLocalizations.of(context)!.tos_section4_text3_string2,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section4_text4,
+                  AppLocalizations.of(context)!.tos_section4_text4,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section4_text5,
-                ),
-              ],
-            ),
-            _buildSection(
-              context: context,
-              title: AppLocalizations.of(context).tos_section5_title,
-              content: <TextSpan>[
-                _buildText(
-                  context,
-                  AppLocalizations.of(context).tos_section5_text1,
+                  AppLocalizations.of(context)!.tos_section4_text5,
                 ),
               ],
             ),
             _buildSection(
               context: context,
-              title: AppLocalizations.of(context).tos_section6_title,
+              title: AppLocalizations.of(context)!.tos_section5_title,
               content: <TextSpan>[
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section6_text1,
+                  AppLocalizations.of(context)!.tos_section5_text1,
+                ),
+              ],
+            ),
+            _buildSection(
+              context: context,
+              title: AppLocalizations.of(context)!.tos_section6_title,
+              content: <TextSpan>[
+                _buildText(
+                  context,
+                  AppLocalizations.of(context)!.tos_section6_text1,
                 ),
                 _buildLink(
                   'support@CircuitVerse.org',
@@ -253,33 +253,33 @@ class AboutTosView extends StatelessWidget {
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section6_text2,
+                  AppLocalizations.of(context)!.tos_section6_text2,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section6_item1,
+                  AppLocalizations.of(context)!.tos_section6_item1,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section6_item2,
+                  AppLocalizations.of(context)!.tos_section6_item2,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section6_item3,
+                  AppLocalizations.of(context)!.tos_section6_item3,
                 ),
               ],
             ),
             _buildSection(
               context: context,
-              title: AppLocalizations.of(context).tos_section7_title,
+              title: AppLocalizations.of(context)!.tos_section7_title,
               content: <TextSpan>[
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section7_text1,
+                  AppLocalizations.of(context)!.tos_section7_text1,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section7_text2,
+                  AppLocalizations.of(context)!.tos_section7_text2,
                 ),
                 _buildLink(
                   'support@CircuitVerse.org',
@@ -287,73 +287,73 @@ class AboutTosView extends StatelessWidget {
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).full_stop,
+                  AppLocalizations.of(context)!.full_stop,
                 ),
               ],
             ),
             _buildSection(
               context: context,
-              title: AppLocalizations.of(context).tos_section8_title,
+              title: AppLocalizations.of(context)!.tos_section8_title,
               content: <TextSpan>[
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section8_text1,
+                  AppLocalizations.of(context)!.tos_section8_text1,
                 ),
               ],
             ),
             _buildSection(
               context: context,
-              title: AppLocalizations.of(context).tos_section9_title,
+              title: AppLocalizations.of(context)!.tos_section9_title,
               content: <TextSpan>[
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section9_text1,
+                  AppLocalizations.of(context)!.tos_section9_text1,
                 ),
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section9_text2,
+                  AppLocalizations.of(context)!.tos_section9_text2,
                 ),
               ],
             ),
             _buildSection(
               context: context,
-              title: AppLocalizations.of(context).tos_section10_title,
+              title: AppLocalizations.of(context)!.tos_section10_title,
               content: <TextSpan>[
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section10_text1,
+                  AppLocalizations.of(context)!.tos_section10_text1,
                   bold: true,
                 ),
               ],
             ),
             _buildSection(
               context: context,
-              title: AppLocalizations.of(context).tos_section11_title,
+              title: AppLocalizations.of(context)!.tos_section11_title,
               content: <TextSpan>[
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section11_text1,
+                  AppLocalizations.of(context)!.tos_section11_text1,
                   bold: true,
                 ),
               ],
             ),
             _buildSection(
               context: context,
-              title: AppLocalizations.of(context).tos_section12_title,
+              title: AppLocalizations.of(context)!.tos_section12_title,
               content: <TextSpan>[
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section12_text1,
+                  AppLocalizations.of(context)!.tos_section12_text1,
                 ),
               ],
             ),
             _buildSection(
               context: context,
-              title: AppLocalizations.of(context).tos_section13_title,
+              title: AppLocalizations.of(context)!.tos_section13_title,
               content: <TextSpan>[
                 _buildText(
                   context,
-                  AppLocalizations.of(context).tos_section13_text1,
+                  AppLocalizations.of(context)!.tos_section13_text1,
                 ),
               ],
             ),

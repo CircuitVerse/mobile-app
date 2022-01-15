@@ -11,7 +11,7 @@ class IbMathjaxSyntax extends md.InlineSyntax {
   @override
   bool onMatch(md.InlineParser parser, Match match) {
     if (match[1] != null) {
-      parser.addNode(md.Element.text('mathjax', match[1]));
+      parser.addNode(md.Element.text('mathjax', match[1]!));
     }
 
     return true;

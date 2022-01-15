@@ -25,5 +25,8 @@ class BaseModel extends ChangeNotifier {
 
   bool isError(String key) => _viewStates[key] == ViewState.Error;
 
-  bool isSuccess(String key) => _viewStates[key] == ViewState.Success;
+  bool isSuccess(String? key) {
+    if (key == null) return false;
+    return _viewStates[key] == ViewState.Success;
+  }
 }

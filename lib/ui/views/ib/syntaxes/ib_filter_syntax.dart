@@ -4,7 +4,7 @@ class IbFilterSyntax extends md.BlockSyntax {
   IbFilterSyntax() : super();
 
   @override
-  md.Node parse(md.BlockParser parser) {
+  md.Node? parse(md.BlockParser parser) {
     parser.advance();
     return null;
   }

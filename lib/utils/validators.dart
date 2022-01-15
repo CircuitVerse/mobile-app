@@ -4,9 +4,14 @@ class Validators {
   static final _emailRegExp = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
-  static bool isEmailValid(String email) => _emailRegExp.hasMatch(email);
+  static bool isEmailValid(String? email) {
+    if (email == null) return false;
 
-  static bool areEmailsValid(String emails) {
+    return _emailRegExp.hasMatch(email);
+  }
+
+  static bool areEmailsValid(String? emails) {
+    if (emails == null) return false;
     // Get list of emails from controller..
     List _emails = emails.replaceAll(' ', '').split(',');
 
@@ -16,7 +21,7 @@ class Validators {
 
   static bool validateAndSaveForm(GlobalKey<FormState> formKey) {
     final form = formKey.currentState;
-    if (form.validate()) {
+    if (form!.validate()) {
       form.save();
       return true;
     }

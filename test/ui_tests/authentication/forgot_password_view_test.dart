@@ -11,17 +11,18 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../setup/test_helpers.dart';
+import '../../setup/test_helpers.mocks.dart';
 
 void main() {
   group('ForgotPasswordViewTest -', () {
-    NavigatorObserver mockObserver;
+    late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
       await setupLocator();
     });
 
-    setUp(() => mockObserver = NavigatorObserverMock());
+    setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpForgotPasswordView(WidgetTester tester) async {
       await tester.pumpWidget(
@@ -72,6 +73,7 @@ void main() {
         'When email is not valid or empty, proper error message should be shown',
         (WidgetTester tester) async {
       var _usersApiMock = getAndRegisterUsersApiMock();
+      // var _usersApiMock = MockUsersApi();
 
       await _pumpForgotPasswordView(tester);
       await tester.pumpAndSettle();

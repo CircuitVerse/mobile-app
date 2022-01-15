@@ -7,8 +7,8 @@ import 'package:mobile_app/services/database_service.dart';
 import 'package:mobile_app/utils/api_utils.dart';
 
 abstract class IbApi {
-  Future<List<Map<String, dynamic>>> fetchApiPage({String id});
-  Future<IbRawPageData> fetchRawPageData({String id});
+  Future<List<Map<String, dynamic>>>? fetchApiPage({String id});
+  Future<IbRawPageData>? fetchRawPageData({String id});
 }
 
 class HttpIbApi implements IbApi {
@@ -16,7 +16,7 @@ class HttpIbApi implements IbApi {
   final DatabaseService _db = locator<DatabaseService>();
 
   @override
-  Future<List<Map<String, dynamic>>> fetchApiPage({String id = ''}) async {
+  Future<List<Map<String, dynamic>>>? fetchApiPage({String id = ''}) async {
     var _url = id == ''
         ? '${EnvironmentConfig.IB_API_BASE_URL}.json'
         : '${EnvironmentConfig.IB_API_BASE_URL}/$id.json';
@@ -34,7 +34,7 @@ class HttpIbApi implements IbApi {
         return _jsonResponse;
       } else {
         var data = await _db.getData<List<dynamic>>(DatabaseBox.IB, _url);
-        return data.map((e) => Map<String, dynamic>.from(e))?.toList();
+        return data.map((e) => Map<String, dynamic>.from(e)).toList();
       }
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
@@ -44,7 +44,7 @@ class HttpIbApi implements IbApi {
   }
 
   @override
-  Future<IbRawPageData> fetchRawPageData({String id = 'index.md'}) async {
+  Future<IbRawPageData>? fetchRawPageData({String id = 'index.md'}) async {
     var _url = '${EnvironmentConfig.IB_API_BASE_URL}/$id';
 
     try {

@@ -7,9 +7,9 @@ class AddGroupMembersResponse {
       );
 
   AddGroupMembersResponse({
-    this.added,
-    this.pending,
-    this.invalid,
+    required this.added,
+    required this.pending,
+    required this.invalid,
   });
   List<String> added;
   List<String> pending;

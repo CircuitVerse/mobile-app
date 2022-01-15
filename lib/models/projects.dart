@@ -10,8 +10,8 @@ class Projects {
       );
 
   Projects({
-    this.data,
-    this.links,
+    required this.data,
+    required this.links,
   });
   List<Project> data;
   Links links;
@@ -34,17 +34,17 @@ class Project {
             : null,
       );
   Project({
-    this.id,
-    this.type,
-    this.attributes,
-    this.relationships,
+    required this.id,
+    required this.type,
+    required this.attributes,
+    required this.relationships,
     this.collaborators,
   });
   String id;
   String type;
   ProjectAttributes attributes;
   ProjectRelationships relationships;
-  List<Collaborator> collaborators;
+  List<Collaborator>? collaborators;
 
   bool get hasAuthorAccess {
     var currentUser = locator<LocalStorageService>().currentUser;
@@ -73,17 +73,17 @@ class ProjectAttributes {
         starsCount: json['stars_count'],
       );
   ProjectAttributes({
-    this.name,
-    this.projectAccessType,
-    this.createdAt,
-    this.updatedAt,
-    this.imagePreview,
+    required this.name,
+    required this.projectAccessType,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.imagePreview,
     this.description,
-    this.view,
-    this.tags,
+    required this.view,
+    required this.tags,
     this.isStarred,
-    this.authorName,
-    this.starsCount,
+    required this.authorName,
+    required this.starsCount,
   });
 
   String name;
@@ -91,10 +91,10 @@ class ProjectAttributes {
   DateTime createdAt;
   DateTime updatedAt;
   ImagePreview imagePreview;
-  String description;
+  String? description;
   int view;
   List<Tag> tags;
-  bool isStarred;
+  bool? isStarred;
   String authorName;
   int starsCount;
 }
@@ -104,7 +104,7 @@ class ImagePreview {
         url: json['url'],
       );
   ImagePreview({
-    this.url,
+    required this.url,
   });
 
   String url;
@@ -117,7 +117,7 @@ class ProjectRelationships {
       );
 
   ProjectRelationships({
-    this.author,
+    required this.author,
   });
   Author author;
 }
@@ -128,7 +128,7 @@ class Author {
       );
 
   Author({
-    this.data,
+    required this.data,
   });
   AuthorData data;
 }
@@ -140,8 +140,8 @@ class AuthorData {
       );
 
   AuthorData({
-    this.id,
-    this.type,
+    required this.id,
+    required this.type,
   });
   String id;
   String type;
@@ -156,10 +156,10 @@ class Tag {
       );
 
   Tag({
-    this.id,
-    this.name,
-    this.createdAt,
-    this.updatedAt,
+    required this.id,
+    required this.name,
+    required this.createdAt,
+    required this.updatedAt,
   });
   int id;
   String name;
