@@ -48,7 +48,7 @@ class AuthOptionsViewModel extends BaseModel {
           _storage.isLoggedIn = true;
 
           // save authentication type to local storage..
-          _storage.authType = AuthType.FACEBOOK;
+          _storage.authType = AuthType.facebook;
 
           setStateFor(FB_OAUTH, ViewState.Success);
         } on Failure catch (f) {
@@ -98,7 +98,7 @@ class AuthOptionsViewModel extends BaseModel {
       _storage.isLoggedIn = true;
 
       // save authentication type to local storage..
-      _storage.authType = AuthType.GOOGLE;
+      _storage.authType = AuthType.google;
 
       setStateFor(GOOGLE_OAUTH, ViewState.Success);
     } on Failure catch (f) {
@@ -112,14 +112,14 @@ class AuthOptionsViewModel extends BaseModel {
 
   Future githubAuth({bool isSignUp = false}) async {
     OAuth2Client _client = GitHubOAuth2Client(
-      redirectUri: EnvironmentConfig.GITHUB_OAUTH_REDIRECT_URI,
+      redirectUri: EnvironmentConfig.githubOAUTHREDIRECTURI,
       customUriScheme: 'circuitverse',
     );
 
     var _oauthHelper = OAuth2Helper(
       _client,
-      clientId: EnvironmentConfig.GITHUB_OAUTH_CLIENT_ID,
-      clientSecret: EnvironmentConfig.GITHUB_OAUTH_CLIENT_SECRET,
+      clientId: EnvironmentConfig.githubOAUTHCLIENTID,
+      clientSecret: EnvironmentConfig.githubOAUTHCLIENTSECRET,
       scopes: ['read:user'],
     );
 
@@ -147,7 +147,7 @@ class AuthOptionsViewModel extends BaseModel {
       _storage.isLoggedIn = true;
 
       // save authentication type to local storage..
-      _storage.authType = AuthType.GITHUB;
+      _storage.authType = AuthType.github;
 
       setStateFor(GITHUB_OAUTH, ViewState.Success);
     } on Failure catch (f) {

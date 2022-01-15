@@ -72,9 +72,9 @@ class CircuitVerseContributor {
   int contributions;
 }
 
-enum Type { USER, BOT }
+enum Type { user, bot }
 
 final typeValues = EnumValues({
-  'Bot': Type.BOT,
-  'User': Type.USER,
+  'Bot': Type.bot,
+  'User': Type.user,
 });

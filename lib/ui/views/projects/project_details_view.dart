@@ -87,8 +87,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 height: 100,
                 width: 50,
                 placeholder: kTransparentImage,
-                image: EnvironmentConfig.CV_API_BASE_URL.substring(
-                        0, EnvironmentConfig.CV_API_BASE_URL.length - 7) +
+                image: EnvironmentConfig.cvAPIBASEURL.substring(
+                        0, EnvironmentConfig.cvAPIBASEURL.length - 7) +
                     _recievedProject.attributes.imagePreview.url,
               ),
             ),

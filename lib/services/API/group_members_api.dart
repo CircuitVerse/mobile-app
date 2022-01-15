@@ -21,7 +21,7 @@ class HttpGroupMembersApi implements GroupMembersApi {
   @override
   Future<GroupMembers> fetchGroupMembers(String groupId) async {
     var endpoint = '/groups/$groupId/members';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -33,9 +33,9 @@ class HttpGroupMembersApi implements GroupMembersApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.GROUP_NOT_FOUND);
+      throw Failure(Constants.groupNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -43,7 +43,7 @@ class HttpGroupMembersApi implements GroupMembersApi {
   Future<AddGroupMembersResponse> addGroupMembers(
       String groupId, String listOfMails) async {
     var endpoint = '/groups/$groupId/members';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {'emails': listOfMails};
 
     try {
@@ -58,16 +58,16 @@ class HttpGroupMembersApi implements GroupMembersApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.GROUP_NOT_FOUND);
+      throw Failure(Constants.groupNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<bool> deleteGroupMember(String groupMemberId) async {
     var endpoint = '/group/members/$groupMemberId';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -79,9 +79,9 @@ class HttpGroupMembersApi implements GroupMembersApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.GROUP_MEMBER_NOT_FOUND);
+      throw Failure(Constants.groupMEMBERNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 }

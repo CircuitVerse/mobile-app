@@ -20,12 +20,12 @@ class CVLandingViewModel extends BaseModel {
     _storage.token = null;
 
     // Perform facebook logout if auth type is facebook..
-    if (_storage.authType == AuthType.FACEBOOK) {
+    if (_storage.authType == AuthType.facebook) {
       await FacebookAuth.instance.logOut();
     }
 
     // Perform google signout if auth type is google..
-    if (_storage.authType == AuthType.GOOGLE) {
+    if (_storage.authType == AuthType.google) {
       await _googleSignIn.signOut();
     }
 

@@ -40,7 +40,7 @@ class HttpAssignmentsApi implements AssignmentsApi {
   @override
   Future<Assignments> fetchAssignments(String groupId, {int page = 1}) async {
     var endpoint = '/groups/$groupId/assignments?page[number]=$page';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -52,16 +52,16 @@ class HttpAssignmentsApi implements AssignmentsApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.GROUP_NOT_FOUND);
+      throw Failure(Constants.groupNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<Assignment> fetchAssignmentDetails(String assignmentId) async {
     var endpoint = '/assignments/$assignmentId?include=grades,projects';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -74,9 +74,9 @@ class HttpAssignmentsApi implements AssignmentsApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.ASSIGNMENT_NOT_FOUND);
+      throw Failure(Constants.assignmentNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -90,7 +90,7 @@ class HttpAssignmentsApi implements AssignmentsApi {
     String restrictions,
   ) async {
     var endpoint = '/groups/$groupId/assignments';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {
       'name': name,
       'deadline': deadline,
@@ -108,13 +108,13 @@ class HttpAssignmentsApi implements AssignmentsApi {
       );
       return Assignment.fromJson(jsonResponse['data']);
     } on BadRequestException {
-      throw Failure(Constants.INVALID_PARAMETERS);
+      throw Failure(Constants.invalidPARAMETERS);
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.GROUP_NOT_FOUND);
+      throw Failure(Constants.groupNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -127,7 +127,7 @@ class HttpAssignmentsApi implements AssignmentsApi {
     String restrictions,
   ) async {
     var endpoint = '/assignments/$assignmentId';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {
       'name': name,
       'deadline': deadline,
@@ -145,20 +145,20 @@ class HttpAssignmentsApi implements AssignmentsApi {
       var assignment = Assignment.fromJson(jsonResponse['data']);
       return assignment;
     } on BadRequestException {
-      throw Failure(Constants.INVALID_PARAMETERS);
+      throw Failure(Constants.invalidPARAMETERS);
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.ASSIGNMENT_NOT_FOUND);
+      throw Failure(Constants.assignmentNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<bool> deleteAssignment(String assignmentId) async {
     var endpoint = '/assignments/$assignmentId';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -170,16 +170,16 @@ class HttpAssignmentsApi implements AssignmentsApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.ASSIGNMENT_NOT_FOUND);
+      throw Failure(Constants.assignmentNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<String> reopenAssignment(String assignmentId) async {
     var endpoint = '/assignments/$assignmentId/reopen';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -188,18 +188,18 @@ class HttpAssignmentsApi implements AssignmentsApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.ASSIGNMENT_NOT_FOUND);
+      throw Failure(Constants.assignmentNOTFOUND);
     } on ConflictException {
-      throw Failure(Constants.ASSIGNMENT_ALREADY_OPENED);
+      throw Failure(Constants.assignmentALREADYOPENED);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<String> startAssignment(String assignmentId) async {
     var endpoint = '/assignments/$assignmentId/start';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -208,9 +208,9 @@ class HttpAssignmentsApi implements AssignmentsApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.ASSIGNMENT_NOT_FOUND);
+      throw Failure(Constants.assignmentNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 }

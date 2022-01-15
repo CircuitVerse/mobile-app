@@ -34,7 +34,7 @@ class HttpUsersApi implements UsersApi {
   @override
   Future<String> login(String email, String password) async {
     var endpoint = '/auth/login';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {
       'email': email,
       'password': password,
@@ -48,20 +48,20 @@ class HttpUsersApi implements UsersApi {
       String token = jsonResponse['token'];
       return token;
     } on UnauthorizedException {
-      throw Failure(Constants.USER_AUTH_WRONG_CREDENTIALS);
+      throw Failure(Constants.userAUTHWRONGCREDENTIALS);
     } on NotFoundException {
-      throw Failure(Constants.USER_AUTH_USER_NOT_FOUND);
+      throw Failure(Constants.userAUTHUSERNOTFOUND);
     } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+      throw Failure(Constants.badRESPONSEFORMAT);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<String> signup(String name, String email, String password) async {
     var endpoint = '/auth/signup';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {
       'name': name,
       'email': email,
@@ -75,18 +75,18 @@ class HttpUsersApi implements UsersApi {
       );
       return jsonResponse['token'];
     } on ConflictException {
-      throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
+      throw Failure(Constants.userAUTHUSERALREADYEXISTS);
     } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+      throw Failure(Constants.badRESPONSEFORMAT);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<String> oauthLogin({String accessToken, String provider}) async {
     var endpoint = '/oauth/login';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {
       'access_token': accessToken,
       'provider': provider,
@@ -100,18 +100,18 @@ class HttpUsersApi implements UsersApi {
       );
       return jsonResponse['token'];
     } on NotFoundException {
-      throw Failure(Constants.USER_AUTH_USER_NOT_FOUND);
+      throw Failure(Constants.userAUTHUSERNOTFOUND);
     } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+      throw Failure(Constants.badRESPONSEFORMAT);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<String> oauthSignup({String accessToken, String provider}) async {
     var endpoint = '/oauth/signup';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {
       'access_token': accessToken,
       'provider': provider,
@@ -125,18 +125,18 @@ class HttpUsersApi implements UsersApi {
       );
       return jsonResponse['token'];
     } on ConflictException {
-      throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
+      throw Failure(Constants.userAUTHUSERALREADYEXISTS);
     } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+      throw Failure(Constants.badRESPONSEFORMAT);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<User> fetchUser(String userId) async {
     var endpoint = '/users/$userId';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     try {
       ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(
@@ -145,18 +145,18 @@ class HttpUsersApi implements UsersApi {
       );
       return User.fromJson(jsonResponse);
     } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+      throw Failure(Constants.badRESPONSEFORMAT);
     } on NotFoundException {
-      throw Failure(Constants.USER_NOT_FOUND);
+      throw Failure(Constants.userNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<User> fetchCurrentUser() async {
     var endpoint = '/me/';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     try {
       ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(
@@ -165,9 +165,9 @@ class HttpUsersApi implements UsersApi {
       );
       return User.fromJson(jsonResponse);
     } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+      throw Failure(Constants.badRESPONSEFORMAT);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -175,7 +175,7 @@ class HttpUsersApi implements UsersApi {
   Future<User> updateProfile(String name, String educationalInstitute,
       String country, bool isSubscribed) async {
     var endpoint = '/users/${_storage.currentUser.data.id}';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {
       'name': name,
       'educational_institute': educationalInstitute,
@@ -191,16 +191,16 @@ class HttpUsersApi implements UsersApi {
       );
       return User.fromJson(jsonResponse);
     } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+      throw Failure(Constants.badRESPONSEFORMAT);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<bool> sendResetPasswordInstructions(String email) async {
     var endpoint = '/password/forgot';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {'email': email};
     try {
       var jsonResponse = await ApiUtils.post(
@@ -210,11 +210,11 @@ class HttpUsersApi implements UsersApi {
       );
       return jsonResponse['message'] is String;
     } on NotFoundException {
-      throw Failure(Constants.USER_NOT_FOUND);
+      throw Failure(Constants.userNOTFOUND);
     } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+      throw Failure(Constants.badRESPONSEFORMAT);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 }

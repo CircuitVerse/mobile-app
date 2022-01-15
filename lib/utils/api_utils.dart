@@ -27,9 +27,9 @@ class ApiUtils {
 
       return ApiUtils.jsonResponse(response, utfDecoder: utfDecoder);
     } on SocketException {
-      throw Failure(Constants.NO_INTERNET_CONNECTION);
+      throw Failure(Constants.noINTERNETCONNECTION);
     } on HttpException {
-      throw Failure(Constants.HTTP_EXCEPTION);
+      throw Failure(Constants.httpEXCEPTION);
     }
   }
 
@@ -41,9 +41,9 @@ class ApiUtils {
           headers: headers, body: jsonEncode(body));
       return ApiUtils.jsonResponse(response);
     } on SocketException {
-      throw Failure(Constants.NO_INTERNET_CONNECTION);
+      throw Failure(Constants.noINTERNETCONNECTION);
     } on HttpException {
-      throw Failure(Constants.HTTP_EXCEPTION);
+      throw Failure(Constants.httpEXCEPTION);
     }
   }
 
@@ -58,9 +58,9 @@ class ApiUtils {
       );
       return ApiUtils.jsonResponse(response);
     } on SocketException {
-      throw Failure(Constants.NO_INTERNET_CONNECTION);
+      throw Failure(Constants.noINTERNETCONNECTION);
     } on HttpException {
-      throw Failure(Constants.HTTP_EXCEPTION);
+      throw Failure(Constants.httpEXCEPTION);
     }
   }
 
@@ -75,9 +75,9 @@ class ApiUtils {
       );
       return ApiUtils.jsonResponse(response);
     } on SocketException {
-      throw Failure(Constants.NO_INTERNET_CONNECTION);
+      throw Failure(Constants.noINTERNETCONNECTION);
     } on HttpException {
-      throw Failure(Constants.HTTP_EXCEPTION);
+      throw Failure(Constants.httpEXCEPTION);
     }
   }
 
@@ -91,9 +91,9 @@ class ApiUtils {
       );
       return ApiUtils.jsonResponse(response);
     } on SocketException {
-      throw Failure(Constants.NO_INTERNET_CONNECTION);
+      throw Failure(Constants.noINTERNETCONNECTION);
     } on HttpException {
-      throw Failure(Constants.HTTP_EXCEPTION);
+      throw Failure(Constants.httpEXCEPTION);
     }
   }
 

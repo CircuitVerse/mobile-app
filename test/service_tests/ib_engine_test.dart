@@ -302,7 +302,7 @@ void main() {
             '<script type="text/javascript">\n$_mockJs\n</script>\n$_mockHtml';
         _expectedResult = _expectedResult.replaceAll(
             RegExp(r'(\.\.(\/\.\.)?)?(?<!org)\/assets'),
-            '${EnvironmentConfig.IB_BASE_URL}/assets');
+            '${EnvironmentConfig.ibBASEURL}/assets');
 
         ApiUtils.client = MockClient((_) {
           if (_.url.toString().endsWith('module.js')) {

@@ -111,7 +111,7 @@ class _IbPageViewState extends State<IbPageView> {
 
   Future _onTapLink(String text, String href, String title) async {
     // If Absolute Interactive Book link
-    if (href.startsWith(EnvironmentConfig.IB_BASE_URL)) {
+    if (href.startsWith(EnvironmentConfig.ibBASEURL)) {
       // If URI is same as the current page
       if (_model.pageData.pageUrl.startsWith(href)) {
         // It's local link
@@ -142,7 +142,7 @@ class _IbPageViewState extends State<IbPageView> {
       var url = uri.toString();
 
       if (uri.toString().startsWith('/assets')) {
-        url = EnvironmentConfig.IB_BASE_URL + url;
+        url = EnvironmentConfig.ibBASEURL + url;
       }
 
       widgets.add(SvgPicture.network(url));
@@ -178,7 +178,7 @@ class _IbPageViewState extends State<IbPageView> {
     return MarkdownBody(
       data: data.content,
       selectable: _selectable,
-      imageDirectory: EnvironmentConfig.IB_BASE_URL,
+      imageDirectory: EnvironmentConfig.ibBASEURL,
       imageBuilder: _buildMarkdownImage,
       onTapLink: _onTapLink,
       blockBuilders: {

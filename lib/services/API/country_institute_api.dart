@@ -30,9 +30,9 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
 
       return matches;
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     } catch (e) {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -42,9 +42,9 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
     try {
       return _fetchAPI(query, url);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     } catch (e) {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -54,9 +54,9 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
     try {
       return _fetchAPI(query, url);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     } catch (e) {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 }

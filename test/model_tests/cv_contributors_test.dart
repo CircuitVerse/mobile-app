@@ -42,7 +42,7 @@ void main() {
           'https://api.github.com/users/test/events{/privacy}');
       expect(_contributor.receivedEventsUrl,
           'https://api.github.com/users/test/received_events');
-      expect(_contributor.type, Type.USER);
+      expect(_contributor.type, Type.user);
       expect(_contributor.siteAdmin, false);
       expect(_contributor.contributions, 114);
     });

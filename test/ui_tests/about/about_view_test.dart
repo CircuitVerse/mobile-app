@@ -62,7 +62,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // returning no response from API should throw generic failure
-        expect(find.text(Constants.GENERIC_FAILURE), findsOneWidget);
+        expect(find.text(Constants.genericFAILURE), findsOneWidget);
       });
 
       testWidgets('when success response, finds contributor avatars',

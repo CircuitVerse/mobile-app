@@ -25,7 +25,7 @@ class HttpGroupsApi implements GroupsApi {
   @override
   Future<Groups> fetchMemberGroups({int page = 1}) async {
     var endpoint = '/groups?page[number]=$page';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -37,14 +37,14 @@ class HttpGroupsApi implements GroupsApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<Groups> fetchMentoringGroups({int page = 1}) async {
     var endpoint = '/groups/mentored?page[number]=$page';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -56,14 +56,14 @@ class HttpGroupsApi implements GroupsApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<Group> fetchGroupDetails(String groupId) async {
     var endpoint = '/groups/$groupId?include=group_members,assignments';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -77,16 +77,16 @@ class HttpGroupsApi implements GroupsApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.GROUP_NOT_FOUND);
+      throw Failure(Constants.groupNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<Group> addGroup(String name) async {
     var endpoint = '/groups';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {'name': name};
 
     try {
@@ -100,14 +100,14 @@ class HttpGroupsApi implements GroupsApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<Group> updateGroup(String groupId, String name) async {
     var endpoint = '/groups/$groupId?include=group_members,assignments';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {'name': name};
 
     try {
@@ -123,16 +123,16 @@ class HttpGroupsApi implements GroupsApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.GROUP_NOT_FOUND);
+      throw Failure(Constants.groupNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<bool> deleteGroup(String groupId) async {
     var endpoint = '/groups/$groupId';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -146,9 +146,9 @@ class HttpGroupsApi implements GroupsApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.GROUP_NOT_FOUND);
+      throw Failure(Constants.groupNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 }

@@ -33,7 +33,7 @@ class HttpGradesApi implements GradesApi {
     String remarks,
   ) async {
     var endpoint = '/assignments/$assignmentId/projects/$projectId/grades';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {
       'grade': {
         'grade': grade,
@@ -52,11 +52,11 @@ class HttpGradesApi implements GradesApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.ASSIGNMENT_NOT_FOUND);
+      throw Failure(Constants.assignmentNOTFOUND);
     } on UnprocessableIdentityException {
-      throw Failure(Constants.INVALID_PARAMETERS);
+      throw Failure(Constants.invalidPARAMETERS);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -67,7 +67,7 @@ class HttpGradesApi implements GradesApi {
     String remarks,
   ) async {
     var endpoint = '/grades/$gradeId';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {
       'grade': {
         'grade': grade,
@@ -87,18 +87,18 @@ class HttpGradesApi implements GradesApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.ASSIGNMENT_NOT_FOUND);
+      throw Failure(Constants.assignmentNOTFOUND);
     } on UnprocessableIdentityException {
-      throw Failure(Constants.INVALID_PARAMETERS);
+      throw Failure(Constants.invalidPARAMETERS);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<bool> deleteGrade(String gradeId) async {
     var endpoint = '/grades/$gradeId';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -110,9 +110,9 @@ class HttpGradesApi implements GradesApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.GRADE_NOT_FOUND);
+      throw Failure(Constants.gradeNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 }

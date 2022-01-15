@@ -3,7 +3,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mobile_app/models/ib/ib_raw_page_data.dart';
 
 enum DatabaseBox {
-  Metadata,
+  metaData,
+  // ignore: constant_identifier_names
   IB,
 }
 
@@ -52,7 +53,7 @@ class DatabaseServiceImpl implements DatabaseService {
 
   @override
   Future<bool> isExpired(String key) async {
-    var data = await getData<DateTime>(DatabaseBox.Metadata, key);
+    var data = await getData<DateTime>(DatabaseBox.metaData, key);
 
     return data == null ||
         data.isBefore(
@@ -75,7 +76,7 @@ class DatabaseServiceImpl implements DatabaseService {
     var openedBox = await _openBox(box);
 
     if (expireData) {
-      await setData(DatabaseBox.Metadata, key, DateTime.now());
+      await setData(DatabaseBox.metaData, key, DateTime.now());
     }
 
     await openedBox.put(key, value);

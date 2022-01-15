@@ -9,12 +9,14 @@ class LocalStorageService {
   static LocalStorageService _instance;
   static SharedPreferences _preferences;
 
+  // ignore: constant_identifier_names
   static const String USER = 'logged_in_user';
+  // ignore: constant_identifier_names
   static const String TOKEN = 'token';
-  static const String IS_LOGGED_IN = 'is_logged_in';
-  static const String IS_FIRST_TIME_LOGIN = 'is_first_time_login';
-  static const String AUTH_TYPE = 'auth_type';
-  static const String IB_SHOWCASE_STATE = 'ib_showcase_state';
+  static const String isLOGGEDIN = 'is_logged_in';
+  static const String isFIRSTTIMELOGIN = 'is_first_time_login';
+  static const String authTYPE = 'auth_type';
+  static const String ibSHOWCASESTATE = 'ib_showcase_state';
 
   static Future<LocalStorageService> getInstance() async {
     _preferences ??= await SharedPreferences.getInstance();
@@ -54,16 +56,16 @@ class LocalStorageService {
     _saveToDisk(TOKEN, _token);
   }
 
-  bool get isLoggedIn => _getFromDisk(IS_LOGGED_IN) ?? false;
+  bool get isLoggedIn => _getFromDisk(isLOGGEDIN) ?? false;
 
   set isLoggedIn(bool isLoggedIn) {
-    _saveToDisk(IS_LOGGED_IN, isLoggedIn);
+    _saveToDisk(isLOGGEDIN, isLoggedIn);
   }
 
-  bool get isFirstTimeLogin => _getFromDisk(IS_FIRST_TIME_LOGIN) ?? true;
+  bool get isFirstTimeLogin => _getFromDisk(isFIRSTTIMELOGIN) ?? true;
 
   set isFirstTimeLogin(bool isLoggedIn) {
-    _saveToDisk(IS_FIRST_TIME_LOGIN, isLoggedIn);
+    _saveToDisk(isFIRSTTIMELOGIN, isLoggedIn);
   }
 
   User get currentUser {
@@ -80,23 +82,23 @@ class LocalStorageService {
   }
 
   AuthType get authType {
-    var _authType = _getFromDisk(AUTH_TYPE);
+    var _authType = _getFromDisk(authTYPE);
     return authTypeValues.map[_authType];
   }
 
   set authType(AuthType authType) {
-    _saveToDisk(AUTH_TYPE, authTypeValues.reverse[authType]);
+    _saveToDisk(authTYPE, authTypeValues.reverse[authType]);
   }
 
   Map<String, dynamic> get getShowcaseState {
     final Map<String, dynamic> result =
         Map.castFrom<dynamic, dynamic, String, dynamic>(
-            json.decode(_getFromDisk(IB_SHOWCASE_STATE) ?? '{}')
+            json.decode(_getFromDisk(ibSHOWCASESTATE) ?? '{}')
                 as Map<dynamic, dynamic>);
     return result;
   }
 
   set setShowcaseState(String state) {
-    _saveToDisk(IB_SHOWCASE_STATE, state);
+    _saveToDisk(ibSHOWCASESTATE, state);
   }
 }

@@ -54,7 +54,7 @@ class _AboutViewState extends State<AboutView> {
       case ViewState.Success:
         var _contributorsAvatars = <Widget>[];
         for (var contributor in _model.cvContributors) {
-          if (contributor.type == Type.USER) {
+          if (contributor.type == Type.user) {
             _contributorsAvatars.add(
               ContributorAvatar(contributor: contributor),
             );

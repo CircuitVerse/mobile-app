@@ -81,7 +81,7 @@ class _EditProfileViewState extends State<EditProfileView> {
       controller: TextEditingController(text: _educationalInstitute),
       onSaved: (value) =>
           _educationalInstitute = (value != '') ? value.trim() : '',
-      toggle: CVTypeAheadField.EDUCATIONAL_INSTITUTE,
+      toggle: CVTypeAheadField.educationalINSTITUTE,
       action: TextInputAction.done,
       countryInstituteObject: locator<CountryInstituteAPI>(),
     );

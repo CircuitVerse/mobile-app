@@ -1,47 +1,48 @@
 class Constants {
   /// USER CONSTANTS
-  static const String USER_AUTH_WRONG_CREDENTIALS =
+  static const String userAUTHWRONGCREDENTIALS =
       'Invalid credentials, please check';
-  static const String USER_AUTH_USER_NOT_FOUND =
-      'User not found, try signing up';
-  static const String USER_AUTH_USER_ALREADY_EXISTS =
+  static const String userAUTHUSERNOTFOUND = 'User not found, try signing up';
+  static const String userAUTHUSERALREADYEXISTS =
       'User already exists, try login';
-  static const String USER_NOT_AUTHORIZED_TO_FETCH_USER =
+  static const String userNOTAUTHORIZEDTOFETCHUSER =
       'You are not authorized to fetch this user';
-  static const String USER_NOT_FOUND = 'User not found';
+  static const String userNOTFOUND = 'User not found';
 
   /// PROJECT CONSTANTS
-  static const String PROJECT_NOT_FOUND = 'No project was found';
-  static const String PROJECT_FORK_CONFLICT = 'Cannot fork your own project';
+  static const String projectNOTFOUND = 'No project was found';
+  static const String projectFORKCONFLICT = 'Cannot fork your own project';
 
   /// COLLABORATOR CONSTANTS
-  static const String COLLABORATOR_NOT_FOUND =
+  static const String collaboratorNOTFOUND =
       'The requested collaborator does not exists';
 
   /// GROUP RELATED CONSTANTS
-  static const String GROUP_NOT_FOUND = 'The requested group does not exists';
+  static const String groupNOTFOUND = 'The requested group does not exists';
 
   /// GROUP MEMBERS CONSTANTS
-  static const String GROUP_MEMBER_NOT_FOUND =
+  static const String groupMEMBERNOTFOUND =
       'The requested group member does not exists';
 
   /// ASSIGNMENTS CONSTANTS
-  static const String ASSIGNMENT_ALREADY_OPENED =
+  static const String assignmentALREADYOPENED =
       'The assignment is already opened';
-  static const String ASSIGNMENT_NOT_FOUND =
+  static const String assignmentNOTFOUND =
       'The requested assignment does not exists';
 
   /// GRADE CONSTANTS
-  static const String GRADE_NOT_FOUND = 'Grade not found';
+  static const String gradeNOTFOUND = 'Grade not found';
 
   /// GENERIC FAILURE CONSTANTS
-  static const String BAD_RESPONSE_FORMAT = 'Bad response format';
-  static const String INVALID_PARAMETERS = 'Invalid parameters, retry!';
-  static const String GENERIC_FAILURE =
+  static const String badRESPONSEFORMAT = 'Bad response format';
+  static const String invalidPARAMETERS = 'Invalid parameters, retry!';
+  static const String genericFAILURE =
       'Something wrong occurred! please try again';
-  static const String NO_INTERNET_CONNECTION = 'No internet connection';
-  static const String HTTP_EXCEPTION = 'Unable to fetch response';
+  static const String noINTERNETCONNECTION = 'No internet connection';
+  static const String httpEXCEPTION = 'Unable to fetch response';
+  // ignore: constant_identifier_names
   static const String UNAUTHENTICATED =
       'Unauthenticated to perform this action';
+  // ignore: constant_identifier_names
   static const String UNAUTHORIZED = 'Unauthorized to perform this action';
 }

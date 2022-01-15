@@ -1,10 +1,10 @@
 import 'package:mobile_app/utils/enum_values.dart';
 
-enum AuthType { EMAIL, FACEBOOK, GOOGLE, GITHUB }
+enum AuthType { email, facebook, google, github }
 
 final authTypeValues = EnumValues({
-  'email': AuthType.EMAIL,
-  'facebook': AuthType.FACEBOOK,
-  'google': AuthType.GOOGLE,
-  'github': AuthType.GITHUB,
+  'email': AuthType.email,
+  'facebook': AuthType.facebook,
+  'google': AuthType.google,
+  'github': AuthType.github,
 });

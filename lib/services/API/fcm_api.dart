@@ -14,7 +14,7 @@ class HttpFCMApi implements FCMApi {
   @override
   Future<String> sendToken(String fcmToken) async {
     var endpoint = '/fcm/token';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {'token': fcmToken};
 
     try {
@@ -28,9 +28,9 @@ class HttpFCMApi implements FCMApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on UnprocessableIdentityException {
-      throw Failure(Constants.INVALID_PARAMETERS);
+      throw Failure(Constants.invalidPARAMETERS);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 }

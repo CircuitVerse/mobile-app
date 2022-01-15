@@ -41,8 +41,9 @@ class CVTypeAheadField extends StatelessWidget {
   final CountryInstituteAPI countryInstituteObject;
   final String toggle;
 
+  // ignore: constant_identifier_names
   static const String COUNTRY = 'country';
-  static const String EDUCATIONAL_INSTITUTE = 'educational institute';
+  static const String educationalINSTITUTE = 'educational institute';
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +82,7 @@ class CVTypeAheadField extends StatelessWidget {
                     pattern,
                   );
                 }
-                if (toggle == EDUCATIONAL_INSTITUTE) {
+                if (toggle == educationalINSTITUTE) {
                   return await countryInstituteObject.getInstitutes(
                     pattern,
                   );

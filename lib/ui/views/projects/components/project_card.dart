@@ -90,8 +90,8 @@ class _ProjectCardState extends State<ProjectCard> {
           child: FadeInImage.memoryNetwork(
             fit: BoxFit.cover,
             placeholder: kTransparentImage,
-            image: EnvironmentConfig.CV_API_BASE_URL.substring(
-                    0, EnvironmentConfig.CV_API_BASE_URL.length - 7) +
+            image: EnvironmentConfig.cvAPIBASEURL
+                    .substring(0, EnvironmentConfig.cvAPIBASEURL.length - 7) +
                 widget.project.attributes.imagePreview.url,
           ),
         ),

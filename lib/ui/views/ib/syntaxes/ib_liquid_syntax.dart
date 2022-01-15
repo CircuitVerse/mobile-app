@@ -23,7 +23,7 @@ class IbLiquidSyntax extends md.BlockSyntax {
             .firstMatch(match[1])[2];
 
         node = md.Element.withTag('img');
-        node.attributes['src'] = '${EnvironmentConfig.IB_BASE_URL}$url';
+        node.attributes['src'] = '${EnvironmentConfig.ibBASEURL}$url';
         node.attributes['alt'] = alt;
       } else {
         // Interactions using html

@@ -62,7 +62,7 @@ class HttpProjectsApi implements ProjectsApi {
     var endpoint = '/projects?page[number]=$page';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
     if (sortBy != null) endpoint += '&sort=$sortBy';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       var jsonResponse = await ApiUtils.get(
@@ -71,7 +71,7 @@ class HttpProjectsApi implements ProjectsApi {
       );
       return Projects.fromJson(jsonResponse);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -85,7 +85,7 @@ class HttpProjectsApi implements ProjectsApi {
     var endpoint = '/users/$userId/projects?page[number]=$page';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
     if (sortBy != null) endpoint += '&sort=$sortBy';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -97,9 +97,9 @@ class HttpProjectsApi implements ProjectsApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on NotFoundException {
-      throw Failure(Constants.USER_NOT_FOUND);
+      throw Failure(Constants.userNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -113,7 +113,7 @@ class HttpProjectsApi implements ProjectsApi {
     var endpoint = '/projects/featured?page[number]=$page&page[size]=$size';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
     if (sortBy != null) endpoint += '&sort=$sortBy';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -125,7 +125,7 @@ class HttpProjectsApi implements ProjectsApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -139,7 +139,7 @@ class HttpProjectsApi implements ProjectsApi {
     var endpoint = '/users/$userId/favourites?page[number]=$page';
     if (filterByTag != null) endpoint += '&filter[tag]=$filterByTag';
     if (sortBy != null) endpoint += '&sort=$sortBy';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -151,14 +151,14 @@ class HttpProjectsApi implements ProjectsApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<Project> getProjectDetails(String id) async {
     var endpoint = '/projects/$id?include=collaborators';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -172,9 +172,9 @@ class HttpProjectsApi implements ProjectsApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.PROJECT_NOT_FOUND);
+      throw Failure(Constants.projectNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -187,7 +187,7 @@ class HttpProjectsApi implements ProjectsApi {
     List<String> tagsList,
   }) async {
     var endpoint = '/projects/$id';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {
       'name': name,
       'project_access_type': projectAccessType,
@@ -204,22 +204,22 @@ class HttpProjectsApi implements ProjectsApi {
       );
       return Project.fromJson(jsonResponse['data']);
     } on BadRequestException {
-      throw Failure(Constants.INVALID_PARAMETERS);
+      throw Failure(Constants.invalidPARAMETERS);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.PROJECT_NOT_FOUND);
+      throw Failure(Constants.projectNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<bool> deleteProject(String projectId) async {
     var endpoint = '/projects/$projectId';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -233,16 +233,16 @@ class HttpProjectsApi implements ProjectsApi {
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.PROJECT_NOT_FOUND);
+      throw Failure(Constants.projectNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<String> toggleStarProject(String projectId) async {
     var endpoint = '/projects/$projectId/toggle-star';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -254,16 +254,16 @@ class HttpProjectsApi implements ProjectsApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on NotFoundException {
-      throw Failure(Constants.PROJECT_NOT_FOUND);
+      throw Failure(Constants.projectNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<Project> forkProject(String toBeForkedProjectId) async {
     var endpoint = '/projects/$toBeForkedProjectId/fork';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -275,11 +275,11 @@ class HttpProjectsApi implements ProjectsApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on NotFoundException {
-      throw Failure(Constants.PROJECT_NOT_FOUND);
+      throw Failure(Constants.projectNOTFOUND);
     } on ConflictException {
-      throw Failure(Constants.PROJECT_FORK_CONFLICT);
+      throw Failure(Constants.projectFORKCONFLICT);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 }

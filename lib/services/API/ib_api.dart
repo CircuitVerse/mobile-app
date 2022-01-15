@@ -18,8 +18,8 @@ class HttpIbApi implements IbApi {
   @override
   Future<List<Map<String, dynamic>>> fetchApiPage({String id = ''}) async {
     var _url = id == ''
-        ? '${EnvironmentConfig.IB_API_BASE_URL}.json'
-        : '${EnvironmentConfig.IB_API_BASE_URL}/$id.json';
+        ? '${EnvironmentConfig.ibAPIBASEURL}.json'
+        : '${EnvironmentConfig.ibAPIBASEURL}/$id.json';
 
     try {
       if (await _db.isExpired(_url)) {
@@ -37,23 +37,23 @@ class HttpIbApi implements IbApi {
         return data.map((e) => Map<String, dynamic>.from(e))?.toList();
       }
     } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+      throw Failure(Constants.badRESPONSEFORMAT);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
   @override
   Future<IbRawPageData> fetchRawPageData({String id = 'index.md'}) async {
-    var _url = '${EnvironmentConfig.IB_API_BASE_URL}/$id';
+    var _url = '${EnvironmentConfig.ibAPIBASEURL}/$id';
 
     try {
       var _jsonResponse = await ApiUtils.get(_url, utfDecoder: true);
       return IbRawPageData.fromJson(_jsonResponse);
     } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+      throw Failure(Constants.badRESPONSEFORMAT);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 }

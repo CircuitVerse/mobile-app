@@ -26,7 +26,7 @@ class HttpCollaboratorsApi implements CollaboratorsApi {
   @override
   Future<Collaborators> fetchProjectCollaborators(String projectId) async {
     var endpoint = '/projects/$projectId/collaborators';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -38,9 +38,9 @@ class HttpCollaboratorsApi implements CollaboratorsApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.PROJECT_NOT_FOUND);
+      throw Failure(Constants.projectNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -50,7 +50,7 @@ class HttpCollaboratorsApi implements CollaboratorsApi {
     String listOfMails,
   ) async {
     var endpoint = '/projects/$projectId/collaborators';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
     var json = {'emails': listOfMails};
 
     try {
@@ -65,9 +65,9 @@ class HttpCollaboratorsApi implements CollaboratorsApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.PROJECT_NOT_FOUND);
+      throw Failure(Constants.projectNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 
@@ -77,7 +77,7 @@ class HttpCollaboratorsApi implements CollaboratorsApi {
     String collaboratorId,
   ) async {
     var endpoint = '/projects/$projectId/collaborators/$collaboratorId';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var uri = EnvironmentConfig.cvAPIBASEURL + endpoint;
 
     try {
       ApiUtils.addTokenToHeaders(headers);
@@ -89,9 +89,9 @@ class HttpCollaboratorsApi implements CollaboratorsApi {
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.COLLABORATOR_NOT_FOUND);
+      throw Failure(Constants.collaboratorNOTFOUND);
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure(Constants.genericFAILURE);
     }
   }
 }

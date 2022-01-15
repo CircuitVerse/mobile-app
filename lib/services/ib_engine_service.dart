@@ -37,8 +37,7 @@ class IbEngineServiceImpl implements IbEngineService {
   List<IbChapter> _ibChapters = [];
 
   /// module.js URL for interaction
-  final _intModuleJsUrl =
-      '${EnvironmentConfig.IB_BASE_URL}/assets/js/module.js';
+  final _intModuleJsUrl = '${EnvironmentConfig.ibBASEURL}/assets/js/module.js';
 
   /// Base path for interactions
   final _intBaseUrl =
@@ -281,7 +280,7 @@ class IbEngineServiceImpl implements IbEngineService {
     // Replace local URLs with absolute
     return result = result.replaceAll(
         RegExp(r'(\.\.(\/\.\.)?)?(?<!org)\/assets'),
-        '${EnvironmentConfig.IB_BASE_URL}/assets');
+        '${EnvironmentConfig.ibBASEURL}/assets');
   }
 
   @override
