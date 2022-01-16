@@ -64,11 +64,11 @@ dev_dependencies:
   flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
-  hive_generator: ^1.1.0
+  hive_generator: ^1.1.2
 
 dependency_overrides:
   mime: ^1.0.1
-  plugin_platform_interface: ^2.0.2
+  plugin_platform_interface: ^2.1.2
 
 flutter_icons:
   android: "launcher_icon"
