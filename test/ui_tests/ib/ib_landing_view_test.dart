@@ -36,7 +36,7 @@ void main() {
       var pageViewModel = MockIbPageViewModel();
       locator.registerSingleton<IbPageViewModel>(pageViewModel);
 
-      when(model.IB_FETCH_CHAPTERS).thenAnswer((_) => 'ib_fetch_chapters');
+      when(model.ibChapters).thenAnswer((_) => 'ib_fetch_chapters');
       when(model.showCaseState).thenAnswer((_) => IBShowCase(
             nextButton: true,
             prevButton: true,
@@ -46,11 +46,9 @@ void main() {
       when(model.keyMap).thenAnswer((_) => {});
 
       // Mock Page View Model
-      when(pageViewModel.IB_FETCH_PAGE_DATA)
-          .thenAnswer((_) => 'mock_fetch_page_data');
+      when(pageViewModel.ibPageData).thenAnswer((_) => 'mock_fetch_page_data');
       when(pageViewModel.fetchPageData()).thenReturn(null);
-      when(pageViewModel.IB_FETCH_PAGE_DATA)
-          .thenAnswer((_) => 'mock_fetch_page_data');
+      when(pageViewModel.ibPageData).thenAnswer((_) => 'mock_fetch_page_data');
 
       when(pageViewModel.isSuccess(any)).thenAnswer((_) => true);
       when(pageViewModel.pageData).thenReturn(

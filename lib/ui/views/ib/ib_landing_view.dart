@@ -196,7 +196,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                       : IbTheme.textColor(context),
                 ),
               ),
-              if (!_model.isSuccess(_model.IB_FETCH_CHAPTERS))
+              if (!_model.isSuccess(_model.ibChapters))
                 const InkWell(
                   child: CVDrawerTile(
                     title: 'Loading...',
@@ -233,8 +233,7 @@ class _IbLandingViewState extends State<IbLandingView> {
       },
       builder: (context, model, child) {
         // Set next page for home page
-        if (model.isSuccess(model.IB_FETCH_CHAPTERS) &&
-            _homeChapter.next == null) {
+        if (model.isSuccess(model.ibChapters) && _homeChapter.next == null) {
           _homeChapter.nextPage = model.chapters[0];
           model.chapters[0].prev = _homeChapter;
         }

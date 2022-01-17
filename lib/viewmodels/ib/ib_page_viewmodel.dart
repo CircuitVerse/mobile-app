@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/locator.dart';
@@ -13,9 +11,9 @@ import 'package:showcaseview/showcaseview.dart';
 
 class IbPageViewModel extends BaseModel {
   // ViewState Keys
-  final String IB_FETCH_PAGE_DATA = 'ib_fetch_page_data';
-  final String IB_FETCH_INTERACTION_DATA = 'ib_fetch_interaction_data';
-  final String IB_FETCH_POP_QUIZ = 'ib_fetch_pop_quiz';
+  final String ibPageData = 'ib_fetch_page_data';
+  final String ibInteractionData = 'ib_fetch_interaction_data';
+  final String ibPopQuiz = 'ib_fetch_pop_quiz';
 
   // List of Global Keys to be Showcase
   late List<GlobalKey> _list;
@@ -37,10 +35,10 @@ class IbPageViewModel extends BaseModel {
     try {
       _pageData = await _ibEngineService.getPageData(id: id);
 
-      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+      setStateFor(ibPageData, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
-      setErrorMessageFor(IB_FETCH_PAGE_DATA, f.message);
+      setStateFor(ibPageData, ViewState.Error);
+      setErrorMessageFor(ibPageData, f.message);
     }
   }
 

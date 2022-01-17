@@ -45,7 +45,7 @@ void main() {
       const Map<String, dynamic> globalKeyMap = <String, dynamic>{};
 
       // Mock Page Data
-      when(model.IB_FETCH_PAGE_DATA).thenAnswer((_) => 'in_fetch_page_data');
+      when(model.ibPageData).thenAnswer((_) => 'in_fetch_page_data');
       when(model.fetchPageData()).thenReturn(null);
       when(model.isSuccess(any)).thenAnswer((_) => true);
       when(model.pageData).thenAnswer(
