@@ -263,15 +263,15 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
     _dialogService.popDialog();
 
-    if (_model.isSuccess(_model.ADD_GRADE)) {
+    if (_model.isSuccess(_model.addGRADE)) {
       SnackBarUtils.showDark(
         'Project Graded Successfully',
         'You have graded the project.',
       );
-    } else if (_model.isError(_model.ADD_GRADE)) {
+    } else if (_model.isError(_model.addGRADE)) {
       SnackBarUtils.showDark(
         'Error',
-        _model.errorMessageFor(_model.ADD_GRADE),
+        _model.errorMessageFor(_model.addGRADE),
       );
     }
   }
@@ -287,15 +287,15 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
     _dialogService.popDialog();
 
-    if (_model.isSuccess(_model.UPDATE_GRADE)) {
+    if (_model.isSuccess(_model.updateGRADE)) {
       SnackBarUtils.showDark(
         'Grade updated Successfully',
         'Grade has been updated successfully.',
       );
-    } else if (_model.isError(_model.UPDATE_GRADE)) {
+    } else if (_model.isError(_model.updateGRADE)) {
       SnackBarUtils.showDark(
         'Error',
-        _model.errorMessageFor(_model.UPDATE_GRADE),
+        _model.errorMessageFor(_model.updateGRADE),
       );
     }
   }
@@ -314,17 +314,17 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.DELETE_GRADE)) {
+      if (_model.isSuccess(_model.deleteGRADE)) {
         SnackBarUtils.showDark(
           'Grade Deleted',
           'Grade has been removed successfully.',
         );
         _gradesController.clear();
         _remarksController.clear();
-      } else if (_model.isError(_model.DELETE_GRADE)) {
+      } else if (_model.isError(_model.deleteGRADE)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.DELETE_GRADE),
+          _model.errorMessageFor(_model.deleteGRADE),
         );
       }
     }
@@ -458,7 +458,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 json.decode(_attrs.restrictions).join(' , '),
               ),
               const Divider(height: 32),
-              if (_model.isSuccess(_model.FETCH_ASSIGNMENT_DETAILS))
+              if (_model.isSuccess(_model.fetchASSIGNMENTDETAILS))
                 Column(
                   children: <Widget>[
                     _buildSubmissions(),

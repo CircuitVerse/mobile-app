@@ -24,7 +24,7 @@ void main() {
 
         // should call login with expected variables
         verify(_usersApiMock.login('test@test.com', 'password'));
-        expect(_model.stateFor(_model.LOGIN), ViewState.Success);
+        expect(_model.stateFor(_model.logIN), ViewState.Success);
       });
 
       test('When called & service throws error', () async {
@@ -38,7 +38,7 @@ void main() {
 
         // should call login with expected variables
         verify(_mockUsersApi.login('test@test.com', 'password'));
-        expect(_model.stateFor(_model.LOGIN), ViewState.Error);
+        expect(_model.stateFor(_model.logIN), ViewState.Error);
       });
     });
   });

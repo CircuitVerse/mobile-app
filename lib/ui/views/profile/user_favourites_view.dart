@@ -34,7 +34,7 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
       builder: (context, model, child) {
         final _items = <Widget>[];
 
-        if (model.isSuccess(model.FETCH_USER_FAVOURITES)) {
+        if (model.isSuccess(model.fetchUSERFAVOURITES)) {
           for (var project in model.userFavourites) {
             _items.add(
               ProjectCard(

@@ -83,15 +83,15 @@ class _MyGroupsViewState extends State<MyGroupsView>
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.DELETE_GROUP)) {
+      if (_model.isSuccess(_model.deleteGROUP)) {
         SnackBarUtils.showDark(
           'Group Deleted',
           'Group was successfully deleted.',
         );
-      } else if (_model.isError(_model.DELETE_GROUP)) {
+      } else if (_model.isError(_model.deleteGROUP)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.DELETE_GROUP),
+          _model.errorMessageFor(_model.deleteGROUP),
         );
       }
     }
@@ -132,7 +132,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
             var _mentoredGroups = <Widget>[];
             var _joinedGroups = <Widget>[];
 
-            if (_model.isSuccess(_model.FETCH_MENTORED_GROUPS)) {
+            if (_model.isSuccess(_model.fetchMENTOREDGROUPS)) {
               // creates GroupMentorCard corresponding to each mentor group
               for (var group in _model.mentoredGroups) {
                 _mentoredGroups.add(
@@ -150,7 +150,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
                 );
               }
             }
-            if (_model.isSuccess(_model.FETCH_MEMBER_GROUPS)) {
+            if (_model.isSuccess(_model.fetchMEMBERGROUPS)) {
               // creates GroupMemberCard corresponding to each member group
               for (var group in _model.memberGroups) {
                 _joinedGroups.add(GroupMemberCard(group: group));

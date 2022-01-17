@@ -34,7 +34,7 @@ void main() {
       locator.registerSingleton<AssignmentDetailsViewModel>(
           _assignmentsDetailsViewModel);
 
-      when(_assignmentsDetailsViewModel.FETCH_ASSIGNMENT_DETAILS)
+      when(_assignmentsDetailsViewModel.fetchASSIGNMENTDETAILS)
           .thenAnswer((_) => 'fetch_assignment');
       when(_assignmentsDetailsViewModel.fetchAssignmentDetails(any))
           .thenReturn(null);

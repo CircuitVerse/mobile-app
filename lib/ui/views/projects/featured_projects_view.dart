@@ -32,7 +32,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
       builder: (context, model, child) {
         final _items = <Widget>[];
 
-        if (model.isSuccess(model.FETCH_FEATURED_PROJECTS)) {
+        if (model.isSuccess(model.fetchFEATUREDPROJECTS)) {
           for (var project in model.featuredProjects) {
             _items.add(
               FeaturedProjectCard(

@@ -212,17 +212,17 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
 
       _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.UPDATE_ASSIGNMENT)) {
+      if (_model.isSuccess(_model.updateASSIGNMENT)) {
         await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedAssignment);
         SnackBarUtils.showDark(
           'Assignment Updated',
           'Assignment was updated successfully',
         );
-      } else if (_model.isError(_model.UPDATE_ASSIGNMENT)) {
+      } else if (_model.isError(_model.updateASSIGNMENT)) {
         SnackBarUtils.showDark(
           'Error',
-          _model.errorMessageFor(_model.UPDATE_ASSIGNMENT),
+          _model.errorMessageFor(_model.updateASSIGNMENT),
         );
       }
     }

@@ -88,7 +88,7 @@ void main() {
       var _editProfileViewModel = MockEditProfileViewModel();
       locator.registerSingleton<EditProfileViewModel>(_editProfileViewModel);
 
-      when(_editProfileViewModel.UPDATE_PROFILE)
+      when(_editProfileViewModel.updatePROFILE)
           .thenAnswer((_) => 'update_profile');
       when(_editProfileViewModel.updateProfile(any, any, any, any))
           .thenReturn(null);

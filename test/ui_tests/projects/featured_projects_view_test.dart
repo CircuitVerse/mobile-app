@@ -37,7 +37,7 @@ void main() {
       var projects = <Project>[];
       projects.add(Project.fromJson(mockProject));
 
-      when(model.FETCH_FEATURED_PROJECTS)
+      when(model.fetchFEATUREDPROJECTS)
           .thenAnswer((_) => 'fetch_featured_projects');
       when(model.fetchFeaturedProjects()).thenReturn(null);
 
@@ -84,7 +84,7 @@ void main() {
             projectDetailsViewModel);
 
         when(projectDetailsViewModel.starCount).thenAnswer((_) => 0);
-        when(projectDetailsViewModel.FETCH_PROJECT_DETAILS)
+        when(projectDetailsViewModel.fetchPROJECTDETAILS)
             .thenAnswer((_) => 'fetch_project_details');
         when(projectDetailsViewModel.fetchProjectDetails(any)).thenReturn(null);
         when(projectDetailsViewModel.isSuccess(any)).thenReturn(false);

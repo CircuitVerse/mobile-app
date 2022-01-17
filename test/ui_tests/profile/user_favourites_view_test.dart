@@ -37,7 +37,7 @@ void main() {
       var projects = <Project>[];
       projects.add(Project.fromJson(mockProject));
 
-      when(_userFavoritesViewModel.FETCH_USER_FAVOURITES)
+      when(_userFavoritesViewModel.fetchUSERFAVOURITES)
           .thenAnswer((_) => 'fetch_user_favorites');
       when(_userFavoritesViewModel.fetchUserFavourites()).thenReturn(null);
       when(_userFavoritesViewModel.isSuccess(any)).thenReturn(true);
@@ -82,7 +82,7 @@ void main() {
             projectDetailsViewModel);
 
         when(projectDetailsViewModel.starCount).thenAnswer((_) => 0);
-        when(projectDetailsViewModel.FETCH_PROJECT_DETAILS)
+        when(projectDetailsViewModel.fetchPROJECTDETAILS)
             .thenAnswer((_) => 'fetch_project_details');
         when(projectDetailsViewModel.fetchProjectDetails(any)).thenReturn(null);
         when(projectDetailsViewModel.isSuccess(any)).thenReturn(false);

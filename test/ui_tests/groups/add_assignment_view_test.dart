@@ -89,7 +89,7 @@ void main() {
       locator
           .registerSingleton<AddAssignmentViewModel>(_addAssignmentViewModel);
 
-      when(_addAssignmentViewModel.ADD_ASSIGNMENT)
+      when(_addAssignmentViewModel.addASSIGNMENT)
           .thenAnswer((_) => 'add_assignment');
       when(_addAssignmentViewModel.addAssignment(any, any, any, any, any, any))
           .thenReturn(null);

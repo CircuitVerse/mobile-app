@@ -48,7 +48,7 @@ void main() {
       var group = Group.fromJson(mockGroup);
       var assignments = Assignment.fromJson(mockAssignment);
 
-      when(_groupDetailsViewModel.FETCH_GROUP_DETAILS)
+      when(_groupDetailsViewModel.fetchGROUPDETAILS)
           .thenAnswer((_) => 'fetch_group_details');
       when(_groupDetailsViewModel.fetchGroupDetails(any)).thenReturn(null);
       when(_groupDetailsViewModel.group).thenReturn(group);

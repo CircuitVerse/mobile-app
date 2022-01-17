@@ -52,8 +52,7 @@ void main() {
         await _model.fetchMentoredGroups();
 
         verify(_mockGroupsApi.fetchMentoringGroups());
-        expect(
-            _model.stateFor(_model.FETCH_MENTORED_GROUPS), ViewState.Success);
+        expect(_model.stateFor(_model.fetchMENTOREDGROUPS), ViewState.Success);
         expect(_model.previousMentoredGroupsBatch, _groups);
         expect(deepEq(_model.mentoredGroups, _groups.data), true);
       });
@@ -69,8 +68,7 @@ void main() {
         await _model.fetchMentoredGroups();
 
         verify(_mockGroupsApi.fetchMentoringGroups(page: 2));
-        expect(
-            _model.stateFor(_model.FETCH_MENTORED_GROUPS), ViewState.Success);
+        expect(_model.stateFor(_model.fetchMENTOREDGROUPS), ViewState.Success);
         expect(_model.previousMentoredGroupsBatch, _groups);
       });
 
@@ -84,8 +82,8 @@ void main() {
         await _model.fetchMentoredGroups();
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.FETCH_MENTORED_GROUPS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_MENTORED_GROUPS),
+        expect(_model.stateFor(_model.fetchMENTOREDGROUPS), ViewState.Error);
+        expect(_model.errorMessageFor(_model.fetchMENTOREDGROUPS),
             'Some Error Occurred!');
       });
     });
@@ -101,7 +99,7 @@ void main() {
         await _model.fetchMemberGroups();
 
         verify(_mockGroupsApi.fetchMemberGroups());
-        expect(_model.stateFor(_model.FETCH_MEMBER_GROUPS), ViewState.Success);
+        expect(_model.stateFor(_model.fetchMEMBERGROUPS), ViewState.Success);
         expect(_model.previousMemberGroupsBatch, _groups);
         expect(deepEq(_model.memberGroups, _groups.data), true);
       });
@@ -117,7 +115,7 @@ void main() {
         await _model.fetchMemberGroups();
 
         verify(_mockGroupsApi.fetchMemberGroups(page: 2));
-        expect(_model.stateFor(_model.FETCH_MEMBER_GROUPS), ViewState.Success);
+        expect(_model.stateFor(_model.fetchMEMBERGROUPS), ViewState.Success);
         expect(_model.previousMemberGroupsBatch, _groups);
       });
 
@@ -131,8 +129,8 @@ void main() {
         await _model.fetchMemberGroups();
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.FETCH_MEMBER_GROUPS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_MEMBER_GROUPS),
+        expect(_model.stateFor(_model.fetchMEMBERGROUPS), ViewState.Error);
+        expect(_model.errorMessageFor(_model.fetchMEMBERGROUPS),
             'Some Error Occurred!');
       });
     });
@@ -149,7 +147,7 @@ void main() {
 
         // verify API call is made..
         verify(_mockGroupsApi.deleteGroup('1'));
-        expect(_model.stateFor(_model.DELETE_GROUP), ViewState.Success);
+        expect(_model.stateFor(_model.deleteGROUP), ViewState.Success);
 
         // verify group member is deleted..
         expect(
@@ -169,8 +167,8 @@ void main() {
         await _model.deleteGroup('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.DELETE_GROUP), ViewState.Error);
-        expect(_model.errorMessageFor(_model.DELETE_GROUP),
+        expect(_model.stateFor(_model.deleteGROUP), ViewState.Error);
+        expect(_model.errorMessageFor(_model.deleteGROUP),
             'Group can\'t be deleted');
       });
 
@@ -184,9 +182,9 @@ void main() {
         await _model.deleteGroup('1');
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.DELETE_GROUP), ViewState.Error);
-        expect(_model.errorMessageFor(_model.DELETE_GROUP),
-            'Some Error Occurred!');
+        expect(_model.stateFor(_model.deleteGROUP), ViewState.Error);
+        expect(
+            _model.errorMessageFor(_model.deleteGROUP), 'Some Error Occurred!');
       });
     });
   });

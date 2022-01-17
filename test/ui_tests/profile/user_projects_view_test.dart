@@ -36,7 +36,7 @@ void main() {
       var projects = <Project>[];
       projects.add(Project.fromJson(mockProject));
 
-      when(_userProjectsViewModel.FETCH_USER_PROJECTS)
+      when(_userProjectsViewModel.fetchUSERPROJECTS)
           .thenAnswer((_) => 'fetch_user_projects');
       when(_userProjectsViewModel.fetchUserProjects(userId: anyNamed('userId')))
           .thenReturn(null);
@@ -84,7 +84,7 @@ void main() {
             projectDetailsViewModel);
 
         when(projectDetailsViewModel.starCount).thenAnswer((_) => 0);
-        when(projectDetailsViewModel.FETCH_PROJECT_DETAILS)
+        when(projectDetailsViewModel.fetchPROJECTDETAILS)
             .thenAnswer((_) => 'fetch_project_details');
         when(projectDetailsViewModel.fetchProjectDetails(any)).thenReturn(null);
         when(projectDetailsViewModel.isSuccess(any)).thenReturn(false);

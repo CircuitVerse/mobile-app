@@ -7,7 +7,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class AboutViewModel extends BaseModel {
   // ViewState Keys
-  final String FETCH_CONTRIBUTORS = 'fetch_contributors';
+  final String fetchCONTRIBUTORS = 'fetch_contributors';
 
   final _contributorsApi = locator<ContributorsApi>();
 
@@ -21,14 +21,14 @@ class AboutViewModel extends BaseModel {
   }
 
   Future fetchContributors() async {
-    setStateFor(FETCH_CONTRIBUTORS, ViewState.Busy);
+    setStateFor(fetchCONTRIBUTORS, ViewState.Busy);
     try {
       cvContributors = await _contributorsApi.fetchContributors() ?? [];
 
-      setStateFor(FETCH_CONTRIBUTORS, ViewState.Success);
+      setStateFor(fetchCONTRIBUTORS, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FETCH_CONTRIBUTORS, ViewState.Error);
-      setErrorMessageFor(FETCH_CONTRIBUTORS, f.message);
+      setStateFor(fetchCONTRIBUTORS, ViewState.Error);
+      setErrorMessageFor(fetchCONTRIBUTORS, f.message);
     }
   }
 }

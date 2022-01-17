@@ -89,7 +89,7 @@ void main() {
       locator.registerSingleton<UpdateAssignmentViewModel>(
           _updateAssignmentViewModel);
 
-      when(_updateAssignmentViewModel.UPDATE_ASSIGNMENT)
+      when(_updateAssignmentViewModel.updateASSIGNMENT)
           .thenAnswer((_) => 'update_assignment');
       when(_updateAssignmentViewModel.updateAssignment(any, any, any, any, any))
           .thenReturn(null);

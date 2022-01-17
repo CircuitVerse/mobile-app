@@ -43,9 +43,9 @@ void main() {
       var groups = <Group>[];
       groups.add(Group.fromJson(mockGroup));
 
-      when(model.FETCH_MENTORED_GROUPS)
+      when(model.fetchMENTOREDGROUPS)
           .thenAnswer((_) => 'fetch_mentored_groups');
-      when(model.FETCH_MEMBER_GROUPS).thenAnswer((_) => 'fetch_member_groups');
+      when(model.fetchMEMBERGROUPS).thenAnswer((_) => 'fetch_member_groups');
       when(model.previousMemberGroupsBatch).thenReturn(null);
       when(model.previousMentoredGroupsBatch).thenReturn(null);
       when(model.fetchMentoredGroups()).thenReturn(null);
@@ -141,7 +141,7 @@ void main() {
       var _groupDetailsViewModel = MockGroupDetailsViewModel();
       locator.registerSingleton<GroupDetailsViewModel>(_groupDetailsViewModel);
 
-      when(_groupDetailsViewModel.FETCH_GROUP_DETAILS)
+      when(_groupDetailsViewModel.fetchGROUPDETAILS)
           .thenAnswer((_) => 'fetch_group_details');
       when(_groupDetailsViewModel.fetchGroupDetails(any)).thenReturn(null);
       when(_groupDetailsViewModel.isSuccess(any)).thenAnswer((_) => false);

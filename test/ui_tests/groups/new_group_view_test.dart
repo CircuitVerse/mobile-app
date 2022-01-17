@@ -67,7 +67,7 @@ void main() {
       var _newGroupViewModel = MockNewGroupViewModel();
       locator.registerSingleton<NewGroupViewModel>(_newGroupViewModel);
 
-      when(_newGroupViewModel.ADD_GROUP).thenAnswer((_) => 'add_group');
+      when(_newGroupViewModel.addGROUP).thenAnswer((_) => 'add_group');
       when(_newGroupViewModel.addGroup(any)).thenReturn(null);
       when(_newGroupViewModel.isSuccess(any)).thenReturn(true);
       when(_newGroupViewModel.newGroup).thenAnswer((_) => null);

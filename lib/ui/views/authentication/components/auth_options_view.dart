@@ -21,12 +21,12 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
   Future<void> onGoogleAuthPressed() async {
     await _model.googleAuth(isSignUp: widget.isSignUp);
 
-    if (_model.isSuccess(_model.GOOGLE_OAUTH)) {
+    if (_model.isSuccess(_model.googleOAUTH)) {
       await Get.offAllNamed(CVLandingView.id);
-    } else if (_model.isError(_model.GOOGLE_OAUTH)) {
+    } else if (_model.isError(_model.googleOAUTH)) {
       SnackBarUtils.showDark(
         'Google Authentication Error',
-        _model.errorMessageFor(_model.GOOGLE_OAUTH),
+        _model.errorMessageFor(_model.googleOAUTH),
       );
     }
   }
@@ -34,12 +34,12 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
   Future<void> onFacebookAuthPressed() async {
     await _model.facebookAuth(isSignUp: widget.isSignUp);
 
-    if (_model.isSuccess(_model.FB_OAUTH)) {
+    if (_model.isSuccess(_model.fbOAUTH)) {
       await Get.offAllNamed(CVLandingView.id);
-    } else if (_model.isError(_model.FB_OAUTH)) {
+    } else if (_model.isError(_model.fbOAUTH)) {
       SnackBarUtils.showDark(
         'Facebook Authentication Error',
-        _model.errorMessageFor(_model.FB_OAUTH),
+        _model.errorMessageFor(_model.fbOAUTH),
       );
     }
   }
@@ -47,12 +47,12 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
   Future<void> onGithubAuthPressed() async {
     await _model.githubAuth(isSignUp: widget.isSignUp);
 
-    if (_model.isSuccess(_model.GITHUB_OAUTH)) {
+    if (_model.isSuccess(_model.githubOAUTH)) {
       await Get.offAllNamed(CVLandingView.id);
-    } else if (_model.isError(_model.GITHUB_OAUTH)) {
+    } else if (_model.isError(_model.githubOAUTH)) {
       SnackBarUtils.showDark(
         'GitHub Authentication Error',
-        _model.errorMessageFor(_model.GITHUB_OAUTH),
+        _model.errorMessageFor(_model.githubOAUTH),
       );
     }
   }

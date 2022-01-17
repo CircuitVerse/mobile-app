@@ -31,7 +31,7 @@ class _UserProjectsViewState extends State<UserProjectsView>
       builder: (context, model, child) {
         final _items = <Widget>[];
 
-        if (model.isSuccess(model.FETCH_USER_PROJECTS)) {
+        if (model.isSuccess(model.fetchUSERPROJECTS)) {
           for (var project in model.userProjects) {
             _items.add(
               ProjectCard(

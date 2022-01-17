@@ -93,7 +93,7 @@ class _SignupViewState extends State<SignupView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _signUpModel.isBusy(_signUpModel.SIGNUP)
+        title: _signUpModel.isBusy(_signUpModel.signUP)
             ? 'Authenticating..'
             : 'REGISTER',
         onPressed: _validateAndSubmit,
@@ -124,15 +124,15 @@ class _SignupViewState extends State<SignupView> {
 
   Future<void> _validateAndSubmit() async {
     if (Validators.validateAndSaveForm(_formKey) &&
-        !_signUpModel.isBusy(_signUpModel.SIGNUP)) {
+        !_signUpModel.isBusy(_signUpModel.signUP)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
       await _signUpModel.signup(_name, _email, _password);
 
-      if (_signUpModel.isSuccess(_signUpModel.SIGNUP)) {
+      if (_signUpModel.isSuccess(_signUpModel.signUP)) {
         // show signup successful snackbar..
         SnackBarUtils.showDark(
-          'Signup Successful',
+          'signup Successful',
           'Welcome to CircuitVerse!',
         );
 
@@ -141,11 +141,11 @@ class _SignupViewState extends State<SignupView> {
           const Duration(seconds: 1),
         );
         await Get.offAllNamed(CVLandingView.id);
-      } else if (_signUpModel.isError(_signUpModel.SIGNUP)) {
+      } else if (_signUpModel.isError(_signUpModel.signUP)) {
         // show failure snackbar..
         SnackBarUtils.showDark(
           'Error',
-          _signUpModel.errorMessageFor(_signUpModel.SIGNUP),
+          _signUpModel.errorMessageFor(_signUpModel.signUP),
         );
         _formKey.currentState?.reset();
       }

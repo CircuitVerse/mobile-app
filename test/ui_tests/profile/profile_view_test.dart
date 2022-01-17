@@ -39,12 +39,12 @@ void main() {
       var _profileViewModel = MockProfileViewModel();
       locator.registerSingleton<ProfileViewModel>(_profileViewModel);
 
-      when(_profileViewModel.FETCH_USER_PROFILE)
+      when(_profileViewModel.fetchUSERPROFILE)
           .thenAnswer((_) => 'fetch_user_profile');
 
       when(_profileViewModel.fetchUserProfile(any)).thenReturn(null);
 
-      when(_profileViewModel.isSuccess(_profileViewModel.FETCH_USER_PROFILE))
+      when(_profileViewModel.isSuccess(_profileViewModel.fetchUSERPROFILE))
           .thenReturn(true);
       when(_profileViewModel.user).thenReturn(user);
 
@@ -52,7 +52,7 @@ void main() {
       var _userProjectsViewModel = MockUserProjectsViewModel();
       locator.registerSingleton<UserProjectsViewModel>(_userProjectsViewModel);
 
-      when(_userProjectsViewModel.FETCH_USER_PROJECTS)
+      when(_userProjectsViewModel.fetchUSERPROJECTS)
           .thenAnswer((_) => 'fetch_user_projects');
       when(_userProjectsViewModel.fetchUserProjects(userId: anyNamed('userId')))
           .thenReturn(null);

@@ -73,7 +73,7 @@ void main() {
       var _editGroupViewModel = MockEditGroupViewModel();
       locator.registerSingleton<EditGroupViewModel>(_editGroupViewModel);
 
-      when(_editGroupViewModel.UPDATE_GROUP).thenAnswer((_) => 'update_group');
+      when(_editGroupViewModel.updateGROUP).thenAnswer((_) => 'update_group');
       when(_editGroupViewModel.updateGroup(any, any)).thenReturn(null);
       when(_editGroupViewModel.isSuccess(any)).thenReturn(true);
       when(_editGroupViewModel.updatedGroup).thenReturn(null);
