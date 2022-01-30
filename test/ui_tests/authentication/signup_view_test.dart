@@ -99,10 +99,8 @@ void main() {
       verifyNever(_usersApiMock.signup('test', 'test@test.com', ''));
       expect(find.text('Password can\'t be empty'), findsOneWidget);
 
-
       await tester.enterText(
-          find.byWidgetPredicate((Widget widget) =>
-              widget is CVPasswordField ),
+          find.byWidgetPredicate((Widget widget) => widget is CVPasswordField),
           'abcd');
       await tester.tap(find.byType(CVPrimaryButton));
       await tester.pumpAndSettle();
