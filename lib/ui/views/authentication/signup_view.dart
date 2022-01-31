@@ -84,7 +84,7 @@ class _SignupViewState extends State<SignupView> {
       focusNode: _emailFocusNode,
       validator: (value) {
         if (value!.isEmpty) {
-          return "Password can\'t be empty";
+          return "Password can't be empty";
         } else if (value.length < 6) {
           return "Password length should be at least 6";
         }
