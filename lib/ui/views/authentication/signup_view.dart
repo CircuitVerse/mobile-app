@@ -82,8 +82,14 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildPasswordInput() {
     return CVPasswordField(
       focusNode: _emailFocusNode,
-      validator: (value) =>
-          value?.isEmpty ?? true ? 'Password can\'t be empty' : null,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "Password can't be empty";
+        } else if (value.length < 6) {
+          return "Password length should be at least 6";
+        }
+        return null;
+      },
       onSaved: (value) => _password = value!.trim(),
     );
   }
