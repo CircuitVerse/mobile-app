@@ -27,9 +27,17 @@ class UserFavouritesViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void onProjectDeleted(String projectId) {
+  void _removeFromUserFavorites(String projectId) {
     _userFavourites.removeWhere((_project) => _project.id == projectId);
     notifyListeners();
+  }
+
+  void onProjectDeleted(String projectId) {
+    _removeFromUserFavorites(projectId);
+  }
+
+  void onProjectUnstarred(String projectId) {
+    _removeFromUserFavorites(projectId);
   }
 
   Future? fetchUserFavourites({String? userId}) async {

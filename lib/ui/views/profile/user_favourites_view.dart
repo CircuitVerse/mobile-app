@@ -44,6 +44,7 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
                   var _result = await Get.toNamed(ProjectDetailsView.id,
                       arguments: project);
                   if (_result is bool) model.onProjectDeleted(project.id);
+                  if (_result is Project) model.onProjectUnstarred(project.id);
                 },
               ),
             );
