@@ -69,6 +69,9 @@ dev_dependencies:
 dependency_overrides:
   mime: ^1.0.1
   plugin_platform_interface: ^2.0.2
+  photo_view: 
+    git:
+      url: https://github.com/bluefireteam/photo_view.git
 
 flutter_icons:
   android: "launcher_icon"
