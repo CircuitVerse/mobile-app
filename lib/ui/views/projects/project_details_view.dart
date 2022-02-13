@@ -574,7 +574,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       builder: (context, model, child) => WillPopScope(
         onWillPop: () async {
           // Check whether the state (i.e starred or not) is changed
-          final bool isChanged = model.receivedProject.attributes.isStarred ^
+          final bool isChanged = model.receivedProject!.attributes.isStarred ^
               _recievedProject.attributes.isStarred;
           Get.back(
             result: isChanged ? model.receivedProject : null,

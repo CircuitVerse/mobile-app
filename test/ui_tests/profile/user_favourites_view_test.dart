@@ -81,6 +81,12 @@ void main() {
         locator.registerSingleton<ProjectDetailsViewModel>(
             projectDetailsViewModel);
 
+        final _recievedProject = Project.fromJson(mockProject);
+        when(projectDetailsViewModel.receivedProject)
+            .thenAnswer((_) => _recievedProject);
+        when(projectDetailsViewModel.isLoggedIn).thenAnswer((_) => true);
+        when(projectDetailsViewModel.isProjectStarred)
+            .thenAnswer((_) => _recievedProject.attributes.isStarred);
         when(projectDetailsViewModel.starCount).thenAnswer((_) => 0);
         when(projectDetailsViewModel.FETCH_PROJECT_DETAILS)
             .thenAnswer((_) => 'fetch_project_details');

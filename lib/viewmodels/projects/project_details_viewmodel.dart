@@ -24,7 +24,7 @@ class ProjectDetailsViewModel extends BaseModel {
 
   bool get isLoggedIn => _localStorageService.isLoggedIn;
 
-  late Project receivedProject;
+  Project? receivedProject;
 
   Project? _project;
 
@@ -171,8 +171,8 @@ class ProjectDetailsViewModel extends BaseModel {
       isProjectStarred = _toggleMessage!.contains('Starred') ? true : false;
       isProjectStarred ? starCount++ : starCount--;
 
-      receivedProject = receivedProject.copyWith(
-        attributes: receivedProject.attributes.copyWith(
+      receivedProject = receivedProject!.copyWith(
+        attributes: receivedProject!.attributes.copyWith(
           isStarred: isProjectStarred,
           starsCount: starCount,
         ),
