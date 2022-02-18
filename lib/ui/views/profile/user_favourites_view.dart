@@ -5,7 +5,9 @@ import 'package:mobile_app/ui/components/cv_add_icon_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
+import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class UserFavouritesView extends StatefulWidget {
   const UserFavouritesView({
@@ -30,7 +32,14 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
   Widget build(BuildContext context) {
     super.build(context);
     return BaseView<UserFavouritesViewModel>(
-      onModelReady: (model) => model.fetchUserFavourites(userId: widget.userId),
+      onModelReady: (model) {
+        model.fetchUserFavourites(userId: widget.userId);
+        context.watch<ProfileViewModel>().addListener(() {
+          final project = context.read<ProfileViewModel>().updatedProject;
+          if (project == null) return;
+          model.onProjectChanged(project);
+        });
+      },
       builder: (context, model, child) {
         final _items = <Widget>[];
 
@@ -44,7 +53,10 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
                   var _result = await Get.toNamed(ProjectDetailsView.id,
                       arguments: project);
                   if (_result is bool) model.onProjectDeleted(project.id);
-                  if (_result is Project) model.onProjectUnstarred(project.id);
+                  if (_result is Project) {
+                    model.onProjectChanged(_result);
+                    context.read<ProfileViewModel>().updatedProject = _result;
+                  }
                 },
               ),
             );
