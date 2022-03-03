@@ -642,10 +642,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 ),
               );
 
-          if (_model.isSuccess(_model.fetchPROJECTDETAILS) &&
-              _model.collaborators.isNotEmpty) {
-            _items.add(const Divider());
-            
+              if (_model.isSuccess(_model.fetchPROJECTDETAILS) &&
+                  _model.collaborators.isNotEmpty) {
+                _items.add(const Divider());
+
                 _items.add(_buildProjectHeader('Collaborators'));
 
                 for (var collaborator in _model.collaborators) {
