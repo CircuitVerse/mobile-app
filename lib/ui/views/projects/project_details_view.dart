@@ -8,7 +8,6 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/collaborators.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/dialog_service.dart';
-import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/components/cv_flat_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
@@ -32,8 +31,6 @@ class ProjectDetailsView extends StatefulWidget {
 }
 
 class _ProjectDetailsViewState extends State<ProjectDetailsView> {
-  final LocalStorageService _localStorageService =
-      locator<LocalStorageService>();
   final DialogService _dialogService = locator<DialogService>();
   late ProjectDetailsViewModel _model;
   final _formKey = GlobalKey<FormState>();
@@ -566,92 +563,105 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return BaseView<ProjectDetailsViewModel>(
       onModelReady: (model) {
         _model = model;
+        _model.receivedProject = _recievedProject;
         // initialize collaborators & isStarred for the project..
         _model.collaborators = _recievedProject.collaborators;
-        _model.isProjectStarred =
-            _recievedProject.attributes.isStarred ?? false;
+        _model.isProjectStarred = _recievedProject.attributes.isStarred;
         _model.starCount = _recievedProject.attributes.starsCount;
 
         _model.fetchProjectDetails(_recievedProject.id);
       },
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          title: const Text('Project Details'),
-          actions: [
-            _buildShareActionButton(),
-          ],
-        ),
-        body: Builder(builder: (context) {
-          var _projectAttrs = _recievedProject.attributes;
-          var _items = <Widget>[];
+      builder: (context, model, child) => WillPopScope(
+        onWillPop: () async {
+          // Check whether the state (i.e starred or not) is changed
+          final bool isChanged = model.receivedProject!.attributes.isStarred ^
+              _recievedProject.attributes.isStarred;
+          Get.back(
+            result: isChanged ? model.receivedProject : null,
+          );
+          return false;
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Project Details'),
+            actions: [
+              _buildShareActionButton(),
+            ],
+          ),
+          body: Builder(
+            builder: (context) {
+              var _projectAttrs = _recievedProject.attributes;
+              var _items = <Widget>[];
 
-          // Adds project preview..
-          _items.add(_buildProjectPreview());
+              // Adds project preview..
+              _items.add(_buildProjectPreview());
 
-          _items.add(const SizedBox(height: 16));
+              _items.add(const SizedBox(height: 16));
 
-          // Adds Project Name, Star & View count..
-          _items.add(_buildProjectNameHeader());
+              // Adds Project Name, Star & View count..
+              _items.add(_buildProjectNameHeader());
 
-          // Adds Project attributes..
-          _items.add(
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _buildProjectAuthor(),
-                  _buildProjectDetailComponent(
-                    'Project Access Type',
-                    _projectAttrs.projectAccessType,
-                  ),
-                  _buildProjectDescription(),
-                  const Divider(height: 32),
-                  Wrap(
-                    spacing: 8,
-                    crossAxisAlignment: WrapCrossAlignment.center,
+              // Adds Project attributes..
+              _items.add(
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      if (!_recievedProject.hasAuthorAccess &&
-                          _localStorageService.isLoggedIn)
-                        _buildForkProjectButton(),
-                      if (_localStorageService.isLoggedIn)
-                        _buildStarProjectButton(),
+                      _buildProjectAuthor(),
+                      _buildProjectDetailComponent(
+                        'Project Access Type',
+                        _projectAttrs.projectAccessType,
+                      ),
+                      _buildProjectDescription(),
+                      const Divider(height: 32),
+                      Wrap(
+                        spacing: 8,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: <Widget>[
+                          if (!_recievedProject.hasAuthorAccess &&
+                              model.isLoggedIn)
+                            _buildForkProjectButton(),
+                          if (model.isLoggedIn) _buildStarProjectButton(),
+                          if (_recievedProject.hasAuthorAccess)
+                            _buildAddCollaboratorsButton(),
+                        ],
+                      ),
+                      const Divider(height: 32),
                       if (_recievedProject.hasAuthorAccess)
-                        _buildAddCollaboratorsButton(),
+                        Wrap(
+                          spacing: 8,
+                          children: <Widget>[
+                            _buildEditButton(),
+                            _buildDeleteButton(),
+                          ],
+                        ),
                     ],
                   ),
-                  const Divider(height: 32),
-                  if (_recievedProject.hasAuthorAccess)
-                    Wrap(
-                      spacing: 8,
-                      children: <Widget>[
-                        _buildEditButton(),
-                        _buildDeleteButton(),
-                      ],
-                    ),
-                ],
-              ),
-            ),
-          );
-
-          if (_model.isSuccess(_model.FETCH_PROJECT_DETAILS) &&
-              _model.collaborators.isNotEmpty) {
-            _items.add(const Divider());
-
-            _items.add(_buildProjectHeader('Collaborators'));
-
-            for (var collaborator in _model.collaborators) {
-              _items.add(
-                _buildCollaborator(collaborator),
+                ),
               );
-            }
-          }
-          return ListView(
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(16),
-            children: _items,
-          );
-        }),
+
+              if (_model.isSuccess(_model.FETCH_PROJECT_DETAILS) &&
+                  _model.collaborators.isNotEmpty) {
+                _items.add(const Divider());
+
+                _items.add(_buildProjectHeader('Collaborators'));
+
+                for (var collaborator in _model.collaborators) {
+                  _items.add(
+                    _buildCollaborator(collaborator),
+                  );
+                }
+              }
+              return ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(16),
+                children: _items,
+              );
+            },
+          ),
+        ),
       ),
     );
   }
