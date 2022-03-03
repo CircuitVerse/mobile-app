@@ -24,6 +24,14 @@ class FeaturedProjectsViewModel extends BaseModel {
     notifyListeners();
   }
 
+  void updateFeaturedProject(Project project) {
+    final int index = _featuredProjects.indexWhere(
+      (element) => element.id == project.id,
+    );
+    _featuredProjects[index] = project;
+    notifyListeners();
+  }
+
   Future? fetchFeaturedProjects({int size = 5}) async {
     try {
       if (previousFeaturedProjectsBatch?.links.next != null) {

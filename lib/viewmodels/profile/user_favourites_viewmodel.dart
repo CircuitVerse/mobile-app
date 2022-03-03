@@ -27,9 +27,26 @@ class UserFavouritesViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void onProjectDeleted(String projectId) {
+  void _removeFromUserFavorites(String projectId) {
     _userFavourites.removeWhere((_project) => _project.id == projectId);
     notifyListeners();
+  }
+
+  void onProjectDeleted(String projectId) {
+    _removeFromUserFavorites(projectId);
+  }
+
+  void _addToUserFavorites(Project project) {
+    _userFavourites.add(project);
+    notifyListeners();
+  }
+
+  void onProjectChanged(Project project) {
+    if (project.attributes.isStarred) {
+      _addToUserFavorites(project);
+    } else {
+      _removeFromUserFavorites(project.id);
+    }
   }
 
   Future? fetchUserFavourites({String? userId}) async {

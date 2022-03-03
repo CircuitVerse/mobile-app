@@ -3,9 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
+import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/profile/user_projects_view.dart';
 import 'package:mobile_app/ui/views/projects/components/project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
+import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import '../../setup/test_helpers.mocks.dart';
 import '../../utils_tests/image_test_utils.dart';
 import 'package:mobile_app/utils/router.dart';
@@ -29,6 +31,10 @@ void main() {
     setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpUserProjectsView(WidgetTester tester) async {
+      // Mock User Profile ViewModel
+      final _profileViewModel = MockProfileViewModel();
+      locator.registerSingleton<ProfileViewModel>(_profileViewModel);
+
       // Mock User Projects ViewModel
       var _userProjectsViewModel = MockUserProjectsViewModel();
       locator.registerSingleton<UserProjectsViewModel>(_userProjectsViewModel);
@@ -49,10 +55,14 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: const Scaffold(
-            body: UserProjectsView(
-              userId: 'user_id',
-            ),
+          home: BaseView<ProfileViewModel>(
+            builder: (context, model, child) {
+              return const Scaffold(
+                body: UserProjectsView(
+                  userId: 'user_id',
+                ),
+              );
+            },
           ),
         ),
       );
@@ -83,6 +93,12 @@ void main() {
         locator.registerSingleton<ProjectDetailsViewModel>(
             projectDetailsViewModel);
 
+        final _recievedProject = Project.fromJson(mockProject);
+        when(projectDetailsViewModel.receivedProject)
+            .thenAnswer((_) => _recievedProject);
+        when(projectDetailsViewModel.isLoggedIn).thenAnswer((_) => true);
+        when(projectDetailsViewModel.isProjectStarred)
+            .thenAnswer((_) => _recievedProject.attributes.isStarred);
         when(projectDetailsViewModel.starCount).thenAnswer((_) => 0);
         when(projectDetailsViewModel.FETCH_PROJECT_DETAILS)
             .thenAnswer((_) => 'fetch_project_details');

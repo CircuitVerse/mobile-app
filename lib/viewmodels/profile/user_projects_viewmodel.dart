@@ -27,6 +27,15 @@ class UserProjectsViewModel extends BaseModel {
     notifyListeners();
   }
 
+  void onProjectChanged(Project project) {
+    final int index = _userProjects.indexWhere(
+      (element) => element.id == project.id,
+    );
+    if (index == -1) return;
+    _userProjects[index] = project;
+    notifyListeners();
+  }
+
   void onProjectDeleted(String projectId) {
     _userProjects.removeWhere((_project) => _project.id == projectId);
     notifyListeners();

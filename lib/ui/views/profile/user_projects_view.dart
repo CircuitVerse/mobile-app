@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_add_icon_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
+import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class UserProjectsView extends StatefulWidget {
   const UserProjectsView({
@@ -27,7 +30,14 @@ class _UserProjectsViewState extends State<UserProjectsView>
   Widget build(BuildContext context) {
     super.build(context);
     return BaseView<UserProjectsViewModel>(
-      onModelReady: (model) => model.fetchUserProjects(userId: widget.userId),
+      onModelReady: (model) {
+        model.fetchUserProjects(userId: widget.userId);
+        context.watch<ProfileViewModel>().addListener(() {
+          var updatedProject = context.read<ProfileViewModel>().updatedProject;
+          if (updatedProject == null) return;
+          model.onProjectChanged(updatedProject);
+        });
+      },
       builder: (context, model, child) {
         final _items = <Widget>[];
 
@@ -41,6 +51,10 @@ class _UserProjectsViewState extends State<UserProjectsView>
                   var _result = await Get.toNamed(ProjectDetailsView.id,
                       arguments: project);
                   if (_result is bool) model.onProjectDeleted(project.id);
+                  if (_result is Project) {
+                    model.onProjectChanged(_result);
+                    context.read<ProfileViewModel>().updatedProject = _result;
+                  }
                 },
               ),
             );
