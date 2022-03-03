@@ -5,6 +5,7 @@ import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/API/collaborators_api.dart';
 import 'package:mobile_app/services/API/projects_api.dart';
+import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class ProjectDetailsViewModel extends BaseModel {
@@ -18,6 +19,12 @@ class ProjectDetailsViewModel extends BaseModel {
 
   final ProjectsApi _projectsApi = locator<ProjectsApi>();
   final CollaboratorsApi _collaboratorsApi = locator<CollaboratorsApi>();
+  final LocalStorageService _localStorageService =
+      locator<LocalStorageService>();
+
+  bool get isLoggedIn => _localStorageService.isLoggedIn;
+
+  Project? receivedProject;
 
   Project? _project;
 
@@ -163,6 +170,13 @@ class ProjectDetailsViewModel extends BaseModel {
       var _toggleMessage = await _projectsApi.toggleStarProject(projectId);
       isProjectStarred = _toggleMessage!.contains('Starred') ? true : false;
       isProjectStarred ? starCount++ : starCount--;
+
+      receivedProject = receivedProject!.copyWith(
+        attributes: receivedProject!.attributes.copyWith(
+          isStarred: isProjectStarred,
+          starsCount: starCount,
+        ),
+      );
 
       setStateFor(toggleSTAR, ViewState.Success);
     } on Failure catch (f) {

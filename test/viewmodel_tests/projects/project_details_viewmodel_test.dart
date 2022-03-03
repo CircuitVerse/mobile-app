@@ -175,6 +175,7 @@ void main() {
             .thenAnswer((_) => Future.value('Starred'));
 
         var _model = ProjectDetailsViewModel();
+        _model.receivedProject = Project.fromJson(mockProject);
         await _model.toggleStarForProject('1');
 
         // verify API call is made..
@@ -191,6 +192,7 @@ void main() {
             .thenAnswer((_) => Future.value('Unstarred'));
 
         var _model = ProjectDetailsViewModel();
+        _model.receivedProject = Project.fromJson(mockProject);
         await _model.toggleStarForProject('1');
 
         // verify API call is made..

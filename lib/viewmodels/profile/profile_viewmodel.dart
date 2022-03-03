@@ -1,6 +1,7 @@
 import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/failure_model.dart';
+import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
@@ -17,6 +18,15 @@ class ProfileViewModel extends BaseModel {
 
   set user(User? user) {
     _user = user;
+    notifyListeners();
+  }
+
+  Project? _updatedProject;
+
+  Project? get updatedProject => _updatedProject;
+
+  set updatedProject(Project? project) {
+    _updatedProject = project;
     notifyListeners();
   }
 

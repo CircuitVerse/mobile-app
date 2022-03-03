@@ -46,6 +46,22 @@ class Project {
   ProjectRelationships relationships;
   List<Collaborator>? collaborators;
 
+  Project copyWith({
+    String? id,
+    String? type,
+    ProjectAttributes? attributes,
+    ProjectRelationships? relationships,
+    List<Collaborator>? collaborators,
+  }) {
+    return Project(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      attributes: attributes ?? this.attributes,
+      relationships: relationships ?? this.relationships,
+      collaborators: collaborators ?? this.collaborators,
+    );
+  }
+
   bool get hasAuthorAccess {
     var currentUser = locator<LocalStorageService>().currentUser;
 
@@ -81,7 +97,7 @@ class ProjectAttributes {
     this.description,
     required this.view,
     required this.tags,
-    this.isStarred,
+    required this.isStarred,
     required this.authorName,
     required this.starsCount,
   });
@@ -94,9 +110,37 @@ class ProjectAttributes {
   String? description;
   int view;
   List<Tag> tags;
-  bool? isStarred;
+  bool isStarred;
   String authorName;
   int starsCount;
+
+  ProjectAttributes copyWith({
+    String? name,
+    String? projectAccessType,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    ImagePreview? imagePreview,
+    String? description,
+    int? view,
+    List<Tag>? tags,
+    bool? isStarred,
+    String? authorName,
+    int? starsCount,
+  }) {
+    return ProjectAttributes(
+      name: name ?? this.name,
+      projectAccessType: projectAccessType ?? this.projectAccessType,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      imagePreview: imagePreview ?? this.imagePreview,
+      view: view ?? this.view,
+      tags: tags ?? this.tags,
+      authorName: authorName ?? this.authorName,
+      starsCount: starsCount ?? this.starsCount,
+      description: description ?? this.description,
+      isStarred: isStarred ?? this.isStarred,
+    );
+  }
 }
 
 class ImagePreview {
