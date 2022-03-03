@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -38,7 +39,14 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
               FeaturedProjectCard(
                 project: project,
                 onViewPressed: () async {
-                  await Get.toNamed(ProjectDetailsView.id, arguments: project);
+                  final _result = await Get.toNamed(
+                    ProjectDetailsView.id,
+                    arguments: project,
+                  );
+
+                  if (_result is Project) {
+                    model.updateFeaturedProject(_result);
+                  }
                 },
               ),
             );
