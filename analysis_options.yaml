@@ -3,18 +3,6 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude: [lib/generated_plugin_registrant.dart]
 
-language:
-   strict-interference: true
-   strict-raw-types: true
-
-errors:
-  missing_required_param: error
-  missing_return: error
-  dead_code: error
-  unused_element: error
-  unused_import: error
-  unused_local_variable: error
-
 linter:
   rules:
     # Util classes
