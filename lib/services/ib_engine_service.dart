@@ -249,12 +249,31 @@ class IbEngineServiceImpl implements IbEngineService {
 
     if (_ibRawPageData == null) return null;
 
+    /// Inline HTML Tags bounded by Backticks(`) are not parsed
+    /// For example,
+    ///   2<sup>6</sup> -> 2^6
+    ///   whereas, `2<sup>6</sup>` -> `2<sup>6</sup>`
+    final content = HtmlUnescape()
+        .convert(_ibRawPageData.rawContent)
+        .splitMapJoin(
+          RegExp(r'\`(.*?)\`'),
+          onMatch: (m) {
+            if (m[1] != null &&
+                RegExp(r'<(\S*?)[^>]*>(.*?)<\/\1>|<.*?\/>').hasMatch(m[1]!)) {
+              return '${m[1]}';
+            }
+
+            return '${m[0]}';
+          },
+          onNonMatch: (n) => n,
+        );
+
     return IbPageData(
       id: _ibRawPageData.id,
       pageUrl: _ibRawPageData.httpUrl,
       title: _ibRawPageData.title,
       content: [
-        IbMd(content: '${HtmlUnescape().convert(_ibRawPageData.rawContent)}\n'),
+        IbMd(content: '$content\n'),
       ],
       tableOfContents: _ibRawPageData.hasToc
           ? _getTableOfContents(_ibRawPageData.content!)
