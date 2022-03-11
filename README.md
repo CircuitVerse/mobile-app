@@ -22,6 +22,10 @@ A detailed guide for multiple platforms setup could be find [here](https://flutt
 ```
 flutter packages pub run build_runner build
 ```
+- If throws any error then run
+```
+flutter pub run build_runner build --delete-conflicting-outputs
+```
 - Switch to mobile-app's git hooks (**optional but recommended**)
 ```
 git config core.hooksPath .githooks/
