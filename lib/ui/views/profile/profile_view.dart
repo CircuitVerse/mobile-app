@@ -109,9 +109,38 @@ class _ProfileViewState extends State<ProfileView> {
     return Container();
   }
 
+  Widget _buildSubcribeToMailComponent() {
+     var _attrs = _model.user?.data.attributes;
+    var _localStorageService = locator<LocalStorageService>();
+    if (_localStorageService.isLoggedIn &&
+        userId == _localStorageService.currentUser!.data.id) {
+      return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      alignment: Alignment.centerLeft,
+      child: RichText(
+        text: TextSpan(
+          style: Theme.of(context).textTheme.bodyText1,
+          children: <TextSpan>[
+            TextSpan(
+              text: 'Subscribed to mails : ',
+              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            TextSpan(
+              text: _attrs?.subscribed.toString(),
+            )
+          ],
+        ),
+      ),
+    );
+    }
+
+    return Container();
+  }
+
   Widget _buildProfileCard() {
     var _attrs = _model.user?.data.attributes;
-
     return Card(
       shape: RoundedRectangleBorder(
         side: const BorderSide(color: CVTheme.lightGrey),
@@ -149,10 +178,7 @@ class _ProfileViewState extends State<ProfileView> {
                     'Educational Institute',
                     _attrs?.educationalInstitute,
                   ),
-                  _buildProfileComponent(
-                    'Subscribed to mails',
-                    _attrs?.subscribed.toString(),
-                  ),
+                  _buildSubcribeToMailComponent(),
                   _buildEditProfileButton()
                 ],
               ),
