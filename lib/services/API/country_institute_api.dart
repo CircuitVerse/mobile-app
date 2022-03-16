@@ -38,7 +38,7 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
 
   @override
   Future<dynamic> getCountries(String query) async {
-    var url = 'https://restcountries.eu/rest/v2/all';
+    var url = 'https://restcountries.com/v3.1/all';
     try {
       return _fetchAPI(query, url);
     } on Exception {
@@ -50,7 +50,7 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
 
   @override
   Future<dynamic> getInstitutes(String query) async {
-    var url = 'http://universities.hipolabs.com/search?';
+    var url = 'http://universities.hipolabs.com/search?name=$query';
     try {
       return _fetchAPI(query, url);
     } on Exception {
