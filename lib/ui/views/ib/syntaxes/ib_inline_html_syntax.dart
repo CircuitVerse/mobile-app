@@ -2,11 +2,11 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:markdown/markdown.dart' as md;
 
 class IbInlineHtmlSyntax extends md.InlineSyntax {
-  IbInlineHtmlSyntax({required this.builders}) : super(_pattern);
+  IbInlineHtmlSyntax({required this.builders}) : super(Pattern);
 
   Map<String, MarkdownElementBuilder> builders;
 
-  static const String _pattern = r'<(\S*?)[^>]*>(.*?)<\/\1>|<.*?\/>';
+  static const String Pattern = r'<(\S*?)[^>]*>(.*?)<\/\1>|<.*?\/>';
 
   @override
   bool onMatch(md.InlineParser parser, Match match) {
