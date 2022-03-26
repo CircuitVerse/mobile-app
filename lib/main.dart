@@ -9,6 +9,7 @@ import 'package:mobile_app/services/database_service.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:mobile_app/ui/views/startup_view.dart';
+import 'package:disposebag/disposebag.dart' show DisposeBagConfigs;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,8 @@ Future<void> main() async {
 
   // Init Hive
   await locator<DatabaseService>().init();
+
+  DisposeBagConfigs.logger = null;
 
   runApp(const CircuitVerseMobile());
 }

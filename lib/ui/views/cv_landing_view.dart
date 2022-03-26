@@ -179,7 +179,7 @@ class _CVLandingViewState extends State<CVLandingView> {
                   child: ExpansionTile(
                     maintainState: true,
                     title: Text(
-                      _model.currentUser?.data.attributes.name ?? '',
+                      _model.name ?? '',
                       style: Theme.of(context).textTheme.headline6?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -240,6 +240,7 @@ class _CVLandingViewState extends State<CVLandingView> {
     return BaseView<CVLandingViewModel>(
       onModelReady: (model) {
         _model = model;
+        _model.listenToUserStream();
       },
       builder: (context, model, child) => WillPopScope(
         onWillPop: () {

@@ -1,13 +1,15 @@
+import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mobile_app/enums/auth_type.dart';
 import 'package:mobile_app/models/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 
 class LocalStorageService {
   static LocalStorageService? _instance;
   static SharedPreferences? _preferences;
+  static RxSharedPreferences? _rxPrefs;
 
   static const String USER = 'logged_in_user';
   static const String TOKEN = 'token';
@@ -18,6 +20,7 @@ class LocalStorageService {
 
   static Future<LocalStorageService> getInstance() async {
     _preferences ??= await SharedPreferences.getInstance();
+    _rxPrefs ??= (_preferences)?.rx;
 
     return _instance ??= LocalStorageService();
   }
@@ -32,19 +35,19 @@ class LocalStorageService {
     debugPrint('LocalStorageService:_saveToDisk. key: $key value: $content');
 
     if (content is String) {
-      _preferences!.setString(key, content);
+      _rxPrefs!.setString(key, content);
     }
     if (content is bool) {
-      _preferences!.setBool(key, content);
+      _rxPrefs!.setBool(key, content);
     }
     if (content is int) {
-      _preferences!.setInt(key, content);
+      _rxPrefs!.setInt(key, content);
     }
     if (content is double) {
-      _preferences!.setDouble(key, content);
+      _rxPrefs!.setDouble(key, content);
     }
     if (content is List<String>) {
-      _preferences!.setStringList(key, content);
+      _rxPrefs!.setStringList(key, content);
     }
   }
 
@@ -98,5 +101,20 @@ class LocalStorageService {
 
   set setShowcaseState(String state) {
     _saveToDisk(IB_SHOWCASE_STATE, state);
+  }
+
+  Stream<User?> userStream() {
+    return _rxPrefs!.observe<String>(
+      USER,
+      (userJson) {
+        return userJson as String?;
+      },
+    ).map<User?>((user) {
+      if (user == null || user == 'null') {
+        return null;
+      }
+
+      return User.fromJson(json.decode(user));
+    });
   }
 }
