@@ -20,7 +20,7 @@ A detailed guide for multiple platforms setup could be find [here](https://flutt
 - `flutter pub get` to get all the dependencies.
 - Generate files using Builder Runner (**required**) 
 ```
-flutter packages pub run build_runner build
+flutter pub run build_runner build --delete-conflicting-outputs
 ```
 - Switch to mobile-app's git hooks (**optional but recommended**)
 ```
