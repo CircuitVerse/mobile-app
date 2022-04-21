@@ -240,6 +240,7 @@ class _CVLandingViewState extends State<CVLandingView> {
     return BaseView<CVLandingViewModel>(
       onModelReady: (model) {
         _model = model;
+        model.setUser();
       },
       builder: (context, model, child) => WillPopScope(
         onWillPop: () {
