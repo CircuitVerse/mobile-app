@@ -9,7 +9,9 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/profile/user_favourites_view.dart';
 import 'package:mobile_app/ui/views/profile/user_projects_view.dart';
 import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
+import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
+import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ProfileView extends StatefulWidget {
@@ -90,12 +92,14 @@ class _ProfileViewState extends State<ProfileView> {
           primary: CVTheme.primaryColor,
         ),
         onPressed: () async {
-          var _updatedUser = await Get.toNamed(EditProfileView.id);
-          if (_updatedUser is User) {
-            setState(() {
-              _model.user = _updatedUser;
-            });
-          }
+          await Get.toNamed(EditProfileView.id)?.then((_updatedUser) {
+            if (_updatedUser is User) {
+              setState(() {
+                _model.user = _updatedUser;
+              });
+            }
+            context.read<CVLandingViewModel>().onProfileUpdated();
+          });
         },
         child: Text(
           'Edit Profile',

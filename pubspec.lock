@@ -318,7 +318,7 @@ packages:
       path: "packages/flutter_markdown"
       ref: HEAD
       resolved-ref: "0072ff221b16f8947f2f80cfb48fc21d62985ee7"
-      url: "git://github.com/CircuitVerse/packages.git"
+      url: "https://github.com/CircuitVerse/packages.git"
     source: git
     version: "0.6.4"
   flutter_math_fork:
