@@ -84,7 +84,7 @@ class ProjectAttributes {
         description: json['description'],
         view: json['view'],
         tags: List<Tag>.from(json['tags'].map((x) => Tag.fromJson(x))),
-        isStarred: json['is_starred'],
+        isStarred: json['is_starred'] ?? false,
         authorName: json['author_name'],
         starsCount: json['stars_count'],
       );
