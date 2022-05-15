@@ -12,6 +12,7 @@ jobs:
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
+    timeout-minutes: 35
     steps:
       # Setup Java environment in order to build the Android app.
       - uses: actions/checkout@v1
