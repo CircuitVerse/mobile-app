@@ -85,19 +85,19 @@ class _IbLandingViewState extends State<IbLandingView> {
                 ? Showcase(
                     key: _model.toc,
                     description: 'Show Table of Contents',
-                    child: IconButton(
-                      icon: const Icon(Icons.menu_book_rounded),
-                      onPressed: value as VoidCallback,
-                    ),
                     onTargetClick: () {
                       _model.onShowCased('toc');
                       if (_key.currentState!.isDrawerOpen) Get.back();
                       Future.delayed(
                         const Duration(milliseconds: 200),
-                        value,
+                        value as VoidCallback,
                       );
                     },
                     disposeOnTap: true,
+                    child: IconButton(
+                      icon: const Icon(Icons.menu_book_rounded),
+                      onPressed: value as VoidCallback,
+                    ),
                   )
                 : Container();
           },

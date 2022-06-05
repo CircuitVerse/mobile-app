@@ -61,7 +61,7 @@ class UserAttributes {
     this.educationalInstitute,
   });
   String? name;
-  String email;
+  String? email;
   bool subscribed;
   DateTime? createdAt;
   DateTime? updatedAt;

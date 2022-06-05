@@ -64,7 +64,7 @@ class IbPageViewModel extends BaseModel {
     if (!state.tocButton) _list.add(keysMap['toc']);
 
     if (_list.isNotEmpty) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 800), () {
           showCaseWidgetState.startShowCase(_list);
         });

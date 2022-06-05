@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
-import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
-import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/components/cv_tab_bar.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/profile/user_favourites_view.dart';
@@ -26,14 +24,6 @@ class ProfileView extends StatefulWidget {
 
 class _ProfileViewState extends State<ProfileView> {
   late ProfileViewModel _model;
-  String? userId;
-
-  @override
-  void initState() {
-    super.initState();
-    userId =
-        widget.userId ?? locator<LocalStorageService>().currentUser?.data.id;
-  }
 
   Widget _buildProfileImage() {
     return Padding(
@@ -84,9 +74,7 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Widget _buildEditProfileButton() {
-    var _localStorageService = locator<LocalStorageService>();
-    if (_localStorageService.isLoggedIn &&
-        userId == _localStorageService.currentUser!.data.id) {
+    if (_model.isLoggedIn && _model.isPersonalProfile) {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: CVTheme.primaryColor,
@@ -153,10 +141,11 @@ class _ProfileViewState extends State<ProfileView> {
                     'Educational Institute',
                     _attrs?.educationalInstitute,
                   ),
-                  _buildProfileComponent(
-                    'Subscribed to mails',
-                    _attrs?.subscribed.toString(),
-                  ),
+                  if (_model.isLoggedIn && _model.isPersonalProfile)
+                    _buildProfileComponent(
+                      'Subscribed to mails',
+                      _attrs?.subscribed.toString(),
+                    ),
                   _buildEditProfileButton()
                 ],
               ),
@@ -168,7 +157,7 @@ class _ProfileViewState extends State<ProfileView> {
   }
 
   Widget _buildProjectsTabBar() {
-    if (userId == null) return Container();
+    if (_model.userId == null) return Container();
     return Expanded(
       child: Card(
         shape: RoundedRectangleBorder(
@@ -196,8 +185,8 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             body: TabBarView(
               children: [
-                UserProjectsView(userId: userId!),
-                UserFavouritesView(userId: userId!),
+                UserProjectsView(userId: _model.userId!),
+                UserFavouritesView(userId: _model.userId!),
               ],
             ),
           ),
@@ -211,7 +200,8 @@ class _ProfileViewState extends State<ProfileView> {
     return BaseView<ProfileViewModel>(
       onModelReady: (model) {
         _model = model;
-        _model.fetchUserProfile(userId);
+        _model.userId = widget.userId;
+        _model.fetchUserProfile();
       },
       builder: (context, model, child) => Scaffold(
         appBar: widget.userId != null

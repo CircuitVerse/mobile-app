@@ -39,10 +39,13 @@ void main() {
       var _profileViewModel = MockProfileViewModel();
       locator.registerSingleton<ProfileViewModel>(_profileViewModel);
 
+      when(_profileViewModel.userId).thenAnswer((_) => 'userId');
+      when(_profileViewModel.isLoggedIn).thenAnswer((_) => true);
+      when(_profileViewModel.isPersonalProfile).thenAnswer((_) => true);
       when(_profileViewModel.FETCH_USER_PROFILE)
           .thenAnswer((_) => 'fetch_user_profile');
 
-      when(_profileViewModel.fetchUserProfile(any)).thenReturn(null);
+      when(_profileViewModel.fetchUserProfile()).thenReturn(null);
 
       when(_profileViewModel.isSuccess(_profileViewModel.FETCH_USER_PROFILE))
           .thenReturn(true);
