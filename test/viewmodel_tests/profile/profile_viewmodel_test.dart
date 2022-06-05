@@ -22,7 +22,8 @@ void main() {
             .thenAnswer((_) => Future.value(_user));
 
         var _model = ProfileViewModel();
-        await _model.fetchUserProfile('1');
+        _model.userId = '1';
+        await _model.fetchUserProfile();
 
         // verify API call is made..
         verify(_mockUsersApi.fetchUser('1'));
@@ -38,7 +39,8 @@ void main() {
             .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = ProfileViewModel();
-        await _model.fetchUserProfile('1');
+        _model.userId = '1';
+        await _model.fetchUserProfile();
 
         // verify Error ViewState with proper error message..
         expect(_model.stateFor(_model.FETCH_USER_PROFILE), ViewState.Error);
