@@ -12,21 +12,26 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
 
   Future<dynamic> _fetchAPI(String query, String url) async {
     try {
-      data = await ApiUtils.get(
-        url,
-      );
+      data = await ApiUtils.get(url);
 
       var matches = [];
+      final bool isCountryApi = url.contains('countries');
 
       for (var i = 0; i < data.length; i++) {
-        matches.add(data[i]['name']);
+        var name = data[i]['name'];
+        if (isCountryApi) name = name['common'];
+        matches.add(name);
       }
 
-      matches.retainWhere(
-        (s) => s.toLowerCase().startsWith(
-              query.toLowerCase(),
-            ),
-      );
+      // Filter the matches only in case of country api
+      // because in universities case it's already filtered.
+      if (isCountryApi) {
+        matches.retainWhere(
+          (s) => s.toLowerCase().startsWith(
+                query.toLowerCase(),
+              ),
+        );
+      }
 
       return matches;
     } on Exception {
