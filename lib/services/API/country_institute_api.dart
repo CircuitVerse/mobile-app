@@ -23,15 +23,11 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
         matches.add(name);
       }
 
-      // Filter the matches only in case of country api
-      // because in universities case it's already filtered.
-      if (isCountryApi) {
-        matches.retainWhere(
-          (s) => s.toLowerCase().startsWith(
-                query.toLowerCase(),
-              ),
-        );
-      }
+      matches.retainWhere(
+        (s) => s.toLowerCase().startsWith(
+              query.toLowerCase(),
+            ),
+      );
 
       return matches;
     } on Exception {
@@ -55,7 +51,7 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
 
   @override
   Future<dynamic> getInstitutes(String query) async {
-    var url = 'http://universities.hipolabs.com/search?name=$query';
+    var url = 'http://universities.hipolabs.com/search?';
     try {
       return _fetchAPI(query, url);
     } on Exception {
