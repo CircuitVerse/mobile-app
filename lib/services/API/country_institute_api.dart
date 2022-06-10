@@ -12,14 +12,15 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
 
   Future<dynamic> _fetchAPI(String query, String url) async {
     try {
-      data = await ApiUtils.get(
-        url,
-      );
+      data = await ApiUtils.get(url);
 
       var matches = [];
+      final bool isCountryApi = url.contains('countries');
 
       for (var i = 0; i < data.length; i++) {
-        matches.add(data[i]['name']);
+        var name = data[i]['name'];
+        if (isCountryApi) name = name['common'];
+        matches.add(name);
       }
 
       matches.retainWhere(
@@ -38,7 +39,7 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
 
   @override
   Future<dynamic> getCountries(String query) async {
-    var url = 'https://restcountries.eu/rest/v2/all';
+    var url = 'https://restcountries.com/v3.1/all';
     try {
       return _fetchAPI(query, url);
     } on Exception {
