@@ -1,6 +1,9 @@
 List mockCountries = [
   {
-    'name': 'Test',
+    'name': {
+      'official': 'Test',
+      'common': 'Test',
+    },
     'topLevelDomain': ['.Test'],
     'alpha2Code': 'Test',
     'alpha3Code': 'Test',
