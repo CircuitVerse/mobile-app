@@ -29,7 +29,7 @@ import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 typedef TocCallback = void Function(Function?);
 typedef SetPageCallback = void Function(IbChapter?);
@@ -130,8 +130,8 @@ class _IbPageViewState extends State<IbPageView> {
     }
 
     // Confirm if it's a valid URL
-    if (await canLaunch(href)) {
-      return launchURL(href);
+    if (await canLaunchUrlString(href)) {
+      await launchUrlString(href);
     }
   }
 

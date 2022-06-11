@@ -53,6 +53,8 @@
 	<string>FB_APP_ID</string>
 	<key>FacebookDisplayName</key>
 	<string>CircuitVerse</string>
+	<key>FacebookClientToken</key>
+	<string>$(FACEBOOK_CLIENT_TOKEN)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
