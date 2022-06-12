@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/projects.dart';
+import 'package:mobile_app/ui/components/cv_drawer.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/featured_project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeaturedProjectsView extends StatefulWidget {
   const FeaturedProjectsView({
@@ -80,8 +83,24 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
 
         return Scaffold(
           appBar: widget.showAppBar
-              ? AppBar(title: const Text('Featured Circuits'))
+              ? AppBar(
+                  title: Text(
+                    AppLocalizations.of(context)!.featured_circuits,
+                    style: TextStyle(
+                      color: CVTheme.appBarText(context),
+                    ),
+                  ),
+                  centerTitle: true,
+                  elevation: 4,
+                  actions: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.search),
+                    ),
+                  ],
+                )
               : null,
+          drawer: const CVDrawer(),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
