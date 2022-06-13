@@ -17,6 +17,7 @@ jobs:
   deploy:
     # This job will run on ubuntu virtual machine
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     # This job will run if the release is based on master branch
     if: github.event.release.target_commitish == 'master'
     env:

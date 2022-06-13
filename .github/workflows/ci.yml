@@ -12,6 +12,7 @@ jobs:
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
+    timeout-minutes: 35
     steps:
       # Setup Java environment in order to build the Android app.
       - uses: actions/checkout@v1
@@ -22,7 +23,9 @@ jobs:
       # Setup the flutter environment.
       - uses: subosito/flutter-action@v1
         with:
-          channel: "stable"
+        # Temporary fix to failing CI
+          flutter-version: '3.0.1'
+          # channel: "stable"
 
       # Get flutter dependencies.
       - run: flutter pub get
