@@ -90,6 +90,7 @@ void main() {
 
       when(_editProfileViewModel.UPDATE_PROFILE)
           .thenAnswer((_) => 'update_profile');
+      when(_editProfileViewModel.imageUpdated).thenAnswer((_) => false);
       when(_editProfileViewModel.updateProfile(any, any, any, any))
           .thenReturn(null);
       when(_editProfileViewModel.isSuccess(any)).thenReturn(true);

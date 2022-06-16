@@ -30,6 +30,7 @@ class _ProfileViewState extends State<ProfileView> {
     final imageURL = EnvironmentConfig.CV_BASE_URL +
         (_model.user?.data.attributes.profilePicture ?? 'Default');
     return Container(
+      key: const Key('profile_image'),
       height: 80,
       width: 80,
       padding: const EdgeInsets.all(8),

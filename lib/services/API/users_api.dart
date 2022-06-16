@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dio/dio.dart' as dio;
+import 'package:http/http.dart' as http;
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
@@ -214,16 +214,23 @@ class HttpUsersApi implements UsersApi {
 
     if (removePicture) json['remove_picture'] = '1';
 
+    var files = <http.MultipartFile>[];
     if (image != null) {
-      json['profile_picture'] = await dio.MultipartFile.fromFile(image.path);
+      files.add(
+        await http.MultipartFile.fromPath(
+          'profile_picture',
+          image.path,
+        ),
+      );
     }
 
     try {
       ApiUtils.addTokenToHeaders(header);
       var jsonResponse = await ApiUtils.patchMutipart(
         uri,
-        headers: header,
-        body: dio.FormData.fromMap(json),
+        headers: headers,
+        body: json,
+        files: files,
       );
       return User.fromJson(jsonResponse);
     } on FormatException {

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
@@ -94,26 +93,34 @@ class ApiUtils {
   static Future patchMutipart(
     String uri, {
     required Map<String, String> headers,
+    required List<http.MultipartFile> files,
     dynamic body,
   }) async {
     try {
-      final res = await Dio().patch(
-        uri,
-        data: body,
-        options: Options(
-          responseType: ResponseType.plain,
-          headers: headers,
-        ),
+      final request = http.MultipartRequest(
+        'PATCH',
+        Uri.parse(uri),
       );
+      request.headers.addAll(headers);
 
-      final response = http.Response(res.data, res.statusCode ?? 200);
+      for (final key in body.keys) {
+        if (body[key] == null) continue;
+
+        request.fields[key] = body[key].toString();
+      }
+
+      for (final file in files) {
+        request.files.add(file);
+      }
+
+      final response = await http.Response.fromStream(
+        await client.send(request),
+      );
       return ApiUtils.jsonResponse(response);
     } on SocketException {
       throw Failure(Constants.NO_INTERNET_CONNECTION);
     } on HttpException {
       throw Failure(Constants.HTTP_EXCEPTION);
-    } on DioError {
-      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 
