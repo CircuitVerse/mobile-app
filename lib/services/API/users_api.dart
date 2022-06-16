@@ -1,7 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
@@ -204,6 +203,8 @@ class HttpUsersApi implements UsersApi {
   ) async {
     var endpoint = '/users/${_storage.currentUser!.data.id}';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+
+    var header = {'Content-Type': 'multipart/form-data'};
     var json = {
       'name': name,
       'educational_institute': educationalInstitute,
@@ -214,42 +215,15 @@ class HttpUsersApi implements UsersApi {
     if (removePicture) json['remove_picture'] = '1';
 
     if (image != null) {
-      json['profile_picture'] = base64Encode(await image.readAsBytes());
+      json['profile_picture'] = await dio.MultipartFile.fromFile(image.path);
     }
 
-    // var json = <String, String>{
-    //   'name': name,
-    //   'subscribed': isSubscribed.toString(),
-    // };
-
-    // if (educationalInstitute != null) {
-    //   json['educational_institute'] = educationalInstitute;
-    // }
-
-    // if (country != null) {
-    //   json['country'] = country;
-    // }
-
-    // var files = <http.MultipartFile>[];
-    // if (image != null) {
-    //   files.add(http.MultipartFile.fromBytes(
-    //     'profile_picture',
-    //     await image.readAsBytes(),
-    //   ));
-    // }
-
     try {
-      ApiUtils.addTokenToHeaders(headers);
-      // var jsonResponse = await ApiUtils.patchMutipart(
-      //   uri,
-      //   headers: headers,
-      //   body: json,
-      //   files: files,
-      // );
-      var jsonResponse = await ApiUtils.patch(
+      ApiUtils.addTokenToHeaders(header);
+      var jsonResponse = await ApiUtils.patchMutipart(
         uri,
-        headers: headers,
-        body: json,
+        headers: header,
+        body: dio.FormData.fromMap(json),
       );
       return User.fromJson(jsonResponse);
     } on FormatException {

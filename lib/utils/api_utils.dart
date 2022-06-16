@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
@@ -87,6 +88,32 @@ class ApiUtils {
       throw Failure(Constants.NO_INTERNET_CONNECTION);
     } on HttpException {
       throw Failure(Constants.HTTP_EXCEPTION);
+    }
+  }
+
+  static Future patchMutipart(
+    String uri, {
+    required Map<String, String> headers,
+    dynamic body,
+  }) async {
+    try {
+      final res = await Dio().patch(
+        uri,
+        data: body,
+        options: Options(
+          responseType: ResponseType.plain,
+          headers: headers,
+        ),
+      );
+
+      final response = http.Response(res.data, res.statusCode ?? 200);
+      return ApiUtils.jsonResponse(response);
+    } on SocketException {
+      throw Failure(Constants.NO_INTERNET_CONNECTION);
+    } on HttpException {
+      throw Failure(Constants.HTTP_EXCEPTION);
+    } on DioError {
+      throw Failure(Constants.GENERIC_FAILURE);
     }
   }
 

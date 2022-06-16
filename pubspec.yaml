@@ -22,6 +22,7 @@ dependencies:
   cached_network_image: ^3.2.1
   cupertino_icons: ^1.0.4
   datetime_picker_formfield: ^2.0.0
+  dio: ^4.0.6
   flutter:
     sdk: flutter
   flutter_facebook_auth: ^4.0.1

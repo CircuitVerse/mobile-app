@@ -61,7 +61,7 @@ class EditProfileViewModel extends BaseModel {
     setStateFor(UPDATE_PROFILE, ViewState.Busy);
     try {
       updatedUser = await _userApi.updateProfile(
-          name, educationalInstitute, country, subscribed, updatedImage, true);
+          name, educationalInstitute, country, subscribed, updatedImage, false);
       _storage.currentUser = _updatedUser;
 
       setStateFor(UPDATE_PROFILE, ViewState.Success);
