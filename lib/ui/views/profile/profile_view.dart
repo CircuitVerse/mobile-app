@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/config/environment_config.dart';
@@ -39,7 +38,7 @@ class _ProfileViewState extends State<ProfileView> {
         image: DecorationImage(
           image: imageURL.toLowerCase().contains('default')
               ? const AssetImage('assets/images/profile/default_icon.jpg')
-              : CachedNetworkImageProvider(imageURL) as ImageProvider,
+              : NetworkImage(imageURL) as ImageProvider,
         ),
       ),
     );

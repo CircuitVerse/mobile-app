@@ -19,7 +19,7 @@ class EditProfileViewModel extends BaseModel {
   final ImagePicker _picker = ImagePicker();
   final ImageCropper _cropper = ImageCropper();
 
-  bool imageUpdated = false;
+  bool imageUpdated = false, removeImage = false;
   File? updatedImage;
 
   User? _updatedUser;
@@ -31,8 +31,11 @@ class EditProfileViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void pickProfileImage() async {
-    final _image = await _picker.pickImage(source: ImageSource.gallery);
+  void pickProfileImage(int index) async {
+    removeImage = false;
+    final _image = await _picker.pickImage(
+      source: index == 0 ? ImageSource.camera : ImageSource.gallery,
+    );
 
     if (_image == null) return;
 
@@ -52,6 +55,13 @@ class EditProfileViewModel extends BaseModel {
     notifyListeners();
   }
 
+  void removePhoto() {
+    removeImage = true;
+    imageUpdated = false;
+    updatedImage = null;
+    notifyListeners();
+  }
+
   Future? updateProfile(
     String name,
     String? educationalInstitute,
@@ -60,8 +70,8 @@ class EditProfileViewModel extends BaseModel {
   ) async {
     setStateFor(UPDATE_PROFILE, ViewState.Busy);
     try {
-      updatedUser = await _userApi.updateProfile(
-          name, educationalInstitute, country, subscribed, updatedImage, false);
+      updatedUser = await _userApi.updateProfile(name, educationalInstitute,
+          country, subscribed, updatedImage, removeImage);
       _storage.currentUser = _updatedUser;
 
       setStateFor(UPDATE_PROFILE, ViewState.Success);
