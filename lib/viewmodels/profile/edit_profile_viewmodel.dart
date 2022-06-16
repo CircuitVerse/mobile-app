@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/failure_model.dart';
@@ -12,6 +16,11 @@ class EditProfileViewModel extends BaseModel {
 
   final UsersApi _userApi = locator<UsersApi>();
   final LocalStorageService _storage = locator<LocalStorageService>();
+  final ImagePicker _picker = ImagePicker();
+  final ImageCropper _cropper = ImageCropper();
+
+  bool imageUpdated = false;
+  File? updatedImage;
 
   User? _updatedUser;
 
@@ -19,6 +28,27 @@ class EditProfileViewModel extends BaseModel {
 
   set updatedUser(User? updatedUser) {
     _updatedUser = updatedUser;
+    notifyListeners();
+  }
+
+  void pickProfileImage() async {
+    final _image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (_image == null) return;
+
+    final _croppedImage = await _cropper.cropImage(
+      sourcePath: _image.path,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      compressQuality: 100,
+      maxHeight: 1000,
+      maxWidth: 1000,
+      cropStyle: CropStyle.circle,
+    );
+
+    if (_croppedImage == null) return;
+
+    imageUpdated = true;
+    updatedImage = File(_croppedImage.path);
     notifyListeners();
   }
 
@@ -31,7 +61,7 @@ class EditProfileViewModel extends BaseModel {
     setStateFor(UPDATE_PROFILE, ViewState.Busy);
     try {
       updatedUser = await _userApi.updateProfile(
-          name, educationalInstitute, country, subscribed);
+          name, educationalInstitute, country, subscribed, updatedImage, true);
       _storage.currentUser = _updatedUser;
 
       setStateFor(UPDATE_PROFILE, ViewState.Success);

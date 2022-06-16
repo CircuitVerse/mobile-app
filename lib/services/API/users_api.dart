@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:http/http.dart' as http;
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
@@ -26,8 +30,14 @@ abstract class UsersApi {
 
   Future<User>? fetchCurrentUser();
 
-  Future<User>? updateProfile(String name, String? educationalInstitute,
-      String? country, bool subscribed);
+  Future<User>? updateProfile(
+    String name,
+    String? educationalInstitute,
+    String? country,
+    bool subscribed,
+    File? image,
+    bool removePicture,
+  );
 
   Future<bool>? sendResetPasswordInstructions(String email);
 }
@@ -184,8 +194,14 @@ class HttpUsersApi implements UsersApi {
   }
 
   @override
-  Future<User>? updateProfile(String name, String? educationalInstitute,
-      String? country, bool isSubscribed) async {
+  Future<User>? updateProfile(
+    String name,
+    String? educationalInstitute,
+    String? country,
+    bool isSubscribed,
+    File? image,
+    bool removePicture,
+  ) async {
     var endpoint = '/users/${_storage.currentUser!.data.id}';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {
@@ -194,8 +210,42 @@ class HttpUsersApi implements UsersApi {
       'country': country,
       'subscribed': isSubscribed,
     };
+
+    if (removePicture) json['remove_picture'] = '1';
+
+    if (image != null) {
+      json['profile_picture'] = base64Encode(await image.readAsBytes());
+    }
+
+    // var json = <String, String>{
+    //   'name': name,
+    //   'subscribed': isSubscribed.toString(),
+    // };
+
+    // if (educationalInstitute != null) {
+    //   json['educational_institute'] = educationalInstitute;
+    // }
+
+    // if (country != null) {
+    //   json['country'] = country;
+    // }
+
+    // var files = <http.MultipartFile>[];
+    // if (image != null) {
+    //   files.add(http.MultipartFile.fromBytes(
+    //     'profile_picture',
+    //     await image.readAsBytes(),
+    //   ));
+    // }
+
     try {
       ApiUtils.addTokenToHeaders(headers);
+      // var jsonResponse = await ApiUtils.patchMutipart(
+      //   uri,
+      //   headers: headers,
+      //   body: json,
+      //   files: files,
+      // );
       var jsonResponse = await ApiUtils.patch(
         uri,
         headers: headers,

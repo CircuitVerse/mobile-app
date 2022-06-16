@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/API/country_institute_api.dart';
 import 'package:mobile_app/services/dialog_service.dart';
@@ -11,6 +13,8 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
+
+import '../../../config/environment_config.dart';
 
 class EditProfileView extends StatefulWidget {
   const EditProfileView({Key? key}) : super(key: key);
@@ -25,7 +29,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   final DialogService _dialogService = locator<DialogService>();
   late EditProfileViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  late String _name;
+  late String _name, _profilePicture;
   String? _educationalInstitute, _country;
   late bool _subscribed;
 
@@ -48,6 +52,55 @@ class _EditProfileViewState extends State<EditProfileView> {
     _educationalInstitute = _userAttrs.educationalInstitute;
     _country = _userAttrs.country;
     _subscribed = _userAttrs.subscribed;
+    _profilePicture = _userAttrs.profilePicture ?? 'Default';
+  }
+
+  Widget _buildProfilePicture() {
+    final imageURL = EnvironmentConfig.CV_BASE_URL + _profilePicture;
+    return GestureDetector(
+      onTap: () {
+        _model.pickProfileImage();
+      },
+      child: Center(
+        child: Stack(
+          children: [
+            Container(
+              height: 120,
+              width: 120,
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: _model.imageUpdated
+                      ? FileImage(_model.updatedImage!)
+                      : imageURL.toLowerCase().contains('default')
+                          ? const AssetImage(
+                              'assets/images/profile/default_icon.jpg',
+                            )
+                          : CachedNetworkImageProvider(imageURL)
+                              as ImageProvider,
+                ),
+              ),
+            ),
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: IbTheme.primaryColor,
+                ),
+                child: const Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildNameInput() {
@@ -153,6 +206,8 @@ class _EditProfileViewState extends State<EditProfileView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                _buildProfilePicture(),
+                const SizedBox(height: 20),
                 _buildNameInput(),
                 _buildCountryField(),
                 _buildInstituteField(),
