@@ -228,7 +228,7 @@ class HttpUsersApi implements UsersApi {
       ApiUtils.addTokenToHeaders(header);
       var jsonResponse = await ApiUtils.patchMutipart(
         uri,
-        headers: headers,
+        headers: header,
         body: json,
         files: files,
       );
