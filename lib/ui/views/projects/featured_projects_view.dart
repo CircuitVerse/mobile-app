@@ -5,6 +5,7 @@ import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_drawer.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
+import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/featured_project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
@@ -27,6 +28,8 @@ class FeaturedProjectsView extends StatefulWidget {
 }
 
 class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
+  final TextEditingController _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return BaseView<FeaturedProjectsViewModel>(
@@ -38,6 +41,10 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
 
         if (model.isSuccess(model.FETCH_FEATURED_PROJECTS)) {
           for (var project in model.featuredProjects) {
+            if (model.searchInput.isNotEmpty &&
+                !project.attributes.name
+                    .toLowerCase()
+                    .contains(model.searchInput.toLowerCase())) continue;
             _items.add(
               FeaturedProjectCard(
                 project: project,
@@ -84,19 +91,57 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
         return Scaffold(
           appBar: widget.showAppBar
               ? AppBar(
-                  title: Text(
-                    AppLocalizations.of(context)!.featured_circuits,
-                    style: TextStyle(
-                      color: CVTheme.appBarText(context),
+                  automaticallyImplyLeading: !model.showSearchBar,
+                  title: Visibility(
+                    visible: model.showSearchBar,
+                    replacement: Text(
+                      AppLocalizations.of(context)!.featured_circuits,
+                      style: TextStyle(
+                        color: CVTheme.appBarText(context),
+                      ),
+                    ),
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        colorScheme: Theme.of(context)
+                            .colorScheme
+                            .copyWith(primary: CVTheme.appBarText(context)),
+                        textSelectionTheme: TextSelectionThemeData(
+                          cursorColor: CVTheme.appBarText(context),
+                        ),
+                      ),
+                      child: CVTextField(
+                        padding: EdgeInsets.zero,
+                        prefixIcon: IconButton(
+                          onPressed: () {
+                            _controller.clear();
+                            model.reset();
+                          },
+                          icon: const Icon(Icons.arrow_back),
+                        ),
+                        action: TextInputAction.search,
+                        controller: _controller,
+                        onChanged: (val) {
+                          model.searchInput = val;
+                        },
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            _controller.clear();
+                          },
+                          icon: const Icon(Icons.close),
+                        ),
+                      ),
                     ),
                   ),
-                  centerTitle: true,
                   elevation: 4,
+                  centerTitle: true,
                   actions: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.search),
-                    ),
+                    if (!model.showSearchBar)
+                      IconButton(
+                        onPressed: () {
+                          model.showSearchBar = true;
+                        },
+                        icon: const Icon(Icons.search),
+                      ),
                   ],
                 )
               : null,

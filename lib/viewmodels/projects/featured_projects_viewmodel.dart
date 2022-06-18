@@ -24,6 +24,30 @@ class FeaturedProjectsViewModel extends BaseModel {
     notifyListeners();
   }
 
+  bool _showSearchBar = false;
+
+  bool get showSearchBar => _showSearchBar;
+
+  set showSearchBar(bool val) {
+    _showSearchBar = val;
+    notifyListeners();
+  }
+
+  String _searchInput = '';
+
+  String get searchInput => _searchInput;
+
+  set searchInput(String val) {
+    _searchInput = val;
+    notifyListeners();
+  }
+
+  void reset() {
+    _searchInput = '';
+    _showSearchBar = false;
+    notifyListeners();
+  }
+
   void updateFeaturedProject(Project project) {
     final int index = _featuredProjects.indexWhere(
       (element) => element.id == project.id,

@@ -8,7 +8,7 @@ class CVTextField extends StatelessWidget {
   ///
   /// When `maxLines` is not specified, it defaults to 1
   const CVTextField({
-    required this.label,
+    this.label,
     this.controller,
     this.type = TextInputType.text,
     this.action = TextInputAction.next,
@@ -22,10 +22,13 @@ class CVTextField extends StatelessWidget {
     ),
     this.focusNode,
     this.onFieldSubmitted,
+    this.onChanged,
+    this.prefixIcon,
+    this.suffixIcon,
     Key? key,
   }) : super(key: key);
 
-  final String label;
+  final String? label;
   final TextEditingController? controller;
   final TextInputType type;
   final TextInputAction action;
@@ -34,8 +37,11 @@ class CVTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final Function(String?)? onSaved;
   final Function(String)? onFieldSubmitted;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final EdgeInsets padding;
   final FocusNode? focusNode;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +52,7 @@ class CVTextField extends StatelessWidget {
         controller: controller,
         maxLines: maxLines,
         keyboardType: type,
+        onChanged: onChanged,
         initialValue: initialValue,
         style: TextStyle(
           color: CVTheme.textColor(context),
@@ -55,6 +62,8 @@ class CVTextField extends StatelessWidget {
           labelStyle: TextStyle(
             color: CVTheme.textFieldLabelColor(context),
           ),
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
         ),
         validator: validator,
         onSaved: onSaved,
