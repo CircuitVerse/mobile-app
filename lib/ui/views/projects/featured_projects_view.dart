@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/projects.dart';
@@ -39,12 +40,9 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
       builder: (context, model, child) {
         final _items = <Widget>[];
 
-        if (model.isSuccess(model.FETCH_FEATURED_PROJECTS)) {
-          for (var project in model.featuredProjects) {
-            if (model.searchInput.isNotEmpty &&
-                !project.attributes.name
-                    .toLowerCase()
-                    .contains(model.searchInput.toLowerCase())) continue;
+        if (model.isSuccess(model.FETCH_FEATURED_PROJECTS) ||
+            model.isSuccess(model.SEARCH_PROJECTS)) {
+          for (var project in model.projects) {
             _items.add(
               FeaturedProjectCard(
                 project: project,
@@ -61,14 +59,31 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
               ),
             );
           }
+
+          if (model.projects.isEmpty && model.showSearchedResult) {
+            _items.addAll(
+              [
+                SvgPicture.asset(
+                  'assets/images/projects/noResult.svg',
+                  height: 400,
+                ),
+                Text(
+                  'No Result found',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: CVTheme.textColor(context),
+                  ),
+                ),
+              ],
+            );
+          }
         }
 
-        if (!widget.embed &&
-            model.previousFeaturedProjectsBatch?.links.next != null) {
+        if (!widget.embed && model.previousProjectsBatch?.links.next != null) {
           _items.add(
             CVPrimaryButton(
               title: 'Load More',
-              onPressed: () => model.fetchFeaturedProjects(),
+              onPressed: model.loadMore,
             ),
           );
         }
@@ -79,14 +94,16 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
           );
         }
 
-        _items.insert(
-          0,
-          const CVHeader(
-            title: 'Editor Picks',
-            description:
-                'These circuits have been hand-picked by our authors for their awesomeness.',
-          ),
-        );
+        if (!model.showSearchBar) {
+          _items.insert(
+            0,
+            const CVHeader(
+              title: 'Editor Picks',
+              description:
+                  'These circuits have been hand-picked by our authors for their awesomeness.',
+            ),
+          );
+        }
 
         return Scaffold(
           appBar: widget.showAppBar
@@ -120,8 +137,9 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                         ),
                         action: TextInputAction.search,
                         controller: _controller,
-                        onChanged: (val) {
-                          model.searchInput = val;
+                        onFieldSubmitted: (value) {
+                          model.query = value;
+                          model.searchProjects(value);
                         },
                         suffixIcon: IconButton(
                           onPressed: () {

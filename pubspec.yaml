@@ -89,6 +89,7 @@ flutter:
     - assets/images/signup/
     - assets/images/group/
     - assets/images/profile/
+    - assets/images/projects/
 
   fonts:
     - family: Poppins

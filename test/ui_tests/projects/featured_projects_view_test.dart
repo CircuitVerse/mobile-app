@@ -15,6 +15,7 @@ import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart'
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_data/mock_projects.dart';
 
@@ -43,11 +44,14 @@ void main() {
 
       when(model.isSuccess(any)).thenAnswer((_) => true);
 
-      when(model.featuredProjects).thenAnswer((_) => projects);
-      when(model.previousFeaturedProjectsBatch).thenAnswer((_) => null);
+      when(model.projects).thenAnswer((_) => projects);
+      when(model.showSearchBar).thenAnswer((_) => false);
+      when(model.previousProjectsBatch).thenAnswer((_) => null);
 
       await tester.pumpWidget(
         GetMaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          locale: const Locale('en'),
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: const FeaturedProjectsView(),
