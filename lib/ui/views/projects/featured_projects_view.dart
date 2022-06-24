@@ -16,12 +16,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class FeaturedProjectsView extends StatefulWidget {
   const FeaturedProjectsView({
     Key? key,
-    this.showAppBar = true,
+    this.showSearchBar = false,
     this.embed = false,
   }) : super(key: key);
 
   static const String id = 'featured_projects_view';
-  final bool showAppBar;
+  final bool showSearchBar;
   final bool embed;
 
   @override
@@ -34,9 +34,15 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
   @override
   Widget build(BuildContext context) {
     return BaseView<FeaturedProjectsViewModel>(
-      onModelReady: (model) => widget.embed
-          ? model.fetchFeaturedProjects(size: 3)
-          : model.fetchFeaturedProjects(),
+      onModelReady: (model) {
+        widget.embed
+            ? model.fetchFeaturedProjects(size: 3)
+            : model.fetchFeaturedProjects();
+        Future.delayed(
+          const Duration(milliseconds: 100),
+          () => model.showSearchBar = widget.showSearchBar,
+        );
+      },
       builder: (context, model, child) {
         final _items = <Widget>[];
 
@@ -106,63 +112,61 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
         }
 
         return Scaffold(
-          appBar: widget.showAppBar
-              ? AppBar(
-                  automaticallyImplyLeading: !model.showSearchBar,
-                  title: Visibility(
-                    visible: model.showSearchBar,
-                    replacement: Text(
-                      AppLocalizations.of(context)!.featured_circuits,
-                      style: TextStyle(
-                        color: CVTheme.appBarText(context),
-                      ),
-                    ),
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        colorScheme: Theme.of(context)
-                            .colorScheme
-                            .copyWith(primary: CVTheme.appBarText(context)),
-                        textSelectionTheme: TextSelectionThemeData(
-                          cursorColor: CVTheme.appBarText(context),
-                        ),
-                      ),
-                      child: CVTextField(
-                        padding: EdgeInsets.zero,
-                        prefixIcon: IconButton(
-                          onPressed: () {
-                            _controller.clear();
-                            model.reset();
-                          },
-                          icon: const Icon(Icons.arrow_back),
-                        ),
-                        action: TextInputAction.search,
-                        controller: _controller,
-                        onFieldSubmitted: (value) {
-                          model.query = value;
-                          model.searchProjects(value);
-                        },
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            _controller.clear();
-                          },
-                          icon: const Icon(Icons.close),
-                        ),
-                      ),
-                    ),
+          appBar: AppBar(
+            automaticallyImplyLeading: !model.showSearchBar,
+            title: Visibility(
+              visible: model.showSearchBar,
+              replacement: Text(
+                AppLocalizations.of(context)!.featured_circuits,
+                style: TextStyle(
+                  color: CVTheme.appBarText(context),
+                ),
+              ),
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: Theme.of(context)
+                      .colorScheme
+                      .copyWith(primary: CVTheme.appBarText(context)),
+                  textSelectionTheme: TextSelectionThemeData(
+                    cursorColor: CVTheme.appBarText(context),
                   ),
-                  elevation: 4,
-                  centerTitle: true,
-                  actions: [
-                    if (!model.showSearchBar)
-                      IconButton(
-                        onPressed: () {
-                          model.showSearchBar = true;
-                        },
-                        icon: const Icon(Icons.search),
-                      ),
-                  ],
-                )
-              : null,
+                ),
+                child: CVTextField(
+                  padding: EdgeInsets.zero,
+                  prefixIcon: IconButton(
+                    onPressed: () {
+                      _controller.clear();
+                      model.reset();
+                    },
+                    icon: const Icon(Icons.arrow_back),
+                  ),
+                  action: TextInputAction.search,
+                  controller: _controller,
+                  onFieldSubmitted: (value) {
+                    model.query = value;
+                    model.searchProjects(value);
+                  },
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      _controller.clear();
+                    },
+                    icon: const Icon(Icons.close),
+                  ),
+                ),
+              ),
+            ),
+            elevation: 4,
+            centerTitle: true,
+            actions: [
+              if (!model.showSearchBar)
+                IconButton(
+                  onPressed: () {
+                    model.showSearchBar = true;
+                  },
+                  icon: const Icon(Icons.search),
+                ),
+            ],
+          ),
           drawer: const CVDrawer(),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16),

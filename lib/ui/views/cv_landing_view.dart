@@ -24,12 +24,14 @@ class CVLandingView extends StatefulWidget {
 class _CVLandingViewState extends State<CVLandingView> {
   final List<Widget> _items = [
     const HomeView(),
-    const FeaturedProjectsView(showAppBar: true),
+    const FeaturedProjectsView(),
     const AboutView(),
     const ContributorsView(showAppBar: false),
     const TeachersView(showAppBar: false),
     const ProfileView(),
     const MyGroupsView(),
+    // Featured Project View having search bar active
+    const FeaturedProjectsView(showSearchBar: true),
   ];
 
   String _appBarTitle(int selectedIndex) {
@@ -45,8 +47,8 @@ class _CVLandingViewState extends State<CVLandingView> {
     }
   }
 
-  AppBar? _buildAppBar(int selectedIndex) {
-    if (selectedIndex == 1) return null;
+  AppBar? _buildAppBar(int selectedIndex, CVLandingViewModel model) {
+    if (selectedIndex == 1 || selectedIndex == 7) return null;
     return AppBar(
       title: Text(
         _appBarTitle(selectedIndex),
@@ -56,6 +58,17 @@ class _CVLandingViewState extends State<CVLandingView> {
       ),
       centerTitle: true,
       elevation: selectedIndex == 6 ? 0 : 4,
+      actions: [
+        Visibility(
+          visible: selectedIndex == 0,
+          child: IconButton(
+            onPressed: () {
+              model.selectedIndex = 7;
+            },
+            icon: const Icon(Icons.search),
+          ),
+        )
+      ],
     );
   }
 
@@ -72,7 +85,7 @@ class _CVLandingViewState extends State<CVLandingView> {
           return Future.value(true);
         },
         child: Scaffold(
-          appBar: _buildAppBar(model.selectedIndex),
+          appBar: _buildAppBar(model.selectedIndex, model),
           drawer: const CVDrawer(),
           body: PageTransitionSwitcher(
             transitionBuilder: (
