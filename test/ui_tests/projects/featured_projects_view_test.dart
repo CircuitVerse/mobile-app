@@ -40,6 +40,8 @@ void main() {
 
       when(model.FETCH_FEATURED_PROJECTS)
           .thenAnswer((_) => 'fetch_featured_projects');
+      when(model.SEARCH_PROJECTS).thenAnswer((_) => 'search_projects');
+      when(model.isBusy(any)).thenAnswer((_) => false);
       when(model.fetchFeaturedProjects()).thenReturn(null);
 
       when(model.isSuccess(any)).thenAnswer((_) => true);

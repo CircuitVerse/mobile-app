@@ -9,6 +9,7 @@ class CVTextField extends StatelessWidget {
   /// When `maxLines` is not specified, it defaults to 1
   const CVTextField({
     this.label,
+    this.hint,
     this.controller,
     this.type = TextInputType.text,
     this.action = TextInputAction.next,
@@ -29,6 +30,7 @@ class CVTextField extends StatelessWidget {
   }) : super(key: key);
 
   final String? label;
+  final String? hint;
   final TextEditingController? controller;
   final TextInputType type;
   final TextInputAction action;
@@ -58,6 +60,7 @@ class CVTextField extends StatelessWidget {
           color: CVTheme.textColor(context),
         ),
         decoration: CVTheme.textFieldDecoration.copyWith(
+          hintText: hint,
           labelText: label,
           labelStyle: TextStyle(
             color: CVTheme.textFieldLabelColor(context),

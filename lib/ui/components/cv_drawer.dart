@@ -52,6 +52,7 @@ class CVDrawer extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
+                  iconColor: CVTheme.textColor(context),
                   children: <Widget>[
                     InkWell(
                       onTap: () => _model.setSelectedIndexTo(1),

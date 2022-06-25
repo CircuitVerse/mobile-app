@@ -49,8 +49,13 @@ class FeaturedProjectsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void reset() {
+  void clear() {
     query = '';
+    _previousSearchedProjectsBatch = null;
+  }
+
+  void reset() {
+    clear();
     _showSearchBar = false;
     _showSearchedResult = false;
     notifyListeners();
@@ -95,7 +100,7 @@ class FeaturedProjectsViewModel extends BaseModel {
         var _nextPageNumber = _getNextPageNumber(_nextPageLink);
 
         // fetch projects corresponding to next page number..
-        _previousFeaturedProjectsBatch = await _projectsApi
+        _previousSearchedProjectsBatch = await _projectsApi
             .searchProjects(query, page: _nextPageNumber, size: size);
       } else {
         // fetch projects for the very first time..

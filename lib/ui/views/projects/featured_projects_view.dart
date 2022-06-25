@@ -45,6 +45,8 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
       },
       builder: (context, model, child) {
         final _items = <Widget>[];
+        final _isLoading = model.isBusy(model.FETCH_FEATURED_PROJECTS) ||
+            model.isBusy(model.SEARCH_PROJECTS);
 
         if (model.isSuccess(model.FETCH_FEATURED_PROJECTS) ||
             model.isSuccess(model.SEARCH_PROJECTS)) {
@@ -65,27 +67,31 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
               ),
             );
           }
-
-          if (model.projects.isEmpty && model.showSearchedResult) {
-            _items.addAll(
-              [
-                SvgPicture.asset(
-                  'assets/images/projects/noResult.svg',
-                  height: 400,
-                ),
-                Text(
-                  'No Result found',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: CVTheme.textColor(context),
-                  ),
-                ),
-              ],
-            );
-          }
         }
 
-        if (!widget.embed && model.previousProjectsBatch?.links.next != null) {
+        if (model.isSuccess(model.SEARCH_PROJECTS) &&
+            model.projects.isEmpty &&
+            model.showSearchedResult) {
+          _items.addAll(
+            [
+              SvgPicture.asset(
+                'assets/images/projects/noResult.svg',
+                height: 400,
+              ),
+              Text(
+                'No Result found',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: CVTheme.textColor(context),
+                ),
+              ),
+            ],
+          );
+        }
+
+        if (!widget.embed &&
+            model.previousProjectsBatch?.links.next != null &&
+            !_isLoading) {
           _items.add(
             CVPrimaryButton(
               title: 'Load More',
@@ -140,6 +146,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                     },
                     icon: const Icon(Icons.arrow_back),
                   ),
+                  hint: 'Search for circuits',
                   action: TextInputAction.search,
                   controller: _controller,
                   onFieldSubmitted: (value) {
@@ -149,6 +156,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                   suffixIcon: IconButton(
                     onPressed: () {
                       _controller.clear();
+                      model.clear();
                     },
                     icon: const Icon(Icons.close),
                   ),
