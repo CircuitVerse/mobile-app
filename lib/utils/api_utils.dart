@@ -103,6 +103,7 @@ class ApiUtils {
       );
       request.headers.addAll(headers);
 
+      body ??= {};
       for (final key in body.keys) {
         if (body[key] == null) continue;
 

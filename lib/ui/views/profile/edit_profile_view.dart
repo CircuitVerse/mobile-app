@@ -57,6 +57,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget _buildProfilePicture() {
     final imageURL = EnvironmentConfig.CV_BASE_URL + _profilePicture;
     return GestureDetector(
+      key: const Key('profile_image'),
       onTap: () {
         showModalBottomSheet(
           context: context,
