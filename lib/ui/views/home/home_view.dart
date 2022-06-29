@@ -7,7 +7,9 @@ import 'package:mobile_app/ui/views/contributors/contributors_view.dart';
 import 'package:mobile_app/ui/views/home/components/feature_card.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
+import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -123,7 +125,8 @@ class _HomeViewState extends State<HomeView> {
             CVOutlineButton(
               title: 'Explore More',
               isPrimaryDark: true,
-              onPressed: () => Get.toNamed(FeaturedProjectsView.id),
+              onPressed: () =>
+                  context.read<CVLandingViewModel>().selectedIndex = 1,
             ),
           ],
         ),
