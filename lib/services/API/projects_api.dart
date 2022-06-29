@@ -33,6 +33,12 @@ abstract class ProjectsApi {
     String sortBy,
   });
 
+  Future<Projects>? searchProjects(
+    String query, {
+    int page = 1,
+    int size = 5,
+  });
+
   Future<Project>? getProjectDetails(String id);
 
   Future<Project>? updateProject(
@@ -173,6 +179,30 @@ class HttpProjectsApi implements ProjectsApi {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
       throw Failure(Constants.PROJECT_NOT_FOUND);
+    } on Exception {
+      throw Failure(Constants.GENERIC_FAILURE);
+    }
+  }
+
+  @override
+  Future<Projects>? searchProjects(
+    String query, {
+    int page = 1,
+    int size = 5,
+  }) async {
+    var endpoint =
+        '/projects/search?q=$query&page[number]=$page&page[size]=$size';
+    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+
+    try {
+      ApiUtils.addTokenToHeaders(headers);
+      var jsonResponse = await ApiUtils.get(
+        uri,
+        headers: headers,
+      );
+      return Projects.fromJson(jsonResponse);
+    } on UnauthorizedException {
+      throw Failure(Constants.UNAUTHENTICATED);
     } on Exception {
       throw Failure(Constants.GENERIC_FAILURE);
     }

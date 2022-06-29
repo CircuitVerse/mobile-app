@@ -29,7 +29,7 @@ void main() {
         expect(
             _model.stateFor(_model.FETCH_FEATURED_PROJECTS), ViewState.Success);
         expect(_model.previousFeaturedProjectsBatch, _projects);
-        expect(deepEq(_model.featuredProjects, _projects.data), true);
+        expect(deepEq(_model.projects, _projects.data), true);
       });
 
       test('When not first time fetched & service returns success response',
