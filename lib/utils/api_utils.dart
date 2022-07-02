@@ -90,6 +90,41 @@ class ApiUtils {
     }
   }
 
+  static Future patchMutipart(
+    String uri, {
+    required Map<String, String> headers,
+    required List<http.MultipartFile> files,
+    dynamic body,
+  }) async {
+    try {
+      final request = http.MultipartRequest(
+        'PATCH',
+        Uri.parse(uri),
+      );
+      request.headers.addAll(headers);
+
+      body ??= {};
+      for (final key in body.keys) {
+        if (body[key] == null) continue;
+
+        request.fields[key] = body[key].toString();
+      }
+
+      for (final file in files) {
+        request.files.add(file);
+      }
+
+      final response = await http.Response.fromStream(
+        await client.send(request),
+      );
+      return ApiUtils.jsonResponse(response);
+    } on SocketException {
+      throw Failure(Constants.NO_INTERNET_CONNECTION);
+    } on HttpException {
+      throw Failure(Constants.HTTP_EXCEPTION);
+    }
+  }
+
   /// Returns JSON DELETE response
   static Future<dynamic> delete(
     String uri, {

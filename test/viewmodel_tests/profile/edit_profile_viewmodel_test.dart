@@ -19,15 +19,16 @@ void main() {
       test('When called & service returns success response', () async {
         var _mockLocalStorageService = getAndRegisterLocalStorageServiceMock();
         var _mockUsersApi = getAndRegisterUsersApiMock();
-        when(_mockUsersApi.updateProfile('Test User', 'Gurukul', 'India', true))
+        when(_mockUsersApi.updateProfile(
+                'Test User', 'Gurukul', 'India', true, null, false))
             .thenAnswer((_) => Future.value(_user));
 
         var _model = EditProfileViewModel();
         await _model.updateProfile('Test User', 'Gurukul', 'India', true);
 
         // verify API call is made..
-        verify(
-            _mockUsersApi.updateProfile('Test User', 'Gurukul', 'India', true));
+        verify(_mockUsersApi.updateProfile(
+            'Test User', 'Gurukul', 'India', true, null, false));
 
         // verify _user is stored in localStorage..
         verify(_mockLocalStorageService.currentUser = _user);
@@ -40,7 +41,8 @@ void main() {
       test('When called & service returns error', () async {
         var _mockLocalStorageService = getAndRegisterLocalStorageServiceMock();
         var _mockUsersApi = getAndRegisterUsersApiMock();
-        when(_mockUsersApi.updateProfile('Test User', 'Gurukul', 'India', true))
+        when(_mockUsersApi.updateProfile(
+                'Test User', 'Gurukul', 'India', true, null, false))
             .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = EditProfileViewModel();

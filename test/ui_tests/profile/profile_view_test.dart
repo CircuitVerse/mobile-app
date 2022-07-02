@@ -83,7 +83,7 @@ void main() {
         await tester.pumpAndSettle();
 
         // Finds Profile Image
-        expect(find.byType(Image), findsOneWidget);
+        expect(find.byKey(const Key('profile_image')), findsOneWidget);
 
         // Finds Username
         expect(find.text('Test User'), findsOneWidget);

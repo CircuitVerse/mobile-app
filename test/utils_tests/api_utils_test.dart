@@ -25,6 +25,8 @@ void main() {
           throwsA(isInstanceOf<Failure>()));
       expect(() => ApiUtils.patch('/', headers: {}),
           throwsA(isInstanceOf<Failure>()));
+      expect(() => ApiUtils.patchMutipart('/', headers: {}, files: []),
+          throwsA(isInstanceOf<Failure>()));
       expect(() => ApiUtils.delete('/', headers: {}),
           throwsA(isInstanceOf<Failure>()));
     });
@@ -39,6 +41,8 @@ void main() {
           throwsA(isInstanceOf<Failure>()));
       expect(() => ApiUtils.patch('/', headers: {}),
           throwsA(isInstanceOf<Failure>()));
+      expect(() => ApiUtils.patchMutipart('/', headers: {}, files: []),
+          throwsA(isInstanceOf<Failure>()));
       expect(() => ApiUtils.delete('/', headers: {}),
           throwsA(isInstanceOf<Failure>()));
     });
@@ -50,6 +54,7 @@ void main() {
       expect(await ApiUtils.post('/', headers: {}), {});
       expect(await ApiUtils.put('/', headers: {}), {});
       expect(await ApiUtils.patch('/', headers: {}), {});
+      expect(await ApiUtils.patchMutipart('/', headers: {}, files: []), {});
       expect(await ApiUtils.delete('/', headers: {}), {});
     });
 

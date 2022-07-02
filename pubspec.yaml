@@ -45,6 +45,8 @@ dependencies:
   html: ^0.15.0
   html_unescape: ^2.0.0
   http: ^0.13.3
+  image_cropper: ^2.0.3
+  image_picker: ^0.8.5+3
   intl: ^0.17.0
   mockito: ^5.0.17
   oauth2_client: ^2.2.2

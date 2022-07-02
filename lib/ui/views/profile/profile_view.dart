@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/ui/components/cv_tab_bar.dart';
@@ -26,11 +27,20 @@ class _ProfileViewState extends State<ProfileView> {
   late ProfileViewModel _model;
 
   Widget _buildProfileImage() {
-    return Padding(
+    final imageURL = EnvironmentConfig.CV_BASE_URL +
+        (_model.user?.data.attributes.profilePicture ?? 'Default');
+    return Container(
+      key: const Key('profile_image'),
+      height: 80,
+      width: 80,
       padding: const EdgeInsets.all(8),
-      child: Image.asset(
-        'assets/images/profile/profile_default.png',
-        width: 80,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        image: DecorationImage(
+          image: imageURL.toLowerCase().contains('default')
+              ? const AssetImage('assets/images/profile/default_icon.jpg')
+              : NetworkImage(imageURL) as ImageProvider,
+        ),
       ),
     );
   }
