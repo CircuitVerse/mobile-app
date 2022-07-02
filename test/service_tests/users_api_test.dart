@@ -187,7 +187,7 @@ void main() {
             (_) => Future.value(Response(json.encode(mockUser), 202)));
         expect(
             (await _usersApi.updateProfile(
-                    'Test User', 'Gurukul', 'India', true))
+                    'Test User', 'Gurukul', 'India', true, null, false))
                 .toString(),
             User.fromJson(mockUser).toString());
       });
@@ -198,11 +198,15 @@ void main() {
         var _usersApi = HttpUsersApi();
 
         ApiUtils.client = MockClient((_) => throw const FormatException(''));
-        expect(_usersApi.updateProfile('Test User', 'Gurukul', 'India', true),
+        expect(
+            _usersApi.updateProfile(
+                'Test User', 'Gurukul', 'India', true, null, false),
             throwsA(isInstanceOf<Failure>()));
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_usersApi.updateProfile('Test User', 'Gurukul', 'India', true),
+        expect(
+            _usersApi.updateProfile(
+                'Test User', 'Gurukul', 'India', true, null, false),
             throwsA(isInstanceOf<Failure>()));
       });
     });

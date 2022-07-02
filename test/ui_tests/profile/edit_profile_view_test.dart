@@ -32,6 +32,17 @@ void main() {
     setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpEditProfileView(WidgetTester tester) async {
+      // Mock Edit Profile View Model
+      var _editProfileViewModel = MockEditProfileViewModel();
+      locator.registerSingleton<EditProfileViewModel>(_editProfileViewModel);
+
+      when(_editProfileViewModel.UPDATE_PROFILE)
+          .thenAnswer((_) => 'update_profile');
+      when(_editProfileViewModel.imageUpdated).thenAnswer((_) => false);
+      when(_editProfileViewModel.updateProfile(any, any, any, any))
+          .thenReturn(null);
+      when(_editProfileViewModel.isSuccess(any)).thenReturn(true);
+      when(_editProfileViewModel.updatedUser).thenAnswer((_) => null);
       // Mock Local Storage
       var _localStorageService = getAndRegisterLocalStorageServiceMock();
 
@@ -75,6 +86,59 @@ void main() {
       });
     });
 
+    testWidgets('pick profile picture', (WidgetTester tester) async {
+      // Pump Edit Profile View
+      await _pumpEditProfileView(tester);
+      await tester.pumpAndSettle();
+
+      final _profilePictureWidget = find.byKey(const Key('profile_image'));
+      expect(_profilePictureWidget, findsOneWidget);
+
+      await tester.tap(_profilePictureWidget);
+      await tester.pumpAndSettle();
+
+      // Bottom sheet is opened
+      verify(mockObserver.didPush(any, any));
+
+      final _galleryPickerIcon = find.byIcon(Icons.collections);
+      expect(_galleryPickerIcon, findsOneWidget);
+
+      await tester.tap(_galleryPickerIcon);
+      await tester.pumpAndSettle();
+
+      verify(mockObserver.didPop(any, any));
+    });
+
+    testWidgets('remove picked profile picture', (WidgetTester tester) async {
+      // Pump Edit Profile View
+      await _pumpEditProfileView(tester);
+      await tester.pumpAndSettle();
+
+      final _editProfileViewModel = locator<EditProfileViewModel>();
+
+      final _profilePictureWidget = find.byKey(const Key('profile_image'));
+      expect(_profilePictureWidget, findsOneWidget);
+
+      await tester.tap(_profilePictureWidget);
+      await tester.pumpAndSettle();
+
+      // Bottom sheet is opened
+      verify(mockObserver.didPush(any, any));
+
+      final _deleteImageWidget = find.byIcon(Icons.delete);
+      expect(_deleteImageWidget, findsOneWidget);
+
+      await tester.tap(_deleteImageWidget);
+      await tester.pumpAndSettle();
+
+      // Set the selected image to null
+      when(_editProfileViewModel.updatedImage).thenAnswer((_) => null);
+
+      // Bottom Sheet is closed
+      verify(mockObserver.didPop(any, any));
+      expect(_editProfileViewModel.updatedImage, isNull);
+    });
+
     testWidgets('on Save Details is Tapped', (WidgetTester tester) async {
       // Mock Dialog Service
       var _dialogService = MockDialogService();
@@ -83,17 +147,6 @@ void main() {
       when(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
           .thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(_dialogService.popDialog()).thenReturn(null);
-
-      // Mock Edit Profile View Model
-      var _editProfileViewModel = MockEditProfileViewModel();
-      locator.registerSingleton<EditProfileViewModel>(_editProfileViewModel);
-
-      when(_editProfileViewModel.UPDATE_PROFILE)
-          .thenAnswer((_) => 'update_profile');
-      when(_editProfileViewModel.updateProfile(any, any, any, any))
-          .thenReturn(null);
-      when(_editProfileViewModel.isSuccess(any)).thenReturn(true);
-      when(_editProfileViewModel.updatedUser).thenAnswer((_) => null);
 
       // Pump Edit Profile View
       await _pumpEditProfileView(tester);

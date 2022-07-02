@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:http/http.dart' as http;
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
@@ -26,8 +29,14 @@ abstract class UsersApi {
 
   Future<User>? fetchCurrentUser();
 
-  Future<User>? updateProfile(String name, String? educationalInstitute,
-      String? country, bool subscribed);
+  Future<User>? updateProfile(
+    String name,
+    String? educationalInstitute,
+    String? country,
+    bool subscribed,
+    File? image,
+    bool removePicture,
+  );
 
   Future<bool>? sendResetPasswordInstructions(String email);
 }
@@ -184,22 +193,44 @@ class HttpUsersApi implements UsersApi {
   }
 
   @override
-  Future<User>? updateProfile(String name, String? educationalInstitute,
-      String? country, bool isSubscribed) async {
+  Future<User>? updateProfile(
+    String name,
+    String? educationalInstitute,
+    String? country,
+    bool isSubscribed,
+    File? image,
+    bool removePicture,
+  ) async {
     var endpoint = '/users/${_storage.currentUser!.data.id}';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+
+    var header = {'Content-Type': 'multipart/form-data'};
     var json = {
       'name': name,
       'educational_institute': educationalInstitute,
       'country': country,
       'subscribed': isSubscribed,
     };
+
+    if (removePicture) json['remove_picture'] = '1';
+
+    var files = <http.MultipartFile>[];
+    if (image != null) {
+      files.add(
+        await http.MultipartFile.fromPath(
+          'profile_picture',
+          image.path,
+        ),
+      );
+    }
+
     try {
-      ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.patch(
+      ApiUtils.addTokenToHeaders(header);
+      var jsonResponse = await ApiUtils.patchMutipart(
         uri,
-        headers: headers,
+        headers: header,
         body: json,
+        files: files,
       );
       return User.fromJson(jsonResponse);
     } on FormatException {

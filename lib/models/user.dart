@@ -47,6 +47,7 @@ class UserAttributes {
             : null,
         admin: json['admin'],
         country: json['country'],
+        profilePicture: json['profile_picture'],
         educationalInstitute: json['educational_institute'],
       );
 
@@ -58,6 +59,7 @@ class UserAttributes {
     this.updatedAt,
     required this.admin,
     this.country,
+    this.profilePicture,
     this.educationalInstitute,
   });
   String? name;
@@ -65,6 +67,7 @@ class UserAttributes {
   bool subscribed;
   DateTime? createdAt;
   DateTime? updatedAt;
+  String? profilePicture;
   bool admin;
   dynamic country;
   dynamic educationalInstitute;
@@ -77,6 +80,7 @@ class UserAttributes {
         'updated_at': updatedAt?.toIso8601String(),
         'admin': admin,
         'country': country,
+        'profile_picture': profilePicture,
         'educational_institute': educationalInstitute,
       };
 }

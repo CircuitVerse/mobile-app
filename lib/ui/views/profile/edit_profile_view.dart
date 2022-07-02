@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/API/country_institute_api.dart';
 import 'package:mobile_app/services/dialog_service.dart';
@@ -11,6 +12,8 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
+
+import '../../../config/environment_config.dart';
 
 class EditProfileView extends StatefulWidget {
   const EditProfileView({Key? key}) : super(key: key);
@@ -25,7 +28,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   final DialogService _dialogService = locator<DialogService>();
   late EditProfileViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  late String _name;
+  late String _name, _profilePicture;
   String? _educationalInstitute, _country;
   late bool _subscribed;
 
@@ -48,6 +51,111 @@ class _EditProfileViewState extends State<EditProfileView> {
     _educationalInstitute = _userAttrs.educationalInstitute;
     _country = _userAttrs.country;
     _subscribed = _userAttrs.subscribed;
+    _profilePicture = _userAttrs.profilePicture ?? 'Default';
+  }
+
+  Widget _buildProfilePicture() {
+    final imageURL = EnvironmentConfig.CV_BASE_URL + _profilePicture;
+    return GestureDetector(
+      key: const Key('profile_image'),
+      onTap: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (_) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    const SizedBox(width: 10),
+                    Text(
+                      'Profile Picture',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () {
+                        _model.removePhoto();
+                        Get.back();
+                      },
+                      icon: const Icon(
+                        Icons.delete,
+                        color: CVTheme.red,
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: List.generate(2, (index) {
+                    return GestureDetector(
+                      onTap: () {
+                        _model.pickProfileImage(index);
+                        Get.back();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(12.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: CVTheme.grey),
+                          ),
+                          child: Icon(
+                            index == 0 ? Icons.camera_alt : Icons.collections,
+                            color: CVTheme.primaryColor,
+                            size: 30,
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: Center(
+        child: Stack(
+          children: [
+            Container(
+              height: 120,
+              width: 120,
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: _model.imageUpdated
+                      ? FileImage(_model.updatedImage!)
+                      : imageURL.toLowerCase().contains('default') ||
+                              _model.removeImage
+                          ? const AssetImage(
+                              'assets/images/profile/default_icon.jpg',
+                            )
+                          : NetworkImage(imageURL) as ImageProvider,
+                ),
+              ),
+            ),
+            Positioned(
+              right: 0,
+              bottom: 0,
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: CVTheme.highlightText(context),
+                ),
+                child: const Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildNameInput() {
@@ -153,6 +261,8 @@ class _EditProfileViewState extends State<EditProfileView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                _buildProfilePicture(),
+                const SizedBox(height: 20),
                 _buildNameInput(),
                 _buildCountryField(),
                 _buildInstituteField(),
