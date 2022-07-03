@@ -1,9 +1,11 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
+import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
@@ -28,11 +30,13 @@ class _IbLandingViewState extends State<IbLandingView> {
   late IbChapter _selectedChapter;
   late ValueNotifier<Function?> _tocNotifier;
   late IbLandingViewModel _model;
+  late TextEditingController _controller;
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
   void initState() {
+    _controller = TextEditingController();
     _tocNotifier = ValueNotifier(null);
     _selectedChapter = _homeChapter;
     super.initState();
@@ -41,6 +45,7 @@ class _IbLandingViewState extends State<IbLandingView> {
   @override
   void dispose() {
     _tocNotifier.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -52,6 +57,53 @@ class _IbLandingViewState extends State<IbLandingView> {
   }
 
   AppBar _buildAppBar() {
+    if (_model.showSearchBar) {
+      return AppBar(
+        automaticallyImplyLeading: false,
+        title: Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+                  primary: Colors.white60,
+                  brightness: Brightness.dark,
+                ),
+            textSelectionTheme: TextSelectionThemeData(
+              cursorColor: CVTheme.appBarText(context),
+            ),
+          ),
+          child: CVTextField(
+            padding: EdgeInsets.zero,
+            prefixIcon: IconButton(
+              onPressed: () {
+                _controller.clear();
+                _model.reset();
+              },
+              icon: const Icon(Icons.arrow_back),
+            ),
+            hint: 'Search CircuitVerse',
+            onFieldSubmitted: (_) {
+              _model.query = _controller.text;
+            },
+            action: TextInputAction.search,
+            controller: _controller,
+            suffixIcon: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.arrow_back_ios),
+                ),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.arrow_forward_ios),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return AppBar(
       leading: IconButton(
         onPressed: () {
@@ -78,6 +130,12 @@ class _IbLandingViewState extends State<IbLandingView> {
             : 'Interactive Book',
       ),
       actions: [
+        IconButton(
+          onPressed: () {
+            _model.showSearchBar = true;
+          },
+          icon: const Icon(Icons.search),
+        ),
         ValueListenableBuilder(
           valueListenable: _tocNotifier,
           builder: (context, value, child) {

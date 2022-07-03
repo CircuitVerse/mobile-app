@@ -7,6 +7,7 @@ import 'package:mobile_app/models/ib/ib_showcase.dart';
 import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 class IbLandingViewModel extends BaseModel {
   // ViewState Keys
@@ -33,6 +34,32 @@ class IbLandingViewModel extends BaseModel {
   List<IbChapter> _chapters = [];
 
   List<IbChapter> get chapters => _chapters;
+
+  // Search Bar State
+  bool _showSearchBar = false;
+  bool get showSearchBar => _showSearchBar;
+  set showSearchBar(bool val) {
+    _showSearchBar = val;
+    notifyListeners();
+  }
+
+  // Query
+  String _query = '';
+  String get query => _query;
+  set query(String val) {
+    _query = val.trim();
+    notifyListeners();
+  }
+
+  // Search Controller
+  final AutoScrollController searchController = AutoScrollController();
+
+  // Reset state
+  void reset() {
+    _showSearchBar = false;
+    _query = '';
+    notifyListeners();
+  }
 
   // ShowCaseState stores the information of whether the button which is to be
   // showcased are clicked or not
