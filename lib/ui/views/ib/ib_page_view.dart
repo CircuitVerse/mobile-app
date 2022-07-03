@@ -19,6 +19,7 @@ import 'package:mobile_app/ui/views/ib/builders/ib_pop_quiz_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_subscript_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_superscript_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_webview_builder.dart';
+import 'package:mobile_app/ui/views/ib/syntaxes/ib_backticks_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_embed_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_filter_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_inline_html_syntax.dart';
@@ -214,6 +215,7 @@ class _IbPageViewState extends State<IbPageView> {
         [
           IbInlineHtmlSyntax(builders: _inlineBuilders),
           IbMathjaxSyntax(),
+          IbBackTicksSyntax(),
           md.EmojiSyntax(),
           ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
         ],
