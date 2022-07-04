@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/locator.dart';
@@ -16,6 +18,11 @@ class IbLandingViewModel extends BaseModel {
   final IbEngineService _ibEngineService = locator<IbEngineService>();
   final LocalStorageService _localStorageService =
       locator<LocalStorageService>();
+
+  // Isolate variables
+  late ReceivePort receivePort, otherResponseReceivePort;
+  late SendPort otherSendPort;
+  late Isolate _isolate;
 
   // Global Keys
   final GlobalKey _toc = GlobalKey(debugLabel: 'toc');
@@ -48,6 +55,9 @@ class IbLandingViewModel extends BaseModel {
   String get query => _query;
   set query(String val) {
     _query = val.trim();
+    ibChapters = [];
+    _updateSearch();
+    otherSendPort.send([val, otherResponseReceivePort.sendPort]);
     notifyListeners();
   }
 
@@ -59,6 +69,86 @@ class IbLandingViewModel extends BaseModel {
     _showSearchBar = false;
     _query = '';
     notifyListeners();
+  }
+
+  // Chapters containing query in it
+  int _currentIndex = 0;
+  int get currentIndex => _currentIndex;
+  set currentIndex(int value) {
+    _currentIndex = value;
+    _updateSearch();
+  }
+
+  List<IbChapter> ibChapters = [];
+  ValueNotifier<String> searchNotifier = ValueNotifier('0/0');
+
+  void _updateSearch() {
+    searchNotifier.value =
+        ibChapters.isEmpty ? '0/0' : '${currentIndex + 1}/${ibChapters.length}';
+  }
+
+  void setUpIsolate() async {
+    receivePort = ReceivePort();
+
+    _isolate = await Isolate.spawn<List<dynamic>>(
+      fetchCallback,
+      [
+        receivePort.sendPort,
+        [
+          IbChapter(
+            id: 'index.md',
+            navOrder: '1',
+            value: 'Interactive Book Home',
+            next: chapters[0],
+          ),
+          ...chapters
+        ],
+        _ibEngineService
+      ],
+    );
+
+    otherSendPort = await receivePort.first;
+
+    otherResponseReceivePort = ReceivePort();
+
+    otherResponseReceivePort.listen((chapter) {
+      if (chapter is IbChapter) {
+        ibChapters.add(chapter);
+        _updateSearch();
+      }
+    });
+  }
+
+  static void fetchCallback(List<dynamic> values) async {
+    final otherReceivePort = ReceivePort();
+
+    final SendPort port = values[0];
+    port.send(otherReceivePort.sendPort);
+
+    final _service = values[2] as IbEngineService;
+
+    otherReceivePort.listen((message) async {
+      final query = message[0];
+
+      final SendPort otherResponseSendPort = message[1];
+
+      for (final chapter in (values[1] as List<IbChapter>)) {
+        List<IbChapter> subChapters = [chapter, ...(chapter.items ?? [])];
+        for (final subChapter in subChapters) {
+          final pageData = await _service.getPageData(id: subChapter.id);
+          final contents = pageData?.content ?? [];
+          for (final con in contents) {
+            if (con.content.contains(RegExp(query, caseSensitive: false))) {
+              otherResponseSendPort.send(subChapter);
+            }
+          }
+        }
+      }
+    });
+  }
+
+  void close() {
+    _isolate.kill(priority: Isolate.immediate);
   }
 
   // ShowCaseState stores the information of whether the button which is to be
@@ -109,6 +199,7 @@ class IbLandingViewModel extends BaseModel {
   void init() {
     _showCaseState = IBShowCase.fromJson(_localStorageService.getShowcaseState);
     fetchChapters();
+    Future.delayed(const Duration(seconds: 1), setUpIsolate);
   }
 
   Future? fetchChapters() async {

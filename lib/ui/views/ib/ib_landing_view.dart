@@ -56,6 +56,13 @@ class _IbLandingViewState extends State<IbLandingView> {
     }
   }
 
+  void _changeChapter() {
+    final index = _model.currentIndex;
+    setState(() {
+      _selectedChapter = _model.ibChapters[index];
+    });
+  }
+
   AppBar _buildAppBar() {
     if (_model.showSearchBar) {
       return AppBar(
@@ -63,7 +70,7 @@ class _IbLandingViewState extends State<IbLandingView> {
         title: Theme(
           data: Theme.of(context).copyWith(
             colorScheme: Theme.of(context).colorScheme.copyWith(
-                  primary: Colors.white60,
+                  primary: Colors.white,
                   brightness: Brightness.dark,
                 ),
             textSelectionTheme: TextSelectionThemeData(
@@ -85,20 +92,47 @@ class _IbLandingViewState extends State<IbLandingView> {
             },
             action: TextInputAction.search,
             controller: _controller,
-            suffixIcon: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_back_ios),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_forward_ios),
-                ),
-              ],
-            ),
+            suffixIcon: ValueListenableBuilder<String>(
+                valueListenable: _model.searchNotifier,
+                builder: (context, value, _) {
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          final index = _model.currentIndex;
+                          if (index == 0) return;
+
+                          _model.currentIndex = index - 1;
+                          _changeChapter();
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color:
+                              _model.currentIndex <= 0 ? Colors.white24 : null,
+                        ),
+                      ),
+                      Text(value, style: const TextStyle(fontSize: 14)),
+                      IconButton(
+                        onPressed: () {
+                          final index = _model.currentIndex;
+                          if (index == _model.ibChapters.length - 1) return;
+
+                          _model.currentIndex = index + 1;
+                          _changeChapter();
+                        },
+                        icon: Icon(
+                          Icons.arrow_forward_ios,
+                          color: _model.currentIndex >=
+                                  _model.ibChapters.length - 1
+                              ? Colors.white24
+                              : null,
+                        ),
+                      ),
+                    ],
+                  );
+                }),
           ),
         ),
       );
@@ -289,6 +323,7 @@ class _IbLandingViewState extends State<IbLandingView> {
         _model = model;
         model.init();
       },
+      onModelDestroy: (model) => model.close(),
       builder: (context, model, child) {
         // Set next page for home page
         if (model.isSuccess(model.IB_FETCH_CHAPTERS) &&
