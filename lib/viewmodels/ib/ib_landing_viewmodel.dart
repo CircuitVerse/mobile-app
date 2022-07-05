@@ -22,7 +22,7 @@ class IbLandingViewModel extends BaseModel {
   // Isolate variables
   late ReceivePort receivePort, otherResponseReceivePort;
   late SendPort otherSendPort;
-  late Isolate _isolate;
+  Isolate? _isolate;
 
   // Global Keys
   final GlobalKey _toc = GlobalKey(debugLabel: 'toc');
@@ -47,6 +47,8 @@ class IbLandingViewModel extends BaseModel {
   bool get showSearchBar => _showSearchBar;
   set showSearchBar(bool val) {
     _showSearchBar = val;
+    ibChapters = [];
+    currentIndex = 0;
     notifyListeners();
   }
 
@@ -57,7 +59,11 @@ class IbLandingViewModel extends BaseModel {
     _query = val.trim();
     ibChapters = [];
     _updateSearch();
-    otherSendPort.send([val, otherResponseReceivePort.sendPort]);
+    // Search in the interactive book only
+    // when query is non empty
+    if (_query.isNotEmpty) {
+      otherSendPort.send([val, otherResponseReceivePort.sendPort]);
+    }
     notifyListeners();
   }
 
@@ -148,7 +154,7 @@ class IbLandingViewModel extends BaseModel {
   }
 
   void close() {
-    _isolate.kill(priority: Isolate.immediate);
+    _isolate?.kill(priority: Isolate.immediate);
   }
 
   // ShowCaseState stores the information of whether the button which is to be
@@ -196,10 +202,10 @@ class IbLandingViewModel extends BaseModel {
     _localStorageService.setShowcaseState = _showCaseState.toString();
   }
 
-  void init() {
+  void init() async {
     _showCaseState = IBShowCase.fromJson(_localStorageService.getShowcaseState);
-    fetchChapters();
-    Future.delayed(const Duration(seconds: 1), setUpIsolate);
+    await fetchChapters();
+    setUpIsolate();
   }
 
   Future? fetchChapters() async {

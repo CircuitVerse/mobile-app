@@ -20,33 +20,9 @@ class IbHeadingsBuilder extends MarkdownElementBuilder {
   Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
     var text = element.textContent;
 
-    // Build Text Span
-    List<TextSpan> spans = [];
-    text.splitMapJoin(
-      RegExp(r'<(\S*?)[^>]*>(.*?)<\/\1>|<.*?\/>'),
-      onMatch: (match) {
-        spans.add(
-          TextSpan(
-            text: match[2],
-            style: const TextStyle(
-              color: Colors.black,
-              backgroundColor: Colors.yellowAccent,
-            ),
-          ),
-        );
-        return '';
-      },
-      onNonMatch: (val) {
-        spans.add(
-          TextSpan(text: val),
-        );
-        return '';
-      },
-    );
-
     var widget = selectable
-        ? SelectableText.rich(TextSpan(children: spans), style: preferredStyle)
-        : Text.rich(TextSpan(children: spans), style: preferredStyle);
+        ? SelectableText(text, style: preferredStyle)
+        : Text(text, style: preferredStyle);
 
     slugMap[IbEngineService.getSlug(text)] = index;
 

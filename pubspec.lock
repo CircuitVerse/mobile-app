@@ -236,14 +236,14 @@ packages:
       name: flutter_facebook_auth_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.2"
+    version: "3.2.0"
   flutter_facebook_auth_web:
     dependency: transitive
     description:
       name: flutter_facebook_auth_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.2"
+    version: "3.2.0"
   flutter_html:
     dependency: "direct main"
     description:
@@ -289,10 +289,10 @@ packages:
     description:
       path: "packages/flutter_markdown"
       ref: HEAD
-      resolved-ref: "0072ff221b16f8947f2f80cfb48fc21d62985ee7"
-      url: "https://github.com/CircuitVerse/packages.git"
+      resolved-ref: "3acef9adaa9d5a9c217bc379c287778295030f47"
+      url: "https://github.com/aman-singh7/packages.git"
     source: git
-    version: "0.6.4"
+    version: "0.6.10+2"
   flutter_math_fork:
     dependency: "direct main"
     description:
@@ -598,12 +598,14 @@ packages:
     source: hosted
     version: "1.0.2"
   markdown:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: markdown
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.1"
+      path: "."
+      ref: HEAD
+      resolved-ref: "73ad99eeddc1ecebd27faa3221e68c81dc8217eb"
+      url: "https://github.com/dart-lang/markdown.git"
+    source: git
+    version: "6.0.0-dev"
   matcher:
     dependency: transitive
     description:

@@ -22,6 +22,7 @@ import 'package:mobile_app/ui/views/ib/builders/ib_superscript_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_webview_builder.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_embed_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_filter_syntax.dart';
+import 'package:mobile_app/ui/views/ib/syntaxes/ib_highlight_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_inline_html_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_liquid_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_mathjax_syntax.dart';
@@ -175,31 +176,17 @@ class _IbPageViewState extends State<IbPageView> {
       selectable: _selectable,
     );
 
-    final _highlightBuilder = HighlightBuilder(
-      controller: context.read<IbLandingViewModel>().searchController,
-      occurenceCountCb: (count) {},
-      selectable: _selectable,
-    );
-
     final _inlineBuilders = {
       'sup': IbSuperscriptBuilder(selectable: _selectable),
       'sub': IbSubscriptBuilder(selectable: _selectable),
       'mathjax': IbMathjaxBuilder(),
-      'mark': _highlightBuilder,
+      'mark': HighlightBuilder(selectable: _selectable),
     };
-
-    String? markdown;
-    if (_landingModel.query.isNotEmpty) {
-      final RegExp regExp = RegExp(_landingModel.query, caseSensitive: false);
-      markdown = data.content.replaceAllMapped(regExp, (match) {
-        return "<mark>${match[0]}</mark>";
-      });
-    }
 
     return MarkdownBody(
       key: UniqueKey(),
       shrinkWrap: false,
-      data: markdown ?? data.content,
+      data: data.content,
       selectable: _selectable,
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
       imageBuilder: _buildMarkdownImage,
@@ -236,6 +223,8 @@ class _IbPageViewState extends State<IbPageView> {
         [
           IbInlineHtmlSyntax(builders: _inlineBuilders),
           IbMathjaxSyntax(),
+          if (_landingModel.query.isNotEmpty)
+            HighlightSyntax(_landingModel.query),
           md.EmojiSyntax(),
           ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
         ],
