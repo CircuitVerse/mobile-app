@@ -13,7 +13,6 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
-// import '../../setup/test_helpers.dart';
 import '../../setup/test_helpers.mocks.dart';
 
 void main() {
@@ -37,20 +36,31 @@ void main() {
       locator.registerSingleton<IbPageViewModel>(pageViewModel);
 
       when(model.showSearchBar).thenAnswer((_) => false);
+      when(model.homeChapter).thenAnswer(
+        (_) => IbChapter(
+          id: 'index.md',
+          navOrder: '1',
+          value: 'Interactive Book Home',
+          next: model.chapters[0],
+        ),
+      );
+      when(model.selectedChapter).thenAnswer((_) => model.homeChapter);
       when(model.IB_FETCH_CHAPTERS).thenAnswer((_) => 'ib_fetch_chapters');
-      when(model.showCaseState).thenAnswer((_) => IBShowCase(
-            nextButton: true,
-            prevButton: true,
-            tocButton: true,
-            drawerButton: true,
-          ));
+      when(model.showCaseState).thenAnswer(
+        (_) => IBShowCase(
+          nextButton: true,
+          prevButton: true,
+          tocButton: true,
+          drawerButton: true,
+        ),
+      );
       when(model.keyMap).thenAnswer((_) => {});
       when(model.close()).thenAnswer((_) => VoidCallback);
 
       // Mock Page View Model
       when(pageViewModel.IB_FETCH_PAGE_DATA)
           .thenAnswer((_) => 'mock_fetch_page_data');
-      when(pageViewModel.fetchPageData()).thenReturn(null);
+      when(pageViewModel.fetchPageData(id: anyNamed('id'))).thenReturn(null);
       when(pageViewModel.IB_FETCH_PAGE_DATA)
           .thenAnswer((_) => 'mock_fetch_page_data');
 

@@ -82,6 +82,7 @@ class IbLandingViewModel extends BaseModel {
   int get currentIndex => _currentIndex;
   set currentIndex(int value) {
     _currentIndex = value;
+    _setChapter();
     _updateSearch();
   }
 
@@ -89,6 +90,7 @@ class IbLandingViewModel extends BaseModel {
   ValueNotifier<String> searchNotifier = ValueNotifier('0/0');
 
   void _updateSearch() {
+    _setChapter();
     searchNotifier.value =
         ibChapters.isEmpty ? '0/0' : '${currentIndex + 1}/${ibChapters.length}';
   }
@@ -120,6 +122,7 @@ class IbLandingViewModel extends BaseModel {
     otherResponseReceivePort.listen((chapter) {
       if (chapter is IbChapter) {
         ibChapters.add(chapter);
+        _setChapter();
         _updateSearch();
       }
     });
@@ -168,6 +171,27 @@ class IbLandingViewModel extends BaseModel {
     notifyListeners();
   }
 
+  // Interactive Book Chapters
+  final IbChapter homeChapter = IbChapter(
+    id: 'index.md',
+    navOrder: '1',
+    value: 'Interactive Book Home',
+  );
+  IbChapter? _selectedChapter;
+  IbChapter get selectedChapter => _selectedChapter!;
+  set selectedChapter(IbChapter chapter) {
+    _selectedChapter = chapter;
+    notifyListeners();
+  }
+
+  void _setChapter() {
+    if (ibChapters.isEmpty) return;
+
+    if (_selectedChapter!.id != ibChapters[currentIndex].id) {
+      selectedChapter = ibChapters[currentIndex];
+    }
+  }
+
   void onShowCased(String key) {
     switch (key) {
       case 'next':
@@ -204,6 +228,7 @@ class IbLandingViewModel extends BaseModel {
 
   void init() async {
     _showCaseState = IBShowCase.fromJson(_localStorageService.getShowcaseState);
+    _selectedChapter = homeChapter;
     await fetchChapters();
     setUpIsolate();
   }
@@ -212,6 +237,8 @@ class IbLandingViewModel extends BaseModel {
     try {
       _chapters = await _ibEngineService.getChapters()!;
       setStateFor(IB_FETCH_CHAPTERS, ViewState.Success);
+      homeChapter.nextPage = chapters[0];
+      chapters[0].prev = homeChapter;
     } on Failure catch (f) {
       setStateFor(IB_FETCH_CHAPTERS, ViewState.Error);
       setErrorMessageFor(IB_FETCH_CHAPTERS, f.message);

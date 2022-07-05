@@ -22,12 +22,6 @@ class IbLandingView extends StatefulWidget {
 }
 
 class _IbLandingViewState extends State<IbLandingView> {
-  final IbChapter _homeChapter = IbChapter(
-    id: 'index.md',
-    navOrder: '1',
-    value: 'Interactive Book Home',
-  );
-  late IbChapter _selectedChapter;
   late ValueNotifier<Function?> _tocNotifier;
   late IbLandingViewModel _model;
   late TextEditingController _controller;
@@ -38,7 +32,6 @@ class _IbLandingViewState extends State<IbLandingView> {
   void initState() {
     _controller = TextEditingController();
     _tocNotifier = ValueNotifier(null);
-    _selectedChapter = _homeChapter;
     super.initState();
   }
 
@@ -51,16 +44,9 @@ class _IbLandingViewState extends State<IbLandingView> {
 
   void setSelectedChapter(IbChapter chapter) {
     Get.back();
-    if (_selectedChapter.id != chapter.id) {
-      setState(() => _selectedChapter = chapter);
+    if (_model.selectedChapter.id != chapter.id) {
+      _model.selectedChapter = chapter;
     }
-  }
-
-  void _changeChapter() {
-    final index = _model.currentIndex;
-    setState(() {
-      _selectedChapter = _model.ibChapters[index];
-    });
   }
 
   AppBar _buildAppBar() {
@@ -105,7 +91,6 @@ class _IbLandingViewState extends State<IbLandingView> {
                           if (index == 0) return;
 
                           _model.currentIndex = index - 1;
-                          _changeChapter();
                         },
                         icon: Icon(
                           Icons.arrow_back_ios,
@@ -120,7 +105,6 @@ class _IbLandingViewState extends State<IbLandingView> {
                           if (index == _model.ibChapters.length - 1) return;
 
                           _model.currentIndex = index + 1;
-                          _changeChapter();
                         },
                         icon: Icon(
                           Icons.arrow_forward_ios,
@@ -159,7 +143,7 @@ class _IbLandingViewState extends State<IbLandingView> {
         ),
       ),
       title: Text(
-        _selectedChapter.id == _homeChapter.id
+        _model.selectedChapter.id == _model.homeChapter.id
             ? 'CircuitVerse'
             : 'Interactive Book',
       ),
@@ -204,7 +188,7 @@ class _IbLandingViewState extends State<IbLandingView> {
       onTap: () => setSelectedChapter(chapter),
       child: CVDrawerTile(
         title: chapter.value,
-        color: (_selectedChapter.id == chapter.id)
+        color: (_model.selectedChapter.id == chapter.id)
             ? IbTheme.getPrimaryColor(context)
             : IbTheme.textColor(context),
       ),
@@ -216,7 +200,7 @@ class _IbLandingViewState extends State<IbLandingView> {
 
     var hasSelectedChapter = false;
     for (var nestedChapter in chapter.items ?? <IbChapter>[]) {
-      if (nestedChapter.id == _selectedChapter.id) {
+      if (nestedChapter.id == _model.selectedChapter.id) {
         hasSelectedChapter = true;
       }
 
@@ -225,10 +209,8 @@ class _IbLandingViewState extends State<IbLandingView> {
 
     return ExpansionTile(
       maintainState: true,
-      initiallyExpanded:
-          (_selectedChapter.id.startsWith(chapter.id) || hasSelectedChapter)
-              ? true
-              : false,
+      initiallyExpanded: (_model.selectedChapter.id.startsWith(chapter.id) ||
+          hasSelectedChapter),
       title: ListTile(
         contentPadding: const EdgeInsets.all(0),
         title: GestureDetector(
@@ -237,7 +219,7 @@ class _IbLandingViewState extends State<IbLandingView> {
             chapter.value,
             style: Theme.of(context).textTheme.headline6?.copyWith(
                   fontFamily: 'Poppins',
-                  color: (_selectedChapter.id.startsWith(chapter.id))
+                  color: (_model.selectedChapter.id.startsWith(chapter.id))
                       ? IbTheme.getPrimaryColor(context)
                       : IbTheme.textColor(context),
                 ),
@@ -280,10 +262,10 @@ class _IbLandingViewState extends State<IbLandingView> {
               ),
               const Divider(thickness: 1),
               InkWell(
-                onTap: () => setSelectedChapter(_homeChapter),
+                onTap: () => setSelectedChapter(_model.homeChapter),
                 child: CVDrawerTile(
                   title: 'Interactive Book Home',
-                  color: (_selectedChapter.id == _homeChapter.id)
+                  color: (_model.selectedChapter.id == _model.homeChapter.id)
                       ? IbTheme.getPrimaryColor(context)
                       : IbTheme.textColor(context),
                 ),
@@ -325,17 +307,10 @@ class _IbLandingViewState extends State<IbLandingView> {
       },
       onModelDestroy: (model) => model.close(),
       builder: (context, model, child) {
-        // Set next page for home page
-        if (model.isSuccess(model.IB_FETCH_CHAPTERS) &&
-            _homeChapter.next == null) {
-          _homeChapter.nextPage = model.chapters[0];
-          model.chapters[0].prev = _homeChapter;
-        }
-
         return WillPopScope(
           onWillPop: () {
-            if (_selectedChapter != _homeChapter) {
-              setState(() => _selectedChapter = _homeChapter);
+            if (model.selectedChapter != model.homeChapter) {
+              model.selectedChapter = model.homeChapter;
               return Future.value(false);
             }
             _model.saveShowcaseState();
@@ -370,7 +345,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                       );
                     },
                     child: IbPageView(
-                      key: Key(_selectedChapter.toString()),
+                      key: Key(_model.selectedChapter.toString()),
                       tocCallback: (val) {
                         Future.delayed(Duration.zero, () async {
                           if (mounted) {
@@ -380,9 +355,9 @@ class _IbLandingViewState extends State<IbLandingView> {
                       },
                       setPage: (chapter) {
                         if (chapter == null) return;
-                        setState(() => _selectedChapter = chapter);
+                        model.selectedChapter = chapter;
                       },
-                      chapter: _selectedChapter,
+                      chapter: model.selectedChapter,
                       setShowCase: (updatedState) {
                         model.showCaseState = updatedState;
                       },
