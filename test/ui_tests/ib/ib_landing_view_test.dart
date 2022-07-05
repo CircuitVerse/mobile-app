@@ -36,6 +36,7 @@ void main() {
       var pageViewModel = MockIbPageViewModel();
       locator.registerSingleton<IbPageViewModel>(pageViewModel);
 
+      when(model.showSearchBar).thenAnswer((_) => false);
       when(model.IB_FETCH_CHAPTERS).thenAnswer((_) => 'ib_fetch_chapters');
       when(model.showCaseState).thenAnswer((_) => IBShowCase(
             nextButton: true,
@@ -44,6 +45,7 @@ void main() {
             drawerButton: true,
           ));
       when(model.keyMap).thenAnswer((_) => {});
+      when(model.close()).thenAnswer((_) => VoidCallback);
 
       // Mock Page View Model
       when(pageViewModel.IB_FETCH_PAGE_DATA)
@@ -106,8 +108,8 @@ void main() {
         // Finds AppBar Text
         expect(find.text('CircuitVerse'), findsOneWidget);
 
-        // Finds Table of Contents Icon
-        expect(find.byType(IconButton), findsNWidgets(1));
+        // Finds Search Icon and Table of Contents Icon
+        expect(find.byType(IconButton), findsNWidgets(2));
 
         // Finds Floating Action Buttons
         expect(find.byType(FloatingActionButton), findsNWidgets(1));
