@@ -13,6 +13,7 @@ import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_chapter_contents_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_headings_builder.dart';
+import 'package:mobile_app/ui/views/ib/builders/ib_highlight_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_interaction_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_mathjax_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_pop_quiz_builder.dart';
@@ -21,12 +22,15 @@ import 'package:mobile_app/ui/views/ib/builders/ib_superscript_builder.dart';
 import 'package:mobile_app/ui/views/ib/builders/ib_webview_builder.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_embed_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_filter_syntax.dart';
+import 'package:mobile_app/ui/views/ib/syntaxes/ib_highlight_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_inline_html_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_liquid_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_mathjax_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_md_tag_syntax.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
+import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
+import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -60,6 +64,7 @@ class IbPageView extends StatefulWidget {
 
 class _IbPageViewState extends State<IbPageView> {
   late IbPageViewModel _model;
+  late IbLandingViewModel _landingModel;
   late AutoScrollController _hideButtonController;
   bool _isFabsVisible = true;
   late ShowCaseWidgetState _showCaseWidgetState;
@@ -70,7 +75,8 @@ class _IbPageViewState extends State<IbPageView> {
   @override
   void initState() {
     super.initState();
-    _showCaseWidgetState = ShowCaseWidget.of(context)!;
+    _showCaseWidgetState = ShowCaseWidget.of(context);
+    _landingModel = context.read<IbLandingViewModel>();
     _isFabsVisible = true;
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
     _hideButtonController.addListener(() {
@@ -87,7 +93,7 @@ class _IbPageViewState extends State<IbPageView> {
 
   @override
   void didChangeDependencies() {
-    _showCaseWidgetState = ShowCaseWidget.of(context)!;
+    _showCaseWidgetState = ShowCaseWidget.of(context);
     super.didChangeDependencies();
   }
 
@@ -174,9 +180,12 @@ class _IbPageViewState extends State<IbPageView> {
       'sup': IbSuperscriptBuilder(selectable: _selectable),
       'sub': IbSubscriptBuilder(selectable: _selectable),
       'mathjax': IbMathjaxBuilder(),
+      'mark': HighlightBuilder(selectable: _selectable),
     };
 
     return MarkdownBody(
+      key: UniqueKey(),
+      shrinkWrap: false,
       data: data.content,
       selectable: _selectable,
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
@@ -214,6 +223,8 @@ class _IbPageViewState extends State<IbPageView> {
         [
           IbInlineHtmlSyntax(builders: _inlineBuilders),
           IbMathjaxSyntax(),
+          if (_landingModel.query.isNotEmpty)
+            HighlightSyntax(_landingModel.query),
           md.EmojiSyntax(),
           ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
         ],

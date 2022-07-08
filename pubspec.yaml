@@ -71,6 +71,8 @@ dev_dependencies:
 dependency_overrides:
   mime: ^1.0.1
   plugin_platform_interface: ^2.1.2
+  markdown: 
+    git: https://github.com/dart-lang/markdown.git
 
 flutter_icons:
   android: "launcher_icon"
