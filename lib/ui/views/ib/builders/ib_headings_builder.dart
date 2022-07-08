@@ -21,14 +21,8 @@ class IbHeadingsBuilder extends MarkdownElementBuilder {
     var text = element.textContent;
 
     var widget = selectable
-        ? SelectableText(
-            text,
-            style: preferredStyle,
-          )
-        : Text(
-            text,
-            style: preferredStyle,
-          );
+        ? SelectableText(text, style: preferredStyle)
+        : Text(text, style: preferredStyle);
 
     slugMap[IbEngineService.getSlug(text)] = index;
 

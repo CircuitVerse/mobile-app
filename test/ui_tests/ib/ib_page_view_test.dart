@@ -6,8 +6,10 @@ import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/models/ib/ib_showcase.dart';
+import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
 import 'package:mobile_app/utils/router.dart';
+import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +31,12 @@ void main() {
     setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpIbPageView(WidgetTester tester) async {
+      // Mock LandingViewModel
+      var landingViewModel = MockIbLandingViewModel();
+      locator.registerSingleton<IbLandingViewModel>(landingViewModel);
+
+      when(landingViewModel.query).thenAnswer((_) => '');
+
       // Mock ViewModel
       var model = MockIbPageViewModel();
       locator.registerSingleton<IbPageViewModel>(model);
@@ -75,17 +83,23 @@ void main() {
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: ShowCaseWidget(
-            builder: Builder(builder: (context) {
-              return IbPageView(
-                key: UniqueKey(),
-                chapter: _chapter,
-                tocCallback: (val) {},
-                setPage: (e) {},
-                showCase: showCase,
-                setShowCase: (e) {},
-                globalKeysMap: globalKeyMap,
-              );
-            }),
+            builder: Builder(
+              builder: (_) {
+                return BaseView<IbLandingViewModel>(
+                  builder: (context, model, _) {
+                    return IbPageView(
+                      key: UniqueKey(),
+                      chapter: _chapter,
+                      tocCallback: (val) {},
+                      setPage: (e) {},
+                      showCase: showCase,
+                      setShowCase: (e) {},
+                      globalKeysMap: globalKeyMap,
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ),
       );
