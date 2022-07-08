@@ -30,8 +30,7 @@ dependencies:
     sdk: flutter
   flutter_markdown:
     git:
-      url: https://github.com/aman-singh7/packages.git
-      # url: https://github.com/CircuitVerse/packages.git
+      url: https://github.com/CircuitVerse/packages.git
       path: packages/flutter_markdown
   flutter_math_fork: ^0.6.2
   flutter_summernote: ^1.0.0
