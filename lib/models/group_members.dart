@@ -39,6 +39,7 @@ class GroupMemberAttributes {
         userId: json['user_id'],
         createdAt: DateTime.parse(json['created_at']),
         updatedAt: DateTime.parse(json['updated_at']),
+        mentor: json['mentor'] ?? false,
         name: json['name'],
         email: json['email'],
       );
@@ -48,6 +49,7 @@ class GroupMemberAttributes {
     required this.userId,
     required this.createdAt,
     required this.updatedAt,
+    required this.mentor,
     this.name,
     this.email,
   });
@@ -57,4 +59,5 @@ class GroupMemberAttributes {
   DateTime updatedAt;
   String? name;
   String? email;
+  bool mentor;
 }

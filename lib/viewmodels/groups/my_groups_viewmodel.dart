@@ -7,7 +7,7 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class MyGroupsViewModel extends BaseModel {
   // ViewState Keys
-  String FETCH_MENTORED_GROUPS = 'fetch_mentored_groups';
+  String FETCH_OWNED_GROUPS = 'fetch_owned_groups';
   String FETCH_MEMBER_GROUPS = 'fetch_member_groups';
   String DELETE_GROUP = 'delete_group';
 
@@ -62,22 +62,22 @@ class MyGroupsViewModel extends BaseModel {
         var _nextPageNumber =
             int.parse(_nextPageLink.substring(_nextPageLink.length - 1));
         // fetch groups corresponding to next page number..
-        previousMentoredGroupsBatch = await _groupsApi.fetchMentoringGroups(
+        previousMentoredGroupsBatch = await _groupsApi.fetchOwnedGroups(
           page: _nextPageNumber,
         );
       } else {
         // Set State as busy only very first time..
-        setStateFor(FETCH_MENTORED_GROUPS, ViewState.Busy);
+        setStateFor(FETCH_OWNED_GROUPS, ViewState.Busy);
         // fetch mentoring groups for the very first time..
-        previousMentoredGroupsBatch = await _groupsApi.fetchMentoringGroups();
+        previousMentoredGroupsBatch = await _groupsApi.fetchOwnedGroups();
       }
 
       mentoredGroups.addAll(previousMentoredGroupsBatch?.data ?? []);
 
-      setStateFor(FETCH_MENTORED_GROUPS, ViewState.Success);
+      setStateFor(FETCH_OWNED_GROUPS, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FETCH_MENTORED_GROUPS, ViewState.Error);
-      setErrorMessageFor(FETCH_MENTORED_GROUPS, f.message);
+      setStateFor(FETCH_OWNED_GROUPS, ViewState.Error);
+      setErrorMessageFor(FETCH_OWNED_GROUPS, f.message);
     }
   }
 

@@ -49,7 +49,7 @@ void main() {
             (_) => Future.value(Response(jsonEncode(mockGroups), 200)));
         var _groupsApi = HttpGroupsApi();
 
-        expect((await _groupsApi.fetchMentoringGroups()).toString(),
+        expect((await _groupsApi.fetchOwnedGroups()).toString(),
             _groups.toString());
       });
 
@@ -57,12 +57,10 @@ void main() {
         var _groupsApi = HttpGroupsApi();
 
         ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
-        expect(_groupsApi.fetchMentoringGroups(),
-            throwsA(isInstanceOf<Failure>()));
+        expect(_groupsApi.fetchOwnedGroups(), throwsA(isInstanceOf<Failure>()));
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_groupsApi.fetchMentoringGroups(),
-            throwsA(isInstanceOf<Failure>()));
+        expect(_groupsApi.fetchOwnedGroups(), throwsA(isInstanceOf<Failure>()));
       });
     });
 

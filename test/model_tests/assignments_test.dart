@@ -48,7 +48,7 @@ void main() {
           DateTime.parse('2020-08-15T15:23:00.000Z').toLocal());
       expect(_assignmentAttributes.description, 'description');
       expect(_assignmentAttributes.status, 'open');
-      expect(_assignmentAttributes.hasMentorAccess, true);
+      expect(_assignmentAttributes.hasPrimaryMentorAccess, true);
       expect(_assignmentAttributes.createdAt,
           DateTime.parse('2020-08-19T15:00:30.423Z').toLocal());
       expect(_assignmentAttributes.updatedAt,

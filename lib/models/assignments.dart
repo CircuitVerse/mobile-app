@@ -77,7 +77,7 @@ class AssignmentAttributes {
         name: json['name'],
         deadline: DateTime.parse(json['deadline']).toLocal(),
         description: json['description'],
-        hasMentorAccess: json['has_mentor_access'],
+        hasPrimaryMentorAccess: json['has_primary_mentor_access'],
         createdAt: DateTime.parse(json['created_at']).toLocal(),
         updatedAt: DateTime.parse(json['updated_at']).toLocal(),
         status: json['status'],
@@ -91,7 +91,7 @@ class AssignmentAttributes {
     this.name,
     required this.deadline,
     this.description,
-    required this.hasMentorAccess,
+    required this.hasPrimaryMentorAccess,
     this.createdAt,
     this.updatedAt,
     this.status,
@@ -104,7 +104,7 @@ class AssignmentAttributes {
   String? name;
   DateTime deadline;
   String? description;
-  bool hasMentorAccess;
+  bool hasPrimaryMentorAccess;
   DateTime? createdAt;
   DateTime? updatedAt;
   String? status;

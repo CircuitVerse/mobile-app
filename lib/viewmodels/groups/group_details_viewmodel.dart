@@ -7,6 +7,7 @@ import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/services/API/assignments_api.dart';
 import 'package:mobile_app/services/API/group_members_api.dart';
 import 'package:mobile_app/services/API/groups_api.dart';
+import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class GroupDetailsViewModel extends BaseModel {
@@ -17,6 +18,7 @@ class GroupDetailsViewModel extends BaseModel {
   String REOPEN_ASSIGNMENT = 'reopen_assignment';
   String START_ASSIGNMENT = 'start_assignment';
   String DELETE_ASSIGNMENT = 'delete_assignment';
+  String UPDATE_MEMBER_ROLE = 'update_member_role';
 
   final GroupsApi _groupsApi = locator<GroupsApi>();
   final GroupMembersApi _groupMembersApi = locator<GroupMembersApi>();
@@ -32,6 +34,17 @@ class GroupDetailsViewModel extends BaseModel {
     notifyListeners();
   }
 
+  // Mentors
+  List<GroupMember> _mentors = [];
+
+  List<GroupMember> get mentors => _mentors;
+
+  set mentors(List<GroupMember> mentors) {
+    _mentors = mentors;
+    notifyListeners();
+  }
+
+  // Members
   List<GroupMember> _groupMembers = [];
 
   List<GroupMember> get groupMembers => _groupMembers;
@@ -59,11 +72,34 @@ class GroupDetailsViewModel extends BaseModel {
     notifyListeners();
   }
 
+  void setMembers(List<GroupMember> members) {
+    _mentors = [];
+    _groupMembers = [];
+    for (final member in members) {
+      if (member.attributes.mentor) {
+        _mentors.add(member);
+      } else {
+        _groupMembers.add(member);
+      }
+    }
+  }
+
+  bool get isMentor {
+    for (final mentor in _mentors) {
+      if (locator<LocalStorageService>().currentUser!.data.id ==
+          mentor.attributes.userId.toString()) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   Future? fetchGroupDetails(String groupId) async {
     setStateFor(FETCH_GROUP_DETAILS, ViewState.Busy);
     try {
       group = await _groupsApi.fetchGroupDetails(groupId);
-      groupMembers = _group.groupMembers!;
+      setMembers(_group.groupMembers!);
       assignments = _group.assignments!;
 
       setStateFor(FETCH_GROUP_DETAILS, ViewState.Success);
@@ -93,9 +129,25 @@ class GroupDetailsViewModel extends BaseModel {
 
       // Fetch & Update all Group Members..
       var _members = await _groupMembersApi.fetchGroupMembers(groupId);
-      if (_members != null) groupMembers = _members.data;
+      if (_members != null) setMembers(_members.data);
 
       setStateFor(ADD_GROUP_MEMBERS, ViewState.Success);
+    } on Failure catch (f) {
+      setStateFor(ADD_GROUP_MEMBERS, ViewState.Error);
+      setErrorMessageFor(ADD_GROUP_MEMBERS, f.message);
+    }
+  }
+
+  Future updateMemberRole(
+      String memberId, bool isMentor, String groupId) async {
+    setStateFor(UPDATE_MEMBER_ROLE, ViewState.Busy);
+    try {
+      await _groupMembersApi.updateMemberRole(memberId, isMentor);
+      // Fetch & Update all Group Members..
+      var _members = await _groupMembersApi.fetchGroupMembers(groupId);
+      if (_members != null) setMembers(_members.data);
+
+      setStateFor(UPDATE_MEMBER_ROLE, ViewState.Success);
     } on Failure catch (f) {
       setStateFor(ADD_GROUP_MEMBERS, ViewState.Error);
       setErrorMessageFor(ADD_GROUP_MEMBERS, f.message);

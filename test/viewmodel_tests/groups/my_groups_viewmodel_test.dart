@@ -45,15 +45,14 @@ void main() {
       test('When first time fetched & service returns success response',
           () async {
         var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.fetchMentoringGroups())
+        when(_mockGroupsApi.fetchOwnedGroups())
             .thenAnswer((_) => Future.value(_groups));
 
         var _model = MyGroupsViewModel();
         await _model.fetchMentoredGroups();
 
-        verify(_mockGroupsApi.fetchMentoringGroups());
-        expect(
-            _model.stateFor(_model.FETCH_MENTORED_GROUPS), ViewState.Success);
+        verify(_mockGroupsApi.fetchOwnedGroups());
+        expect(_model.stateFor(_model.FETCH_OWNED_GROUPS), ViewState.Success);
         expect(_model.previousMentoredGroupsBatch, _groups);
         expect(deepEq(_model.mentoredGroups, _groups.data), true);
       });
@@ -61,31 +60,30 @@ void main() {
       test('When not first time fetched & service returns success response',
           () async {
         var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.fetchMentoringGroups(page: 2))
+        when(_mockGroupsApi.fetchOwnedGroups(page: 2))
             .thenAnswer((_) => Future.value(_groups));
 
         var _model = MyGroupsViewModel();
         _model.previousMentoredGroupsBatch = _groups;
         await _model.fetchMentoredGroups();
 
-        verify(_mockGroupsApi.fetchMentoringGroups(page: 2));
-        expect(
-            _model.stateFor(_model.FETCH_MENTORED_GROUPS), ViewState.Success);
+        verify(_mockGroupsApi.fetchOwnedGroups(page: 2));
+        expect(_model.stateFor(_model.FETCH_OWNED_GROUPS), ViewState.Success);
         expect(_model.previousMentoredGroupsBatch, _groups);
       });
 
       test('When first time fetched & service returns error response',
           () async {
         var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.fetchMentoringGroups())
+        when(_mockGroupsApi.fetchOwnedGroups())
             .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = MyGroupsViewModel();
         await _model.fetchMentoredGroups();
 
         // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.FETCH_MENTORED_GROUPS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_MENTORED_GROUPS),
+        expect(_model.stateFor(_model.FETCH_OWNED_GROUPS), ViewState.Error);
+        expect(_model.errorMessageFor(_model.FETCH_OWNED_GROUPS),
             'Some Error Occurred!');
       });
     });

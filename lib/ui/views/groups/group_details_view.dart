@@ -90,7 +90,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 textAlign: TextAlign.center,
               ),
             ),
-            if (_recievedGroup.isMentor) ...[
+            if (_recievedGroup.isPrimaryMentor) ...[
               const SizedBox(width: 12),
               _buildEditGroupButton(),
             ]
@@ -98,13 +98,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         ),
         RichText(
           text: TextSpan(
-            text: 'Mentor : ',
+            text: 'Primary Mentor : ',
             style: Theme.of(context).textTheme.headline6?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
             children: <TextSpan>[
               TextSpan(
-                text: _recievedGroup.attributes.mentorName,
+                text: _recievedGroup.attributes.primaryMentorName,
                 style: Theme.of(context).textTheme.headline6,
               ),
             ],
@@ -114,7 +114,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     );
   }
 
-  Future<void> onAddGroupMemberPressed(BuildContext context) async {
+  Future<void> onAddMemberPressed(BuildContext context) async {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
       Navigator.pop(context);
@@ -141,7 +141,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     setState(() => _emails = null);
   }
 
-  void showAddGroupMemberDialog() {
+  void showAddMemberDialog({bool member = true}) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -152,9 +152,9 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const Text(
-                  'Add Group Members',
-                  style: TextStyle(
+                Text(
+                  'Add ${member ? "Group Members" : "Mentors"}',
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -186,7 +186,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               ),
               CVFlatButton(
                 key: addButtonGlobalKey,
-                triggerFunction: onAddGroupMemberPressed,
+                triggerFunction: onAddMemberPressed,
                 context: context,
                 buttonText: 'ADD',
               ),
@@ -223,7 +223,11 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     }
   }
 
-  Widget _buildSubHeader({required String title, VoidCallback? onAddPressed}) {
+  Widget _buildSubHeader({
+    required String title,
+    VoidCallback? onAddPressed,
+    bool extraCondition = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Row(
@@ -235,7 +239,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          if (_recievedGroup.isMentor)
+          if (_recievedGroup.isPrimaryMentor || extraCondition)
             CVPrimaryButton(
               title: '+ Add',
               onPressed: onAddPressed,
@@ -348,6 +352,38 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     }
   }
 
+  String role(bool isMember) {
+    return isMember ? "member" : "mentor";
+  }
+
+  Future<void> onEditGroupRole(String id, {bool member = true}) async {
+    var _dialogResponse = await _dialogService.showConfirmationDialog(
+      title: 'Make ${role(!member)}',
+      description: 'Are you sure you want to ${member ? "promote" : "demote"}'
+          ' this group ${role(member)} to a ${role(!member)}?',
+      confirmationTitle: 'YES',
+    );
+
+    if (_dialogResponse?.confirmed ?? false) {
+      _dialogService.showCustomProgressDialog(
+          title: member ? 'Promoting' : 'Demoting');
+
+      await _model.updateMemberRole(id, member, _recievedGroup.id);
+
+      _dialogService.popDialog();
+
+      if (_model.isSuccess(_model.UPDATE_MEMBER_ROLE)) {
+        SnackBarUtils.showDark(member ? 'Promoted' : 'Demoted',
+            'Group member was successfully updated.');
+      } else if (_model.isError(_model.UPDATE_MEMBER_ROLE)) {
+        SnackBarUtils.showDark(
+          'Error',
+          _model.errorMessageFor(_model.UPDATE_MEMBER_ROLE),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<GroupDetailsViewModel>(
@@ -366,8 +402,31 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
           _items.add(
             _buildSubHeader(
+              title: 'Mentors',
+              onAddPressed: () => showAddMemberDialog(member: false),
+            ),
+          );
+
+          if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
+            for (var mentor in _model.mentors) {
+              _items.add(
+                MemberCard(
+                  member: mentor,
+                  hasMentorAccess: _model.group.isPrimaryMentor,
+                  onEditPressed: () =>
+                      onEditGroupRole(mentor.id, member: false),
+                  onDeletePressed: () => onDeleteGroupMemberPressed(mentor.id),
+                ),
+              );
+            }
+          }
+
+          _items.add(const SizedBox(height: 36));
+
+          _items.add(
+            _buildSubHeader(
               title: 'Members',
-              onAddPressed: showAddGroupMemberDialog,
+              onAddPressed: showAddMemberDialog,
             ),
           );
 
@@ -376,7 +435,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               _items.add(
                 MemberCard(
                   member: member,
-                  hasMentorAccess: _model.group.isMentor,
+                  hasMentorAccess: _model.group.isPrimaryMentor,
+                  onEditPressed: () => onEditGroupRole(member.id),
                   onDeletePressed: () => onDeleteGroupMemberPressed(member.id),
                 ),
               );
@@ -389,6 +449,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             _buildSubHeader(
               title: 'Assignments',
               onAddPressed: onAddAssignmentPressed,
+              extraCondition: _model.isMentor, // Mentors can also add
+              // assignments in the group
             ),
           );
 

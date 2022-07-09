@@ -52,35 +52,36 @@ class Group {
   List<Assignment>? assignments;
 
   // returns true if the logged in user is mentor for this group
-  bool get isMentor => locator<LocalStorageService>().currentUser!.data.id ==
-          attributes.mentorId.toString()
-      ? true
-      : false;
+  bool get isPrimaryMentor =>
+      locator<LocalStorageService>().currentUser!.data.id ==
+              attributes.primaryMentorId.toString()
+          ? true
+          : false;
 }
 
 class GroupAttributes {
   factory GroupAttributes.fromJson(Map<String, dynamic> json) =>
       GroupAttributes(
         memberCount: json['member_count'],
-        mentorName: json['mentor_name'],
+        primaryMentorName: json['primary_mentor_name'],
         name: json['name'],
-        mentorId: json['mentor_id'],
+        primaryMentorId: json['primary_mentor_id'],
         createdAt: DateTime.parse(json['created_at']),
         updatedAt: DateTime.parse(json['updated_at']),
       );
 
   GroupAttributes({
     required this.memberCount,
-    required this.mentorName,
+    required this.primaryMentorName,
     required this.name,
-    required this.mentorId,
+    required this.primaryMentorId,
     required this.createdAt,
     required this.updatedAt,
   });
   int memberCount;
-  String mentorName;
+  String primaryMentorName;
   String name;
-  int mentorId;
+  int primaryMentorId;
   DateTime createdAt;
   DateTime updatedAt;
 }
