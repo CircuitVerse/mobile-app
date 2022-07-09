@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
-import 'package:mobile_app/models/assignments.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
@@ -16,7 +15,6 @@ import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../setup/test_data/mock_assignments.dart';
 import '../../setup/test_data/mock_groups.dart';
 import '../../setup/test_data/mock_user.dart';
 import '../../setup/test_helpers.dart' as test;
@@ -46,15 +44,16 @@ void main() {
       locator.registerSingleton<GroupDetailsViewModel>(_groupDetailsViewModel);
 
       var group = Group.fromJson(mockGroup);
-      var assignments = Assignment.fromJson(mockAssignment);
 
       when(_groupDetailsViewModel.FETCH_GROUP_DETAILS)
           .thenAnswer((_) => 'fetch_group_details');
       when(_groupDetailsViewModel.fetchGroupDetails(any)).thenReturn(null);
       when(_groupDetailsViewModel.group).thenReturn(group);
-      when(_groupDetailsViewModel.groupMembers).thenReturn(group.groupMembers!);
-      when(_groupDetailsViewModel.assignments).thenReturn([assignments]);
+      when(_groupDetailsViewModel.members).thenReturn([group.groupMembers![0]]);
+      when(_groupDetailsViewModel.mentors).thenReturn([]);
+      when(_groupDetailsViewModel.assignments).thenReturn(group.assignments!);
       when(_groupDetailsViewModel.isSuccess(any)).thenAnswer((_) => true);
+      when(_groupDetailsViewModel.isMentor).thenAnswer((_) => true);
 
       await tester.pumpWidget(
         GetMaterialApp(
@@ -77,17 +76,17 @@ void main() {
       // Finds Group Name
       expect(find.text('Test Group'), findsOneWidget);
 
-      // Finds Edit Group Button and Edit Assignment Button
+      // Finds Edit Group Button
       expect(find.text('Edit'), findsNWidgets(2));
 
       // Finds Mentor Name
       expect(find.byWidgetPredicate((widget) {
         return widget is RichText &&
-            widget.text.toPlainText() == 'Mentor : Test User';
+            widget.text.toPlainText() == 'Primary Mentor : Test User';
       }), findsOneWidget);
 
-      // Make Add Members and Add Assignments Button
-      expect(find.widgetWithText(CVPrimaryButton, '+ Add'), findsNWidgets(2));
+      // Make Add Mentors, Add Members and Add Assignments Button
+      expect(find.widgetWithText(CVPrimaryButton, '+ Add'), findsNWidgets(3));
 
       // Finds Member Card (1)
       expect(find.byType(MemberCard), findsOneWidget);

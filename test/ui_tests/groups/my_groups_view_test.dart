@@ -43,8 +43,7 @@ void main() {
       var groups = <Group>[];
       groups.add(Group.fromJson(mockGroup));
 
-      when(model.FETCH_MENTORED_GROUPS)
-          .thenAnswer((_) => 'fetch_mentored_groups');
+      when(model.FETCH_OWNED_GROUPS).thenAnswer((_) => 'fetch_owned_groups');
       when(model.FETCH_MEMBER_GROUPS).thenAnswer((_) => 'fetch_member_groups');
       when(model.previousMemberGroupsBatch).thenReturn(null);
       when(model.previousMentoredGroupsBatch).thenReturn(null);
@@ -52,9 +51,8 @@ void main() {
       when(model.fetchMemberGroups()).thenReturn(null);
 
       when(model.isSuccess(any)).thenAnswer((_) => true);
-      when(model.isSuccess(any)).thenAnswer((_) => true);
 
-      when(model.mentoredGroups).thenAnswer((_) => groups);
+      when(model.ownedGroups).thenAnswer((_) => groups);
       when(model.memberGroups).thenAnswer((_) => groups);
 
       await tester.pumpWidget(
@@ -95,7 +93,7 @@ void main() {
       expect(find.widgetWithText(CardButton, 'View'), findsOneWidget);
 
       // Tap Mentored Groups Tab
-      await tester.tap(find.widgetWithText(Tab, "Mentored"));
+      await tester.tap(find.widgetWithText(Tab, "Owned"));
       await tester.pumpAndSettle();
 
       // Mentored Group Card (1)
@@ -144,6 +142,7 @@ void main() {
       when(_groupDetailsViewModel.FETCH_GROUP_DETAILS)
           .thenAnswer((_) => 'fetch_group_details');
       when(_groupDetailsViewModel.fetchGroupDetails(any)).thenReturn(null);
+      when(_groupDetailsViewModel.isMentor).thenAnswer((_) => false);
       when(_groupDetailsViewModel.isSuccess(any)).thenAnswer((_) => false);
 
       await tester.tap(find.widgetWithText(CardButton, 'View').first);

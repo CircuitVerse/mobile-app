@@ -13,9 +13,9 @@ class MyGroupsViewModel extends BaseModel {
 
   final GroupsApi _groupsApi = locator<GroupsApi>();
 
-  final List<Group> _mentoredGroups = [];
+  final List<Group> _ownedGroups = [];
 
-  List<Group> get mentoredGroups => _mentoredGroups;
+  List<Group> get ownedGroups => _ownedGroups;
 
   final List<Group> _memberGroups = [];
 
@@ -40,17 +40,17 @@ class MyGroupsViewModel extends BaseModel {
   }
 
   void onGroupCreated(Group group) async {
-    _mentoredGroups.add(group);
+    _ownedGroups.add(group);
     notifyListeners();
   }
 
   void onGroupUpdated(Group group) {
     // if update access is granted then group must be one of his/her mentored
-    var _mentoredGroupIndex = _mentoredGroups.indexWhere(
+    var _mentoredGroupIndex = _ownedGroups.indexWhere(
       (mentoredGroup) => mentoredGroup.id == group.id,
     );
-    _mentoredGroups.removeAt(_mentoredGroupIndex);
-    _mentoredGroups.insert(_mentoredGroupIndex, group);
+    _ownedGroups.removeAt(_mentoredGroupIndex);
+    _ownedGroups.insert(_mentoredGroupIndex, group);
     notifyListeners();
   }
 
@@ -72,7 +72,7 @@ class MyGroupsViewModel extends BaseModel {
         previousMentoredGroupsBatch = await _groupsApi.fetchOwnedGroups();
       }
 
-      mentoredGroups.addAll(previousMentoredGroupsBatch?.data ?? []);
+      ownedGroups.addAll(previousMentoredGroupsBatch?.data ?? []);
 
       setStateFor(FETCH_OWNED_GROUPS, ViewState.Success);
     } on Failure catch (f) {
@@ -115,7 +115,7 @@ class MyGroupsViewModel extends BaseModel {
 
       if (_isDeleted ?? false) {
         // remove the group from the list of groups..
-        mentoredGroups.removeWhere((group) => group.id == groupId);
+        ownedGroups.removeWhere((group) => group.id == groupId);
         setStateFor(DELETE_GROUP, ViewState.Success);
       } else {
         setStateFor(DELETE_GROUP, ViewState.Error);

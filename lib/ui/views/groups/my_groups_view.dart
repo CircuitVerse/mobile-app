@@ -134,7 +134,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
 
             if (_model.isSuccess(_model.FETCH_OWNED_GROUPS)) {
               // creates GroupMentorCard corresponding to each mentor group
-              for (var group in _model.mentoredGroups) {
+              for (var group in _model.ownedGroups) {
                 _ownedGroups.add(
                   GroupMentorCard(
                     group: group,

@@ -21,18 +21,18 @@ void main() {
         var _model = MyGroupsViewModel();
         _model.onGroupCreated(_group);
 
-        expect(_model.mentoredGroups.last, _group);
+        expect(_model.ownedGroups.last, _group);
       });
     });
 
     group('onGroupUpdated -', () {
       test('When called, updates a particular group', () {
         var _model = MyGroupsViewModel();
-        _model.mentoredGroups.add(_group);
+        _model.ownedGroups.add(_group);
         _model.onGroupUpdated(_group..attributes.name = 'Test Group Updated');
 
         expect(
-          _model.mentoredGroups
+          _model.ownedGroups
               .firstWhere((group) => group.id == _group.id)
               .attributes
               .name,
@@ -54,7 +54,7 @@ void main() {
         verify(_mockGroupsApi.fetchOwnedGroups());
         expect(_model.stateFor(_model.FETCH_OWNED_GROUPS), ViewState.Success);
         expect(_model.previousMentoredGroupsBatch, _groups);
-        expect(deepEq(_model.mentoredGroups, _groups.data), true);
+        expect(deepEq(_model.ownedGroups, _groups.data), true);
       });
 
       test('When not first time fetched & service returns success response',
@@ -142,7 +142,7 @@ void main() {
             .thenAnswer((_) => Future.value(true));
 
         var _model = MyGroupsViewModel();
-        _model.mentoredGroups.add(_group);
+        _model.ownedGroups.add(_group);
         await _model.deleteGroup('1');
 
         // verify API call is made..
@@ -151,9 +151,7 @@ void main() {
 
         // verify group member is deleted..
         expect(
-            _model.mentoredGroups
-                .where((group) => _group.id == group.id)
-                .isEmpty,
+            _model.ownedGroups.where((group) => _group.id == group.id).isEmpty,
             true);
       });
 
@@ -163,7 +161,7 @@ void main() {
             .thenAnswer((_) => Future.value(false));
 
         var _model = MyGroupsViewModel();
-        _model.mentoredGroups.add(_group);
+        _model.ownedGroups.add(_group);
         await _model.deleteGroup('1');
 
         // verify Error ViewState with proper error message..
@@ -178,7 +176,7 @@ void main() {
             .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = MyGroupsViewModel();
-        _model.mentoredGroups.add(_group);
+        _model.ownedGroups.add(_group);
         await _model.deleteGroup('1');
 
         // verify Error ViewState with proper error message..

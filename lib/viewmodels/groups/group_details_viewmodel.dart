@@ -45,12 +45,12 @@ class GroupDetailsViewModel extends BaseModel {
   }
 
   // Members
-  List<GroupMember> _groupMembers = [];
+  List<GroupMember> _members = [];
 
-  List<GroupMember> get groupMembers => _groupMembers;
+  List<GroupMember> get members => _members;
 
-  set groupMembers(List<GroupMember> groupMembers) {
-    _groupMembers = groupMembers;
+  set members(List<GroupMember> members) {
+    _members = members;
     notifyListeners();
   }
 
@@ -74,12 +74,12 @@ class GroupDetailsViewModel extends BaseModel {
 
   void setMembers(List<GroupMember> members) {
     _mentors = [];
-    _groupMembers = [];
+    _members = [];
     for (final member in members) {
       if (member.attributes.mentor) {
         _mentors.add(member);
       } else {
-        _groupMembers.add(member);
+        _members.add(member);
       }
     }
   }
@@ -154,14 +154,18 @@ class GroupDetailsViewModel extends BaseModel {
     }
   }
 
-  Future deleteGroupMember(String groupMemberId) async {
+  Future deleteGroupMember(String groupMemberId, bool member) async {
     setStateFor(DELETE_GROUP_MEMBER, ViewState.Busy);
     try {
       var _isDeleted = await _groupMembersApi.deleteGroupMember(groupMemberId);
 
       if (_isDeleted ?? false) {
         // Remove Group Member from the list..
-        groupMembers.removeWhere((member) => member.id == groupMemberId);
+        if (member) {
+          members.removeWhere((member) => member.id == groupMemberId);
+        } else {
+          mentors.removeWhere((mentor) => mentor.id == groupMemberId);
+        }
         setStateFor(DELETE_GROUP_MEMBER, ViewState.Success);
       } else {
         setStateFor(DELETE_GROUP_MEMBER, ViewState.Error);
@@ -213,7 +217,7 @@ class GroupDetailsViewModel extends BaseModel {
       _group = await _groupsApi.fetchGroupDetails(_group.id)!;
 
       // update assignments after creating a project for any assignment..
-      groupMembers = _group.groupMembers!;
+      members = _group.groupMembers!;
       assignments = _group.assignments!;
 
       setStateFor(START_ASSIGNMENT, ViewState.Success);

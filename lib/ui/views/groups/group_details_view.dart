@@ -143,59 +143,63 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
   void showAddMemberDialog({bool member = true}) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  'Add ${member ? "Group Members" : "Mentors"}',
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                'Add ${member ? "Group Members" : "Mentors"}',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
                 ),
-                Text(
-                  'Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.',
-                  style: Theme.of(context).textTheme.bodyText1,
-                )
-              ],
-            ),
-            content: Form(
-              key: _formKey,
-              child: TextFormField(
-                maxLines: 5,
-                autofocus: true,
-                decoration: CVTheme.textFieldDecoration.copyWith(
-                  hintText: 'Email Ids',
-                ),
-                validator: (emails) => Validators.areEmailsValid(emails)
-                    ? null
-                    : 'Enter emails in valid format.',
-                onSaved: (emails) =>
-                    _emails = emails!.replaceAll(' ', '').trim(),
               ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('CANCEL'),
-              ),
-              CVFlatButton(
-                key: addButtonGlobalKey,
-                triggerFunction: onAddMemberPressed,
-                context: context,
-                buttonText: 'ADD',
-              ),
+              Text(
+                'Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.',
+                style: Theme.of(context).textTheme.bodyText1,
+              )
             ],
-          );
-        });
+          ),
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+              maxLines: 5,
+              autofocus: true,
+              onChanged: (emailValue) {
+                addButtonGlobalKey.currentState
+                    ?.setDynamicFunction(emailValue.isNotEmpty);
+              },
+              decoration: CVTheme.textFieldDecoration.copyWith(
+                hintText: 'Email Ids',
+              ),
+              validator: (emails) => Validators.areEmailsValid(emails)
+                  ? null
+                  : 'Enter emails in valid format.',
+              onSaved: (emails) => _emails = emails!.replaceAll(' ', '').trim(),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('CANCEL'),
+            ),
+            CVFlatButton(
+              key: addButtonGlobalKey,
+              triggerFunction: onAddMemberPressed,
+              context: context,
+              buttonText: 'ADD',
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  Future<void> onDeleteGroupMemberPressed(String groupMemberId) async {
+  Future<void> onDeleteGroupMemberPressed(String memberId, bool member) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title: 'Remove Group Member',
       description: 'Are you sure you want to remove this group member?',
@@ -205,7 +209,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Removing');
 
-      await _model.deleteGroupMember(groupMemberId);
+      await _model.deleteGroupMember(memberId, member);
 
       _dialogService.popDialog();
 
@@ -415,7 +419,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                   hasMentorAccess: _model.group.isPrimaryMentor,
                   onEditPressed: () =>
                       onEditGroupRole(mentor.id, member: false),
-                  onDeletePressed: () => onDeleteGroupMemberPressed(mentor.id),
+                  onDeletePressed: () =>
+                      onDeleteGroupMemberPressed(mentor.id, false),
                 ),
               );
             }
@@ -431,13 +436,14 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           );
 
           if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
-            for (var member in _model.groupMembers) {
+            for (var member in _model.members) {
               _items.add(
                 MemberCard(
                   member: member,
                   hasMentorAccess: _model.group.isPrimaryMentor,
                   onEditPressed: () => onEditGroupRole(member.id),
-                  onDeletePressed: () => onDeleteGroupMemberPressed(member.id),
+                  onDeletePressed: () =>
+                      onDeleteGroupMemberPressed(member.id, true),
                 ),
               );
             }
