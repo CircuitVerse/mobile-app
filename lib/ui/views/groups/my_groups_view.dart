@@ -119,7 +119,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
             indicatorColor: CVTheme.primaryColor,
             tabs: const [
               Tab(
-                text: 'Mentored',
+                text: 'Owned',
               ),
               Tab(
                 text: 'Joined',
@@ -129,13 +129,13 @@ class _MyGroupsViewState extends State<MyGroupsView>
         ),
         body: Builder(
           builder: (context) {
-            var _mentoredGroups = <Widget>[];
+            var _ownedGroups = <Widget>[];
             var _joinedGroups = <Widget>[];
 
-            if (_model.isSuccess(_model.FETCH_MENTORED_GROUPS)) {
+            if (_model.isSuccess(_model.FETCH_OWNED_GROUPS)) {
               // creates GroupMentorCard corresponding to each mentor group
-              for (var group in _model.mentoredGroups) {
-                _mentoredGroups.add(
+              for (var group in _model.ownedGroups) {
+                _ownedGroups.add(
                   GroupMentorCard(
                     group: group,
                     onEdit: () => onEditGroupPressed(group),
@@ -145,7 +145,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
               }
               // Adds fetch more groups icon if link to next set exists
               if (_model.previousMentoredGroupsBatch?.links.next != null) {
-                _mentoredGroups.add(
+                _ownedGroups.add(
                   CVAddIconButton(onPressed: _model.fetchMentoredGroups),
                 );
               }
@@ -167,10 +167,10 @@ class _MyGroupsViewState extends State<MyGroupsView>
             return TabBarView(
               controller: _tabController,
               children: <Widget>[
-                _mentoredGroups.isEmpty
+                _ownedGroups.isEmpty
                     ? _emptyState()
                     : ListView(
-                        children: _mentoredGroups,
+                        children: _ownedGroups,
                       ),
                 _joinedGroups.isEmpty
                     ? _emptyState()

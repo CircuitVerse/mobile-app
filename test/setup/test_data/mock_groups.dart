@@ -5,9 +5,9 @@ Map<String, dynamic> mockGroups = {
       'type': 'group',
       'attributes': {
         'member_count': 1,
-        'mentor_name': 'Test User',
+        'primary_mentor_name': 'Test User',
         'name': 'Test Group',
-        'mentor_id': 1,
+        'primary_mentor_id': 1,
         'created_at': '2020-08-15T05:49:56.433Z',
         'updated_at': '2020-08-15T17:21:13.813Z'
       },
@@ -62,7 +62,7 @@ Map<String, dynamic> mockGroup = {
         'description': 'description',
         'status': 'open',
         'restrictions': '[]',
-        'has_mentor_access': true,
+        'has_primary_mentor_access': true,
         'current_user_project_id': null,
         'created_at': '2020-08-15T15:00:30.423Z',
         'updated_at': '2020-08-15T15:23:03.018Z',
@@ -99,9 +99,9 @@ Map<String, dynamic> mockGroup = {
 
 Map<String, dynamic> mockGroupAttributes = {
   'member_count': 1,
-  'mentor_name': 'Test User',
+  'primary_mentor_name': 'Test User',
   'name': 'Test Group',
-  'mentor_id': 1,
+  'primary_mentor_id': 1,
   'created_at': '2020-08-15T05:49:56.433Z',
   'updated_at': '2020-08-15T17:21:13.813Z'
 };

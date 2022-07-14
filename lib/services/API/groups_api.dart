@@ -8,7 +8,7 @@ import 'package:mobile_app/utils/app_exceptions.dart';
 abstract class GroupsApi {
   Future<Groups>? fetchMemberGroups({int page = 1});
 
-  Future<Groups>? fetchMentoringGroups({int page = 1});
+  Future<Groups>? fetchOwnedGroups({int page = 1});
 
   Future<Group>? fetchGroupDetails(String groupId);
 
@@ -42,8 +42,8 @@ class HttpGroupsApi implements GroupsApi {
   }
 
   @override
-  Future<Groups>? fetchMentoringGroups({int page = 1}) async {
-    var endpoint = '/groups/mentored?page[number]=$page';
+  Future<Groups>? fetchOwnedGroups({int page = 1}) async {
+    var endpoint = '/groups/owned?page[number]=$page';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 
     try {

@@ -23,9 +23,7 @@ jobs:
       # Setup the flutter environment.
       - uses: subosito/flutter-action@v1
         with:
-        # Temporary fix to failing CI
-          flutter-version: '3.0.1'
-          # channel: "stable"
+          channel: "stable"
 
       # Get flutter dependencies.
       - run: flutter pub get
@@ -56,7 +54,9 @@ jobs:
       # Build ios
       - name: Run ios build
         if: ${{ matrix.platform == 'macos-latest'}}
-        run: flutter build ios --release --no-codesign
+        run: |
+          rm ios/Podfile.lock
+          flutter build ios --release --no-codesign
 
       # Upload generated apk to the artifacts.
       - uses: actions/upload-artifact@v1

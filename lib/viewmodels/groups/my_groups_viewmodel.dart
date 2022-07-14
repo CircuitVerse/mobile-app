@@ -7,15 +7,15 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
 class MyGroupsViewModel extends BaseModel {
   // ViewState Keys
-  String FETCH_MENTORED_GROUPS = 'fetch_mentored_groups';
+  String FETCH_OWNED_GROUPS = 'fetch_owned_groups';
   String FETCH_MEMBER_GROUPS = 'fetch_member_groups';
   String DELETE_GROUP = 'delete_group';
 
   final GroupsApi _groupsApi = locator<GroupsApi>();
 
-  final List<Group> _mentoredGroups = [];
+  final List<Group> _ownedGroups = [];
 
-  List<Group> get mentoredGroups => _mentoredGroups;
+  List<Group> get ownedGroups => _ownedGroups;
 
   final List<Group> _memberGroups = [];
 
@@ -40,17 +40,17 @@ class MyGroupsViewModel extends BaseModel {
   }
 
   void onGroupCreated(Group group) async {
-    _mentoredGroups.add(group);
+    _ownedGroups.add(group);
     notifyListeners();
   }
 
   void onGroupUpdated(Group group) {
     // if update access is granted then group must be one of his/her mentored
-    var _mentoredGroupIndex = _mentoredGroups.indexWhere(
+    var _mentoredGroupIndex = _ownedGroups.indexWhere(
       (mentoredGroup) => mentoredGroup.id == group.id,
     );
-    _mentoredGroups.removeAt(_mentoredGroupIndex);
-    _mentoredGroups.insert(_mentoredGroupIndex, group);
+    _ownedGroups.removeAt(_mentoredGroupIndex);
+    _ownedGroups.insert(_mentoredGroupIndex, group);
     notifyListeners();
   }
 
@@ -62,22 +62,22 @@ class MyGroupsViewModel extends BaseModel {
         var _nextPageNumber =
             int.parse(_nextPageLink.substring(_nextPageLink.length - 1));
         // fetch groups corresponding to next page number..
-        previousMentoredGroupsBatch = await _groupsApi.fetchMentoringGroups(
+        previousMentoredGroupsBatch = await _groupsApi.fetchOwnedGroups(
           page: _nextPageNumber,
         );
       } else {
         // Set State as busy only very first time..
-        setStateFor(FETCH_MENTORED_GROUPS, ViewState.Busy);
+        setStateFor(FETCH_OWNED_GROUPS, ViewState.Busy);
         // fetch mentoring groups for the very first time..
-        previousMentoredGroupsBatch = await _groupsApi.fetchMentoringGroups();
+        previousMentoredGroupsBatch = await _groupsApi.fetchOwnedGroups();
       }
 
-      mentoredGroups.addAll(previousMentoredGroupsBatch?.data ?? []);
+      ownedGroups.addAll(previousMentoredGroupsBatch?.data ?? []);
 
-      setStateFor(FETCH_MENTORED_GROUPS, ViewState.Success);
+      setStateFor(FETCH_OWNED_GROUPS, ViewState.Success);
     } on Failure catch (f) {
-      setStateFor(FETCH_MENTORED_GROUPS, ViewState.Error);
-      setErrorMessageFor(FETCH_MENTORED_GROUPS, f.message);
+      setStateFor(FETCH_OWNED_GROUPS, ViewState.Error);
+      setErrorMessageFor(FETCH_OWNED_GROUPS, f.message);
     }
   }
 
@@ -115,7 +115,7 @@ class MyGroupsViewModel extends BaseModel {
 
       if (_isDeleted ?? false) {
         // remove the group from the list of groups..
-        mentoredGroups.removeWhere((group) => group.id == groupId);
+        ownedGroups.removeWhere((group) => group.id == groupId);
         setStateFor(DELETE_GROUP, ViewState.Success);
       } else {
         setStateFor(DELETE_GROUP, ViewState.Error);

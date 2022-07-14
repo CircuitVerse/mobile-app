@@ -8,10 +8,12 @@ class MemberCard extends StatelessWidget {
     required this.member,
     this.hasMentorAccess = false,
     required this.onDeletePressed,
+    required this.onEditPressed,
   }) : super(key: key);
 
   final GroupMember member;
   final bool hasMentorAccess;
+  final VoidCallback onEditPressed;
   final VoidCallback onDeletePressed;
 
   @override
@@ -51,10 +53,25 @@ class MemberCard extends StatelessWidget {
             ),
           ),
           if (hasMentorAccess)
-            IconButton(
-              icon: const Icon(Icons.delete_outline),
-              color: CVTheme.red,
-              onPressed: onDeletePressed,
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: onEditPressed,
+                  child: const Icon(
+                    Icons.edit_outlined,
+                    color: CVTheme.primaryColor,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                GestureDetector(
+                  onTap: onDeletePressed,
+                  child: const Icon(
+                    Icons.delete_outline,
+                    color: CVTheme.red,
+                  ),
+                ),
+              ],
             )
           else
             Container()

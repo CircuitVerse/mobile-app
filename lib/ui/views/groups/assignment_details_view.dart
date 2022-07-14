@@ -101,7 +101,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             textAlign: TextAlign.center,
           ),
         ),
-        if (_recievedAssignment.attributes.hasMentorAccess) ...[
+        if (_recievedAssignment.attributes.hasPrimaryMentorAccess) ...[
           const SizedBox(width: 12),
           _buildEditAssignmentButton(),
         ]
@@ -200,7 +200,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   }
 
   Widget _buildSubmissions() {
-    if (_recievedAssignment.attributes.hasMentorAccess) {
+    if (_recievedAssignment.attributes.hasPrimaryMentorAccess) {
       return Column(
         children: <Widget>[
           Align(
@@ -427,7 +427,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
     return BaseView<AssignmentDetailsViewModel>(
       onModelReady: (model) {
         _model = model;
-        if (_recievedAssignment.attributes.hasMentorAccess) {
+        if (_recievedAssignment.attributes.hasPrimaryMentorAccess) {
           _model.fetchAssignmentDetails(_recievedAssignment.id);
         }
       },
