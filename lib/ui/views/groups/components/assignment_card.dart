@@ -46,7 +46,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
 
   Widget _buildAssignmentButtons() {
     var _items = <Widget>[];
-    var _isMentor = widget.assignment.attributes.hasMentorAccess;
+    var _isMentor = widget.assignment.attributes.hasPrimaryMentorAccess;
     var _isOpen = widget.assignment.attributes.status != 'closed';
     var _isDeadlineOver =
         widget.assignment.attributes.deadline.isBefore(DateTime.now());

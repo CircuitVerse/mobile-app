@@ -45,7 +45,7 @@ class AssignmentDetailsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  late Project? _focussedProject;
+  Project? _focussedProject;
 
   Project? get focussedProject => _focussedProject;
 
