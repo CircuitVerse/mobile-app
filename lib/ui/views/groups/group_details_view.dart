@@ -114,14 +114,14 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     );
   }
 
-  Future<void> onAddMemberPressed(BuildContext context) async {
+  Future<void> onAddMemberPressed(BuildContext context, bool isMentor) async {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
       Navigator.pop(context);
 
       _dialogService.showCustomProgressDialog(title: 'Adding');
 
-      await _model.addMembers(_recievedGroup.id, _emails!);
+      await _model.addMembers(_recievedGroup.id, _emails!, isMentor);
 
       _dialogService.popDialog();
 
@@ -189,7 +189,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             ),
             CVFlatButton(
               key: addButtonGlobalKey,
-              triggerFunction: onAddMemberPressed,
+              triggerFunction: (context) =>
+                  onAddMemberPressed(context, !member),
               context: context,
               buttonText: 'ADD',
             ),
