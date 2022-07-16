@@ -23,6 +23,7 @@ import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/ui/views/projects/project_preview_fullscreen_view.dart';
+import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 
 class CVRouter {
@@ -36,6 +37,8 @@ class CVRouter {
         return MaterialPageRoute(builder: (_) => const ForgotPasswordView());
       case CVLandingView.id:
         return MaterialPageRoute(builder: (_) => const CVLandingView());
+      case SimulatorView.id:
+        return MaterialPageRoute(builder: (_) => const SimulatorView());
       case TeachersView.id:
         return MaterialPageRoute(builder: (_) => const TeachersView());
       case ContributorsView.id:

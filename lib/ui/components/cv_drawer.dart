@@ -7,6 +7,7 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
+import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -69,6 +70,13 @@ class CVDrawer extends StatelessWidget {
                 child: CVDrawerTile(
                   title: AppLocalizations.of(context)!.interactive_book,
                   iconData: Icons.chrome_reader_mode,
+                ),
+              ),
+              InkWell(
+                onTap: () => Get.toNamed(SimulatorView.id),
+                child: CVDrawerTile(
+                  title: AppLocalizations.of(context)!.simulator,
+                  iconData: FontAwesome5.atom,
                 ),
               ),
               InkWell(
