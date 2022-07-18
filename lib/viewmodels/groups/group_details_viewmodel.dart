@@ -109,11 +109,11 @@ class GroupDetailsViewModel extends BaseModel {
     }
   }
 
-  Future addMembers(String groupId, String emails) async {
+  Future addMembers(String groupId, String emails, bool isMentor) async {
     setStateFor(ADD_GROUP_MEMBERS, ViewState.Busy);
     try {
       var addGroupMembers =
-          await _groupMembersApi.addGroupMembers(groupId, emails);
+          await _groupMembersApi.addGroupMembers(groupId, emails, isMentor);
 
       var _addedMembers = addGroupMembers!.added.join(', ');
       var _pendingMembers = addGroupMembers.pending.join(', ');

@@ -10,7 +10,7 @@ abstract class GroupMembersApi {
   Future<GroupMembers>? fetchGroupMembers(String groupId);
 
   Future<AddGroupMembersResponse>? addGroupMembers(
-      String groupId, String listOfMails);
+      String groupId, String listOfMails, bool isMentor);
 
   Future updateMemberRole(String memberId, bool isMentor);
 
@@ -43,10 +43,10 @@ class HttpGroupMembersApi implements GroupMembersApi {
 
   @override
   Future<AddGroupMembersResponse>? addGroupMembers(
-      String groupId, String listOfMails) async {
+      String groupId, String listOfMails, bool isMentor) async {
     var endpoint = '/groups/$groupId/members';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
-    var json = {'emails': listOfMails};
+    var json = {'emails': listOfMails, 'mentor': isMentor};
 
     try {
       ApiUtils.addTokenToHeaders(headers);
