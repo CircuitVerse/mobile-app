@@ -64,7 +64,7 @@ void main() {
       test('When called & service returns success response', () async {
         var _mockGroupMembersApi = getAndRegisterGroupMembersApiMock();
         when(_mockGroupMembersApi.addGroupMembers(
-                '1', 'test@test.com,pending@test.com,invalid@test.com'))
+                '1', 'test@test.com,pending@test.com,invalid@test.com', false))
             .thenAnswer((_) => Future.value(_addedMembers));
 
         when(_mockGroupMembersApi.fetchGroupMembers('1'))
@@ -72,11 +72,11 @@ void main() {
 
         var _model = GroupDetailsViewModel();
         await _model.addMembers(
-            '1', 'test@test.com,pending@test.com,invalid@test.com');
+            '1', 'test@test.com,pending@test.com,invalid@test.com', false);
 
         // verify API call is made..
         verify(_mockGroupMembersApi.addGroupMembers(
-            '1', 'test@test.com,pending@test.com,invalid@test.com'));
+            '1', 'test@test.com,pending@test.com,invalid@test.com', false));
         verify(_mockGroupMembersApi.fetchGroupMembers('1'));
         expect(_model.stateFor(_model.ADD_GROUP_MEMBERS), ViewState.Success);
 
@@ -88,12 +88,12 @@ void main() {
       test('When called & service returns error', () async {
         var _mockGroupMembersApi = getAndRegisterGroupMembersApiMock();
         when(_mockGroupMembersApi.addGroupMembers(
-                '1', 'test@test.com,pending@test.com,invalid@test.com'))
+                '1', 'test@test.com,pending@test.com,invalid@test.com', false))
             .thenThrow(Failure('Some Error Occurred!'));
 
         var _model = GroupDetailsViewModel();
         await _model.addMembers(
-            '1', 'test@test.com,pending@test.com,invalid@test.com');
+            '1', 'test@test.com,pending@test.com,invalid@test.com', false);
 
         // verify Error ViewState with proper error message..
         expect(_model.stateFor(_model.ADD_GROUP_MEMBERS), ViewState.Error);

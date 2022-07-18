@@ -56,7 +56,8 @@ void main() {
             Response(jsonEncode(mockAddGroupMembersResponse), 201)));
         var _groupMembersApi = HttpGroupMembersApi();
 
-        expect((await _groupMembersApi.addGroupMembers('1', '')).toString(),
+        expect(
+            (await _groupMembersApi.addGroupMembers('1', '', false)).toString(),
             _addGroupMembersResponse.toString());
       });
 
@@ -64,15 +65,15 @@ void main() {
         var _groupMembersApi = HttpGroupMembersApi();
 
         ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
-        expect(_groupMembersApi.addGroupMembers('1', ''),
+        expect(_groupMembersApi.addGroupMembers('1', '', false),
             throwsA(isInstanceOf<Failure>()));
 
         ApiUtils.client = MockClient((_) => throw NotFoundException(''));
-        expect(_groupMembersApi.addGroupMembers('1', ''),
+        expect(_groupMembersApi.addGroupMembers('1', '', false),
             throwsA(isInstanceOf<Failure>()));
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_groupMembersApi.addGroupMembers('1', ''),
+        expect(_groupMembersApi.addGroupMembers('1', '', false),
             throwsA(isInstanceOf<Failure>()));
       });
     });
