@@ -16,6 +16,7 @@
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <!-- Specify that the launch screen should continue being displayed -->
             <!-- until Flutter renders its first frame. -->
@@ -40,6 +41,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
         <activity android:name="com.facebook.FacebookActivity"
+            android:exported="true"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
         <activity
@@ -54,11 +56,14 @@
         </activity>
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <!-- Github authentication configuration -->
-        <activity android:name="com.linusu.flutter_web_auth.CallbackActivity" >
+        <activity 
+            android:name="com.linusu.flutter_web_auth.CallbackActivity"
+            android:exported="true" >
             <intent-filter android:label="flutter_web_auth">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
