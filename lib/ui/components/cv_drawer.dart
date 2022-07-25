@@ -73,7 +73,14 @@ class CVDrawer extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () => Get.toNamed(SimulatorView.id),
+                onTap: () async {
+                  final url = await Get.toNamed(SimulatorView.id);
+                  if (url is String) {
+                    if (url.contains('sign_out')) {
+                      _model.onLogoutPressed();
+                    }
+                  }
+                },
                 child: CVDrawerTile(
                   title: AppLocalizations.of(context)!.simulator,
                   iconData: FontAwesome5.atom,

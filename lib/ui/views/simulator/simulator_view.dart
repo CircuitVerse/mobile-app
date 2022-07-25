@@ -1,49 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:mobile_app/config/environment_config.dart';
+import 'package:get/get.dart';
+import 'package:mobile_app/enums/view_state.dart';
+import 'package:mobile_app/ui/views/base_view.dart';
+import 'package:mobile_app/viewmodels/simulator/simulator_viewmodel.dart';
 
-class SimulatorView extends StatefulWidget {
+class SimulatorView extends StatelessWidget {
   static const String id = 'simulator_view';
 
   const SimulatorView({Key? key}) : super(key: key);
 
   @override
-  State<SimulatorView> createState() => _SimulatorViewState();
-}
-
-class _SimulatorViewState extends State<SimulatorView> {
-  @override
-  void initState() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    _loadingState = ValueNotifier(0);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    _loadingState.dispose();
-    super.dispose();
-  }
-
-  late final ValueNotifier<int> _loadingState;
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ValueListenableBuilder<int>(
-          valueListenable: _loadingState,
-          builder: (context, value, _) {
+        child: BaseView<SimulatorViewModel>(
+          onModelReady: (model) => model.onModelReady(),
+          onModelDestroy: (model) => model.onModelDestroy(),
+          builder: (context, model, _) {
             return IndexedStack(
-              index: value,
+              index: model.isIdle(SimulatorViewModel.SIMULATOR) ? 1 : 0,
               children: [
                 Center(
                   child: SizedBox(
@@ -55,13 +31,30 @@ class _SimulatorViewState extends State<SimulatorView> {
                   ),
                 ),
                 InAppWebView(
-                  onLoadStop: (_, uri) {
-                    _loadingState.value = 1;
+                  onLoadStop: (controller, uri) async {
+                    model.setStateFor(
+                        SimulatorViewModel.SIMULATOR, ViewState.Idle);
                   },
                   initialUrlRequest: URLRequest(
-                    url:
-                        Uri.parse('${EnvironmentConfig.CV_BASE_URL}/simulator'),
+                    url: Uri.parse(model.url),
+                    headers: {'Authorization': 'Token ${model.token}'},
                   ),
+                  initialOptions: InAppWebViewGroupOptions(
+                    crossPlatform: InAppWebViewOptions(
+                      useShouldOverrideUrlLoading: true,
+                      useOnDownloadStart: true,
+                    ),
+                  ),
+                  shouldOverrideUrlLoading: (con, navigationAction) async {
+                    final url = navigationAction.request.url.toString();
+
+                    if (model.findMatchInString(url)) {
+                      Get.back(result: url);
+                    }
+
+                    return NavigationActionPolicy.CANCEL;
+                  },
+                  onDownloadStartRequest: (controller, downloadStartRequest) {},
                 ),
               ],
             );
