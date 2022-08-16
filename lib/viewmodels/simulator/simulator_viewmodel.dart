@@ -17,21 +17,10 @@ class SimulatorViewModel extends BaseModel {
   final LocalStorageService _service = locator<LocalStorageService>();
   final cookieManager = CookieManager.instance();
 
-  String? get token => _service.token;
+  String? get token {
+    if (!_service.isLoggedIn) return null;
 
-  String _cookies = "";
-
-  String get cookies => _cookies;
-
-  Future<String> get setCookies async {
-    final _cookies = await cookieManager.getCookies(url: uri);
-
-    String res = "";
-    for (final cookie in _cookies) {
-      res += "${cookie.name}=${cookie.value};";
-    }
-
-    return res;
+    return _service.token;
   }
 
   Uri get uri => Uri.parse(EnvironmentConfig.CV_BASE_URL);
@@ -45,6 +34,13 @@ class SimulatorViewModel extends BaseModel {
       return true;
     }
 
+    final components = url.split('/');
+    final length = components.length;
+    if (components[length - 1] == 'edit' &&
+        components[length - 3] == 'projects') {
+      return true;
+    }
+
     return false;
   }
 
@@ -54,19 +50,6 @@ class SimulatorViewModel extends BaseModel {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-
-    if (!_service.isLoggedIn) await cookieManager.deleteAllCookies();
-
-    // Set the cookie
-    final expiryDate = DateTime.now().add(const Duration(days: 15));
-    cookieManager.setCookie(
-      url: uri,
-      name: 'remember_user_token',
-      value: token ?? 'token',
-      expiresDate: expiryDate.millisecondsSinceEpoch,
-    );
-
-    _cookies = await setCookies;
   }
 
   void onModelDestroy() {

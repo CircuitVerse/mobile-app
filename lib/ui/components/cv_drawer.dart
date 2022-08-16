@@ -8,6 +8,7 @@ import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
 import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
+import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -78,6 +79,17 @@ class CVDrawer extends StatelessWidget {
                   if (url is String) {
                     if (url.contains('sign_out')) {
                       _model.onLogoutPressed();
+                    } else if (url.contains('edit')) {
+                      // close the drawer
+                      Get.back();
+                      // show the snackbar
+                      Future.delayed(
+                        const Duration(seconds: 1),
+                        () => SnackBarUtils.showDark(
+                          'New project created',
+                          'Please check your profile to edit..',
+                        ),
+                      );
                     }
                   }
                 },

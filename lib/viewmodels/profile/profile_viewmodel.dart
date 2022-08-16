@@ -29,7 +29,7 @@ class ProfileViewModel extends BaseModel {
 
   set user(User? user) {
     _user = user;
-    _localStorageService.currentUser = _user;
+    if (isPersonalProfile) _localStorageService.currentUser = _user;
     notifyListeners();
   }
 
