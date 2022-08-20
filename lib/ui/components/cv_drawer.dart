@@ -76,6 +76,7 @@ class CVDrawer extends StatelessWidget {
               InkWell(
                 onTap: () async {
                   final url = await Get.toNamed(SimulatorView.id);
+                  await Future.delayed(const Duration(seconds: 1));
                   if (url is String) {
                     if (url.contains('sign_out')) {
                       _model.onLogoutPressed();
@@ -83,13 +84,14 @@ class CVDrawer extends StatelessWidget {
                       // close the drawer
                       Get.back();
                       // show the snackbar
-                      Future.delayed(
-                        const Duration(seconds: 1),
-                        () => SnackBarUtils.showDark(
-                          'New project created',
-                          'Please check your profile to edit..',
-                        ),
+                      SnackBarUtils.showDark(
+                        'New project created',
+                        'Please check your profile to edit..',
                       );
+                    } else if (url.contains('groups')) {
+                      _model.setSelectedIndexTo(6);
+                    } else if (url.contains('users')) {
+                      _model.setSelectedIndexTo(5);
                     }
                   }
                 },

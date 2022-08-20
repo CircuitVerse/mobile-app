@@ -54,7 +54,9 @@ class SimulatorView extends StatelessWidget {
 
                     return NavigationActionPolicy.CANCEL;
                   },
-                  onDownloadStartRequest: (controller, downloadStartRequest) {},
+                  onDownloadStartRequest: (controller, request) {
+                    model.download(request);
+                  },
                 ),
               ],
             );
