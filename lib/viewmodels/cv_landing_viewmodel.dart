@@ -27,6 +27,15 @@ class CVLandingViewModel extends BaseModel {
     notifyListeners();
   }
 
+  bool _hasPendingNotif = false;
+
+  bool get hasPendingNotif => _hasPendingNotif;
+
+  set hasPendingNotif(bool val) {
+    _hasPendingNotif = val;
+    notifyListeners();
+  }
+
   void onLogout() async {
     _storage.isLoggedIn = false;
     _storage.currentUser = null;
