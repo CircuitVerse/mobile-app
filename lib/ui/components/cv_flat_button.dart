@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/cv_theme.dart';
 
 class CVFlatButton extends StatefulWidget {
   const CVFlatButton({
@@ -16,9 +17,11 @@ class CVFlatButton extends StatefulWidget {
 
 class CVFlatButtonState extends State<CVFlatButton> {
   Function? dynamicFunction;
+  bool isButtonActive = false;
   void setDynamicFunction(bool isActive) {
     setState(() {
       dynamicFunction = isActive ? widget.triggerFunction : null;
+      isButtonActive = isActive;
     });
   }
 
@@ -26,7 +29,7 @@ class CVFlatButtonState extends State<CVFlatButton> {
   Widget build(BuildContext context) {
     return TextButton(
       style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(Colors.grey),
+        foregroundColor: isButtonActive ? MaterialStateProperty.all(CVTheme.primaryColor) : MaterialStateProperty.all(Colors.grey),
       ),
       onPressed: dynamicFunction == null
           ? null
