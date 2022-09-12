@@ -120,5 +120,5 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => SimulatorViewModel());
 
   // Notification ViewModel
-  locator.registerFactory(() => NotificationsViewModel());
+  locator.registerLazySingleton(() => NotificationsViewModel());
 }

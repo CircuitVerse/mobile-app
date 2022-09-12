@@ -9,11 +9,13 @@ import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
+import 'package:mobile_app/viewmodels/notifications/notifications_viewmodel.dart';
 
 class CVLandingViewModel extends BaseModel {
   final LocalStorageService _storage = locator<LocalStorageService>();
   final DialogService _dialogService = locator<DialogService>();
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  final NotificationsViewModel _viewModel = locator<NotificationsViewModel>();
 
   User? _currentUser;
   int _selectedIndex = 0;
@@ -54,8 +56,10 @@ class CVLandingViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void setUser() {
+  void setUser() async {
     _currentUser = _storage.currentUser;
+    // fetch notifications
+    hasPendingNotif = await _viewModel.fetchNotifications();
   }
 
   void onProfileUpdated() {

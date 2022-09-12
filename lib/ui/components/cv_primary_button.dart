@@ -22,7 +22,7 @@ class CVPrimaryButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: padding,
-        primary:
+        backgroundColor:
             isPrimaryDark ? CVTheme.primaryColorDark : CVTheme.primaryColor,
       ),
       onPressed: onPressed ?? () {},

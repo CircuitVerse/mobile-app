@@ -23,9 +23,7 @@ jobs:
       # Setup the flutter environment.
       - uses: subosito/flutter-action@v1
         with:
-          # Temporary fix to failing CI
-          flutter-version: '3.0.4'
-          # channel: "stable"
+          channel: "stable"
 
       # Get flutter dependencies.
       - run: flutter pub get

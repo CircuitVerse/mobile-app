@@ -46,7 +46,7 @@ class NotificationsServiceImpl implements NotificationsService {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      await ApiUtils.get(uri, headers: headers);
+      await ApiUtils.patch(uri, headers: headers);
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {

@@ -16,25 +16,62 @@ class NotificationsViewModel extends BaseModel {
   final _notificationService = locator<NotificationsService>();
   final _storageService = locator<LocalStorageService>();
 
-  List<Notification>? _notifications;
+  // Notifications
+  List<Notification> _notifications = [];
 
-  List<Notification> get notifications => _notifications ?? [];
+  List<Notification> get notifications => _notifications;
 
-  set notification(List<Notification>? notif) {
+  set notifications(List<Notification> notif) {
     _notifications = notif;
     notifyListeners();
   }
 
-  void fetchNotifications() async {
-    if (!_storageService.isLoggedIn) return;
+  bool hasUnread = false;
+
+  // Dropdown value
+  String _value = 'All';
+
+  String get value => _value;
+
+  set value(String val) {
+    _value = val;
+    notifyListeners();
+  }
+
+  void markAsRead(String id) async {
+    try {
+      setStateFor(MARK_AS_READ, ViewState.Busy);
+      await _notificationService.markAsRead(id);
+      hasUnread = await fetchNotifications();
+      setStateFor(MARK_AS_READ, ViewState.Idle);
+    } on Failure catch (f) {
+      setStateFor(MARK_AS_READ, ViewState.Error);
+      setErrorMessageFor(MARK_AS_READ, f.message);
+    }
+  }
+
+  Future<bool> fetchNotifications() async {
+    if (!_storageService.isLoggedIn) return false;
+
+    _notifications.clear();
+    hasUnread = false;
 
     try {
       setStateFor(FETCH_NOTIFICATIONS, ViewState.Busy);
-      _notifications = await _notificationService.fetchNotifications();
+      notifications = await _notificationService.fetchNotifications() ?? [];
       setStateFor(FETCH_NOTIFICATIONS, ViewState.Success);
     } on Failure catch (f) {
       setStateFor(FETCH_NOTIFICATIONS, ViewState.Error);
       setErrorMessageFor(FETCH_NOTIFICATIONS, f.message);
     }
+
+    for (final notif in notifications) {
+      if (notif.attributes.unread) {
+        hasUnread = true;
+        return true;
+      }
+    }
+
+    return false;
   }
 }
