@@ -6,12 +6,14 @@ class CVDrawerTile extends StatelessWidget {
     required this.title,
     this.iconData,
     this.color,
+    this.pending = false,
     Key? key,
   }) : super(key: key);
 
   final String title;
   final IconData? iconData;
   final Color? color;
+  final bool pending;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,17 @@ class CVDrawerTile extends StatelessWidget {
                 fontFamily: 'Poppins',
                 color: color ?? CVTheme.textColor(context),
               ),
+        ),
+        trailing: Visibility(
+          visible: pending,
+          child: Container(
+            height: 8,
+            width: 8,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: CVTheme.red,
+            ),
+          ),
         ),
       ),
     );

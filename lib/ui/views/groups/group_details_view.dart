@@ -46,7 +46,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        primary: CVTheme.primaryColor,
+        backgroundColor: CVTheme.primaryColor,
       ),
       onPressed: () async {
         var _updatedGroup = await Get.toNamed(
