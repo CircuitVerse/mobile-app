@@ -7,6 +7,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/contributors/contributors_view.dart';
 import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
 import 'package:mobile_app/ui/views/home/home_view.dart';
+import 'package:mobile_app/ui/views/notifications/notifications_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
@@ -22,6 +23,9 @@ class CVLandingView extends StatefulWidget {
 }
 
 class _CVLandingViewState extends State<CVLandingView> {
+  // Global key
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final List<Widget> _items = [
     const HomeView(),
     const FeaturedProjectsView(),
@@ -32,6 +36,7 @@ class _CVLandingViewState extends State<CVLandingView> {
     const MyGroupsView(),
     // Featured Project View having search bar active
     const FeaturedProjectsView(showSearchBar: true),
+    const NotificationsView(),
   ];
 
   String _appBarTitle(int selectedIndex) {
@@ -42,6 +47,8 @@ class _CVLandingViewState extends State<CVLandingView> {
         return AppLocalizations.of(context)!.profile;
       case 6:
         return AppLocalizations.of(context)!.groups;
+      case 8:
+        return AppLocalizations.of(context)!.notifications;
       default:
         return AppLocalizations.of(context)!.title;
     }
@@ -54,6 +61,28 @@ class _CVLandingViewState extends State<CVLandingView> {
         _appBarTitle(selectedIndex),
         style: TextStyle(
           color: CVTheme.appBarText(context),
+        ),
+      ),
+      leading: IconButton(
+        onPressed: () {
+          _scaffoldKey.currentState?.openDrawer();
+        },
+        icon: Stack(
+          children: [
+            if (model.hasPendingNotif)
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  height: 8,
+                  width: 8,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: CVTheme.red,
+                  ),
+                ),
+              ),
+            const Center(child: Icon(Icons.menu)),
+          ],
         ),
       ),
       centerTitle: true,
@@ -85,6 +114,7 @@ class _CVLandingViewState extends State<CVLandingView> {
           return Future.value(true);
         },
         child: Scaffold(
+          key: _scaffoldKey,
           appBar: _buildAppBar(model.selectedIndex, model),
           drawer: const CVDrawer(),
           body: PageTransitionSwitcher(

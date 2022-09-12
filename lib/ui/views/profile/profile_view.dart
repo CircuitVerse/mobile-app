@@ -87,7 +87,7 @@ class _ProfileViewState extends State<ProfileView> {
     if (_model.isLoggedIn && _model.isPersonalProfile) {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: CVTheme.primaryColor,
+          backgroundColor: CVTheme.primaryColor,
         ),
         onPressed: () async {
           await Get.toNamed(EditProfileView.id)?.then((_updatedUser) {

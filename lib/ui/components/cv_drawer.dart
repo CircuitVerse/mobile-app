@@ -121,11 +121,20 @@ class CVDrawer extends StatelessWidget {
                   iconData: Icons.account_balance,
                 ),
               ),
-              if (_model.isLoggedIn)
+              if (_model.isLoggedIn) ...[
+                InkWell(
+                  onTap: () => _model.setSelectedIndexTo(8),
+                  child: CVDrawerTile(
+                    title: AppLocalizations.of(context)!.notifications,
+                    iconData: FontAwesome.bell,
+                    pending: _model.hasPendingNotif,
+                  ),
+                ),
                 Theme(
                   data: CVTheme.themeData(context),
                   child: ExpansionTile(
                     maintainState: true,
+                    iconColor: CVTheme.textColor(context),
                     title: Text(
                       _model.currentUser?.data.attributes.name ?? '',
                       style: Theme.of(context).textTheme.headline6?.copyWith(
@@ -157,7 +166,7 @@ class CVDrawer extends StatelessWidget {
                     ],
                   ),
                 )
-              else
+              ] else
                 InkWell(
                   onTap: () => Get.offAndToNamed(LoginView.id),
                   child: CVDrawerTile(

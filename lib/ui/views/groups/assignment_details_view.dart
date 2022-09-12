@@ -58,7 +58,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 4),
-        primary: CVTheme.primaryColor,
+        backgroundColor: CVTheme.primaryColor,
       ),
       onPressed: () async {
         var _updatedAssignment = await Get.toNamed(
@@ -399,7 +399,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(8),
-                        primary: CVTheme.red,
+                        backgroundColor: CVTheme.red,
                       ),
                       onPressed: () => deleteGrade(_submittedGrade.id),
                       child: Text(

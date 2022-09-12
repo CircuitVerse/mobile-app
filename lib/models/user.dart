@@ -24,7 +24,7 @@ class Data {
     required this.attributes,
   });
   String id;
-  String type;
+  String? type;
   UserAttributes attributes;
 
   Map<String, dynamic> toJson() => {
