@@ -23,7 +23,7 @@ jobs:
     env:
       RELEASE_TYPE: ${{ contains(github.event.release.tag_name, 'beta') && 'beta' || 'prod' }}
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
 
       # Setup Java environment in order to build the Android apps
       - uses: actions/setup-java@v1
@@ -37,7 +37,7 @@ jobs:
           bundler-cache: true
 
       # Setup the flutter environment.
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
 
