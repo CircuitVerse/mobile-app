@@ -29,12 +29,15 @@ class GroupDetailsView extends StatefulWidget {
 
 class _GroupDetailsViewState extends State<GroupDetailsView> {
   final DialogService _dialogService = locator<DialogService>();
+  final _emailEditController = TextEditingController();
   late GroupDetailsViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String? _emails;
+  String _emails = '';
+  final List<String> _emailsList = [];
   late Group _recievedGroup;
   final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
       GlobalKey<CVFlatButtonState>();
+  final List<Widget> _chips = <Widget>[];
 
   @override
   void initState() {
@@ -114,14 +117,33 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     );
   }
 
+  void resetForm() {
+    _emailEditController.clear();
+    _emailsList.clear();
+    _chips.clear();
+    _emails = '';
+  }
+
   Future<void> onAddMemberPressed(BuildContext context, bool isMentor) async {
-    if (Validators.validateAndSaveForm(_formKey)) {
+    for (String email in _emailsList) {
+      _emails = '$_emails$email,';
+    }
+
+    //add the last email that has not yet been added to the chips, after validating
+    if (_formKey.currentState!.validate()) {
+      _emails = _emails + _emailEditController.text;
+    }
+
+    //either there are all chips or there is one last email input that needs to be validated
+    if (_emailEditController.text == '' || _formKey.currentState!.validate()) {
       FocusScope.of(context).requestFocus(FocusNode());
       Navigator.pop(context);
 
+      setState(() => resetForm());
+
       _dialogService.showCustomProgressDialog(title: 'Adding');
 
-      await _model.addMembers(_recievedGroup.id, _emails!, isMentor);
+      await _model.addMembers(_recievedGroup.id, _emails, isMentor);
 
       _dialogService.popDialog();
 
@@ -138,64 +160,132 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         );
       }
     }
-    setState(() => _emails = null);
   }
 
   void showAddMemberDialog({bool member = true}) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Add ${member ? "Group Members" : "Mentors"}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
+        return StatefulBuilder(builder: ((context, setState) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Add ${member ? "Group Members" : "Mentors"}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Enter Email IDs separated by spaces. If users are not registered, an email ID will be sent requesting them to sign up.',
+                  style: Theme.of(context).textTheme.bodyText1,
+                )
+              ],
+            ),
+            content: Form(
+              key: _formKey,
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: CVTheme.primaryColor,
+                    width: 1,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: SingleChildScrollView(
+                  child: Wrap(
+                    children: [
+                      ..._chips,
+                      RawKeyboardListener(
+                        autofocus: true,
+                        focusNode: FocusNode(),
+                        onKey: (event) {
+                          if (event.data.logicalKey.keyLabel == 'Backspace') {
+                            if (_emailEditController.text.isEmpty &&
+                                _chips.isNotEmpty) {
+                              setState(() {
+                                _chips.removeLast();
+                                _emailsList.removeLast();
+                              });
+                            }
+                          }
+                        },
+                        child: TextFormField(
+                          autofocus: true,
+                          controller: _emailEditController,
+                          keyboardType: TextInputType.emailAddress,
+                          onChanged: (emailValue) {
+                            addButtonGlobalKey.currentState
+                                ?.setDynamicFunction(emailValue.isNotEmpty);
+                            if (emailValue.endsWith(' ')) {
+                              _emailEditController.text =
+                                  _emailEditController.text.substring(
+                                      0, _emailEditController.text.length - 1);
+                              _emailEditController.selection =
+                                  TextSelection.fromPosition(
+                                TextPosition(
+                                    offset: _emailEditController.text.length),
+                              );
+                              if (_formKey.currentState!.validate()) {
+                                setState(() {
+                                  _emailEditController.clear();
+                                  _chips.add(
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 1.0),
+                                      child: InputChip(
+                                        label: Text(emailValue
+                                            .substring(0, emailValue.length - 1)
+                                            .trim()),
+                                      ),
+                                    ),
+                                  );
+                                  _emailsList.add(emailValue
+                                      .substring(0, emailValue.length - 1)
+                                      .trim());
+                                });
+                              }
+                            }
+                          },
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                          ),
+                          validator: (emails) =>
+                              Validators.areEmailsValid(emails)
+                                  ? null
+                                  : 'Enter emails in valid format.',
+                          onSaved: (emails) =>
+                              _emails = emails!.replaceAll(' ', '').trim(),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Text(
-                'Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.',
-                style: Theme.of(context).textTheme.bodyText1,
-              )
-            ],
-          ),
-          content: Form(
-            key: _formKey,
-            child: TextFormField(
-              maxLines: 5,
-              autofocus: true,
-              onChanged: (emailValue) {
-                addButtonGlobalKey.currentState
-                    ?.setDynamicFunction(emailValue.isNotEmpty);
-              },
-              decoration: CVTheme.textFieldDecoration.copyWith(
-                hintText: 'Email Ids',
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  resetForm();
+                },
+                child: const Text('CANCEL'),
               ),
-              validator: (emails) => Validators.areEmailsValid(emails)
-                  ? null
-                  : 'Enter emails in valid format.',
-              onSaved: (emails) => _emails = emails!.replaceAll(' ', '').trim(),
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('CANCEL'),
-            ),
-            CVFlatButton(
-              key: addButtonGlobalKey,
-              triggerFunction: (context) =>
-                  onAddMemberPressed(context, !member),
-              context: context,
-              buttonText: 'ADD',
-            ),
-          ],
-        );
+              CVFlatButton(
+                key: addButtonGlobalKey,
+                triggerFunction: (context) =>
+                    onAddMemberPressed(context, !member),
+                context: context,
+                buttonText: 'ADD',
+              ),
+            ],
+          );
+        }));
       },
     );
   }
