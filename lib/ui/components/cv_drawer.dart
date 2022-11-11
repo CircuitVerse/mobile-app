@@ -178,7 +178,7 @@ class CVDrawer extends StatelessWidget {
           ),
           Positioned(
             right: 5,
-            top: 35,
+            top: 45,
             child: IconButton(
               icon: Theme.of(context).brightness == Brightness.dark
                   ? const Icon(Icons.brightness_low)
