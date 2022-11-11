@@ -139,13 +139,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       FocusScope.of(context).requestFocus(FocusNode());
       Navigator.pop(context);
 
-      setState(() => resetForm());
-
       _dialogService.showCustomProgressDialog(title: 'Adding');
 
       await _model.addMembers(_recievedGroup.id, _emails, isMentor);
 
       _dialogService.popDialog();
+
+      setState(() => resetForm());
 
       if (_model.isSuccess(_model.ADD_GROUP_MEMBERS) &&
           _model.addedMembersSuccessMessage.isNotEmpty) {
