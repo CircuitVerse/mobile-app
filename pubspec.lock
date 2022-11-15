@@ -963,6 +963,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
+  simple_chips_input:
+    dependency: "direct main"
+    description:
+      name: simple_chips_input
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1207,5 +1214,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.17.0 <3.0.0"
+  dart: ">=2.18.4 <3.0.0"
   flutter: ">=3.0.0"
