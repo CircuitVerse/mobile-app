@@ -414,8 +414,8 @@ class _IbPageViewState extends State<IbPageView> {
             child: Showcase(
               key: _model.prevPage,
               description: 'Tap to navigate to previous page',
-              overlayPadding: const EdgeInsets.all(12.0),
-              shapeBorder: const CircleBorder(),
+              targetPadding: const EdgeInsets.all(12.0),
+              targetShapeBorder: const CircleBorder(),
               onTargetClick: () {
                 widget.setShowCase(widget.showCase.copyWith(prevButton: true));
                 widget.setPage(widget.chapter.prev);
@@ -454,8 +454,8 @@ class _IbPageViewState extends State<IbPageView> {
             child: Showcase(
               key: _model.nextPage,
               description: 'Tap to navigate to next page',
-              overlayPadding: const EdgeInsets.all(12.0),
-              shapeBorder: const CircleBorder(),
+              targetPadding: const EdgeInsets.all(12.0),
+              targetShapeBorder: const CircleBorder(),
               onTargetClick: () {
                 widget.setShowCase(widget.showCase.copyWith(nextButton: true));
                 widget.setPage(widget.chapter.next);
