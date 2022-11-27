@@ -150,55 +150,30 @@ IbEngineService getAndRegisterIbEngineServiceMock() {
   return _ibEngineService;
 }
 
-@GenerateNiceMocks([
-  MockSpec<IbLandingViewModel>(),
-  MockSpec<IbPageViewModel>(),
-  MockSpec<UserFavouritesViewModel>(),
-  MockSpec<ProjectDetailsViewModel>(),
-  MockSpec<EditProfileViewModel>(),
-  MockSpec<UserProjectsViewModel>(),
-  MockSpec<FeaturedProjectsViewModel>(),
-  MockSpec<ContributorsApi>(),
-  MockSpec<UsersApi>(),
-  MockSpec<EditGroupViewModel>(),
-  MockSpec<MyGroupsViewModel>(),
-  MockSpec<GroupDetailsViewModel>(),
-  MockSpec<NewGroupViewModel>(),
-  MockSpec<UpdateAssignmentViewModel>(),
-  MockSpec<AddAssignmentViewModel>(),
-  MockSpec<AssignmentDetailsViewModel>(),
-  MockSpec<ProfileViewModel>(),
-  MockSpec<DialogService>(),
-  MockSpec<NavigatorObserver>(),
-  MockSpec<LocalStorageService>(),
-])
-
-// @GenerateMocks(
-//   [
-//     IbLandingViewModel,
-//     IbPageViewModel,
-//     UserFavouritesViewModel,
-//     ProjectDetailsViewModel,
-//     EditProfileViewModel,
-//     UserProjectsViewModel,
-//     FeaturedProjectsViewModel,
-//     ContributorsApi,
-//     UsersApi,
-//     EditGroupViewModel,
-//     MyGroupsViewModel,
-//     GroupDetailsViewModel,
-//     NewGroupViewModel,
-//     UpdateAssignmentViewModel,
-//     AddAssignmentViewModel,
-//     AssignmentDetailsViewModel,
-//     ProfileViewModel,
-//     DialogService,
-//   ],
-//   customMocks: [
-//     MockSpec<NavigatorObserver>(onMissingStub: OnMissingStub.returnDefault),
-//     MockSpec<LocalStorageService>(onMissingStub: OnMissingStub.returnDefault),
-//   ],
-// )
+@GenerateNiceMocks(
+  [
+    MockSpec<IbLandingViewModel>(),
+    MockSpec<IbPageViewModel>(),
+    MockSpec<UserFavouritesViewModel>(),
+    MockSpec<ProjectDetailsViewModel>(),
+    MockSpec<EditProfileViewModel>(),
+    MockSpec<UserProjectsViewModel>(),
+    MockSpec<FeaturedProjectsViewModel>(),
+    MockSpec<ContributorsApi>(),
+    MockSpec<UsersApi>(),
+    MockSpec<EditGroupViewModel>(),
+    MockSpec<MyGroupsViewModel>(),
+    MockSpec<GroupDetailsViewModel>(),
+    MockSpec<NewGroupViewModel>(),
+    MockSpec<UpdateAssignmentViewModel>(),
+    MockSpec<AddAssignmentViewModel>(),
+    MockSpec<AssignmentDetailsViewModel>(),
+    MockSpec<ProfileViewModel>(),
+    MockSpec<DialogService>(),
+    MockSpec<NavigatorObserver>(),
+    MockSpec<LocalStorageService>(),
+  ],
+)
 void registerServices() {
   getAndRegisterLocalStorageServiceMock();
   getAndRegisterDatabaseServiceMock();
