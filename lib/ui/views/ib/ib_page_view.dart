@@ -183,10 +183,16 @@ class _IbPageViewState extends State<IbPageView> {
       'mark': HighlightBuilder(selectable: _selectable),
     };
 
+    // Temporary fix for bug in flutter_markdown package
+    // Prevent crash of app by adding an invisible character at the end of the string, 
+    // So that if any inline element is at the end of the markdown , it can be grouped with the invisible character and not crash the app
+    String content = data.content;
+    content = "$content‎ ";
+
     return MarkdownBody(
       key: UniqueKey(),
       shrinkWrap: false,
-      data: data.content,
+      data: content,
       selectable: _selectable,
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
       imageBuilder: _buildMarkdownImage,
