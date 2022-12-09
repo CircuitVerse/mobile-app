@@ -15,7 +15,7 @@ class IbWebViewBuilder extends MarkdownElementBuilder {
       data: textContent,
       customRenders: {
         tagMatcher('iframe'): CustomRender.widget(
-          widget: (context, child) {
+          widget: (RenderContext context, _) {
             final width = MediaQuery.of(context.buildContext).size.width;
             final height = (width * 9) / 16;
 

@@ -6,13 +6,12 @@ import 'package:transparent_image/transparent_image.dart';
 
 import 'image_test_utils.mocks.dart';
 
-@GenerateMocks(
-  [],
-  customMocks: [
-    MockSpec<HttpClient>(returnNullOnMissingStub: true),
-    MockSpec<HttpClientRequest>(returnNullOnMissingStub: true),
-    MockSpec<HttpClientResponse>(returnNullOnMissingStub: true),
-    MockSpec<HttpHeaders>(returnNullOnMissingStub: true),
+@GenerateNiceMocks(
+  [
+    MockSpec<HttpClient>(),
+    MockSpec<HttpClientRequest>(),
+    MockSpec<HttpClientResponse>(),
+    MockSpec<HttpHeaders>(),
   ],
 )
 R provideMockedNetworkImages<R>(R Function() body, {List<int>? imageBytes}) {
