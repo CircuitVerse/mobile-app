@@ -227,7 +227,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 ),
                 Html(
                   data: _recievedProject.attributes.description ?? '',
-                  style: {'body': Style(fontSize: const FontSize(18))},
+                  style: {'body': Style(fontSize: FontSize(18))},
                 )
               ],
             ),

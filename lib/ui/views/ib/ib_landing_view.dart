@@ -133,7 +133,7 @@ class _IbLandingViewState extends State<IbLandingView> {
         icon: Showcase(
           key: _model.drawer,
           description: 'Navigate to different chapters',
-          overlayPadding: const EdgeInsets.all(12.0),
+          targetPadding: const EdgeInsets.all(12.0),
           onTargetClick: () {
             _model.onShowCased('drawer');
             _key.currentState?.openDrawer();

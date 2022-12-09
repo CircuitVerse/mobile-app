@@ -150,7 +150,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             data: _recievedAssignment.attributes.description ?? '',
             style: {
               'body': Style(
-                fontSize: const FontSize(18),
+                fontSize: FontSize(18),
               )
             },
           )
