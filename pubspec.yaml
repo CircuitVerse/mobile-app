@@ -59,6 +59,7 @@ dependencies:
   share: ^2.0.4
   shared_preferences: ^2.0.12
   showcaseview: ^2.0.0+1
+  simple_chips_input: ^0.2.3
   theme_provider: ^0.5.0
   timeago: ^3.1.0
   transparent_image: ^2.0.0
@@ -74,7 +75,7 @@ dev_dependencies:
 dependency_overrides:
   mime: ^1.0.1
   plugin_platform_interface: ^2.1.2
-  markdown: 
+  markdown:
     git: https://github.com/dart-lang/markdown.git
 
 flutter_icons:
