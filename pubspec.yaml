@@ -24,8 +24,9 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_facebook_auth: ^4.0.1
-  flutter_html: ^3.0.0-alpha.3
   flutter_inappwebview: ^5.4.3+7
+  # flutter_facebook_auth: ^5.0.6
+  flutter_html: ^3.0.0-alpha.6
   flutter_keyboard_visibility: ^5.0.2
   flutter_localizations:
     sdk: flutter
@@ -33,10 +34,10 @@ dependencies:
     git:
       url: https://github.com/CircuitVerse/packages.git
       path: packages/flutter_markdown
-  flutter_math_fork: ^0.6.2
+  flutter_math_fork: ^0.6.3+1
   flutter_summernote: ^1.0.0
-  flutter_svg: ^1.1.0
-  flutter_typeahead: ^4.0.0
+  flutter_svg: ^1.1.6
+  flutter_typeahead: ^4.1.1
   fluttericon: ^2.0.0
   get: ^4.6.1
   get_it: ^7.2.0
@@ -45,20 +46,20 @@ dependencies:
   hive_flutter: ^1.1.0
   html: ^0.15.0
   html_unescape: ^2.0.0
-  http: ^0.13.3
   image_cropper: ^2.0.3
   image_picker: ^0.8.5+3
   intl: ^0.17.0
   mockito: ^5.0.17
-  oauth2_client: ^2.2.2
   path_provider: ^2.0.11
   permission_handler: ^10.0.0
   photo_view: ^0.14.0
+  oauth2_client: ^3.0.0
   provider: ^6.0.2
   scroll_to_index: ^3.0.1
   share: ^2.0.4
   shared_preferences: ^2.0.12
-  showcaseview: ^1.1.4
+  showcaseview: ^2.0.0+1
+  simple_chips_input: ^0.2.3
   theme_provider: ^0.5.0
   timeago: ^3.1.0
   transparent_image: ^2.0.0
@@ -69,12 +70,12 @@ dev_dependencies:
   flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
-  hive_generator: ^1.1.2
+  hive_generator: ^2.0.0
 
 dependency_overrides:
   mime: ^1.0.1
   plugin_platform_interface: ^2.1.2
-  markdown: 
+  markdown:
     git: https://github.com/dart-lang/markdown.git
 
 flutter_icons:

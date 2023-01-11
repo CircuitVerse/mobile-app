@@ -16,6 +16,7 @@ import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/ui/components/cv_flat_button.dart';
 import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
+import 'package:simple_chips_input/simple_chips_input.dart';
 
 class GroupDetailsView extends StatefulWidget {
   const GroupDetailsView({Key? key, required this.group}) : super(key: key);
@@ -35,6 +36,17 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   late Group _recievedGroup;
   final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
       GlobalKey<CVFlatButtonState>();
+  // textformfield style for the email address textfield chips
+  final TextFormFieldStyle _textFormFieldStyle = const TextFormFieldStyle(
+    maxLines: 5,
+    keyboardType: TextInputType.emailAddress,
+    cursorColor: CVTheme.primaryColor,
+    decoration: InputDecoration(
+      hintText: 'Email IDs',
+      hintStyle: TextStyle(color: CVTheme.primaryColor),
+      border: InputBorder.none,
+    ),
+  );
 
   @override
   void initState() {
@@ -115,28 +127,28 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   }
 
   Future<void> onAddMemberPressed(BuildContext context, bool isMentor) async {
-    if (Validators.validateAndSaveForm(_formKey)) {
-      FocusScope.of(context).requestFocus(FocusNode());
-      Navigator.pop(context);
+    // save automatically validates the form
+    _formKey.currentState!.save();
+    FocusScope.of(context).requestFocus(FocusNode());
+    Navigator.pop(context);
 
-      _dialogService.showCustomProgressDialog(title: 'Adding');
+    _dialogService.showCustomProgressDialog(title: 'Adding');
 
-      await _model.addMembers(_recievedGroup.id, _emails!, isMentor);
+    await _model.addMembers(_recievedGroup.id, _emails!, isMentor);
 
-      _dialogService.popDialog();
+    _dialogService.popDialog();
 
-      if (_model.isSuccess(_model.ADD_GROUP_MEMBERS) &&
-          _model.addedMembersSuccessMessage.isNotEmpty) {
-        SnackBarUtils.showDark(
-          'Group Members Added',
-          _model.addedMembersSuccessMessage,
-        );
-      } else if (_model.isError(_model.ADD_GROUP_MEMBERS)) {
-        SnackBarUtils.showDark(
-          'Error',
-          _model.errorMessageFor(_model.ADD_GROUP_MEMBERS),
-        );
-      }
+    if (_model.isSuccess(_model.ADD_GROUP_MEMBERS) &&
+        _model.addedMembersSuccessMessage.isNotEmpty) {
+      SnackBarUtils.showDark(
+        'Group Members Added',
+        _model.addedMembersSuccessMessage,
+      );
+    } else if (_model.isError(_model.ADD_GROUP_MEMBERS)) {
+      SnackBarUtils.showDark(
+        'Error',
+        _model.errorMessageFor(_model.ADD_GROUP_MEMBERS),
+      );
     }
     setState(() => _emails = null);
   }
@@ -164,23 +176,32 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               )
             ],
           ),
-          content: Form(
-            key: _formKey,
-            child: TextFormField(
-              maxLines: 5,
-              autofocus: true,
-              onChanged: (emailValue) {
-                addButtonGlobalKey.currentState
-                    ?.setDynamicFunction(emailValue.isNotEmpty);
-              },
-              decoration: CVTheme.textFieldDecoration.copyWith(
-                hintText: 'Email Ids',
+          content: SimpleChipsInput(
+            formKey: _formKey,
+            widgetContainerDecoration: BoxDecoration(
+              border: Border.all(
+                color: CVTheme.primaryColor,
+                width: 1,
               ),
-              validator: (emails) => Validators.areEmailsValid(emails)
-                  ? null
-                  : 'Enter emails in valid format.',
-              onSaved: (emails) => _emails = emails!.replaceAll(' ', '').trim(),
+              borderRadius: BorderRadius.circular(8),
             ),
+            chipContainerDecoration: BoxDecoration(
+              color: CVTheme.primaryColor,
+              borderRadius: BorderRadius.circular(50),
+            ),
+            textFormFieldStyle: _textFormFieldStyle,
+            separatorCharacter: ',',
+            createCharacter: ',',
+            autoFocus: true,
+            validateInput: true,
+            validateInputMethod: (emails) => Validators.areEmailsValid(emails)
+                ? null
+                : 'Enter emails in valid format.',
+            onChanged: (emails) {
+              addButtonGlobalKey.currentState
+                  ?.setDynamicFunction(emails.isNotEmpty);
+            },
+            onSaved: (emails) => _emails = emails.replaceAll(' ', '').trim(),
           ),
           actions: <Widget>[
             TextButton(
