@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:mobile_app/config/environment_config.dart';
@@ -27,6 +28,7 @@ import 'package:mobile_app/ui/views/ib/syntaxes/ib_inline_html_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_liquid_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_mathjax_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_md_tag_syntax.dart';
+import 'package:mobile_app/viewmodels/ib/ib_floating_btn_controller.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
@@ -66,7 +68,8 @@ class _IbPageViewState extends State<IbPageView> {
   late IbPageViewModel _model;
   late IbLandingViewModel _landingModel;
   late AutoScrollController _hideButtonController;
-  bool _isFabsVisible = true;
+  final IbfloatingBtnController ibfloatingBtnController =
+      Get.put(IbfloatingBtnController());
   late ShowCaseWidgetState _showCaseWidgetState;
 
   /// To track index through slug for scroll_to_index
@@ -77,16 +80,16 @@ class _IbPageViewState extends State<IbPageView> {
     super.initState();
     _showCaseWidgetState = ShowCaseWidget.of(context);
     _landingModel = context.read<IbLandingViewModel>();
-    _isFabsVisible = true;
+    ibfloatingBtnController.show();
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
     _hideButtonController.addListener(() {
       if (_hideButtonController.position.userScrollDirection ==
           ScrollDirection.reverse) {
-        setState(() => _isFabsVisible = false);
+        ibfloatingBtnController.hide();
       }
       if (_hideButtonController.position.userScrollDirection ==
           ScrollDirection.forward) {
-        setState(() => _isFabsVisible = true);
+        ibfloatingBtnController.show();
       }
     });
   }
@@ -397,37 +400,40 @@ class _IbPageViewState extends State<IbPageView> {
       }
 
       buttons.add(
-        AnimatedOpacity(
-          duration: const Duration(milliseconds: 500),
-          opacity: _isFabsVisible ? 1.0 : 0.0,
-          child: FloatingActionButton(
-            heroTag: 'previousPage',
-            mini: true,
-            backgroundColor: Theme.of(context).primaryIconTheme.color,
-            onPressed: () {
-              //If FAB are not visible do not do anything.
-              if (!_isFabsVisible) {
-                return;
-              }
-              widget.setPage(widget.chapter.prev);
-            },
-            child: Showcase(
-              key: _model.prevPage,
-              description: 'Tap to navigate to previous page',
-              targetPadding: const EdgeInsets.all(12.0),
-              targetShapeBorder: const CircleBorder(),
-              onTargetClick: () {
-                widget.setShowCase(widget.showCase.copyWith(prevButton: true));
+        Obx((){
+          return AnimatedOpacity(
+            duration: const Duration(milliseconds: 500),
+            opacity:
+                ibfloatingBtnController.isFloatingBtnVisible.value ? 1.0 : 0.0,
+            child: FloatingActionButton(
+              heroTag: 'previousPage',
+              mini: true,
+              backgroundColor: Theme.of(context).primaryIconTheme.color,
+              onPressed: () {
+                //If FAB are not visible do not do anything.
+                if (!ibfloatingBtnController.isFloatingBtnVisible.value) {
+                  return;
+                }
                 widget.setPage(widget.chapter.prev);
               },
-              disposeOnTap: true,
-              child: const Icon(
-                Icons.arrow_back_rounded,
-                color: IbTheme.primaryColor,
+              child: Showcase(
+                key: _model.prevPage,
+                description: 'Tap to navigate to previous page',
+                targetPadding: const EdgeInsets.all(12.0),
+                targetShapeBorder: const CircleBorder(),
+                onTargetClick: () {
+                  widget.setShowCase(widget.showCase.copyWith(prevButton: true));
+                  widget.setPage(widget.chapter.prev);
+                },
+                disposeOnTap: true,
+                child: const Icon(
+                  Icons.arrow_back_rounded,
+                  color: IbTheme.primaryColor,
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        })
       );
     }
 
@@ -436,17 +442,18 @@ class _IbPageViewState extends State<IbPageView> {
         alignment = MainAxisAlignment.end;
       }
 
-      buttons.add(
-        AnimatedOpacity(
+      buttons.add(Obx(() {
+        return AnimatedOpacity(
           duration: const Duration(milliseconds: 500),
-          opacity: _isFabsVisible ? 1.0 : 0.0,
+          opacity:
+              ibfloatingBtnController.isFloatingBtnVisible.value ? 1.0 : 0.0,
           child: FloatingActionButton(
             heroTag: 'nextPage',
             mini: true,
             backgroundColor: Theme.of(context).primaryIconTheme.color,
             onPressed: () {
               //If FAB are not visible do not do anything.
-              if (!_isFabsVisible) {
+              if (!ibfloatingBtnController.isFloatingBtnVisible.value) {
                 return;
               }
               widget.setPage(widget.chapter.next);
@@ -467,8 +474,8 @@ class _IbPageViewState extends State<IbPageView> {
               ),
             ),
           ),
-        ),
-      );
+        );
+      }));
     }
 
     return Row(
