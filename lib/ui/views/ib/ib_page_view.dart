@@ -82,10 +82,12 @@ class _IbPageViewState extends State<IbPageView> {
     _landingModel = context.read<IbLandingViewModel>();
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
     _hideButtonController.addListener(() {
-      if (_hideButtonController.position.userScrollDirection == ScrollDirection.reverse) {
+      if (_hideButtonController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
         _ibFloatingButtonState.makeInvisible();
       }
-      if (_hideButtonController.position.userScrollDirection ==  ScrollDirection.forward) {
+      if (_hideButtonController.position.userScrollDirection ==
+          ScrollDirection.forward) {
         _ibFloatingButtonState.makeVisible();
       }
     });
@@ -399,45 +401,43 @@ class _IbPageViewState extends State<IbPageView> {
       buttons.add(
         ChangeNotifierProvider<IbFloatingButtonState>.value(
           value: _ibFloatingButtonState,
-          child: Builder(
-            builder: (context) {
-              return Consumer<IbFloatingButtonState>(
+          child: Builder(builder: (context) {
+            return Consumer<IbFloatingButtonState>(
                 builder: (context, _, child) {
-                  return AnimatedOpacity(
-                    duration: const Duration(milliseconds: 500),
-                    opacity: _ibFloatingButtonState.isVisible ? 1.0 : 0.0,
-                    child: FloatingActionButton(
-                      heroTag: 'previousPage',
-                      mini: true,
-                      backgroundColor: Theme.of(context).primaryIconTheme.color,
-                      onPressed: () {
-                        //If FAB are not visible do not do anything.
-                        if (!_ibFloatingButtonState.isVisible) {
-                          return;
-                        }
-                        widget.setPage(widget.chapter.prev);
-                      },
-                      child: Showcase(
-                        key: _model.prevPage,
-                        description: 'Tap to navigate to previous page',
-                        targetPadding: const EdgeInsets.all(12.0),
-                        targetShapeBorder: const CircleBorder(),
-                        onTargetClick: () {
-                          widget.setShowCase(widget.showCase.copyWith(prevButton: true));
-                          widget.setPage(widget.chapter.prev);
-                        },
-                        disposeOnTap: true,
-                        child: const Icon(
-                          Icons.arrow_back_rounded,
-                          color: IbTheme.primaryColor,
-                        ),
-                      ),
+              return AnimatedOpacity(
+                duration: const Duration(milliseconds: 500),
+                opacity: _ibFloatingButtonState.isVisible ? 1.0 : 0.0,
+                child: FloatingActionButton(
+                  heroTag: 'previousPage',
+                  mini: true,
+                  backgroundColor: Theme.of(context).primaryIconTheme.color,
+                  onPressed: () {
+                    //If FAB are not visible do not do anything.
+                    if (!_ibFloatingButtonState.isVisible) {
+                      return;
+                    }
+                    widget.setPage(widget.chapter.prev);
+                  },
+                  child: Showcase(
+                    key: _model.prevPage,
+                    description: 'Tap to navigate to previous page',
+                    targetPadding: const EdgeInsets.all(12.0),
+                    targetShapeBorder: const CircleBorder(),
+                    onTargetClick: () {
+                      widget.setShowCase(
+                          widget.showCase.copyWith(prevButton: true));
+                      widget.setPage(widget.chapter.prev);
+                    },
+                    disposeOnTap: true,
+                    child: const Icon(
+                      Icons.arrow_back_rounded,
+                      color: IbTheme.primaryColor,
                     ),
-                  );
-                }
+                  ),
+                ),
               );
-            }
-          ),
+            });
+          }),
         ),
       );
     }
@@ -450,41 +450,40 @@ class _IbPageViewState extends State<IbPageView> {
       buttons.add(
         ChangeNotifierProvider<IbFloatingButtonState>.value(
           value: _ibFloatingButtonState,
-          child: Consumer<IbFloatingButtonState>(
-            builder: (context, _, child) {
-              return AnimatedOpacity(
-                duration: const Duration(milliseconds: 500),
-                opacity: _ibFloatingButtonState.isVisible ? 1.0 : 0.0,
-                child: FloatingActionButton(
-                  heroTag: 'nextPage',
-                  mini: true,
-                  backgroundColor: Theme.of(context).primaryIconTheme.color,
-                  onPressed: () {
-                    //If FAB are not visible do not do anything.
-                    if (!_ibFloatingButtonState.isVisible) {
-                      return;
-                    }
+          child: Consumer<IbFloatingButtonState>(builder: (context, _, child) {
+            return AnimatedOpacity(
+              duration: const Duration(milliseconds: 500),
+              opacity: _ibFloatingButtonState.isVisible ? 1.0 : 0.0,
+              child: FloatingActionButton(
+                heroTag: 'nextPage',
+                mini: true,
+                backgroundColor: Theme.of(context).primaryIconTheme.color,
+                onPressed: () {
+                  //If FAB are not visible do not do anything.
+                  if (!_ibFloatingButtonState.isVisible) {
+                    return;
+                  }
+                  widget.setPage(widget.chapter.next);
+                },
+                child: Showcase(
+                  key: _model.nextPage,
+                  description: 'Tap to navigate to next page',
+                  targetPadding: const EdgeInsets.all(12.0),
+                  targetShapeBorder: const CircleBorder(),
+                  onTargetClick: () {
+                    widget.setShowCase(
+                        widget.showCase.copyWith(nextButton: true));
                     widget.setPage(widget.chapter.next);
                   },
-                  child: Showcase(
-                    key: _model.nextPage,
-                    description: 'Tap to navigate to next page',
-                    targetPadding: const EdgeInsets.all(12.0),
-                    targetShapeBorder: const CircleBorder(),
-                    onTargetClick: () {
-                      widget.setShowCase(widget.showCase.copyWith(nextButton: true));
-                      widget.setPage(widget.chapter.next);
-                    },
-                    disposeOnTap: false,
-                    child: const Icon(
-                      Icons.arrow_forward_rounded,
-                      color: IbTheme.primaryColor,
-                    ),
+                  disposeOnTap: false,
+                  child: const Icon(
+                    Icons.arrow_forward_rounded,
+                    color: IbTheme.primaryColor,
                   ),
                 ),
-              );
-            }
-          ),
+              ),
+            );
+          }),
         ),
       );
     }

@@ -1,15 +1,14 @@
-
 import 'package:flutter/material.dart';
 
-class IbFloatingButtonState extends ChangeNotifier{
+class IbFloatingButtonState extends ChangeNotifier {
   bool isVisible = true;
 
-  void makeInvisible(){
+  void makeInvisible() {
     isVisible = false;
     notifyListeners();
   }
 
-  void makeVisible(){
+  void makeVisible() {
     isVisible = true;
     notifyListeners();
   }
