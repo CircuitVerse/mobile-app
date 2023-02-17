@@ -400,10 +400,9 @@ class _IbPageViewState extends State<IbPageView> {
 
       buttons.add(
         ChangeNotifierProvider<IbFloatingButtonState>.value(
-          value: _ibFloatingButtonState,
-          child: Builder(builder: (context) {
-            return Consumer<IbFloatingButtonState>(
-                builder: (context, _, child) {
+            value: _ibFloatingButtonState,
+            child:
+                Consumer<IbFloatingButtonState>(builder: (context, _, child) {
               return AnimatedOpacity(
                 duration: const Duration(milliseconds: 500),
                 opacity: _ibFloatingButtonState.isVisible ? 1.0 : 0.0,
@@ -436,9 +435,7 @@ class _IbPageViewState extends State<IbPageView> {
                   ),
                 ),
               );
-            });
-          }),
-        ),
+            })),
       );
     }
 
