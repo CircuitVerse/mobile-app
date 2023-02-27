@@ -73,7 +73,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         onPressed: () async {
           final url = Uri.parse(
               'https://circuitverse.org/users/${widget.project.relationships.author.data.id}/projects/${widget.project.id}');
-          await launchUrl(url);
+          await launchUrl(url, mode: LaunchMode.externalApplication);
         },
         icon: const Icon(Icons.link_rounded),
       ),
