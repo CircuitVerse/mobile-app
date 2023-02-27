@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CircuitVerseSocialCard extends StatelessWidget {
   const CircuitVerseSocialCard({
@@ -8,6 +9,7 @@ class CircuitVerseSocialCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.url,
+    required this.choice,
     Key? key,
   }) : super(key: key);
 
@@ -15,12 +17,18 @@ class CircuitVerseSocialCard extends StatelessWidget {
   final String title;
   final String description;
   final String url;
+  final int choice;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        launchURL(url);
+        if (choice == 1) {
+          final url = Uri.parse('mailto:support@circuitverse.org');
+          await launchUrl(url);
+        } else {
+          launchURL(url);
+        }
       },
       child: Card(
         color: Theme.of(context).brightness == Brightness.dark
