@@ -14,11 +14,13 @@ import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
 import 'package:mobile_app/ui/views/projects/project_preview_fullscreen_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
+import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:share/share.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectDetailsView extends StatefulWidget {
   const ProjectDetailsView({Key? key, required this.project}) : super(key: key);
@@ -60,6 +62,20 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         onPressed: onShareButtonPressed,
         icon: const Icon(Icons.share),
         tooltip: 'Share',
+      ),
+    );
+  }
+
+  Widget _buildOpenActionButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: IconButton(
+        onPressed: () async {
+          final url = Uri.parse(
+              'https://circuitverse.org/users/${widget.project.relationships.author.data.id}/projects/${widget.project.id}');
+          await launchUrl(url);
+        },
+        icon: const Icon(Icons.link_rounded),
       ),
     );
   }
@@ -585,6 +601,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           appBar: AppBar(
             title: const Text('Project Details'),
             actions: [
+              _buildOpenActionButton(),
               _buildShareActionButton(),
             ],
           ),
