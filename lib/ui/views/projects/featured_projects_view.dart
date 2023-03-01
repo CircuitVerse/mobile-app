@@ -5,7 +5,6 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_drawer.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
-import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/featured_project_card.dart';
@@ -31,10 +30,32 @@ class FeaturedProjectsView extends StatefulWidget {
 class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
   final TextEditingController _controller = TextEditingController();
 
+  final ScrollController controller = ScrollController();
+
+  late final FeaturedProjectsViewModel _model;
+
+  void handleScrolling() {
+    if (controller.offset >= controller.position.maxScrollExtent) {
+      if (!widget.embed &&
+          _model.previousProjectsBatch?.links.next != null &&
+          !(_model.isBusy(_model.FETCH_FEATURED_PROJECTS) ||
+              _model.isBusy(_model.SEARCH_PROJECTS))) {
+        _model.loadMore();
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(handleScrolling);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<FeaturedProjectsViewModel>(
       onModelReady: (model) {
+        _model = model;
         widget.embed
             ? model.fetchFeaturedProjects(size: 3)
             : model.fetchFeaturedProjects();
@@ -69,6 +90,14 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
           }
         }
 
+        if (_isLoading) {
+          _items.add(
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+
         if (model.isSuccess(model.SEARCH_PROJECTS) &&
             model.projects.isEmpty &&
             model.showSearchedResult) {
@@ -86,17 +115,6 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                 ),
               ),
             ],
-          );
-        }
-
-        if (!widget.embed &&
-            model.previousProjectsBatch?.links.next != null &&
-            !_isLoading) {
-          _items.add(
-            CVPrimaryButton(
-              title: 'Load More',
-              onPressed: model.loadMore,
-            ),
           );
         }
 
@@ -176,12 +194,18 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
             ],
           ),
           drawer: const CVDrawer(),
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: _items,
-            ),
-          ),
+          body: Padding(
+              padding: const EdgeInsets.all(16),
+              child: ListView.builder(
+                  controller: controller,
+                  // +1 for the header
+                  // +2 for the loading indicator
+                  itemCount: _isLoading
+                      ? model.projects.length + 2
+                      : model.projects.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _items[index];
+                  })),
         );
       },
     );
