@@ -113,7 +113,7 @@ class _SignupViewState extends State<SignupView> {
       child: RichText(
         text: TextSpan(
           text: 'Already Registered? ',
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
           children: <TextSpan>[
             TextSpan(
               text: 'Login',

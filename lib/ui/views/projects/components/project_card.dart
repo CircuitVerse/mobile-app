@@ -25,7 +25,7 @@ class _ProjectCardState extends State<ProjectCard> {
     return Chip(
       label: Text(title),
       backgroundColor: Colors.black,
-      labelStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+      labelStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
             color: Colors.white,
           ),
     );
@@ -56,7 +56,7 @@ class _ProjectCardState extends State<ProjectCard> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline5?.copyWith(
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     color: Theme.of(context).brightness == Brightness.dark
                         ? widget.isHeaderFilled
                             ? Colors.black

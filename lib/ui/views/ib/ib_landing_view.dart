@@ -217,7 +217,7 @@ class _IbLandingViewState extends State<IbLandingView> {
           onTap: () => setSelectedChapter(chapter),
           child: Text(
             chapter.value,
-            style: Theme.of(context).textTheme.headline6?.copyWith(
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontFamily: 'Poppins',
                   color: (_model.selectedChapter.id.startsWith(chapter.id))
                       ? IbTheme.getPrimaryColor(context)

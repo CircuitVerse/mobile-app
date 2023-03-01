@@ -70,7 +70,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       child: RichText(
         text: TextSpan(
           text: 'New User? ',
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
           children: const <TextSpan>[
             TextSpan(
               text: 'Sign Up',

@@ -77,7 +77,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           const SizedBox(width: 8),
           Text(
             'Edit',
-            style: Theme.of(context).textTheme.headline6?.copyWith(
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Colors.white,
                 ),
           )
@@ -95,7 +95,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             Flexible(
               child: Text(
                 _recievedGroup.attributes.name,
-                style: Theme.of(context).textTheme.headline4?.copyWith(
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       color: CVTheme.textColor(context),
                       fontWeight: FontWeight.bold,
                     ),
@@ -111,13 +111,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         RichText(
           text: TextSpan(
             text: 'Primary Mentor : ',
-            style: Theme.of(context).textTheme.headline6?.copyWith(
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
             children: <TextSpan>[
               TextSpan(
                 text: _recievedGroup.attributes.primaryMentorName,
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ],
           ),
@@ -172,7 +172,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               ),
               Text(
                 'Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.',
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyLarge,
               )
             ],
           ),
@@ -261,7 +261,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.headline5?.copyWith(
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
