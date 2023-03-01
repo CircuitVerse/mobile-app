@@ -29,21 +29,21 @@ class ContributorsView extends StatelessWidget {
               title: 'Email us at',
               description: 'support@circuitverse.org',
               url: 'mailto:support@circuitverse.org',
-              choice: 1,
+              
             ),
             CircuitVerseSocialCard(
               imagePath: 'assets/images/contribute/slack.png',
               title: 'Join and chat with us at',
               description: 'Slack channel',
               url: 'https://circuitverse.org/slack',
-              choice: 2,
+              
             ),
             CircuitVerseSocialCard(
                 imagePath: 'assets/images/contribute/github.png',
                 title: 'Contribute to open source',
                 description: 'Github',
                 url: 'https://github.com/CircuitVerse',
-                choice: 3),
+                ),
             SizedBox(height: 32),
             CVSubheader(title: 'How to Support ?'),
             ContributeSupportCard(
