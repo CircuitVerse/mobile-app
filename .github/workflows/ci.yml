@@ -26,7 +26,7 @@ jobs:
           channel: "stable"
 
       # Clean pub cache
-      - run: flutter pub cache clean
+      - run: flutter pub cache clean -f
 
       # Get flutter dependencies.
       - run: flutter pub get
