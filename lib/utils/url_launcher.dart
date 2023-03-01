@@ -1,9 +1,12 @@
+import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-Future<void> launchURL(String url) async {
-  if (await canLaunchUrlString(url)) {
-    await launchUrlString(url, mode: LaunchMode.externalApplication);
+void launchURL(String url) async {
+  var str1 = 'mailto';
+  if (url.startsWith(str1)) {
+    final url = Uri.parse('mailto:support@circuitverse.org');
+    await launchUrl(url);
   } else {
-    throw 'Could not launch $url';
+    await launchUrlString(url, mode: LaunchMode.externalApplication);
   }
 }
