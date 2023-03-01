@@ -23,13 +23,8 @@ class CircuitVerseSocialCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (choice == 1) {
-          final url = Uri.parse('mailto:support@circuitverse.org');
-          await launchUrl(url);
-        } else {
           launchURL(url);
-        }
-      },
+        },
       child: Card(
         color: Theme.of(context).brightness == Brightness.dark
             ? CVTheme.primaryColor
