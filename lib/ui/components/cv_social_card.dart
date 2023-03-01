@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 
-
 class CircuitVerseSocialCard extends StatelessWidget {
   const CircuitVerseSocialCard({
     required this.imagePath,
@@ -21,8 +20,8 @@ class CircuitVerseSocialCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-          launchURL(url);
-        },
+        launchURL(url);
+      },
       child: Card(
         color: Theme.of(context).brightness == Brightness.dark
             ? CVTheme.primaryColor

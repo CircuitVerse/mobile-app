@@ -108,14 +108,12 @@ class _AboutViewState extends State<AboutView> {
                 title: AppLocalizations.of(context)!.email_us_at,
                 description: 'support@circuitverse.org',
                 url: 'mailto:support@circuitverse.org',
-           
               ),
               CircuitVerseSocialCard(
                 imagePath: 'assets/images/contribute/slack.png',
                 title: AppLocalizations.of(context)!.join_slack,
                 description: AppLocalizations.of(context)!.slack_channel,
                 url: 'https://circuitverse.org/slack',
-               
               ),
               const Divider(),
               CVSubheader(
