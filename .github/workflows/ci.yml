@@ -28,6 +28,10 @@ jobs:
       # Clean pub cache
       - run: flutter pub cache clean -f
 
+      # Set git core.longpaths to true
+      - if: ${{ matrix.platform == 'windows-latest'}}
+        run: git config --system core.longpaths true
+      
       # Get flutter dependencies.
       - run: flutter pub get
 
