@@ -15,7 +15,7 @@ class AboutTosView extends StatelessWidget {
 
   TextSpan _buildText(BuildContext context, String text, {bool bold = false}) {
     return TextSpan(
-      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             fontWeight: bold ? FontWeight.bold : FontWeight.normal,
             fontFamily: 'Poppins',
           ),
@@ -52,7 +52,7 @@ class AboutTosView extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headline5?.copyWith(
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.w400,
                 color: CVTheme.primaryHeading(context),
               ),

@@ -29,10 +29,10 @@ class CVPrimaryButton extends StatelessWidget {
       child: Text(
         title,
         style: isBodyText
-            ? Theme.of(context).textTheme.bodyText1?.copyWith(
+            ? Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: Colors.white,
                 )
-            : Theme.of(context).textTheme.headline6?.copyWith(
+            : Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Colors.white,
                 ),
       ),

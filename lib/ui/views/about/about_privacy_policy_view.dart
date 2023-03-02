@@ -15,7 +15,7 @@ class AboutPrivacyPolicyView extends StatelessWidget {
   TextSpan _buildText(BuildContext context, String text,
       {bool bold = false, bool italic = false}) {
     return TextSpan(
-      style: Theme.of(context).textTheme.bodyText1?.copyWith(
+      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
             fontWeight: bold ? FontWeight.bold : FontWeight.normal,
             fontStyle: italic ? FontStyle.italic : FontStyle.normal,
             fontFamily: 'Poppins',
@@ -49,8 +49,8 @@ class AboutPrivacyPolicyView extends StatelessWidget {
     bool heading = false,
   }) {
     var style = heading
-        ? Theme.of(context).textTheme.headline5
-        : Theme.of(context).textTheme.headline6;
+        ? Theme.of(context).textTheme.headlineSmall
+        : Theme.of(context).textTheme.titleLarge;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

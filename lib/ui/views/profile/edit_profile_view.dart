@@ -71,7 +71,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                     const SizedBox(width: 10),
                     Text(
                       'Profile Picture',
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const Spacer(),
                     IconButton(

@@ -19,7 +19,7 @@ class CVHeader extends StatelessWidget {
       children: <Widget>[
         Text(
           title,
-          style: Theme.of(context).textTheme.headline3?.copyWith(
+          style: Theme.of(context).textTheme.displaySmall?.copyWith(
                 fontWeight: FontWeight.w400,
                 color: CVTheme.primaryColorDark,
               ),
@@ -28,7 +28,7 @@ class CVHeader extends StatelessWidget {
         if (subtitle != null)
           Text(
             subtitle!,
-            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: CVTheme.textColor(context),
                 ),
@@ -41,7 +41,7 @@ class CVHeader extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: Text(
               description!,
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
           )

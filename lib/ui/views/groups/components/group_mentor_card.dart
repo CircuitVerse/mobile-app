@@ -47,7 +47,7 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
         children: <Widget>[
           Text(
             widget.group.attributes.name,
-            style: Theme.of(context).textTheme.headline5?.copyWith(
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
             textAlign: TextAlign.center,
@@ -56,7 +56,7 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Text(
               'Total Members: ${widget.group.attributes.memberCount}',
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           Row(

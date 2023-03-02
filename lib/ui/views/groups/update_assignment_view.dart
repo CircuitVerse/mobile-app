@@ -108,7 +108,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         value: _isRestrictionEnabled,
         title: Text(
           'Elements restriction',
-          style: Theme.of(context).textTheme.headline6?.copyWith(
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
         ),
@@ -151,7 +151,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),

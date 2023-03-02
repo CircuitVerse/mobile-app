@@ -26,7 +26,7 @@ class ContributeSupportCard extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.headline5?.copyWith(
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -37,7 +37,7 @@ class ContributeSupportCard extends StatelessWidget {
                 cardDescriptionList
                     .map((x) => '\u2022 $x\n')
                     .reduce((x, y) => '$x$y'),
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             )
           ],
