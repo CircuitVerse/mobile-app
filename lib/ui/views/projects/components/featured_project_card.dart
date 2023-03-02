@@ -70,7 +70,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.headline6?.copyWith(
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     color: CVTheme.textColor(context),
                   ),
             ),
