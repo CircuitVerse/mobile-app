@@ -20,8 +20,6 @@ import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:share/share.dart';
 import 'package:transparent_image/transparent_image.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 class ProjectDetailsView extends StatefulWidget {
   const ProjectDetailsView({Key? key, required this.project}) : super(key: key);
 
@@ -71,9 +69,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: IconButton(
         onPressed: () async {
-          final url = Uri.parse(
+          final url = (
               'https://circuitverse.org/users/${widget.project.relationships.author.data.id}/projects/${widget.project.id}');
-          await launchUrl(url, mode: LaunchMode.externalApplication);
+          launchURL(url),
         },
         icon: const Icon(Icons.link_rounded),
       ),
