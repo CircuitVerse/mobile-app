@@ -232,25 +232,25 @@ class _IbPageViewState extends State<IbPageView> {
         ],
       ),
       styleSheet: MarkdownStyleSheet(
-        h1: Theme.of(context).textTheme.headline4?.copyWith(
+        h1: Theme.of(context).textTheme.headlineMedium?.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w300,
             ),
-        h2: Theme.of(context).textTheme.headline5?.copyWith(
+        h2: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w600,
             ),
-        h3: Theme.of(context).textTheme.headline6?.copyWith(
+        h3: Theme.of(context).textTheme.titleLarge?.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w600,
             ),
-        h4: Theme.of(context).textTheme.subtitle1?.copyWith(
+        h4: Theme.of(context).textTheme.titleMedium?.copyWith(
               color: IbTheme.primaryHeadingColor(context),
               fontWeight: FontWeight.w600,
             ),
         h5: Theme.of(context)
             .textTheme
-            .headline6
+            .titleLarge
             ?.copyWith(fontWeight: FontWeight.w300),
         horizontalRuleDecoration: BoxDecoration(
           border: Border(
@@ -373,7 +373,7 @@ class _IbPageViewState extends State<IbPageView> {
                 'Table of Contents',
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1
+                    .titleMedium
                     ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
               ),
               tileColor: Theme.of(context).primaryColor,
@@ -496,7 +496,7 @@ class _IbPageViewState extends State<IbPageView> {
       return [
         Text(
           'Loading ...',
-          style: Theme.of(context).textTheme.headline6?.copyWith(
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: IbTheme.primaryHeadingColor(context),
                 fontWeight: FontWeight.w600,
               ),

@@ -103,7 +103,7 @@ class _LoginViewState extends State<LoginView> {
       child: RichText(
         text: TextSpan(
           text: 'New User? ',
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
           children: <TextSpan>[
             TextSpan(
               text: 'Sign Up',

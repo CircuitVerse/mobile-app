@@ -25,7 +25,7 @@ class FeatureCard extends StatelessWidget {
             child: Text(
               cardHeading,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline5,
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
           Container(
@@ -33,7 +33,7 @@ class FeatureCard extends StatelessWidget {
             child: Text(
               cardDescription,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
         ],

@@ -34,7 +34,7 @@ class IbPopQuiz extends StatelessWidget {
           Text(
             'Question $questionNumber',
             textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.subtitle2,
+            style: Theme.of(context).textTheme.titleSmall,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 6.0),
@@ -62,7 +62,7 @@ class IbPopQuiz extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             'Pop Quiz',
-            style: Theme.of(context).textTheme.headline5?.copyWith(
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: IbTheme.primaryHeadingColor(context),
                   fontWeight: FontWeight.w600,
                 ),
