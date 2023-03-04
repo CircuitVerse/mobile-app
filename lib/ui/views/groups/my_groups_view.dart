@@ -49,7 +49,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
       child: Text(
         title,
         textAlign: TextAlign.center,
-        style: Theme.of(context).textTheme.headline6,
+        style: Theme.of(context).textTheme.titleLarge,
       ),
     );
   }

@@ -22,7 +22,7 @@ class IbPopQuizButtonState extends State<IbPopQuizButton> {
       return Colors.white;
     }
 
-    return Theme.of(context).textTheme.bodyText1?.color;
+    return Theme.of(context).textTheme.bodyLarge?.color;
   }
 
   Color? _getBorderColor() {
@@ -34,7 +34,7 @@ class IbPopQuizButtonState extends State<IbPopQuizButton> {
       }
     }
 
-    return Theme.of(context).textTheme.bodyText1?.color;
+    return Theme.of(context).textTheme.bodyLarge?.color;
   }
 
   IconData getTheRightIcon() {

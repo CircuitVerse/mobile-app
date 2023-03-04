@@ -51,7 +51,7 @@ class CVDrawer extends StatelessWidget {
                     ),
                     title: Text(
                       AppLocalizations.of(context)!.explore,
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
                   iconColor: CVTheme.textColor(context),
@@ -137,7 +137,7 @@ class CVDrawer extends StatelessWidget {
                     iconColor: CVTheme.textColor(context),
                     title: Text(
                       _model.currentUser?.data.attributes.name ?? '',
-                      style: Theme.of(context).textTheme.headline6?.copyWith(
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                     ),
