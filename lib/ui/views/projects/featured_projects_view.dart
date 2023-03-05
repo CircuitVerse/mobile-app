@@ -34,6 +34,8 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
 
   late final FeaturedProjectsViewModel _model;
 
+  List<Widget> _projects = [];
+
   void handleScrolling() {
     if (controller.offset >= controller.position.maxScrollExtent) {
       if (!widget.embed &&
@@ -52,6 +54,12 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BaseView<FeaturedProjectsViewModel>(
       onModelReady: (model) {
@@ -66,8 +74,6 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
       },
       builder: (context, model, child) {
         final _items = <Widget>[];
-        final _isLoading = model.isBusy(model.FETCH_FEATURED_PROJECTS) ||
-            model.isBusy(model.SEARCH_PROJECTS);
 
         if (model.isSuccess(model.FETCH_FEATURED_PROJECTS) ||
             model.isSuccess(model.SEARCH_PROJECTS)) {
@@ -88,14 +94,18 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
               ),
             );
           }
-        }
 
-        if (_isLoading) {
-          _items.add(
-            const Center(
+          // add loading indicator if there are more projects to load..
+          if (!widget.embed &&
+              model.previousProjectsBatch?.links.next != null) {
+            _items.add(const Center(
               child: CircularProgressIndicator(),
-            ),
-          );
+            ));
+          }
+
+          // maintaing another state of projects to prevent blank screen when
+          // projects fetched from loadMore() is being added to the list..
+          _projects = _items;
         }
 
         if (model.isSuccess(model.SEARCH_PROJECTS) &&
@@ -198,13 +208,9 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
               padding: const EdgeInsets.all(16),
               child: ListView.builder(
                   controller: controller,
-                  // +1 for the header
-                  // +2 for the loading indicator
-                  itemCount: _isLoading
-                      ? model.projects.length + 2
-                      : model.projects.length + 1,
+                  itemCount: _projects.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return _items[index];
+                    return _projects[index];
                   })),
         );
       },
