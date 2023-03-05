@@ -6,6 +6,12 @@ void launchURL(String url) async {
     final url = Uri.parse('mailto:support@circuitverse.org');
     await launchUrl(url);
   } else {
-    await launchUrlString(url, mode: LaunchMode.externalApplication);
+    if (url == "https://circuitverse.org/slack" ||
+        url == "https://circuitverse.org/slack" ||
+        url == "https://github.com/CircuitVerse") {
+      await launchUrlString(url, mode: LaunchMode.externalApplication);
+    } else {
+      await launchUrlString(url);
+    }
   }
 }
