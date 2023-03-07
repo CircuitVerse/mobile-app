@@ -34,6 +34,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   final DialogService _dialogService = locator<DialogService>();
   late ProjectDetailsViewModel _model;
   final _formKey = GlobalKey<FormState>();
+  bool _isBeingStarred = false;
   late String _emails;
   late Project _recievedProject;
   final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
@@ -288,6 +289,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   }
 
   Future<void> onStarProjectPressed() async {
+    _isBeingStarred = true;
     await _model.toggleStarForProject(_recievedProject.id);
 
     if (_model.isSuccess(_model.TOGGLE_STAR)) {
@@ -301,23 +303,26 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         _model.errorMessageFor(_model.TOGGLE_STAR),
       );
     }
+    _isBeingStarred = false;
   }
 
   Widget _buildStarProjectButton() {
-    return InkWell(
-      onTap: onStarProjectPressed,
-      child: Container(
-        padding: const EdgeInsets.all(4),
-        decoration: BoxDecoration(
-          color: CVTheme.primaryColor,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Icon(
-          _model.isProjectStarred ? Icons.star : Icons.star_border,
-          color: Colors.white,
-        ),
-      ),
-    );
+    return _isBeingStarred
+        ? const CircularProgressIndicator()
+        : InkWell(
+            onTap: onStarProjectPressed,
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: CVTheme.primaryColor,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Icon(
+                _model.isProjectStarred ? Icons.star : Icons.star_border,
+                color: Colors.white,
+              ),
+            ),
+          );
   }
 
   Future<void> onAddCollaboratorsPressed(BuildContext context) async {
