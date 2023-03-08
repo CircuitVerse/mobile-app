@@ -308,7 +308,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Widget _buildStarProjectButton() {
     return _isBeingStarred
-        ? const CircularProgressIndicator()
+        ? const SizedBox(
+            height: 30,
+            width: 30,
+            child: CircularProgressIndicator(),
+          )
         : InkWell(
             onTap: onStarProjectPressed,
             child: Container(
