@@ -77,7 +77,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           const SizedBox(width: 8),
           Text(
             'Edit',
-            style: Theme.of(context).textTheme.headline6?.copyWith(
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Colors.white,
                 ),
           )
@@ -94,7 +94,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         Flexible(
           child: Text(
             _recievedAssignment.attributes.name!,
-            style: Theme.of(context).textTheme.headline4?.copyWith(
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   color: CVTheme.textColor(context),
                   fontWeight: FontWeight.bold,
                 ),
@@ -115,7 +115,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
       alignment: Alignment.centerLeft,
       child: RichText(
         text: TextSpan(
-          style: Theme.of(context).textTheme.headline6?.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
           children: <TextSpan>[
             TextSpan(
               text: '$title : ',
@@ -141,7 +141,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         children: [
           Text(
             'Description',
-            style: Theme.of(context).textTheme.headline6?.copyWith(
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -150,7 +150,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             data: _recievedAssignment.attributes.description ?? '',
             style: {
               'body': Style(
-                fontSize: const FontSize(18),
+                fontSize: FontSize(18),
               )
             },
           )
@@ -185,7 +185,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                   child: Text(
                     submission.attributes.authorName,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline6?.copyWith(
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: _model.focussedProject == submission
                               ? Colors.white
                               : CVTheme.textColor(context),
@@ -207,7 +207,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             alignment: Alignment.topLeft,
             child: Text(
               'Submissions : ',
-              style: Theme.of(context).textTheme.headline5?.copyWith(
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -223,7 +223,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'No Submissions yet!',
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   )
                 : _buildSubmissionAuthors(),
@@ -355,7 +355,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             children: <Widget>[
               Text(
                 'Grades & Remarks',
-                style: Theme.of(context).textTheme.headline6?.copyWith(
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -404,7 +404,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                       onPressed: () => deleteGrade(_submittedGrade.id),
                       child: Text(
                         'Delete',
-                        style: Theme.of(context).textTheme.headline6?.copyWith(
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               color: Colors.white,
                             ),
                       ),

@@ -31,8 +31,8 @@ class CVOutlineButton extends StatelessWidget {
         child: Text(
           title,
           style: isBodyText
-              ? Theme.of(context).textTheme.bodyText1
-              : Theme.of(context).textTheme.headline6,
+              ? Theme.of(context).textTheme.bodyLarge
+              : Theme.of(context).textTheme.titleLarge,
         ),
       ),
     );

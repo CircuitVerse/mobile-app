@@ -53,7 +53,7 @@ class _ProfileViewState extends State<ProfileView> {
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.subtitle1?.copyWith(
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
             ),
       ),
@@ -66,11 +66,11 @@ class _ProfileViewState extends State<ProfileView> {
       alignment: Alignment.centerLeft,
       child: RichText(
         text: TextSpan(
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
           children: <TextSpan>[
             TextSpan(
               text: '$title : ',
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -101,7 +101,7 @@ class _ProfileViewState extends State<ProfileView> {
         },
         child: Text(
           'Edit Profile',
-          style: Theme.of(context).textTheme.bodyText1?.copyWith(
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: Colors.white,
               ),
         ),

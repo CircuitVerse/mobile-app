@@ -138,7 +138,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         textAlign: TextAlign.center,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.headline5?.copyWith(
+        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
               color: Colors.white,
             ),
       ),
@@ -167,7 +167,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: RichText(
         text: TextSpan(
-          style: Theme.of(context).textTheme.headline6?.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
           children: <TextSpan>[
             TextSpan(
               text: '$heading : ',
@@ -188,7 +188,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: RichText(
         text: TextSpan(
-          style: Theme.of(context).textTheme.headline6?.copyWith(fontSize: 18),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
           children: <TextSpan>[
             const TextSpan(
               text: 'Author : ',
@@ -220,14 +220,14 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               children: [
                 Text(
                   'Description :',
-                  style: Theme.of(context).textTheme.headline6?.copyWith(
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
                 ),
                 Html(
                   data: _recievedProject.attributes.description ?? '',
-                  style: {'body': Style(fontSize: const FontSize(18))},
+                  style: {'body': Style(fontSize: FontSize(18))},
                 )
               ],
             ),
@@ -277,7 +277,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             const SizedBox(width: 4),
             Text(
               'Fork',
-              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: Colors.white,
                   ),
             ),
@@ -365,7 +365,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 ),
                 Text(
                   'Enter Email IDs separated by commas. Users need to be registered already on the platform. Note that collaboration is not real time as of now. Every save overwrites the previous data.',
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 )
               ],
             ),
@@ -441,7 +441,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           children: <Widget>[
             const Icon(Icons.edit, size: 16),
             const SizedBox(width: 4),
-            Text('Edit', style: Theme.of(context).textTheme.subtitle1),
+            Text('Edit', style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
       ),
@@ -491,7 +491,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           children: <Widget>[
             const Icon(Icons.delete, size: 16),
             const SizedBox(width: 4),
-            Text('Delete', style: Theme.of(context).textTheme.subtitle1),
+            Text('Delete', style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
       ),
@@ -538,7 +538,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   Get.toNamed(ProfileView.id, arguments: collaborator.id),
               child: Text(
                 collaborator.attributes.name,
-                style: Theme.of(context).textTheme.headline6?.copyWith(
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       decoration: TextDecoration.underline,
                       color: CVTheme.highlightText(context),
                       fontWeight: FontWeight.bold,

@@ -12,7 +12,7 @@ jobs:
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
-    timeout-minutes: 35
+    timeout-minutes: 40
     steps:
       # Setup Java environment in order to build the Android app.
       - uses: actions/checkout@v3
@@ -25,6 +25,13 @@ jobs:
         with:
           channel: "stable"
 
+      # Clean pub cache
+      - run: flutter pub cache clean -f
+
+      # Set git core.longpaths to true
+      - if: ${{ matrix.platform == 'windows-latest'}}
+        run: git config --system core.longpaths true
+      
       # Get flutter dependencies.
       - run: flutter pub get
 
@@ -32,7 +39,7 @@ jobs:
       - run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
       # Check for any formatting issues in the code.
-      - run: flutter format --set-exit-if-changed .
+      - run: dart format --set-exit-if-changed .
 
       # Statically analyze the Dart code for any errors.
       - run: flutter analyze .

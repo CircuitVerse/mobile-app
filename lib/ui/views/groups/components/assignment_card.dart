@@ -29,7 +29,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
   Widget _buildAssignmentComponent(String title, String description) {
     return RichText(
       text: TextSpan(
-        style: Theme.of(context).textTheme.bodyText1,
+        style: Theme.of(context).textTheme.bodyLarge,
         children: <TextSpan>[
           TextSpan(
             text: '$title : ',
@@ -37,7 +37,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
           ),
           TextSpan(
             text: description,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyLarge,
           )
         ],
       ),
@@ -175,7 +175,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
             widget.assignment.attributes.name ?? 'No Name',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.headline6?.copyWith(
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
           ),
