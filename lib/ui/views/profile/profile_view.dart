@@ -151,6 +151,7 @@ class _ProfileViewState extends State<ProfileView> {
                     'Educational Institute',
                     _attrs?.educationalInstitute,
                   ),
+
                   if (_model.isLoggedIn && _model.isPersonalProfile)
                     _buildProfileComponent(
                       'Subscribed to mails',
