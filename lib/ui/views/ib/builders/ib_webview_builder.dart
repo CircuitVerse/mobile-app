@@ -8,30 +8,48 @@ class IbWebViewBuilder extends MarkdownElementBuilder {
   IbWebViewBuilder();
 
   @override
-  Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
+  Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
     var textContent = element.textContent;
 
-    return Html(
-      data: textContent,
-      customRenders: {
-        tagMatcher('iframe'): CustomRender.widget(
-          widget: (RenderContext context, _) {
-            final width = MediaQuery.of(context.buildContext).size.width;
-            final height = (width * 9) / 16;
+    return Builder(
+      builder: (context) {
+        final double width = MediaQuery.of(context).size.width;
+        final double height = (width * 9) / 16;
 
-            return SizedBox(
-              width: width,
-              height: height,
-              child: WebView(
-                initialUrl: context.tree.element?.attributes['src'],
-                javascriptMode: JavascriptMode.unrestricted,
-                initialMediaPlaybackPolicy:
-                    AutoMediaPlaybackPolicy.always_allow,
-              ),
-            );
-          },
-        ),
+        return Html(
+          data: textContent,
+          extensions: [
+            TagExtension(
+              tagsToExtend: {"iframe"},
+              builder: (extensionContext) {
+                final String url = 
+                    extensionContext.attributes['src'] ?? 'about:blank';
+                
+                // Create and configure WebViewController
+                final WebViewController controller = WebViewController()
+                  ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                  ..setNavigationDelegate(
+                    NavigationDelegate(
+                      onNavigationRequest: (NavigationRequest request) {
+                        return NavigationDecision.navigate;
+                      },
+                    ),
+                  )
+                  ..loadRequest(Uri.parse(url));
+                
+                return SizedBox(
+                  width: width,
+                  height: height,
+                  child: WebViewWidget(controller: controller),
+                );
+              },
+            ),
+          ],
+        );
       },
     );
   }
 }
+
+
+

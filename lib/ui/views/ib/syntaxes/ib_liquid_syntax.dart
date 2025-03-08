@@ -6,7 +6,7 @@ class IbLiquidSyntax extends md.BlockSyntax {
 
   @override
   md.Node? parse(md.BlockParser parser) {
-    var match = pattern.firstMatch(parser.current);
+    var match = pattern.firstMatch(parser.current as String);
     if (match == null) return null;
     var tags = match[1]!.split(' ');
     md.Element? node;

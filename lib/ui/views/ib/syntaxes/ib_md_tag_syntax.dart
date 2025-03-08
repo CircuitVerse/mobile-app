@@ -7,7 +7,7 @@ class IbMdTagSyntax extends md.BlockSyntax {
 
   @override
   md.Node? parse(md.BlockParser parser) {
-    var match = pattern.firstMatch(parser.current);
+    var match = pattern.firstMatch(parser.current as String);
     if (match == null) return null;
     _tagsStack.addAll(match[1]!.split(' '));
 
@@ -21,7 +21,7 @@ class IbMdTagSyntax extends md.BlockSyntax {
 
       _tagsStack.remove('.fs-9');
       parser.advance();
-      return md.Element.text('h5', text);
+      return md.Element.text('h5', text as String);
     }
 
     // Pop Quizzes
