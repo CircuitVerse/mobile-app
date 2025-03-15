@@ -327,7 +327,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                     .last;
                 model.onShowCased(key);
               },
-              builder: Builder(builder: (context) {
+              builder: (context) => Builder(builder: (context) {
                 return Scaffold(
                   key: _key,
                   appBar: _buildAppBar(),

@@ -31,19 +31,6 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
     }
   }
 
-  Future<void> onFacebookAuthPressed() async {
-    await _model.facebookAuth(isSignUp: widget.isSignUp);
-
-    if (_model.isSuccess(_model.FB_OAUTH)) {
-      await Get.offAllNamed(CVLandingView.id);
-    } else if (_model.isError(_model.FB_OAUTH)) {
-      SnackBarUtils.showDark(
-        'Facebook Authentication Error',
-        _model.errorMessageFor(_model.FB_OAUTH),
-      );
-    }
-  }
-
   Future<void> onGithubAuthPressed() async {
     await _model.githubAuth(isSignUp: widget.isSignUp);
 
@@ -81,15 +68,6 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
                   decoration: const BoxDecoration(shape: BoxShape.circle),
                   child:
                       Image.asset('assets/icons/google_icon.png', height: 40),
-                ),
-              ),
-              GestureDetector(
-                onTap: onFacebookAuthPressed,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: const BoxDecoration(shape: BoxShape.circle),
-                  child:
-                      Image.asset('assets/icons/facebook_icon.png', height: 40),
                 ),
               ),
               GestureDetector(

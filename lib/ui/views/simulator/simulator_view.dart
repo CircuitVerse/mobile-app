@@ -36,7 +36,7 @@ class SimulatorView extends StatelessWidget {
                         SimulatorViewModel.SIMULATOR, ViewState.Idle);
                   },
                   initialUrlRequest: URLRequest(
-                    url: Uri.parse(model.url),
+                    url: WebUri.uri(Uri.parse(model.url)),
                     headers: {'Authorization': 'Token ${model.token}'},
                   ),
                   initialOptions: InAppWebViewGroupOptions(
