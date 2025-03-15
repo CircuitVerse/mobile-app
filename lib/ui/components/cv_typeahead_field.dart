@@ -6,7 +6,7 @@ import 'package:mobile_app/services/API/country_institute_api.dart';
 class CVTypeAheadField extends StatelessWidget {
   /// Creates a [TextField] that is specifically styled for CircuitVerse.
   ///
-  /// When a [TextInputStreapis not specified, it defaults to [TextInputType.text]
+  /// When a [TextInputStream not specified, it defaults to [TextInputType.text]
   ///
   /// When `maxLines` is not specified, it defaults to 1
   const CVTypeAheadField({
@@ -46,8 +46,6 @@ class CVTypeAheadField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? text;
-
     return Padding(
       padding: padding,
       child: TypeAheadField(

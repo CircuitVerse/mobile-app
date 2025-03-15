@@ -26,25 +26,25 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
           return const Text('Loading Interaction...');
         }
 
-        var _textContent = snapshot.data.toString();
-        var _streamController = StreamController<double>();
+        var textContent = snapshot.data.toString();
+        var streamController = StreamController<double>();
 
         // Create and configure WebViewController
         final controller = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadHtmlString(_textContent);
+          ..loadHtmlString(textContent);
 
         controller.setNavigationDelegate(
             NavigationDelegate(onPageFinished: (String url) async {
           final height = double.parse(
               await controller.runJavaScriptReturningResult(
                   'document.documentElement.scrollHeight;') as String);
-          _streamController.add(height);
+          streamController.add(height);
         }));
 
         return StreamBuilder<double>(
           initialData: 100,
-          stream: _streamController.stream,
+          stream: streamController.stream,
           builder: (context, snapshot) {
             return SizedBox(
               height: snapshot.data,

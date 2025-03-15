@@ -19,16 +19,17 @@ class IbWebViewBuilder extends MarkdownElementBuilder {
             final width =
                 MediaQuery.of(extensionContext.buildContext!).size.width;
             final height = (width * 9) / 16;
-            final _controller = WebViewController();
-            _controller
+            final controller = WebViewController();
+            controller
               ..setJavaScriptMode(JavaScriptMode.unrestricted)
-              ..loadRequest(Uri.parse(element.attributes['src']!));
+              ..loadRequest(
+                  Uri.parse(element.attributes['src'] ?? 'about:blank'));
 
             return SizedBox(
               width: width,
               height: height,
               child: WebViewWidget(
-                controller: _controller,
+                controller: controller,
               ),
             );
           }),
