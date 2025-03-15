@@ -6,9 +6,9 @@ import 'package:mobile_app/services/API/country_institute_api.dart';
 class CVTypeAheadField extends StatelessWidget {
   /// Creates a [TextField] that is specifically styled for CircuitVerse.
   ///
-  /// When a [TextInputType] is not specified, it defaults to [TextInputType.text]
+  /// When a [TextInputType] is not specified, it defaults to [TextInputType.text].
   ///
-  /// When `maxLines` is not specified, it defaults to 1
+  /// When `maxLines` is not specified, it defaults to 1.
   const CVTypeAheadField({
     required this.label,
     this.type = TextInputType.text,
@@ -50,13 +50,15 @@ class CVTypeAheadField extends StatelessWidget {
 
     return Padding(
       padding: padding,
-      child: FutureBuilder(
+      // Added a dummy future so that FutureBuilder has a future to work with.
+      child: FutureBuilder<dynamic>(
+        future: Future.value(null),
         builder: (context, projectSnap) {
-          if (projectSnap.connectionState == ConnectionState.none &&
-              projectSnap.hasData) {
+          // Check if the Future is still waiting.
+          if (projectSnap.connectionState == ConnectionState.waiting) {
             return Container();
           }
-          return TypeAheadFormField(
+          return TypeAheadFormField<String>(
             textFieldConfiguration: TextFieldConfiguration(
               decoration: CVTheme.textFieldDecoration.copyWith(
                 labelText: label,
@@ -77,16 +79,12 @@ class CVTypeAheadField extends StatelessWidget {
             suggestionsCallback: (pattern) async {
               try {
                 if (toggle == COUNTRY) {
-                  return await countryInstituteObject.getCountries(
-                    pattern,
-                  );
+                  return await countryInstituteObject.getCountries(pattern);
                 }
                 if (toggle == EDUCATIONAL_INSTITUTE) {
-                  return await countryInstituteObject.getInstitutes(
-                    pattern,
-                  );
+                  return await countryInstituteObject.getInstitutes(pattern);
                 }
-                //// If there is need of some other API Fetch add another if condition
+                // Return a default suggestion if no condition is met.
                 return [
                   if (pattern == '') 'No suggestions found' else pattern,
                 ];
@@ -101,18 +99,18 @@ class CVTypeAheadField extends StatelessWidget {
             },
             itemBuilder: (context, suggestion) {
               return ListTile(
-                title: Text(suggestion as String),
+                title: Text(suggestion),
               );
             },
             onSuggestionSelected: (value) {
               if (value != '') {
-                controller?.text = value as String;
+                controller?.text = value;
               }
             },
             onSaved: (value) {
-              onSaved!(
-                (value == '') ? (text ?? 'N.A') : value,
-              );
+              if (onSaved != null) {
+                onSaved!((value == '') ? (text ?? 'N.A') : value);
+              }
             },
           );
         },
@@ -120,3 +118,5 @@ class CVTypeAheadField extends StatelessWidget {
     );
   }
 }
+
+

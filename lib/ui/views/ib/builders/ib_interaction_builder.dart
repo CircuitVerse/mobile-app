@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -15,7 +14,7 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
 
   @override
   Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
-    var id = element.textContent;
+    final id = element.textContent;
 
     return FutureBuilder<dynamic>(
       future: model.fetchHtmlInteraction(id),
@@ -23,37 +22,83 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
         if (snapshot.data is Failure) {
           return const Text('Error Loading Interaction');
         } else if (!snapshot.hasData) {
-          return const Text('Loading Interaction...');
+          return const Center(child: CircularProgressIndicator());
         }
 
-        var _textContent = snapshot.data.toString();
-        var _streamController = StreamController<double>();
-        late WebViewController _webViewController;
+        final textContent = snapshot.data.toString();
+        return IbInteractionWidget(htmlContent: textContent);
+      },
+    );
+  }
+}
 
-        return StreamBuilder<double>(
-          initialData: 100,
-          stream: _streamController.stream,
-          builder: (context, snapshot) {
-            return SizedBox(
-              height: snapshot.data,
-              child: WebView(
-                initialUrl:
-                    'data:text/html;base64,${base64Encode(const Utf8Encoder().convert(_textContent))}',
-                onWebViewCreated: (_controller) {
-                  _webViewController = _controller;
-                },
-                onPageFinished: (some) async {
-                  var height = double.parse(
-                      await _webViewController.runJavascriptReturningResult(
-                          'document.documentElement.scrollHeight;'));
-                  _streamController.add(height);
-                },
-                javascriptMode: JavascriptMode.unrestricted,
-              ),
-            );
+class IbInteractionWidget extends StatefulWidget {
+  final String htmlContent;
+  const IbInteractionWidget({Key? key, required this.htmlContent})
+      : super(key: key);
+
+  @override
+  State<IbInteractionWidget> createState() => _IbInteractionWidgetState();
+}
+
+class _IbInteractionWidgetState extends State<IbInteractionWidget> {
+  final StreamController<double> _heightStreamController =
+      StreamController<double>();
+  late final WebViewController _webViewController;
+  double _height = 100; // Initial height
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the WebViewController
+    _webViewController = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(Colors.transparent)
+      ..loadHtmlString(widget.htmlContent)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageFinished: (String url) async {
+            try {
+              final result = await _webViewController.runJavaScriptReturningResult(
+                'document.documentElement.scrollHeight;'
+              );
+              
+              // Convert result to double (result is already a number with the new API)
+              final newHeight = result is num ? result.toDouble() : 100.0;
+              
+              if (!_heightStreamController.isClosed) {
+                _heightStreamController.add(newHeight);
+                setState(() {
+                  _height = newHeight;
+                });
+              }
+            } catch (e) {
+              debugPrint('Error getting webview height: $e');
+            }
           },
+        ),
+      );
+  }
+
+  @override
+  void dispose() {
+    _heightStreamController.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<double>(
+      initialData: _height,
+      stream: _heightStreamController.stream,
+      builder: (context, streamSnapshot) {
+        return SizedBox(
+          height: streamSnapshot.data,
+          width: double.infinity,
+          child: WebViewWidget(controller: _webViewController),
         );
       },
     );
   }
 }
+

@@ -15,10 +15,10 @@ class ContributorsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: showAppBar ? AppBar() : null,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+      body: const SingleChildScrollView(
+        padding: EdgeInsets.all(16),
         child: Column(
-          children: const <Widget>[
+          children: <Widget>[
             CVHeader(
               title: 'CONTRIBUTE',
               description:
