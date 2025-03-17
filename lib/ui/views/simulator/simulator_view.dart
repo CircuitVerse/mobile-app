@@ -39,11 +39,9 @@ class SimulatorView extends StatelessWidget {
                     url: WebUri.uri(Uri.parse(model.url)),
                     headers: {'Authorization': 'Token ${model.token}'},
                   ),
-                  initialOptions: InAppWebViewGroupOptions(
-                    crossPlatform: InAppWebViewOptions(
-                      useShouldOverrideUrlLoading: true,
-                      useOnDownloadStart: true,
-                    ),
+                  initialSettings: InAppWebViewSettings(
+                    useShouldOverrideUrlLoading: true,
+                    useOnDownloadStart: true,
                   ),
                   shouldOverrideUrlLoading: (con, navigationAction) async {
                     final url = navigationAction.request.url.toString();

@@ -12,7 +12,7 @@ List<TypeAdapter> DatabaseAdapters = <TypeAdapter>[
 ];
 
 extension DatabaseBoxExt on DatabaseBox {
-  String get inString => describeEnum(this);
+  String get inString => name;
 }
 
 abstract class DatabaseService {

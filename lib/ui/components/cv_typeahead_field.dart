@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/cv_theme.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:mobile_app/services/API/country_institute_api.dart';
 

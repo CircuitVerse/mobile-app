@@ -105,13 +105,12 @@ class _CVLandingViewState extends State<CVLandingView> {
   Widget build(BuildContext context) {
     return BaseView<CVLandingViewModel>(
       onModelReady: (model) => model.setUser(),
-      builder: (context, model, child) => WillPopScope(
-        onWillPop: () {
-          if (model.selectedIndex != 0) {
+      builder: (context, model, child) => PopScope(
+        canPop: model.selectedIndex != 0,
+        onPopInvokedWithResult: (didPop, result) {
+          if (didPop) {
             model.selectedIndex = 0;
-            return Future.value(false);
           }
-          return Future.value(true);
         },
         child: Scaffold(
           key: _scaffoldKey,

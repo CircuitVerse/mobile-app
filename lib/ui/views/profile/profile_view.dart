@@ -178,7 +178,7 @@ class _ProfileViewState extends State<ProfileView> {
           length: 2,
           child: Scaffold(
             appBar: CVTabBar(
-              color: CVTheme.lightGrey.withOpacity(0.2),
+              color: CVTheme.lightGrey.withValues(alpha: 0.2),
               tabBar: const TabBar(
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.black87,

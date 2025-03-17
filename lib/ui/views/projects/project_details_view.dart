@@ -571,15 +571,15 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
         _model.fetchProjectDetails(_recievedProject.id);
       },
-      builder: (context, model, child) => WillPopScope(
-        onWillPop: () async {
-          // Check whether the state (i.e starred or not) is changed
+      builder: (context, model, child) => PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) return;
           final bool isChanged = model.receivedProject!.attributes.isStarred ^
               _recievedProject.attributes.isStarred;
           Get.back(
             result: isChanged ? model.receivedProject : null,
           );
-          return false;
         },
         child: Scaffold(
           appBar: AppBar(

@@ -305,8 +305,8 @@ void main() {
             RegExp(r'(\.\.(\/\.\.)?)?(?<!org)\/assets'),
             '${EnvironmentConfig.IB_BASE_URL}/assets');
 
-        ApiUtils.client = MockClient((_) {
-          if (_.url.toString().endsWith('module.js')) {
+        ApiUtils.client = MockClient((req) {
+          if (req.url.toString().endsWith('module.js')) {
             return Future.value(Response(_mockJs, 200));
           }
 

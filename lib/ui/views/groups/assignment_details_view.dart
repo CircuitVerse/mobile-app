@@ -176,7 +176,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                       ? CVTheme.primaryColor
                       : Colors.transparent,
                   border: Border.all(
-                    color: CVTheme.grey.withOpacity(0.5),
+                    color: CVTheme.grey.withValues(alpha: 0.5),
                     width: 0.5,
                   ),
                 ),
