@@ -523,10 +523,11 @@ packages:
   flutter_summernote:
     dependency: "direct main"
     description:
-      name: flutter_summernote
-      sha256: "221a2cd9de3463ac19b2680ef77ce7f8d7449299db9c3a36eab1fe1b96a160d3"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: ef0924f1b3d2244677e25df4eb64c01f1dab45c6
+      url: "https://github.com/realaashil/flutter_summernote"
+    source: git
     version: "1.1.1"
   flutter_svg:
     dependency: "direct main"

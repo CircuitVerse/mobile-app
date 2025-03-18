@@ -31,7 +31,9 @@ dependencies:
     sdk: flutter
   flutter_markdown: ^0.7.6+2
   flutter_math_fork: ^0.7.3
-  flutter_summernote: ^1.0.0
+  flutter_summernote:
+    git:
+      url: https://github.com/realaashil/flutter_summernote
   flutter_svg: ^2.0.17
   flutter_typeahead: ^5.2.0
   fluttericon: ^2.0.0

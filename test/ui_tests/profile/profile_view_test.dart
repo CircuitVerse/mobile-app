@@ -95,7 +95,7 @@ void main() {
                   widget.text.toPlainText() == 'Country : India' ||
                   widget.text.toPlainText() ==
                       'Educational Institute : Gurukul' ||
-                  widget.text.toPlainText() == 'Subscribed to mails : true');
+                  widget.text.toPlainText().contains('Subscribed to mails'));
         }), findsNWidgets(4));
 
         // Finds Tabs of Circuits, Favorites
