@@ -245,7 +245,17 @@ class AboutPrivacyPolicyView extends StatelessWidget {
                 ),
               ],
             ),
-          ],
+          ],          ElevatedButton(
+            onPressed: () async {
+              try {
+                await launchEmail('support@circuitverse.org');
+              } catch (e) {
+                // Handle error (show snackbar/dialog)
+                print('Error launching email client: $e');
+              }
+            },
+            child: Text('Email Us'),
+          ),
         ),
       ),
     );
