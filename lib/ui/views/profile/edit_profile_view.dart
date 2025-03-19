@@ -16,7 +16,7 @@ import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 import '../../../config/environment_config.dart';
 
 class EditProfileView extends StatefulWidget {
-  const EditProfileView({Key? key}) : super(key: key);
+  const EditProfileView({super.key});
 
   static const String id = 'edit_profile_view';
 

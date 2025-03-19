@@ -7,8 +7,8 @@ import 'package:transparent_image/transparent_image.dart';
 class ContributorAvatar extends StatelessWidget {
   const ContributorAvatar({
     required this.contributor,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final CircuitVerseContributor contributor;
 

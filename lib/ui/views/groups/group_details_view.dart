@@ -19,7 +19,7 @@ import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 import 'package:simple_chips_input/simple_chips_input.dart';
 
 class GroupDetailsView extends StatefulWidget {
-  const GroupDetailsView({Key? key, required this.group}) : super(key: key);
+  const GroupDetailsView({super.key, required this.group});
 
   static const String id = 'group_details_view';
   final Group group;

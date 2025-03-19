@@ -23,7 +23,7 @@ Future<void> main() async {
 }
 
 class CircuitVerseMobile extends StatelessWidget {
-  const CircuitVerseMobile({Key? key}) : super(key: key);
+  const CircuitVerseMobile({super.key});
 
   // This widget is the root of CircuitVerse Mobile.
   @override

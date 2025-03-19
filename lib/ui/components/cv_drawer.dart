@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class CVDrawer extends StatelessWidget {
-  const CVDrawer({Key? key}) : super(key: key);
+  const CVDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {

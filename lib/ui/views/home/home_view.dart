@@ -12,7 +12,7 @@ import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
   static const String id = 'home_view';
 
   @override

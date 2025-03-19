@@ -8,8 +8,8 @@ class CVPrimaryButton extends StatelessWidget {
     this.isBodyText = false,
     this.isPrimaryDark = false,
     this.padding = const EdgeInsets.all(8),
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final VoidCallback? onPressed;

@@ -4,8 +4,8 @@ class IbPopQuizButton extends StatefulWidget {
   const IbPopQuizButton({
     required this.content,
     required this.isCorrect,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String content;
   final bool isCorrect;

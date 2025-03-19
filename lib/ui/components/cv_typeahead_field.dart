@@ -24,8 +24,8 @@ class CVTypeAheadField extends StatelessWidget {
     required this.countryInstituteObject,
     this.controller,
     required this.toggle,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String label;
   final TextEditingController? controller;

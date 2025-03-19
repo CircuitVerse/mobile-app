@@ -7,8 +7,8 @@ class CVDrawerTile extends StatelessWidget {
     this.iconData,
     this.color,
     this.pending = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final IconData? iconData;

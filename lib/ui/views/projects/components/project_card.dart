@@ -6,11 +6,11 @@ import 'package:transparent_image/transparent_image.dart';
 
 class ProjectCard extends StatefulWidget {
   const ProjectCard({
-    Key? key,
+    super.key,
     required this.project,
     required this.onPressed,
     this.isHeaderFilled = true,
-  }) : super(key: key);
+  });
 
   final Project project;
   final VoidCallback onPressed;

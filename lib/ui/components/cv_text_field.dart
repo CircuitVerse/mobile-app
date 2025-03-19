@@ -26,8 +26,8 @@ class CVTextField extends StatelessWidget {
     this.onChanged,
     this.prefixIcon,
     this.suffixIcon,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String? label;
   final String? hint;

@@ -11,9 +11,9 @@ import 'package:provider/provider.dart';
 
 class UserProjectsView extends StatefulWidget {
   const UserProjectsView({
-    Key? key,
+    super.key,
     required this.userId,
-  }) : super(key: key);
+  });
 
   final String userId;
 

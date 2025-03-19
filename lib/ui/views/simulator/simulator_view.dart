@@ -8,7 +8,7 @@ import 'package:mobile_app/viewmodels/simulator/simulator_viewmodel.dart';
 class SimulatorView extends StatelessWidget {
   static const String id = 'simulator_view';
 
-  const SimulatorView({Key? key}) : super(key: key);
+  const SimulatorView({super.key});
 
   @override
   Widget build(BuildContext context) {

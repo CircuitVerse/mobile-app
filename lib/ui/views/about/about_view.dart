@@ -14,7 +14,7 @@ import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutView extends StatefulWidget {
-  const AboutView({Key? key}) : super(key: key);
+  const AboutView({super.key});
   static const String id = 'about_view';
 
   @override

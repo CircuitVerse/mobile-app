@@ -5,8 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class AboutPrivacyPolicyView extends StatelessWidget {
-  const AboutPrivacyPolicyView({Key? key, this.showAppBar = true})
-      : super(key: key);
+  const AboutPrivacyPolicyView({super.key, this.showAppBar = true});
 
   static const String id = 'about_privacy_policy_view';
 

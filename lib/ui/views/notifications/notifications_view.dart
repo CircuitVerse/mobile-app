@@ -9,7 +9,7 @@ import 'package:mobile_app/viewmodels/notifications/notifications_viewmodel.dart
 import 'package:provider/provider.dart';
 
 class NotificationsView extends StatelessWidget {
-  const NotificationsView({Key? key}) : super(key: key);
+  const NotificationsView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -9,8 +9,8 @@ class BaseView<T extends BaseModel> extends StatefulWidget {
     this.onModelReady,
     this.onModelDestroy,
     this.model,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget Function(BuildContext context, T model, Widget? child) builder;
   final Function(T)? onModelReady;

@@ -6,7 +6,7 @@ import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/group_details_view.dart';
 
 class GroupMemberCard extends StatelessWidget {
-  const GroupMemberCard({Key? key, required this.group}) : super(key: key);
+  const GroupMemberCard({super.key, required this.group});
 
   final Group group;
 

@@ -8,8 +8,8 @@ class CircuitVerseSocialCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.url,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String imagePath;
   final String title;

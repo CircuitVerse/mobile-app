@@ -6,8 +6,8 @@ class CVHeader extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.description,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final String? subtitle;

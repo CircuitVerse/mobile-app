@@ -21,7 +21,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ProjectDetailsView extends StatefulWidget {
-  const ProjectDetailsView({Key? key, required this.project}) : super(key: key);
+  const ProjectDetailsView({super.key, required this.project});
 
   static const String id = 'project_details_view';
   final Project project;

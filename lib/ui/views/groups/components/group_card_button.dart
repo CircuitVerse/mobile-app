@@ -5,8 +5,8 @@ class CardButton extends StatelessWidget {
     required this.onPressed,
     required this.color,
     required this.title,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   final VoidCallback onPressed;
   final Color color;
   final String title;

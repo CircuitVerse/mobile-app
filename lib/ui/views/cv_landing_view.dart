@@ -15,7 +15,7 @@ import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CVLandingView extends StatefulWidget {
-  const CVLandingView({Key? key}) : super(key: key);
+  const CVLandingView({super.key});
   static const String id = 'cv_landing_view';
 
   @override

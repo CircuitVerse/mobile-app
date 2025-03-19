@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class AboutTosView extends StatelessWidget {
-  const AboutTosView({Key? key, this.showAppBar = true}) : super(key: key);
+  const AboutTosView({super.key, this.showAppBar = true});
 
   static const String id = 'about_tos_view';
 

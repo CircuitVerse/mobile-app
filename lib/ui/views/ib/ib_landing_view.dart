@@ -13,7 +13,7 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class IbLandingView extends StatefulWidget {
-  const IbLandingView({Key? key}) : super(key: key);
+  const IbLandingView({super.key});
 
   static const String id = 'ib_landing_view';
 

@@ -14,10 +14,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeaturedProjectsView extends StatefulWidget {
   const FeaturedProjectsView({
-    Key? key,
+    super.key,
     this.showSearchBar = false,
     this.embed = false,
-  }) : super(key: key);
+  });
 
   static const String id = 'featured_projects_view';
   final bool showSearchBar;

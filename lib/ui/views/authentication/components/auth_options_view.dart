@@ -7,7 +7,7 @@ import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/authentication/auth_options_viewmodel.dart';
 
 class AuthOptionsView extends StatefulWidget {
-  const AuthOptionsView({Key? key, this.isSignUp = false}) : super(key: key);
+  const AuthOptionsView({super.key, this.isSignUp = false});
 
   final bool isSignUp;
 
