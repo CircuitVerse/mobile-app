@@ -59,9 +59,7 @@ class _CVLandingViewState extends State<CVLandingView> {
     return AppBar(
       title: Text(
         _appBarTitle(selectedIndex),
-        style: TextStyle(
-          color: CVTheme.appBarText(context),
-        ),
+        style: TextStyle(color: CVTheme.appBarText(context)),
       ),
       leading: IconButton(
         onPressed: () {
@@ -96,7 +94,7 @@ class _CVLandingViewState extends State<CVLandingView> {
             },
             icon: const Icon(Icons.search),
           ),
-        )
+        ),
       ],
     );
   }
@@ -105,33 +103,34 @@ class _CVLandingViewState extends State<CVLandingView> {
   Widget build(BuildContext context) {
     return BaseView<CVLandingViewModel>(
       onModelReady: (model) => model.setUser(),
-      builder: (context, model, child) => PopScope(
-        canPop: model.selectedIndex != 0,
-        onPopInvokedWithResult: (didPop, result) {
-          if (didPop) {
-            model.selectedIndex = 0;
-          }
-        },
-        child: Scaffold(
-          key: _scaffoldKey,
-          appBar: _buildAppBar(model.selectedIndex, model),
-          drawer: const CVDrawer(),
-          body: PageTransitionSwitcher(
-            transitionBuilder: (
-              Widget child,
-              Animation<double> animation,
-              Animation<double> secondaryAnimation,
-            ) {
-              return FadeThroughTransition(
-                animation: animation,
-                secondaryAnimation: secondaryAnimation,
-                child: child,
-              );
+      builder:
+          (context, model, child) => PopScope(
+            canPop: model.selectedIndex != 0,
+            onPopInvokedWithResult: (didPop, result) {
+              if (didPop) {
+                model.selectedIndex = 0;
+              }
             },
-            child: _items.elementAt(model.selectedIndex),
+            child: Scaffold(
+              key: _scaffoldKey,
+              appBar: _buildAppBar(model.selectedIndex, model),
+              drawer: const CVDrawer(),
+              body: PageTransitionSwitcher(
+                transitionBuilder: (
+                  Widget child,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                ) {
+                  return FadeThroughTransition(
+                    animation: animation,
+                    secondaryAnimation: secondaryAnimation,
+                    child: child,
+                  );
+                },
+                child: _items.elementAt(model.selectedIndex),
+              ),
+            ),
           ),
-        ),
-      ),
     );
   }
 }
