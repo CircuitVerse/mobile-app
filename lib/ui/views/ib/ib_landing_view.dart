@@ -166,7 +166,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                       if (_key.currentState!.isDrawerOpen) Get.back();
                       Future.delayed(
                         const Duration(milliseconds: 200),
-                        value as VoidCallback,
+                        value,
                       );
                     },
                     disposeOnTap: true,
