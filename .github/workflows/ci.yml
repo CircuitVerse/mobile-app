@@ -36,8 +36,8 @@ jobs:
       - name: Build Runner (Generate Dart Files)
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
-      - name: Format Check
-        run: dart format --set-exit-if-changed .
+      - name: Format Check (Exclude .mocks files)
+        run: dart format --set-exit-if-changed $(git ls-files '*.dart' ':!:*.mocks.dart')
 
       - name: Analyze Code
         run: flutter analyze
