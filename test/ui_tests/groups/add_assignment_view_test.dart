@@ -36,9 +36,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: const AddAssignmentView(
-            groupId: 'Test',
-          ),
+          home: const AddAssignmentView(groupId: 'Test'),
         ),
       );
 
@@ -47,55 +45,66 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic AddAssignmentView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic AddAssignmentView widgets', (
+      WidgetTester tester,
+    ) async {
       await _pumpAddAssignmentView(tester);
       await tester.pumpAndSettle();
 
       // Finds Name, HTML Editor, Date Time, DropDown, CheckboxListTile fields
-      expect(find.byWidgetPredicate((widget) {
-        if (widget is CVTextField) {
-          return widget.label == 'Name';
-        } else if (widget is CVHtmlEditor) {
-          return true;
-        } else if (widget is DateTimeField) {
-          return widget.key == const Key('cv_assignment_deadline_field');
-        } else if (widget is DropdownButtonFormField) {
-          return widget.key == const Key('cv_assignment_grading_dropdown');
-        } else if (widget is CheckboxListTile) {
-          return true;
-        }
+      expect(
+        find.byWidgetPredicate((widget) {
+          if (widget is CVTextField) {
+            return widget.label == 'Name';
+          } else if (widget is CVHtmlEditor) {
+            return true;
+          } else if (widget is DateTimeField) {
+            return widget.key == const Key('cv_assignment_deadline_field');
+          } else if (widget is DropdownButtonFormField) {
+            return widget.key == const Key('cv_assignment_grading_dropdown');
+          } else if (widget is CheckboxListTile) {
+            return true;
+          }
 
-        return false;
-      }), findsNWidgets(5));
+          return false;
+        }),
+        findsNWidgets(5),
+      );
 
       // Finds no elements checkboxes as Elements Restrictions Checkbox is not selected
       expect(find.byType(Checkbox), findsOneWidget);
 
       // Finds Save button
-      expect(find.widgetWithText(CVPrimaryButton, 'Create Assignment'),
-          findsOneWidget);
+      expect(
+        find.widgetWithText(CVPrimaryButton, 'Create Assignment'),
+        findsOneWidget,
+      );
     });
 
-    testWidgets('on Create Assignment button is Tapped',
-        (WidgetTester tester) async {
+    testWidgets('on Create Assignment button is Tapped', (
+      WidgetTester tester,
+    ) async {
       // Mock Dialog Service
       var _dialogService = MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
-      when(_dialogService.showCustomProgressDialog())
-          .thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
+      when(
+        _dialogService.showCustomProgressDialog(),
+      ).thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(_dialogService.popDialog()).thenReturn(null);
 
       // Mock AddAssignment ViewModel
       var _addAssignmentViewModel = MockAddAssignmentViewModel();
-      locator
-          .registerSingleton<AddAssignmentViewModel>(_addAssignmentViewModel);
+      locator.registerSingleton<AddAssignmentViewModel>(
+        _addAssignmentViewModel,
+      );
 
-      when(_addAssignmentViewModel.ADD_ASSIGNMENT)
-          .thenAnswer((_) => 'add_assignment');
-      when(_addAssignmentViewModel.addAssignment(any, any, any, any, any, any))
-          .thenReturn(null);
+      when(
+        _addAssignmentViewModel.ADD_ASSIGNMENT,
+      ).thenAnswer((_) => 'add_assignment');
+      when(
+        _addAssignmentViewModel.addAssignment(any, any, any, any, any, any),
+      ).thenReturn(null);
       when(_addAssignmentViewModel.isSuccess(any)).thenReturn(false);
       when(_addAssignmentViewModel.isError(any)).thenReturn(false);
 
@@ -105,9 +114,11 @@ void main() {
 
       // Tap Save Details Button
       await tester.enterText(
-          find.byWidgetPredicate(
-              (widget) => widget is CVTextField && widget.label == 'Name'),
-          'Test');
+        find.byWidgetPredicate(
+          (widget) => widget is CVTextField && widget.label == 'Name',
+        ),
+        'Test',
+      );
       Widget widget = find.byType(CVPrimaryButton).evaluate().first.widget;
       (widget as CVPrimaryButton).onPressed!();
       await tester.pumpAndSettle();
@@ -115,8 +126,9 @@ void main() {
       await tester.pump(const Duration(seconds: 5));
 
       // Verify Dialog Service is called to show Dialog of Updating
-      verify(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
-          .called(1);
+      verify(
+        _dialogService.showCustomProgressDialog(title: anyNamed('title')),
+      ).called(1);
     });
   });
 }

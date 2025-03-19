@@ -20,9 +20,7 @@ class CVHtmlEditor extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         color: CVTheme.htmlEditorBg,
-        border: Border.all(
-          color: CVTheme.primaryColorDark,
-        ),
+        border: Border.all(color: CVTheme.primaryColorDark),
       ),
       key: editorKey,
       hasAttachment: hasAttachment,

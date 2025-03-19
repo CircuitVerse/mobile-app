@@ -29,17 +29,14 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         border: const Border(
-          top: BorderSide(
-            width: 10,
-            color: CVTheme.primaryColor,
-          ),
+          top: BorderSide(width: 10, color: CVTheme.primaryColor),
         ),
         boxShadow: [
           BoxShadow(
             color: CVTheme.boxShadow(context),
             offset: const Offset(0, 3),
             blurRadius: 2,
-          )
+          ),
         ],
         color: CVTheme.boxBg(context),
       ),
@@ -47,9 +44,9 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
         children: <Widget>[
           Text(
             widget.group.attributes.name,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           Padding(
@@ -64,8 +61,11 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
             children: <Widget>[
               Flexible(
                 child: CardButton(
-                  onPressed: () =>
-                      Get.toNamed(GroupDetailsView.id, arguments: widget.group),
+                  onPressed:
+                      () => Get.toNamed(
+                        GroupDetailsView.id,
+                        arguments: widget.group,
+                      ),
                   color: CVTheme.primaryColor,
                   title: 'View',
                 ),
@@ -85,7 +85,7 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

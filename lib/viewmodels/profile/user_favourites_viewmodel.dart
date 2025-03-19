@@ -55,8 +55,9 @@ class UserFavouritesViewModel extends BaseModel {
         // fetch next batch of projects..
         String _nextPageLink = previousUserFavouritesBatch!.links.next;
 
-        var _nextPageNumber =
-            int.parse(_nextPageLink.substring(_nextPageLink.length - 1));
+        var _nextPageNumber = int.parse(
+          _nextPageLink.substring(_nextPageLink.length - 1),
+        );
 
         // fetch projects corresponding to next page number..
         previousUserFavouritesBatch = await _projectsApi.getUserFavourites(
@@ -68,7 +69,8 @@ class UserFavouritesViewModel extends BaseModel {
         setStateFor(FETCH_USER_FAVOURITES, ViewState.Busy);
         // fetch projects for the very first time..
         previousUserFavouritesBatch = await _projectsApi.getUserFavourites(
-            userId ?? _localStorageService.currentUser!.data.id);
+          userId ?? _localStorageService.currentUser!.data.id,
+        );
       }
 
       userFavourites.addAll(previousUserFavouritesBatch!.data);

@@ -33,12 +33,10 @@ class _MyGroupsViewState extends State<MyGroupsView>
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        SvgPicture.asset(
-          'assets/images/group/no_group.svg',
-          height: 250,
-        ),
+        SvgPicture.asset('assets/images/group/no_group.svg', height: 250),
         _buildSubHeader(
-            title: "Explore and join groups of your school and friends!"),
+          title: "Explore and join groups of your school and friends!",
+        ),
       ],
     );
   }
@@ -61,10 +59,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
   }
 
   Future<void> onEditGroupPressed(Group group) async {
-    var _result = await Get.toNamed(
-      EditGroupView.id,
-      arguments: group,
-    );
+    var _result = await Get.toNamed(EditGroupView.id, arguments: group);
 
     if (_result is Group) _model.onGroupUpdated(_result);
   }
@@ -106,82 +101,72 @@ class _MyGroupsViewState extends State<MyGroupsView>
         _model.fetchMemberGroups();
         _tabController = TabController(length: 2, vsync: this);
       },
-      builder: (context, model, child) => Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: onCreateGroupPressed,
-          backgroundColor: CVTheme.primaryColor,
-          child: const Icon(Icons.add),
-        ),
-        appBar: AppBar(
-          title: TabBar(
-            controller: _tabController,
-            labelColor: CVTheme.textColor(context),
-            indicatorColor: CVTheme.primaryColor,
-            tabs: const [
-              Tab(
-                text: 'Owned',
+      builder:
+          (context, model, child) => Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: onCreateGroupPressed,
+              backgroundColor: CVTheme.primaryColor,
+              child: const Icon(Icons.add),
+            ),
+            appBar: AppBar(
+              title: TabBar(
+                controller: _tabController,
+                labelColor: CVTheme.textColor(context),
+                indicatorColor: CVTheme.primaryColor,
+                tabs: const [Tab(text: 'Owned'), Tab(text: 'Joined')],
               ),
-              Tab(
-                text: 'Joined',
-              ),
-            ],
+            ),
+            body: Builder(
+              builder: (context) {
+                var _ownedGroups = <Widget>[];
+                var _joinedGroups = <Widget>[];
+
+                if (_model.isSuccess(_model.FETCH_OWNED_GROUPS)) {
+                  // creates GroupMentorCard corresponding to each mentor group
+                  for (var group in _model.ownedGroups) {
+                    _ownedGroups.add(
+                      GroupMentorCard(
+                        group: group,
+                        onEdit: () => onEditGroupPressed(group),
+                        onDelete: () => onDeleteGroupPressed(group.id),
+                      ),
+                    );
+                  }
+                  // Adds fetch more groups icon if link to next set exists
+                  if (_model.previousMentoredGroupsBatch?.links.next != null) {
+                    _ownedGroups.add(
+                      CVAddIconButton(onPressed: _model.fetchMentoredGroups),
+                    );
+                  }
+                }
+                if (_model.isSuccess(_model.FETCH_MEMBER_GROUPS)) {
+                  // creates GroupMemberCard corresponding to each member group
+                  for (var group in _model.memberGroups) {
+                    _joinedGroups.add(GroupMemberCard(group: group));
+                  }
+
+                  // Adds fetch more groups icon if link to next set exists
+                  if (_model.previousMemberGroupsBatch?.links.next != null) {
+                    _joinedGroups.add(
+                      CVAddIconButton(onPressed: _model.fetchMemberGroups),
+                    );
+                  }
+                }
+
+                return TabBarView(
+                  controller: _tabController,
+                  children: <Widget>[
+                    _ownedGroups.isEmpty
+                        ? _emptyState()
+                        : ListView(children: _ownedGroups),
+                    _joinedGroups.isEmpty
+                        ? _emptyState()
+                        : ListView(children: _joinedGroups),
+                  ],
+                );
+              },
+            ),
           ),
-        ),
-        body: Builder(
-          builder: (context) {
-            var _ownedGroups = <Widget>[];
-            var _joinedGroups = <Widget>[];
-
-            if (_model.isSuccess(_model.FETCH_OWNED_GROUPS)) {
-              // creates GroupMentorCard corresponding to each mentor group
-              for (var group in _model.ownedGroups) {
-                _ownedGroups.add(
-                  GroupMentorCard(
-                    group: group,
-                    onEdit: () => onEditGroupPressed(group),
-                    onDelete: () => onDeleteGroupPressed(group.id),
-                  ),
-                );
-              }
-              // Adds fetch more groups icon if link to next set exists
-              if (_model.previousMentoredGroupsBatch?.links.next != null) {
-                _ownedGroups.add(
-                  CVAddIconButton(onPressed: _model.fetchMentoredGroups),
-                );
-              }
-            }
-            if (_model.isSuccess(_model.FETCH_MEMBER_GROUPS)) {
-              // creates GroupMemberCard corresponding to each member group
-              for (var group in _model.memberGroups) {
-                _joinedGroups.add(GroupMemberCard(group: group));
-              }
-
-              // Adds fetch more groups icon if link to next set exists
-              if (_model.previousMemberGroupsBatch?.links.next != null) {
-                _joinedGroups.add(
-                  CVAddIconButton(onPressed: _model.fetchMemberGroups),
-                );
-              }
-            }
-
-            return TabBarView(
-              controller: _tabController,
-              children: <Widget>[
-                _ownedGroups.isEmpty
-                    ? _emptyState()
-                    : ListView(
-                        children: _ownedGroups,
-                      ),
-                _joinedGroups.isEmpty
-                    ? _emptyState()
-                    : ListView(
-                        children: _joinedGroups,
-                      ),
-              ],
-            );
-          },
-        ),
-      ),
     );
   }
 }

@@ -58,46 +58,49 @@ class _EditGroupViewState extends State<EditGroupView> {
   Widget build(BuildContext context) {
     return BaseView<EditGroupViewModel>(
       onModelReady: (model) => _model = model,
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                const CVSubheader(
-                  title: 'EDIT GROUP',
-                  subtitle:
-                      "You can update Group details here. Don't leave the Group Name blank.",
+      builder:
+          (context, model, child) => Scaffold(
+            appBar: AppBar(),
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    const CVSubheader(
+                      title: 'EDIT GROUP',
+                      subtitle:
+                          "You can update Group details here. Don't leave the Group Name blank.",
+                    ),
+                    const SizedBox(height: 16),
+                    SvgPicture.asset(
+                      'assets/images/group/edit_group.svg',
+                      height: 200,
+                    ),
+                    const SizedBox(height: 16),
+                    CVTextField(
+                      padding: const EdgeInsets.all(0),
+                      label: 'Group Name',
+                      initialValue: widget.group.attributes.name,
+                      validator:
+                          (value) =>
+                              value?.isEmpty ?? true
+                                  ? 'Please enter a Group Name'
+                                  : null,
+                      onSaved: (value) => _name = value!.trim(),
+                      action: TextInputAction.done,
+                    ),
+                    const SizedBox(height: 16),
+                    CVPrimaryButton(
+                      title: 'Save',
+                      onPressed: _validateAndSubmit,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 16),
-                SvgPicture.asset(
-                  'assets/images/group/edit_group.svg',
-                  height: 200,
-                ),
-                const SizedBox(height: 16),
-                CVTextField(
-                  padding: const EdgeInsets.all(0),
-                  label: 'Group Name',
-                  initialValue: widget.group.attributes.name,
-                  validator: (value) => value?.isEmpty ?? true
-                      ? 'Please enter a Group Name'
-                      : null,
-                  onSaved: (value) => _name = value!.trim(),
-                  action: TextInputAction.done,
-                ),
-                const SizedBox(height: 16),
-                CVPrimaryButton(
-                  title: 'Save',
-                  onPressed: _validateAndSubmit,
-                )
-              ],
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

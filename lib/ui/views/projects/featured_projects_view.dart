@@ -98,9 +98,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
           // add loading indicator if there are more projects to load..
           if (!widget.embed &&
               model.previousProjectsBatch?.links.next != null) {
-            _items.add(const Center(
-              child: CircularProgressIndicator(),
-            ));
+            _items.add(const Center(child: CircularProgressIndicator()));
           }
 
           // maintaing another state of projects to prevent blank screen when
@@ -111,27 +109,20 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
         if (model.isSuccess(model.SEARCH_PROJECTS) &&
             model.projects.isEmpty &&
             model.showSearchedResult) {
-          _items.addAll(
-            [
-              SvgPicture.asset(
-                'assets/images/projects/noResult.svg',
-                height: 400,
-              ),
-              Text(
-                'No Result found',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: CVTheme.textColor(context),
-                ),
-              ),
-            ],
-          );
+          _items.addAll([
+            SvgPicture.asset(
+              'assets/images/projects/noResult.svg',
+              height: 400,
+            ),
+            Text(
+              'No Result found',
+              style: TextStyle(fontSize: 16, color: CVTheme.textColor(context)),
+            ),
+          ]);
         }
 
         if (widget.embed) {
-          return Column(
-            children: _items,
-          );
+          return Column(children: _items);
         }
 
         if (!model.showSearchBar) {
@@ -152,15 +143,13 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
               visible: model.showSearchBar,
               replacement: Text(
                 AppLocalizations.of(context)!.featured_circuits,
-                style: TextStyle(
-                  color: CVTheme.appBarText(context),
-                ),
+                style: TextStyle(color: CVTheme.appBarText(context)),
               ),
               child: Theme(
                 data: Theme.of(context).copyWith(
-                  colorScheme: Theme.of(context)
-                      .colorScheme
-                      .copyWith(primary: CVTheme.appBarText(context)),
+                  colorScheme: Theme.of(
+                    context,
+                  ).colorScheme.copyWith(primary: CVTheme.appBarText(context)),
                   textSelectionTheme: TextSelectionThemeData(
                     cursorColor: CVTheme.appBarText(context),
                   ),
@@ -205,13 +194,15 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
           ),
           drawer: const CVDrawer(),
           body: Padding(
-              padding: const EdgeInsets.all(16),
-              child: ListView.builder(
-                  controller: controller,
-                  itemCount: _projects.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return _projects[index];
-                  })),
+            padding: const EdgeInsets.all(16),
+            child: ListView.builder(
+              controller: controller,
+              itemCount: _projects.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _projects[index];
+              },
+            ),
+          ),
         );
       },
     );

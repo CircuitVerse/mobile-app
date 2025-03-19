@@ -16,7 +16,8 @@ void main() {
     group('sendToken -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response('{"message": "received"}', 200)));
+          (_) => Future.value(Response('{"message": "received"}', 200)),
+        );
         var _fcmApi = HttpFCMApi();
 
         expect(await _fcmApi.sendToken('token'), 'received');
@@ -28,8 +29,9 @@ void main() {
         ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
         expect(_fcmApi.sendToken('token'), throwsA(isInstanceOf<Failure>()));
 
-        ApiUtils.client =
-            MockClient((_) => throw UnprocessableIdentityException(''));
+        ApiUtils.client = MockClient(
+          (_) => throw UnprocessableIdentityException(''),
+        );
         expect(_fcmApi.sendToken('token'), throwsA(isInstanceOf<Failure>()));
 
         ApiUtils.client = MockClient((_) => throw Exception(''));

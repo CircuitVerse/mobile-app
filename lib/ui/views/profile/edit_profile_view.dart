@@ -79,10 +79,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                         _model.removePhoto();
                         Get.back();
                       },
-                      icon: const Icon(
-                        Icons.delete,
-                        color: CVTheme.red,
-                      ),
+                      icon: const Icon(Icons.delete, color: CVTheme.red),
                     ),
                   ],
                 ),
@@ -126,13 +123,14 @@ class _EditProfileViewState extends State<EditProfileView> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: _model.imageUpdated
-                      ? FileImage(_model.updatedImage!)
-                      : imageURL.toLowerCase().contains('default') ||
+                  image:
+                      _model.imageUpdated
+                          ? FileImage(_model.updatedImage!)
+                          : imageURL.toLowerCase().contains('default') ||
                               _model.removeImage
                           ? const AssetImage(
-                              'assets/images/profile/default_icon.jpg',
-                            )
+                            'assets/images/profile/default_icon.jpg',
+                          )
                           : NetworkImage(imageURL) as ImageProvider,
                 ),
               ),
@@ -146,10 +144,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                   shape: BoxShape.circle,
                   color: CVTheme.highlightText(context),
                 ),
-                child: const Icon(
-                  Icons.camera_alt,
-                  color: Colors.white,
-                ),
+                child: const Icon(Icons.camera_alt, color: Colors.white),
               ),
             ),
           ],
@@ -162,11 +157,11 @@ class _EditProfileViewState extends State<EditProfileView> {
     return CVTextField(
       label: 'Name',
       initialValue: _name,
-      validator: (value) =>
-          value?.isEmpty ?? true ? "Name can't be empty" : null,
+      validator:
+          (value) => value?.isEmpty ?? true ? "Name can't be empty" : null,
       onSaved: (value) => _name = value!.trim(),
-      onFieldSubmitted: (_) =>
-          FocusScope.of(context).requestFocus(_nameFocusNode),
+      onFieldSubmitted:
+          (_) => FocusScope.of(context).requestFocus(_nameFocusNode),
     );
   }
 
@@ -190,8 +185,8 @@ class _EditProfileViewState extends State<EditProfileView> {
       focusNode: _countryFocusNode,
       label: 'Educational Institute',
       controller: TextEditingController(text: _educationalInstitute),
-      onSaved: (value) =>
-          _educationalInstitute = (value != '') ? value!.trim() : '',
+      onSaved:
+          (value) => _educationalInstitute = (value != '') ? value!.trim() : '',
       toggle: CVTypeAheadField.EDUCATIONAL_INSTITUTE,
       action: TextInputAction.done,
       countryInstituteObject: locator<CountryInstituteAPI>(),
@@ -218,7 +213,11 @@ class _EditProfileViewState extends State<EditProfileView> {
       _dialogService.showCustomProgressDialog(title: 'Updating..');
 
       await _model.updateProfile(
-          _name, _educationalInstitute, _country, _subscribed);
+        _name,
+        _educationalInstitute,
+        _country,
+        _subscribed,
+      );
 
       _dialogService.popDialog();
 
@@ -252,28 +251,29 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget build(BuildContext context) {
     return BaseView<EditProfileViewModel>(
       onModelReady: (model) => _model = model,
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: const Text('Update Profile')),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                _buildProfilePicture(),
-                const SizedBox(height: 20),
-                _buildNameInput(),
-                _buildCountryField(),
-                _buildInstituteField(),
-                _buildSubscribedField(),
-                const SizedBox(height: 16),
-                _buildSaveDetailsButton(),
-              ],
+      builder:
+          (context, model, child) => Scaffold(
+            appBar: AppBar(title: const Text('Update Profile')),
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _buildProfilePicture(),
+                    const SizedBox(height: 20),
+                    _buildNameInput(),
+                    _buildCountryField(),
+                    _buildInstituteField(),
+                    _buildSubscribedField(),
+                    const SizedBox(height: 16),
+                    _buildSaveDetailsButton(),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

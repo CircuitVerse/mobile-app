@@ -30,9 +30,10 @@ class CVOutlineButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 4),
         child: Text(
           title,
-          style: isBodyText
-              ? Theme.of(context).textTheme.bodyLarge
-              : Theme.of(context).textTheme.titleLarge,
+          style:
+              isBodyText
+                  ? Theme.of(context).textTheme.bodyLarge
+                  : Theme.of(context).textTheme.titleLarge,
         ),
       ),
     );

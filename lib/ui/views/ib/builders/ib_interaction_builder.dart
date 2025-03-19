@@ -29,17 +29,24 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
         var streamController = StreamController<double>();
 
         // Create and configure WebViewController
-        final controller = WebViewController()
-          ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadHtmlString(textContent);
+        final controller =
+            WebViewController()
+              ..setJavaScriptMode(JavaScriptMode.unrestricted)
+              ..loadHtmlString(textContent);
 
         controller.setNavigationDelegate(
-            NavigationDelegate(onPageFinished: (String url) async {
-          final height = double.parse(
-              await controller.runJavaScriptReturningResult(
-                  'document.documentElement.scrollHeight;') as String);
-          streamController.add(height);
-        }));
+          NavigationDelegate(
+            onPageFinished: (String url) async {
+              final height = double.parse(
+                await controller.runJavaScriptReturningResult(
+                      'document.documentElement.scrollHeight;',
+                    )
+                    as String,
+              );
+              streamController.add(height);
+            },
+          ),
+        );
 
         return StreamBuilder<double>(
           initialData: 100,
@@ -47,9 +54,7 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
           builder: (context, snapshot) {
             return SizedBox(
               height: snapshot.data,
-              child: WebViewWidget(
-                controller: controller,
-              ),
+              child: WebViewWidget(controller: controller),
             );
           },
         );

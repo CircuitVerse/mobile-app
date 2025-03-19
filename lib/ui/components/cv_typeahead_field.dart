@@ -15,10 +15,7 @@ class CVTypeAheadField extends StatelessWidget {
     this.maxLines = 1,
     this.validator,
     this.onSaved,
-    this.padding = const EdgeInsets.symmetric(
-      horizontal: 16,
-      vertical: 8,
-    ),
+    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     this.focusNode,
     this.onFieldSubmitted,
     required this.countryInstituteObject,
@@ -51,29 +48,19 @@ class CVTypeAheadField extends StatelessWidget {
         suggestionsCallback: (pattern) async {
           try {
             if (toggle == COUNTRY) {
-              return await countryInstituteObject.getCountries(
-                pattern,
-              );
+              return await countryInstituteObject.getCountries(pattern);
             }
             if (toggle == EDUCATIONAL_INSTITUTE) {
-              return await countryInstituteObject.getInstitutes(
-                pattern,
-              );
+              return await countryInstituteObject.getInstitutes(pattern);
             }
             //// If there is need of some other API Fetch add another if condition
-            return [
-              if (pattern == '') 'No suggestions found' else pattern,
-            ];
+            return [if (pattern == '') 'No suggestions found' else pattern];
           } catch (e) {
-            return [
-              if (pattern == '') 'No suggestions found' else pattern,
-            ];
+            return [if (pattern == '') 'No suggestions found' else pattern];
           }
         },
         itemBuilder: (context, suggestion) {
-          return ListTile(
-            title: Text(suggestion as String),
-          );
+          return ListTile(title: Text(suggestion as String));
         },
         onSelected: (value) {
           if (value != '') {

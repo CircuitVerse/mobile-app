@@ -5,6 +5,6 @@ List mockInstitutes = [
     'web_pages': ['http://www.test.edu'],
     'alpha_two_code': 'Test',
     'country': 'Test',
-    'name': 'Test'
-  }
+    'name': 'Test',
+  },
 ];

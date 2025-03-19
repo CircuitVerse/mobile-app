@@ -42,14 +42,17 @@ void main() {
       var projects = <Project>[];
       projects.add(Project.fromJson(mockProject));
 
-      when(_userProjectsViewModel.FETCH_USER_PROJECTS)
-          .thenAnswer((_) => 'fetch_user_projects');
-      when(_userProjectsViewModel.fetchUserProjects(userId: anyNamed('userId')))
-          .thenReturn(null);
+      when(
+        _userProjectsViewModel.FETCH_USER_PROJECTS,
+      ).thenAnswer((_) => 'fetch_user_projects');
+      when(
+        _userProjectsViewModel.fetchUserProjects(userId: anyNamed('userId')),
+      ).thenReturn(null);
       when(_userProjectsViewModel.isSuccess(any)).thenReturn(true);
       when(_userProjectsViewModel.userProjects).thenAnswer((_) => projects);
-      when(_userProjectsViewModel.previousUserProjectsBatch)
-          .thenAnswer((_) => null);
+      when(
+        _userProjectsViewModel.previousUserProjectsBatch,
+      ).thenAnswer((_) => null);
 
       await tester.pumpWidget(
         GetMaterialApp(
@@ -57,11 +60,7 @@ void main() {
           navigatorObservers: [mockObserver],
           home: BaseView<ProfileViewModel>(
             builder: (context, model, child) {
-              return const Scaffold(
-                body: UserProjectsView(
-                  userId: 'user_id',
-                ),
-              );
+              return const Scaffold(body: UserProjectsView(userId: 'user_id'));
             },
           ),
         ),
@@ -72,8 +71,9 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic UserProjectsView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic UserProjectsView widgets', (
+      WidgetTester tester,
+    ) async {
       await provideMockedNetworkImages(() async {
         await _pumpUserProjectsView(tester);
         await tester.pumpAndSettle();
@@ -83,25 +83,30 @@ void main() {
       });
     });
 
-    testWidgets('Project Page is Pushed onTap View button',
-        (WidgetTester tester) async {
+    testWidgets('Project Page is Pushed onTap View button', (
+      WidgetTester tester,
+    ) async {
       await provideMockedNetworkImages(() async {
         await _pumpUserProjectsView(tester);
         await tester.pumpAndSettle();
 
         var projectDetailsViewModel = MockProjectDetailsViewModel();
         locator.registerSingleton<ProjectDetailsViewModel>(
-            projectDetailsViewModel);
+          projectDetailsViewModel,
+        );
 
         final _recievedProject = Project.fromJson(mockProject);
-        when(projectDetailsViewModel.receivedProject)
-            .thenAnswer((_) => _recievedProject);
+        when(
+          projectDetailsViewModel.receivedProject,
+        ).thenAnswer((_) => _recievedProject);
         when(projectDetailsViewModel.isLoggedIn).thenAnswer((_) => true);
-        when(projectDetailsViewModel.isProjectStarred)
-            .thenAnswer((_) => _recievedProject.attributes.isStarred);
+        when(
+          projectDetailsViewModel.isProjectStarred,
+        ).thenAnswer((_) => _recievedProject.attributes.isStarred);
         when(projectDetailsViewModel.starCount).thenAnswer((_) => 0);
-        when(projectDetailsViewModel.FETCH_PROJECT_DETAILS)
-            .thenAnswer((_) => 'fetch_project_details');
+        when(
+          projectDetailsViewModel.FETCH_PROJECT_DETAILS,
+        ).thenAnswer((_) => 'fetch_project_details');
         when(projectDetailsViewModel.fetchProjectDetails(any)).thenReturn(null);
         when(projectDetailsViewModel.isSuccess(any)).thenReturn(false);
 

@@ -14,10 +14,7 @@ abstract class CollaboratorsApi {
     String listOfMails,
   );
 
-  Future<bool>? deleteCollaborator(
-    String projectId,
-    String collaboratorId,
-  );
+  Future<bool>? deleteCollaborator(String projectId, String collaboratorId);
 }
 
 class HttpCollaboratorsApi implements CollaboratorsApi {
@@ -30,10 +27,7 @@ class HttpCollaboratorsApi implements CollaboratorsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return Collaborators.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
@@ -55,11 +49,7 @@ class HttpCollaboratorsApi implements CollaboratorsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.post(
-        uri,
-        headers: headers,
-        body: json,
-      );
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       var addedCollaborators = AddCollaboratorsResponse.fromJson(jsonResponse);
       return addedCollaborators;
     } on UnauthorizedException {
@@ -81,10 +71,7 @@ class HttpCollaboratorsApi implements CollaboratorsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      await ApiUtils.delete(
-        uri,
-        headers: headers,
-      );
+      await ApiUtils.delete(uri, headers: headers);
       return true;
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);

@@ -40,8 +40,11 @@ class ApiUtils {
     dynamic body,
   }) async {
     try {
-      final response = await client.post(Uri.parse(uri),
-          headers: headers, body: jsonEncode(body));
+      final response = await client.post(
+        Uri.parse(uri),
+        headers: headers,
+        body: jsonEncode(body),
+      );
       return ApiUtils.jsonResponse(response);
     } on SocketException {
       throw Failure(Constants.NO_INTERNET_CONNECTION);
@@ -97,10 +100,7 @@ class ApiUtils {
     dynamic body,
   }) async {
     try {
-      final request = http.MultipartRequest(
-        'PATCH',
-        Uri.parse(uri),
-      );
+      final request = http.MultipartRequest('PATCH', Uri.parse(uri));
       request.headers.addAll(headers);
 
       body ??= {};
@@ -131,10 +131,7 @@ class ApiUtils {
     required Map<String, String> headers,
   }) async {
     try {
-      final response = await client.delete(
-        Uri.parse(uri),
-        headers: headers,
-      );
+      final response = await client.delete(Uri.parse(uri), headers: headers);
       return ApiUtils.jsonResponse(response);
     } on SocketException {
       throw Failure(Constants.NO_INTERNET_CONNECTION);
@@ -143,8 +140,10 @@ class ApiUtils {
     }
   }
 
-  static dynamic jsonResponse(http.Response response,
-      {bool utfDecoder = false}) {
+  static dynamic jsonResponse(
+    http.Response response, {
+    bool utfDecoder = false,
+  }) {
     switch (response.statusCode) {
       case 200:
       case 201:
@@ -153,7 +152,8 @@ class ApiUtils {
         return response.body == ''
             ? {}
             : json.decode(
-                utfDecoder ? utf8.decode(response.bodyBytes) : response.body);
+              utfDecoder ? utf8.decode(response.bodyBytes) : response.body,
+            );
       case 400:
         throw BadRequestException(response.body);
       case 401:

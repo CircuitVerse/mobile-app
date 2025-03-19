@@ -45,22 +45,28 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-          find.byWidgetPredicate(
-              (Widget widget) => widget is Image && widget.height == 300),
-          findsOneWidget);
+        find.byWidgetPredicate(
+          (Widget widget) => widget is Image && widget.height == 300,
+        ),
+        findsOneWidget,
+      );
 
       expect(find.byType(CVTextField), findsOneWidget);
       expect(find.byType(CVPasswordField), findsOneWidget);
       expect(find.text('Forgot Password?'), findsOneWidget);
       expect(find.byType(CVPrimaryButton), findsOneWidget);
-      expect(find.byWidgetPredicate((widget) {
-        return widget is RichText &&
-            widget.text.toPlainText() == 'New User? Sign Up';
-      }), findsOneWidget);
+      expect(
+        find.byWidgetPredicate((widget) {
+          return widget is RichText &&
+              widget.text.toPlainText() == 'New User? Sign Up';
+        }),
+        findsOneWidget,
+      );
     });
 
-    testWidgets('ForgotPassword? onTap takes to ForgotPasswordView',
-        (WidgetTester tester) async {
+    testWidgets('ForgotPassword? onTap takes to ForgotPasswordView', (
+      WidgetTester tester,
+    ) async {
       await _pumpLoginView(tester);
       await tester.pumpAndSettle();
 
@@ -71,15 +77,18 @@ void main() {
       expect(find.byType(ForgotPasswordView), findsOneWidget);
     });
 
-    testWidgets('New User? Sign Up onTap takes to SignupView',
-        (WidgetTester tester) async {
+    testWidgets('New User? Sign Up onTap takes to SignupView', (
+      WidgetTester tester,
+    ) async {
       await _pumpLoginView(tester);
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byWidgetPredicate((widget) {
-        return widget is RichText &&
-            widget.text.toPlainText() == 'New User? Sign Up';
-      }));
+      await tester.tap(
+        find.byWidgetPredicate((widget) {
+          return widget is RichText &&
+              widget.text.toPlainText() == 'New User? Sign Up';
+        }),
+      );
       await tester.pumpAndSettle();
 
       verify(mockObserver.didPush(any, any));
@@ -87,26 +96,27 @@ void main() {
     });
 
     testWidgets(
-        'When email/password is not valid or empty, proper error message should be shown',
-        (WidgetTester tester) async {
-      var _usersApiMock = getAndRegisterUsersApiMock();
+      'When email/password is not valid or empty, proper error message should be shown',
+      (WidgetTester tester) async {
+        var _usersApiMock = getAndRegisterUsersApiMock();
 
-      await _pumpLoginView(tester);
-      await tester.pumpAndSettle();
+        await _pumpLoginView(tester);
+        await tester.pumpAndSettle();
 
-      await tester.tap(find.byType(CVPrimaryButton));
-      await tester.pumpAndSettle();
+        await tester.tap(find.byType(CVPrimaryButton));
+        await tester.pumpAndSettle();
 
-      verifyNever(_usersApiMock.login('', ''));
-      expect(find.text('Please enter a valid email'), findsOneWidget);
-      expect(find.text('Password can\'t be empty'), findsOneWidget);
+        verifyNever(_usersApiMock.login('', ''));
+        expect(find.text('Please enter a valid email'), findsOneWidget);
+        expect(find.text('Password can\'t be empty'), findsOneWidget);
 
-      await tester.enterText(find.byType(CVTextField), 'test@test.com');
-      await tester.tap(find.byType(CVPrimaryButton));
-      await tester.pumpAndSettle();
+        await tester.enterText(find.byType(CVTextField), 'test@test.com');
+        await tester.tap(find.byType(CVPrimaryButton));
+        await tester.pumpAndSettle();
 
-      verifyNever(_usersApiMock.login('test@test.com', ''));
-      expect(find.text('Password can\'t be empty'), findsOneWidget);
-    });
+        verifyNever(_usersApiMock.login('test@test.com', ''));
+        expect(find.text('Password can\'t be empty'), findsOneWidget);
+      },
+    );
   });
 }

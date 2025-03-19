@@ -37,8 +37,9 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds RichText and Text Widgets on AboutTosView',
-        (WidgetTester tester) async {
+    testWidgets('finds RichText and Text Widgets on AboutTosView', (
+      WidgetTester tester,
+    ) async {
       await _pumpAboutPrivacyPolicyView(tester);
 
       expect(find.byType(RichText), findsWidgets);

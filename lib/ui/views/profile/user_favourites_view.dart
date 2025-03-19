@@ -10,10 +10,7 @@ import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class UserFavouritesView extends StatefulWidget {
-  const UserFavouritesView({
-    super.key,
-    this.userId,
-  });
+  const UserFavouritesView({super.key, this.userId});
 
   final String? userId;
 
@@ -50,8 +47,10 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
                 project: project,
                 isHeaderFilled: false,
                 onPressed: () async {
-                  var _result = await Get.toNamed(ProjectDetailsView.id,
-                      arguments: project);
+                  var _result = await Get.toNamed(
+                    ProjectDetailsView.id,
+                    arguments: project,
+                  );
                   if (_result is bool) model.onProjectDeleted(project.id);
                   if (_result is Project) {
                     model.onProjectChanged(_result);
@@ -71,10 +70,7 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
           );
         }
 
-        return ListView(
-          padding: const EdgeInsets.all(8),
-          children: _items,
-        );
+        return ListView(padding: const EdgeInsets.all(8), children: _items);
       },
     );
   }

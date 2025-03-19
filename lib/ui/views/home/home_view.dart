@@ -27,9 +27,9 @@ class _HomeViewState extends State<HomeView> {
         children: <Widget>[
           Text(
             'Dive into the world of Logic Circuits for free!',
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           Text(
@@ -73,64 +73,67 @@ class _HomeViewState extends State<HomeView> {
     }
 
     return BaseView<HomeViewModel>(
-      builder: (context, model, child) => SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: <Widget>[
-            _buildHeader(),
-            _buildHomePageSketch(),
-            _buildTeachersAndContributorButtons(),
-            const CVSubheader(
-              title: 'Features',
-              subtitle:
-                  'Design circuits quickly and easily with a modern and intuitive user interface with drag-and-drop, copy/paste, zoom and more.',
+      builder:
+          (context, model, child) => SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: <Widget>[
+                _buildHeader(),
+                _buildHomePageSketch(),
+                _buildTeachersAndContributorButtons(),
+                const CVSubheader(
+                  title: 'Features',
+                  subtitle:
+                      'Design circuits quickly and easily with a modern and intuitive user interface with drag-and-drop, copy/paste, zoom and more.',
+                ),
+                const FeatureCard(
+                  assetPath: 'assets/images/homepage/export-hd.png',
+                  cardHeading: 'Explore High Resolution Images',
+                  cardDescription:
+                      'CircuitVerse can export high resolution images in multiple formats including SVG.',
+                ),
+                const FeatureCard(
+                  assetPath:
+                      'assets/images/homepage/combinational-analysis.png',
+                  cardHeading: 'Combinational Analysis',
+                  cardDescription:
+                      'Automatically generate circuit based on truth table data. This is great to create complex logic circuits and can be easily be made into a subcircuit.',
+                ),
+                const FeatureCard(
+                  assetPath: 'assets/images/homepage/embed.png',
+                  cardHeading: 'Embed in Blogs',
+                  cardDescription:
+                      'Since CircuitVerse is built in HTML5, an iFrame can be generated for each project allowing the user to embed it almost anywhere.',
+                ),
+                const FeatureCard(
+                  assetPath: 'assets/images/homepage/sub-circuit.png',
+                  cardHeading: 'Use Sub circuits',
+                  cardDescription:
+                      'Create subcircuits once and use them repeatedly. This allows easier and more structured design.',
+                ),
+                const FeatureCard(
+                  assetPath: 'assets/images/homepage/multi-bit-bus.png',
+                  cardHeading: 'Multi Bit Buses and components',
+                  cardDescription:
+                      'CircuitVerse supports multi bit wires, this means circuit design is easier, faster and uncluttered.',
+                ),
+                const SizedBox(height: 16),
+                const CVSubheader(
+                  title: 'Editor Picks',
+                  subtitle:
+                      'These circuits have been hand-picked by our authors for their awesomeness',
+                ),
+                const FeaturedProjectsView(embed: true),
+                CVOutlineButton(
+                  title: 'Explore More',
+                  isPrimaryDark: true,
+                  onPressed:
+                      () =>
+                          context.read<CVLandingViewModel>().selectedIndex = 1,
+                ),
+              ],
             ),
-            const FeatureCard(
-              assetPath: 'assets/images/homepage/export-hd.png',
-              cardHeading: 'Explore High Resolution Images',
-              cardDescription:
-                  'CircuitVerse can export high resolution images in multiple formats including SVG.',
-            ),
-            const FeatureCard(
-              assetPath: 'assets/images/homepage/combinational-analysis.png',
-              cardHeading: 'Combinational Analysis',
-              cardDescription:
-                  'Automatically generate circuit based on truth table data. This is great to create complex logic circuits and can be easily be made into a subcircuit.',
-            ),
-            const FeatureCard(
-              assetPath: 'assets/images/homepage/embed.png',
-              cardHeading: 'Embed in Blogs',
-              cardDescription:
-                  'Since CircuitVerse is built in HTML5, an iFrame can be generated for each project allowing the user to embed it almost anywhere.',
-            ),
-            const FeatureCard(
-              assetPath: 'assets/images/homepage/sub-circuit.png',
-              cardHeading: 'Use Sub circuits',
-              cardDescription:
-                  'Create subcircuits once and use them repeatedly. This allows easier and more structured design.',
-            ),
-            const FeatureCard(
-              assetPath: 'assets/images/homepage/multi-bit-bus.png',
-              cardHeading: 'Multi Bit Buses and components',
-              cardDescription:
-                  'CircuitVerse supports multi bit wires, this means circuit design is easier, faster and uncluttered.',
-            ),
-            const SizedBox(height: 16),
-            const CVSubheader(
-              title: 'Editor Picks',
-              subtitle:
-                  'These circuits have been hand-picked by our authors for their awesomeness',
-            ),
-            const FeaturedProjectsView(embed: true),
-            CVOutlineButton(
-              title: 'Explore More',
-              isPrimaryDark: true,
-              onPressed: () =>
-                  context.read<CVLandingViewModel>().selectedIndex = 1,
-            ),
-          ],
-        ),
-      ),
+          ),
     );
   }
 }

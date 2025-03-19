@@ -92,39 +92,42 @@ class _AboutViewState extends State<AboutView> {
         _model = model;
         _model.fetchContributors();
       },
-      builder: (context, model, child) => Scaffold(
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: <Widget>[
-              CVHeader(
-                title: AppLocalizations.of(context)!.about_title,
-                subtitle: AppLocalizations.of(context)?.about_subtitle,
-                description: AppLocalizations.of(context)?.about_description,
+      builder:
+          (context, model, child) => Scaffold(
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: <Widget>[
+                  CVHeader(
+                    title: AppLocalizations.of(context)!.about_title,
+                    subtitle: AppLocalizations.of(context)?.about_subtitle,
+                    description:
+                        AppLocalizations.of(context)?.about_description,
+                  ),
+                  _buildTosAndPrivacyButtons(),
+                  CircuitVerseSocialCard(
+                    imagePath: 'assets/images/contribute/email.png',
+                    title: AppLocalizations.of(context)!.email_us_at,
+                    description: 'support@circuitverse.org',
+                    url: 'mailto:support@circuitverse.org',
+                  ),
+                  CircuitVerseSocialCard(
+                    imagePath: 'assets/images/contribute/slack.png',
+                    title: AppLocalizations.of(context)!.join_slack,
+                    description: AppLocalizations.of(context)!.slack_channel,
+                    url: 'https://circuitverse.org/slack',
+                  ),
+                  const Divider(),
+                  CVSubheader(
+                    title: AppLocalizations.of(context)!.contributors,
+                    subtitle:
+                        AppLocalizations.of(context)?.contributors_subtitle,
+                  ),
+                  _buildContributorsList(),
+                ],
               ),
-              _buildTosAndPrivacyButtons(),
-              CircuitVerseSocialCard(
-                imagePath: 'assets/images/contribute/email.png',
-                title: AppLocalizations.of(context)!.email_us_at,
-                description: 'support@circuitverse.org',
-                url: 'mailto:support@circuitverse.org',
-              ),
-              CircuitVerseSocialCard(
-                imagePath: 'assets/images/contribute/slack.png',
-                title: AppLocalizations.of(context)!.join_slack,
-                description: AppLocalizations.of(context)!.slack_channel,
-                url: 'https://circuitverse.org/slack',
-              ),
-              const Divider(),
-              CVSubheader(
-                title: AppLocalizations.of(context)!.contributors,
-                subtitle: AppLocalizations.of(context)?.contributors_subtitle,
-              ),
-              _buildContributorsList(),
-            ],
+            ),
           ),
-        ),
-      ),
     );
   }
 }

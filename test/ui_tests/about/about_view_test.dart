@@ -56,8 +56,9 @@ void main() {
     });
 
     group('AboutView widgets for different API states -', () {
-      testWidgets('when error response, finds GENERIC_FAILURE',
-          (WidgetTester tester) async {
+      testWidgets('when error response, finds GENERIC_FAILURE', (
+        WidgetTester tester,
+      ) async {
         await _pumpAboutView(tester);
         await tester.pumpAndSettle();
 
@@ -65,8 +66,9 @@ void main() {
         expect(find.text(Constants.GENERIC_FAILURE), findsOneWidget);
       });
 
-      testWidgets('when success response, finds contributor avatars',
-          (WidgetTester tester) async {
+      testWidgets('when success response, finds contributor avatars', (
+        WidgetTester tester,
+      ) async {
         await provideMockedNetworkImages(() async {
           // var _mockContributorsApi = getAndRegisterContributorsApiMock();
           var _mockContributorsApi = MockContributorsApi();
@@ -86,14 +88,18 @@ void main() {
       });
     });
 
-    testWidgets('Terms of Service Page is Pushed onTap',
-        (WidgetTester tester) async {
+    testWidgets('Terms of Service Page is Pushed onTap', (
+      WidgetTester tester,
+    ) async {
       await _pumpAboutView(tester);
 
-      expect(find.widgetWithText(CVPrimaryButton, 'Terms Of Service'),
-          findsOneWidget);
-      await tester
-          .tap(find.widgetWithText(CVPrimaryButton, 'Terms Of Service'));
+      expect(
+        find.widgetWithText(CVPrimaryButton, 'Terms Of Service'),
+        findsOneWidget,
+      );
+      await tester.tap(
+        find.widgetWithText(CVPrimaryButton, 'Terms Of Service'),
+      );
       await tester.pumpAndSettle();
 
       verify(mockObserver.didPush(any, any));
@@ -103,8 +109,10 @@ void main() {
     testWidgets('Policy Page is Pushed onTap', (WidgetTester tester) async {
       await _pumpAboutView(tester);
 
-      expect(find.widgetWithText(CVPrimaryButton, 'Privacy Policy'),
-          findsOneWidget);
+      expect(
+        find.widgetWithText(CVPrimaryButton, 'Privacy Policy'),
+        findsOneWidget,
+      );
       await tester.tap(find.widgetWithText(CVPrimaryButton, 'Privacy Policy'));
       await tester.pumpAndSettle();
 

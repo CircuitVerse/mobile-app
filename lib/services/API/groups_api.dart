@@ -29,10 +29,7 @@ class HttpGroupsApi implements GroupsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return Groups.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
@@ -48,10 +45,7 @@ class HttpGroupsApi implements GroupsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return Groups.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
@@ -67,10 +61,7 @@ class HttpGroupsApi implements GroupsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return Group.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
@@ -91,11 +82,7 @@ class HttpGroupsApi implements GroupsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.post(
-        uri,
-        headers: headers,
-        body: json,
-      );
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       return Group.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
@@ -136,10 +123,7 @@ class HttpGroupsApi implements GroupsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      await ApiUtils.delete(
-        uri,
-        headers: headers,
-      );
+      await ApiUtils.delete(uri, headers: headers);
       return true;
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
