@@ -39,7 +39,7 @@ jobs:
         id: changelog
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          config: "angular" # or any other preset
+          config: "angular"
           output-file: "CHANGELOG.md"
           version: ${{ steps.extract_version.outputs.VERSION }}
 
@@ -47,16 +47,17 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git tag ${{ steps.extract_version.outputs.VERSION }}${{ inputs.release_type == 'beta' && '-beta' || '' }} -a -m "Release ${{ steps.extract_version.outputs.VERSION }}${{ inputs.release_type == 'beta' && '-beta' || '' }}"
-          git push origin ${{ steps.extract_version.outputs.VERSION }}${{ inputs.release_type == 'beta' && '-beta' || '' }}
+          TAG_NAME="v${{ steps.extract_version.outputs.VERSION }}-${{ inputs.release_type }}"
+          git tag $TAG_NAME -a -m "Release $TAG_NAME"
+          git push origin $TAG_NAME
 
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.extract_version.outputs.VERSION }}${{ inputs.release_type == 'beta' && '-beta' || '' }}
-          release_name: Release ${{ steps.extract_version.outputs.VERSION }}${{ inputs.release_type == 'beta' && '-beta' || '' }}
+          tag_name: "v${{ steps.extract_version.outputs.VERSION }}-${{ inputs.release_type }}"
+          release_name: "Release v${{ steps.extract_version.outputs.VERSION }}-${{ inputs.release_type }}"
           body: ${{ steps.changelog.outputs.clean_changelog }}
           draft: false
           prerelease: ${{ inputs.release_type == 'beta' }}
