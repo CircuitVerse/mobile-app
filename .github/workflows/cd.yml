@@ -90,7 +90,7 @@ jobs:
 
       - run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
-      - run: flutter format --set-exit-if-changed .
+      - run: dart format --set-exit-if-changed $(git ls-files '*.dart' ':!:*.mocks.dart')
 
       - run: flutter analyze .
 
