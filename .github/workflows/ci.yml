@@ -52,6 +52,17 @@ jobs:
           flag-name: run-${{ matrix.platform }}
           parallel: true
 
+      - name: Cache Gradle Wrapper and Gradle Cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            build/app/outputs/apk/release/
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Build APK (Android)
         run: flutter build apk
 
@@ -76,4 +87,4 @@ jobs:
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true 
+          parallel-finished: true
