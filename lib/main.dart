@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
@@ -32,6 +33,8 @@ class CircuitVerseMobile extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    var delegates = AppLocalizations.localizationsDelegates.toList();
+    delegates.add(FlutterQuillLocalizations.delegate);
 
     return KeyboardDismissOnTap(
       child: ThemeProvider(
@@ -73,8 +76,7 @@ class CircuitVerseMobile extends StatelessWidget {
             builder:
                 (themeContext) => GetMaterialApp(
                   title: 'CircuitVerse Mobile',
-                  localizationsDelegates:
-                      AppLocalizations.localizationsDelegates,
+                  localizationsDelegates: delegates,
                   supportedLocales: AppLocalizations.supportedLocales,
                   onGenerateTitle:
                       (BuildContext context) =>

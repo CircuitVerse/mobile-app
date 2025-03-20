@@ -1,6 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_summernote/flutter_summernote.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/cv_theme.dart';
@@ -31,7 +31,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   final _formKey = GlobalKey<FormState>();
   String _gradingScale = 'No Scale';
   late String _name;
-  final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
+  final QuillController _controller = QuillController.basic();
   late DateTime _deadline;
   final List<String> _restrictions = [];
   final List<String> _gradingOptions = [
@@ -55,7 +55,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   Widget _buildDescriptionInput() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: CVHtmlEditor(editorKey: _descriptionEditor),
+      child: CVHtmlEditor(controller: _controller),
     );
   }
 
@@ -209,8 +209,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       // [ISSUE] [html_editor] Throws error in Tests
       String _descriptionEditorText;
       try {
-        _descriptionEditorText =
-            await _descriptionEditor.currentState!.getText();
+        _descriptionEditorText = _controller.document.toPlainText();
       } on NoSuchMethodError {
         debugPrint(
           'Handled html_editor error. NOTE: This should only throw during tests.',
