@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
-import 'package:flutter_summernote/flutter_summernote.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
@@ -29,7 +29,7 @@ class _EditProjectViewState extends State<EditProjectView> {
   final _formKey = GlobalKey<FormState>();
   late String _name, _projectAccessType;
   late List<String> _tags;
-  final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
+  final QuillController _controller = QuillController.basic();
 
   final _nameFocusNode = FocusNode();
   final _tagsListFocusNode = FocusNode();
@@ -109,7 +109,7 @@ class _EditProjectViewState extends State<EditProjectView> {
   Widget _buildDescriptionInput() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: CVHtmlEditor(editorKey: _descriptionEditor),
+      child: CVHtmlEditor(controller: _controller),
     );
   }
 
@@ -123,7 +123,7 @@ class _EditProjectViewState extends State<EditProjectView> {
         widget.project.id,
         name: _name,
         projectAccessType: _projectAccessType,
-        description: await _descriptionEditor.currentState!.getText(),
+        description: _controller.document.toPlainText(),
         tagsList: _tags,
       );
 
