@@ -1,0 +1,28 @@
+version: 2
+updates:
+  - package-ecosystem: "pub"
+    directory: "/" # Root directory of your Flutter project
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "flutter" # Ignore Flutter SDK updates
+      - dependency-name: "sdk" # Ignore Dart SDK updates
+    labels:
+      - "dependencies"
+      - "pub"
+    commit-message:
+      prefix: "chore(deps):"
+      prefix-development: "chore(dev-deps):"
+      include: "scope"
+  - package-ecosystem: "github-actions"
+    directory: "/" # Root directory of your Flutter project
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore(gha):"
+      include: "scope"
