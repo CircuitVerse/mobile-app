@@ -68,7 +68,7 @@ dependencies:
   markdown: any
   webview_flutter: any
 dev_dependencies:
-  build_runner: ^2.1.7
+  build_runner: ^2.4.15
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
