@@ -41,7 +41,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           config: "angular"
           output-file: "CHANGELOG.md"
-          version: ${{ steps.extract_version.outputs.VERSION }}
+          version-file: "pubspec.yaml "
 
       - name: Create Release Tag
         run: |
