@@ -23,11 +23,14 @@ void main() {
     group('getPublicProjects -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockProjects), 200)));
+          (_) => Future.value(Response(jsonEncode(mockProjects), 200)),
+        );
         var _projectsApi = HttpProjectsApi();
 
-        expect((await _projectsApi.getPublicProjects()).toString(),
-            _projects.toString());
+        expect(
+          (await _projectsApi.getPublicProjects()).toString(),
+          _projects.toString(),
+        );
       });
 
       test('When called & http client throws Exceptions', () async {
@@ -35,128 +38,167 @@ void main() {
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
         expect(
-            _projectsApi.getPublicProjects(), throwsA(isInstanceOf<Failure>()));
+          _projectsApi.getPublicProjects(),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
 
     group('getUserProjects -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockProjects), 200)));
+          (_) => Future.value(Response(jsonEncode(mockProjects), 200)),
+        );
         var _projectsApi = HttpProjectsApi();
 
-        expect((await _projectsApi.getUserProjects('1')).toString(),
-            _projects.toString());
+        expect(
+          (await _projectsApi.getUserProjects('1')).toString(),
+          _projects.toString(),
+        );
       });
 
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
         ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
-        expect(_projectsApi.getUserProjects('1'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.getUserProjects('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw NotFoundException(''));
-        expect(_projectsApi.getUserProjects('1'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.getUserProjects('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_projectsApi.getUserProjects('1'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.getUserProjects('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
 
     group('getFeaturedProjects -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockProjects), 200)));
+          (_) => Future.value(Response(jsonEncode(mockProjects), 200)),
+        );
         var _projectsApi = HttpProjectsApi();
 
-        expect((await _projectsApi.getFeaturedProjects()).toString(),
-            _projects.toString());
+        expect(
+          (await _projectsApi.getFeaturedProjects()).toString(),
+          _projects.toString(),
+        );
       });
 
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
         ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
-        expect(_projectsApi.getFeaturedProjects(),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.getFeaturedProjects(),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_projectsApi.getFeaturedProjects(),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.getFeaturedProjects(),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
 
     group('getUserFavourites -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockProjects), 200)));
+          (_) => Future.value(Response(jsonEncode(mockProjects), 200)),
+        );
         var _projectsApi = HttpProjectsApi();
 
-        expect((await _projectsApi.getUserFavourites('1')).toString(),
-            _projects.toString());
+        expect(
+          (await _projectsApi.getUserFavourites('1')).toString(),
+          _projects.toString(),
+        );
       });
 
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
         ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
-        expect(_projectsApi.getUserFavourites('1'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.getUserFavourites('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_projectsApi.getUserFavourites('1'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.getUserFavourites('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
 
     group('getProjectDetails -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockProject), 200)));
+          (_) => Future.value(Response(jsonEncode(mockProject), 200)),
+        );
         var _projectsApi = HttpProjectsApi();
 
-        expect((await _projectsApi.getProjectDetails('1')).toString(),
-            _project.toString());
+        expect(
+          (await _projectsApi.getProjectDetails('1')).toString(),
+          _project.toString(),
+        );
       });
 
       test('When called & http client throws Exceptions', () async {
         var _projectsApi = HttpProjectsApi();
 
         ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
-        expect(_projectsApi.getProjectDetails('1'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.getProjectDetails('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
-        expect(_projectsApi.getProjectDetails('1'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.getProjectDetails('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw NotFoundException(''));
-        expect(_projectsApi.getProjectDetails('1'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.getProjectDetails('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_projectsApi.getProjectDetails('1'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.getProjectDetails('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
 
     group('updateProject -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockProject), 202)));
+          (_) => Future.value(Response(jsonEncode(mockProject), 202)),
+        );
         var _projectsApi = HttpProjectsApi();
 
         expect(
-            (await _projectsApi.updateProject('1',
-                    name: 'Test Project',
-                    projectAccessType: 'Public',
-                    description: 'description',
-                    tagsList: []))
-                .toString(),
-            _project.toString());
+          (await _projectsApi.updateProject(
+            '1',
+            name: 'Test Project',
+            projectAccessType: 'Public',
+            description: 'description',
+            tagsList: [],
+          )).toString(),
+          _project.toString(),
+        );
       });
 
       test('When called & http client throws Exceptions', () async {
@@ -164,48 +206,63 @@ void main() {
 
         ApiUtils.client = MockClient((_) => throw BadRequestException(''));
         expect(
-            _projectsApi.updateProject('1',
-                name: 'Test Project',
-                projectAccessType: 'Public',
-                description: 'description',
-                tagsList: []),
-            throwsA(isInstanceOf<Failure>()));
+          _projectsApi.updateProject(
+            '1',
+            name: 'Test Project',
+            projectAccessType: 'Public',
+            description: 'description',
+            tagsList: [],
+          ),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
         expect(
-            _projectsApi.updateProject('1',
-                name: 'Test Project',
-                projectAccessType: 'Public',
-                description: 'description',
-                tagsList: []),
-            throwsA(isInstanceOf<Failure>()));
+          _projectsApi.updateProject(
+            '1',
+            name: 'Test Project',
+            projectAccessType: 'Public',
+            description: 'description',
+            tagsList: [],
+          ),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
         expect(
-            _projectsApi.updateProject('1',
-                name: 'Test Project',
-                projectAccessType: 'Public',
-                description: 'description',
-                tagsList: []),
-            throwsA(isInstanceOf<Failure>()));
+          _projectsApi.updateProject(
+            '1',
+            name: 'Test Project',
+            projectAccessType: 'Public',
+            description: 'description',
+            tagsList: [],
+          ),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw NotFoundException(''));
         expect(
-            _projectsApi.updateProject('1',
-                name: 'Test Project',
-                projectAccessType: 'Public',
-                description: 'description',
-                tagsList: []),
-            throwsA(isInstanceOf<Failure>()));
+          _projectsApi.updateProject(
+            '1',
+            name: 'Test Project',
+            projectAccessType: 'Public',
+            description: 'description',
+            tagsList: [],
+          ),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
         expect(
-            _projectsApi.updateProject('1',
-                name: 'Test Project',
-                projectAccessType: 'Public',
-                description: 'description',
-                tagsList: []),
-            throwsA(isInstanceOf<Failure>()));
+          _projectsApi.updateProject(
+            '1',
+            name: 'Test Project',
+            projectAccessType: 'Public',
+            description: 'description',
+            tagsList: [],
+          ),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
 
@@ -222,26 +279,35 @@ void main() {
 
         ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
         expect(
-            _projectsApi.deleteProject('1'), throwsA(isInstanceOf<Failure>()));
+          _projectsApi.deleteProject('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
         expect(
-            _projectsApi.deleteProject('1'), throwsA(isInstanceOf<Failure>()));
+          _projectsApi.deleteProject('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw NotFoundException(''));
         expect(
-            _projectsApi.deleteProject('1'), throwsA(isInstanceOf<Failure>()));
+          _projectsApi.deleteProject('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
         expect(
-            _projectsApi.deleteProject('1'), throwsA(isInstanceOf<Failure>()));
+          _projectsApi.deleteProject('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
 
     group('toggleStarProject -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response('{"message": "toggled"}', 200)));
+          (_) => Future.value(Response('{"message": "toggled"}', 200)),
+        );
         var _projectsApi = HttpProjectsApi();
 
         expect(await _projectsApi.toggleStarProject('1'), 'toggled');
@@ -251,27 +317,36 @@ void main() {
         var _projectsApi = HttpProjectsApi();
 
         ApiUtils.client = MockClient((_) => throw UnauthorizedException(''));
-        expect(_projectsApi.toggleStarProject('1'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.toggleStarProject('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw NotFoundException(''));
-        expect(_projectsApi.toggleStarProject('1'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.toggleStarProject('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_projectsApi.toggleStarProject('1'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _projectsApi.toggleStarProject('1'),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
 
     group('forkProject -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockProject), 204)));
+          (_) => Future.value(Response(jsonEncode(mockProject), 204)),
+        );
         var _projectsApi = HttpProjectsApi();
 
-        expect((await _projectsApi.forkProject('1')).toString(),
-            _project.toString());
+        expect(
+          (await _projectsApi.forkProject('1')).toString(),
+          _project.toString(),
+        );
       });
 
       test('When called & http client throws Exceptions', () async {

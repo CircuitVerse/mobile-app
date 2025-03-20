@@ -20,10 +20,7 @@ import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class AssignmentDetailsView extends StatefulWidget {
-  const AssignmentDetailsView({
-    Key? key,
-    required this.assignment,
-  }) : super(key: key);
+  const AssignmentDetailsView({super.key, required this.assignment});
 
   static const String id = 'assignment_details_view';
   final Assignment assignment;
@@ -77,10 +74,10 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           const SizedBox(width: 8),
           Text(
             'Edit',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Colors.white,
-                ),
-          )
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(color: Colors.white),
+          ),
         ],
       ),
     );
@@ -95,16 +92,16 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           child: Text(
             _recievedAssignment.attributes.name!,
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: CVTheme.textColor(context),
-                  fontWeight: FontWeight.bold,
-                ),
+              color: CVTheme.textColor(context),
+              fontWeight: FontWeight.bold,
+            ),
             textAlign: TextAlign.center,
           ),
         ),
         if (_recievedAssignment.attributes.hasPrimaryMentorAccess) ...[
           const SizedBox(width: 12),
           _buildEditAssignmentButton(),
-        ]
+        ],
       ],
     );
   }
@@ -122,11 +119,12 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: description == null || description.isEmpty
-                  ? 'N.A'
-                  : description,
+              text:
+                  description == null || description.isEmpty
+                      ? 'N.A'
+                      : description,
               style: const TextStyle(fontSize: 18),
-            )
+            ),
           ],
         ),
       ),
@@ -142,18 +140,14 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           Text(
             'Description',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
           ),
           Html(
             data: _recievedAssignment.attributes.description ?? '',
-            style: {
-              'body': Style(
-                fontSize: FontSize(18),
-              )
-            },
-          )
+            style: {'body': Style(fontSize: FontSize(18))},
+          ),
         ],
       ),
     );
@@ -161,41 +155,44 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
   Widget _buildSubmissionAuthors() {
     return Column(
-      children: _model.projects
-          .map(
-            (submission) => InkWell(
-              onTap: () {
-                _model.focussedProject = submission;
-                _gradesController.clear();
-                _remarksController.clear();
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: _model.focussedProject == submission
-                      ? CVTheme.primaryColor
-                      : Colors.transparent,
-                  border: Border.all(
-                    color: CVTheme.grey.withOpacity(0.5),
-                    width: 0.5,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    submission.attributes.authorName,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          color: _model.focussedProject == submission
-                              ? Colors.white
-                              : CVTheme.textColor(context),
+      children:
+          _model.projects
+              .map(
+                (submission) => InkWell(
+                  onTap: () {
+                    _model.focussedProject = submission;
+                    _gradesController.clear();
+                    _remarksController.clear();
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color:
+                          _model.focussedProject == submission
+                              ? CVTheme.primaryColor
+                              : Colors.transparent,
+                      border: Border.all(
+                        color: CVTheme.grey.withValues(alpha: 0.5),
+                        width: 0.5,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        submission.attributes.authorName,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color:
+                              _model.focussedProject == submission
+                                  ? Colors.white
+                                  : CVTheme.textColor(context),
                         ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          )
-          .toList(),
+              )
+              .toList(),
     );
   }
 
@@ -207,9 +204,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             alignment: Alignment.topLeft,
             child: Text(
               'Submissions : ',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(height: 16),
@@ -218,15 +215,16 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             decoration: BoxDecoration(
               border: Border.all(color: CVTheme.primaryColorDark),
             ),
-            child: _model.projects.isEmpty
-                ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'No Submissions yet!',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                  )
-                : _buildSubmissionAuthors(),
+            child:
+                _model.projects.isEmpty
+                    ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'No Submissions yet!',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    )
+                    : _buildSubmissionAuthors(),
           ),
           const SizedBox(height: 4),
           if (_model.focussedProject != null)
@@ -239,12 +237,15 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 child: FadeInImage.memoryNetwork(
                   fit: BoxFit.cover,
                   placeholder: kTransparentImage,
-                  image: EnvironmentConfig.CV_API_BASE_URL.substring(
-                          0, EnvironmentConfig.CV_API_BASE_URL.length - 7) +
+                  image:
+                      EnvironmentConfig.CV_API_BASE_URL.substring(
+                        0,
+                        EnvironmentConfig.CV_API_BASE_URL.length - 7,
+                      ) +
                       _model.focussedProject!.attributes.imagePreview.url,
                 ),
               ),
-            )
+            ),
         ],
       );
     }
@@ -269,10 +270,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         'You have graded the project.',
       );
     } else if (_model.isError(_model.ADD_GRADE)) {
-      SnackBarUtils.showDark(
-        'Error',
-        _model.errorMessageFor(_model.ADD_GRADE),
-      );
+      SnackBarUtils.showDark('Error', _model.errorMessageFor(_model.ADD_GRADE));
     }
   }
 
@@ -355,21 +353,23 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             children: <Widget>[
               Text(
                 'Grades & Remarks',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               CVTextField(
                 label: 'Grade',
                 controller: _gradesController,
                 padding: const EdgeInsets.all(0),
-                type: _recievedAssignment.attributes.gradingScale == 'percent'
-                    ? TextInputType.number
-                    : TextInputType.text,
-                validator: (value) =>
-                    value?.isEmpty ?? true ? "Grade can't be empty" : null,
-                onFieldSubmitted: (_) =>
-                    FocusScope.of(context).requestFocus(_gradeFocusNode),
+                type:
+                    _recievedAssignment.attributes.gradingScale == 'percent'
+                        ? TextInputType.number
+                        : TextInputType.text,
+                validator:
+                    (value) =>
+                        value?.isEmpty ?? true ? "Grade can't be empty" : null,
+                onFieldSubmitted:
+                    (_) => FocusScope.of(context).requestFocus(_gradeFocusNode),
               ),
               const SizedBox(height: 4),
               CVTextField(
@@ -404,11 +404,11 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                       onPressed: () => deleteGrade(_submittedGrade.id),
                       child: Text(
                         'Delete',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: Colors.white,
-                            ),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleLarge?.copyWith(color: Colors.white),
                       ),
-                    )
+                    ),
                 ],
               ),
               const SizedBox(height: 16),
@@ -431,45 +431,48 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           _model.fetchAssignmentDetails(_recievedAssignment.id);
         }
       },
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: const Text('Assignment Details')),
-        body: Builder(builder: (context) {
-          var _attrs = _recievedAssignment.attributes;
-          var _remainingTime = _attrs.deadline.difference(DateTime.now());
+      builder:
+          (context, model, child) => Scaffold(
+            appBar: AppBar(title: const Text('Assignment Details')),
+            body: Builder(
+              builder: (context) {
+                var _attrs = _recievedAssignment.attributes;
+                var _remainingTime = _attrs.deadline.difference(DateTime.now());
 
-          return ListView(
-            padding: const EdgeInsets.all(16),
-            children: <Widget>[
-              _buildHeader(),
-              const SizedBox(height: 16),
-              _buildDetailComponent('Name', _attrs.name),
-              _buildDetailComponent(
-                'Deadline',
-                DateFormat.yMEd().add_jms().format(_attrs.deadline),
-              ),
-              if (!_remainingTime.isNegative)
-                _buildDetailComponent(
-                  'Time Remaining',
-                  '${_remainingTime.inDays} days ${_remainingTime.inHours.remainder(24)} hours ${_remainingTime.inMinutes.remainder(60)} minutes',
-                ),
-              _buildAssignmentDescription(),
-              _buildDetailComponent(
-                'Restricted Elements',
-                json.decode(_attrs.restrictions).join(' , '),
-              ),
-              const Divider(height: 32),
-              if (_model.isSuccess(_model.FETCH_ASSIGNMENT_DETAILS))
-                Column(
+                return ListView(
+                  padding: const EdgeInsets.all(16),
                   children: <Widget>[
-                    _buildSubmissions(),
+                    _buildHeader(),
                     const SizedBox(height: 16),
-                    _buildGrades(),
+                    _buildDetailComponent('Name', _attrs.name),
+                    _buildDetailComponent(
+                      'Deadline',
+                      DateFormat.yMEd().add_jms().format(_attrs.deadline),
+                    ),
+                    if (!_remainingTime.isNegative)
+                      _buildDetailComponent(
+                        'Time Remaining',
+                        '${_remainingTime.inDays} days ${_remainingTime.inHours.remainder(24)} hours ${_remainingTime.inMinutes.remainder(60)} minutes',
+                      ),
+                    _buildAssignmentDescription(),
+                    _buildDetailComponent(
+                      'Restricted Elements',
+                      json.decode(_attrs.restrictions).join(' , '),
+                    ),
+                    const Divider(height: 32),
+                    if (_model.isSuccess(_model.FETCH_ASSIGNMENT_DETAILS))
+                      Column(
+                        children: <Widget>[
+                          _buildSubmissions(),
+                          const SizedBox(height: 16),
+                          _buildGrades(),
+                        ],
+                      ),
                   ],
-                ),
-            ],
-          );
-        }),
-      ),
+                );
+              },
+            ),
+          ),
     );
   }
 }

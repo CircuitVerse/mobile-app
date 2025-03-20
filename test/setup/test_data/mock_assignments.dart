@@ -14,29 +14,29 @@ Map<String, dynamic> mockAssignments = {
         'created_at': '2020-08-19T15:00:30.423Z',
         'updated_at': '2020-08-20T15:23:03.018Z',
         'grading_scale': 'letter',
-        'grades_finalized': false
+        'grades_finalized': false,
       },
       'relationships': {
         'projects': {
           'data': [
-            {'id': '1', 'type': 'project'}
-          ]
+            {'id': '1', 'type': 'project'},
+          ],
         },
         'grades': {
           'data': [
-            {'id': '1', 'type': 'grade'}
-          ]
-        }
-      }
-    }
+            {'id': '1', 'type': 'grade'},
+          ],
+        },
+      },
+    },
   ],
   'links': {
     'self': '{url}?page[number]=1',
     'first': '{url}?page[number]=1',
     'prev': null,
     'next': '{url}?page[number]=2',
-    'last': '{url}?page[number]=1'
-  }
+    'last': '{url}?page[number]=1',
+  },
 };
 
 Map<String, dynamic> mockAssignment = {
@@ -47,15 +47,15 @@ Map<String, dynamic> mockAssignment = {
     'relationships': {
       'projects': {
         'data': [
-          {'id': '1', 'type': 'project'}
-        ]
+          {'id': '1', 'type': 'project'},
+        ],
       },
       'grades': {
         'data': [
-          {'id': '1', 'type': 'grade'}
-        ]
-      }
-    }
+          {'id': '1', 'type': 'grade'},
+        ],
+      },
+    },
   },
   'included': [
     {
@@ -65,13 +65,13 @@ Map<String, dynamic> mockAssignment = {
         'grade': 'A',
         'remarks': 'Good',
         'created_at': '2020-08-20T15:23:50.073Z',
-        'updated_at': '2020-08-20T15:23:50.073Z'
+        'updated_at': '2020-08-20T15:23:50.073Z',
       },
       'relationships': {
         'project': {
-          'data': {'id': '1', 'type': 'project'}
-        }
-      }
+          'data': {'id': '1', 'type': 'project'},
+        },
+      },
     },
     {
       'id': '1',
@@ -87,16 +87,16 @@ Map<String, dynamic> mockAssignment = {
         'tags': [],
         'is_starred': false,
         'author_name': 'Test',
-        'stars_count': 0
+        'stars_count': 0,
       },
       'relationships': {
         'author': {
-          'data': {'id': '1', 'type': 'author'}
+          'data': {'id': '1', 'type': 'author'},
         },
-        'collaborators': {'data': []}
-      }
-    }
-  ]
+        'collaborators': {'data': []},
+      },
+    },
+  ],
 };
 
 Map<String, dynamic> mockAssignmentAttributes = {
@@ -110,5 +110,5 @@ Map<String, dynamic> mockAssignmentAttributes = {
   'created_at': '2020-08-19T15:00:30.423Z',
   'updated_at': '2020-08-20T15:23:03.018Z',
   'grading_scale': 'letter',
-  'grades_finalized': false
+  'grades_finalized': false,
 };

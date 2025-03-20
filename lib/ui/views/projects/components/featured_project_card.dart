@@ -9,8 +9,8 @@ class FeaturedProjectCard extends StatefulWidget {
   const FeaturedProjectCard({
     required this.project,
     required this.onViewPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Project project;
   final VoidCallback onViewPressed;
@@ -39,8 +39,11 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
           child: FadeInImage.memoryNetwork(
             fit: BoxFit.cover,
             placeholder: kTransparentImage,
-            image: EnvironmentConfig.CV_API_BASE_URL.substring(
-                    0, EnvironmentConfig.CV_API_BASE_URL.length - 7) +
+            image:
+                EnvironmentConfig.CV_API_BASE_URL.substring(
+                  0,
+                  EnvironmentConfig.CV_API_BASE_URL.length - 7,
+                ) +
                 widget.project.attributes.imagePreview.url,
           ),
         ),
@@ -57,9 +60,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
           bottomLeft: Radius.circular(4),
           bottomRight: Radius.circular(4),
         ),
-        border: Border.fromBorderSide(
-          BorderSide(color: CVTheme.primaryColor),
-        ),
+        border: Border.fromBorderSide(BorderSide(color: CVTheme.primaryColor)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,8 +72,8 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: CVTheme.textColor(context),
-                  ),
+                color: CVTheme.textColor(context),
+              ),
             ),
           ),
           CVPrimaryButton(
@@ -94,10 +95,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         shadowColor: CVTheme.primaryColorLight,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            _buildPreview(),
-            _buildFooter(),
-          ],
+          children: <Widget>[_buildPreview(), _buildFooter()],
         ),
       ),
     );

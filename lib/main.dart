@@ -23,7 +23,7 @@ Future<void> main() async {
 }
 
 class CircuitVerseMobile extends StatelessWidget {
-  const CircuitVerseMobile({Key? key}) : super(key: key);
+  const CircuitVerseMobile({super.key});
 
   // This widget is the root of CircuitVerse Mobile.
   @override
@@ -50,9 +50,9 @@ class CircuitVerseMobile extends StatelessWidget {
                 foregroundColor: CVTheme.drawerIcon(context),
               ),
               colorScheme: Theme.of(context).colorScheme.copyWith(
-                    primary: CVTheme.primaryColor,
-                    brightness: Brightness.light,
-                  ),
+                primary: CVTheme.primaryColor,
+                brightness: Brightness.light,
+              ),
             ),
             description: 'LightTheme',
           ),
@@ -70,17 +70,20 @@ class CircuitVerseMobile extends StatelessWidget {
         ],
         child: ThemeConsumer(
           child: Builder(
-            builder: (themeContext) => GetMaterialApp(
-              title: 'CircuitVerse Mobile',
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              onGenerateTitle: (BuildContext context) =>
-                  AppLocalizations.of(context)!.title,
-              debugShowCheckedModeBanner: false,
-              onGenerateRoute: CVRouter.generateRoute,
-              theme: ThemeProvider.themeOf(themeContext).data,
-              home: const StartUpView(),
-            ),
+            builder:
+                (themeContext) => GetMaterialApp(
+                  title: 'CircuitVerse Mobile',
+                  localizationsDelegates:
+                      AppLocalizations.localizationsDelegates,
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  onGenerateTitle:
+                      (BuildContext context) =>
+                          AppLocalizations.of(context)!.title,
+                  debugShowCheckedModeBanner: false,
+                  onGenerateRoute: CVRouter.generateRoute,
+                  theme: ThemeProvider.themeOf(themeContext).data,
+                  home: const StartUpView(),
+                ),
           ),
         ),
       ),

@@ -32,21 +32,28 @@ void main() {
       // Mock AssignmentDetails ViewModel
       var _assignmentsDetailsViewModel = MockAssignmentDetailsViewModel();
       locator.registerSingleton<AssignmentDetailsViewModel>(
-          _assignmentsDetailsViewModel);
+        _assignmentsDetailsViewModel,
+      );
 
-      when(_assignmentsDetailsViewModel.FETCH_ASSIGNMENT_DETAILS)
-          .thenAnswer((_) => 'fetch_assignment');
-      when(_assignmentsDetailsViewModel.fetchAssignmentDetails(any))
-          .thenReturn(null);
+      when(
+        _assignmentsDetailsViewModel.FETCH_ASSIGNMENT_DETAILS,
+      ).thenAnswer((_) => 'fetch_assignment');
+      when(
+        _assignmentsDetailsViewModel.fetchAssignmentDetails(any),
+      ).thenReturn(null);
       when(_assignmentsDetailsViewModel.isSuccess(any)).thenReturn(true);
-      when(_assignmentsDetailsViewModel.assignment)
-          .thenAnswer((_) => _assignment);
-      when(_assignmentsDetailsViewModel.projects)
-          .thenAnswer((_) => _assignment.projects!);
-      when(_assignmentsDetailsViewModel.focussedProject)
-          .thenAnswer((_) => _assignment.projects?.first);
-      when(_assignmentsDetailsViewModel.grades)
-          .thenAnswer((_) => _assignment.grades!);
+      when(
+        _assignmentsDetailsViewModel.assignment,
+      ).thenAnswer((_) => _assignment);
+      when(
+        _assignmentsDetailsViewModel.projects,
+      ).thenAnswer((_) => _assignment.projects!);
+      when(
+        _assignmentsDetailsViewModel.focussedProject,
+      ).thenAnswer((_) => _assignment.projects?.first);
+      when(
+        _assignmentsDetailsViewModel.grades,
+      ).thenAnswer((_) => _assignment.grades!);
 
       await tester.pumpWidget(
         GetMaterialApp(
@@ -61,8 +68,9 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic UpdateAssignmentView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic UpdateAssignmentView widgets', (
+      WidgetTester tester,
+    ) async {
       await provideMockedNetworkImages(() async {
         await _pumpAssignmentDetailsView(tester);
         await tester.pumpAndSettle();
@@ -79,12 +87,15 @@ void main() {
         expect(find.byType(ElevatedButton), findsNWidgets(3));
 
         // Finds Name, Deadline, Restricted Elements
-        expect(find.byWidgetPredicate((widget) {
-          return widget is RichText &&
-              (widget.text.toPlainText() == 'Name : Test' ||
-                  widget.text.toPlainText().contains('Deadline : ') ||
-                  widget.text.toPlainText() == 'Restricted Elements : N.A');
-        }), findsNWidgets(3));
+        expect(
+          find.byWidgetPredicate((widget) {
+            return widget is RichText &&
+                (widget.text.toPlainText() == 'Name : Test' ||
+                    widget.text.toPlainText().contains('Deadline : ') ||
+                    widget.text.toPlainText() == 'Restricted Elements : N.A');
+          }),
+          findsNWidgets(3),
+        );
 
         // Finds HTML description
         expect(find.byType(Html), findsOneWidget);

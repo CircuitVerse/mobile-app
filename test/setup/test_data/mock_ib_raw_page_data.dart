@@ -18,9 +18,9 @@ Map<String, dynamic> mockIbRawPageData1 = {
     'title': 'Home',
     'nav_order': 1,
     'description': '',
-    'permalink': '/'
+    'permalink': '/',
   },
   'front_matter_defaults': {},
   'http_url': 'https://learn.circuitverse.org/',
-  'api_url': 'https://learn.circuitverse.org/_api/pages/index.md'
+  'api_url': 'https://learn.circuitverse.org/_api/pages/index.md',
 };

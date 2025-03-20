@@ -3,11 +3,7 @@ import 'package:get/get.dart';
 
 class SnackBarUtils {
   static void showLight(String title, String message) {
-    Get.snackbar(
-      title,
-      message,
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    Get.snackbar(title, message, snackPosition: SnackPosition.BOTTOM);
   }
 
   static void showDark(String title, String message) {
@@ -15,7 +11,7 @@ class SnackBarUtils {
       title,
       message,
       snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.black.withOpacity(0.8),
+      backgroundColor: Colors.black.withValues(alpha: 0.8),
       colorText: Colors.white,
     );
   }

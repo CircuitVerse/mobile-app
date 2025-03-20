@@ -50,16 +50,9 @@ class HttpUsersApi implements UsersApi {
   Future<String>? login(String email, String password) async {
     var endpoint = '/auth/login';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
-    var json = {
-      'email': email,
-      'password': password,
-    };
+    var json = {'email': email, 'password': password};
     try {
-      var jsonResponse = await ApiUtils.post(
-        uri,
-        headers: headers,
-        body: json,
-      );
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       String token = jsonResponse['token'];
       return token;
     } on UnauthorizedException {
@@ -77,17 +70,9 @@ class HttpUsersApi implements UsersApi {
   Future<String>? signup(String name, String email, String password) async {
     var endpoint = '/auth/signup';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
-    var json = {
-      'name': name,
-      'email': email,
-      'password': password,
-    };
+    var json = {'name': name, 'email': email, 'password': password};
     try {
-      var jsonResponse = await ApiUtils.post(
-        uri,
-        headers: headers,
-        body: json,
-      );
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       return jsonResponse['token'];
     } on ConflictException {
       throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
@@ -105,17 +90,10 @@ class HttpUsersApi implements UsersApi {
   }) async {
     var endpoint = '/oauth/login';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
-    var json = {
-      'access_token': accessToken,
-      'provider': provider,
-    };
+    var json = {'access_token': accessToken, 'provider': provider};
 
     try {
-      var jsonResponse = await ApiUtils.post(
-        uri,
-        headers: headers,
-        body: json,
-      );
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       return jsonResponse['token'];
     } on NotFoundException {
       throw Failure(Constants.USER_AUTH_USER_NOT_FOUND);
@@ -133,17 +111,10 @@ class HttpUsersApi implements UsersApi {
   }) async {
     var endpoint = '/oauth/signup';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
-    var json = {
-      'access_token': accessToken,
-      'provider': provider,
-    };
+    var json = {'access_token': accessToken, 'provider': provider};
 
     try {
-      var jsonResponse = await ApiUtils.post(
-        uri,
-        headers: headers,
-        body: json,
-      );
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       return jsonResponse['token'];
     } on ConflictException {
       throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
@@ -160,10 +131,7 @@ class HttpUsersApi implements UsersApi {
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return User.fromJson(jsonResponse);
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
@@ -180,10 +148,7 @@ class HttpUsersApi implements UsersApi {
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return User.fromJson(jsonResponse);
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
@@ -217,10 +182,7 @@ class HttpUsersApi implements UsersApi {
     var files = <http.MultipartFile>[];
     if (image != null) {
       files.add(
-        await http.MultipartFile.fromPath(
-          'profile_picture',
-          image.path,
-        ),
+        await http.MultipartFile.fromPath('profile_picture', image.path),
       );
     }
 
@@ -246,11 +208,7 @@ class HttpUsersApi implements UsersApi {
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'email': email};
     try {
-      var jsonResponse = await ApiUtils.post(
-        uri,
-        headers: headers,
-        body: json,
-      );
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       return jsonResponse['message'] is String;
     } on NotFoundException {
       throw Failure(Constants.USER_NOT_FOUND);

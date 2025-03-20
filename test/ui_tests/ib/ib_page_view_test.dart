@@ -83,23 +83,24 @@ void main() {
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: ShowCaseWidget(
-            builder: Builder(
-              builder: (_) {
-                return BaseView<IbLandingViewModel>(
-                  builder: (context, model, _) {
-                    return IbPageView(
-                      key: UniqueKey(),
-                      chapter: _chapter,
-                      tocCallback: (val) {},
-                      setPage: (e) {},
-                      showCase: showCase,
-                      setShowCase: (e) {},
-                      globalKeysMap: globalKeyMap,
+            builder:
+                (context) => Builder(
+                  builder: (_) {
+                    return BaseView<IbLandingViewModel>(
+                      builder: (context, model, _) {
+                        return IbPageView(
+                          key: UniqueKey(),
+                          chapter: _chapter,
+                          tocCallback: (val) {},
+                          setPage: (e) {},
+                          showCase: showCase,
+                          setShowCase: (e) {},
+                          globalKeysMap: globalKeyMap,
+                        );
+                      },
                     );
                   },
-                );
-              },
-            ),
+                ),
           ),
         ),
       );
@@ -125,13 +126,16 @@ void main() {
       expect(find.byType(FloatingActionButton), findsNWidgets(2));
 
       // Finds IbContent Widgets
-      expect(find.byWidgetPredicate((widget) {
-        return widget is RichText &&
-            (widget.text.toPlainText() == 'Interactive-Book' ||
-                widget.text.toPlainText() ==
-                    'Learn Digital Logic Design easily.' ||
-                widget.text.toPlainText() == 'Audience');
-      }), findsNWidgets(3));
+      expect(
+        find.byWidgetPredicate((widget) {
+          return widget is RichText &&
+              (widget.text.toPlainText() == 'Interactive-Book' ||
+                  widget.text.toPlainText() ==
+                      'Learn Digital Logic Design easily.' ||
+                  widget.text.toPlainText() == 'Audience');
+        }),
+        findsNWidgets(3),
+      );
       expect(find.byType(Divider), findsNWidgets(1));
     });
   });

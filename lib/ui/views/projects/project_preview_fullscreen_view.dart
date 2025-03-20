@@ -5,10 +5,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ProjectPreviewFullScreen extends StatelessWidget {
-  const ProjectPreviewFullScreen({
-    Key? key,
-    required this.project,
-  }) : super(key: key);
+  const ProjectPreviewFullScreen({super.key, required this.project});
 
   static const String id = 'project_preview_fullscreen_view';
   final Project project;
@@ -16,21 +13,20 @@ class ProjectPreviewFullScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(project.attributes.name),
-      ),
+      appBar: AppBar(title: Text(project.attributes.name)),
       body: Center(
         child: PhotoView.customChild(
-          backgroundDecoration: const BoxDecoration(
-            color: Colors.white,
-          ),
+          backgroundDecoration: const BoxDecoration(color: Colors.white),
           initialScale: 1.0,
           child: FadeInImage.memoryNetwork(
             height: 100,
             width: 50,
             placeholder: kTransparentImage,
-            image: EnvironmentConfig.CV_API_BASE_URL.substring(
-                    0, EnvironmentConfig.CV_API_BASE_URL.length - 7) +
+            image:
+                EnvironmentConfig.CV_API_BASE_URL.substring(
+                  0,
+                  EnvironmentConfig.CV_API_BASE_URL.length - 7,
+                ) +
                 project.attributes.imagePreview.url,
           ),
         ),

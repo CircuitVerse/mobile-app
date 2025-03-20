@@ -42,26 +42,31 @@ void main() {
       when(_profileViewModel.userId).thenAnswer((_) => 'userId');
       when(_profileViewModel.isLoggedIn).thenAnswer((_) => true);
       when(_profileViewModel.isPersonalProfile).thenAnswer((_) => true);
-      when(_profileViewModel.FETCH_USER_PROFILE)
-          .thenAnswer((_) => 'fetch_user_profile');
+      when(
+        _profileViewModel.FETCH_USER_PROFILE,
+      ).thenAnswer((_) => 'fetch_user_profile');
 
       when(_profileViewModel.fetchUserProfile()).thenReturn(null);
 
-      when(_profileViewModel.isSuccess(_profileViewModel.FETCH_USER_PROFILE))
-          .thenReturn(true);
+      when(
+        _profileViewModel.isSuccess(_profileViewModel.FETCH_USER_PROFILE),
+      ).thenReturn(true);
       when(_profileViewModel.user).thenReturn(user);
 
       // Mock User Projects ViewModel
       var _userProjectsViewModel = MockUserProjectsViewModel();
       locator.registerSingleton<UserProjectsViewModel>(_userProjectsViewModel);
 
-      when(_userProjectsViewModel.FETCH_USER_PROJECTS)
-          .thenAnswer((_) => 'fetch_user_projects');
-      when(_userProjectsViewModel.fetchUserProjects(userId: anyNamed('userId')))
-          .thenReturn(null);
+      when(
+        _userProjectsViewModel.FETCH_USER_PROJECTS,
+      ).thenAnswer((_) => 'fetch_user_projects');
+      when(
+        _userProjectsViewModel.fetchUserProjects(userId: anyNamed('userId')),
+      ).thenReturn(null);
       when(_userProjectsViewModel.isSuccess(any)).thenReturn(false);
-      when(_userProjectsViewModel.previousUserProjectsBatch)
-          .thenAnswer((_) => null);
+      when(
+        _userProjectsViewModel.previousUserProjectsBatch,
+      ).thenAnswer((_) => null);
 
       await tester.pumpWidget(
         GetMaterialApp(
@@ -76,8 +81,9 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic ProfileView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic ProfileView widgets', (
+      WidgetTester tester,
+    ) async {
       await provideMockedNetworkImages(() async {
         await _pumpProfileView(tester);
         await tester.pumpAndSettle();
@@ -89,14 +95,17 @@ void main() {
         expect(find.text('Test User'), findsOneWidget);
 
         // Finds Joined, Country, Institute, Subscription
-        expect(find.byWidgetPredicate((widget) {
-          return widget is RichText &&
-              (widget.text.toPlainText().contains('Joined : ') ||
-                  widget.text.toPlainText() == 'Country : India' ||
-                  widget.text.toPlainText() ==
-                      'Educational Institute : Gurukul' ||
-                  widget.text.toPlainText() == 'Subscribed to mails : true');
-        }), findsNWidgets(4));
+        expect(
+          find.byWidgetPredicate((widget) {
+            return widget is RichText &&
+                (widget.text.toPlainText().contains('Joined : ') ||
+                    widget.text.toPlainText() == 'Country : India' ||
+                    widget.text.toPlainText() ==
+                        'Educational Institute : Gurukul' ||
+                    widget.text.toPlainText().contains('Subscribed to mails'));
+          }),
+          findsNWidgets(4),
+        );
 
         // Finds Tabs of Circuits, Favorites
         expect(find.widgetWithText(Tab, 'Circuits'), findsOneWidget);

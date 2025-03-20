@@ -6,38 +6,38 @@ import 'package:mobile_app/services/local_storage_service.dart';
 
 class Groups {
   factory Groups.fromJson(Map<String, dynamic> json) => Groups(
-        data: List<Group>.from(json['data'].map((x) => Group.fromJson(x))),
-        links: Links.fromJson(json['links']),
-      );
-  Groups({
-    required this.data,
-    required this.links,
-  });
+    data: List<Group>.from(json['data'].map((x) => Group.fromJson(x))),
+    links: Links.fromJson(json['links']),
+  );
+  Groups({required this.data, required this.links});
   List<Group> data;
   Links links;
 }
 
 class Group {
   factory Group.fromJson(Map<String, dynamic> json) => Group(
-        id: json['id'] ?? json['data']['id'],
-        type: json['type'] ?? json['data']['type'],
-        attributes: GroupAttributes.fromJson(
-            json['attributes'] ?? json['data']['attributes']),
-        groupMembers: json['included'] != null
+    id: json['id'] ?? json['data']['id'],
+    type: json['type'] ?? json['data']['type'],
+    attributes: GroupAttributes.fromJson(
+      json['attributes'] ?? json['data']['attributes'],
+    ),
+    groupMembers:
+        json['included'] != null
             ? List<GroupMember>.from(
-                json['included']
-                    ?.where((e) => e['type'] == 'group_member')
-                    ?.map((e) => GroupMember.fromJson(e)),
-              )
+              json['included']
+                  ?.where((e) => e['type'] == 'group_member')
+                  ?.map((e) => GroupMember.fromJson(e)),
+            )
             : null,
-        assignments: json['included'] != null
+    assignments:
+        json['included'] != null
             ? List<Assignment>.from(
-                json['included']
-                    ?.where((e) => e['type'] == 'assignment')
-                    ?.map((e) => Assignment.fromJson(e)),
-              )
+              json['included']
+                  ?.where((e) => e['type'] == 'assignment')
+                  ?.map((e) => Assignment.fromJson(e)),
+            )
             : null,
-      );
+  );
   Group({
     required this.id,
     required this.type,

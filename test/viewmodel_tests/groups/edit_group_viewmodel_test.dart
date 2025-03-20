@@ -18,8 +18,9 @@ void main() {
     group('updateGrade -', () {
       test('When called & service returns success response', () async {
         var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.updateGroup('1', 'Test'))
-            .thenAnswer((_) => Future.value(_group));
+        when(
+          _mockGroupsApi.updateGroup('1', 'Test'),
+        ).thenAnswer((_) => Future.value(_group));
 
         var _model = EditGroupViewModel();
         await _model.updateGroup('1', 'Test');
@@ -34,16 +35,19 @@ void main() {
 
       test('When called & service returns error', () async {
         var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.updateGroup('1', 'Test'))
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _mockGroupsApi.updateGroup('1', 'Test'),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = EditGroupViewModel();
         await _model.updateGroup('1', 'Test');
 
         // verify Error ViewState with proper error message..
         expect(_model.stateFor(_model.UPDATE_GROUP), ViewState.Error);
-        expect(_model.errorMessageFor(_model.UPDATE_GROUP),
-            'Some Error Occurred!');
+        expect(
+          _model.errorMessageFor(_model.UPDATE_GROUP),
+          'Some Error Occurred!',
+        );
 
         // verify group is not populated on failure
         expect(_model.updatedGroup, null);

@@ -4,12 +4,12 @@ import 'package:mobile_app/models/group_members.dart';
 
 class MemberCard extends StatelessWidget {
   const MemberCard({
-    Key? key,
+    super.key,
     required this.member,
     this.hasMentorAccess = false,
     required this.onDeletePressed,
     required this.onEditPressed,
-  }) : super(key: key);
+  });
 
   final GroupMember member;
   final bool hasMentorAccess;
@@ -28,7 +28,7 @@ class MemberCard extends StatelessWidget {
             color: CVTheme.boxShadow(context),
             offset: const Offset(0, 3),
             blurRadius: 2,
-          )
+          ),
         ],
         color: CVTheme.boxBg(context),
       ),
@@ -66,15 +66,12 @@ class MemberCard extends StatelessWidget {
                 const SizedBox(height: 10),
                 GestureDetector(
                   onTap: onDeletePressed,
-                  child: const Icon(
-                    Icons.delete_outline,
-                    color: CVTheme.red,
-                  ),
+                  child: const Icon(Icons.delete_outline, color: CVTheme.red),
                 ),
               ],
             )
           else
-            Container()
+            Container(),
         ],
       ),
     );

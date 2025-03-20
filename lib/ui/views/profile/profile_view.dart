@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({Key? key, this.userId}) : super(key: key);
+  const ProfileView({super.key, this.userId});
 
   static const String id = 'profile_view';
   final String? userId;
@@ -27,7 +27,8 @@ class _ProfileViewState extends State<ProfileView> {
   late ProfileViewModel _model;
 
   Widget _buildProfileImage() {
-    final imageURL = EnvironmentConfig.CV_BASE_URL +
+    final imageURL =
+        EnvironmentConfig.CV_BASE_URL +
         (_model.user?.data.attributes.profilePicture ?? 'Default');
     return Container(
       key: const Key('profile_image'),
@@ -37,9 +38,10 @@ class _ProfileViewState extends State<ProfileView> {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         image: DecorationImage(
-          image: imageURL.toLowerCase().contains('default')
-              ? const AssetImage('assets/images/profile/default_icon.jpg')
-              : NetworkImage(imageURL) as ImageProvider,
+          image:
+              imageURL.toLowerCase().contains('default')
+                  ? const AssetImage('assets/images/profile/default_icon.jpg')
+                  : NetworkImage(imageURL) as ImageProvider,
         ),
       ),
     );
@@ -53,9 +55,9 @@ class _ProfileViewState extends State<ProfileView> {
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+        style: Theme.of(
+          context,
+        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -70,13 +72,11 @@ class _ProfileViewState extends State<ProfileView> {
           children: <TextSpan>[
             TextSpan(
               text: '$title : ',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
-            TextSpan(
-              text: description?.isEmpty ?? true ? 'N.A' : description,
-            )
+            TextSpan(text: description?.isEmpty ?? true ? 'N.A' : description),
           ],
         ),
       ),
@@ -86,9 +86,7 @@ class _ProfileViewState extends State<ProfileView> {
   Widget _buildEditProfileButton() {
     if (_model.isLoggedIn && _model.isPersonalProfile) {
       return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: CVTheme.primaryColor,
-        ),
+        style: ElevatedButton.styleFrom(backgroundColor: CVTheme.primaryColor),
         onPressed: () async {
           await Get.toNamed(EditProfileView.id)?.then((_updatedUser) {
             if (_updatedUser is User) {
@@ -101,9 +99,9 @@ class _ProfileViewState extends State<ProfileView> {
         },
         child: Text(
           'Edit Profile',
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.white,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyLarge?.copyWith(color: Colors.white),
         ),
       );
     }
@@ -126,10 +124,7 @@ class _ProfileViewState extends State<ProfileView> {
             Expanded(
               flex: 1,
               child: Column(
-                children: <Widget>[
-                  _buildProfileImage(),
-                  _buildNameComponent(),
-                ],
+                children: <Widget>[_buildProfileImage(), _buildNameComponent()],
               ),
             ),
             Expanded(
@@ -143,21 +138,17 @@ class _ProfileViewState extends State<ProfileView> {
                         ? timeago.format(_attrs!.createdAt!)
                         : null,
                   ),
-                  _buildProfileComponent(
-                    'Country',
-                    _attrs?.country,
-                  ),
+                  _buildProfileComponent('Country', _attrs?.country),
                   _buildProfileComponent(
                     'Educational Institute',
                     _attrs?.educationalInstitute,
                   ),
-
                   if (_model.isLoggedIn && _model.isPersonalProfile)
                     _buildProfileComponent(
                       'Subscribed to mails',
                       _attrs?.subscribed == true ? "Yes" : "No",
                     ),
-                  _buildEditProfileButton()
+                  _buildEditProfileButton(),
                 ],
               ),
             ),
@@ -179,7 +170,7 @@ class _ProfileViewState extends State<ProfileView> {
           length: 2,
           child: Scaffold(
             appBar: CVTabBar(
-              color: CVTheme.lightGrey.withOpacity(0.2),
+              color: CVTheme.lightGrey.withValues(alpha: 0.2),
               tabBar: const TabBar(
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.black87,
@@ -188,10 +179,7 @@ class _ProfileViewState extends State<ProfileView> {
                   color: CVTheme.primaryColor,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
                 ),
-                tabs: [
-                  Tab(text: 'Circuits'),
-                  Tab(text: 'Favourites'),
-                ],
+                tabs: [Tab(text: 'Circuits'), Tab(text: 'Favourites')],
               ),
             ),
             body: TabBarView(
@@ -214,24 +202,23 @@ class _ProfileViewState extends State<ProfileView> {
         _model.userId = widget.userId;
         _model.fetchUserProfile();
       },
-      builder: (context, model, child) => Scaffold(
-        appBar: widget.userId != null
-            ? AppBar(
-                title: const Text('Profile'),
-                centerTitle: true,
-              )
-            : null,
-        body: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: <Widget>[
-              _buildProfileCard(),
-              const SizedBox(height: 8),
-              _buildProjectsTabBar(),
-            ],
+      builder:
+          (context, model, child) => Scaffold(
+            appBar:
+                widget.userId != null
+                    ? AppBar(title: const Text('Profile'), centerTitle: true)
+                    : null,
+            body: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                children: <Widget>[
+                  _buildProfileCard(),
+                  const SizedBox(height: 8),
+                  _buildProjectsTabBar(),
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
     );
   }
 }

@@ -39,8 +39,11 @@ void main() {
     test('Get default value from non-existent data from a box', () async {
       await Hive.deleteFromDisk();
 
-      var expectedData =
-          await db.getData(DatabaseBox.IB, 'test-3', defaultValue: 'test');
+      var expectedData = await db.getData(
+        DatabaseBox.IB,
+        'test-3',
+        defaultValue: 'test',
+      );
       expect(expectedData, 'test');
     });
   });

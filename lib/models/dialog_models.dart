@@ -13,9 +13,7 @@ class DialogRequest {
 }
 
 class DialogResponse {
-  DialogResponse({
-    required this.confirmed,
-  });
+  DialogResponse({required this.confirmed});
 
   final bool confirmed;
 }

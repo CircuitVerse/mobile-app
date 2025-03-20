@@ -2,31 +2,25 @@ import 'package:mobile_app/models/links.dart';
 
 class GroupMembers {
   factory GroupMembers.fromJson(Map<String, dynamic> json) => GroupMembers(
-        data: List<GroupMember>.from(
-            json['data'].map((x) => GroupMember.fromJson(x))),
-        links: Links.fromJson(json['links']),
-      );
+    data: List<GroupMember>.from(
+      json['data'].map((x) => GroupMember.fromJson(x)),
+    ),
+    links: Links.fromJson(json['links']),
+  );
 
-  GroupMembers({
-    required this.data,
-    required this.links,
-  });
+  GroupMembers({required this.data, required this.links});
   List<GroupMember> data;
   Links links;
 }
 
 class GroupMember {
   factory GroupMember.fromJson(Map<String, dynamic> json) => GroupMember(
-        id: json['id'],
-        type: json['type'],
-        attributes: GroupMemberAttributes.fromJson(json['attributes']),
-      );
+    id: json['id'],
+    type: json['type'],
+    attributes: GroupMemberAttributes.fromJson(json['attributes']),
+  );
 
-  GroupMember({
-    required this.id,
-    required this.type,
-    required this.attributes,
-  });
+  GroupMember({required this.id, required this.type, required this.attributes});
   String id;
   String type;
   GroupMemberAttributes attributes;

@@ -59,8 +59,9 @@ class MyGroupsViewModel extends BaseModel {
       if (previousMentoredGroupsBatch?.links.next != null) {
         // fetch next batch of mentoring groups..
         String _nextPageLink = previousMentoredGroupsBatch!.links.next;
-        var _nextPageNumber =
-            int.parse(_nextPageLink.substring(_nextPageLink.length - 1));
+        var _nextPageNumber = int.parse(
+          _nextPageLink.substring(_nextPageLink.length - 1),
+        );
         // fetch groups corresponding to next page number..
         previousMentoredGroupsBatch = await _groupsApi.fetchOwnedGroups(
           page: _nextPageNumber,
@@ -86,8 +87,9 @@ class MyGroupsViewModel extends BaseModel {
       if (previousMemberGroupsBatch?.links.next != null) {
         // fetch next batch of member groups..
         String _nextPageLink = previousMemberGroupsBatch!.links.next;
-        var _nextPageNumber =
-            int.parse(_nextPageLink.substring(_nextPageLink.length - 1));
+        var _nextPageNumber = int.parse(
+          _nextPageLink.substring(_nextPageLink.length - 1),
+        );
         // fetch groups corresponding to next page number..
         previousMemberGroupsBatch = await _groupsApi.fetchMemberGroups(
           page: _nextPageNumber,

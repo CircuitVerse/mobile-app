@@ -56,8 +56,8 @@ class IbEngineServiceImpl implements IbEngineService {
     List<Map<String, dynamic>>? _apiResponse;
     try {
       _apiResponse = await _ibApi.fetchApiPage(id: id);
-    } catch (_) {
-      throw Failure('IbApi: ${_.toString()}');
+    } catch (err) {
+      throw Failure('IbApi: ${err.toString()}');
     }
 
     var parentPages = <IbChapter>[];
@@ -72,12 +72,14 @@ class IbEngineServiceImpl implements IbEngineService {
         // If the page has children inside a directory, it's a parent page
         // All child pages must be present inside parent one
         // refer an example: https://learn.circuitverse.org/_api/pages/docs/binary-representation.json
-        parentPages.add(IbChapter(
-          id: page['path'],
-          value: page['title'],
-          navOrder: page['nav_order'].toString(),
-          items: childPages,
-        ));
+        parentPages.add(
+          IbChapter(
+            id: page['path'],
+            value: page['title'],
+            navOrder: page['nav_order'].toString(),
+            items: childPages,
+          ),
+        );
       } else {
         // Ignore Index page if flag enabled or page has no title (like 404 page)
         if ((page['title'] == null) ||
@@ -86,11 +88,13 @@ class IbEngineServiceImpl implements IbEngineService {
         }
 
         // Add child page to the list
-        childPages.add(IbChapter(
-          id: page['path'],
-          value: page['title'],
-          navOrder: page['nav_order'].toString(),
-        ));
+        childPages.add(
+          IbChapter(
+            id: page['path'],
+            value: page['title'],
+            navOrder: page['nav_order'].toString(),
+          ),
+        );
       }
     }
 
@@ -108,9 +112,10 @@ class IbEngineServiceImpl implements IbEngineService {
     // We have to flatten the nested chapters and assign prev and next to the objects
     // but return original list of chapters to keep the order intact
 
-    var _flatten = chapters
-        .expand((c) => c.items != null ? [c, ...c.items!] : [c])
-        .toList();
+    var _flatten =
+        chapters
+            .expand((c) => c.items != null ? [c, ...c.items!] : [c])
+            .toList();
 
     if (_flatten.length <= 1) {
       return chapters;
@@ -146,8 +151,9 @@ class IbEngineServiceImpl implements IbEngineService {
     }
 
     // Sort root pages
-    _chapters
-        .sort((a, b) => int.parse(a.navOrder).compareTo(int.parse(b.navOrder)));
+    _chapters.sort(
+      (a, b) => int.parse(a.navOrder).compareTo(int.parse(b.navOrder)),
+    );
 
     // Build Navigation
     _chapters = _buildNav(_chapters);
@@ -171,12 +177,7 @@ class IbEngineServiceImpl implements IbEngineService {
           ),
         );
       } else {
-        toc.add(
-          IbTocItem(
-            leading: '$eff_index.',
-            content: li.text,
-          ),
-        );
+        toc.add(IbTocItem(leading: '$eff_index.', content: li.text));
       }
       index += 1;
     }
@@ -185,8 +186,11 @@ class IbEngineServiceImpl implements IbEngineService {
   }
 
   /// Recursively parses list of chapter contents
-  List<IbTocItem> _parseChapterContents(Element element,
-      {bool num = true, bool root = false}) {
+  List<IbTocItem> _parseChapterContents(
+    Element element, {
+    bool num = true,
+    bool root = false,
+  }) {
     var index = num ? 1 : 'a'.codeUnitAt(0);
     var toc = <IbTocItem>[];
 
@@ -196,10 +200,7 @@ class IbEngineServiceImpl implements IbEngineService {
 
       for (var node in li.nodes) {
         if (node is Element && node.localName == 'ul') {
-          sublist.addAll(_parseChapterContents(
-            node,
-            num: !num,
-          ));
+          sublist.addAll(_parseChapterContents(node, num: !num));
           break;
         }
       }
@@ -243,8 +244,8 @@ class IbEngineServiceImpl implements IbEngineService {
     IbRawPageData? _ibRawPageData;
     try {
       _ibRawPageData = await _ibApi.fetchRawPageData(id: id);
-    } catch (_) {
-      throw Failure(_.toString());
+    } catch (err) {
+      throw Failure(err.toString());
     }
 
     if (_ibRawPageData == null) return null;
@@ -256,12 +257,14 @@ class IbEngineServiceImpl implements IbEngineService {
       content: [
         IbMd(content: '${HtmlUnescape().convert(_ibRawPageData.rawContent)}\n'),
       ],
-      tableOfContents: _ibRawPageData.hasToc
-          ? _getTableOfContents(_ibRawPageData.content!)
-          : [],
-      chapterOfContents: _ibRawPageData.hasChildren
-          ? _getChapterOfContents(_ibRawPageData.content!)
-          : [],
+      tableOfContents:
+          _ibRawPageData.hasToc
+              ? _getTableOfContents(_ibRawPageData.content!)
+              : [],
+      chapterOfContents:
+          _ibRawPageData.hasChildren
+              ? _getChapterOfContents(_ibRawPageData.content!)
+              : [],
     );
   }
 
@@ -282,8 +285,9 @@ class IbEngineServiceImpl implements IbEngineService {
 
     // Replace local URLs with absolute
     return result = result.replaceAll(
-        RegExp(r'(\.\.(\/\.\.)?)?(?<!org)\/assets'),
-        '${EnvironmentConfig.IB_BASE_URL}/assets');
+      RegExp(r'(\.\.(\/\.\.)?)?(?<!org)\/assets'),
+      '${EnvironmentConfig.IB_BASE_URL}/assets',
+    );
   }
 
   @override
@@ -310,11 +314,9 @@ class IbEngineServiceImpl implements IbEngineService {
         _lastQuestion.choices.add(match[2]!);
       } else {
         // Question
-        _questions.add(IbPopQuizQuestion(
-          question: match[2]!,
-          answers: [],
-          choices: [],
-        ));
+        _questions.add(
+          IbPopQuizQuestion(question: match[2]!, answers: [], choices: []),
+        );
       }
     }
 

@@ -15,7 +15,7 @@ import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CVLandingView extends StatefulWidget {
-  const CVLandingView({Key? key}) : super(key: key);
+  const CVLandingView({super.key});
   static const String id = 'cv_landing_view';
 
   @override
@@ -59,9 +59,7 @@ class _CVLandingViewState extends State<CVLandingView> {
     return AppBar(
       title: Text(
         _appBarTitle(selectedIndex),
-        style: TextStyle(
-          color: CVTheme.appBarText(context),
-        ),
+        style: TextStyle(color: CVTheme.appBarText(context)),
       ),
       leading: IconButton(
         onPressed: () {
@@ -96,7 +94,7 @@ class _CVLandingViewState extends State<CVLandingView> {
             },
             icon: const Icon(Icons.search),
           ),
-        )
+        ),
       ],
     );
   }
@@ -105,34 +103,34 @@ class _CVLandingViewState extends State<CVLandingView> {
   Widget build(BuildContext context) {
     return BaseView<CVLandingViewModel>(
       onModelReady: (model) => model.setUser(),
-      builder: (context, model, child) => WillPopScope(
-        onWillPop: () {
-          if (model.selectedIndex != 0) {
-            model.selectedIndex = 0;
-            return Future.value(false);
-          }
-          return Future.value(true);
-        },
-        child: Scaffold(
-          key: _scaffoldKey,
-          appBar: _buildAppBar(model.selectedIndex, model),
-          drawer: const CVDrawer(),
-          body: PageTransitionSwitcher(
-            transitionBuilder: (
-              Widget child,
-              Animation<double> animation,
-              Animation<double> secondaryAnimation,
-            ) {
-              return FadeThroughTransition(
-                animation: animation,
-                secondaryAnimation: secondaryAnimation,
-                child: child,
-              );
+      builder:
+          (context, model, child) => PopScope(
+            canPop: model.selectedIndex != 0,
+            onPopInvokedWithResult: (didPop, result) {
+              if (didPop) {
+                model.selectedIndex = 0;
+              }
             },
-            child: _items.elementAt(model.selectedIndex),
+            child: Scaffold(
+              key: _scaffoldKey,
+              appBar: _buildAppBar(model.selectedIndex, model),
+              drawer: const CVDrawer(),
+              body: PageTransitionSwitcher(
+                transitionBuilder: (
+                  Widget child,
+                  Animation<double> animation,
+                  Animation<double> secondaryAnimation,
+                ) {
+                  return FadeThroughTransition(
+                    animation: animation,
+                    secondaryAnimation: secondaryAnimation,
+                    child: child,
+                  );
+                },
+                child: _items.elementAt(model.selectedIndex),
+              ),
+            ),
           ),
-        ),
-      ),
     );
   }
 }

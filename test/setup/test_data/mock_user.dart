@@ -10,7 +10,7 @@ Map<String, dynamic> mockUser = {
       'updated_at': '2020-08-15T03:16:50.702Z',
       'admin': false,
       'country': 'India',
-      'educational_institute': 'Gurukul'
-    }
-  }
+      'educational_institute': 'Gurukul',
+    },
+  },
 };

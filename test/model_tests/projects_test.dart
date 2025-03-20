@@ -29,16 +29,21 @@ void main() {
     });
 
     test('ProjectAttributes fromJson', () {
-      var _projectAttributes =
-          ProjectAttributes.fromJson(mockProjectAttributes);
+      var _projectAttributes = ProjectAttributes.fromJson(
+        mockProjectAttributes,
+      );
 
       expect(_projectAttributes, isInstanceOf<ProjectAttributes>());
       expect(_projectAttributes.name, 'Test/Test');
       expect(_projectAttributes.projectAccessType, 'Private');
-      expect(_projectAttributes.createdAt,
-          DateTime.parse('2020-08-15T15:23:03.007Z'));
-      expect(_projectAttributes.updatedAt,
-          DateTime.parse('2020-08-15T15:23:03.007Z'));
+      expect(
+        _projectAttributes.createdAt,
+        DateTime.parse('2020-08-15T15:23:03.007Z'),
+      );
+      expect(
+        _projectAttributes.updatedAt,
+        DateTime.parse('2020-08-15T15:23:03.007Z'),
+      );
       expect(_projectAttributes.imagePreview, isInstanceOf<ImagePreview>());
       expect(_projectAttributes.description, null);
       expect(_projectAttributes.view, 1);
@@ -56,8 +61,9 @@ void main() {
     });
 
     test('ProjectRelationships fromJson', () {
-      var _projectRelationships =
-          ProjectRelationships.fromJson(mockProjectRelationships);
+      var _projectRelationships = ProjectRelationships.fromJson(
+        mockProjectRelationships,
+      );
 
       expect(_projectRelationships, isInstanceOf<ProjectRelationships>());
       expect(_projectRelationships.author, isInstanceOf<Author>());

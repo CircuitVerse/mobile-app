@@ -12,7 +12,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
 
 class NewGroupView extends StatefulWidget {
-  const NewGroupView({Key? key}) : super(key: key);
+  const NewGroupView({super.key});
 
   static const String id = 'new_group_view';
 
@@ -56,45 +56,48 @@ class _NewGroupViewState extends State<NewGroupView> {
   Widget build(BuildContext context) {
     return BaseView<NewGroupViewModel>(
       onModelReady: (model) => _model = model,
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                const CVSubheader(
-                  title: 'NEW GROUP',
-                  subtitle:
-                      'Groups an be used by mentors to set projects for and give grades to students.',
+      builder:
+          (context, model, child) => Scaffold(
+            appBar: AppBar(),
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    const CVSubheader(
+                      title: 'NEW GROUP',
+                      subtitle:
+                          'Groups an be used by mentors to set projects for and give grades to students.',
+                    ),
+                    const SizedBox(height: 16),
+                    SvgPicture.asset(
+                      'assets/images/group/new_group.svg',
+                      height: 200,
+                    ),
+                    const SizedBox(height: 16),
+                    CVTextField(
+                      padding: const EdgeInsets.all(0),
+                      label: 'Group Name',
+                      validator:
+                          (value) =>
+                              value?.isEmpty ?? true
+                                  ? 'Please enter a Group Name'
+                                  : null,
+                      onSaved: (value) => _name = value!.trim(),
+                      action: TextInputAction.done,
+                    ),
+                    const SizedBox(height: 16),
+                    CVPrimaryButton(
+                      title: 'SAVE',
+                      onPressed: _validateAndSubmit,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 16),
-                SvgPicture.asset(
-                  'assets/images/group/new_group.svg',
-                  height: 200,
-                ),
-                const SizedBox(height: 16),
-                CVTextField(
-                  padding: const EdgeInsets.all(0),
-                  label: 'Group Name',
-                  validator: (value) => value?.isEmpty ?? true
-                      ? 'Please enter a Group Name'
-                      : null,
-                  onSaved: (value) => _name = value!.trim(),
-                  action: TextInputAction.done,
-                ),
-                const SizedBox(height: 16),
-                CVPrimaryButton(
-                  title: 'SAVE',
-                  onPressed: _validateAndSubmit,
-                )
-              ],
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

@@ -24,9 +24,7 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
       }
 
       matches.retainWhere(
-        (s) => s.toLowerCase().startsWith(
-              query.toLowerCase(),
-            ),
+        (s) => s.toLowerCase().startsWith(query.toLowerCase()),
       );
 
       return matches;

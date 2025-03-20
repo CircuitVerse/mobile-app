@@ -14,7 +14,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/edit_project_viewmodel.dart';
 
 class EditProjectView extends StatefulWidget {
-  const EditProjectView({Key? key, required this.project}) : super(key: key);
+  const EditProjectView({super.key, required this.project});
 
   static const String id = 'edit_project_view';
   final Project project;
@@ -53,11 +53,11 @@ class _EditProjectViewState extends State<EditProjectView> {
     return CVTextField(
       label: 'Name',
       initialValue: _name,
-      validator: (value) =>
-          value?.isEmpty ?? true ? "Name can't be empty" : null,
+      validator:
+          (value) => value?.isEmpty ?? true ? "Name can't be empty" : null,
       onSaved: (value) => _name = value!.trim(),
-      onFieldSubmitted: (_) =>
-          FocusScope.of(context).requestFocus(_nameFocusNode),
+      onFieldSubmitted:
+          (_) => FocusScope.of(context).requestFocus(_nameFocusNode),
     );
   }
 
@@ -66,8 +66,9 @@ class _EditProjectViewState extends State<EditProjectView> {
       label: 'Tags List',
       focusNode: _nameFocusNode,
       initialValue: _tags.join(' , '),
-      onSaved: (value) =>
-          _tags = value!.split(',').map((tag) => tag.trim()).toList(),
+      onSaved:
+          (value) =>
+              _tags = value!.split(',').map((tag) => tag.trim()).toList(),
       onFieldSubmitted: (_) {
         _nameFocusNode.unfocus();
         FocusScope.of(context).requestFocus(_tagsListFocusNode);
@@ -90,25 +91,24 @@ class _EditProjectViewState extends State<EditProjectView> {
             _projectAccessType = value;
           });
         },
-        validator: (category) =>
-            category == null ? 'Choose a Project Access Type' : null,
-        items: ['Public', 'Private', 'Limited Access']
-            .map<DropdownMenuItem<String>>((var type) {
-          return DropdownMenuItem<String>(
-            value: type,
-            child: Text(type),
-          );
-        }).toList(),
+        validator:
+            (category) =>
+                category == null ? 'Choose a Project Access Type' : null,
+        items:
+            [
+              'Public',
+              'Private',
+              'Limited Access',
+            ].map<DropdownMenuItem<String>>((var type) {
+              return DropdownMenuItem<String>(value: type, child: Text(type));
+            }).toList(),
       ),
     );
   }
 
   Widget _buildDescriptionInput() {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 8,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: CVHtmlEditor(editorKey: _descriptionEditor),
     );
   }
@@ -159,26 +159,29 @@ class _EditProjectViewState extends State<EditProjectView> {
   Widget build(BuildContext context) {
     return BaseView<EditProjectViewModel>(
       onModelReady: (model) => _model = model,
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text('Edit ${widget.project.attributes.name}')),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                _buildNameInput(),
-                _buildTagsInput(),
-                _buildProjectAccessTypeInput(),
-                _buildDescriptionInput(),
-                const SizedBox(height: 16),
-                _buildUpdateProjectButton(),
-              ],
+      builder:
+          (context, model, child) => Scaffold(
+            appBar: AppBar(
+              title: Text('Edit ${widget.project.attributes.name}'),
+            ),
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _buildNameInput(),
+                    _buildTagsInput(),
+                    _buildProjectAccessTypeInput(),
+                    _buildDescriptionInput(),
+                    const SizedBox(height: 16),
+                    _buildUpdateProjectButton(),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

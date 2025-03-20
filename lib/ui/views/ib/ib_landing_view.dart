@@ -13,7 +13,7 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class IbLandingView extends StatefulWidget {
-  const IbLandingView({Key? key}) : super(key: key);
+  const IbLandingView({super.key});
 
   static const String id = 'ib_landing_view';
 
@@ -56,9 +56,9 @@ class _IbLandingViewState extends State<IbLandingView> {
         title: Theme(
           data: Theme.of(context).copyWith(
             colorScheme: Theme.of(context).colorScheme.copyWith(
-                  primary: Colors.white,
-                  brightness: Brightness.dark,
-                ),
+              primary: Colors.white,
+              brightness: Brightness.dark,
+            ),
             textSelectionTheme: TextSelectionThemeData(
               cursorColor: CVTheme.appBarText(context),
             ),
@@ -79,44 +79,44 @@ class _IbLandingViewState extends State<IbLandingView> {
             action: TextInputAction.search,
             controller: _controller,
             suffixIcon: ValueListenableBuilder<String>(
-                valueListenable: _model.searchNotifier,
-                builder: (context, value, _) {
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          final index = _model.currentIndex;
-                          if (index == 0) return;
+              valueListenable: _model.searchNotifier,
+              builder: (context, value, _) {
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        final index = _model.currentIndex;
+                        if (index == 0) return;
 
-                          _model.currentIndex = index - 1;
-                        },
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color:
-                              _model.currentIndex <= 0 ? Colors.white24 : null,
-                        ),
+                        _model.currentIndex = index - 1;
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: _model.currentIndex <= 0 ? Colors.white24 : null,
                       ),
-                      Text(value, style: const TextStyle(fontSize: 14)),
-                      IconButton(
-                        onPressed: () {
-                          final index = _model.currentIndex;
-                          if (index == _model.ibChapters.length - 1) return;
+                    ),
+                    Text(value, style: const TextStyle(fontSize: 14)),
+                    IconButton(
+                      onPressed: () {
+                        final index = _model.currentIndex;
+                        if (index == _model.ibChapters.length - 1) return;
 
-                          _model.currentIndex = index + 1;
-                        },
-                        icon: Icon(
-                          Icons.arrow_forward_ios,
-                          color: _model.currentIndex >=
-                                  _model.ibChapters.length - 1
-                              ? Colors.white24
-                              : null,
-                        ),
+                        _model.currentIndex = index + 1;
+                      },
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        color:
+                            _model.currentIndex >= _model.ibChapters.length - 1
+                                ? Colors.white24
+                                : null,
                       ),
-                    ],
-                  );
-                }),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       );
@@ -159,22 +159,19 @@ class _IbLandingViewState extends State<IbLandingView> {
           builder: (context, value, child) {
             return value != null
                 ? Showcase(
-                    key: _model.toc,
-                    description: 'Show Table of Contents',
-                    onTargetClick: () {
-                      _model.onShowCased('toc');
-                      if (_key.currentState!.isDrawerOpen) Get.back();
-                      Future.delayed(
-                        const Duration(milliseconds: 200),
-                        value as VoidCallback,
-                      );
-                    },
-                    disposeOnTap: true,
-                    child: IconButton(
-                      icon: const Icon(Icons.menu_book_rounded),
-                      onPressed: value as VoidCallback,
-                    ),
-                  )
+                  key: _model.toc,
+                  description: 'Show Table of Contents',
+                  onTargetClick: () {
+                    _model.onShowCased('toc');
+                    if (_key.currentState!.isDrawerOpen) Get.back();
+                    Future.delayed(const Duration(milliseconds: 200), value);
+                  },
+                  disposeOnTap: true,
+                  child: IconButton(
+                    icon: const Icon(Icons.menu_book_rounded),
+                    onPressed: value as VoidCallback,
+                  ),
+                )
                 : Container();
           },
         ),
@@ -188,9 +185,10 @@ class _IbLandingViewState extends State<IbLandingView> {
       onTap: () => setSelectedChapter(chapter),
       child: CVDrawerTile(
         title: chapter.value,
-        color: (_model.selectedChapter.id == chapter.id)
-            ? IbTheme.getPrimaryColor(context)
-            : IbTheme.textColor(context),
+        color:
+            (_model.selectedChapter.id == chapter.id)
+                ? IbTheme.getPrimaryColor(context)
+                : IbTheme.textColor(context),
       ),
     );
   }
@@ -209,8 +207,9 @@ class _IbLandingViewState extends State<IbLandingView> {
 
     return ExpansionTile(
       maintainState: true,
-      initiallyExpanded: (_model.selectedChapter.id.startsWith(chapter.id) ||
-          hasSelectedChapter),
+      initiallyExpanded:
+          (_model.selectedChapter.id.startsWith(chapter.id) ||
+              hasSelectedChapter),
       title: ListTile(
         contentPadding: const EdgeInsets.all(0),
         title: GestureDetector(
@@ -218,11 +217,12 @@ class _IbLandingViewState extends State<IbLandingView> {
           child: Text(
             chapter.value,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontFamily: 'Poppins',
-                  color: (_model.selectedChapter.id.startsWith(chapter.id))
+              fontFamily: 'Poppins',
+              color:
+                  (_model.selectedChapter.id.startsWith(chapter.id))
                       ? IbTheme.getPrimaryColor(context)
                       : IbTheme.textColor(context),
-                ),
+            ),
           ),
         ),
       ),
@@ -265,17 +265,14 @@ class _IbLandingViewState extends State<IbLandingView> {
                 onTap: () => setSelectedChapter(_model.homeChapter),
                 child: CVDrawerTile(
                   title: 'Interactive Book Home',
-                  color: (_model.selectedChapter.id == _model.homeChapter.id)
-                      ? IbTheme.getPrimaryColor(context)
-                      : IbTheme.textColor(context),
+                  color:
+                      (_model.selectedChapter.id == _model.homeChapter.id)
+                          ? IbTheme.getPrimaryColor(context)
+                          : IbTheme.textColor(context),
                 ),
               ),
               if (!_model.isSuccess(_model.IB_FETCH_CHAPTERS))
-                const InkWell(
-                  child: CVDrawerTile(
-                    title: 'Loading...',
-                  ),
-                )
+                const InkWell(child: CVDrawerTile(title: 'Loading...'))
               else
                 _buildChapters(_model.chapters),
             ],
@@ -284,9 +281,10 @@ class _IbLandingViewState extends State<IbLandingView> {
             right: 5,
             top: 27,
             child: IconButton(
-              icon: Theme.of(context).brightness == Brightness.dark
-                  ? const Icon(Icons.brightness_low)
-                  : const Icon(Icons.brightness_high),
+              icon:
+                  Theme.of(context).brightness == Brightness.dark
+                      ? const Icon(Icons.brightness_low)
+                      : const Icon(Icons.brightness_high),
               iconSize: 28.0,
               onPressed: () {
                 ThemeProvider.controllerOf(context).nextTheme();
@@ -307,66 +305,70 @@ class _IbLandingViewState extends State<IbLandingView> {
       },
       onModelDestroy: (model) => model.close(),
       builder: (context, model, child) {
-        return WillPopScope(
-          onWillPop: () {
-            if (model.selectedChapter != model.homeChapter) {
+        return PopScope(
+          canPop: model.selectedChapter != model.homeChapter,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) {
               model.selectedChapter = model.homeChapter;
-              return Future.value(false);
+            } else {
+              _model.saveShowcaseState();
             }
-            _model.saveShowcaseState();
-            return Future.value(true);
           },
           child: Theme(
             data: IbTheme.getThemeData(context),
             child: ShowCaseWidget(
               onComplete: (index, globalKey) {
-                final String key = globalKey
-                    .toString()
-                    .substring(1, globalKey.toString().length - 1)
-                    .split(" ")
-                    .last;
+                final String key =
+                    globalKey
+                        .toString()
+                        .substring(1, globalKey.toString().length - 1)
+                        .split(" ")
+                        .last;
                 model.onShowCased(key);
               },
-              builder: Builder(builder: (context) {
-                return Scaffold(
-                  key: _key,
-                  appBar: _buildAppBar(),
-                  drawer: _buildDrawer(),
-                  body: PageTransitionSwitcher(
-                    transitionBuilder: (
-                      Widget child,
-                      Animation<double> animation,
-                      Animation<double> secondaryAnimation,
-                    ) {
-                      return FadeThroughTransition(
-                        animation: animation,
-                        secondaryAnimation: secondaryAnimation,
-                        child: child,
+              builder:
+                  (context) => Builder(
+                    builder: (context) {
+                      return Scaffold(
+                        key: _key,
+                        appBar: _buildAppBar(),
+                        drawer: _buildDrawer(),
+                        body: PageTransitionSwitcher(
+                          transitionBuilder: (
+                            Widget child,
+                            Animation<double> animation,
+                            Animation<double> secondaryAnimation,
+                          ) {
+                            return FadeThroughTransition(
+                              animation: animation,
+                              secondaryAnimation: secondaryAnimation,
+                              child: child,
+                            );
+                          },
+                          child: IbPageView(
+                            key: Key(_model.selectedChapter.toString()),
+                            tocCallback: (val) {
+                              Future.delayed(Duration.zero, () async {
+                                if (mounted) {
+                                  _tocNotifier.value = val;
+                                }
+                              });
+                            },
+                            setPage: (chapter) {
+                              if (chapter == null) return;
+                              model.selectedChapter = chapter;
+                            },
+                            chapter: model.selectedChapter,
+                            setShowCase: (updatedState) {
+                              model.showCaseState = updatedState;
+                            },
+                            showCase: model.showCaseState,
+                            globalKeysMap: model.keyMap,
+                          ),
+                        ),
                       );
                     },
-                    child: IbPageView(
-                      key: Key(_model.selectedChapter.toString()),
-                      tocCallback: (val) {
-                        Future.delayed(Duration.zero, () async {
-                          if (mounted) {
-                            _tocNotifier.value = val;
-                          }
-                        });
-                      },
-                      setPage: (chapter) {
-                        if (chapter == null) return;
-                        model.selectedChapter = chapter;
-                      },
-                      chapter: model.selectedChapter,
-                      setShowCase: (updatedState) {
-                        model.showCaseState = updatedState;
-                      },
-                      showCase: model.showCaseState,
-                      globalKeysMap: model.keyMap,
-                    ),
                   ),
-                );
-              }),
             ),
           ),
         );

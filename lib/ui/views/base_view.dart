@@ -9,8 +9,8 @@ class BaseView<T extends BaseModel> extends StatefulWidget {
     this.onModelReady,
     this.onModelDestroy,
     this.model,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final Widget Function(BuildContext context, T model, Widget? child) builder;
   final Function(T)? onModelReady;
@@ -45,9 +45,7 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<T>.value(
       value: model,
-      child: Consumer<T>(
-        builder: widget.builder,
-      ),
+      child: Consumer<T>(builder: widget.builder),
     );
   }
 }

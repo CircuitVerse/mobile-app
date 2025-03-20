@@ -28,8 +28,9 @@ void main() {
     });
 
     test('CollaboratorAttributesTest', () {
-      var _collaboratorAttributes =
-          CollaboratorAttributes.fromJson(mockCollaboratorAttributes);
+      var _collaboratorAttributes = CollaboratorAttributes.fromJson(
+        mockCollaboratorAttributes,
+      );
 
       expect(_collaboratorAttributes, isInstanceOf<CollaboratorAttributes>());
 

@@ -4,7 +4,8 @@ import 'package:mobile_app/utils/enum_values.dart';
 
 List<CircuitVerseContributor> circuitVerseContributorsFromJson(String str) =>
     List<CircuitVerseContributor>.from(
-        json.decode(str).map((x) => CircuitVerseContributor.fromJson(x)));
+      json.decode(str).map((x) => CircuitVerseContributor.fromJson(x)),
+    );
 
 class CircuitVerseContributor {
   factory CircuitVerseContributor.fromJson(Map<String, dynamic> json) =>
@@ -74,7 +75,4 @@ class CircuitVerseContributor {
 
 enum Type { USER, BOT }
 
-final typeValues = EnumValues({
-  'Bot': Type.BOT,
-  'User': Type.USER,
-});
+final typeValues = EnumValues({'Bot': Type.BOT, 'User': Type.USER});

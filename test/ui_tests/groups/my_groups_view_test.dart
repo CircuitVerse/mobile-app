@@ -68,8 +68,9 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic MyGroupsView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic MyGroupsView widgets', (
+      WidgetTester tester,
+    ) async {
       await _pumpMyGroupsView(tester);
       await tester.pumpAndSettle();
 
@@ -124,23 +125,26 @@ void main() {
       expect(find.byType(NewGroupView), findsOneWidget);
     });
 
-    testWidgets('View Group Details Page is Pushed onTap',
-        (WidgetTester tester) async {
+    testWidgets('View Group Details Page is Pushed onTap', (
+      WidgetTester tester,
+    ) async {
       await _pumpMyGroupsView(tester);
       await tester.pumpAndSettle();
 
       // Mock Local Storage
       var _localStorage = getAndRegisterLocalStorageServiceMock();
 
-      when(_localStorage.currentUser)
-          .thenAnswer((_) => User.fromJson(mockUser));
+      when(
+        _localStorage.currentUser,
+      ).thenAnswer((_) => User.fromJson(mockUser));
 
       // Mock View Model
       var _groupDetailsViewModel = MockGroupDetailsViewModel();
       locator.registerSingleton<GroupDetailsViewModel>(_groupDetailsViewModel);
 
-      when(_groupDetailsViewModel.FETCH_GROUP_DETAILS)
-          .thenAnswer((_) => 'fetch_group_details');
+      when(
+        _groupDetailsViewModel.FETCH_GROUP_DETAILS,
+      ).thenAnswer((_) => 'fetch_group_details');
       when(_groupDetailsViewModel.fetchGroupDetails(any)).thenReturn(null);
       when(_groupDetailsViewModel.isMentor).thenAnswer((_) => false);
       when(_groupDetailsViewModel.isSuccess(any)).thenAnswer((_) => false);
@@ -163,17 +167,20 @@ void main() {
       expect(find.byType(EditGroupView), findsOneWidget);
     });
 
-    testWidgets('Delete Group Dialog is visible onTap',
-        (WidgetTester tester) async {
+    testWidgets('Delete Group Dialog is visible onTap', (
+      WidgetTester tester,
+    ) async {
       var _dialogService = MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
       // Mock Dialog Service
-      when(_dialogService.showConfirmationDialog(
-        title: anyNamed('title'),
-        description: anyNamed('description'),
-        confirmationTitle: anyNamed('confirmationTitle'),
-      )).thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
+      when(
+        _dialogService.showConfirmationDialog(
+          title: anyNamed('title'),
+          description: anyNamed('description'),
+          confirmationTitle: anyNamed('confirmationTitle'),
+        ),
+      ).thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
 
       await _pumpMyGroupsView(tester);
       await tester.pumpAndSettle();
@@ -182,11 +189,13 @@ void main() {
       await tester.pumpAndSettle();
 
       // Verify Dialog Service was called after Delete Button is pressed
-      verify(_dialogService.showConfirmationDialog(
-        title: anyNamed('title'),
-        description: anyNamed('description'),
-        confirmationTitle: anyNamed('confirmationTitle'),
-      )).called(1);
+      verify(
+        _dialogService.showConfirmationDialog(
+          title: anyNamed('title'),
+          description: anyNamed('description'),
+          confirmationTitle: anyNamed('confirmationTitle'),
+        ),
+      ).called(1);
     });
   });
 }

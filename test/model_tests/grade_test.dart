@@ -24,15 +24,20 @@ void main() {
 
       expect(_gradeAttributes.grade, 'A');
       expect(_gradeAttributes.remarks, 'Good');
-      expect(_gradeAttributes.createdAt,
-          DateTime.parse('2020-08-20T15:23:50.073Z'));
-      expect(_gradeAttributes.updatedAt,
-          DateTime.parse('2020-08-20T15:23:50.073Z'));
+      expect(
+        _gradeAttributes.createdAt,
+        DateTime.parse('2020-08-20T15:23:50.073Z'),
+      );
+      expect(
+        _gradeAttributes.updatedAt,
+        DateTime.parse('2020-08-20T15:23:50.073Z'),
+      );
     });
 
     test('GradeRelationshipsFromJson', () {
-      var _gradeRelationships =
-          GradeRelationships.fromJson(mockGradeRelationships);
+      var _gradeRelationships = GradeRelationships.fromJson(
+        mockGradeRelationships,
+      );
 
       expect(_gradeRelationships, isInstanceOf<GradeRelationships>());
       expect(_gradeRelationships.project, isInstanceOf<GradedProject>());

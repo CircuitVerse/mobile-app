@@ -5,9 +5,7 @@ import 'package:markdown/markdown.dart' as md;
 typedef CountCb = void Function(int);
 
 class HighlightBuilder extends MarkdownElementBuilder {
-  HighlightBuilder({
-    this.selectable = true,
-  });
+  HighlightBuilder({this.selectable = true});
 
   final bool selectable;
 
@@ -21,18 +19,12 @@ class HighlightBuilder extends MarkdownElementBuilder {
     );
     final textSpan = TextSpan(
       style: style,
-      children: [
-        WidgetSpan(
-          child: Text(
-            text,
-            style: style,
-          ),
-        )
-      ],
+      children: [WidgetSpan(child: Text(text, style: style))],
     );
-    var widget = selectable
-        ? SelectableText.rich(textSpan, style: style)
-        : RichText(text: textSpan);
+    var widget =
+        selectable
+            ? SelectableText.rich(textSpan, style: style)
+            : RichText(text: textSpan);
 
     return widget;
   }

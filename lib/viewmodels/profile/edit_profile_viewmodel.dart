@@ -45,7 +45,6 @@ class EditProfileViewModel extends BaseModel {
       compressQuality: 100,
       maxHeight: 1000,
       maxWidth: 1000,
-      cropStyle: CropStyle.circle,
     );
 
     if (_croppedImage == null) return;
@@ -70,8 +69,14 @@ class EditProfileViewModel extends BaseModel {
   ) async {
     setStateFor(UPDATE_PROFILE, ViewState.Busy);
     try {
-      updatedUser = await _userApi.updateProfile(name, educationalInstitute,
-          country, subscribed, updatedImage, removeImage);
+      updatedUser = await _userApi.updateProfile(
+        name,
+        educationalInstitute,
+        country,
+        subscribed,
+        updatedImage,
+        removeImage,
+      );
       _storage.currentUser = _updatedUser;
 
       setStateFor(UPDATE_PROFILE, ViewState.Success);
