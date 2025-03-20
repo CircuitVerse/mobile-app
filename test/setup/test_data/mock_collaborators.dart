@@ -5,16 +5,14 @@ Map<String, dynamic> mockCollaborators = {
     'first': '{url}?page[number]=1',
     'prev': null,
     'next': '{url}?page[number]=2',
-    'last': '{url}?page[number]=1'
-  }
+    'last': '{url}?page[number]=1',
+  },
 };
 
 Map<String, dynamic> mockCollaborator = {
   'id': '1',
   'type': 'user',
-  'attributes': mockCollaboratorAttributes
+  'attributes': mockCollaboratorAttributes,
 };
 
-Map<String, dynamic> mockCollaboratorAttributes = {
-  'name': 'Test User',
-};
+Map<String, dynamic> mockCollaboratorAttributes = {'name': 'Test User'};

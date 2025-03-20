@@ -17,12 +17,7 @@ void main() {
         var _mockIbEngineApi = getAndRegisterIbEngineServiceMock();
         when(_mockIbEngineApi.getPageData(id: '')).thenAnswer(
           (_) => Future.value(
-            IbPageData(
-              id: '',
-              pageUrl: '',
-              title: 'Home',
-              content: [],
-            ),
+            IbPageData(id: '', pageUrl: '', title: 'Home', content: []),
           ),
         );
 
@@ -41,8 +36,9 @@ void main() {
 
       test('When called & service returns error', () async {
         var _mockIbEngineApi = getAndRegisterIbEngineServiceMock();
-        when(_mockIbEngineApi.getPageData(id: ''))
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _mockIbEngineApi.getPageData(id: ''),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = IbPageViewModel();
         await _model.fetchPageData(id: '');
@@ -56,9 +52,9 @@ void main() {
     group('fetchHtmlInteraction -', () {
       test('When called & service returns success response', () async {
         var _mockIbEngineApi = getAndRegisterIbEngineServiceMock();
-        when(_mockIbEngineApi.getHtmlInteraction('')).thenAnswer(
-          (_) => Future.value('test-data'),
-        );
+        when(
+          _mockIbEngineApi.getHtmlInteraction(''),
+        ).thenAnswer((_) => Future.value('test-data'));
 
         var _model = IbPageViewModel();
         var _result = await _model.fetchHtmlInteraction('');
@@ -72,8 +68,9 @@ void main() {
 
       test('When called & service returns error', () async {
         var _mockIbEngineApi = getAndRegisterIbEngineServiceMock();
-        when(_mockIbEngineApi.getHtmlInteraction(''))
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _mockIbEngineApi.getHtmlInteraction(''),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = IbPageViewModel();
         var _result = await _model.fetchHtmlInteraction('');
@@ -102,8 +99,9 @@ void main() {
 
       test('When called & service returns error', () async {
         var _mockIbEngineApi = getAndRegisterIbEngineServiceMock();
-        when(_mockIbEngineApi.getPopQuiz(''))
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _mockIbEngineApi.getPopQuiz(''),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = IbPageViewModel();
         var _result = _model.fetchPopQuiz('');

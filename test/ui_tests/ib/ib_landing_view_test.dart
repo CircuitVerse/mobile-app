@@ -58,33 +58,34 @@ void main() {
       when(model.close()).thenAnswer((_) => VoidCallback);
 
       // Mock Page View Model
-      when(pageViewModel.IB_FETCH_PAGE_DATA)
-          .thenAnswer((_) => 'mock_fetch_page_data');
+      when(
+        pageViewModel.IB_FETCH_PAGE_DATA,
+      ).thenAnswer((_) => 'mock_fetch_page_data');
       when(pageViewModel.fetchPageData(id: anyNamed('id'))).thenReturn(null);
-      when(pageViewModel.IB_FETCH_PAGE_DATA)
-          .thenAnswer((_) => 'mock_fetch_page_data');
+      when(
+        pageViewModel.IB_FETCH_PAGE_DATA,
+      ).thenAnswer((_) => 'mock_fetch_page_data');
 
       when(pageViewModel.isSuccess(any)).thenAnswer((_) => true);
       when(pageViewModel.pageData).thenReturn(
-          IbPageData(id: 'test', pageUrl: 'test', title: 'test', content: []));
+        IbPageData(id: 'test', pageUrl: 'test', title: 'test', content: []),
+      );
 
       // Mock Page Drawer List
       when(model.fetchChapters()).thenReturn(null);
       when(model.isSuccess(any)).thenAnswer((_) => true);
-      when(model.chapters).thenAnswer((_) => [
-            IbChapter(
-              id: 'test',
-              value: 'Test Chapter',
-              navOrder: '1',
-              items: [
-                IbChapter(
-                  id: 'test-2',
-                  value: 'Test Chapter2',
-                  navOrder: '2',
-                ),
-              ],
-            )
-          ]);
+      when(model.chapters).thenAnswer(
+        (_) => [
+          IbChapter(
+            id: 'test',
+            value: 'Test Chapter',
+            navOrder: '1',
+            items: [
+              IbChapter(id: 'test-2', value: 'Test Chapter2', navOrder: '2'),
+            ],
+          ),
+        ],
+      );
       when(model.drawer).thenAnswer((_) => GlobalKey());
       when(model.toc).thenAnswer((_) => GlobalKey());
       when(pageViewModel.nextPage).thenAnswer((_) => GlobalKey());
@@ -95,9 +96,12 @@ void main() {
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: ShowCaseWidget(
-            builder: Builder(builder: (context) {
-              return const IbLandingView();
-            }),
+            builder:
+                (context) => Builder(
+                  builder: (context) {
+                    return const IbLandingView();
+                  },
+                ),
           ),
         ),
       );

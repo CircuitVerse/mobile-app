@@ -22,64 +22,88 @@ void main() {
     group('addGrade -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockGrade), 201)));
+          (_) => Future.value(Response(jsonEncode(mockGrade), 201)),
+        );
         var _gradesApi = HttpGradesApi();
 
-        expect((await _gradesApi.addGrade('1', '1', 'A', 'Good')).toString(),
-            _grade.toString());
+        expect(
+          (await _gradesApi.addGrade('1', '1', 'A', 'Good')).toString(),
+          _grade.toString(),
+        );
       });
 
       test('When called & http client throws Exceptions', () async {
         var _gradesApi = HttpGradesApi();
 
         ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
-        expect(_gradesApi.addGrade('1', '1', 'A', 'Good'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _gradesApi.addGrade('1', '1', 'A', 'Good'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw NotFoundException(''));
-        expect(_gradesApi.addGrade('1', '1', 'A', 'Good'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _gradesApi.addGrade('1', '1', 'A', 'Good'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
-        ApiUtils.client =
-            MockClient((_) => throw UnprocessableIdentityException(''));
-        expect(_gradesApi.addGrade('1', '1', 'A', 'Good'),
-            throwsA(isInstanceOf<Failure>()));
+        ApiUtils.client = MockClient(
+          (_) => throw UnprocessableIdentityException(''),
+        );
+        expect(
+          _gradesApi.addGrade('1', '1', 'A', 'Good'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_gradesApi.addGrade('1', '1', 'A', 'Good'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _gradesApi.addGrade('1', '1', 'A', 'Good'),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
 
     group('updateGrade -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockGrade), 202)));
+          (_) => Future.value(Response(jsonEncode(mockGrade), 202)),
+        );
         var _gradesApi = HttpGradesApi();
 
-        expect((await _gradesApi.updateGrade('1', 'A', 'Good')).toString(),
-            _grade.toString());
+        expect(
+          (await _gradesApi.updateGrade('1', 'A', 'Good')).toString(),
+          _grade.toString(),
+        );
       });
 
       test('When called & http client throws Exceptions', () async {
         var _gradesApi = HttpGradesApi();
 
         ApiUtils.client = MockClient((_) => throw ForbiddenException(''));
-        expect(_gradesApi.updateGrade('1', 'A', 'Good'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _gradesApi.updateGrade('1', 'A', 'Good'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw NotFoundException(''));
-        expect(_gradesApi.updateGrade('1', 'A', 'Good'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _gradesApi.updateGrade('1', 'A', 'Good'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
-        ApiUtils.client =
-            MockClient((_) => throw UnprocessableIdentityException(''));
-        expect(_gradesApi.updateGrade('1', 'A', 'Good'),
-            throwsA(isInstanceOf<Failure>()));
+        ApiUtils.client = MockClient(
+          (_) => throw UnprocessableIdentityException(''),
+        );
+        expect(
+          _gradesApi.updateGrade('1', 'A', 'Good'),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_gradesApi.updateGrade('1', 'A', 'Good'),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _gradesApi.updateGrade('1', 'A', 'Good'),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
 

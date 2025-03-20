@@ -6,7 +6,7 @@ import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/group_details_view.dart';
 
 class GroupMemberCard extends StatelessWidget {
-  const GroupMemberCard({Key? key, required this.group}) : super(key: key);
+  const GroupMemberCard({super.key, required this.group});
 
   final Group group;
 
@@ -17,10 +17,7 @@ class GroupMemberCard extends StatelessWidget {
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         border: const Border(
-          left: BorderSide(
-            width: 10,
-            color: CVTheme.primaryColor,
-          ),
+          left: BorderSide(width: 10, color: CVTheme.primaryColor),
         ),
         boxShadow: [
           BoxShadow(
@@ -41,9 +38,9 @@ class GroupMemberCard extends StatelessWidget {
                   group.attributes.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 Padding(
@@ -60,7 +57,7 @@ class GroupMemberCard extends StatelessWidget {
             onPressed: () => Get.toNamed(GroupDetailsView.id, arguments: group),
             color: CVTheme.primaryColor,
             title: 'View',
-          )
+          ),
         ],
       ),
     );

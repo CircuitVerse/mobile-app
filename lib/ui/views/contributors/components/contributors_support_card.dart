@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class ContributeSupportCard extends StatelessWidget {
   const ContributeSupportCard({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.title,
     required this.cardDescriptionList,
-  }) : super(key: key);
+  });
 
   final String imagePath;
   final String title;
@@ -27,8 +27,8 @@ class ContributeSupportCard extends StatelessWidget {
               child: Text(
                 title,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Padding(
@@ -39,7 +39,7 @@ class ContributeSupportCard extends StatelessWidget {
                     .reduce((x, y) => '$x$y'),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
-            )
+            ),
           ],
         ),
       ),

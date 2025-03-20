@@ -13,15 +13,18 @@ class ForgotPasswordViewModel extends BaseModel {
   Future onForgotPassword(String email) async {
     setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Busy);
     try {
-      var _areInstructionsSent =
-          await _usersApi.sendResetPasswordInstructions(email);
+      var _areInstructionsSent = await _usersApi.sendResetPasswordInstructions(
+        email,
+      );
 
       if (_areInstructionsSent ?? false) {
         setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Success);
       } else {
         setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Error);
         setErrorMessageFor(
-            SEND_RESET_INSTRUCTIONS, "Instructions couldn't be sent!");
+          SEND_RESET_INSTRUCTIONS,
+          "Instructions couldn't be sent!",
+        );
       }
     } on Failure catch (f) {
       setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Error);

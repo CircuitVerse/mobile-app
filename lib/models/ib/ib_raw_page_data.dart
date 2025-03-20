@@ -5,22 +5,22 @@ part 'ib_raw_page_data.g.dart';
 @HiveType(typeId: 0)
 class IbRawPageData {
   factory IbRawPageData.fromJson(Map<String, dynamic> json) => IbRawPageData(
-        id: json['path'] ?? json['relative_path'],
-        name: json['name'],
-        title: json['title'],
-        content: json['content'],
-        rawContent: json['raw_content'],
-        navOrder: json['nav_order'].toString(),
-        cvibLevel: json['cvib_level'],
-        parent: json['parent'],
-        hasChildren: json['has_children'] ?? false,
-        hasToc: json['has_toc'] ?? (json['name'] == 'index.md' ? false : true),
-        disableComments: json['disable_comments'] ??
-            (json['name'] == 'index.md' ? true : false),
-        frontMatter: json['front_matter'] ?? {},
-        httpUrl: json['http_url'],
-        apiUrl: json['api_url'],
-      );
+    id: json['path'] ?? json['relative_path'],
+    name: json['name'],
+    title: json['title'],
+    content: json['content'],
+    rawContent: json['raw_content'],
+    navOrder: json['nav_order'].toString(),
+    cvibLevel: json['cvib_level'],
+    parent: json['parent'],
+    hasChildren: json['has_children'] ?? false,
+    hasToc: json['has_toc'] ?? (json['name'] == 'index.md' ? false : true),
+    disableComments:
+        json['disable_comments'] ?? (json['name'] == 'index.md' ? true : false),
+    frontMatter: json['front_matter'] ?? {},
+    httpUrl: json['http_url'],
+    apiUrl: json['api_url'],
+  );
 
   IbRawPageData({
     required this.id,

@@ -16,52 +16,67 @@ void main() {
     var _projects = Projects.fromJson(mockProjects);
 
     group('fetchFeaturedProjects -', () {
-      test('When first time fetched & service returns success response',
-          () async {
-        var _mockProjectsApi = getAndRegisterProjectsApiMock();
-        when(_mockProjectsApi.getFeaturedProjects())
-            .thenAnswer((_) => Future.value(_projects));
+      test(
+        'When first time fetched & service returns success response',
+        () async {
+          var _mockProjectsApi = getAndRegisterProjectsApiMock();
+          when(
+            _mockProjectsApi.getFeaturedProjects(),
+          ).thenAnswer((_) => Future.value(_projects));
 
-        var _model = FeaturedProjectsViewModel();
-        await _model.fetchFeaturedProjects();
+          var _model = FeaturedProjectsViewModel();
+          await _model.fetchFeaturedProjects();
 
-        verify(_mockProjectsApi.getFeaturedProjects());
-        expect(
-            _model.stateFor(_model.FETCH_FEATURED_PROJECTS), ViewState.Success);
-        expect(_model.previousFeaturedProjectsBatch, _projects);
-        expect(deepEq(_model.projects, _projects.data), true);
-      });
+          verify(_mockProjectsApi.getFeaturedProjects());
+          expect(
+            _model.stateFor(_model.FETCH_FEATURED_PROJECTS),
+            ViewState.Success,
+          );
+          expect(_model.previousFeaturedProjectsBatch, _projects);
+          expect(deepEq(_model.projects, _projects.data), true);
+        },
+      );
 
-      test('When not first time fetched & service returns success response',
-          () async {
-        var _mockProjectsApi = getAndRegisterProjectsApiMock();
-        when(_mockProjectsApi.getFeaturedProjects(page: 2))
-            .thenAnswer((_) => Future.value(_projects));
+      test(
+        'When not first time fetched & service returns success response',
+        () async {
+          var _mockProjectsApi = getAndRegisterProjectsApiMock();
+          when(
+            _mockProjectsApi.getFeaturedProjects(page: 2),
+          ).thenAnswer((_) => Future.value(_projects));
 
-        var _model = FeaturedProjectsViewModel();
-        _model.previousFeaturedProjectsBatch = _projects;
-        await _model.fetchFeaturedProjects();
+          var _model = FeaturedProjectsViewModel();
+          _model.previousFeaturedProjectsBatch = _projects;
+          await _model.fetchFeaturedProjects();
 
-        // verify API call to page 2 is made
-        verify(_mockProjectsApi.getFeaturedProjects(page: 2));
-        expect(
-            _model.stateFor(_model.FETCH_FEATURED_PROJECTS), ViewState.Success);
-        expect(_model.previousFeaturedProjectsBatch, _projects);
-      });
+          // verify API call to page 2 is made
+          verify(_mockProjectsApi.getFeaturedProjects(page: 2));
+          expect(
+            _model.stateFor(_model.FETCH_FEATURED_PROJECTS),
+            ViewState.Success,
+          );
+          expect(_model.previousFeaturedProjectsBatch, _projects);
+        },
+      );
 
       test('When service returns error response', () async {
         var _mockProjectsApi = getAndRegisterProjectsApiMock();
-        when(_mockProjectsApi.getFeaturedProjects())
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _mockProjectsApi.getFeaturedProjects(),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = FeaturedProjectsViewModel();
         await _model.fetchFeaturedProjects();
 
         // verify Error ViewState with proper error message..
         expect(
-            _model.stateFor(_model.FETCH_FEATURED_PROJECTS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_FEATURED_PROJECTS),
-            'Some Error Occurred!');
+          _model.stateFor(_model.FETCH_FEATURED_PROJECTS),
+          ViewState.Error,
+        );
+        expect(
+          _model.errorMessageFor(_model.FETCH_FEATURED_PROJECTS),
+          'Some Error Occurred!',
+        );
       });
     });
   });

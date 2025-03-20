@@ -18,8 +18,9 @@ void main() {
     group('addGroup -', () {
       test('When called & service returns success response', () async {
         var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.addGroup('Test Group'))
-            .thenAnswer((_) => Future.value(_group));
+        when(
+          _mockGroupsApi.addGroup('Test Group'),
+        ).thenAnswer((_) => Future.value(_group));
 
         var _model = NewGroupViewModel();
         await _model.addGroup('Test Group');
@@ -31,8 +32,9 @@ void main() {
 
       test('When called & service returns error response', () async {
         var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.addGroup('Test Group'))
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _mockGroupsApi.addGroup('Test Group'),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = NewGroupViewModel();
         await _model.addGroup('Test Group');
@@ -40,7 +42,9 @@ void main() {
         // verify Error ViewState with proper error message..
         expect(_model.stateFor(_model.ADD_GROUP), ViewState.Error);
         expect(
-            _model.errorMessageFor(_model.ADD_GROUP), 'Some Error Occurred!');
+          _model.errorMessageFor(_model.ADD_GROUP),
+          'Some Error Occurred!',
+        );
       });
     });
   });

@@ -44,10 +44,7 @@ class HttpAssignmentsApi implements AssignmentsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return Assignments.fromJson(jsonResponse);
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
@@ -65,10 +62,7 @@ class HttpAssignmentsApi implements AssignmentsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       var assignment = Assignment.fromJson(jsonResponse);
       return assignment;
     } on ForbiddenException {
@@ -96,16 +90,12 @@ class HttpAssignmentsApi implements AssignmentsApi {
       'deadline': deadline,
       'description': description,
       'grading_scale': gradingScale,
-      'restrictions': restrictions
+      'restrictions': restrictions,
     };
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.post(
-        uri,
-        headers: headers,
-        body: json,
-      );
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       return Assignment.fromJson(jsonResponse['data']);
     } on BadRequestException {
       throw Failure(Constants.INVALID_PARAMETERS);
@@ -162,10 +152,7 @@ class HttpAssignmentsApi implements AssignmentsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      await ApiUtils.delete(
-        uri,
-        headers: headers,
-      );
+      await ApiUtils.delete(uri, headers: headers);
       return true;
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);

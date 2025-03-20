@@ -34,9 +34,9 @@ class IbLandingViewModel extends BaseModel {
 
   // Getter for Global Keys Map
   Map<String, dynamic> get keyMap => <String, dynamic>{
-        'toc': _toc,
-        'drawer': _drawer,
-      };
+    'toc': _toc,
+    'drawer': _drawer,
+  };
 
   List<IbChapter> _chapters = [];
 
@@ -98,22 +98,19 @@ class IbLandingViewModel extends BaseModel {
   void setUpIsolate() async {
     receivePort = ReceivePort();
 
-    _isolate = await Isolate.spawn<List<dynamic>>(
-      fetchCallback,
+    _isolate = await Isolate.spawn<List<dynamic>>(fetchCallback, [
+      receivePort.sendPort,
       [
-        receivePort.sendPort,
-        [
-          IbChapter(
-            id: 'index.md',
-            navOrder: '1',
-            value: 'Interactive Book Home',
-            next: chapters[0],
-          ),
-          ...chapters
-        ],
-        _ibEngineService
+        IbChapter(
+          id: 'index.md',
+          navOrder: '1',
+          value: 'Interactive Book Home',
+          next: chapters[0],
+        ),
+        ...chapters,
       ],
-    );
+      _ibEngineService,
+    ]);
 
     otherSendPort = await receivePort.first;
 

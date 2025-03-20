@@ -10,7 +10,10 @@ abstract class GroupMembersApi {
   Future<GroupMembers>? fetchGroupMembers(String groupId);
 
   Future<AddGroupMembersResponse>? addGroupMembers(
-      String groupId, String listOfMails, bool isMentor);
+    String groupId,
+    String listOfMails,
+    bool isMentor,
+  );
 
   Future updateMemberRole(String memberId, bool isMentor);
 
@@ -27,10 +30,7 @@ class HttpGroupMembersApi implements GroupMembersApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return GroupMembers.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);
@@ -43,18 +43,17 @@ class HttpGroupMembersApi implements GroupMembersApi {
 
   @override
   Future<AddGroupMembersResponse>? addGroupMembers(
-      String groupId, String listOfMails, bool isMentor) async {
+    String groupId,
+    String listOfMails,
+    bool isMentor,
+  ) async {
     var endpoint = '/groups/$groupId/members';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'emails': listOfMails, 'mentor': isMentor};
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.post(
-        uri,
-        headers: headers,
-        body: json,
-      );
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       var addGroupMembers = AddGroupMembersResponse.fromJson(jsonResponse);
       return addGroupMembers;
     } on UnauthorizedException {
@@ -71,7 +70,7 @@ class HttpGroupMembersApi implements GroupMembersApi {
     var endpoint = '/group/members/$memberId';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {
-      'group_member': {'mentor': isMentor}
+      'group_member': {'mentor': isMentor},
     };
 
     try {
@@ -93,10 +92,7 @@ class HttpGroupMembersApi implements GroupMembersApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      await ApiUtils.delete(
-        uri,
-        headers: headers,
-      );
+      await ApiUtils.delete(uri, headers: headers);
       return true;
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHORIZED);

@@ -5,34 +5,34 @@ import 'package:mobile_app/services/local_storage_service.dart';
 
 class Projects {
   factory Projects.fromJson(Map<String, dynamic> json) => Projects(
-        data: List<Project>.from(json['data'].map((x) => Project.fromJson(x))),
-        links: Links.fromJson(json['links']),
-      );
+    data: List<Project>.from(json['data'].map((x) => Project.fromJson(x))),
+    links: Links.fromJson(json['links']),
+  );
 
-  Projects({
-    required this.data,
-    required this.links,
-  });
+  Projects({required this.data, required this.links});
   List<Project> data;
   Links links;
 }
 
 class Project {
   factory Project.fromJson(Map<String, dynamic> json) => Project(
-        id: json['id'] ?? json['data']['id'],
-        type: json['type'] ?? json['data']['type'],
-        attributes: ProjectAttributes.fromJson(
-            json['attributes'] ?? json['data']['attributes']),
-        relationships: ProjectRelationships.fromJson(
-            json['relationships'] ?? json['data']['relationships']),
-        collaborators: json['included'] != null
+    id: json['id'] ?? json['data']['id'],
+    type: json['type'] ?? json['data']['type'],
+    attributes: ProjectAttributes.fromJson(
+      json['attributes'] ?? json['data']['attributes'],
+    ),
+    relationships: ProjectRelationships.fromJson(
+      json['relationships'] ?? json['data']['relationships'],
+    ),
+    collaborators:
+        json['included'] != null
             ? List<Collaborator>.from(
-                json['included']
-                    ?.where((e) => e['type'] == 'user')
-                    ?.map((e) => Collaborator.fromJson(e)),
-              )
+              json['included']
+                  ?.where((e) => e['type'] == 'user')
+                  ?.map((e) => Collaborator.fromJson(e)),
+            )
             : null,
-      );
+  );
   Project({
     required this.id,
     required this.type,
@@ -144,60 +144,45 @@ class ProjectAttributes {
 }
 
 class ImagePreview {
-  factory ImagePreview.fromJson(Map<String, dynamic> json) => ImagePreview(
-        url: json['url'],
-      );
-  ImagePreview({
-    required this.url,
-  });
+  factory ImagePreview.fromJson(Map<String, dynamic> json) =>
+      ImagePreview(url: json['url']);
+  ImagePreview({required this.url});
 
   String url;
 }
 
 class ProjectRelationships {
   factory ProjectRelationships.fromJson(Map<String, dynamic> json) =>
-      ProjectRelationships(
-        author: Author.fromJson(json['author']),
-      );
+      ProjectRelationships(author: Author.fromJson(json['author']));
 
-  ProjectRelationships({
-    required this.author,
-  });
+  ProjectRelationships({required this.author});
   Author author;
 }
 
 class Author {
-  factory Author.fromJson(Map<String, dynamic> json) => Author(
-        data: AuthorData.fromJson(json['data']),
-      );
+  factory Author.fromJson(Map<String, dynamic> json) =>
+      Author(data: AuthorData.fromJson(json['data']));
 
-  Author({
-    required this.data,
-  });
+  Author({required this.data});
   AuthorData data;
 }
 
 class AuthorData {
-  factory AuthorData.fromJson(Map<String, dynamic> json) => AuthorData(
-        id: json['id'],
-        type: json['type'],
-      );
+  factory AuthorData.fromJson(Map<String, dynamic> json) =>
+      AuthorData(id: json['id'], type: json['type']);
 
-  AuthorData({
-    required this.id,
-    required this.type,
-  });
+  AuthorData({required this.id, required this.type});
   String id;
   String type;
 }
 
 class Tag {
   factory Tag.fromJson(Map<String, dynamic> json) => Tag(
-        id: json['id'],
-        name: json['name'],
-        createdAt: DateTime.parse(json['created_at']),
-        updatedAt: DateTime.parse(json['updated_at']),
-      );
+    id: json['id'],
+    name: json['name'],
+    createdAt: DateTime.parse(json['created_at']),
+    updatedAt: DateTime.parse(json['updated_at']),
+  );
 
   Tag({
     required this.id,

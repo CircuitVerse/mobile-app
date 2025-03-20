@@ -17,11 +17,7 @@ void main() {
         var _mockIbEngineApi = getAndRegisterIbEngineServiceMock();
         when(_mockIbEngineApi.getChapters()).thenAnswer(
           (_) => Future.value([
-            IbChapter(
-              id: 'index.md',
-              value: 'Home',
-              navOrder: '1',
-            ),
+            IbChapter(id: 'index.md', value: 'Home', navOrder: '1'),
           ]),
         );
 
@@ -38,8 +34,9 @@ void main() {
 
       test('When called & service returns error', () async {
         var _mockIbEngineApi = getAndRegisterIbEngineServiceMock();
-        when(_mockIbEngineApi.getChapters())
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _mockIbEngineApi.getChapters(),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = IbLandingViewModel();
         await _model.fetchChapters();

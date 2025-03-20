@@ -8,8 +8,8 @@ class CircuitVerseSocialCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.url,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String imagePath;
   final String title;
@@ -23,9 +23,10 @@ class CircuitVerseSocialCard extends StatelessWidget {
         launchURL(url);
       },
       child: Card(
-        color: Theme.of(context).brightness == Brightness.dark
-            ? CVTheme.primaryColor
-            : CVTheme.primaryColorShadow,
+        color:
+            Theme.of(context).brightness == Brightness.dark
+                ? CVTheme.primaryColor
+                : CVTheme.primaryColorShadow,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: Row(
@@ -42,9 +43,9 @@ class CircuitVerseSocialCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: CVTheme.textColor(context),
-                          ),
+                        fontWeight: FontWeight.bold,
+                        color: CVTheme.textColor(context),
+                      ),
                     ),
                     Text(
                       description,
@@ -54,7 +55,7 @@ class CircuitVerseSocialCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

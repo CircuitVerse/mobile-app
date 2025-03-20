@@ -19,11 +19,7 @@ class HttpFCMApi implements FCMApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.post(
-        uri,
-        headers: headers,
-        body: json,
-      );
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       return jsonResponse['message'];
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);

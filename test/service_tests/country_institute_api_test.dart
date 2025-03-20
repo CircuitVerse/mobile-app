@@ -15,7 +15,8 @@ void main() {
     group('fetchCountries -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockCountries), 200)));
+          (_) => Future.value(Response(jsonEncode(mockCountries), 200)),
+        );
         var _countryApi = HttpCountryInstituteAPI();
 
         expect(
@@ -39,7 +40,9 @@ void main() {
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
         expect(
-            _countriesApi.getCountries(''), throwsA(isInstanceOf<Failure>()));
+          _countriesApi.getCountries(''),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
   });
@@ -48,7 +51,8 @@ void main() {
     group('fetchInstitutes -', () {
       test('When called & http client returns success response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockInstitutes), 200)));
+          (_) => Future.value(Response(jsonEncode(mockInstitutes), 200)),
+        );
         var _countryApi = HttpCountryInstituteAPI();
 
         expect(
@@ -72,7 +76,9 @@ void main() {
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
         expect(
-            _countriesApi.getInstitutes(''), throwsA(isInstanceOf<Failure>()));
+          _countriesApi.getInstitutes(''),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
   });

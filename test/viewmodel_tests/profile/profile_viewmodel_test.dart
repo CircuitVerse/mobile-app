@@ -18,8 +18,9 @@ void main() {
     group('fetchUserProfile -', () {
       test('When called & service returns success response', () async {
         var _mockUsersApi = getAndRegisterUsersApiMock();
-        when(_mockUsersApi.fetchUser('1'))
-            .thenAnswer((_) => Future.value(_user));
+        when(
+          _mockUsersApi.fetchUser('1'),
+        ).thenAnswer((_) => Future.value(_user));
 
         var _model = ProfileViewModel();
         _model.userId = '1';
@@ -35,8 +36,9 @@ void main() {
 
       test('When called & service returns error', () async {
         var _mockUsersApi = getAndRegisterUsersApiMock();
-        when(_mockUsersApi.fetchUser('1'))
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _mockUsersApi.fetchUser('1'),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = ProfileViewModel();
         _model.userId = '1';
@@ -44,8 +46,10 @@ void main() {
 
         // verify Error ViewState with proper error message..
         expect(_model.stateFor(_model.FETCH_USER_PROFILE), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_USER_PROFILE),
-            'Some Error Occurred!');
+        expect(
+          _model.errorMessageFor(_model.FETCH_USER_PROFILE),
+          'Some Error Occurred!',
+        );
 
         // verify user is not populated on failure
         expect(_model.user, null);

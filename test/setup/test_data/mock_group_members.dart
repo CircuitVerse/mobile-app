@@ -9,23 +9,23 @@ Map<String, dynamic> mockGroupMembers = {
         'created_at': '2020-08-15T14:36:38.228Z',
         'updated_at': '2020-08-15T14:36:38.228Z',
         'name': 'Test User',
-        'email': 'test@test.com'
+        'email': 'test@test.com',
       },
-    }
+    },
   ],
   'links': {
     'self': '{url}?page[number]=1',
     'first': '{url}?page[number]=1',
     'prev': null,
     'next': '{url}?page[number]=2',
-    'last': '{url}?page[number]=1'
-  }
+    'last': '{url}?page[number]=1',
+  },
 };
 
 Map<String, dynamic> mockGroupMember = {
   'id': '1',
   'type': 'group_member',
-  'attributes': mockGroupMemberAttributes
+  'attributes': mockGroupMemberAttributes,
 };
 
 Map<String, dynamic> mockGroupMemberAttributes = {
@@ -34,5 +34,5 @@ Map<String, dynamic> mockGroupMemberAttributes = {
   'created_at': '2020-08-15T14:36:38.228Z',
   'updated_at': '2020-08-15T14:36:38.228Z',
   'name': 'Test User',
-  'email': 'test@test.com'
+  'email': 'test@test.com',
 };

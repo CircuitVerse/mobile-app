@@ -13,7 +13,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.dart';
 
 class ForgotPasswordView extends StatefulWidget {
-  const ForgotPasswordView({Key? key}) : super(key: key);
+  const ForgotPasswordView({super.key});
 
   static const String id = 'forgot_password_view';
 
@@ -32,10 +32,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       color: CVTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
-        child: Image.asset(
-          'assets/images/login/cv_login.png',
-          height: 300,
-        ),
+        child: Image.asset('assets/images/login/cv_login.png', height: 300),
       ),
     );
   }
@@ -44,8 +41,11 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     return CVTextField(
       label: 'Email',
       type: TextInputType.emailAddress,
-      validator: (value) =>
-          Validators.isEmailValid(value) ? null : 'Please enter a valid email',
+      validator:
+          (value) =>
+              Validators.isEmailValid(value)
+                  ? null
+                  : 'Please enter a valid email',
       onSaved: (value) => _email = value!.trim(),
       action: TextInputAction.done,
     );
@@ -56,9 +56,10 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _model.isBusy(_model.SEND_RESET_INSTRUCTIONS)
-            ? 'Sending..'
-            : 'SEND INSTRUCTIONS',
+        title:
+            _model.isBusy(_model.SEND_RESET_INSTRUCTIONS)
+                ? 'Sending..'
+                : 'SEND INSTRUCTIONS',
         onPressed: _validateAndSubmit,
       ),
     );
@@ -74,9 +75,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
           children: const <TextSpan>[
             TextSpan(
               text: 'Sign Up',
-              style: TextStyle(
-                color: CVTheme.primaryColorDark,
-              ),
+              style: TextStyle(color: CVTheme.primaryColorDark),
             ),
           ],
         ),
@@ -122,28 +121,27 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   Widget build(BuildContext context) {
     return BaseView<ForgotPasswordViewModel>(
       onModelReady: (model) => _model = model,
-      builder: (context, model, child) => Scaffold(
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                _buildForgotPasswordImage(),
-                const SizedBox(height: 8),
-                _buildEmailInput(),
-                const SizedBox(height: 8),
-                _buildSendInstructionsButton(),
-                const SizedBox(height: 8),
-                _buildNewUserSignUpComponent(),
-                const SizedBox(height: 32),
-                const AuthOptionsView(
-                  isSignUp: false,
+      builder:
+          (context, model, child) => Scaffold(
+            body: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    _buildForgotPasswordImage(),
+                    const SizedBox(height: 8),
+                    _buildEmailInput(),
+                    const SizedBox(height: 8),
+                    _buildSendInstructionsButton(),
+                    const SizedBox(height: 8),
+                    _buildNewUserSignUpComponent(),
+                    const SizedBox(height: 32),
+                    const AuthOptionsView(isSignUp: false),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

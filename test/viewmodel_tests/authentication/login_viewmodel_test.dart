@@ -15,8 +15,9 @@ void main() {
       test('When called & service returns token response', () async {
         var _usersApiMock = getAndRegisterUsersApiMock();
 
-        when(_usersApiMock.login('test@test.com', 'password'))
-            .thenAnswer((_) => Future.value('token'));
+        when(
+          _usersApiMock.login('test@test.com', 'password'),
+        ).thenAnswer((_) => Future.value('token'));
 
         var _model = LoginViewModel();
         when(_usersApiMock.fetchCurrentUser()).thenAnswer((_) => null);
@@ -30,8 +31,9 @@ void main() {
       test('When called & service throws error', () async {
         var _mockUsersApi = getAndRegisterUsersApiMock();
 
-        when(_mockUsersApi.login('test@test.com', 'password'))
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _mockUsersApi.login('test@test.com', 'password'),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = LoginViewModel();
         await _model.login('test@test.com', 'password');

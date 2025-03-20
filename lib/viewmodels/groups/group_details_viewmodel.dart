@@ -112,16 +112,18 @@ class GroupDetailsViewModel extends BaseModel {
   Future addMembers(String groupId, String emails, bool isMentor) async {
     setStateFor(ADD_GROUP_MEMBERS, ViewState.Busy);
     try {
-      var addGroupMembers =
-          await _groupMembersApi.addGroupMembers(groupId, emails, isMentor);
+      var addGroupMembers = await _groupMembersApi.addGroupMembers(
+        groupId,
+        emails,
+        isMentor,
+      );
 
       var _addedMembers = addGroupMembers!.added.join(', ');
       var _pendingMembers = addGroupMembers.pending.join(', ');
       var _invalidMembers = addGroupMembers.invalid.join(', ');
 
-      addedMembersSuccessMessage = (_addedMembers.isNotEmpty
-              ? '$_addedMembers was/were added '
-              : '') +
+      addedMembersSuccessMessage =
+          (_addedMembers.isNotEmpty ? '$_addedMembers was/were added ' : '') +
           (_pendingMembers.isNotEmpty
               ? '$_pendingMembers is/are pending '
               : '') +
@@ -139,7 +141,10 @@ class GroupDetailsViewModel extends BaseModel {
   }
 
   Future updateMemberRole(
-      String memberId, bool isMentor, String groupId) async {
+    String memberId,
+    bool isMentor,
+    String groupId,
+  ) async {
     setStateFor(UPDATE_MEMBER_ROLE, ViewState.Busy);
     try {
       await _groupMembersApi.updateMemberRole(memberId, isMentor);
@@ -170,7 +175,9 @@ class GroupDetailsViewModel extends BaseModel {
       } else {
         setStateFor(DELETE_GROUP_MEMBER, ViewState.Error);
         setErrorMessageFor(
-            DELETE_GROUP_MEMBER, 'Group Member can\'t be deleted');
+          DELETE_GROUP_MEMBER,
+          'Group Member can\'t be deleted',
+        );
       }
     } on Failure catch (f) {
       setStateFor(DELETE_GROUP_MEMBER, ViewState.Error);
@@ -184,8 +191,9 @@ class GroupDetailsViewModel extends BaseModel {
   }
 
   void onAssignmentUpdated(Assignment assignment) async {
-    var _index =
-        _assignments.indexWhere((assignment) => assignment.id == assignment.id);
+    var _index = _assignments.indexWhere(
+      (assignment) => assignment.id == assignment.id,
+    );
     _assignments.removeAt(_index);
     _assignments.insert(_index, assignment);
     notifyListeners();

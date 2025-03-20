@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -26,30 +25,36 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
           return const Text('Loading Interaction...');
         }
 
-        var _textContent = snapshot.data.toString();
-        var _streamController = StreamController<double>();
-        late WebViewController _webViewController;
+        var textContent = snapshot.data.toString();
+        var streamController = StreamController<double>();
+
+        // Create and configure WebViewController
+        final controller =
+            WebViewController()
+              ..setJavaScriptMode(JavaScriptMode.unrestricted)
+              ..loadHtmlString(textContent);
+
+        controller.setNavigationDelegate(
+          NavigationDelegate(
+            onPageFinished: (String url) async {
+              final height = double.parse(
+                await controller.runJavaScriptReturningResult(
+                      'document.documentElement.scrollHeight;',
+                    )
+                    as String,
+              );
+              streamController.add(height);
+            },
+          ),
+        );
 
         return StreamBuilder<double>(
           initialData: 100,
-          stream: _streamController.stream,
+          stream: streamController.stream,
           builder: (context, snapshot) {
             return SizedBox(
               height: snapshot.data,
-              child: WebView(
-                initialUrl:
-                    'data:text/html;base64,${base64Encode(const Utf8Encoder().convert(_textContent))}',
-                onWebViewCreated: (_controller) {
-                  _webViewController = _controller;
-                },
-                onPageFinished: (some) async {
-                  var height = double.parse(
-                      await _webViewController.runJavascriptReturningResult(
-                          'document.documentElement.scrollHeight;'));
-                  _streamController.add(height);
-                },
-                javascriptMode: JavascriptMode.unrestricted,
-              ),
+              child: WebViewWidget(controller: controller),
             );
           },
         );

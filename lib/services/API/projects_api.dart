@@ -33,11 +33,7 @@ abstract class ProjectsApi {
     String sortBy,
   });
 
-  Future<Projects>? searchProjects(
-    String query, {
-    int page = 1,
-    int size = 5,
-  });
+  Future<Projects>? searchProjects(String query, {int page = 1, int size = 5});
 
   Future<Project>? getProjectDetails(String id);
 
@@ -71,10 +67,7 @@ class HttpProjectsApi implements ProjectsApi {
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 
     try {
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return Projects.fromJson(jsonResponse);
     } on Exception {
       throw Failure(Constants.GENERIC_FAILURE);
@@ -95,10 +88,7 @@ class HttpProjectsApi implements ProjectsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return Projects.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
@@ -123,10 +113,7 @@ class HttpProjectsApi implements ProjectsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return Projects.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
@@ -149,10 +136,7 @@ class HttpProjectsApi implements ProjectsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return Projects.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
@@ -168,10 +152,7 @@ class HttpProjectsApi implements ProjectsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return Project.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
@@ -196,10 +177,7 @@ class HttpProjectsApi implements ProjectsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return Projects.fromJson(jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
@@ -253,10 +231,7 @@ class HttpProjectsApi implements ProjectsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      await ApiUtils.delete(
-        uri,
-        headers: headers,
-      );
+      await ApiUtils.delete(uri, headers: headers);
       return true;
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
@@ -276,10 +251,7 @@ class HttpProjectsApi implements ProjectsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return jsonResponse['message'];
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
@@ -297,10 +269,7 @@ class HttpProjectsApi implements ProjectsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(
-        uri,
-        headers: headers,
-      );
+      var jsonResponse = await ApiUtils.get(uri, headers: headers);
       return Project.fromJson(jsonResponse['data']);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);

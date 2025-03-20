@@ -56,10 +56,7 @@ class NotificationAttributes {
 }
 
 class NotificationParams {
-  NotificationParams({
-    required this.user,
-    required this.project,
-  });
+  NotificationParams({required this.user, required this.project});
 
   final User user;
   final Project project;
@@ -69,9 +66,7 @@ class NotificationParams {
     mp['id'] = json['user']['id'].toString();
     mp['attributes'] = json['user'];
     return NotificationParams(
-      user: User.fromJson({
-        'data': mp,
-      }),
+      user: User.fromJson({'data': mp}),
       project: Project.fromJson(json['project']),
     );
   }
@@ -109,12 +104,14 @@ class Project {
       slug: json['slug'],
       view: json['view'],
       imagePreview: json['image_preview'],
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : null,
-      updatedAt: json['updated_at'] != null
-          ? DateTime.parse(json['updated_at'])
-          : null,
+      createdAt:
+          json['created_at'] != null
+              ? DateTime.parse(json['created_at'])
+              : null,
+      updatedAt:
+          json['updated_at'] != null
+              ? DateTime.parse(json['updated_at'])
+              : null,
     );
   }
 }

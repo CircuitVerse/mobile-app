@@ -65,7 +65,9 @@ class CVLandingViewModel extends BaseModel {
   void onProfileUpdated() {
     final _updatedUser = _storage.currentUser;
     if (_currentUser?.data.attributes.name ==
-        _updatedUser?.data.attributes.name) return;
+        _updatedUser?.data.attributes.name) {
+      return;
+    }
 
     currentUser = _updatedUser;
   }

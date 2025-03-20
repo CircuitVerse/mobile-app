@@ -19,8 +19,9 @@ void main() {
     var _assignment = Assignment.fromJson(mockAssignment);
     var _deadlineFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
     var _localDeadline = DateTime(2020, 8, 15);
-    var _timeZoneOffsetIncludedDeadline =
-        _localDeadline.subtract(_localDeadline.timeZoneOffset);
+    var _timeZoneOffsetIncludedDeadline = _localDeadline.subtract(
+      _localDeadline.timeZoneOffset,
+    );
 
     group('addAssignment -', () {
       test('When called & service returns success response', () async {
@@ -38,7 +39,13 @@ void main() {
 
         var _model = AddAssignmentViewModel();
         await _model.addAssignment(
-            '1', 'Test', _localDeadline, 'letter', 'description', []);
+          '1',
+          'Test',
+          _localDeadline,
+          'letter',
+          'description',
+          [],
+        );
 
         // verify call to addAssignment with timezone offset subtracted was made
         verify(
@@ -73,11 +80,19 @@ void main() {
 
         var _model = AddAssignmentViewModel();
         await _model.addAssignment(
-            '1', 'Test', _localDeadline, 'letter', 'description', []);
+          '1',
+          'Test',
+          _localDeadline,
+          'letter',
+          'description',
+          [],
+        );
 
         expect(_model.stateFor(_model.ADD_ASSIGNMENT), ViewState.Error);
-        expect(_model.errorMessageFor(_model.ADD_ASSIGNMENT),
-            'Some Error Occurred!');
+        expect(
+          _model.errorMessageFor(_model.ADD_ASSIGNMENT),
+          'Some Error Occurred!',
+        );
       });
     });
   });

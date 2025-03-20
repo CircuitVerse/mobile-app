@@ -2,17 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mobile_app/models/ib/ib_raw_page_data.dart';
 
-enum DatabaseBox {
-  Metadata,
-  IB,
-}
+enum DatabaseBox { Metadata, IB }
 
-List<TypeAdapter> DatabaseAdapters = <TypeAdapter>[
-  IbRawPageDataAdapter(),
-];
+List<TypeAdapter> DatabaseAdapters = <TypeAdapter>[IbRawPageDataAdapter()];
 
 extension DatabaseBoxExt on DatabaseBox {
-  String get inString => describeEnum(this);
+  String get inString => name;
 }
 
 abstract class DatabaseService {
@@ -20,8 +15,12 @@ abstract class DatabaseService {
 
   Future<bool> isExpired(String key);
   Future<T> getData<T>(DatabaseBox box, String key, {T defaultValue});
-  Future<void> setData(DatabaseBox box, String key, dynamic value,
-      {bool expireData});
+  Future<void> setData(
+    DatabaseBox box,
+    String key,
+    dynamic value, {
+    bool expireData,
+  });
 }
 
 class DatabaseServiceImpl implements DatabaseService {
@@ -55,11 +54,7 @@ class DatabaseServiceImpl implements DatabaseService {
     var data = await getData<DateTime?>(DatabaseBox.Metadata, key);
 
     return data == null ||
-        data.isBefore(
-          DateTime.now().subtract(
-            Duration(hours: _timeoutHours),
-          ),
-        );
+        data.isBefore(DateTime.now().subtract(Duration(hours: _timeoutHours)));
   }
 
   @override
@@ -70,8 +65,12 @@ class DatabaseServiceImpl implements DatabaseService {
   }
 
   @override
-  Future<void> setData(DatabaseBox box, String key, dynamic value,
-      {bool expireData = false}) async {
+  Future<void> setData(
+    DatabaseBox box,
+    String key,
+    dynamic value, {
+    bool expireData = false,
+  }) async {
     var openedBox = await _openBox(box);
 
     if (expireData) {

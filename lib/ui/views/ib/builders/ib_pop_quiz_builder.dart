@@ -17,9 +17,6 @@ class IbPopQuizBuilder extends MarkdownElementBuilder {
 
     if (_popQuizQuestions == null) return Container();
 
-    return IbPopQuiz(
-      context: context,
-      questions: _popQuizQuestions,
-    );
+    return IbPopQuiz(context: context, questions: _popQuizQuestions);
   }
 }

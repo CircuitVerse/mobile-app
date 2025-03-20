@@ -38,16 +38,18 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds CircuitVerse logo on StartUpView',
-        (WidgetTester tester) async {
+    testWidgets('finds CircuitVerse logo on StartUpView', (
+      WidgetTester tester,
+    ) async {
       await _pumpStartUpView(tester);
 
       expect(find.byKey(const Key('cv_startup_logo')), findsOneWidget);
       await tester.pumpAndSettle(const Duration(seconds: 1));
     });
 
-    testWidgets('HomeView is pushed over StartUpView after 1 second',
-        (WidgetTester tester) async {
+    testWidgets('HomeView is pushed over StartUpView after 1 second', (
+      WidgetTester tester,
+    ) async {
       await _pumpStartUpView(tester);
       await tester.pumpAndSettle(const Duration(seconds: 1));
 

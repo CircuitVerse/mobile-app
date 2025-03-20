@@ -6,22 +6,22 @@ class IbTheme {
   static ThemeData getThemeData(context) {
     return Theme.of(context).copyWith(
       brightness: Theme.of(context).brightness,
-      primaryIconTheme: Theme.of(context).primaryIconTheme.copyWith(
-            color: Colors.white,
-          ),
+      primaryIconTheme: Theme.of(
+        context,
+      ).primaryIconTheme.copyWith(color: Colors.white),
       appBarTheme: const AppBarTheme(
         foregroundColor: Colors.white,
         backgroundColor: IbTheme.primaryColor,
       ),
       primaryColor: IbTheme.primaryColor,
       textTheme: Theme.of(context).textTheme.apply(
-            fontFamily: IbTheme.fontFamily,
-            bodyColor: IbTheme.textColor(context),
-          ),
+        fontFamily: IbTheme.fontFamily,
+        bodyColor: IbTheme.textColor(context),
+      ),
       primaryTextTheme: Theme.of(context).primaryTextTheme.apply(
-            fontFamily: IbTheme.fontFamily,
-            bodyColor: Colors.white,
-          ),
+        fontFamily: IbTheme.fontFamily,
+        bodyColor: Colors.white,
+      ),
     );
   }
 

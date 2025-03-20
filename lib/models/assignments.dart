@@ -4,15 +4,12 @@ import 'package:mobile_app/models/projects.dart';
 
 class Assignments {
   factory Assignments.fromJson(Map<String, dynamic> json) => Assignments(
-        data: List<Assignment>.from(
-          json['data'].map((x) => Assignment.fromJson(x)),
-        ),
-        links: Links.fromJson(json['links']),
-      );
-  Assignments({
-    this.data,
-    this.links,
-  });
+    data: List<Assignment>.from(
+      json['data'].map((x) => Assignment.fromJson(x)),
+    ),
+    links: Links.fromJson(json['links']),
+  );
+  Assignments({this.data, this.links});
 
   List<Assignment>? data;
   Links? links;
@@ -20,25 +17,28 @@ class Assignments {
 
 class Assignment {
   factory Assignment.fromJson(Map<String, dynamic> json) => Assignment(
-        id: json['id'] ?? json['data']['id'],
-        type: json['type'] ?? json['data']['type'],
-        attributes: AssignmentAttributes.fromJson(
-            json['attributes'] ?? json['data']['attributes']),
-        projects: json['included'] != null
+    id: json['id'] ?? json['data']['id'],
+    type: json['type'] ?? json['data']['type'],
+    attributes: AssignmentAttributes.fromJson(
+      json['attributes'] ?? json['data']['attributes'],
+    ),
+    projects:
+        json['included'] != null
             ? List<Project>.from(
-                json['included']
-                    ?.where((e) => e['type'] == 'project')
-                    ?.map((e) => Project.fromJson(e)),
-              )
+              json['included']
+                  ?.where((e) => e['type'] == 'project')
+                  ?.map((e) => Project.fromJson(e)),
+            )
             : null,
-        grades: json['included'] != null
+    grades:
+        json['included'] != null
             ? List<Grade>.from(
-                json['included']
-                    ?.where((e) => e['type'] == 'grade')
-                    ?.map((e) => Grade.fromJson(e)),
-              )
+              json['included']
+                  ?.where((e) => e['type'] == 'grade')
+                  ?.map((e) => Grade.fromJson(e)),
+            )
             : null,
-      );
+  );
   Assignment({
     required this.id,
     required this.type,

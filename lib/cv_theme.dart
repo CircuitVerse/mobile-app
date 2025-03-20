@@ -55,9 +55,9 @@ class CVTheme {
     return ThemeData(
       brightness: Theme.of(context).brightness,
       colorScheme: ThemeData().colorScheme.copyWith(
-            brightness: Theme.of(context).brightness,
-            primary: CVTheme.secondaryColor,
-          ),
+        brightness: Theme.of(context).brightness,
+        primary: CVTheme.secondaryColor,
+      ),
     );
   }
 

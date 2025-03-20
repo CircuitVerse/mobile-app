@@ -13,7 +13,9 @@ void main() {
       expect(_ibRawPageData.title, mockIbRawPageData1['title']);
       expect(_ibRawPageData.parent, null);
       expect(
-          _ibRawPageData.navOrder, mockIbRawPageData1['nav_order'].toString());
+        _ibRawPageData.navOrder,
+        mockIbRawPageData1['nav_order'].toString(),
+      );
       expect(_ibRawPageData.cvibLevel, null);
       expect(_ibRawPageData.hasChildren, false);
       expect(_ibRawPageData.hasToc, false);

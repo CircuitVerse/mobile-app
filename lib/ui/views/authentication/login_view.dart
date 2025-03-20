@@ -14,7 +14,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
 
 class LoginView extends StatefulWidget {
-  const LoginView({Key? key}) : super(key: key);
+  const LoginView({super.key});
 
   static const String id = 'login_view';
   @override
@@ -35,16 +35,14 @@ class _LoginViewState extends State<LoginView> {
   Widget _buildLoginImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height > 800
-          ? MediaQuery.of(context).size.height * 0.56
-          : MediaQuery.of(context).size.height * 0.475,
+      height:
+          MediaQuery.of(context).size.height > 800
+              ? MediaQuery.of(context).size.height * 0.56
+              : MediaQuery.of(context).size.height * 0.475,
       color: CVTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
-        child: Image.asset(
-          'assets/images/login/cv_login.png',
-          height: 300,
-        ),
+        child: Image.asset('assets/images/login/cv_login.png', height: 300),
       ),
     );
   }
@@ -53,19 +51,22 @@ class _LoginViewState extends State<LoginView> {
     return CVTextField(
       label: 'Email',
       type: TextInputType.emailAddress,
-      validator: (value) =>
-          Validators.isEmailValid(value) ? null : 'Please enter a valid email',
+      validator:
+          (value) =>
+              Validators.isEmailValid(value)
+                  ? null
+                  : 'Please enter a valid email',
       onSaved: (value) => _email = value!.trim(),
-      onFieldSubmitted: (_) =>
-          FocusScope.of(context).requestFocus(_emailFocusNode),
+      onFieldSubmitted:
+          (_) => FocusScope.of(context).requestFocus(_emailFocusNode),
     );
   }
 
   Widget _buildPasswordInput() {
     return CVPasswordField(
       focusNode: _emailFocusNode,
-      validator: (value) =>
-          value?.isEmpty ?? true ? 'Password can\'t be empty' : null,
+      validator:
+          (value) => value?.isEmpty ?? true ? 'Password can\'t be empty' : null,
       onSaved: (value) => _password = value!.trim(),
     );
   }
@@ -78,9 +79,7 @@ class _LoginViewState extends State<LoginView> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Text(
           'Forgot Password?',
-          style: TextStyle(
-            color: CVTheme.highlightText(context),
-          ),
+          style: TextStyle(color: CVTheme.highlightText(context)),
         ),
       ),
     );
@@ -125,19 +124,13 @@ class _LoginViewState extends State<LoginView> {
       await _model.login(_email, _password);
       if (_model.isSuccess(_model.LOGIN)) {
         // show login successful snackbar..
-        SnackBarUtils.showDark(
-          'Login Successful',
-          'Welcome back!',
-        );
+        SnackBarUtils.showDark('Login Successful', 'Welcome back!');
         // move to home view on successful login..
         await Future.delayed(const Duration(seconds: 1));
         await Get.offAllNamed(CVLandingView.id);
       } else if (_model.isError(_model.LOGIN)) {
         // show failure snackbar..
-        SnackBarUtils.showDark(
-          'Error',
-          _model.errorMessageFor(_model.LOGIN),
-        );
+        SnackBarUtils.showDark('Error', _model.errorMessageFor(_model.LOGIN));
         _formKey.currentState?.reset();
       }
     }
@@ -147,28 +140,29 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return BaseView<LoginViewModel>(
       onModelReady: (model) => _model = model,
-      builder: (context, model, child) => Scaffold(
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                _buildLoginImage(),
-                const SizedBox(height: 8),
-                _buildEmailInput(),
-                _buildPasswordInput(),
-                _buildForgotPasswordComponent(),
-                const SizedBox(height: 16),
-                _buildLoginButton(),
-                const SizedBox(height: 8),
-                _buildNewUserSignUpComponent(),
-                const SizedBox(height: 30),
-                const AuthOptionsView(isSignUp: false),
-              ],
+      builder:
+          (context, model, child) => Scaffold(
+            body: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    _buildLoginImage(),
+                    const SizedBox(height: 8),
+                    _buildEmailInput(),
+                    _buildPasswordInput(),
+                    _buildForgotPasswordComponent(),
+                    const SizedBox(height: 16),
+                    _buildLoginButton(),
+                    const SizedBox(height: 8),
+                    _buildNewUserSignUpComponent(),
+                    const SizedBox(height: 30),
+                    const AuthOptionsView(isSignUp: false),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

@@ -1,9 +1,6 @@
 List mockCountries = [
   {
-    'name': {
-      'official': 'Test',
-      'common': 'Test',
-    },
+    'name': {'official': 'Test', 'common': 'Test'},
     'topLevelDomain': ['.Test'],
     'alpha2Code': 'Test',
     'alpha3Code': 'Test',
@@ -22,27 +19,27 @@ List mockCountries = [
     'nativeName': 'Test',
     'numericCode': 'Test',
     'currencies': [
-      {'code': 'Test', 'name': 'Test', 'symbol': 'Test'}
+      {'code': 'Test', 'name': 'Test', 'symbol': 'Test'},
     ],
     'languages': [
       {
         'iso639_1': 'Test',
         'iso639_2': 'Test',
         'name': 'Test',
-        'nativeName': 'Test'
+        'nativeName': 'Test',
       },
       {
         'iso639_1': 'Test',
         'iso639_2': 'Test',
         'name': 'Test',
-        'nativeName': 'Test'
+        'nativeName': 'Test',
       },
       {
         'iso639_1': 'Test',
         'iso639_2': 'Test',
         'name': 'Test',
-        'nativeName': 'Test'
-      }
+        'nativeName': 'Test',
+      },
     ],
     'translations': {
       'de': 'Test',
@@ -54,12 +51,17 @@ List mockCountries = [
       'pt': 'Test',
       'nl': 'Test',
       'hr': 'Test',
-      'fa': 'Test'
+      'fa': 'Test',
     },
     'flag': 'Test',
     'regionalBlocs': [
-      {'acronym': 'Test', 'name': 'Test', 'otherAcronyms': [], 'otherNames': []}
+      {
+        'acronym': 'Test',
+        'name': 'Test',
+        'otherAcronyms': [],
+        'otherNames': [],
+      },
     ],
-    'cioc': 'Test'
-  }
+    'cioc': 'Test',
+  },
 ];

@@ -8,13 +8,13 @@ import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 
 class AssignmentCard extends StatefulWidget {
   const AssignmentCard({
-    Key? key,
+    super.key,
     required this.assignment,
     required this.onDeletePressed,
     required this.onEditPressed,
     required this.onReopenPressed,
     required this.onStartPressed,
-  }) : super(key: key);
+  });
   final Assignment assignment;
   final VoidCallback onDeletePressed;
   final VoidCallback onEditPressed;
@@ -38,7 +38,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
           TextSpan(
             text: description,
             style: Theme.of(context).textTheme.bodyLarge,
-          )
+          ),
         ],
       ),
     );
@@ -48,8 +48,9 @@ class _AssignmentCardState extends State<AssignmentCard> {
     var _items = <Widget>[];
     var _isMentor = widget.assignment.attributes.hasPrimaryMentorAccess;
     var _isOpen = widget.assignment.attributes.status != 'closed';
-    var _isDeadlineOver =
-        widget.assignment.attributes.deadline.isBefore(DateTime.now());
+    var _isDeadlineOver = widget.assignment.attributes.deadline.isBefore(
+      DateTime.now(),
+    );
     var _projectId = widget.assignment.attributes.currentUserProjectId;
 
     /// Adds Show assignment details button..
@@ -58,8 +59,11 @@ class _AssignmentCardState extends State<AssignmentCard> {
       Flexible(
         child: CardButton(
           title: 'Show',
-          onPressed: () => Get.toNamed(AssignmentDetailsView.id,
-              arguments: widget.assignment),
+          onPressed:
+              () => Get.toNamed(
+                AssignmentDetailsView.id,
+                arguments: widget.assignment,
+              ),
           color: CVTheme.primaryColor,
         ),
       ),
@@ -164,7 +168,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
             color: CVTheme.boxShadow(context),
             offset: const Offset(0, 3),
             blurRadius: 2,
-          )
+          ),
         ],
         color: CVTheme.boxBg(context),
       ),
@@ -175,9 +179,9 @@ class _AssignmentCardState extends State<AssignmentCard> {
             widget.assignment.attributes.name ?? 'No Name',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
           _buildAssignmentComponent(
             'Grading',

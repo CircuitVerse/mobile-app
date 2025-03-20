@@ -7,7 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class AboutTosView extends StatelessWidget {
-  const AboutTosView({Key? key, this.showAppBar = true}) : super(key: key);
+  const AboutTosView({super.key, this.showAppBar = true});
 
   static const String id = 'about_tos_view';
 
@@ -16,29 +16,28 @@ class AboutTosView extends StatelessWidget {
   TextSpan _buildText(BuildContext context, String text, {bool bold = false}) {
     return TextSpan(
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontWeight: bold ? FontWeight.bold : FontWeight.normal,
-            fontFamily: 'Poppins',
-          ),
+        fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+        fontFamily: 'Poppins',
+      ),
       text: text,
     );
   }
 
   TextSpan _buildLink(String text, String link, {bool route = false}) {
     return TextSpan(
-      style: const TextStyle(
-        color: Colors.blue,
-        fontFamily: 'Poppins',
-      ),
+      style: const TextStyle(color: Colors.blue, fontFamily: 'Poppins'),
       text: text,
-      recognizer: TapGestureRecognizer()
-        ..onTap = !route
-            ? () async {
-                final url = link;
-                if (await canLaunchUrlString(url)) {
-                  await launchUrlString(url);
-                }
-              }
-            : () => Get.toNamed(link),
+      recognizer:
+          TapGestureRecognizer()
+            ..onTap =
+                !route
+                    ? () async {
+                      final url = link;
+                      if (await canLaunchUrlString(url)) {
+                        await launchUrlString(url);
+                      }
+                    }
+                    : () => Get.toNamed(link),
     );
   }
 
@@ -53,17 +52,15 @@ class AboutTosView extends StatelessWidget {
         Text(
           title,
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w400,
-                color: CVTheme.primaryHeading(context),
-              ),
+            fontWeight: FontWeight.w400,
+            color: CVTheme.primaryHeading(context),
+          ),
           textAlign: TextAlign.left,
         ),
         RichText(
           textAlign: TextAlign.justify,
-          text: TextSpan(
-            children: content,
-          ),
-        )
+          text: TextSpan(children: content),
+        ),
       ],
     );
   }
@@ -71,16 +68,15 @@ class AboutTosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: showAppBar
-          ? AppBar(
-              title: Text(
-                AppLocalizations.of(context)!.terms_of_service,
-                style: TextStyle(
-                  color: CVTheme.primaryHeading(context),
+      appBar:
+          showAppBar
+              ? AppBar(
+                title: Text(
+                  AppLocalizations.of(context)!.terms_of_service,
+                  style: TextStyle(color: CVTheme.primaryHeading(context)),
                 ),
-              ),
-            )
-          : null,
+              )
+              : null,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -93,10 +89,7 @@ class AboutTosView extends StatelessWidget {
                   context,
                   AppLocalizations.of(context)!.tos_section1_text1_string1,
                 ),
-                _buildLink(
-                  'CircuitVerse.org',
-                  'https://circuitverse.org/',
-                ),
+                _buildLink('CircuitVerse.org', 'https://circuitverse.org/'),
                 _buildText(
                   context,
                   AppLocalizations.of(context)!.tos_section1_text1_string2,
@@ -156,10 +149,7 @@ class AboutTosView extends StatelessWidget {
                   'support@CircuitVerse.org',
                   'mailto:support@CircuitVerse.org',
                 ),
-                _buildText(
-                  context,
-                  AppLocalizations.of(context)!.full_stop,
-                ),
+                _buildText(context, AppLocalizations.of(context)!.full_stop),
               ],
             ),
             _buildSection(
@@ -282,10 +272,7 @@ class AboutTosView extends StatelessWidget {
                   'support@CircuitVerse.org',
                   'mailto:support@CircuitVerse.org',
                 ),
-                _buildText(
-                  context,
-                  AppLocalizations.of(context)!.full_stop,
-                ),
+                _buildText(context, AppLocalizations.of(context)!.full_stop),
               ],
             ),
             _buildSection(

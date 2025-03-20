@@ -45,8 +45,10 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      expect(find.text('Dive into the world of Logic Circuits for free!'),
-          findsOneWidget);
+      expect(
+        find.text('Dive into the world of Logic Circuits for free!'),
+        findsOneWidget,
+      );
       expect(find.byType(CVSubheader), findsNWidgets(2));
       expect(find.byType(CVOutlineButton), findsNWidgets(3));
       expect(find.byType(FeatureCard), findsNWidgets(5));

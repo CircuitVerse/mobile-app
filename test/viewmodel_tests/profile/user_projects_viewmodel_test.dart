@@ -26,76 +26,99 @@ void main() {
         _model.onProjectDeleted('1');
 
         expect(
-            _model.userProjects
-                .where((project) => project.id == _project.id)
-                .isEmpty,
-            true);
+          _model.userProjects
+              .where((project) => project.id == _project.id)
+              .isEmpty,
+          true,
+        );
       });
     });
 
     group('fetchUserFavourites -', () {
-      test('When first time fetched & service returns success response',
-          () async {
-        var _mockProjectsApi = getAndRegisterProjectsApiMock();
-        when(_mockProjectsApi.getUserProjects('1'))
-            .thenAnswer((_) => Future.value(_projects));
+      test(
+        'When first time fetched & service returns success response',
+        () async {
+          var _mockProjectsApi = getAndRegisterProjectsApiMock();
+          when(
+            _mockProjectsApi.getUserProjects('1'),
+          ).thenAnswer((_) => Future.value(_projects));
 
-        var _model = UserProjectsViewModel();
-        await _model.fetchUserProjects(userId: '1');
+          var _model = UserProjectsViewModel();
+          await _model.fetchUserProjects(userId: '1');
 
-        verify(_mockProjectsApi.getUserProjects('1'));
-        expect(_model.stateFor(_model.FETCH_USER_PROJECTS), ViewState.Success);
-        expect(_model.previousUserProjectsBatch, _projects);
-        expect(deepEq(_model.userProjects, _projects.data), true);
-      });
+          verify(_mockProjectsApi.getUserProjects('1'));
+          expect(
+            _model.stateFor(_model.FETCH_USER_PROJECTS),
+            ViewState.Success,
+          );
+          expect(_model.previousUserProjectsBatch, _projects);
+          expect(deepEq(_model.userProjects, _projects.data), true);
+        },
+      );
 
-      test('When not first time fetched & service returns success response',
-          () async {
-        var _mockProjectsApi = getAndRegisterProjectsApiMock();
-        when(_mockProjectsApi.getUserProjects('1', page: 2))
-            .thenAnswer((_) => Future.value(_projects));
+      test(
+        'When not first time fetched & service returns success response',
+        () async {
+          var _mockProjectsApi = getAndRegisterProjectsApiMock();
+          when(
+            _mockProjectsApi.getUserProjects('1', page: 2),
+          ).thenAnswer((_) => Future.value(_projects));
 
-        var _model = UserProjectsViewModel();
-        _model.previousUserProjectsBatch = _projects;
-        await _model.fetchUserProjects(userId: '1');
+          var _model = UserProjectsViewModel();
+          _model.previousUserProjectsBatch = _projects;
+          await _model.fetchUserProjects(userId: '1');
 
-        // verify API call to page 2 is made
-        verify(_mockProjectsApi.getUserProjects('1', page: 2));
-        expect(_model.stateFor(_model.FETCH_USER_PROJECTS), ViewState.Success);
-        expect(_model.previousUserProjectsBatch, _projects);
-      });
+          // verify API call to page 2 is made
+          verify(_mockProjectsApi.getUserProjects('1', page: 2));
+          expect(
+            _model.stateFor(_model.FETCH_USER_PROJECTS),
+            ViewState.Success,
+          );
+          expect(_model.previousUserProjectsBatch, _projects);
+        },
+      );
 
-      test('When userId not passed, API calls is made with _currentUser.id',
-          () async {
-        var _mockLocalStorageService = getAndRegisterLocalStorageServiceMock();
-        when(_mockLocalStorageService.currentUser).thenReturn(_user);
+      test(
+        'When userId not passed, API calls is made with _currentUser.id',
+        () async {
+          var _mockLocalStorageService =
+              getAndRegisterLocalStorageServiceMock();
+          when(_mockLocalStorageService.currentUser).thenReturn(_user);
 
-        var _mockProjectsApi = getAndRegisterProjectsApiMock();
-        when(_mockProjectsApi.getUserProjects('1'))
-            .thenAnswer((_) => Future.value(_projects));
+          var _mockProjectsApi = getAndRegisterProjectsApiMock();
+          when(
+            _mockProjectsApi.getUserProjects('1'),
+          ).thenAnswer((_) => Future.value(_projects));
 
-        var _model = UserProjectsViewModel();
-        await _model.fetchUserProjects();
+          var _model = UserProjectsViewModel();
+          await _model.fetchUserProjects();
 
-        // verify API call is made with _currentUser.data.id i.e '1'..
-        verify(_mockProjectsApi.getUserProjects('1'));
-        expect(_model.stateFor(_model.FETCH_USER_PROJECTS), ViewState.Success);
-        expect(_model.previousUserProjectsBatch, _projects);
-        expect(deepEq(_model.userProjects, _projects.data), true);
-      });
+          // verify API call is made with _currentUser.data.id i.e '1'..
+          verify(_mockProjectsApi.getUserProjects('1'));
+          expect(
+            _model.stateFor(_model.FETCH_USER_PROJECTS),
+            ViewState.Success,
+          );
+          expect(_model.previousUserProjectsBatch, _projects);
+          expect(deepEq(_model.userProjects, _projects.data), true);
+        },
+      );
 
       test('When service returns error response', () async {
         var _mockProjectsApi = getAndRegisterProjectsApiMock();
-        when(_mockProjectsApi.getUserProjects('1'))
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _mockProjectsApi.getUserProjects('1'),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = UserProjectsViewModel();
         await _model.fetchUserProjects(userId: '1');
 
         // verify Error ViewState with proper error message..
         expect(_model.stateFor(_model.FETCH_USER_PROJECTS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_USER_PROJECTS),
-            'Some Error Occurred!');
+        expect(
+          _model.errorMessageFor(_model.FETCH_USER_PROJECTS),
+          'Some Error Occurred!',
+        );
       });
     });
   });

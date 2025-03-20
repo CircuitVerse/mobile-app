@@ -9,19 +9,19 @@ Map<String, dynamic> mockGroups = {
         'name': 'Test Group',
         'primary_mentor_id': 1,
         'created_at': '2020-08-15T05:49:56.433Z',
-        'updated_at': '2020-08-15T17:21:13.813Z'
+        'updated_at': '2020-08-15T17:21:13.813Z',
       },
       'relationships': {
         'group_members': {
           'data': [
             {'id': '1', 'type': 'group_member'},
-          ]
+          ],
         },
         'assignments': {
           'data': [
             {'id': '1', 'type': 'assignment'},
-          ]
-        }
+          ],
+        },
       },
     },
   ],
@@ -30,8 +30,8 @@ Map<String, dynamic> mockGroups = {
     'first': '{url}?page[number]=1',
     'prev': null,
     'next': '{url}?page[number]=2',
-    'last': '{url}?page[number]=1'
-  }
+    'last': '{url}?page[number]=1',
+  },
 };
 
 Map<String, dynamic> mockGroup = {
@@ -43,14 +43,14 @@ Map<String, dynamic> mockGroup = {
       'group_members': {
         'data': [
           {'id': '1', 'type': 'group_member'},
-        ]
+        ],
       },
       'assignments': {
         'data': [
           {'id': '1', 'type': 'assignment'},
-        ]
-      }
-    }
+        ],
+      },
+    },
   },
   'included': [
     {
@@ -67,20 +67,20 @@ Map<String, dynamic> mockGroup = {
         'created_at': '2020-08-15T15:00:30.423Z',
         'updated_at': '2020-08-15T15:23:03.018Z',
         'grading_scale': 'letter',
-        'grades_finalized': false
+        'grades_finalized': false,
       },
       'relationships': {
         'projects': {
           'data': [
-            {'id': '1', 'type': 'project'}
-          ]
+            {'id': '1', 'type': 'project'},
+          ],
         },
         'grades': {
           'data': [
-            {'id': '1', 'type': 'grade'}
-          ]
-        }
-      }
+            {'id': '1', 'type': 'grade'},
+          ],
+        },
+      },
     },
     {
       'id': '1',
@@ -91,10 +91,10 @@ Map<String, dynamic> mockGroup = {
         'created_at': '2020-08-19T14:36:38.228Z',
         'updated_at': '2020-08-19T14:36:38.228Z',
         'name': 'Test User',
-        'email': 'test@test.com'
-      }
-    }
-  ]
+        'email': 'test@test.com',
+      },
+    },
+  ],
 };
 
 Map<String, dynamic> mockGroupAttributes = {
@@ -103,5 +103,5 @@ Map<String, dynamic> mockGroupAttributes = {
   'name': 'Test Group',
   'primary_mentor_id': 1,
   'created_at': '2020-08-15T05:49:56.433Z',
-  'updated_at': '2020-08-15T17:21:13.813Z'
+  'updated_at': '2020-08-15T17:21:13.813Z',
 };

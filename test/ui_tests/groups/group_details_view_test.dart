@@ -14,6 +14,8 @@ import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
 
 import '../../setup/test_data/mock_groups.dart';
 import '../../setup/test_data/mock_user.dart';
@@ -29,6 +31,7 @@ void main() {
       SharedPreferences.setMockInitialValues({});
       await setupLocator();
       locator.allowReassignment = true;
+      WebViewPlatform.instance = AndroidWebViewPlatform();
     });
 
     setUp(() => mockObserver = MockNavigatorObserver());
@@ -36,8 +39,9 @@ void main() {
     Future<void> _pumpGroupDetailsView(WidgetTester tester) async {
       // Mock Local Storage
       var _localStorageService = test.getAndRegisterLocalStorageServiceMock();
-      when(_localStorageService.currentUser)
-          .thenAnswer((_) => User.fromJson(mockUser));
+      when(
+        _localStorageService.currentUser,
+      ).thenAnswer((_) => User.fromJson(mockUser));
 
       // Mock GroupDetailsViewModel
       var _groupDetailsViewModel = MockGroupDetailsViewModel();
@@ -45,8 +49,9 @@ void main() {
 
       var group = Group.fromJson(mockGroup);
 
-      when(_groupDetailsViewModel.FETCH_GROUP_DETAILS)
-          .thenAnswer((_) => 'fetch_group_details');
+      when(
+        _groupDetailsViewModel.FETCH_GROUP_DETAILS,
+      ).thenAnswer((_) => 'fetch_group_details');
       when(_groupDetailsViewModel.fetchGroupDetails(any)).thenReturn(null);
       when(_groupDetailsViewModel.group).thenReturn(group);
       when(_groupDetailsViewModel.members).thenReturn([group.groupMembers![0]]);
@@ -68,8 +73,9 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic MyGroupsView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic MyGroupsView widgets', (
+      WidgetTester tester,
+    ) async {
       await _pumpGroupDetailsView(tester);
       await tester.pumpAndSettle();
 
@@ -80,10 +86,13 @@ void main() {
       expect(find.text('Edit'), findsNWidgets(2));
 
       // Finds Mentor Name
-      expect(find.byWidgetPredicate((widget) {
-        return widget is RichText &&
-            widget.text.toPlainText() == 'Primary Mentor : Test User';
-      }), findsOneWidget);
+      expect(
+        find.byWidgetPredicate((widget) {
+          return widget is RichText &&
+              widget.text.toPlainText() == 'Primary Mentor : Test User';
+        }),
+        findsOneWidget,
+      );
 
       // Make Add Mentors, Add Members and Add Assignments Button
       expect(find.widgetWithText(CVPrimaryButton, '+ Add'), findsNWidgets(3));
@@ -95,8 +104,9 @@ void main() {
       expect(find.byType(AssignmentCard), findsOneWidget);
     });
 
-    testWidgets('EditGroupView is Pushed onTap Edit Button',
-        (WidgetTester tester) async {
+    testWidgets('EditGroupView is Pushed onTap Edit Button', (
+      WidgetTester tester,
+    ) async {
       await _pumpGroupDetailsView(tester);
       await tester.pumpAndSettle();
 
@@ -109,8 +119,9 @@ void main() {
       expect(find.byType(EditGroupView), findsOneWidget);
     });
 
-    testWidgets('Alert Dialog is Pushed on Add Member Button',
-        (WidgetTester tester) async {
+    testWidgets('Alert Dialog is Pushed on Add Member Button', (
+      WidgetTester tester,
+    ) async {
       await _pumpGroupDetailsView(tester);
       await tester.pumpAndSettle();
 
@@ -122,8 +133,9 @@ void main() {
       expect(find.byType(AlertDialog), findsOneWidget);
     });
 
-    testWidgets('AddAssignmentView is Pushed onTap Add Assignment Button',
-        (WidgetTester tester) async {
+    testWidgets('AddAssignmentView is Pushed onTap Add Assignment Button', (
+      WidgetTester tester,
+    ) async {
       await _pumpGroupDetailsView(tester);
       await tester.pumpAndSettle();
 

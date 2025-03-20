@@ -19,32 +19,52 @@ void main() {
       ApiUtils.client = MockClient((_) => throw const SocketException(''));
 
       expect(() => ApiUtils.get('/'), throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.post('/', headers: {}),
-          throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.put('/', headers: {}),
-          throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.patch('/', headers: {}),
-          throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.patchMutipart('/', headers: {}, files: []),
-          throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.delete('/', headers: {}),
-          throwsA(isInstanceOf<Failure>()));
+      expect(
+        () => ApiUtils.post('/', headers: {}),
+        throwsA(isInstanceOf<Failure>()),
+      );
+      expect(
+        () => ApiUtils.put('/', headers: {}),
+        throwsA(isInstanceOf<Failure>()),
+      );
+      expect(
+        () => ApiUtils.patch('/', headers: {}),
+        throwsA(isInstanceOf<Failure>()),
+      );
+      expect(
+        () => ApiUtils.patchMutipart('/', headers: {}, files: []),
+        throwsA(isInstanceOf<Failure>()),
+      );
+      expect(
+        () => ApiUtils.delete('/', headers: {}),
+        throwsA(isInstanceOf<Failure>()),
+      );
     });
 
     test('When http method called & raises HttpException', () {
       ApiUtils.client = MockClient((_) => throw const HttpException(''));
 
       expect(() => ApiUtils.get('/'), throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.post('/', headers: {}),
-          throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.put('/', headers: {}),
-          throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.patch('/', headers: {}),
-          throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.patchMutipart('/', headers: {}, files: []),
-          throwsA(isInstanceOf<Failure>()));
-      expect(() => ApiUtils.delete('/', headers: {}),
-          throwsA(isInstanceOf<Failure>()));
+      expect(
+        () => ApiUtils.post('/', headers: {}),
+        throwsA(isInstanceOf<Failure>()),
+      );
+      expect(
+        () => ApiUtils.put('/', headers: {}),
+        throwsA(isInstanceOf<Failure>()),
+      );
+      expect(
+        () => ApiUtils.patch('/', headers: {}),
+        throwsA(isInstanceOf<Failure>()),
+      );
+      expect(
+        () => ApiUtils.patchMutipart('/', headers: {}, files: []),
+        throwsA(isInstanceOf<Failure>()),
+      );
+      expect(
+        () => ApiUtils.delete('/', headers: {}),
+        throwsA(isInstanceOf<Failure>()),
+      );
     });
 
     test('When http method called & status success', () async {
@@ -67,8 +87,9 @@ void main() {
         });
 
         test('When body is not empty', () {
-          var _jsonResponse =
-              ApiUtils.jsonResponse(Response('{"body": "body"}', 200));
+          var _jsonResponse = ApiUtils.jsonResponse(
+            Response('{"body": "body"}', 200),
+          );
 
           expect(_jsonResponse, {'body': 'body'});
         });

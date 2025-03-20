@@ -47,8 +47,9 @@ class UserProjectsViewModel extends BaseModel {
         // fetch next batch of projects..
         String _nextPageLink = previousUserProjectsBatch!.links.next;
 
-        var _nextPageNumber =
-            int.parse(_nextPageLink.substring(_nextPageLink.length - 1));
+        var _nextPageNumber = int.parse(
+          _nextPageLink.substring(_nextPageLink.length - 1),
+        );
 
         // fetch projects corresponding to next page number..
         previousUserProjectsBatch = await _projectsApi.getUserProjects(
@@ -60,7 +61,8 @@ class UserProjectsViewModel extends BaseModel {
         setStateFor(FETCH_USER_PROJECTS, ViewState.Busy);
         // fetch projects for the very first time..
         previousUserProjectsBatch = await _projectsApi.getUserProjects(
-            userId ?? _localStorageService.currentUser!.data.id);
+          userId ?? _localStorageService.currentUser!.data.id,
+        );
       }
       userProjects.addAll(previousUserProjectsBatch!.data);
       setStateFor(FETCH_USER_PROJECTS, ViewState.Success);

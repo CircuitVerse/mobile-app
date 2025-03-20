@@ -32,9 +32,10 @@ class FeaturedProjectsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Projects? get previousProjectsBatch => _showSearchedResult
-      ? _previousSearchedProjectsBatch
-      : _previousFeaturedProjectsBatch;
+  Projects? get previousProjectsBatch =>
+      _showSearchedResult
+          ? _previousSearchedProjectsBatch
+          : _previousFeaturedProjectsBatch;
 
   bool _showSearchBar = false;
 
@@ -100,12 +101,17 @@ class FeaturedProjectsViewModel extends BaseModel {
         var _nextPageNumber = _getNextPageNumber(_nextPageLink);
 
         // fetch projects corresponding to next page number..
-        _previousSearchedProjectsBatch = await _projectsApi
-            .searchProjects(query, page: _nextPageNumber, size: size);
+        _previousSearchedProjectsBatch = await _projectsApi.searchProjects(
+          query,
+          page: _nextPageNumber,
+          size: size,
+        );
       } else {
         // fetch projects for the very first time..
-        _previousSearchedProjectsBatch =
-            await _projectsApi.searchProjects(query, size: size);
+        _previousSearchedProjectsBatch = await _projectsApi.searchProjects(
+          query,
+          size: size,
+        );
       }
       _searchedProjects.addAll(previousSearchedProjectsBatch!.data);
       _showSearchedResult = true;

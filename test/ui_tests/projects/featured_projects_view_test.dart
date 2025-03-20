@@ -38,8 +38,9 @@ void main() {
       var projects = <Project>[];
       projects.add(Project.fromJson(mockProject));
 
-      when(model.FETCH_FEATURED_PROJECTS)
-          .thenAnswer((_) => 'fetch_featured_projects');
+      when(
+        model.FETCH_FEATURED_PROJECTS,
+      ).thenAnswer((_) => 'fetch_featured_projects');
       when(model.SEARCH_PROJECTS).thenAnswer((_) => 'search_projects');
       when(model.isBusy(any)).thenAnswer((_) => false);
       when(model.fetchFeaturedProjects()).thenReturn(null);
@@ -65,8 +66,9 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic MyGroupsView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic MyGroupsView widgets', (
+      WidgetTester tester,
+    ) async {
       await provideMockedNetworkImages(() async {
         await _pumpFeaturedProjectsView(tester);
         await tester.pumpAndSettle();
@@ -79,36 +81,42 @@ void main() {
       });
     });
 
-    testWidgets('Project Page is Pushed onTap View button',
-        (WidgetTester tester) async {
+    testWidgets('Project Page is Pushed onTap View button', (
+      WidgetTester tester,
+    ) async {
       await provideMockedNetworkImages(() async {
         await _pumpFeaturedProjectsView(tester);
         await tester.pumpAndSettle();
 
         var projectDetailsViewModel = MockProjectDetailsViewModel();
         locator.registerSingleton<ProjectDetailsViewModel>(
-            projectDetailsViewModel);
+          projectDetailsViewModel,
+        );
 
         final _recievedProject = Project.fromJson(mockProject);
-        when(projectDetailsViewModel.receivedProject)
-            .thenAnswer((_) => _recievedProject);
+        when(
+          projectDetailsViewModel.receivedProject,
+        ).thenAnswer((_) => _recievedProject);
         when(projectDetailsViewModel.isLoggedIn).thenAnswer((_) => true);
-        when(projectDetailsViewModel.isProjectStarred)
-            .thenAnswer((_) => _recievedProject.attributes.isStarred);
+        when(
+          projectDetailsViewModel.isProjectStarred,
+        ).thenAnswer((_) => _recievedProject.attributes.isStarred);
         when(projectDetailsViewModel.starCount).thenAnswer((_) => 0);
-        when(projectDetailsViewModel.FETCH_PROJECT_DETAILS)
-            .thenAnswer((_) => 'fetch_project_details');
+        when(
+          projectDetailsViewModel.FETCH_PROJECT_DETAILS,
+        ).thenAnswer((_) => 'fetch_project_details');
         when(projectDetailsViewModel.fetchProjectDetails(any)).thenReturn(null);
         when(projectDetailsViewModel.isSuccess(any)).thenReturn(false);
 
         expect(find.widgetWithText(CVPrimaryButton, 'View'), findsOneWidget);
 
         // ISSUE: tester.tap() is not working
-        Widget button = find
-            .widgetWithText(CVPrimaryButton, 'View')
-            .evaluate()
-            .first
-            .widget;
+        Widget button =
+            find
+                .widgetWithText(CVPrimaryButton, 'View')
+                .evaluate()
+                .first
+                .widget;
         (button as CVPrimaryButton).onPressed!();
         await tester.pumpAndSettle();
 

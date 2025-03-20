@@ -29,13 +29,15 @@ class CVFlatButtonState extends State<CVFlatButton> {
   Widget build(BuildContext context) {
     return TextButton(
       style: ButtonStyle(
-        foregroundColor: isButtonActive
-            ? MaterialStateProperty.all(CVTheme.primaryColor)
-            : MaterialStateProperty.all(Colors.grey),
+        foregroundColor:
+            isButtonActive
+                ? WidgetStateProperty.all(CVTheme.primaryColor)
+                : WidgetStateProperty.all(Colors.grey),
       ),
-      onPressed: dynamicFunction == null
-          ? null
-          : () => dynamicFunction!.call(widget.context),
+      onPressed:
+          dynamicFunction == null
+              ? null
+              : () => dynamicFunction!.call(widget.context),
       child: Text(widget.buttonText),
     );
   }

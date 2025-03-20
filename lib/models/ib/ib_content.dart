@@ -4,16 +4,12 @@ abstract class IbContent {
 }
 
 class IbTocItem extends IbContent {
-  IbTocItem({
-    required String content,
-    required this.leading,
-    this.items,
-  }) : super(content: content);
+  IbTocItem({required super.content, required this.leading, this.items});
 
   final String leading;
   final List<IbTocItem>? items;
 }
 
 class IbMd extends IbContent {
-  IbMd({required String content}) : super(content: content);
+  IbMd({required super.content});
 }

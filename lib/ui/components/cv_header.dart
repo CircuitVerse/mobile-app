@@ -6,8 +6,8 @@ class CVHeader extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.description,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final String? subtitle;
@@ -20,18 +20,18 @@ class CVHeader extends StatelessWidget {
         Text(
           title,
           style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                fontWeight: FontWeight.w400,
-                color: CVTheme.primaryColorDark,
-              ),
+            fontWeight: FontWeight.w400,
+            color: CVTheme.primaryColorDark,
+          ),
           textAlign: TextAlign.center,
         ),
         if (subtitle != null)
           Text(
             subtitle!,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: CVTheme.textColor(context),
-                ),
+              fontWeight: FontWeight.bold,
+              color: CVTheme.textColor(context),
+            ),
             textAlign: TextAlign.center,
           )
         else

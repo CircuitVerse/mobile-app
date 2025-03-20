@@ -7,8 +7,8 @@ class CVDrawerTile extends StatelessWidget {
     this.iconData,
     this.color,
     this.pending = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final IconData? iconData;
@@ -20,18 +20,16 @@ class CVDrawerTile extends StatelessWidget {
     return Theme(
       data: CVTheme.themeData(context),
       child: ListTile(
-        leading: iconData != null
-            ? Icon(
-                iconData,
-                color: color ?? CVTheme.drawerIcon(context),
-              )
-            : null,
+        leading:
+            iconData != null
+                ? Icon(iconData, color: color ?? CVTheme.drawerIcon(context))
+                : null,
         title: Text(
           title,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontFamily: 'Poppins',
-                color: color ?? CVTheme.textColor(context),
-              ),
+            fontFamily: 'Poppins',
+            color: color ?? CVTheme.textColor(context),
+          ),
         ),
         trailing: Visibility(
           visible: pending,

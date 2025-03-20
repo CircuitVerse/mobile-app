@@ -16,7 +16,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
 
 class AddAssignmentView extends StatefulWidget {
-  const AddAssignmentView({Key? key, required this.groupId}) : super(key: key);
+  const AddAssignmentView({super.key, required this.groupId});
 
   static const String id = 'add_assignment_view';
   final String groupId;
@@ -38,15 +38,15 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     'No Scale',
     'Letter',
     'Percent',
-    'Custom'
+    'Custom',
   ];
   bool _isRestrictionEnabled = false;
 
   Widget _buildNameInput() {
     return CVTextField(
       label: 'Name',
-      validator: (name) =>
-          name?.isEmpty ?? true ? 'Please enter a valid name' : null,
+      validator:
+          (name) => name?.isEmpty ?? true ? 'Please enter a valid name' : null,
       onSaved: (name) => _name = name!.trim(),
       action: TextInputAction.done,
     );
@@ -54,10 +54,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
 
   Widget _buildDescriptionInput() {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 8,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: CVHtmlEditor(editorKey: _descriptionEditor),
     );
   }
@@ -69,9 +66,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         key: const Key('cv_assignment_deadline_field'),
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: DateTime.now().add(const Duration(days: 7)),
-        decoration: CVTheme.textFieldDecoration.copyWith(
-          labelText: 'Deadline',
-        ),
+        decoration: CVTheme.textFieldDecoration.copyWith(labelText: 'Deadline'),
         onShowPicker: (context, currentValue) async {
           final date = await showDatePicker(
             context: context,
@@ -82,8 +77,9 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
           if (date != null) {
             final time = await showTimePicker(
               context: context,
-              initialTime:
-                  TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+              initialTime: TimeOfDay.fromDateTime(
+                currentValue ?? DateTime.now(),
+              ),
             );
             return DateTimeField.combine(date, time);
           } else {
@@ -110,12 +106,10 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
             _gradingScale = value;
           });
         },
-        items: _gradingOptions.map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
+        items:
+            _gradingOptions.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(value: value, child: Text(value));
+            }).toList(),
       ),
     );
   }
@@ -127,9 +121,9 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         value: _isRestrictionEnabled,
         title: Text(
           'Elements restriction',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         subtitle: const Text('Enable elements restriction'),
         onChanged: (value) {
@@ -171,9 +165,9 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const Divider(),
           Wrap(children: components.map((e) => _buildCheckBox(e)).toList()),
@@ -186,10 +180,11 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Column(
-        children: restrictionElements.entries
-            .toList()
-            .map<Widget>((e) => _buildRestrictionComponent(e.key, e.value))
-            .toList(),
+        children:
+            restrictionElements.entries
+                .toList()
+                .map<Widget>((e) => _buildRestrictionComponent(e.key, e.value))
+                .toList(),
       ),
     );
   }
@@ -218,7 +213,8 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
             await _descriptionEditor.currentState!.getText();
       } on NoSuchMethodError {
         debugPrint(
-            'Handled html_editor error. NOTE: This should only throw during tests.');
+          'Handled html_editor error. NOTE: This should only throw during tests.',
+        );
         _descriptionEditorText = '';
       }
 
@@ -259,30 +255,31 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   Widget build(BuildContext context) {
     return BaseView<AddAssignmentViewModel>(
       onModelReady: (model) => _model = model,
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: const Text('Add Assignment')),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                _buildNameInput(),
-                _buildDescriptionInput(),
-                _buildDeadlineInput(),
-                _buildGradingScaleDropdown(),
-                _buildRestrictionsHeader(),
-                if (_isRestrictionEnabled)
-                  _buildRestrictions()
-                else
-                  Container(),
-                _buildCreateButton(),
-              ],
+      builder:
+          (context, model, child) => Scaffold(
+            appBar: AppBar(title: const Text('Add Assignment')),
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _buildNameInput(),
+                    _buildDescriptionInput(),
+                    _buildDeadlineInput(),
+                    _buildGradingScaleDropdown(),
+                    _buildRestrictionsHeader(),
+                    if (_isRestrictionEnabled)
+                      _buildRestrictions()
+                    else
+                      Container(),
+                    _buildCreateButton(),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

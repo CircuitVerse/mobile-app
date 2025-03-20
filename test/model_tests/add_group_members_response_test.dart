@@ -6,8 +6,9 @@ import '../setup/test_data/mock_add_group_members_response.dart';
 void main() {
   group('AddGroupMembersResponseTest -', () {
     test('fromJson', () {
-      var _collaboratorResponse =
-          AddGroupMembersResponse.fromJson(mockAddGroupMembersResponse);
+      var _collaboratorResponse = AddGroupMembersResponse.fromJson(
+        mockAddGroupMembersResponse,
+      );
 
       expect(_collaboratorResponse, isInstanceOf<AddGroupMembersResponse>());
 

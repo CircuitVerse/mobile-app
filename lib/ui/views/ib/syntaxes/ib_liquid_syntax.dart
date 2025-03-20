@@ -6,7 +6,7 @@ class IbLiquidSyntax extends md.BlockSyntax {
 
   @override
   md.Node? parse(md.BlockParser parser) {
-    var match = pattern.firstMatch(parser.current);
+    var match = pattern.firstMatch(parser.current.content);
     if (match == null) return null;
     var tags = match[1]!.split(' ');
     md.Element? node;
@@ -20,8 +20,10 @@ class IbLiquidSyntax extends md.BlockSyntax {
         // Images
         var url =
             RegExp(r'''url=("|')([^"'\n\r]+)("|')''').firstMatch(match[1]!)![2];
-        var alt = RegExp(r'''description=("|')([^"'\n\r]*)("|')''')
-            .firstMatch(match[1]!)![2];
+        var alt =
+            RegExp(
+              r'''description=("|')([^"'\n\r]*)("|')''',
+            ).firstMatch(match[1]!)![2];
 
         node = md.Element.withTag('img');
         node.attributes['src'] = '${EnvironmentConfig.IB_BASE_URL}$url';

@@ -37,19 +37,22 @@ void main() {
 
       // Mock User Favorites ViewModel
       var _userFavoritesViewModel = MockUserFavouritesViewModel();
-      locator
-          .registerSingleton<UserFavouritesViewModel>(_userFavoritesViewModel);
+      locator.registerSingleton<UserFavouritesViewModel>(
+        _userFavoritesViewModel,
+      );
 
       var projects = <Project>[];
       projects.add(Project.fromJson(mockProject));
 
-      when(_userFavoritesViewModel.FETCH_USER_FAVOURITES)
-          .thenAnswer((_) => 'fetch_user_favorites');
+      when(
+        _userFavoritesViewModel.FETCH_USER_FAVOURITES,
+      ).thenAnswer((_) => 'fetch_user_favorites');
       when(_userFavoritesViewModel.fetchUserFavourites()).thenReturn(null);
       when(_userFavoritesViewModel.isSuccess(any)).thenReturn(true);
       when(_userFavoritesViewModel.userFavourites).thenAnswer((_) => projects);
-      when(_userFavoritesViewModel.previousUserFavouritesBatch)
-          .thenAnswer((_) => null);
+      when(
+        _userFavoritesViewModel.previousUserFavouritesBatch,
+      ).thenAnswer((_) => null);
 
       await tester.pumpWidget(
         GetMaterialApp(
@@ -57,9 +60,7 @@ void main() {
           navigatorObservers: [mockObserver],
           home: BaseView<ProfileViewModel>(
             builder: (context, model, child) {
-              return const Scaffold(
-                body: UserFavouritesView(),
-              );
+              return const Scaffold(body: UserFavouritesView());
             },
           ),
         ),
@@ -70,8 +71,9 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic UserFavouritesView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic UserFavouritesView widgets', (
+      WidgetTester tester,
+    ) async {
       await provideMockedNetworkImages(() async {
         await _pumpUserFavouritesView(tester);
         await tester.pumpAndSettle();
@@ -81,25 +83,30 @@ void main() {
       });
     });
 
-    testWidgets('Project Page is Pushed onTap View button',
-        (WidgetTester tester) async {
+    testWidgets('Project Page is Pushed onTap View button', (
+      WidgetTester tester,
+    ) async {
       await provideMockedNetworkImages(() async {
         await _pumpUserFavouritesView(tester);
         await tester.pumpAndSettle();
 
         var projectDetailsViewModel = MockProjectDetailsViewModel();
         locator.registerSingleton<ProjectDetailsViewModel>(
-            projectDetailsViewModel);
+          projectDetailsViewModel,
+        );
 
         final _recievedProject = Project.fromJson(mockProject);
-        when(projectDetailsViewModel.receivedProject)
-            .thenAnswer((_) => _recievedProject);
+        when(
+          projectDetailsViewModel.receivedProject,
+        ).thenAnswer((_) => _recievedProject);
         when(projectDetailsViewModel.isLoggedIn).thenAnswer((_) => true);
-        when(projectDetailsViewModel.isProjectStarred)
-            .thenAnswer((_) => _recievedProject.attributes.isStarred);
+        when(
+          projectDetailsViewModel.isProjectStarred,
+        ).thenAnswer((_) => _recievedProject.attributes.isStarred);
         when(projectDetailsViewModel.starCount).thenAnswer((_) => 0);
-        when(projectDetailsViewModel.FETCH_PROJECT_DETAILS)
-            .thenAnswer((_) => 'fetch_project_details');
+        when(
+          projectDetailsViewModel.FETCH_PROJECT_DETAILS,
+        ).thenAnswer((_) => 'fetch_project_details');
         when(projectDetailsViewModel.fetchProjectDetails(any)).thenReturn(null);
         when(projectDetailsViewModel.isSuccess(any)).thenReturn(false);
 

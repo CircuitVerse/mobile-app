@@ -13,11 +13,7 @@ abstract class GradesApi {
     String remarks,
   );
 
-  Future<Grade>? updateGrade(
-    String gradeId,
-    dynamic grade,
-    String remarks,
-  );
+  Future<Grade>? updateGrade(String gradeId, dynamic grade, String remarks);
 
   Future<bool>? deleteGrade(String gradeId);
 }
@@ -35,19 +31,12 @@ class HttpGradesApi implements GradesApi {
     var endpoint = '/assignments/$assignmentId/projects/$projectId/grades';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {
-      'grade': {
-        'grade': grade,
-        'remarks': remarks,
-      }
+      'grade': {'grade': grade, 'remarks': remarks},
     };
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.post(
-        uri,
-        headers: headers,
-        body: json,
-      );
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
       return Grade.fromJson(jsonResponse['data']);
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
@@ -69,10 +58,7 @@ class HttpGradesApi implements GradesApi {
     var endpoint = '/grades/$gradeId';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {
-      'grade': {
-        'grade': grade,
-        'remarks': remarks,
-      }
+      'grade': {'grade': grade, 'remarks': remarks},
     };
 
     try {
@@ -102,10 +88,7 @@ class HttpGradesApi implements GradesApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      await ApiUtils.delete(
-        uri,
-        headers: headers,
-      );
+      await ApiUtils.delete(uri, headers: headers);
       return true;
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);

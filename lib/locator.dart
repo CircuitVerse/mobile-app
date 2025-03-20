@@ -57,7 +57,8 @@ Future<void> setupLocator() async {
 
   // Notifications Service
   locator.registerLazySingleton<NotificationsService>(
-      () => NotificationsServiceImpl());
+    () => NotificationsServiceImpl(),
+  );
 
   // API Services
   locator.registerLazySingleton<ContributorsApi>(() => HttpContributorsApi());
@@ -70,7 +71,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<GradesApi>(() => HttpGradesApi());
   locator.registerLazySingleton<FCMApi>(() => HttpFCMApi());
   locator.registerLazySingleton<CountryInstituteAPI>(
-      () => HttpCountryInstituteAPI());
+    () => HttpCountryInstituteAPI(),
+  );
   locator.registerLazySingleton<IbApi>(() => HttpIbApi());
 
   // Interactive Book Engine Service

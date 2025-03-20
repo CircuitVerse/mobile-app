@@ -7,7 +7,7 @@ Map<String, List<String>> restrictionElements = {
     'ConstantVal',
     'Stepper',
     'Random',
-    'Counter'
+    'Counter',
   ],
   'Output': [
     'Output',
@@ -18,7 +18,7 @@ Map<String, List<String>> restrictionElements = {
     'SevenSegDisplay',
     'SixteenSegDisplay',
     'SquareRGBLed',
-    'RGBLedMatrix'
+    'RGBLedMatrix',
   ],
   'Gates': [
     'AndGate',
@@ -27,7 +27,7 @@ Map<String, List<String>> restrictionElements = {
     'XorGate',
     'NandGate',
     'NorGate',
-    'XnorGate'
+    'XnorGate',
   ],
   'Decoders & Plexers': [
     'Multiplexer',
@@ -36,7 +36,7 @@ Map<String, List<String>> restrictionElements = {
     'MSB',
     'LSB',
     'PriorityEncoder',
-    'Decoder'
+    'Decoder',
   ],
   'Sequential Elements': [
     'DflipFlop',
@@ -62,6 +62,6 @@ Map<String, List<String>> restrictionElements = {
     'Arrow',
     'Text',
     'Tunnel',
-    'TwoComplement'
-  ]
+    'TwoComplement',
+  ],
 };

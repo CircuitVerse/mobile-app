@@ -1,14 +1,12 @@
 Map<String, dynamic> mockProjects = {
-  'data': [
-    mockProject,
-  ],
+  'data': [mockProject],
   'links': {
     'self': '{url}?page[number]=1',
     'first': '{url}?page[number]=1',
     'prev': null,
     'next': '{url}?page[number]=2',
-    'last': '{url}?page[number]=1'
-  }
+    'last': '{url}?page[number]=1',
+  },
 };
 
 Map<String, dynamic> mockProject = {
@@ -16,8 +14,8 @@ Map<String, dynamic> mockProject = {
     'id': '1',
     'type': 'project',
     'attributes': mockProjectAttributes,
-    'relationships': mockProjectRelationships
-  }
+    'relationships': mockProjectRelationships,
+  },
 };
 
 Map<String, dynamic> mockProjectAttributes = {
@@ -31,23 +29,23 @@ Map<String, dynamic> mockProjectAttributes = {
   'tags': [mockTag],
   'is_starred': false,
   'author_name': 'Test',
-  'stars_count': 0
+  'stars_count': 0,
 };
 
 Map<String, dynamic> mockProjectRelationships = {
   'author': mockAuthor,
-  'collaborators': {'data': []}
+  'collaborators': {'data': []},
 };
 
 Map<String, dynamic> mockImagePreview = {'url': '/img/default.png'};
 
 Map<String, dynamic> mockAuthor = {
-  'data': {'id': '1', 'type': 'author'}
+  'data': {'id': '1', 'type': 'author'},
 };
 
 Map<String, dynamic> mockTag = {
   'id': 1,
   'name': 'test',
   'created_at': '2020-08-15T15:23:03.007Z',
-  'updated_at': '2020-08-15T15:23:03.007Z'
+  'updated_at': '2020-08-15T15:23:03.007Z',
 };

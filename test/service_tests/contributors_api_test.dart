@@ -15,25 +15,32 @@ void main() {
     group('fetchContributors -', () {
       test('When called & http client returns succes response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockContributors), 200)));
+          (_) => Future.value(Response(jsonEncode(mockContributors), 200)),
+        );
         var _contributorsApi = HttpContributorsApi();
 
         expect(
-            (await _contributorsApi.fetchContributors()).toString(),
-            circuitVerseContributorsFromJson(jsonEncode(mockContributors))
-                .toString());
+          (await _contributorsApi.fetchContributors()).toString(),
+          circuitVerseContributorsFromJson(
+            jsonEncode(mockContributors),
+          ).toString(),
+        );
       });
 
       test('When called & http client throws Exceptions', () async {
         var _contributorsApi = HttpContributorsApi();
 
         ApiUtils.client = MockClient((_) => throw const FormatException(''));
-        expect(_contributorsApi.fetchContributors(),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _contributorsApi.fetchContributors(),
+          throwsA(isInstanceOf<Failure>()),
+        );
 
         ApiUtils.client = MockClient((_) => throw Exception(''));
-        expect(_contributorsApi.fetchContributors(),
-            throwsA(isInstanceOf<Failure>()));
+        expect(
+          _contributorsApi.fetchContributors(),
+          throwsA(isInstanceOf<Failure>()),
+        );
       });
     });
   });

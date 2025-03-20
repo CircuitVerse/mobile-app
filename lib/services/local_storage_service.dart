@@ -91,8 +91,9 @@ class LocalStorageService {
   Map<String, dynamic> get getShowcaseState {
     final Map<String, dynamic> result =
         Map.castFrom<dynamic, dynamic, String, dynamic>(
-            json.decode(_getFromDisk(IB_SHOWCASE_STATE) ?? '{}')
-                as Map<dynamic, dynamic>);
+          json.decode(_getFromDisk(IB_SHOWCASE_STATE) ?? '{}')
+              as Map<dynamic, dynamic>,
+        );
     return result;
   }
 

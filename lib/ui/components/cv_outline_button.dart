@@ -7,8 +7,8 @@ class CVOutlineButton extends StatelessWidget {
     this.onPressed,
     this.isBodyText = false,
     this.isPrimaryDark = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final VoidCallback? onPressed;
@@ -30,9 +30,10 @@ class CVOutlineButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 4),
         child: Text(
           title,
-          style: isBodyText
-              ? Theme.of(context).textTheme.bodyLarge
-              : Theme.of(context).textTheme.titleLarge,
+          style:
+              isBodyText
+                  ? Theme.of(context).textTheme.bodyLarge
+                  : Theme.of(context).textTheme.titleLarge,
         ),
       ),
     );

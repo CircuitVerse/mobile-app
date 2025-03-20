@@ -17,17 +17,14 @@ class CVTextField extends StatelessWidget {
     this.initialValue,
     this.validator,
     this.onSaved,
-    this.padding = const EdgeInsets.symmetric(
-      horizontal: 16,
-      vertical: 8,
-    ),
+    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     this.focusNode,
     this.onFieldSubmitted,
     this.onChanged,
     this.prefixIcon,
     this.suffixIcon,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String? label;
   final String? hint;
@@ -56,15 +53,11 @@ class CVTextField extends StatelessWidget {
         keyboardType: type,
         onChanged: onChanged,
         initialValue: initialValue,
-        style: TextStyle(
-          color: CVTheme.textColor(context),
-        ),
+        style: TextStyle(color: CVTheme.textColor(context)),
         decoration: CVTheme.textFieldDecoration.copyWith(
           hintText: hint,
           labelText: label,
-          labelStyle: TextStyle(
-            color: CVTheme.textFieldLabelColor(context),
-          ),
+          labelStyle: TextStyle(color: CVTheme.textFieldLabelColor(context)),
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
         ),

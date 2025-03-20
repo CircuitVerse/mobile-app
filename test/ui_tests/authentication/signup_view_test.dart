@@ -38,75 +38,92 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic SignupView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic SignupView widgets', (
+      WidgetTester tester,
+    ) async {
       await _pumpSignupView(tester);
       await tester.pumpAndSettle();
 
       expect(
-          find.byWidgetPredicate(
-              (Widget widget) => widget is Image && widget.height == 300),
-          findsOneWidget);
+        find.byWidgetPredicate(
+          (Widget widget) => widget is Image && widget.height == 300,
+        ),
+        findsOneWidget,
+      );
       expect(find.byType(CVTextField), findsNWidgets(2));
       expect(find.byType(CVPasswordField), findsOneWidget);
       expect(find.byType(CVPrimaryButton), findsOneWidget);
-      expect(find.byWidgetPredicate((widget) {
-        return widget is RichText &&
-            widget.text.toPlainText() == 'Already Registered? Login';
-      }), findsOneWidget);
+      expect(
+        find.byWidgetPredicate((widget) {
+          return widget is RichText &&
+              widget.text.toPlainText() == 'Already Registered? Login';
+        }),
+        findsOneWidget,
+      );
     });
 
     testWidgets(
-        'When name/email/password is not valid or empty, proper error message should be shown',
-        (WidgetTester tester) async {
-      var _usersApiMock = getAndRegisterUsersApiMock();
-      // var _usersApiMock = MockUsersApi();
+      'When name/email/password is not valid or empty, proper error message should be shown',
+      (WidgetTester tester) async {
+        var _usersApiMock = getAndRegisterUsersApiMock();
+        // var _usersApiMock = MockUsersApi();
 
-      await _pumpSignupView(tester);
-      await tester.pumpAndSettle();
+        await _pumpSignupView(tester);
+        await tester.pumpAndSettle();
 
-      expect(
-          find.byWidgetPredicate((Widget widget) =>
-              widget is CVTextField && widget.label == 'Name'),
-          findsOneWidget);
+        expect(
+          find.byWidgetPredicate(
+            (Widget widget) => widget is CVTextField && widget.label == 'Name',
+          ),
+          findsOneWidget,
+        );
 
-      await tester.tap(find.byType(CVPrimaryButton));
-      await tester.pumpAndSettle();
+        await tester.tap(find.byType(CVPrimaryButton));
+        await tester.pumpAndSettle();
 
-      verifyNever(_usersApiMock.signup('', '', ''));
-      expect(find.text('Name can\'t be empty'), findsOneWidget);
-      expect(find.text('Please enter a valid email'), findsOneWidget);
-      expect(find.text('Password can\'t be empty'), findsOneWidget);
+        verifyNever(_usersApiMock.signup('', '', ''));
+        expect(find.text('Name can\'t be empty'), findsOneWidget);
+        expect(find.text('Please enter a valid email'), findsOneWidget);
+        expect(find.text('Password can\'t be empty'), findsOneWidget);
 
-      await tester.enterText(
-          find.byWidgetPredicate((Widget widget) =>
-              widget is CVTextField && widget.label == 'Name'),
-          'test');
-      await tester.tap(find.byType(CVPrimaryButton));
-      await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byWidgetPredicate(
+            (Widget widget) => widget is CVTextField && widget.label == 'Name',
+          ),
+          'test',
+        );
+        await tester.tap(find.byType(CVPrimaryButton));
+        await tester.pumpAndSettle();
 
-      verifyNever(_usersApiMock.signup('test', '', ''));
-      expect(find.text('Please enter a valid email'), findsOneWidget);
-      expect(find.text('Password can\'t be empty'), findsOneWidget);
+        verifyNever(_usersApiMock.signup('test', '', ''));
+        expect(find.text('Please enter a valid email'), findsOneWidget);
+        expect(find.text('Password can\'t be empty'), findsOneWidget);
 
-      await tester.enterText(
-          find.byWidgetPredicate((Widget widget) =>
-              widget is CVTextField && widget.label == 'Email'),
-          'test@test.com');
-      await tester.tap(find.byType(CVPrimaryButton));
-      await tester.pumpAndSettle();
+        await tester.enterText(
+          find.byWidgetPredicate(
+            (Widget widget) => widget is CVTextField && widget.label == 'Email',
+          ),
+          'test@test.com',
+        );
+        await tester.tap(find.byType(CVPrimaryButton));
+        await tester.pumpAndSettle();
 
-      verifyNever(_usersApiMock.signup('test', 'test@test.com', ''));
-      expect(find.text('Password can\'t be empty'), findsOneWidget);
+        verifyNever(_usersApiMock.signup('test', 'test@test.com', ''));
+        expect(find.text('Password can\'t be empty'), findsOneWidget);
 
-      await tester.enterText(
+        await tester.enterText(
           find.byWidgetPredicate((Widget widget) => widget is CVPasswordField),
-          'abcd');
-      await tester.tap(find.byType(CVPrimaryButton));
-      await tester.pumpAndSettle();
+          'abcd',
+        );
+        await tester.tap(find.byType(CVPrimaryButton));
+        await tester.pumpAndSettle();
 
-      verifyNever(_usersApiMock.signup('test', 'test@test.com', 'abcd'));
-      expect(find.text('Password length should be at least 6'), findsOneWidget);
-    });
+        verifyNever(_usersApiMock.signup('test', 'test@test.com', 'abcd'));
+        expect(
+          find.text('Password length should be at least 6'),
+          findsOneWidget,
+        );
+      },
+    );
   });
 }

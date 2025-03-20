@@ -15,8 +15,9 @@ void main() {
       test('When called & service returns response true', () async {
         var _usersApiMock = getAndRegisterUsersApiMock();
 
-        when(_usersApiMock.sendResetPasswordInstructions('test@test.com'))
-            .thenAnswer((_) => Future.value(true));
+        when(
+          _usersApiMock.sendResetPasswordInstructions('test@test.com'),
+        ).thenAnswer((_) => Future.value(true));
 
         var _model = ForgotPasswordViewModel();
         await _model.onForgotPassword('test@test.com');
@@ -24,14 +25,17 @@ void main() {
         // should call login with expected variables
         verify(_usersApiMock.sendResetPasswordInstructions('test@test.com'));
         expect(
-            _model.stateFor(_model.SEND_RESET_INSTRUCTIONS), ViewState.Success);
+          _model.stateFor(_model.SEND_RESET_INSTRUCTIONS),
+          ViewState.Success,
+        );
       });
 
       test('When called & service returns response false', () async {
         var _usersApiMock = getAndRegisterUsersApiMock();
 
-        when(_usersApiMock.sendResetPasswordInstructions('test@test.com'))
-            .thenAnswer((_) => Future.value(false));
+        when(
+          _usersApiMock.sendResetPasswordInstructions('test@test.com'),
+        ).thenAnswer((_) => Future.value(false));
 
         var _model = ForgotPasswordViewModel();
         await _model.onForgotPassword('test@test.com');
@@ -39,16 +43,21 @@ void main() {
         // should call login with expected variables
         verify(_usersApiMock.sendResetPasswordInstructions('test@test.com'));
         expect(
-            _model.stateFor(_model.SEND_RESET_INSTRUCTIONS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS),
-            "Instructions couldn't be sent!");
+          _model.stateFor(_model.SEND_RESET_INSTRUCTIONS),
+          ViewState.Error,
+        );
+        expect(
+          _model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS),
+          "Instructions couldn't be sent!",
+        );
       });
 
       test('When called & service throws failure', () async {
         var _usersApiMock = getAndRegisterUsersApiMock();
 
-        when(_usersApiMock.sendResetPasswordInstructions('test@test.com'))
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _usersApiMock.sendResetPasswordInstructions('test@test.com'),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = ForgotPasswordViewModel();
         await _model.onForgotPassword('test@test.com');
@@ -56,7 +65,9 @@ void main() {
         // should call login with expected variables
         verify(_usersApiMock.sendResetPasswordInstructions('test@test.com'));
         expect(
-            _model.stateFor(_model.SEND_RESET_INSTRUCTIONS), ViewState.Error);
+          _model.stateFor(_model.SEND_RESET_INSTRUCTIONS),
+          ViewState.Error,
+        );
       });
     });
   });

@@ -38,17 +38,17 @@ class ConflictException extends AppException {
 
 class UnprocessableIdentityException extends AppException {
   UnprocessableIdentityException([String? message])
-      : super(message, 'Unprocessable Identity');
+    : super(message, 'Unprocessable Identity');
 }
 
 class InternalServerErrorException extends AppException {
   InternalServerErrorException([String? message])
-      : super(message, 'Internal Server Error');
+    : super(message, 'Internal Server Error');
 }
 
 class ServiceUnavailableException extends AppException {
   ServiceUnavailableException([String? message])
-      : super(message, 'Service Unavailable');
+    : super(message, 'Service Unavailable');
 }
 
 class InvalidInputException extends AppException {
@@ -57,5 +57,5 @@ class InvalidInputException extends AppException {
 
 class FetchDataException extends AppException {
   FetchDataException([String? message])
-      : super(message, 'Error During Communication');
+    : super(message, 'Error During Communication');
 }

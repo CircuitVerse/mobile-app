@@ -8,8 +8,8 @@ class CVPrimaryButton extends StatelessWidget {
     this.isBodyText = false,
     this.isPrimaryDark = false,
     this.padding = const EdgeInsets.all(8),
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final VoidCallback? onPressed;
@@ -28,13 +28,14 @@ class CVPrimaryButton extends StatelessWidget {
       onPressed: onPressed ?? () {},
       child: Text(
         title,
-        style: isBodyText
-            ? Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.white,
-                )
-            : Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Colors.white,
-                ),
+        style:
+            isBodyText
+                ? Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(color: Colors.white)
+                : Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(color: Colors.white),
       ),
     );
   }

@@ -19,16 +19,31 @@ void main() {
       test('When called & service returns success response', () async {
         var _mockLocalStorageService = getAndRegisterLocalStorageServiceMock();
         var _mockUsersApi = getAndRegisterUsersApiMock();
-        when(_mockUsersApi.updateProfile(
-                'Test User', 'Gurukul', 'India', true, null, false))
-            .thenAnswer((_) => Future.value(_user));
+        when(
+          _mockUsersApi.updateProfile(
+            'Test User',
+            'Gurukul',
+            'India',
+            true,
+            null,
+            false,
+          ),
+        ).thenAnswer((_) => Future.value(_user));
 
         var _model = EditProfileViewModel();
         await _model.updateProfile('Test User', 'Gurukul', 'India', true);
 
         // verify API call is made..
-        verify(_mockUsersApi.updateProfile(
-            'Test User', 'Gurukul', 'India', true, null, false));
+        verify(
+          _mockUsersApi.updateProfile(
+            'Test User',
+            'Gurukul',
+            'India',
+            true,
+            null,
+            false,
+          ),
+        );
 
         // verify _user is stored in localStorage..
         verify(_mockLocalStorageService.currentUser = _user);
@@ -41,17 +56,26 @@ void main() {
       test('When called & service returns error', () async {
         var _mockLocalStorageService = getAndRegisterLocalStorageServiceMock();
         var _mockUsersApi = getAndRegisterUsersApiMock();
-        when(_mockUsersApi.updateProfile(
-                'Test User', 'Gurukul', 'India', true, null, false))
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _mockUsersApi.updateProfile(
+            'Test User',
+            'Gurukul',
+            'India',
+            true,
+            null,
+            false,
+          ),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = EditProfileViewModel();
         await _model.updateProfile('Test User', 'Gurukul', 'India', true);
 
         // verify Error ViewState with proper error message..
         expect(_model.stateFor(_model.UPDATE_PROFILE), ViewState.Error);
-        expect(_model.errorMessageFor(_model.UPDATE_PROFILE),
-            'Some Error Occurred!');
+        expect(
+          _model.errorMessageFor(_model.UPDATE_PROFILE),
+          'Some Error Occurred!',
+        );
 
         // verify user is not populated on failure
         expect(_model.updatedUser, null);
