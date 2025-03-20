@@ -35,7 +35,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Generate Changelog
-        uses: TriPSs/conventional-changelog-action@v3
+        uses: TriPSs/conventional-changelog-action@v6
         id: changelog
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
