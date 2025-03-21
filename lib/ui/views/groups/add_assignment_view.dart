@@ -42,6 +42,12 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   ];
   bool _isRestrictionEnabled = false;
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   Widget _buildNameInput() {
     return CVTextField(
       label: 'Name',

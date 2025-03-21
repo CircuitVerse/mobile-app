@@ -45,6 +45,12 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     _isRestrictionEnabled = _restrictions.isNotEmpty;
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   Widget _buildNameInput() {
     return CVTextField(
       initialValue: widget.assignment.attributes.name,
