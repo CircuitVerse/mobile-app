@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
-import 'package:flutter_summernote/flutter_summernote.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/data/restriction_elements.dart';
@@ -33,7 +33,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   late UpdateAssignmentViewModel _model;
   final _formKey = GlobalKey<FormState>();
   late String _name;
-  final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
+  final QuillController _controller = QuillController.basic();
   late DateTime _deadline;
   List _restrictions = [];
   bool _isRestrictionEnabled = false;
@@ -43,6 +43,12 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     super.initState();
     _restrictions = json.decode(widget.assignment.attributes.restrictions);
     _isRestrictionEnabled = _restrictions.isNotEmpty;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   Widget _buildNameInput() {
@@ -58,7 +64,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   Widget _buildDescriptionInput() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: CVHtmlEditor(editorKey: _descriptionEditor),
+      child: CVHtmlEditor(controller: _controller),
     );
   }
 
@@ -189,8 +195,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       // [ISSUE] [html_editor] Throws error in Tests
       String _descriptionEditorText;
       try {
-        _descriptionEditorText =
-            await _descriptionEditor.currentState!.getText();
+        _descriptionEditorText = _controller.document.toPlainText();
       } on NoSuchMethodError {
         debugPrint(
           'Handled html_editor error. NOTE: This should only throw during tests.',
