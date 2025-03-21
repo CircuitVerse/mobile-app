@@ -53,7 +53,7 @@ jobs:
           parallel: true
 
       - name: Cache Gradle Wrapper and Gradle Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
