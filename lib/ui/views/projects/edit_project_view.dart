@@ -38,6 +38,7 @@ class _EditProjectViewState extends State<EditProjectView> {
   void dispose() {
     _nameFocusNode.dispose();
     _tagsListFocusNode.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
