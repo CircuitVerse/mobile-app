@@ -292,6 +292,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   }
 
   Future<void> onStarProjectPressed() async {
+    if (_model.isBusy(_model.TOGGLE_STAR)) return;
     await _model.toggleStarForProject(_recievedProject.id);
 
     if (_model.isSuccess(_model.TOGGLE_STAR)) {
@@ -316,10 +317,20 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           color: CVTheme.primaryColor,
           borderRadius: BorderRadius.circular(4),
         ),
-        child: Icon(
-          _model.isProjectStarred ? Icons.star : Icons.star_border,
-          color: Colors.white,
-        ),
+        child:
+            _model.isBusy(_model.TOGGLE_STAR)
+                ? const SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    strokeWidth: 3,
+                  ),
+                )
+                : Icon(
+                  _model.isProjectStarred ? Icons.star : Icons.star_border,
+                  color: Colors.white,
+                ),
       ),
     );
   }
