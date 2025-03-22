@@ -13,7 +13,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/edit_group_viewmodel.dart';
 
 class EditGroupView extends StatefulWidget {
-  const EditGroupView({Key? key, required this.group}) : super(key: key);
+  const EditGroupView({super.key, required this.group});
 
   static const String id = 'edit_group_view';
   final Group group;
@@ -67,10 +67,12 @@ class _EditGroupViewState extends State<EditGroupView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                const CVSubheader(
+                CVSubheader(
                   title: 'EDIT GROUP',
                   subtitle:
                       "You can update Group details here. Don't leave the Group Name blank.",
+                  titleStyle: Theme.of(context).textTheme.headlineSmall!,
+                  subtitleStyle: Theme.of(context).textTheme.bodyMedium!,
                 ),
                 const SizedBox(height: 16),
                 SvgPicture.asset(

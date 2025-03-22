@@ -7,8 +7,8 @@ class CVHtmlEditor extends StatelessWidget {
     required this.editorKey,
     this.hasAttachment = true,
     this.height = 300,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final GlobalKey<FlutterSummernoteState> editorKey;
   final double height;

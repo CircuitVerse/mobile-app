@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class ContributeSupportCard extends StatelessWidget {
   const ContributeSupportCard({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.title,
     required this.cardDescriptionList,
-  }) : super(key: key);
+  });
 
   final String imagePath;
   final String title;

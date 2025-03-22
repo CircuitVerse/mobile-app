@@ -21,9 +21,9 @@ import 'package:transparent_image/transparent_image.dart';
 
 class AssignmentDetailsView extends StatefulWidget {
   const AssignmentDetailsView({
-    Key? key,
+    super.key,
     required this.assignment,
-  }) : super(key: key);
+  });
 
   static const String id = 'assignment_details_view';
   final Assignment assignment;
@@ -176,7 +176,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                       ? CVTheme.primaryColor
                       : Colors.transparent,
                   border: Border.all(
-                    color: CVTheme.grey.withOpacity(0.5),
+                    color: CVTheme.grey.withValues(alpha: 0.5),
                     width: 0.5,
                   ),
                 ),

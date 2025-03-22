@@ -15,7 +15,7 @@ class SnackBarUtils {
       title,
       message,
       snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.black.withOpacity(0.8),
+      backgroundColor: Colors.black.withValues(alpha: 0.8),
       colorText: Colors.white,
     );
   }

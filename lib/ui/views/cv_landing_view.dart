@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
+import 'package:mobile_app/l10n/app_localizations.dart';
 import 'package:mobile_app/ui/components/cv_drawer.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -12,10 +13,9 @@ import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CVLandingView extends StatefulWidget {
-  const CVLandingView({Key? key}) : super(key: key);
+  const CVLandingView({super.key});
   static const String id = 'cv_landing_view';
 
   @override
@@ -105,13 +105,12 @@ class _CVLandingViewState extends State<CVLandingView> {
   Widget build(BuildContext context) {
     return BaseView<CVLandingViewModel>(
       onModelReady: (model) => model.setUser(),
-      builder: (context, model, child) => WillPopScope(
-        onWillPop: () {
-          if (model.selectedIndex != 0) {
+      builder: (context, model, child) => PopScope(
+        canPop: model.selectedIndex != 0,
+        onPopInvokedWithResult: (didPop, result) {
+          if (didPop) {
             model.selectedIndex = 0;
-            return Future.value(false);
           }
-          return Future.value(true);
         },
         child: Scaffold(
           key: _scaffoldKey,

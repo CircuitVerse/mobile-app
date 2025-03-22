@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ProfileView extends StatefulWidget {
-  const ProfileView({Key? key, this.userId}) : super(key: key);
+  const ProfileView({super.key, this.userId});
 
   static const String id = 'profile_view';
   final String? userId;
@@ -151,7 +151,6 @@ class _ProfileViewState extends State<ProfileView> {
                     'Educational Institute',
                     _attrs?.educationalInstitute,
                   ),
-
                   if (_model.isLoggedIn && _model.isPersonalProfile)
                     _buildProfileComponent(
                       'Subscribed to mails',
@@ -179,7 +178,7 @@ class _ProfileViewState extends State<ProfileView> {
           length: 2,
           child: Scaffold(
             appBar: CVTabBar(
-              color: CVTheme.lightGrey.withOpacity(0.2),
+              color: CVTheme.lightGrey.withValues(alpha: 0.2),
               tabBar: const TabBar(
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.black87,

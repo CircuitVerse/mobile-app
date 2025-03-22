@@ -15,7 +15,7 @@ import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
 
 class MyGroupsView extends StatefulWidget {
-  const MyGroupsView({Key? key}) : super(key: key);
+  const MyGroupsView({super.key});
 
   static const String id = 'my_groups_view';
 

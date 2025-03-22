@@ -6,10 +6,10 @@ import 'package:mobile_app/ui/views/ib/components/ib_pop_quiz_button.dart';
 
 class IbPopQuiz extends StatelessWidget {
   const IbPopQuiz({
-    Key? key,
+    super.key,
     required this.context,
     required this.questions,
-  }) : super(key: key);
+  });
 
   final BuildContext context;
   final List<IbPopQuizQuestion> questions;

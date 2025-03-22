@@ -5,8 +5,8 @@ class CVSubheader extends StatelessWidget {
   const CVSubheader({
     required this.title,
     this.subtitle,
-    Key? key,
-  }) : super(key: key);
+    super.key, required TextStyle titleStyle, required TextStyle subtitleStyle,
+  });
 
   final String title;
   final String? subtitle;

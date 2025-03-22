@@ -8,7 +8,7 @@ import 'package:mobile_app/viewmodels/simulator/simulator_viewmodel.dart';
 class SimulatorView extends StatelessWidget {
   static const String id = 'simulator_view';
 
-  const SimulatorView({Key? key}) : super(key: key);
+  const SimulatorView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +36,12 @@ class SimulatorView extends StatelessWidget {
                         SimulatorViewModel.SIMULATOR, ViewState.Idle);
                   },
                   initialUrlRequest: URLRequest(
-                    url: Uri.parse(model.url),
+                    url: WebUri.uri(Uri.parse(model.url)),
                     headers: {'Authorization': 'Token ${model.token}'},
                   ),
-                  initialOptions: InAppWebViewGroupOptions(
-                    crossPlatform: InAppWebViewOptions(
-                      useShouldOverrideUrlLoading: true,
-                      useOnDownloadStart: true,
-                    ),
+                  initialSettings: InAppWebViewSettings(
+                    useShouldOverrideUrlLoading: true,
+                    useOnDownloadStart: true,
                   ),
                   shouldOverrideUrlLoading: (con, navigationAction) async {
                     final url = navigationAction.request.url.toString();

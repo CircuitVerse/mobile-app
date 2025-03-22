@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
+import 'package:mobile_app/l10n/app_localizations.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_drawer.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
@@ -10,14 +11,13 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/projects/components/featured_project_card.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeaturedProjectsView extends StatefulWidget {
   const FeaturedProjectsView({
-    Key? key,
+    super.key,
     this.showSearchBar = false,
     this.embed = false,
-  }) : super(key: key);
+  });
 
   static const String id = 'featured_projects_view';
   final bool showSearchBar;

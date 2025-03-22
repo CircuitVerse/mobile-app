@@ -2,15 +2,14 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobile_app/enums/auth_type.dart';
+import 'package:mobile_app/l10n/app_localizations.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 import 'package:mobile_app/viewmodels/notifications/notifications_viewmodel.dart';
-
 class CVLandingViewModel extends BaseModel {
   final LocalStorageService _storage = locator<LocalStorageService>();
   final DialogService _dialogService = locator<DialogService>();

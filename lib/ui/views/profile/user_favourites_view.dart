@@ -11,9 +11,9 @@ import 'package:provider/provider.dart';
 
 class UserFavouritesView extends StatefulWidget {
   const UserFavouritesView({
-    Key? key,
+    super.key,
     this.userId,
-  }) : super(key: key);
+  });
 
   final String? userId;
 

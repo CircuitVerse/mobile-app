@@ -3,11 +3,11 @@ import 'package:mobile_app/cv_theme.dart';
 
 class CVPasswordField extends StatefulWidget {
   const CVPasswordField({
-    Key? key,
+    super.key,
     this.validator,
     this.onSaved,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final String? Function(String?)? validator;
   final Function(String?)? onSaved;

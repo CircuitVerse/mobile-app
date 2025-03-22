@@ -17,7 +17,8 @@ import 'image_test_utils.mocks.dart';
 R provideMockedNetworkImages<R>(R Function() body, {List<int>? imageBytes}) {
   return HttpOverrides.runZoned(
     body,
-    createHttpClient: (_) => _createMockImageHttpClient(_, imageBytes),
+    createHttpClient: (context) =>
+        _createMockImageHttpClient(context, imageBytes),
   );
 }
 

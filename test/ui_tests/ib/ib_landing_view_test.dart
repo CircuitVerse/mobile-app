@@ -95,7 +95,7 @@ void main() {
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: ShowCaseWidget(
-            builder: Builder(builder: (context) {
+            builder: (context) => Builder(builder: (context) {
               return const IbLandingView();
             }),
           ),

@@ -13,6 +13,8 @@ import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
 
 import '../../setup/test_helpers.mocks.dart';
 
@@ -24,6 +26,7 @@ void main() {
       SharedPreferences.setMockInitialValues({});
       await setupLocator();
       locator.allowReassignment = true;
+      WebViewPlatform.instance = AndroidWebViewPlatform();
     });
 
     setUp(() => mockObserver = MockNavigatorObserver());

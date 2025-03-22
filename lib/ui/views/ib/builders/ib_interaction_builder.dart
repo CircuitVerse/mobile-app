@@ -34,8 +34,7 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
 
 class IbInteractionWidget extends StatefulWidget {
   final String htmlContent;
-  const IbInteractionWidget({Key? key, required this.htmlContent})
-      : super(key: key);
+  const IbInteractionWidget({super.key, required this.htmlContent});
 
   @override
   State<IbInteractionWidget> createState() => _IbInteractionWidgetState();
@@ -101,4 +100,3 @@ class _IbInteractionWidgetState extends State<IbInteractionWidget> {
     );
   }
 }
-

@@ -17,11 +17,11 @@ import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ProjectDetailsView extends StatefulWidget {
-  const ProjectDetailsView({Key? key, required this.project}) : super(key: key);
+  const ProjectDetailsView({super.key, required this.project});
 
   static const String id = 'project_details_view';
   final Project project;
@@ -571,15 +571,15 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
         _model.fetchProjectDetails(_recievedProject.id);
       },
-      builder: (context, model, child) => WillPopScope(
-        onWillPop: () async {
-          // Check whether the state (i.e starred or not) is changed
+      builder: (context, model, child) => PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) return;
           final bool isChanged = model.receivedProject!.attributes.isStarred ^
               _recievedProject.attributes.isStarred;
           Get.back(
             result: isChanged ? model.receivedProject : null,
           );
-          return false;
         },
         child: Scaffold(
           appBar: AppBar(

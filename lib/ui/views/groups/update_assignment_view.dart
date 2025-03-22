@@ -20,9 +20,9 @@ import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
 
 class UpdateAssignmentView extends StatefulWidget {
   const UpdateAssignmentView({
-    Key? key,
+    super.key,
     required this.assignment,
-  }) : super(key: key);
+  });
 
   static const String id = 'update_assignment_view';
   final Assignment assignment;

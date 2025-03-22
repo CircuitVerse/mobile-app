@@ -7,8 +7,8 @@ class CVOutlineButton extends StatelessWidget {
     this.onPressed,
     this.isBodyText = false,
     this.isPrimaryDark = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String title;
   final VoidCallback? onPressed;

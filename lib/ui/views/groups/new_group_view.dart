@@ -12,7 +12,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
 
 class NewGroupView extends StatefulWidget {
-  const NewGroupView({Key? key}) : super(key: key);
+  const NewGroupView({super.key});
 
   static const String id = 'new_group_view';
 
@@ -65,10 +65,12 @@ class _NewGroupViewState extends State<NewGroupView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                const CVSubheader(
+                CVSubheader(
                   title: 'NEW GROUP',
                   subtitle:
                       'Groups an be used by mentors to set projects for and give grades to students.',
+                  titleStyle: Theme.of(context).textTheme.headlineSmall!,
+                  subtitleStyle: Theme.of(context).textTheme.bodyMedium!,
                 ),
                 const SizedBox(height: 16),
                 SvgPicture.asset(

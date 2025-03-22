@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/enums/view_state.dart';
+import 'package:mobile_app/l10n/app_localizations.dart';
 import 'package:mobile_app/models/cv_contributors.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
@@ -11,10 +12,9 @@ import 'package:mobile_app/ui/views/about/about_tos_view.dart';
 import 'package:mobile_app/ui/views/about/components/contributor_avatar.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutView extends StatefulWidget {
-  const AboutView({Key? key}) : super(key: key);
+  const AboutView({super.key});
   static const String id = 'about_view';
 
   @override
@@ -119,6 +119,9 @@ class _AboutViewState extends State<AboutView> {
               CVSubheader(
                 title: AppLocalizations.of(context)!.contributors,
                 subtitle: AppLocalizations.of(context)?.contributors_subtitle,
+                titleStyle: Theme.of(context).textTheme.headlineSmall!,
+                subtitleStyle: Theme.of(context).textTheme.bodyMedium!,
+                
               ),
               _buildContributorsList(),
             ],

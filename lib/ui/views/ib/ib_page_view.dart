@@ -102,16 +102,16 @@ class _IbPageViewState extends State<IbPageView> {
   Widget _buildDivider() {
     return const Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
-      child: Divider(
-        thickness: 1.5,
-      ),
+      child: Divider(thickness: 1.5),
     );
   }
 
   Future _scrollToWidget(String slug) async {
     if (_slugMap.containsKey(slug)) {
-      await _hideButtonController.scrollToIndex(_slugMap[slug]!,
-          preferPosition: AutoScrollPosition.begin);
+      await _hideButtonController.scrollToIndex(
+        _slugMap[slug]!,
+        preferPosition: AutoScrollPosition.begin,
+      );
     } else {
       debugPrint('[IB]: $slug not present in map');
     }
@@ -143,31 +143,25 @@ class _IbPageViewState extends State<IbPageView> {
     }
   }
 
-  Widget? _buildMarkdownImage(Uri uri, String? title, String? alt) {
-    var widgets = <Widget>[];
-
-    // SVG Support
+  Widget _buildMarkdownImage(Uri uri, String? title, String? alt) {
     if (uri.toString().endsWith('.svg')) {
       var url = uri.toString();
-
       if (uri.toString().startsWith('/assets')) {
         url = EnvironmentConfig.IB_BASE_URL + url;
       }
-
-      widgets.add(SvgPicture.network(url));
+      var widgets = <Widget>[SvgPicture.network(url)];
+      if (alt != null) {
+        widgets.add(Text(alt));
+      }
+      return Column(children: widgets);
     } else {
-      // Fallback to default Image Builder
-      return null;
+      // Handle non-SVG images
+      if (alt != null) {
+        return Column(children: [Image.network(uri.toString()), Text(alt)]);
+      } else {
+        return Image.network(uri.toString());
+      }
     }
-
-    // Alternate text for SVGs
-    if (alt != null) {
-      widgets.add(Text(alt));
-    }
-
-    return Column(
-      children: widgets,
-    );
   }
 
   Widget _buildMarkdown(IbMd data) {
@@ -191,9 +185,9 @@ class _IbPageViewState extends State<IbPageView> {
       data: data.content,
       selectable: _selectable,
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
-      imageBuilder: _buildMarkdownImage,
       onTapLink: _onTapLink,
-      blockBuilders: {
+      imageBuilder: _buildMarkdownImage,
+      builders: {
         'h1': _headingsBuilder,
         'h2': _headingsBuilder,
         'h3': _headingsBuilder,
@@ -201,19 +195,19 @@ class _IbPageViewState extends State<IbPageView> {
         'h5': _headingsBuilder,
         'h6': _headingsBuilder,
         'chapter_contents': IbChapterContentsBuilder(
-            chapterContents:
-                _model.pageData?.chapterOfContents?.isNotEmpty ?? false
-                    ? _buildTOC(
-                        _model.pageData!.chapterOfContents!,
-                        padding: false,
-                        isEnabled: false,
-                      )
-                    : Container()),
+          chapterContents:
+              _model.pageData?.chapterOfContents?.isNotEmpty ?? false
+                  ? _buildTOC(
+                    _model.pageData!.chapterOfContents!,
+                    padding: false,
+                    isEnabled: false,
+                  )
+                  : Container(),
+        ),
         'iframe': IbWebViewBuilder(),
         'interaction': IbInteractionBuilder(model: _model),
         'quiz': IbPopQuizBuilder(context: context, model: _model),
       },
-      builders: _inlineBuilders,
       extensionSet: md.ExtensionSet(
         [
           IbEmbedSyntax(),
@@ -233,31 +227,27 @@ class _IbPageViewState extends State<IbPageView> {
       ),
       styleSheet: MarkdownStyleSheet(
         h1: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w300,
-            ),
+          color: IbTheme.primaryHeadingColor(context),
+          fontWeight: FontWeight.w300,
+        ),
         h2: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w600,
-            ),
+          color: IbTheme.primaryHeadingColor(context),
+          fontWeight: FontWeight.w600,
+        ),
         h3: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w600,
-            ),
+          color: IbTheme.primaryHeadingColor(context),
+          fontWeight: FontWeight.w600,
+        ),
         h4: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w600,
-            ),
-        h5: Theme.of(context)
-            .textTheme
-            .titleLarge
-            ?.copyWith(fontWeight: FontWeight.w300),
+          color: IbTheme.primaryHeadingColor(context),
+          fontWeight: FontWeight.w600,
+        ),
+        h5: Theme.of(
+          context,
+        ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w300),
         horizontalRuleDecoration: BoxDecoration(
           border: Border(
-            top: BorderSide(
-              width: 1.5,
-              color: Theme.of(context).dividerColor,
-            ),
+            top: BorderSide(width: 1.5, color: Theme.of(context).dividerColor),
           ),
         ),
       ),
@@ -269,9 +259,7 @@ class _IbPageViewState extends State<IbPageView> {
       padding: EdgeInsets.symmetric(vertical: 4),
       child: Text(
         'Copyright © 2021 Contributors to CircuitVerse. Distributed under a [CC-by-sa] license.',
-        style: TextStyle(
-          fontSize: 10,
-        ),
+        style: TextStyle(fontSize: 10),
       ),
     );
   }
@@ -326,13 +314,7 @@ class _IbPageViewState extends State<IbPageView> {
 
     if (item.items != null) {
       for (var e in item.items!) {
-        items.addAll(
-          _buildTocItems(
-            e,
-            padding: padding,
-            isEnabled: isEnabled,
-          ),
-        );
+        items.addAll(_buildTocItems(e, padding: padding, isEnabled: isEnabled));
       }
     }
 
@@ -357,9 +339,7 @@ class _IbPageViewState extends State<IbPageView> {
       );
     }
 
-    return Column(
-      children: items,
-    );
+    return Column(children: items);
   }
 
   void _showBottomSheet() {
@@ -371,10 +351,9 @@ class _IbPageViewState extends State<IbPageView> {
             ListTile(
               title: Text(
                 'Table of Contents',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
               ),
               tileColor: Theme.of(context).primaryColor,
             ),
@@ -400,9 +379,9 @@ class _IbPageViewState extends State<IbPageView> {
 
       buttons.add(
         ChangeNotifierProvider<IbFloatingButtonState>.value(
-            value: _ibFloatingButtonState,
-            child:
-                Consumer<IbFloatingButtonState>(builder: (context, _, child) {
+          value: _ibFloatingButtonState,
+          child: Consumer<IbFloatingButtonState>(
+            builder: (context, _, child) {
               return AnimatedOpacity(
                 duration: const Duration(milliseconds: 500),
                 opacity: _ibFloatingButtonState.isVisible ? 1.0 : 0.0,
@@ -424,7 +403,8 @@ class _IbPageViewState extends State<IbPageView> {
                     targetShapeBorder: const CircleBorder(),
                     onTargetClick: () {
                       widget.setShowCase(
-                          widget.showCase.copyWith(prevButton: true));
+                        widget.showCase.copyWith(prevButton: true),
+                      );
                       widget.setPage(widget.chapter.prev);
                     },
                     disposeOnTap: true,
@@ -435,7 +415,9 @@ class _IbPageViewState extends State<IbPageView> {
                   ),
                 ),
               );
-            })),
+            },
+          ),
+        ),
       );
     }
 
@@ -447,48 +429,48 @@ class _IbPageViewState extends State<IbPageView> {
       buttons.add(
         ChangeNotifierProvider<IbFloatingButtonState>.value(
           value: _ibFloatingButtonState,
-          child: Consumer<IbFloatingButtonState>(builder: (context, _, child) {
-            return AnimatedOpacity(
-              duration: const Duration(milliseconds: 500),
-              opacity: _ibFloatingButtonState.isVisible ? 1.0 : 0.0,
-              child: FloatingActionButton(
-                heroTag: 'nextPage',
-                mini: true,
-                backgroundColor: Theme.of(context).primaryIconTheme.color,
-                onPressed: () {
-                  //If FAB are not visible do not do anything.
-                  if (!_ibFloatingButtonState.isVisible) {
-                    return;
-                  }
-                  widget.setPage(widget.chapter.next);
-                },
-                child: Showcase(
-                  key: _model.nextPage,
-                  description: 'Tap to navigate to next page',
-                  targetPadding: const EdgeInsets.all(12.0),
-                  targetShapeBorder: const CircleBorder(),
-                  onTargetClick: () {
-                    widget.setShowCase(
-                        widget.showCase.copyWith(nextButton: true));
+          child: Consumer<IbFloatingButtonState>(
+            builder: (context, _, child) {
+              return AnimatedOpacity(
+                duration: const Duration(milliseconds: 500),
+                opacity: _ibFloatingButtonState.isVisible ? 1.0 : 0.0,
+                child: FloatingActionButton(
+                  heroTag: 'nextPage',
+                  mini: true,
+                  backgroundColor: Theme.of(context).primaryIconTheme.color,
+                  onPressed: () {
+                    //If FAB are not visible do not do anything.
+                    if (!_ibFloatingButtonState.isVisible) {
+                      return;
+                    }
                     widget.setPage(widget.chapter.next);
                   },
-                  disposeOnTap: false,
-                  child: const Icon(
-                    Icons.arrow_forward_rounded,
-                    color: IbTheme.primaryColor,
+                  child: Showcase(
+                    key: _model.nextPage,
+                    description: 'Tap to navigate to next page',
+                    targetPadding: const EdgeInsets.all(12.0),
+                    targetShapeBorder: const CircleBorder(),
+                    onTargetClick: () {
+                      widget.setShowCase(
+                        widget.showCase.copyWith(nextButton: true),
+                      );
+                      widget.setPage(widget.chapter.next);
+                    },
+                    disposeOnTap: false,
+                    child: const Icon(
+                      Icons.arrow_forward_rounded,
+                      color: IbTheme.primaryColor,
+                    ),
                   ),
                 ),
-              ),
-            );
-          }),
+              );
+            },
+          ),
         ),
       );
     }
 
-    return Row(
-      mainAxisAlignment: alignment,
-      children: buttons,
-    );
+    return Row(mainAxisAlignment: alignment, children: buttons);
   }
 
   List<Widget> _buildPageContent(IbPageData? pageData) {
@@ -497,9 +479,9 @@ class _IbPageViewState extends State<IbPageView> {
         Text(
           'Loading ...',
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: IbTheme.primaryHeadingColor(context),
-                fontWeight: FontWeight.w600,
-              ),
+            color: IbTheme.primaryHeadingColor(context),
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ];
     }
@@ -508,16 +490,13 @@ class _IbPageViewState extends State<IbPageView> {
 
     for (var content in pageData.content ?? []) {
       switch (content.runtimeType) {
-        case IbMd:
+        case const (IbMd,):
           contents.add(_buildMarkdown(content as IbMd));
           break;
       }
     }
 
-    contents.addAll([
-      _buildDivider(),
-      _buildFooter(),
-    ]);
+    contents.addAll([_buildDivider(), _buildFooter()]);
 
     return contents;
   }

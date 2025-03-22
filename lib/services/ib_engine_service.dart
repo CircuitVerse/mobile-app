@@ -56,8 +56,8 @@ class IbEngineServiceImpl implements IbEngineService {
     List<Map<String, dynamic>>? _apiResponse;
     try {
       _apiResponse = await _ibApi.fetchApiPage(id: id);
-    } catch (_) {
-      throw Failure('IbApi: ${_.toString()}');
+    } catch (err) {
+      throw Failure('IbApi: ${err.toString()}');
     }
 
     var parentPages = <IbChapter>[];
@@ -243,8 +243,8 @@ class IbEngineServiceImpl implements IbEngineService {
     IbRawPageData? _ibRawPageData;
     try {
       _ibRawPageData = await _ibApi.fetchRawPageData(id: id);
-    } catch (_) {
-      throw Failure(_.toString());
+    } catch (err) {
+      throw Failure(err.toString());
     }
 
     if (_ibRawPageData == null) return null;

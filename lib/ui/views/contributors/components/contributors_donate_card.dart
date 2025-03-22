@@ -3,11 +3,11 @@ import 'package:mobile_app/utils/url_launcher.dart';
 
 class ContributeDonateCard extends StatelessWidget {
   const ContributeDonateCard({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.title,
     required this.url,
-  }) : super(key: key);
+  });
 
   final String imagePath;
   final String title;

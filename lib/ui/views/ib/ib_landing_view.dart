@@ -13,7 +13,7 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 class IbLandingView extends StatefulWidget {
-  const IbLandingView({Key? key}) : super(key: key);
+  const IbLandingView({super.key});
 
   static const String id = 'ib_landing_view';
 
@@ -166,7 +166,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                       if (_key.currentState!.isDrawerOpen) Get.back();
                       Future.delayed(
                         const Duration(milliseconds: 200),
-                        value as VoidCallback,
+                        value,
                       );
                     },
                     disposeOnTap: true,
@@ -307,14 +307,14 @@ class _IbLandingViewState extends State<IbLandingView> {
       },
       onModelDestroy: (model) => model.close(),
       builder: (context, model, child) {
-        return WillPopScope(
-          onWillPop: () {
-            if (model.selectedChapter != model.homeChapter) {
+        return PopScope(
+          canPop: model.selectedChapter != model.homeChapter,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) {
               model.selectedChapter = model.homeChapter;
-              return Future.value(false);
+            } else {
+              _model.saveShowcaseState();
             }
-            _model.saveShowcaseState();
-            return Future.value(true);
           },
           child: Theme(
             data: IbTheme.getThemeData(context),
@@ -327,7 +327,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                     .last;
                 model.onShowCased(key);
               },
-              builder: Builder(builder: (context) {
+              builder: (context) => Builder(builder: (context) {
                 return Scaffold(
                   key: _key,
                   appBar: _buildAppBar(),
