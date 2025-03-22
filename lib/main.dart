@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/l10n/app_localizations.dart';
@@ -36,6 +37,8 @@ class CircuitVerseMobile extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    var delegates = AppLocalizations.localizationsDelegates.toList();
+    delegates.add(FlutterQuillLocalizations.delegate);
 
     return KeyboardDismissOnTap(
       child: ThemeProvider(
@@ -54,9 +57,9 @@ class CircuitVerseMobile extends StatelessWidget {
                 foregroundColor: CVTheme.drawerIcon(context),
               ),
               colorScheme: Theme.of(context).colorScheme.copyWith(
-                    primary: CVTheme.primaryColor,
-                    brightness: Brightness.light,
-                  ),
+                primary: CVTheme.primaryColor,
+                brightness: Brightness.light,
+              ),
             ),
             description: 'LightTheme',
           ),
@@ -74,17 +77,19 @@ class CircuitVerseMobile extends StatelessWidget {
         ],
         child: ThemeConsumer(
           child: Builder(
-            builder: (themeContext) => GetMaterialApp(
-              title: 'CircuitVerse Mobile',
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              onGenerateTitle: (BuildContext context) =>
-                  AppLocalizations.of(context)!.title,
-              debugShowCheckedModeBanner: false,
-              onGenerateRoute: CVRouter.generateRoute,
-              theme: ThemeProvider.themeOf(themeContext).data,
-              home: const StartUpView(),
-            ),
+            builder:
+                (themeContext) => GetMaterialApp(
+                  title: 'CircuitVerse Mobile',
+                  localizationsDelegates: delegates,
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  onGenerateTitle:
+                      (BuildContext context) =>
+                          AppLocalizations.of(context)!.title,
+                  debugShowCheckedModeBanner: false,
+                  onGenerateRoute: CVRouter.generateRoute,
+                  theme: ThemeProvider.themeOf(themeContext).data,
+                  home: const StartUpView(),
+                ),
           ),
         ),
       ),

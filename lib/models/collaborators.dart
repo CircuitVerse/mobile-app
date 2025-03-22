@@ -2,25 +2,23 @@ import 'package:mobile_app/models/links.dart';
 
 class Collaborators {
   factory Collaborators.fromJson(Map<String, dynamic> json) => Collaborators(
-        data: List<Collaborator>.from(
-            json['data'].map((x) => Collaborator.fromJson(x))),
-        links: Links.fromJson(json['links']),
-      );
+    data: List<Collaborator>.from(
+      json['data'].map((x) => Collaborator.fromJson(x)),
+    ),
+    links: Links.fromJson(json['links']),
+  );
 
-  Collaborators({
-    required this.data,
-    required this.links,
-  });
+  Collaborators({required this.data, required this.links});
   List<Collaborator> data;
   Links links;
 }
 
 class Collaborator {
   factory Collaborator.fromJson(Map<String, dynamic> json) => Collaborator(
-        id: json['id'],
-        type: json['type'],
-        attributes: CollaboratorAttributes.fromJson(json['attributes']),
-      );
+    id: json['id'],
+    type: json['type'],
+    attributes: CollaboratorAttributes.fromJson(json['attributes']),
+  );
 
   Collaborator({
     required this.id,
@@ -34,12 +32,8 @@ class Collaborator {
 
 class CollaboratorAttributes {
   factory CollaboratorAttributes.fromJson(Map<String, dynamic> json) =>
-      CollaboratorAttributes(
-        name: json['name'],
-      );
+      CollaboratorAttributes(name: json['name']);
 
-  CollaboratorAttributes({
-    required this.name,
-  });
+  CollaboratorAttributes({required this.name});
   String name;
 }

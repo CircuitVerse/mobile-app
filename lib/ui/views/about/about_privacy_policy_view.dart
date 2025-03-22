@@ -11,14 +11,18 @@ class AboutPrivacyPolicyView extends StatelessWidget {
 
   final bool showAppBar;
 
-  TextSpan _buildText(BuildContext context, String text,
-      {bool bold = false, bool italic = false}) {
+  TextSpan _buildText(
+    BuildContext context,
+    String text, {
+    bool bold = false,
+    bool italic = false,
+  }) {
     return TextSpan(
       style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-            fontWeight: bold ? FontWeight.bold : FontWeight.normal,
-            fontStyle: italic ? FontStyle.italic : FontStyle.normal,
-            fontFamily: 'Poppins',
-          ),
+        fontWeight: bold ? FontWeight.bold : FontWeight.normal,
+        fontStyle: italic ? FontStyle.italic : FontStyle.normal,
+        fontFamily: 'Poppins',
+      ),
       text: text,
     );
   }
@@ -31,13 +35,14 @@ class AboutPrivacyPolicyView extends StatelessWidget {
         fontFamily: 'Poppins',
       ),
       text: text,
-      recognizer: TapGestureRecognizer()
-        ..onTap = () async {
-          final url = link;
-          if (await canLaunchUrlString(url)) {
-            await launchUrlString(url);
-          }
-        },
+      recognizer:
+          TapGestureRecognizer()
+            ..onTap = () async {
+              final url = link;
+              if (await canLaunchUrlString(url)) {
+                await launchUrlString(url);
+              }
+            },
     );
   }
 
@@ -47,9 +52,10 @@ class AboutPrivacyPolicyView extends StatelessWidget {
     String title = '',
     bool heading = false,
   }) {
-    var style = heading
-        ? Theme.of(context).textTheme.headlineSmall
-        : Theme.of(context).textTheme.titleLarge;
+    var style =
+        heading
+            ? Theme.of(context).textTheme.headlineSmall
+            : Theme.of(context).textTheme.titleLarge;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,10 +73,8 @@ class AboutPrivacyPolicyView extends StatelessWidget {
           Container(),
         RichText(
           textAlign: TextAlign.justify,
-          text: TextSpan(
-            children: content,
-          ),
-        )
+          text: TextSpan(children: content),
+        ),
       ],
     );
   }
@@ -78,16 +82,15 @@ class AboutPrivacyPolicyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: showAppBar
-          ? AppBar(
-              title: Text(
-                AppLocalizations.of(context)!.privacy_policy,
-                style: TextStyle(
-                  color: CVTheme.primaryHeading(context),
+      appBar:
+          showAppBar
+              ? AppBar(
+                title: Text(
+                  AppLocalizations.of(context)!.privacy_policy,
+                  style: TextStyle(color: CVTheme.primaryHeading(context)),
                 ),
-              ),
-            )
-          : null,
+              )
+              : null,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -104,10 +107,7 @@ class AboutPrivacyPolicyView extends StatelessWidget {
                   'https://circuitverse.org/tos',
                   italic: true,
                 ),
-                _buildText(
-                  context,
-                  AppLocalizations.of(context)!.full_stop,
-                ),
+                _buildText(context, AppLocalizations.of(context)!.full_stop),
               ],
             ),
             _buildSection(
@@ -224,7 +224,7 @@ class AboutPrivacyPolicyView extends StatelessWidget {
                 _buildText(
                   context,
                   AppLocalizations.of(context)!.privacy_section3_text4_string2,
-                )
+                ),
               ],
             ),
             _buildSection(
@@ -235,13 +235,12 @@ class AboutPrivacyPolicyView extends StatelessWidget {
                   context,
                   AppLocalizations.of(context)!.contact_us_text,
                 ),
-                _buildLink('support@circuitverse.org',
-                    'mailto:privacy@CircuitVerse.com',
-                    italic: true),
-                _buildText(
-                  context,
-                  AppLocalizations.of(context)!.full_stop,
+                _buildLink(
+                  'support@circuitverse.org',
+                  'mailto:privacy@CircuitVerse.com',
+                  italic: true,
                 ),
+                _buildText(context, AppLocalizations.of(context)!.full_stop),
               ],
             ),
           ],

@@ -38,10 +38,7 @@ class NotificationsView extends StatelessWidget {
                         ),
                         value: model.value,
                         items: const [
-                          DropdownMenuItem(
-                            value: 'All',
-                            child: Text('All'),
-                          ),
+                          DropdownMenuItem(value: 'All', child: Text('All')),
                           DropdownMenuItem(
                             value: 'Unread',
                             child: Text('Unread'),
@@ -64,17 +61,16 @@ class NotificationsView extends StatelessWidget {
                     return const SizedBox();
                   }
 
-                  NotificationType type = notification.attributes.type
-                          .toLowerCase()
-                          .contains('star')
-                      ? NotificationType.Star
-                      : NotificationType.Fork;
+                  NotificationType type =
+                      notification.attributes.type.toLowerCase().contains(
+                            'star',
+                          )
+                          ? NotificationType.Star
+                          : NotificationType.Fork;
 
                   return Card(
                     shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
                     child: ListTile(
                       contentPadding: const EdgeInsets.all(8.0),
@@ -99,19 +95,21 @@ class NotificationsView extends StatelessWidget {
                         'forked your project '
                         '${notification.attributes.params.project.name}',
                         style: TextStyle(
-                          fontWeight: notification.attributes.unread
-                              ? FontWeight.bold
-                              : FontWeight.normal,
+                          fontWeight:
+                              notification.attributes.unread
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
                         ),
                       ),
                       subtitle: Text(
-                        DateFormat.yMMMMd()
-                            .add_jm()
-                            .format(notification.attributes.updatedAt),
+                        DateFormat.yMMMMd().add_jm().format(
+                          notification.attributes.updatedAt,
+                        ),
                         style: TextStyle(
-                          fontWeight: notification.attributes.unread
-                              ? FontWeight.bold
-                              : FontWeight.normal,
+                          fontWeight:
+                              notification.attributes.unread
+                                  ? FontWeight.bold
+                                  : FontWeight.normal,
                         ),
                       ),
                     ),

@@ -84,9 +84,10 @@ class _EditGroupViewState extends State<EditGroupView> {
                   padding: const EdgeInsets.all(0),
                   label: 'Group Name',
                   initialValue: widget.group.attributes.name,
-                  validator: (value) => value?.isEmpty ?? true
-                      ? 'Please enter a Group Name'
-                      : null,
+                  validator: (value) =>
+                      value?.isEmpty ?? true
+                          ? 'Please enter a Group Name'
+                          : null,
                   onSaved: (value) => _name = value!.trim(),
                   action: TextInputAction.done,
                 ),
@@ -94,7 +95,7 @@ class _EditGroupViewState extends State<EditGroupView> {
                 CVPrimaryButton(
                   title: 'Save',
                   onPressed: _validateAndSubmit,
-                )
+                ),
               ],
             ),
           ),

@@ -150,30 +150,28 @@ IbEngineService getAndRegisterIbEngineServiceMock() {
   return _ibEngineService;
 }
 
-@GenerateNiceMocks(
-  [
-    MockSpec<IbLandingViewModel>(),
-    MockSpec<IbPageViewModel>(),
-    MockSpec<UserFavouritesViewModel>(),
-    MockSpec<ProjectDetailsViewModel>(),
-    MockSpec<EditProfileViewModel>(),
-    MockSpec<UserProjectsViewModel>(),
-    MockSpec<FeaturedProjectsViewModel>(),
-    MockSpec<ContributorsApi>(),
-    MockSpec<UsersApi>(),
-    MockSpec<EditGroupViewModel>(),
-    MockSpec<MyGroupsViewModel>(),
-    MockSpec<GroupDetailsViewModel>(),
-    MockSpec<NewGroupViewModel>(),
-    MockSpec<UpdateAssignmentViewModel>(),
-    MockSpec<AddAssignmentViewModel>(),
-    MockSpec<AssignmentDetailsViewModel>(),
-    MockSpec<ProfileViewModel>(),
-    MockSpec<DialogService>(),
-    MockSpec<NavigatorObserver>(),
-    MockSpec<LocalStorageService>(),
-  ],
-)
+@GenerateNiceMocks([
+  MockSpec<IbLandingViewModel>(),
+  MockSpec<IbPageViewModel>(),
+  MockSpec<UserFavouritesViewModel>(),
+  MockSpec<ProjectDetailsViewModel>(),
+  MockSpec<EditProfileViewModel>(),
+  MockSpec<UserProjectsViewModel>(),
+  MockSpec<FeaturedProjectsViewModel>(),
+  MockSpec<ContributorsApi>(),
+  MockSpec<UsersApi>(),
+  MockSpec<EditGroupViewModel>(),
+  MockSpec<MyGroupsViewModel>(),
+  MockSpec<GroupDetailsViewModel>(),
+  MockSpec<NewGroupViewModel>(),
+  MockSpec<UpdateAssignmentViewModel>(),
+  MockSpec<AddAssignmentViewModel>(),
+  MockSpec<AssignmentDetailsViewModel>(),
+  MockSpec<ProfileViewModel>(),
+  MockSpec<DialogService>(),
+  MockSpec<NavigatorObserver>(),
+  MockSpec<LocalStorageService>(),
+])
 void registerServices() {
   getAndRegisterLocalStorageServiceMock();
   getAndRegisterDatabaseServiceMock();

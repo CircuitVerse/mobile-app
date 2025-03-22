@@ -1,40 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_summernote/flutter_summernote.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:mobile_app/cv_theme.dart';
 
-class CVHtmlEditor extends StatelessWidget {
+class CVHtmlEditor extends StatefulWidget {
   const CVHtmlEditor({
-    required this.editorKey,
+    required this.controller,
     this.hasAttachment = true,
     this.height = 300,
     super.key,
   });
 
-  final GlobalKey<FlutterSummernoteState> editorKey;
+  final QuillController controller;
   final double height;
   final bool hasAttachment;
 
   @override
+  State<CVHtmlEditor> createState() => _CVHtmlEditorState();
+}
+
+class _CVHtmlEditorState extends State<CVHtmlEditor> {
+  @override
   Widget build(BuildContext context) {
-    return FlutterSummernote(
-      height: height,
+    QuillSimpleToolbarConfig toolbarConfig = QuillSimpleToolbarConfig(
+      showFontFamily: false,
+      showFontSize: false,
+      showColorButton: false,
+      showBackgroundColorButton: false,
+      showClearFormat: false,
+      showHeaderStyle: false,
+      showListCheck: false,
+      showCodeBlock: true,
+      showAlignmentButtons: true,
+      showQuote: false,
+      showIndent: false,
+      showSearchButton: false,
+    );
+    return Container(
       decoration: BoxDecoration(
-        color: CVTheme.htmlEditorBg,
-        border: Border.all(
-          color: CVTheme.primaryColorDark,
-        ),
+        color: CVTheme.boxBg(context),
+        border: Border.all(color: CVTheme.primaryColorDark),
       ),
-      key: editorKey,
-      hasAttachment: hasAttachment,
-      customToolbar: """
-          [
-            ['view', ['codeview', 'undo', 'redo']],
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['link', 'hr']]
-          ]
-        """,
+      child: Column(
+        children: [
+          QuillSimpleToolbar(
+            controller: widget.controller,
+            config: toolbarConfig,
+          ),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: widget.height,
+              maxHeight: widget.height,
+            ),
+            child: QuillEditor.basic(controller: widget.controller),
+          ),
+        ],
+      ),
     );
   }
 }

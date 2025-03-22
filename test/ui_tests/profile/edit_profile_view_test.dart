@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
@@ -36,11 +37,13 @@ void main() {
       var _editProfileViewModel = MockEditProfileViewModel();
       locator.registerSingleton<EditProfileViewModel>(_editProfileViewModel);
 
-      when(_editProfileViewModel.UPDATE_PROFILE)
-          .thenAnswer((_) => 'update_profile');
+      when(
+        _editProfileViewModel.UPDATE_PROFILE,
+      ).thenAnswer((_) => 'update_profile');
       when(_editProfileViewModel.imageUpdated).thenAnswer((_) => false);
-      when(_editProfileViewModel.updateProfile(any, any, any, any))
-          .thenReturn(null);
+      when(
+        _editProfileViewModel.updateProfile(any, any, any, any),
+      ).thenReturn(null);
       when(_editProfileViewModel.isSuccess(any)).thenReturn(true);
       when(_editProfileViewModel.updatedUser).thenAnswer((_) => null);
       // Mock Local Storage
@@ -54,6 +57,8 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
+          localizationsDelegates:
+              FlutterQuillLocalizations.localizationsDelegates,
           home: const EditProfileView(),
         ),
       );
@@ -63,26 +68,32 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic EditProfileView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic EditProfileView widgets', (
+      WidgetTester tester,
+    ) async {
       await provideMockedNetworkImages(() async {
         await _pumpEditProfileView(tester);
         await tester.pumpAndSettle();
 
         // Finds Name, Country, Educational Institute
-        expect(find.byWidgetPredicate((widget) {
-          return (widget is CVTextField && widget.label == 'Name') ||
-              (widget is CVTypeAheadField &&
-                  (widget.label == 'Country' ||
-                      widget.label == 'Educational Institute'));
-        }), findsNWidgets(3));
+        expect(
+          find.byWidgetPredicate((widget) {
+            return (widget is CVTextField && widget.label == 'Name') ||
+                (widget is CVTypeAheadField &&
+                    (widget.label == 'Country' ||
+                        widget.label == 'Educational Institute'));
+          }),
+          findsNWidgets(3),
+        );
 
         // Finds Subscribe to mail checkbox
         expect(find.byType(CheckboxListTile), findsOneWidget);
 
         // Finds Save Details button
-        expect(find.widgetWithText(CVPrimaryButton, 'Save Details'),
-            findsOneWidget);
+        expect(
+          find.widgetWithText(CVPrimaryButton, 'Save Details'),
+          findsOneWidget,
+        );
       });
     });
 
@@ -144,8 +155,9 @@ void main() {
       var _dialogService = MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
-      when(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
-          .thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
+      when(
+        _dialogService.showCustomProgressDialog(title: anyNamed('title')),
+      ).thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(_dialogService.popDialog()).thenReturn(null);
 
       // Pump Edit Profile View
@@ -159,8 +171,9 @@ void main() {
       await tester.pump(const Duration(seconds: 5));
 
       // Verify Dialog Service is called to show Dialog of Updating
-      verify(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
-          .called(1);
+      verify(
+        _dialogService.showCustomProgressDialog(title: anyNamed('title')),
+      ).called(1);
     });
   });
 }

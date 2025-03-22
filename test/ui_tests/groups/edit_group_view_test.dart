@@ -45,16 +45,19 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic EditGroupView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic EditGroupView widgets', (
+      WidgetTester tester,
+    ) async {
       await _pumpEditGroupView(tester);
       await tester.pumpAndSettle();
 
       // Finds Group Name field
       expect(
-          find.byWidgetPredicate((widget) =>
-              widget is CVTextField && widget.label == 'Group Name'),
-          findsOneWidget);
+        find.byWidgetPredicate(
+          (widget) => widget is CVTextField && widget.label == 'Group Name',
+        ),
+        findsOneWidget,
+      );
 
       // Finds Save button
       expect(find.widgetWithText(CVPrimaryButton, 'Save'), findsOneWidget);
@@ -65,8 +68,9 @@ void main() {
       var _dialogService = MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
-      when(_dialogService.showCustomProgressDialog())
-          .thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
+      when(
+        _dialogService.showCustomProgressDialog(),
+      ).thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(_dialogService.popDialog()).thenReturn(null);
 
       // Mock EditGroupViewModel
@@ -84,17 +88,20 @@ void main() {
 
       // Tap Save Details Button
       await tester.enterText(
-          find.byWidgetPredicate((widget) =>
-              widget is CVTextField && widget.label == 'Group Name'),
-          'Test');
+        find.byWidgetPredicate(
+          (widget) => widget is CVTextField && widget.label == 'Group Name',
+        ),
+        'Test',
+      );
       await tester.tap(find.widgetWithText(CVPrimaryButton, 'Save'));
       await tester.pumpAndSettle();
 
       await tester.pump(const Duration(seconds: 5));
 
       // Verify Dialog Service is called to show Dialog of Updating
-      verify(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
-          .called(1);
+      verify(
+        _dialogService.showCustomProgressDialog(title: anyNamed('title')),
+      ).called(1);
     });
   });
 }

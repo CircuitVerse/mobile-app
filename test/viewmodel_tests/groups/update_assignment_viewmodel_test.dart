@@ -19,8 +19,9 @@ void main() {
     var _assignment = Assignment.fromJson(mockAssignment);
     var _deadlineFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
     var _localDeadline = DateTime(2020, 8, 15);
-    var _timeZoneOffsetIncludedDeadline =
-        _localDeadline.subtract(_localDeadline.timeZoneOffset);
+    var _timeZoneOffsetIncludedDeadline = _localDeadline.subtract(
+      _localDeadline.timeZoneOffset,
+    );
 
     group('updateAssignment -', () {
       test('When called & service returns success response', () async {
@@ -36,8 +37,13 @@ void main() {
         ).thenAnswer((_) => Future.value(_assignment));
 
         var _model = UpdateAssignmentViewModel();
-        await _model
-            .updateAssignment('1', 'Test', _localDeadline, 'description', []);
+        await _model.updateAssignment(
+          '1',
+          'Test',
+          _localDeadline,
+          'description',
+          [],
+        );
 
         // verify call to updateAssignment with timezone offset subtracted was made
         verify(
@@ -69,12 +75,19 @@ void main() {
         ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = UpdateAssignmentViewModel();
-        await _model
-            .updateAssignment('1', 'Test', _localDeadline, 'description', []);
+        await _model.updateAssignment(
+          '1',
+          'Test',
+          _localDeadline,
+          'description',
+          [],
+        );
 
         expect(_model.stateFor(_model.UPDATE_ASSIGNMENT), ViewState.Error);
-        expect(_model.errorMessageFor(_model.UPDATE_ASSIGNMENT),
-            'Some Error Occurred!');
+        expect(
+          _model.errorMessageFor(_model.UPDATE_ASSIGNMENT),
+          'Some Error Occurred!',
+        );
       });
     });
   });

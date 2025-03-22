@@ -28,17 +28,22 @@ void main() {
     });
 
     test('GroupMemberAttributesTest fromJson', () {
-      var _groupMemberAttributes =
-          GroupMemberAttributes.fromJson(mockGroupMemberAttributes);
+      var _groupMemberAttributes = GroupMemberAttributes.fromJson(
+        mockGroupMemberAttributes,
+      );
 
       expect(_groupMemberAttributes, isInstanceOf<GroupMemberAttributes>());
 
       expect(_groupMemberAttributes.groupId, 1);
       expect(_groupMemberAttributes.userId, 1);
-      expect(_groupMemberAttributes.createdAt,
-          DateTime.parse('2020-08-15T14:36:38.228Z'));
-      expect(_groupMemberAttributes.updatedAt,
-          DateTime.parse('2020-08-15T14:36:38.228Z'));
+      expect(
+        _groupMemberAttributes.createdAt,
+        DateTime.parse('2020-08-15T14:36:38.228Z'),
+      );
+      expect(
+        _groupMemberAttributes.updatedAt,
+        DateTime.parse('2020-08-15T14:36:38.228Z'),
+      );
       expect(_groupMemberAttributes.name, 'Test User');
       expect(_groupMemberAttributes.email, 'test@test.com');
     });

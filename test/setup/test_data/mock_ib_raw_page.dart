@@ -10,7 +10,7 @@ Map<String, dynamic> mockIbRawPage1 = {
   'dir': '/',
   'url': '/',
   'http_url': 'https://learn.circuitverse.org/',
-  'api_url': 'https://learn.circuitverse.org/_api/pages/index.md'
+  'api_url': 'https://learn.circuitverse.org/_api/pages/index.md',
 };
 
 Map<String, dynamic> mockIbRawPage2 = {
@@ -26,7 +26,7 @@ Map<String, dynamic> mockIbRawPage2 = {
   'url': '/docs/binary-representation/',
   'http_url': 'https://learn.circuitverse.org/docs/binary-representation/',
   'api_url':
-      'https://learn.circuitverse.org/_api/pages/docs/binary-representation/index.md'
+      'https://learn.circuitverse.org/_api/pages/docs/binary-representation/index.md',
 };
 
 Map<String, dynamic> mockIbRawPage3 = {
@@ -44,5 +44,5 @@ Map<String, dynamic> mockIbRawPage3 = {
   'http_url':
       'https://learn.circuitverse.org/docs/binary-representation/binary-numbers.html',
   'api_url':
-      'https://learn.circuitverse.org/_api/pages/docs/binary-representation/binary-numbers.md'
+      'https://learn.circuitverse.org/_api/pages/docs/binary-representation/binary-numbers.md',
 };

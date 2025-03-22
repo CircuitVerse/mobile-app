@@ -53,84 +53,61 @@ class CVRouter {
         return MaterialPageRoute(builder: (_) => const FeaturedProjectsView());
       case ProfileView.id:
         var _userId = settings.arguments as String;
-        return MaterialPageRoute(
-          builder: (_) => ProfileView(
-            userId: _userId,
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => ProfileView(userId: _userId));
       case EditProfileView.id:
         return MaterialPageRoute(builder: (_) => const EditProfileView());
       case ProjectDetailsView.id:
         var _project = settings.arguments as Project;
         return MaterialPageRoute(
-          builder: (_) => ProjectDetailsView(
-            project: _project,
-          ),
+          builder: (_) => ProjectDetailsView(project: _project),
         );
       case EditProjectView.id:
         var _project = settings.arguments as Project;
         return MaterialPageRoute(
-          builder: (_) => EditProjectView(
-            project: _project,
-          ),
+          builder: (_) => EditProjectView(project: _project),
         );
       case MyGroupsView.id:
         return MaterialPageRoute(builder: (_) => const MyGroupsView());
       case GroupDetailsView.id:
         var group = settings.arguments as Group;
         return MaterialPageRoute(
-          builder: (_) => GroupDetailsView(
-            group: group,
-          ),
+          builder: (_) => GroupDetailsView(group: group),
         );
       case NewGroupView.id:
         return MaterialPageRoute(builder: (_) => const NewGroupView());
       case EditGroupView.id:
         var group = settings.arguments as Group;
-        return MaterialPageRoute(
-          builder: (_) => EditGroupView(
-            group: group,
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => EditGroupView(group: group));
       case AssignmentDetailsView.id:
         var _assignment = settings.arguments as Assignment;
         return MaterialPageRoute(
-          builder: (_) => AssignmentDetailsView(
-            assignment: _assignment,
-          ),
+          builder: (_) => AssignmentDetailsView(assignment: _assignment),
         );
       case AddAssignmentView.id:
         var _groupId = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (_) => AddAssignmentView(
-            groupId: _groupId,
-          ),
+          builder: (_) => AddAssignmentView(groupId: _groupId),
         );
       case UpdateAssignmentView.id:
         var _assignment = settings.arguments as Assignment;
         return MaterialPageRoute(
-          builder: (_) => UpdateAssignmentView(
-            assignment: _assignment,
-          ),
+          builder: (_) => UpdateAssignmentView(assignment: _assignment),
         );
       case IbLandingView.id:
-        return MaterialPageRoute(
-          builder: (_) => const IbLandingView(),
-        );
+        return MaterialPageRoute(builder: (_) => const IbLandingView());
       case ProjectPreviewFullScreen.id:
         var _project = settings.arguments as Project;
         return MaterialPageRoute(
-          builder: (_) => ProjectPreviewFullScreen(
-            project: _project,
-          ),
+          builder: (_) => ProjectPreviewFullScreen(project: _project),
         );
       default:
         return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(
-              child: Text('No route defined for ${settings.name}'),
-            ),
-          ),
+          builder:
+              (_) => Scaffold(
+                body: Center(
+                  child: Text('No route defined for ${settings.name}'),
+                ),
+              ),
         );
     }
   }

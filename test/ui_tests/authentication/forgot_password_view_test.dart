@@ -38,51 +38,61 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic ForgotPasswordView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic ForgotPasswordView widgets', (
+      WidgetTester tester,
+    ) async {
       await _pumpForgotPasswordView(tester);
       await tester.pumpAndSettle();
 
       expect(
-          find.byWidgetPredicate(
-              (Widget widget) => widget is Image && widget.height == 300),
-          findsOneWidget);
+        find.byWidgetPredicate(
+          (Widget widget) => widget is Image && widget.height == 300,
+        ),
+        findsOneWidget,
+      );
       expect(find.byType(CVTextField), findsOneWidget);
       expect(find.byType(CVPrimaryButton), findsOneWidget);
-      expect(find.byWidgetPredicate((widget) {
-        return widget is RichText &&
-            widget.text.toPlainText() == 'New User? Sign Up';
-      }), findsOneWidget);
+      expect(
+        find.byWidgetPredicate((widget) {
+          return widget is RichText &&
+              widget.text.toPlainText() == 'New User? Sign Up';
+        }),
+        findsOneWidget,
+      );
     });
 
-    testWidgets('New User? Sign Up onTap takes to SignupView',
-        (WidgetTester tester) async {
+    testWidgets('New User? Sign Up onTap takes to SignupView', (
+      WidgetTester tester,
+    ) async {
       await _pumpForgotPasswordView(tester);
       await tester.pumpAndSettle();
 
-      await tester.tap(find.byWidgetPredicate((widget) {
-        return widget is RichText &&
-            widget.text.toPlainText() == 'New User? Sign Up';
-      }));
+      await tester.tap(
+        find.byWidgetPredicate((widget) {
+          return widget is RichText &&
+              widget.text.toPlainText() == 'New User? Sign Up';
+        }),
+      );
       await tester.pumpAndSettle();
 
       expect(find.byType(SignupView), findsOneWidget);
     });
 
     testWidgets(
-        'When email is not valid or empty, proper error message should be shown',
-        (WidgetTester tester) async {
-      var _usersApiMock = getAndRegisterUsersApiMock();
-      // var _usersApiMock = MockUsersApi();
+      'When email is not valid or empty, proper error message should be shown',
+      (WidgetTester tester) async {
+        var _usersApiMock = getAndRegisterUsersApiMock();
+        // var _usersApiMock = MockUsersApi();
 
-      await _pumpForgotPasswordView(tester);
-      await tester.pumpAndSettle();
+        await _pumpForgotPasswordView(tester);
+        await tester.pumpAndSettle();
 
-      await tester.tap(find.byType(CVPrimaryButton));
-      await tester.pumpAndSettle();
+        await tester.tap(find.byType(CVPrimaryButton));
+        await tester.pumpAndSettle();
 
-      verifyNever(_usersApiMock.sendResetPasswordInstructions(''));
-      expect(find.text('Please enter a valid email'), findsOneWidget);
-    });
+        verifyNever(_usersApiMock.sendResetPasswordInstructions(''));
+        expect(find.text('Please enter a valid email'), findsOneWidget);
+      },
+    );
   });
 }

@@ -78,7 +78,8 @@ class ProjectDetailsViewModel extends BaseModel {
       _addedCollaboratorsSuccessMessage;
 
   set addedCollaboratorsSuccessMessage(
-      String addedCollaboratorsSuccessMessage) {
+    String addedCollaboratorsSuccessMessage,
+  ) {
     _addedCollaboratorsSuccessMessage = addedCollaboratorsSuccessMessage;
     notifyListeners();
   }
@@ -99,14 +100,17 @@ class ProjectDetailsViewModel extends BaseModel {
   Future addCollaborators(String projectId, String emails) async {
     setStateFor(ADD_COLLABORATORS, ViewState.Busy);
     try {
-      var addedCollaborators =
-          await _collaboratorsApi.addCollaborators(projectId, emails);
+      var addedCollaborators = await _collaboratorsApi.addCollaborators(
+        projectId,
+        emails,
+      );
 
       var _addedMembers = addedCollaborators?.added.join(', ');
       var _existingMembers = addedCollaborators?.existing.join(', ');
       var _invalidMembers = addedCollaborators?.invalid.join(', ');
 
-      addedCollaboratorsSuccessMessage = (_addedMembers?.isNotEmpty ?? false
+      addedCollaboratorsSuccessMessage =
+          (_addedMembers?.isNotEmpty ?? false
               ? '$_addedMembers was/were added '
               : '') +
           (_existingMembers?.isNotEmpty ?? false
@@ -117,8 +121,9 @@ class ProjectDetailsViewModel extends BaseModel {
               : '');
 
       // Fetch & Update all collaborators..
-      var _collaborators =
-          await _collaboratorsApi.fetchProjectCollaborators(projectId);
+      var _collaborators = await _collaboratorsApi.fetchProjectCollaborators(
+        projectId,
+      );
       collaborators = _collaborators?.data;
 
       setStateFor(ADD_COLLABORATORS, ViewState.Success);
@@ -131,12 +136,15 @@ class ProjectDetailsViewModel extends BaseModel {
   Future deleteCollaborator(String projectId, String collaboratorId) async {
     setStateFor(DELETE_COLLABORATORS, ViewState.Busy);
     try {
-      var _isDeleted =
-          await _collaboratorsApi.deleteCollaborator(projectId, collaboratorId);
+      var _isDeleted = await _collaboratorsApi.deleteCollaborator(
+        projectId,
+        collaboratorId,
+      );
 
       // Remove Collaborator from the list..
-      collaborators
-          .removeWhere((collaborator) => collaborator.id == collaboratorId);
+      collaborators.removeWhere(
+        (collaborator) => collaborator.id == collaboratorId,
+      );
       notifyListeners();
 
       if (_isDeleted ?? false) {
@@ -144,7 +152,9 @@ class ProjectDetailsViewModel extends BaseModel {
       } else {
         setStateFor(DELETE_COLLABORATORS, ViewState.Error);
         setErrorMessageFor(
-            DELETE_COLLABORATORS, 'Collaborator can\'t be deleted');
+          DELETE_COLLABORATORS,
+          'Collaborator can\'t be deleted',
+        );
       }
     } on Failure catch (f) {
       setStateFor(DELETE_COLLABORATORS, ViewState.Error);

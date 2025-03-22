@@ -1,5 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
@@ -41,6 +42,8 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
+          localizationsDelegates:
+              FlutterQuillLocalizations.localizationsDelegates,
           home: UpdateAssignmentView(assignment: _assignment),
         ),
       );
@@ -50,53 +53,64 @@ void main() {
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic UpdateAssignmentView widgets',
-        (WidgetTester tester) async {
+    testWidgets('finds Generic UpdateAssignmentView widgets', (
+      WidgetTester tester,
+    ) async {
       await _pumpUpdateAssignmentView(tester);
       await tester.pumpAndSettle();
 
       // Finds Name, HTML Editor, Date Time, DropDown, CheckboxListTile fields
-      expect(find.byWidgetPredicate((widget) {
-        if (widget is CVTextField) {
-          return widget.label == 'Name';
-        } else if (widget is CVHtmlEditor) {
-          return true;
-        } else if (widget is DateTimeField) {
-          return widget.key == const Key('cv_assignment_deadline_field');
-        } else if (widget is CheckboxListTile) {
-          return true;
-        }
+      expect(
+        find.byWidgetPredicate((widget) {
+          if (widget is CVTextField) {
+            return widget.label == 'Name';
+          } else if (widget is CVHtmlEditor) {
+            return true;
+          } else if (widget is DateTimeField) {
+            return widget.key == const Key('cv_assignment_deadline_field');
+          } else if (widget is CheckboxListTile) {
+            return true;
+          }
 
-        return false;
-      }), findsNWidgets(4));
+          return false;
+        }),
+        findsNWidgets(4),
+      );
 
       // Finds no elements checkboxes as Elements Restrictions Checkbox is not selected
       expect(find.byType(Checkbox), findsOneWidget);
 
       // Finds Save button
-      expect(find.widgetWithText(CVPrimaryButton, 'Update Assignment'),
-          findsOneWidget);
+      expect(
+        find.widgetWithText(CVPrimaryButton, 'Update Assignment'),
+        findsOneWidget,
+      );
     });
 
-    testWidgets('on Update Assignment button is Tapped',
-        (WidgetTester tester) async {
+    testWidgets('on Update Assignment button is Tapped', (
+      WidgetTester tester,
+    ) async {
       // Mock Dialog Service
       var _dialogService = MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
-      when(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
-          .thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
+      when(
+        _dialogService.showCustomProgressDialog(title: anyNamed('title')),
+      ).thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(_dialogService.popDialog()).thenReturn(null);
 
       // Mock UpdateAssignment ViewModel
       var _updateAssignmentViewModel = MockUpdateAssignmentViewModel();
       locator.registerSingleton<UpdateAssignmentViewModel>(
-          _updateAssignmentViewModel);
+        _updateAssignmentViewModel,
+      );
 
-      when(_updateAssignmentViewModel.UPDATE_ASSIGNMENT)
-          .thenAnswer((_) => 'update_assignment');
-      when(_updateAssignmentViewModel.updateAssignment(any, any, any, any, any))
-          .thenReturn(null);
+      when(
+        _updateAssignmentViewModel.UPDATE_ASSIGNMENT,
+      ).thenAnswer((_) => 'update_assignment');
+      when(
+        _updateAssignmentViewModel.updateAssignment(any, any, any, any, any),
+      ).thenReturn(null);
       when(_updateAssignmentViewModel.isSuccess(any)).thenReturn(false);
       when(_updateAssignmentViewModel.isError(any)).thenReturn(false);
 
@@ -106,9 +120,11 @@ void main() {
 
       // Tap Save Details Button
       await tester.enterText(
-          find.byWidgetPredicate(
-              (widget) => widget is CVTextField && widget.label == 'Name'),
-          'Test');
+        find.byWidgetPredicate(
+          (widget) => widget is CVTextField && widget.label == 'Name',
+        ),
+        'Test',
+      );
       Widget widget = find.byType(CVPrimaryButton).evaluate().first.widget;
       (widget as CVPrimaryButton).onPressed!();
       await tester.pumpAndSettle();
@@ -116,8 +132,9 @@ void main() {
       await tester.pump(const Duration(seconds: 5));
 
       // Verify Dialog Service is called to show Dialog of Updating
-      verify(_dialogService.showCustomProgressDialog(title: anyNamed('title')))
-          .called(1);
+      verify(
+        _dialogService.showCustomProgressDialog(title: anyNamed('title')),
+      ).called(1);
     });
   });
 }

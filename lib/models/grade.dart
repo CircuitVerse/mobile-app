@@ -6,11 +6,11 @@ class Grade {
     this.relationships,
   });
   factory Grade.fromJson(Map<String, dynamic> json) => Grade(
-        id: json['id'],
-        type: json['type'],
-        attributes: GradeAttributes.fromJson(json['attributes']),
-        relationships: GradeRelationships.fromJson(json['relationships']),
-      );
+    id: json['id'],
+    type: json['type'],
+    attributes: GradeAttributes.fromJson(json['attributes']),
+    relationships: GradeRelationships.fromJson(json['relationships']),
+  );
 
   String id;
   String? type;
@@ -41,37 +41,24 @@ class GradeAttributes {
 
 class GradeRelationships {
   factory GradeRelationships.fromJson(Map<String, dynamic> json) =>
-      GradeRelationships(
-        project: GradedProject.fromJson(json['project']),
-      );
+      GradeRelationships(project: GradedProject.fromJson(json['project']));
 
-  GradeRelationships({
-    required this.project,
-  });
+  GradeRelationships({required this.project});
   GradedProject project;
 }
 
 class GradedProject {
-  factory GradedProject.fromJson(Map<String, dynamic> json) => GradedProject(
-        data: GradedProjectData.fromJson(json['data']),
-      );
-  GradedProject({
-    required this.data,
-  });
+  factory GradedProject.fromJson(Map<String, dynamic> json) =>
+      GradedProject(data: GradedProjectData.fromJson(json['data']));
+  GradedProject({required this.data});
   GradedProjectData data;
 }
 
 class GradedProjectData {
   factory GradedProjectData.fromJson(Map<String, dynamic> json) =>
-      GradedProjectData(
-        id: json['id'],
-        type: json['type'],
-      );
+      GradedProjectData(id: json['id'], type: json['type']);
 
-  GradedProjectData({
-    required this.id,
-    required this.type,
-  });
+  GradedProjectData({required this.id, required this.type});
   String id;
   String type;
 }

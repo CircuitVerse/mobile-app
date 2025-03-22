@@ -39,16 +39,14 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildSignUpImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height > 800
-          ? MediaQuery.of(context).size.height * 0.52
-          : MediaQuery.of(context).size.height * 0.43,
+      height:
+          MediaQuery.of(context).size.height > 800
+              ? MediaQuery.of(context).size.height * 0.52
+              : MediaQuery.of(context).size.height * 0.43,
       color: CVTheme.imageBackground,
       padding: const EdgeInsets.all(16),
       child: SafeArea(
-        child: Image.asset(
-          'assets/images/signup/cv_signup.png',
-          height: 300,
-        ),
+        child: Image.asset('assets/images/signup/cv_signup.png', height: 300),
       ),
     );
   }
@@ -56,11 +54,11 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildNameInput() {
     return CVTextField(
       label: 'Name',
-      validator: (value) =>
-          value?.isEmpty ?? true ? 'Name can\'t be empty' : null,
+      validator:
+          (value) => value?.isEmpty ?? true ? 'Name can\'t be empty' : null,
       onSaved: (value) => _name = value!.trim(),
-      onFieldSubmitted: (_) =>
-          FocusScope.of(context).requestFocus(_nameFocusNode),
+      onFieldSubmitted:
+          (_) => FocusScope.of(context).requestFocus(_nameFocusNode),
     );
   }
 
@@ -69,8 +67,11 @@ class _SignupViewState extends State<SignupView> {
       focusNode: _nameFocusNode,
       label: 'Email',
       type: TextInputType.emailAddress,
-      validator: (value) =>
-          Validators.isEmailValid(value) ? null : 'Please enter a valid email',
+      validator:
+          (value) =>
+              Validators.isEmailValid(value)
+                  ? null
+                  : 'Please enter a valid email',
       onSaved: (value) => _email = value!.trim(),
       onFieldSubmitted: (_) {
         _nameFocusNode.unfocus();
@@ -99,9 +100,10 @@ class _SignupViewState extends State<SignupView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _signUpModel.isBusy(_signUpModel.SIGNUP)
-            ? 'Authenticating..'
-            : 'REGISTER',
+        title:
+            _signUpModel.isBusy(_signUpModel.SIGNUP)
+                ? 'Authenticating..'
+                : 'REGISTER',
         onPressed: _validateAndSubmit,
       ),
     );
@@ -137,15 +139,10 @@ class _SignupViewState extends State<SignupView> {
 
       if (_signUpModel.isSuccess(_signUpModel.SIGNUP)) {
         // show signup successful snackbar..
-        SnackBarUtils.showDark(
-          'Signup Successful',
-          'Welcome to CircuitVerse!',
-        );
+        SnackBarUtils.showDark('Signup Successful', 'Welcome to CircuitVerse!');
 
         // move to home view on successful signup..
-        await Future.delayed(
-          const Duration(seconds: 1),
-        );
+        await Future.delayed(const Duration(seconds: 1));
         await Get.offAllNamed(CVLandingView.id);
       } else if (_signUpModel.isError(_signUpModel.SIGNUP)) {
         // show failure snackbar..
@@ -162,28 +159,29 @@ class _SignupViewState extends State<SignupView> {
   Widget build(BuildContext context) {
     return BaseView<SignupViewModel>(
       onModelReady: (model) => _signUpModel = model,
-      builder: (context, model, child) => Scaffold(
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                _buildSignUpImage(),
-                const SizedBox(height: 8),
-                _buildNameInput(),
-                _buildEmailInput(),
-                _buildPasswordInput(),
-                const SizedBox(height: 14),
-                _buildRegisterButton(),
-                const SizedBox(height: 8),
-                _buildAlreadyRegisteredComponent(),
-                const SizedBox(height: 20),
-                const AuthOptionsView(isSignUp: true),
-              ],
+      builder:
+          (context, model, child) => Scaffold(
+            body: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    _buildSignUpImage(),
+                    const SizedBox(height: 8),
+                    _buildNameInput(),
+                    _buildEmailInput(),
+                    _buildPasswordInput(),
+                    const SizedBox(height: 14),
+                    _buildRegisterButton(),
+                    const SizedBox(height: 8),
+                    _buildAlreadyRegisteredComponent(),
+                    const SizedBox(height: 20),
+                    const AuthOptionsView(isSignUp: true),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

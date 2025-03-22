@@ -18,25 +18,35 @@ void main() {
     group('updateProject -', () {
       test('When called & service returns success response', () async {
         var _mockProjectsApi = getAndRegisterProjectsApiMock();
-        when(_mockProjectsApi.updateProject('1',
+        when(
+          _mockProjectsApi.updateProject(
+            '1',
             name: 'Test',
             projectAccessType: 'Public',
             description: 'description',
-            tagsList: [])).thenAnswer((_) => Future.value(_project));
+            tagsList: [],
+          ),
+        ).thenAnswer((_) => Future.value(_project));
 
         var _model = EditProjectViewModel();
-        await _model.updateProject('1',
-            name: 'Test',
-            projectAccessType: 'Public',
-            description: 'description',
-            tagsList: []);
+        await _model.updateProject(
+          '1',
+          name: 'Test',
+          projectAccessType: 'Public',
+          description: 'description',
+          tagsList: [],
+        );
 
         // verify API call is made..
-        verify(_mockProjectsApi.updateProject('1',
+        verify(
+          _mockProjectsApi.updateProject(
+            '1',
             name: 'Test',
             projectAccessType: 'Public',
             description: 'description',
-            tagsList: []));
+            tagsList: [],
+          ),
+        );
         expect(_model.stateFor(_model.UPDATE_PROJECT), ViewState.Success);
 
         // verify project is updated..
@@ -45,23 +55,31 @@ void main() {
 
       test('When called & service returns error', () async {
         var _mockProjectsApi = getAndRegisterProjectsApiMock();
-        when(_mockProjectsApi.updateProject('1',
+        when(
+          _mockProjectsApi.updateProject(
+            '1',
             name: 'Test',
             projectAccessType: 'Public',
             description: 'description',
-            tagsList: [])).thenThrow(Failure('Some Error Occurred!'));
+            tagsList: [],
+          ),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = EditProjectViewModel();
-        await _model.updateProject('1',
-            name: 'Test',
-            projectAccessType: 'Public',
-            description: 'description',
-            tagsList: []);
+        await _model.updateProject(
+          '1',
+          name: 'Test',
+          projectAccessType: 'Public',
+          description: 'description',
+          tagsList: [],
+        );
 
         // verify Error ViewState with proper error message..
         expect(_model.stateFor(_model.UPDATE_PROJECT), ViewState.Error);
-        expect(_model.errorMessageFor(_model.UPDATE_PROJECT),
-            'Some Error Occurred!');
+        expect(
+          _model.errorMessageFor(_model.UPDATE_PROJECT),
+          'Some Error Occurred!',
+        );
 
         // verify project is not populated on failure
         expect(_model.updatedProject, null);

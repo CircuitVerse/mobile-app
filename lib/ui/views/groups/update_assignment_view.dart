@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
-import 'package:flutter_summernote/flutter_summernote.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/data/restriction_elements.dart';
@@ -19,10 +19,7 @@ import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
 
 class UpdateAssignmentView extends StatefulWidget {
-  const UpdateAssignmentView({
-    super.key,
-    required this.assignment,
-  });
+  const UpdateAssignmentView({super.key, required this.assignment});
 
   static const String id = 'update_assignment_view';
   final Assignment assignment;
@@ -36,7 +33,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   late UpdateAssignmentViewModel _model;
   final _formKey = GlobalKey<FormState>();
   late String _name;
-  final GlobalKey<FlutterSummernoteState> _descriptionEditor = GlobalKey();
+  final QuillController _controller = QuillController.basic();
   late DateTime _deadline;
   List _restrictions = [];
   bool _isRestrictionEnabled = false;
@@ -48,23 +45,26 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     _isRestrictionEnabled = _restrictions.isNotEmpty;
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   Widget _buildNameInput() {
     return CVTextField(
       initialValue: widget.assignment.attributes.name,
       label: 'Name',
-      validator: (name) =>
-          name?.isEmpty ?? true ? 'Please enter a valid name' : null,
+      validator:
+          (name) => name?.isEmpty ?? true ? 'Please enter a valid name' : null,
       onSaved: (name) => _name = name!.trim(),
     );
   }
 
   Widget _buildDescriptionInput() {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 8,
-      ),
-      child: CVHtmlEditor(editorKey: _descriptionEditor),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: CVHtmlEditor(controller: _controller),
     );
   }
 
@@ -75,9 +75,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         key: const Key('cv_assignment_deadline_field'),
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: widget.assignment.attributes.deadline,
-        decoration: CVTheme.textFieldDecoration.copyWith(
-          labelText: 'Deadline',
-        ),
+        decoration: CVTheme.textFieldDecoration.copyWith(labelText: 'Deadline'),
         onShowPicker: (context, currentValue) async {
           final date = await showDatePicker(
             context: context,
@@ -88,8 +86,9 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
           if (date != null) {
             final time = await showTimePicker(
               context: context,
-              initialTime:
-                  TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+              initialTime: TimeOfDay.fromDateTime(
+                currentValue ?? DateTime.now(),
+              ),
             );
             return DateTimeField.combine(date, time);
           } else {
@@ -108,9 +107,9 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         value: _isRestrictionEnabled,
         title: Text(
           'Elements restriction',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         subtitle: const Text('Enable elements restriction'),
         onChanged: (value) {
@@ -128,16 +127,17 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Checkbox(
-            value: _restrictions.contains(name),
-            onChanged: (value) {
-              if (value == null) return;
-              if (value) {
-                _restrictions.add(name);
-              } else {
-                _restrictions.remove(name);
-              }
-              setState(() {});
-            }),
+          value: _restrictions.contains(name),
+          onChanged: (value) {
+            if (value == null) return;
+            if (value) {
+              _restrictions.add(name);
+            } else {
+              _restrictions.remove(name);
+            }
+            setState(() {});
+          },
+        ),
         Text(name),
       ],
     );
@@ -151,9 +151,9 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         children: <Widget>[
           Text(
             title,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
           const Divider(),
           Wrap(children: components.map((e) => _buildCheckBox(e)).toList()),
@@ -166,10 +166,11 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Column(
-        children: restrictionElements.entries
-            .toList()
-            .map<Widget>((e) => _buildRestrictionComponent(e.key, e.value))
-            .toList(),
+        children:
+            restrictionElements.entries
+                .toList()
+                .map<Widget>((e) => _buildRestrictionComponent(e.key, e.value))
+                .toList(),
       ),
     );
   }
@@ -194,11 +195,11 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       // [ISSUE] [html_editor] Throws error in Tests
       String _descriptionEditorText;
       try {
-        _descriptionEditorText =
-            await _descriptionEditor.currentState!.getText();
+        _descriptionEditorText = _controller.document.toPlainText();
       } on NoSuchMethodError {
         debugPrint(
-            'Handled html_editor error. NOTE: This should only throw during tests.');
+          'Handled html_editor error. NOTE: This should only throw during tests.',
+        );
         _descriptionEditorText = '';
       }
 
@@ -232,29 +233,30 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   Widget build(BuildContext context) {
     return BaseView<UpdateAssignmentViewModel>(
       onModelReady: (model) => _model = model,
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: const Text('Update Assignment')),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                _buildNameInput(),
-                _buildDescriptionInput(),
-                _buildDeadlineInput(),
-                _buildRestrictionsHeader(),
-                if (_isRestrictionEnabled)
-                  _buildRestrictions()
-                else
-                  Container(),
-                _buildUpdateButton(),
-              ],
+      builder:
+          (context, model, child) => Scaffold(
+            appBar: AppBar(title: const Text('Update Assignment')),
+            body: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _buildNameInput(),
+                    _buildDescriptionInput(),
+                    _buildDeadlineInput(),
+                    _buildRestrictionsHeader(),
+                    if (_isRestrictionEnabled)
+                      _buildRestrictions()
+                    else
+                      Container(),
+                    _buildUpdateButton(),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

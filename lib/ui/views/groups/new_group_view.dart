@@ -68,7 +68,7 @@ class _NewGroupViewState extends State<NewGroupView> {
                 CVSubheader(
                   title: 'NEW GROUP',
                   subtitle:
-                      'Groups an be used by mentors to set projects for and give grades to students.',
+                      'Groups can be used by mentors to set projects for and give grades to students.',
                   titleStyle: Theme.of(context).textTheme.headlineSmall!,
                   subtitleStyle: Theme.of(context).textTheme.bodyMedium!,
                 ),
@@ -81,9 +81,10 @@ class _NewGroupViewState extends State<NewGroupView> {
                 CVTextField(
                   padding: const EdgeInsets.all(0),
                   label: 'Group Name',
-                  validator: (value) => value?.isEmpty ?? true
-                      ? 'Please enter a Group Name'
-                      : null,
+                  validator: (value) =>
+                      value?.isEmpty ?? true
+                          ? 'Please enter a Group Name'
+                          : null,
                   onSaved: (value) => _name = value!.trim(),
                   action: TextInputAction.done,
                 ),
@@ -91,7 +92,7 @@ class _NewGroupViewState extends State<NewGroupView> {
                 CVPrimaryButton(
                   title: 'SAVE',
                   onPressed: _validateAndSubmit,
-                )
+                ),
               ],
             ),
           ),

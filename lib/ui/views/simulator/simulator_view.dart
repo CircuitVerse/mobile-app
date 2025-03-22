@@ -33,7 +33,9 @@ class SimulatorView extends StatelessWidget {
                 InAppWebView(
                   onLoadStop: (controller, uri) async {
                     model.setStateFor(
-                        SimulatorViewModel.SIMULATOR, ViewState.Idle);
+                      SimulatorViewModel.SIMULATOR,
+                      ViewState.Idle,
+                    );
                   },
                   initialUrlRequest: URLRequest(
                     url: WebUri.uri(Uri.parse(model.url)),

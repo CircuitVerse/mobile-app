@@ -25,8 +25,10 @@ class CVDrawer extends StatelessWidget {
           ListView(
             children: <Widget>[
               Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 32, horizontal: 10),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 32,
+                  horizontal: 10,
+                ),
                 child: Image.asset(
                   'assets/images/landing/cv_full_logo.png',
                   width: 90,
@@ -138,8 +140,8 @@ class CVDrawer extends StatelessWidget {
                     title: Text(
                       _model.currentUser?.data.attributes.name ?? '',
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     children: <Widget>[
                       InkWell(
@@ -165,7 +167,7 @@ class CVDrawer extends StatelessWidget {
                       ),
                     ],
                   ),
-                )
+                ),
               ] else
                 InkWell(
                   onTap: () => Get.offAndToNamed(LoginView.id),
@@ -173,16 +175,17 @@ class CVDrawer extends StatelessWidget {
                     title: AppLocalizations.of(context)!.login,
                     iconData: FontAwesome.login,
                   ),
-                )
+                ),
             ],
           ),
           Positioned(
             right: 5,
             top: 35,
             child: IconButton(
-              icon: Theme.of(context).brightness == Brightness.dark
-                  ? const Icon(Icons.brightness_low)
-                  : const Icon(Icons.brightness_high),
+              icon:
+                  Theme.of(context).brightness == Brightness.dark
+                      ? const Icon(Icons.brightness_low)
+                      : const Icon(Icons.brightness_high),
               iconSize: 28.0,
               onPressed: () => ThemeProvider.controllerOf(context).nextTheme(),
             ),

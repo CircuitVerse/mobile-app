@@ -490,7 +490,7 @@ class _IbPageViewState extends State<IbPageView> {
 
     for (var content in pageData.content ?? []) {
       switch (content.runtimeType) {
-        case const (IbMd,):
+        case const (IbMd):
           contents.add(_buildMarkdown(content as IbMd));
           break;
       }

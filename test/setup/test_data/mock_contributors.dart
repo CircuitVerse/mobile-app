@@ -18,7 +18,7 @@ List mockContributors = [
     'received_events_url': 'https://api.github.com/users/test/received_events',
     'type': 'User',
     'site_admin': false,
-    'contributions': 114
+    'contributions': 114,
   },
   {
     'login': 'test',
@@ -39,7 +39,7 @@ List mockContributors = [
     'received_events_url': 'https://api.github.com/users/test/received_events',
     'type': 'User',
     'site_admin': false,
-    'contributions': 101
+    'contributions': 101,
   },
   {
     'login': 'test',
@@ -60,6 +60,6 @@ List mockContributors = [
     'received_events_url': 'https://api.github.com/users/test/received_events',
     'type': 'User',
     'site_admin': false,
-    'contributions': 70
+    'contributions': 70,
   },
 ];

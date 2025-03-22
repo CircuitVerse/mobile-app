@@ -30,18 +30,13 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 8,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: TextFormField(
         focusNode: widget.focusNode,
         maxLines: 1,
         obscureText: _obscureText,
         keyboardType: TextInputType.visiblePassword,
-        style: TextStyle(
-          color: CVTheme.textColor(context),
-        ),
+        style: TextStyle(color: CVTheme.textColor(context)),
         decoration: CVTheme.textFieldDecoration.copyWith(
           suffixIcon: GestureDetector(
             onTap: _toggle,
@@ -51,9 +46,7 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
             ),
           ),
           labelText: 'Password',
-          labelStyle: TextStyle(
-            color: CVTheme.textFieldLabelColor(context),
-          ),
+          labelStyle: TextStyle(color: CVTheme.textFieldLabelColor(context)),
         ),
         textInputAction: TextInputAction.done,
         validator: widget.validator,

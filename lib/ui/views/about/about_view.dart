@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/enums/view_state.dart';
-import 'package:mobile_app/l10n/app_localizations.dart';
+import 'package:mobile_app/l10n/app_localizations.dart' show AppLocalizations;
 import 'package:mobile_app/models/cv_contributors.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
@@ -100,7 +100,8 @@ class _AboutViewState extends State<AboutView> {
               CVHeader(
                 title: AppLocalizations.of(context)!.about_title,
                 subtitle: AppLocalizations.of(context)?.about_subtitle,
-                description: AppLocalizations.of(context)?.about_description,
+                description:
+                    AppLocalizations.of(context)?.about_description,
               ),
               _buildTosAndPrivacyButtons(),
               CircuitVerseSocialCard(
@@ -118,10 +119,10 @@ class _AboutViewState extends State<AboutView> {
               const Divider(),
               CVSubheader(
                 title: AppLocalizations.of(context)!.contributors,
-                subtitle: AppLocalizations.of(context)?.contributors_subtitle,
+                subtitle:
+                    AppLocalizations.of(context)?.contributors_subtitle,
                 titleStyle: Theme.of(context).textTheme.headlineSmall!,
                 subtitleStyle: Theme.of(context).textTheme.bodyMedium!,
-                
               ),
               _buildContributorsList(),
             ],

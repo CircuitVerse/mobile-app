@@ -12,14 +12,10 @@ class DialogService {
   void _showDialog(DialogRequest request) {
     Get.dialog(
       AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         title: Text(
           request.title,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         content:
             request.description != null ? Text(request.description!) : null,
@@ -30,9 +26,7 @@ class DialogService {
             },
             child: Text(
               request.buttonTitle!,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -43,14 +37,10 @@ class DialogService {
   void _showConfirmationDialog(DialogRequest request) {
     Get.dialog(
       AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         title: Text(
           request.title,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         content:
             request.description != null ? Text(request.description!) : null,
@@ -61,9 +51,7 @@ class DialogService {
             },
             child: Text(
               request.cancelTitle!,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           TextButton(
@@ -72,9 +60,7 @@ class DialogService {
             },
             child: Text(
               request.buttonTitle!,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],
@@ -85,9 +71,7 @@ class DialogService {
   void _showProgressDialog(DialogRequest request) {
     Get.dialog(
       SimpleDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
@@ -153,9 +137,7 @@ class DialogService {
 
   void showCustomProgressDialog({String? title}) {
     title ??= 'Title';
-    _showProgressDialog(
-      DialogRequest(title: title),
-    );
+    _showProgressDialog(DialogRequest(title: title));
   }
 
   /// Completes the _dialogCompleter to resume the Future's execution call

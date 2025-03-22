@@ -31,12 +31,17 @@ void main() {
       test('When called & http client returns succes response', () async {
         await Hive.deleteFromDisk();
 
-        ApiUtils.client = MockClient((_) => Future.value(
-            Response(jsonEncode([mockIbRawPage1, mockIbRawPage2]), 200)));
+        ApiUtils.client = MockClient(
+          (_) => Future.value(
+            Response(jsonEncode([mockIbRawPage1, mockIbRawPage2]), 200),
+          ),
+        );
         var _ibApi = HttpIbApi();
 
-        expect((await _ibApi.fetchApiPage()).toString(),
-            [mockIbRawPage1, mockIbRawPage2].toString());
+        expect(
+          (await _ibApi.fetchApiPage()).toString(),
+          [mockIbRawPage1, mockIbRawPage2].toString(),
+        );
       });
 
       test('When called & http client throws Exceptions', () async {
@@ -55,11 +60,14 @@ void main() {
     group('fetchRawPageData -', () {
       test('When called & http client returns succes response', () async {
         ApiUtils.client = MockClient(
-            (_) => Future.value(Response(jsonEncode(mockIbRawPageData1), 200)));
+          (_) => Future.value(Response(jsonEncode(mockIbRawPageData1), 200)),
+        );
         var _ibApi = HttpIbApi();
 
-        expect((await _ibApi.fetchRawPageData()).toString(),
-            IbRawPageData.fromJson(mockIbRawPageData1).toString());
+        expect(
+          (await _ibApi.fetchRawPageData()).toString(),
+          IbRawPageData.fromJson(mockIbRawPageData1).toString(),
+        );
       });
 
       test('When called & http client throws Exceptions', () async {

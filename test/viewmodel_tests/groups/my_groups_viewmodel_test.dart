@@ -42,104 +42,133 @@ void main() {
     });
 
     group('fetchMentoredGroups -', () {
-      test('When first time fetched & service returns success response',
-          () async {
-        var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.fetchOwnedGroups())
-            .thenAnswer((_) => Future.value(_groups));
+      test(
+        'When first time fetched & service returns success response',
+        () async {
+          var _mockGroupsApi = getAndRegisterGroupsApiMock();
+          when(
+            _mockGroupsApi.fetchOwnedGroups(),
+          ).thenAnswer((_) => Future.value(_groups));
 
-        var _model = MyGroupsViewModel();
-        await _model.fetchMentoredGroups();
+          var _model = MyGroupsViewModel();
+          await _model.fetchMentoredGroups();
 
-        verify(_mockGroupsApi.fetchOwnedGroups());
-        expect(_model.stateFor(_model.FETCH_OWNED_GROUPS), ViewState.Success);
-        expect(_model.previousMentoredGroupsBatch, _groups);
-        expect(deepEq(_model.ownedGroups, _groups.data), true);
-      });
+          verify(_mockGroupsApi.fetchOwnedGroups());
+          expect(_model.stateFor(_model.FETCH_OWNED_GROUPS), ViewState.Success);
+          expect(_model.previousMentoredGroupsBatch, _groups);
+          expect(deepEq(_model.ownedGroups, _groups.data), true);
+        },
+      );
 
-      test('When not first time fetched & service returns success response',
-          () async {
-        var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.fetchOwnedGroups(page: 2))
-            .thenAnswer((_) => Future.value(_groups));
+      test(
+        'When not first time fetched & service returns success response',
+        () async {
+          var _mockGroupsApi = getAndRegisterGroupsApiMock();
+          when(
+            _mockGroupsApi.fetchOwnedGroups(page: 2),
+          ).thenAnswer((_) => Future.value(_groups));
 
-        var _model = MyGroupsViewModel();
-        _model.previousMentoredGroupsBatch = _groups;
-        await _model.fetchMentoredGroups();
+          var _model = MyGroupsViewModel();
+          _model.previousMentoredGroupsBatch = _groups;
+          await _model.fetchMentoredGroups();
 
-        verify(_mockGroupsApi.fetchOwnedGroups(page: 2));
-        expect(_model.stateFor(_model.FETCH_OWNED_GROUPS), ViewState.Success);
-        expect(_model.previousMentoredGroupsBatch, _groups);
-      });
+          verify(_mockGroupsApi.fetchOwnedGroups(page: 2));
+          expect(_model.stateFor(_model.FETCH_OWNED_GROUPS), ViewState.Success);
+          expect(_model.previousMentoredGroupsBatch, _groups);
+        },
+      );
 
-      test('When first time fetched & service returns error response',
-          () async {
-        var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.fetchOwnedGroups())
-            .thenThrow(Failure('Some Error Occurred!'));
+      test(
+        'When first time fetched & service returns error response',
+        () async {
+          var _mockGroupsApi = getAndRegisterGroupsApiMock();
+          when(
+            _mockGroupsApi.fetchOwnedGroups(),
+          ).thenThrow(Failure('Some Error Occurred!'));
 
-        var _model = MyGroupsViewModel();
-        await _model.fetchMentoredGroups();
+          var _model = MyGroupsViewModel();
+          await _model.fetchMentoredGroups();
 
-        // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.FETCH_OWNED_GROUPS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_OWNED_GROUPS),
-            'Some Error Occurred!');
-      });
+          // verify Error ViewState with proper error message..
+          expect(_model.stateFor(_model.FETCH_OWNED_GROUPS), ViewState.Error);
+          expect(
+            _model.errorMessageFor(_model.FETCH_OWNED_GROUPS),
+            'Some Error Occurred!',
+          );
+        },
+      );
     });
 
     group('fetchMemberGroups -', () {
-      test('When first time fetched & service returns success response',
-          () async {
-        var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.fetchMemberGroups())
-            .thenAnswer((_) => Future.value(_groups));
+      test(
+        'When first time fetched & service returns success response',
+        () async {
+          var _mockGroupsApi = getAndRegisterGroupsApiMock();
+          when(
+            _mockGroupsApi.fetchMemberGroups(),
+          ).thenAnswer((_) => Future.value(_groups));
 
-        var _model = MyGroupsViewModel();
-        await _model.fetchMemberGroups();
+          var _model = MyGroupsViewModel();
+          await _model.fetchMemberGroups();
 
-        verify(_mockGroupsApi.fetchMemberGroups());
-        expect(_model.stateFor(_model.FETCH_MEMBER_GROUPS), ViewState.Success);
-        expect(_model.previousMemberGroupsBatch, _groups);
-        expect(deepEq(_model.memberGroups, _groups.data), true);
-      });
+          verify(_mockGroupsApi.fetchMemberGroups());
+          expect(
+            _model.stateFor(_model.FETCH_MEMBER_GROUPS),
+            ViewState.Success,
+          );
+          expect(_model.previousMemberGroupsBatch, _groups);
+          expect(deepEq(_model.memberGroups, _groups.data), true);
+        },
+      );
 
-      test('When not first time fetched & service returns success response',
-          () async {
-        var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.fetchMemberGroups(page: 2))
-            .thenAnswer((_) => Future.value(_groups));
+      test(
+        'When not first time fetched & service returns success response',
+        () async {
+          var _mockGroupsApi = getAndRegisterGroupsApiMock();
+          when(
+            _mockGroupsApi.fetchMemberGroups(page: 2),
+          ).thenAnswer((_) => Future.value(_groups));
 
-        var _model = MyGroupsViewModel();
-        _model.previousMemberGroupsBatch = _groups;
-        await _model.fetchMemberGroups();
+          var _model = MyGroupsViewModel();
+          _model.previousMemberGroupsBatch = _groups;
+          await _model.fetchMemberGroups();
 
-        verify(_mockGroupsApi.fetchMemberGroups(page: 2));
-        expect(_model.stateFor(_model.FETCH_MEMBER_GROUPS), ViewState.Success);
-        expect(_model.previousMemberGroupsBatch, _groups);
-      });
+          verify(_mockGroupsApi.fetchMemberGroups(page: 2));
+          expect(
+            _model.stateFor(_model.FETCH_MEMBER_GROUPS),
+            ViewState.Success,
+          );
+          expect(_model.previousMemberGroupsBatch, _groups);
+        },
+      );
 
-      test('When first time fetched & service returns error response',
-          () async {
-        var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.fetchMemberGroups())
-            .thenThrow(Failure('Some Error Occurred!'));
+      test(
+        'When first time fetched & service returns error response',
+        () async {
+          var _mockGroupsApi = getAndRegisterGroupsApiMock();
+          when(
+            _mockGroupsApi.fetchMemberGroups(),
+          ).thenThrow(Failure('Some Error Occurred!'));
 
-        var _model = MyGroupsViewModel();
-        await _model.fetchMemberGroups();
+          var _model = MyGroupsViewModel();
+          await _model.fetchMemberGroups();
 
-        // verify Error ViewState with proper error message..
-        expect(_model.stateFor(_model.FETCH_MEMBER_GROUPS), ViewState.Error);
-        expect(_model.errorMessageFor(_model.FETCH_MEMBER_GROUPS),
-            'Some Error Occurred!');
-      });
+          // verify Error ViewState with proper error message..
+          expect(_model.stateFor(_model.FETCH_MEMBER_GROUPS), ViewState.Error);
+          expect(
+            _model.errorMessageFor(_model.FETCH_MEMBER_GROUPS),
+            'Some Error Occurred!',
+          );
+        },
+      );
     });
 
     group('deleteGroup -', () {
       test('When called & service returns success/true response', () async {
         var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.deleteGroup('1'))
-            .thenAnswer((_) => Future.value(true));
+        when(
+          _mockGroupsApi.deleteGroup('1'),
+        ).thenAnswer((_) => Future.value(true));
 
         var _model = MyGroupsViewModel();
         _model.ownedGroups.add(_group);
@@ -151,14 +180,16 @@ void main() {
 
         // verify group member is deleted..
         expect(
-            _model.ownedGroups.where((group) => _group.id == group.id).isEmpty,
-            true);
+          _model.ownedGroups.where((group) => _group.id == group.id).isEmpty,
+          true,
+        );
       });
 
       test('When called & service returns false', () async {
         var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.deleteGroup('1'))
-            .thenAnswer((_) => Future.value(false));
+        when(
+          _mockGroupsApi.deleteGroup('1'),
+        ).thenAnswer((_) => Future.value(false));
 
         var _model = MyGroupsViewModel();
         _model.ownedGroups.add(_group);
@@ -166,14 +197,17 @@ void main() {
 
         // verify Error ViewState with proper error message..
         expect(_model.stateFor(_model.DELETE_GROUP), ViewState.Error);
-        expect(_model.errorMessageFor(_model.DELETE_GROUP),
-            'Group can\'t be deleted');
+        expect(
+          _model.errorMessageFor(_model.DELETE_GROUP),
+          'Group can\'t be deleted',
+        );
       });
 
       test('When called & service returns error', () async {
         var _mockGroupsApi = getAndRegisterGroupsApiMock();
-        when(_mockGroupsApi.deleteGroup('1'))
-            .thenThrow(Failure('Some Error Occurred!'));
+        when(
+          _mockGroupsApi.deleteGroup('1'),
+        ).thenThrow(Failure('Some Error Occurred!'));
 
         var _model = MyGroupsViewModel();
         _model.ownedGroups.add(_group);
@@ -181,8 +215,10 @@ void main() {
 
         // verify Error ViewState with proper error message..
         expect(_model.stateFor(_model.DELETE_GROUP), ViewState.Error);
-        expect(_model.errorMessageFor(_model.DELETE_GROUP),
-            'Some Error Occurred!');
+        expect(
+          _model.errorMessageFor(_model.DELETE_GROUP),
+          'Some Error Occurred!',
+        );
       });
     });
   });

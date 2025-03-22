@@ -14,7 +14,7 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
 
   @override
   Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
-    final id = element.textContent;
+    var id = element.textContent;
 
     return FutureBuilder<dynamic>(
       future: model.fetchHtmlInteraction(id),
@@ -22,79 +22,41 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
         if (snapshot.data is Failure) {
           return const Text('Error Loading Interaction');
         } else if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
+          return const Text('Loading Interaction...');
         }
 
-        final textContent = snapshot.data.toString();
-        return IbInteractionWidget(htmlContent: textContent);
-      },
-    );
-  }
-}
+        var textContent = snapshot.data.toString();
+        var streamController = StreamController<double>();
 
-class IbInteractionWidget extends StatefulWidget {
-  final String htmlContent;
-  const IbInteractionWidget({super.key, required this.htmlContent});
+        // Create and configure WebViewController
+        final controller =
+            WebViewController()
+              ..setJavaScriptMode(JavaScriptMode.unrestricted)
+              ..loadHtmlString(textContent);
 
-  @override
-  State<IbInteractionWidget> createState() => _IbInteractionWidgetState();
-}
-
-class _IbInteractionWidgetState extends State<IbInteractionWidget> {
-  final StreamController<double> _heightStreamController =
-      StreamController<double>();
-  late final WebViewController _webViewController;
-  double _height = 100; // Initial height
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize the WebViewController
-    _webViewController = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(Colors.transparent)
-      ..loadHtmlString(widget.htmlContent)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onPageFinished: (String url) async {
-            try {
-              final result = await _webViewController.runJavaScriptReturningResult(
-                'document.documentElement.scrollHeight;'
+        controller.setNavigationDelegate(
+          NavigationDelegate(
+            onPageFinished: (String url) async {
+              final height = double.parse(
+                await controller.runJavaScriptReturningResult(
+                      'document.documentElement.scrollHeight;',
+                    )
+                    as String,
               );
-              
-              // Convert result to double (result is already a number with the new API)
-              final newHeight = result is num ? result.toDouble() : 100.0;
-              
-              if (!_heightStreamController.isClosed) {
-                _heightStreamController.add(newHeight);
-                setState(() {
-                  _height = newHeight;
-                });
-              }
-            } catch (e) {
-              debugPrint('Error getting webview height: $e');
-            }
+              streamController.add(height);
+            },
+          ),
+        );
+
+        return StreamBuilder<double>(
+          initialData: 100,
+          stream: streamController.stream,
+          builder: (context, snapshot) {
+            return SizedBox(
+              height: snapshot.data,
+              child: WebViewWidget(controller: controller),
+            );
           },
-        ),
-      );
-  }
-
-  @override
-  void dispose() {
-    _heightStreamController.close();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<double>(
-      initialData: _height,
-      stream: _heightStreamController.stream,
-      builder: (context, streamSnapshot) {
-        return SizedBox(
-          height: streamSnapshot.data,
-          width: double.infinity,
-          child: WebViewWidget(controller: _webViewController),
         );
       },
     );

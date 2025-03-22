@@ -9,17 +9,18 @@ class StartUpView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseView<StartUpViewModel>(
       onModelReady: (model) => model.handleStartUpLogic(),
-      builder: (context, model, child) => Scaffold(
-        body: Center(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 42),
-            child: Image.asset(
-              'assets/images/landing/cv_full_logo.png',
-              key: const Key('cv_startup_logo'),
+      builder:
+          (context, model, child) => Scaffold(
+            body: Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 42),
+                child: Image.asset(
+                  'assets/images/landing/cv_full_logo.png',
+                  key: const Key('cv_startup_logo'),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

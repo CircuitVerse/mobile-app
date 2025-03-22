@@ -33,26 +33,35 @@ void main() {
       expect(_assignment.grades?.length, 1);
 
       expect(_assignment.canBeGraded, true);
-      expect(_assignment.gradingScaleHint,
-          'Assignment can be graded with any of the letters A/B/C/D/E/F');
+      expect(
+        _assignment.gradingScaleHint,
+        'Assignment can be graded with any of the letters A/B/C/D/E/F',
+      );
     });
 
     test('AssignmentAttributesTest', () {
-      var _assignmentAttributes =
-          AssignmentAttributes.fromJson(mockAssignmentAttributes);
+      var _assignmentAttributes = AssignmentAttributes.fromJson(
+        mockAssignmentAttributes,
+      );
 
       expect(_assignmentAttributes, isInstanceOf<AssignmentAttributes>());
 
       expect(_assignmentAttributes.name, 'Test');
-      expect(_assignmentAttributes.deadline,
-          DateTime.parse('2020-08-15T15:23:00.000Z').toLocal());
+      expect(
+        _assignmentAttributes.deadline,
+        DateTime.parse('2020-08-15T15:23:00.000Z').toLocal(),
+      );
       expect(_assignmentAttributes.description, 'description');
       expect(_assignmentAttributes.status, 'open');
       expect(_assignmentAttributes.hasPrimaryMentorAccess, true);
-      expect(_assignmentAttributes.createdAt,
-          DateTime.parse('2020-08-19T15:00:30.423Z').toLocal());
-      expect(_assignmentAttributes.updatedAt,
-          DateTime.parse('2020-08-20T15:23:03.018Z').toLocal());
+      expect(
+        _assignmentAttributes.createdAt,
+        DateTime.parse('2020-08-19T15:00:30.423Z').toLocal(),
+      );
+      expect(
+        _assignmentAttributes.updatedAt,
+        DateTime.parse('2020-08-20T15:23:03.018Z').toLocal(),
+      );
       expect(_assignmentAttributes.currentUserProjectId, null);
       expect(_assignmentAttributes.gradingScale, 'letter');
       expect(_assignmentAttributes.gradesFinalized, false);
