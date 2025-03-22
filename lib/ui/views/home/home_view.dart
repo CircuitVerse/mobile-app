@@ -81,10 +81,12 @@ class _HomeViewState extends State<HomeView> {
                 _buildHeader(),
                 _buildHomePageSketch(),
                 _buildTeachersAndContributorButtons(),
-                const CVSubheader(
+                CVSubheader(
                   title: 'Features',
                   subtitle:
                       'Design circuits quickly and easily with a modern and intuitive user interface with drag-and-drop, copy/paste, zoom and more.',
+                  titleStyle: Theme.of(context).textTheme.headlineSmall!,
+                  subtitleStyle: Theme.of(context).textTheme.bodyMedium!,
                 ),
                 const FeatureCard(
                   assetPath: 'assets/images/homepage/export-hd.png',
@@ -118,10 +120,12 @@ class _HomeViewState extends State<HomeView> {
                       'CircuitVerse supports multi bit wires, this means circuit design is easier, faster and uncluttered.',
                 ),
                 const SizedBox(height: 16),
-                const CVSubheader(
+                CVSubheader(
                   title: 'Editor Picks',
                   subtitle:
                       'These circuits have been hand-picked by our authors for their awesomeness',
+                  titleStyle: Theme.of(context).textTheme.headlineSmall!,
+                  subtitleStyle: Theme.of(context).textTheme.bodyMedium!,
                 ),
                 const FeaturedProjectsView(embed: true),
                 CVOutlineButton(

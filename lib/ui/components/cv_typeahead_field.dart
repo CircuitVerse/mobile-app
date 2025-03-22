@@ -7,7 +7,7 @@ class CVTypeAheadField extends StatelessWidget {
   ///
   /// When a [TextInputStream not specified, it defaults to [TextInputType.text]
   ///
-  /// When `maxLines` is not specified, it defaults to 1
+  /// When `maxLines` is not specified, it defaults to 1.
   const CVTypeAheadField({
     required this.label,
     this.type = TextInputType.text,
@@ -67,7 +67,10 @@ class CVTypeAheadField extends StatelessWidget {
             controller?.text = value as String;
           }
         },
+       
       ),
     );
   }
 }
+
+
