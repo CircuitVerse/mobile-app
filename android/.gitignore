@@ -6,17 +6,9 @@ gradle-wrapper.jar
 /local.properties
 GeneratedPluginRegistrant.java
 
-# fastlane specific
-**/fastlane/report.xml
-
-# deliver temporary files
-**/fastlane/Preview.html
-
-# snapshot generated screenshots
-**/fastlane/screenshots
-
-# scan temporary files
-**/fastlane/test_output
-
-# supply json key
-**/supply_json_key.json
+app/.cxx
+# Remember to never publicly share your keystore.
+# See https://flutter.dev/to/reference-keystore
+key.properties
+**/*.keystore
+**/*.jks
