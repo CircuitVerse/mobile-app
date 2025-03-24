@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/l10n/app_localizations.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/ui/views/about/about_privacy_policy_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_helpers.mocks.dart';
 

@@ -421,9 +421,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Widget _buildAddCollaboratorsButton() {
     return GestureDetector(
       onTap: showAddCollaboratorsDialog,
-      child: Row(
+      child: const Row(
         mainAxisSize: MainAxisSize.min,
-        children: const <Widget>[Icon(Icons.add), Text('Add A Collaborator')],
+        children: <Widget>[const Icon(Icons.add), const Text('Add A Collaborator')],
       ),
     );
   }

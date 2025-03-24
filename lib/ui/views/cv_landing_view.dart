@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
+import 'package:mobile_app/l10n/app_localizations.dart';
 import 'package:mobile_app/ui/components/cv_drawer.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -12,7 +13,6 @@ import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CVLandingView extends StatefulWidget {
   const CVLandingView({super.key});

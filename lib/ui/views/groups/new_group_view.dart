@@ -56,48 +56,48 @@ class _NewGroupViewState extends State<NewGroupView> {
   Widget build(BuildContext context) {
     return BaseView<NewGroupViewModel>(
       onModelReady: (model) => _model = model,
-      builder:
-          (context, model, child) => Scaffold(
-            appBar: AppBar(),
-            body: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    const CVSubheader(
-                      title: 'NEW GROUP',
-                      subtitle:
-                          'Groups an be used by mentors to set projects for and give grades to students.',
-                    ),
-                    const SizedBox(height: 16),
-                    SvgPicture.asset(
-                      'assets/images/group/new_group.svg',
-                      height: 200,
-                    ),
-                    const SizedBox(height: 16),
-                    CVTextField(
-                      padding: const EdgeInsets.all(0),
-                      label: 'Group Name',
-                      validator:
-                          (value) =>
-                              value?.isEmpty ?? true
-                                  ? 'Please enter a Group Name'
-                                  : null,
-                      onSaved: (value) => _name = value!.trim(),
-                      action: TextInputAction.done,
-                    ),
-                    const SizedBox(height: 16),
-                    CVPrimaryButton(
-                      title: 'SAVE',
-                      onPressed: _validateAndSubmit,
-                    ),
-                  ],
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                CVSubheader(
+                  title: 'NEW GROUP',
+                  subtitle:
+                      'Groups can be used by mentors to set projects for and give grades to students.',
+                  titleStyle: Theme.of(context).textTheme.headlineSmall!,
+                  subtitleStyle: Theme.of(context).textTheme.bodyMedium!,
                 ),
-              ),
+                const SizedBox(height: 16),
+                SvgPicture.asset(
+                  'assets/images/group/new_group.svg',
+                  height: 200,
+                ),
+                const SizedBox(height: 16),
+                CVTextField(
+                  padding: const EdgeInsets.all(0),
+                  label: 'Group Name',
+                  validator: (value) =>
+                      value?.isEmpty ?? true
+                          ? 'Please enter a Group Name'
+                          : null,
+                  onSaved: (value) => _name = value!.trim(),
+                  action: TextInputAction.done,
+                ),
+                const SizedBox(height: 16),
+                CVPrimaryButton(
+                  title: 'SAVE',
+                  onPressed: _validateAndSubmit,
+                ),
+              ],
             ),
           ),
+        ),
+      ),
     );
   }
 }
