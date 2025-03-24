@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2](https://github.com/CircuitVerse/mobile-app/compare/v1.0.1...v1.0.2) (2025-03-24)
+
+### Continuous Integration
+
+* update CD configuration to upload apk to releases ([f0f4eb6](https://github.com/CircuitVerse/mobile-app/commit/f0f4eb68dfa47f0e320526896b63b68232df340d))
+
 ## [1.0.1](https://github.com/CircuitVerse/mobile-app/compare/v1.0.0...v1.0.1) (2025-03-24)
 
 ### Bug Fixes
