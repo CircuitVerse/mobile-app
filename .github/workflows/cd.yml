@@ -161,7 +161,7 @@ jobs:
           subdirectory: android
           
       - name: Archive build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: app-release-v${{ env.VERSION }}
           path: build/app/outputs/
