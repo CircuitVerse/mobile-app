@@ -1,108 +1,169 @@
 name: Release and Deploy
-
 on:
   workflow_dispatch:
-    inputs:
-      release_type:
-        description: 'Release type (beta or prod)'
-        required: true
-        type: choice
-        options:
-          - beta
-          - prod
 
-env:
-  FB_APP_ID: ${{ secrets.FB_APP_ID }}
-  FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
-  GITHUB_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
-  GITHUB_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
-  FASTLANE_SUPPLY_JSON_KEY: ${{ secrets.FASTLANE_SUPPLY_JSON_KEY }}
-  RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
-  RELEASE_KEYSTORE_PROPERTIES: ${{ secrets.RELEASE_KEYSTORE_PROPERTIES }}
+permissions:
+  contents: write # for releases and tags
+  issues: write # for issue comments
+  pull-requests: write # for PR comments
+  id-token: write # for GitHub OIDC authentication with pub.dev
 
 jobs:
   release:
+    name: Release
     runs-on: ubuntu-latest
+    outputs:
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+      new_release_version: ${{ steps.semantic.outputs.new_release_version }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Extract Version from pubspec.yaml
-        id: extract_version
-        run: |
-          VERSION=$(grep "version:" pubspec.yaml | awk '{print $2}')
-          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
-
-      - name: Generate Changelog
-        uses: TriPSs/conventional-changelog-action@v6
-        id: changelog
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          config: "angular"
-          output-file: "CHANGELOG.md"
-          version-file: "pubspec.yaml "
-
-      - name: Create Release Tag
+          node-version: "lts/*"
+          
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          
+      - name: Install semantic-release and plugins
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          TAG_NAME="v${{ steps.extract_version.outputs.VERSION }}-${{ inputs.release_type }}"
-          git tag $TAG_NAME -a -m "Release $TAG_NAME"
-          git push origin $TAG_NAME
-
-      - name: Create GitHub Release
-        uses: actions/create-release@v1
+          npm init -y
+          npm install --no-save \
+            semantic-release \
+            @semantic-release/commit-analyzer \
+            @semantic-release/release-notes-generator \
+            @semantic-release/changelog \
+            @semantic-release/github \
+            @semantic-release/git \
+            semantic-release-pub \
+            conventional-changelog-conventionalcommits
+          
+      - name: Create semantic-release config
+        run: |
+          cat > .releaserc.json << EOF
+          {
+            "branches": ["master"],
+            "plugins": [
+              ["@semantic-release/commit-analyzer", {
+                "preset": "conventionalcommits",
+                "releaseRules": [
+                  {"type": "feat", "release": "minor"},
+                  {"type": "fix", "release": "patch"},
+                  {"type": "docs", "release": "patch"},
+                  {"type": "style", "release": "patch"},
+                  {"type": "refactor", "release": "patch"},
+                  {"type": "perf", "release": "patch"},
+                  {"type": "test", "scope": "breaking", "release": "major"},
+                  {"type": "build", "release": "patch"},
+                  {"type": "ci", "release": "patch"},
+                  {"type": "chore", "release": false}
+                ]
+              }],
+              ["@semantic-release/release-notes-generator", {
+                "preset": "conventionalcommits",
+                "presetConfig": {
+                  "types": [
+                    {"type": "feat", "section": "Features"},
+                    {"type": "fix", "section": "Bug Fixes"},
+                    {"type": "docs", "section": "Documentation"},
+                    {"type": "style", "section": "Styles"},
+                    {"type": "refactor", "section": "Code Refactoring"},
+                    {"type": "perf", "section": "Performance Improvements"},
+                    {"type": "test", "section": "Tests"},
+                    {"type": "build", "section": "Build System"},
+                    {"type": "ci", "section": "Continuous Integration"}
+                  ]
+                }
+              }],
+              ["@semantic-release/changelog", {
+                "changelogFile": "CHANGELOG.md",
+                "changelogTitle": "# Changelog\n\nAll notable changes to this project will be documented in this file."
+              }],
+              ["semantic-release-pub", {
+                "cli": "flutter",
+                "publishPub": false,
+                "updateBuildNumber": true,
+                "useGithubOidc": false
+              }],
+              ["@semantic-release/github", {
+                "assets": []
+              }],
+              ["@semantic-release/git", {
+                "assets": ["CHANGELOG.md", "pubspec.yaml"],
+                "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+              }]
+            ]
+          }
+          EOF
+          
+      - name: Run Semantic Release
+        id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: "v${{ steps.extract_version.outputs.VERSION }}-${{ inputs.release_type }}"
-          release_name: "Release v${{ steps.extract_version.outputs.VERSION }}-${{ inputs.release_type }}"
-          body: ${{ steps.changelog.outputs.clean_changelog }}
-          draft: false
-          prerelease: ${{ inputs.release_type == 'beta' }}
-
+        run: npx semantic-release
+          
   deploy:
+    name: Deploy
     needs: release
+    if: needs.release.outputs.new_release_published == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     env:
-      RELEASE_TYPE: ${{ inputs.release_type }}
+      VERSION: ${{ needs.release.outputs.new_release_version }}
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-java@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          distribution: "temurin"
-          java-version: "17"
-
-      - uses: ruby/setup-ruby@v1
+          ref: master
+        
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.0'
           bundler-cache: true
-
-      - uses: subosito/flutter-action@v2
+          
+      - name: Setup credentials
+        run: |
+          echo "${{ secrets.FASTLANE_SUPPLY_JSON_KEY }}" | base64 --decode > android/supply_json_key.json
+          echo "${{ secrets.RELEASE_KEYSTORE_PROPERTIES }}" | base64 --decode > android/key.release.properties
+          echo "${{ secrets.RELEASE_KEYSTORE }}" | base64 --decode > android/app/cv_release.jks
+          
+      - name: Flutter build
+        run: |
+          flutter clean
+          flutter pub get
+          flutter packages pub run build_runner build --delete-conflicting-outputs
+          flutter build appbundle \
+            --release \
+            --dart-define=FB_APP_ID=${{ secrets.FB_APP_ID }} \
+            --dart-define=FB_APP_NAME=${{ secrets.FB_APP_NAME }} \
+            --dart-define=GITHUB_OAUTH_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }} \
+            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+            
+      - name: Deploy with Fastlane
+        uses: maierj/fastlane-action@v3.1.0
         with:
-          channel: "stable"
-
-      - run: flutter clean
-      - run: flutter pub get
-
-      - run: flutter packages pub run build_runner build --delete-conflicting-outputs
-
-      - run: dart format --set-exit-if-changed $(git ls-files '*.dart' ':!:*.mocks.dart')
-
-      - run: flutter analyze .
-
-      - run: echo "${FASTLANE_SUPPLY_JSON_KEY}" | base64 --decode > android/supply_json_key.json
-
-      - run: echo "${RELEASE_KEYSTORE_PROPERTIES}" | base64 --decode > android/key.release.properties
-
-      - run: echo "${RELEASE_KEYSTORE}" | base64 --decode > android/app/cv_release.jks
-
-      - run: flutter build appbundle --dart-define=FB_APP_ID=${FB_APP_ID} --dart-define=FB_APP_NAME=${FB_APP_NAME} --dart-define=GITHUB_OAUTH_CLIENT_ID=${GITHUB_OAUTH_CLIENT_ID} --dart-define=GITHUB_OAUTH_CLIENT_SECRET=${GITHUB_OAUTH_CLIENT_SECRET}
-
-      - uses: maierj/fastlane-action@v3.1.0
-        with:
-          lane: ${{ env.RELEASE_TYPE }}
+          lane: "production"
           subdirectory: android
+          
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release-v${{ env.VERSION }}
+          path: build/app/outputs/
