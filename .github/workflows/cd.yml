@@ -43,11 +43,10 @@ jobs:
             @semantic-release/git \
             semantic-release-pub \
             conventional-changelog-conventionalcommits
-          
-      - name: Create semantic-release config
+      
+      - name: Create semantic-release config file
         run: |
-          cat > .releaserc.json << EOF
-          {
+          echo '{
             "branches": ["master"],
             "plugins": [
               ["@semantic-release/commit-analyzer", {
@@ -99,8 +98,7 @@ jobs:
                 "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
               }]
             ]
-          }
-          EOF
+          }' > .releaserc.json
           
       - name: Run Semantic Release
         id: semantic
