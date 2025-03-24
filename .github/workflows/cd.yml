@@ -147,8 +147,15 @@ jobs:
           flutter clean
           flutter pub get
           flutter packages pub run build_runner build --delete-conflicting-outputs
-          flutter build appbundle \
-            --release \
+          
+          # Build both APK and App Bundle
+          flutter build apk --release \
+            --dart-define=FB_APP_ID=${{ secrets.FB_APP_ID }} \
+            --dart-define=FB_APP_NAME=${{ secrets.FB_APP_NAME }} \
+            --dart-define=GITHUB_OAUTH_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }} \
+            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+          
+          flutter build appbundle --release \
             --dart-define=FB_APP_ID=${{ secrets.FB_APP_ID }} \
             --dart-define=FB_APP_NAME=${{ secrets.FB_APP_NAME }} \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }} \
@@ -159,6 +166,14 @@ jobs:
         with:
           lane: "production"
           subdirectory: android
+      
+      - name: Upload APK to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ env.VERSION }}
+          files: |
+            build/app/outputs/flutter-apk/app-release.apk
+          token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Archive build artifacts
         uses: actions/upload-artifact@v3
