@@ -474,12 +474,11 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   List<Widget> _buildPageContent(IbPageData? pageData) {
-    
     if (pageData == null) {
       return [
         Column(
           children: [
-            SizedBox(height: 120), 
+            SizedBox(height: 120),
             Center(
               child: SizedBox(
                 width: 40,
