@@ -476,12 +476,17 @@ class _IbPageViewState extends State<IbPageView> {
   List<Widget> _buildPageContent(IbPageData? pageData) {
     if (pageData == null) {
       return [
-        Text(
-          'Loading ...',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: IbTheme.primaryHeadingColor(context),
-            fontWeight: FontWeight.w600,
-          ),
+        Column(
+          children: [
+            SizedBox(height: 120),
+            Center(
+              child: SizedBox(
+                width: 40,
+                height: 40,
+                child: CircularProgressIndicator(strokeWidth: 3),
+              ),
+            ),
+          ],
         ),
       ];
     }
