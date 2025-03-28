@@ -272,7 +272,14 @@ class _IbLandingViewState extends State<IbLandingView> {
                 ),
               ),
               if (!_model.isSuccess(_model.IB_FETCH_CHAPTERS))
-                const InkWell(child: CVDrawerTile(title: 'Loading...'))
+                const ListTile(
+                  leading: SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  title: Text('Loading Chapters...'),
+                )
               else
                 _buildChapters(_model.chapters),
             ],
