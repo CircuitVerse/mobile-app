@@ -58,7 +58,7 @@ dependencies:
   theme_provider: ^0.6.0
   timeago: ^3.1.0
   transparent_image: ^2.0.0
-  url_launcher: ^6.0.18
+  url_launcher: ^6.3.0
   flutter_facebook_auth: ^6.0.4
 
   http: any
