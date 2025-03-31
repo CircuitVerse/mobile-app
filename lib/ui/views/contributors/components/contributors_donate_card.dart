@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
-
 class ContributeDonateCard extends StatelessWidget {
   const ContributeDonateCard({
     super.key,
@@ -21,7 +20,7 @@ class ContributeDonateCard extends StatelessWidget {
         const SizedBox(height: 10),
         GestureDetector(
           onTap: () async {
-            launchURL(url);
+            launchURL(context,url);
           },
           child: Container(
             decoration: BoxDecoration(
