@@ -3,14 +3,11 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
-void launchURL(BuildContext context,String url) async {
+void launchURL(BuildContext context, String url) async {
   if (url.startsWith('mailto:')) {
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
-      await launchUrl(
-        uri,
-        mode: LaunchMode.externalApplication,
-      );
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
       final email = url.replaceFirst('mailto:', '');
       Clipboard.setData(ClipboardData(text: email));
@@ -29,6 +26,6 @@ void launchURL(BuildContext context,String url) async {
   } else {
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
-    } 
+    }
   }
 }
