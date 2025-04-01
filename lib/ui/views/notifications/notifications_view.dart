@@ -11,6 +11,60 @@ import 'package:provider/provider.dart';
 class NotificationsView extends StatelessWidget {
   const NotificationsView({super.key});
 
+  Widget _emptyState(BuildContext context, {required bool hasNoNotifications}) {
+    return Padding(
+      padding: const EdgeInsets.all(32.0),
+      child: Column(
+        children: <Widget>[
+          const SizedBox(height: 100),
+          _buildSubHeader(
+            context,
+            title:
+                hasNoNotifications
+                    ? "No notifications yet"
+                    : "No unread notifications",
+            subtitle:
+                hasNoNotifications
+                    ? "Your notifications will appear here"
+                    : "You have no unread notifications",
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSubHeader(
+    BuildContext context, {
+    required String title,
+    String? subtitle,
+  }) {
+    return Column(
+      children: [
+        Icon(Icons.notifications_none, size: 64, color: Colors.grey[400]),
+        const SizedBox(height: 24),
+        Text(
+          title,
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        if (subtitle != null) ...[
+          const SizedBox(height: 16),
+          Text(
+            subtitle,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Colors.grey[600],
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<NotificationsViewModel>(
@@ -19,6 +73,11 @@ class NotificationsView extends StatelessWidget {
         Future.delayed(const Duration(seconds: 1), () {
           context.read<CVLandingViewModel>().hasPendingNotif = model.hasUnread;
         });
+
+        final hasNoNotifications = model.notifications.isEmpty;
+        final hasNoUnread =
+            model.value == 'Unread' &&
+            model.notifications.every((n) => !n.attributes.unread);
 
         return Scaffold(
           body: SingleChildScrollView(
@@ -55,6 +114,9 @@ class NotificationsView extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (hasNoNotifications || hasNoUnread)
+                  _emptyState(context, hasNoNotifications: hasNoNotifications),
+
                 ...model.notifications.map((notification) {
                   if (model.value == 'Unread' &&
                       !notification.attributes.unread) {
@@ -114,7 +176,7 @@ class NotificationsView extends StatelessWidget {
                       ),
                     ),
                   );
-                }),
+                }).toList(),
               ],
             ),
           ),
