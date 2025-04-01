@@ -176,7 +176,7 @@ class NotificationsView extends StatelessWidget {
                       ),
                     ),
                   );
-                }).toList(),
+                }),
               ],
             ),
           ),
