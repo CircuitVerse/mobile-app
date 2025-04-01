@@ -7,25 +7,7 @@
          FlutterApplication and put your custom class here. -->
 
     <!-- Queries section needed for Android 11+ to handle mailto and other URLs -->
-    <queries>
-        <!-- For mailto: links -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="mailto" />
-        </intent>
-        
-        <!-- For https: links -->
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="https" />
-        </intent>
-        
-        <!-- For tel: links -->
-        <intent>
-            <action android:name="android.intent.action.DIAL" />
-            <data android:scheme="tel" />
-        </intent>
-    </queries>
+
 
     <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -38,13 +20,17 @@
                 <data android:scheme="mailto" />
             </intent>
             <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="tel" />
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="sms" />
-        </intent>
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="tel" />
+            </intent>
+            <intent>
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="sms" />
+            </intent>
+            <intent>
+                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="https" />
+            </intent>
         </queries>
     <application
         android:name="${applicationName}"
