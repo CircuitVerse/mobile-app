@@ -76,6 +76,7 @@ class NotificationsView extends StatelessWidget {
 
         final hasNoNotifications = model.notifications.isEmpty;
         final hasNoUnread =
+            !hasNoNotifications &&
             model.value == 'Unread' &&
             model.notifications.every((n) => !n.attributes.unread);
 
