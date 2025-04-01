@@ -42,9 +42,7 @@ class CircuitVerseSocialCard extends StatelessWidget {
                       right: -4,
                       child: IconButton(
                         onPressed: () {
-                          // Handle copy action here
                           Clipboard.setData(ClipboardData(text: url));
-                            // Show a snackbar indicating success
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: const Text('Copied to clipboard!'),
