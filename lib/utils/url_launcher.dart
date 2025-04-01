@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
-void launchURL(BuildContext context, String url) async {
+Future<void> launchURL(BuildContext context, String url) async {
   if (url.startsWith('mailto:')) {
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
