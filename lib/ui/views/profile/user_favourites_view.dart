@@ -25,6 +25,47 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
 
   Future<void> onProjectCardPressed(Project project) async {}
 
+  Widget _emptyState() {
+    return Padding(
+      padding: const EdgeInsets.all(32.0),
+      child: Column(
+        children: <Widget>[
+          const SizedBox(height: 100),
+          _buildSubHeader(
+            title: "No favorites yet!",
+            subtitle: "Explore projects and add them to your favorites list",
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSubHeader({required String title, String? subtitle}) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        if (subtitle != null) ...[
+          const SizedBox(height: 16),
+          Text(
+            subtitle,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Colors.grey[600],
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -41,24 +82,28 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
         final _items = <Widget>[];
 
         if (model.isSuccess(model.FETCH_USER_FAVOURITES)) {
-          for (var project in model.userFavourites) {
-            _items.add(
-              ProjectCard(
-                project: project,
-                isHeaderFilled: false,
-                onPressed: () async {
-                  var _result = await Get.toNamed(
-                    ProjectDetailsView.id,
-                    arguments: project,
-                  );
-                  if (_result is bool) model.onProjectDeleted(project.id);
-                  if (_result is Project) {
-                    model.onProjectChanged(_result);
-                    context.read<ProfileViewModel>().updatedProject = _result;
-                  }
-                },
-              ),
-            );
+          if (model.userFavourites.isEmpty) {
+            _items.add(_emptyState());
+          } else {
+            for (var project in model.userFavourites) {
+              _items.add(
+                ProjectCard(
+                  project: project,
+                  isHeaderFilled: false,
+                  onPressed: () async {
+                    var _result = await Get.toNamed(
+                      ProjectDetailsView.id,
+                      arguments: project,
+                    );
+                    if (_result is bool) model.onProjectDeleted(project.id);
+                    if (_result is Project) {
+                      model.onProjectChanged(_result);
+                      context.read<ProfileViewModel>().updatedProject = _result;
+                    }
+                  },
+                ),
+              );
+            }
           }
         }
 

@@ -23,6 +23,48 @@ class _UserProjectsViewState extends State<UserProjectsView>
   @override
   bool get wantKeepAlive => true;
 
+  Widget _emptyState() {
+    return Padding(
+      padding: const EdgeInsets.all(32.0),
+      child: Column(
+        children: <Widget>[
+          const SizedBox(height: 100),
+          _buildSubHeader(
+            title: "No Projects Yet!",
+            subtitle:
+                "Start fresh with a new design or fork existing templates",
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSubHeader({required String title, String? subtitle}) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        if (subtitle != null) ...[
+          const SizedBox(height: 16),
+          Text(
+            subtitle,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Colors.grey[600],
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -39,24 +81,28 @@ class _UserProjectsViewState extends State<UserProjectsView>
         final _items = <Widget>[];
 
         if (model.isSuccess(model.FETCH_USER_PROJECTS)) {
-          for (var project in model.userProjects) {
-            _items.add(
-              ProjectCard(
-                project: project,
-                isHeaderFilled: false,
-                onPressed: () async {
-                  var _result = await Get.toNamed(
-                    ProjectDetailsView.id,
-                    arguments: project,
-                  );
-                  if (_result is bool) model.onProjectDeleted(project.id);
-                  if (_result is Project) {
-                    model.onProjectChanged(_result);
-                    context.read<ProfileViewModel>().updatedProject = _result;
-                  }
-                },
-              ),
-            );
+          if (model.userProjects.isEmpty) {
+            _items.add(_emptyState());
+          } else {
+            for (var project in model.userProjects) {
+              _items.add(
+                ProjectCard(
+                  project: project,
+                  isHeaderFilled: false,
+                  onPressed: () async {
+                    var _result = await Get.toNamed(
+                      ProjectDetailsView.id,
+                      arguments: project,
+                    );
+                    if (_result is bool) model.onProjectDeleted(project.id);
+                    if (_result is Project) {
+                      model.onProjectChanged(_result);
+                      context.read<ProfileViewModel>().updatedProject = _result;
+                    }
+                  },
+                ),
+              );
+            }
           }
         }
 
