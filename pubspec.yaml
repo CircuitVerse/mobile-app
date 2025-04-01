@@ -23,6 +23,7 @@ dependencies:
   datetime_picker_formfield: ^2.0.0
   flutter:
     sdk: flutter
+  
   flutter_inappwebview: ^6.1.5
   # flutter_facebook_auth: ^5.0.6
   flutter_html: ^3.0.0-alpha.6
