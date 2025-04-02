@@ -45,7 +45,7 @@ Future<void> launchURL(BuildContext context, String url) async {
           action: SnackBarAction(
             label: "Retry",
             textColor: Colors.white,
-            onPressed: () async{
+            onPressed: () async {
               await launchURL(context, url);
             },
           ),
