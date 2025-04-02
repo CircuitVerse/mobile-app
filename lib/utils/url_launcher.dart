@@ -3,7 +3,12 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
-Future<void> launchURL(BuildContext context, String url) async {
+Future<void> launchURL(
+  BuildContext context,
+  String url, {
+  int retryCount = 0,
+}) async {
+  const int maxRetryAttempts = 2;
   if (url.startsWith('mailto:')) {
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
@@ -25,7 +30,7 @@ Future<void> launchURL(BuildContext context, String url) async {
   } else {
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
-    } else {
+    } else if (retryCount < maxRetryAttempts) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -46,9 +51,25 @@ Future<void> launchURL(BuildContext context, String url) async {
             label: "Retry",
             textColor: Colors.white,
             onPressed: () async {
-              await launchURL(context, url);
+              await launchURL(context, url, retryCount: retryCount + 1);
             },
           ),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Failed to open the URL after several attempts.",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Colors.redAccent,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          duration: Duration(seconds: 2),
+          margin: EdgeInsets.all(16),
         ),
       );
     }
