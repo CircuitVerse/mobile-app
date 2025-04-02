@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:flutter/services.dart';
+
 class CircuitVerseSocialCard extends StatelessWidget {
   const CircuitVerseSocialCard({
     required this.imagePath,
@@ -24,9 +25,10 @@ class CircuitVerseSocialCard extends StatelessWidget {
         launchURL(url);
       },
       child: Card(
-        color: Theme.of(context).brightness == Brightness.dark
-            ? CVTheme.primaryColor
-            : CVTheme.primaryColorShadow,
+        color:
+            Theme.of(context).brightness == Brightness.dark
+                ? CVTheme.primaryColor
+                : CVTheme.primaryColorShadow,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: Row(
@@ -43,15 +45,15 @@ class CircuitVerseSocialCard extends StatelessWidget {
                       child: IconButton(
                         onPressed: () {
                           Clipboard.setData(ClipboardData(text: url));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: const Text('Copied to clipboard!'),
-                                duration: const Duration(seconds: 2),
-                                behavior: SnackBarBehavior.floating,
-                              ),
-                            );
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Text('Copied to clipboard!'),
+                              duration: const Duration(seconds: 2),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
                         },
-                        icon: Icon(Icons.copy), 
+                        icon: Icon(Icons.copy),
                         tooltip: 'Copy',
                       ),
                     ),
@@ -62,10 +64,12 @@ class CircuitVerseSocialCard extends StatelessWidget {
                           title,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: CVTheme.textColor(context),
-                              ),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: CVTheme.textColor(context),
+                          ),
                         ),
                         Text(
                           description,
