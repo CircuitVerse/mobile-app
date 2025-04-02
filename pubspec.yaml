@@ -30,7 +30,7 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
   flutter_localizations:
     sdk: flutter
-  flutter_markdown: ^0.7.6+2
+  flutter_markdown: ^0.7.7
   flutter_math_fork: ^0.7.3
   flutter_svg: ^2.0.17
   flutter_typeahead: ^5.2.0
