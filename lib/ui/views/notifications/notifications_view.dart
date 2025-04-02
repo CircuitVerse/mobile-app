@@ -11,6 +11,60 @@ import 'package:provider/provider.dart';
 class NotificationsView extends StatelessWidget {
   const NotificationsView({super.key});
 
+  Widget _emptyState(BuildContext context, {required bool hasNoNotifications}) {
+    return Padding(
+      padding: const EdgeInsets.all(32.0),
+      child: Column(
+        children: <Widget>[
+          const SizedBox(height: 100),
+          _buildSubHeader(
+            context,
+            title:
+                hasNoNotifications
+                    ? "No notifications yet"
+                    : "No unread notifications",
+            subtitle:
+                hasNoNotifications
+                    ? "Your notifications will appear here"
+                    : "You have no unread notifications",
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSubHeader(
+    BuildContext context, {
+    required String title,
+    String? subtitle,
+  }) {
+    return Column(
+      children: [
+        Icon(Icons.notifications_none, size: 64, color: Colors.grey[400]),
+        const SizedBox(height: 24),
+        Text(
+          title,
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        if (subtitle != null) ...[
+          const SizedBox(height: 16),
+          Text(
+            subtitle,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Colors.grey[600],
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<NotificationsViewModel>(
@@ -20,10 +74,11 @@ class NotificationsView extends StatelessWidget {
           context.read<CVLandingViewModel>().hasPendingNotif = model.hasUnread;
         });
 
-        final filteredNotifications =
-            model.notifications.where((notification) {
-              return model.value != 'Unread' || notification.attributes.unread;
-            }).toList();
+        final hasNoNotifications = model.notifications.isEmpty;
+        final hasNoUnread =
+            !hasNoNotifications &&
+            model.value == 'Unread' &&
+            model.notifications.every((n) => !n.attributes.unread);
 
         return Scaffold(
           body: SingleChildScrollView(
@@ -36,7 +91,7 @@ class NotificationsView extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.topRight,
                       child: SizedBox(
-                        width: 130, // Fixed width to prevent overflow
+                        width: 130,
                         child: DropdownButtonFormField<String>(
                           isDense: true,
                           decoration: const InputDecoration(
@@ -63,78 +118,76 @@ class NotificationsView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (filteredNotifications.isEmpty)
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.4,
-                      child: Center(
-                        child: Text(
-                          'No notifications found',
-                          style: Theme.of(context).textTheme.titleMedium
-                              ?.copyWith(color: Colors.grey.shade600),
-                        ),
-                      ),
-                    )
-                  else
-                    ...filteredNotifications.map((notification) {
-                      NotificationType type =
-                          notification.attributes.type.toLowerCase().contains(
-                                'star',
-                              )
-                              ? NotificationType.Star
-                              : NotificationType.Fork;
+                  if (hasNoNotifications || hasNoUnread)
+                    _emptyState(
+                      context,
+                      hasNoNotifications: hasNoNotifications,
+                    ),
 
-                      return Card(
-                        margin: const EdgeInsets.symmetric(vertical: 6),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(12),
-                          onTap: () => model.markAsRead(notification.id),
-                          leading: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.grey.withAlpha(50),
+                  ...model.notifications
+                      .where(
+                        (notification) =>
+                            model.value != 'Unread' ||
+                            notification.attributes.unread,
+                      )
+                      .map((notification) {
+                        NotificationType type =
+                            notification.attributes.type.toLowerCase().contains(
+                                  'star',
+                                )
+                                ? NotificationType.Star
+                                : NotificationType.Fork;
+
+                        return Card(
+                          margin: const EdgeInsets.symmetric(vertical: 6),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.all(12),
+                            onTap: () => model.markAsRead(notification.id),
+                            leading: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.grey.withAlpha(50),
+                              ),
+                              child: Icon(
+                                type == NotificationType.Star
+                                    ? FontAwesome.star
+                                    : FontAwesome.fork,
+                                color: CVTheme.primaryColor,
+                                size: 20,
+                              ),
                             ),
-                            child: Icon(
-                              type == NotificationType.Star
-                                  ? FontAwesome.star
-                                  : FontAwesome.fork,
-                              color: CVTheme.primaryColor,
-                              size: 20, // Fixed icon size
+                            title: Text(
+                              '${notification.attributes.params.user.data.attributes.name} '
+                              '${type == NotificationType.Fork ? 'forked' : 'starred'} your project '
+                              '${notification.attributes.params.project.name}',
+                              style: TextStyle(
+                                fontWeight:
+                                    notification.attributes.unread
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                            subtitle: Text(
+                              DateFormat.yMMMMd().add_jm().format(
+                                notification.attributes.updatedAt,
+                              ),
+                              style: TextStyle(
+                                fontWeight:
+                                    notification.attributes.unread
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          title: Text(
-                            '${notification.attributes.params.user.data.attributes.name} '
-                            '${type == NotificationType.Fork ? 'forked' : 'starred'} your project '
-                            '${notification.attributes.params.project.name}',
-                            style: TextStyle(
-                              fontWeight:
-                                  notification.attributes.unread
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                            ),
-                            overflow:
-                                TextOverflow.ellipsis, // Prevents overflow
-                            maxLines: 2, // Limits to 2 lines
-                          ),
-                          subtitle: Text(
-                            DateFormat.yMMMMd().add_jm().format(
-                              notification.attributes.updatedAt,
-                            ),
-                            style: TextStyle(
-                              fontWeight:
-                                  notification.attributes.unread
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                            ),
-                            overflow:
-                                TextOverflow.ellipsis, // Prevents overflow
-                          ),
-                        ),
-                      );
-                    }),
+                        );
+                      }),
                 ],
               ),
             ),
