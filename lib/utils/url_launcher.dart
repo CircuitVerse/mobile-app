@@ -39,6 +39,32 @@ Future<void> launchURL(
         mode: LaunchMode.externalApplication,
       );
     }
+  } else if (url.startsWith('sms:')) {
+    final Uri smsUri = Uri.parse(url);
+    if (await canLaunchUrl(smsUri)) {
+      await launchUrl(smsUri, mode: LaunchMode.externalApplication);
+    } else {
+      final phone = url.replaceFirst('sms:', '');
+      Clipboard.setData(ClipboardData(text: phone));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Error, Phone no copied to clipboard: $phone",
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.grey[800],
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          duration: const Duration(seconds: 1),
+          margin: const EdgeInsets.all(16),
+        ),
+      );
+    }
   } else {
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
