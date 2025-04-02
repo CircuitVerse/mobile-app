@@ -18,8 +18,20 @@ Future<void> launchURL(
       Clipboard.setData(ClipboardData(text: email));
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Email copied to clipboard: $email"),
-          duration: Duration(seconds: 1),
+          content: Text(
+            "Email copied to clipboard: $email",
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.grey[800],
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          duration: const Duration(seconds: 1),
+          margin: const EdgeInsets.all(16),
         ),
       );
       await launchUrlString(
