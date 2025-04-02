@@ -19,7 +19,7 @@ Future<void> launchURL(
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text("Email copied to clipboard: $email"),
-          duration: Duration(seconds: 1),
+          // duration: Duration(seconds: 1),
         ),
       );
       await launchUrlString(
@@ -31,10 +31,11 @@ Future<void> launchURL(
     if (await canLaunchUrlString(url)) {
       await launchUrlString(url);
     } else if (retryCount < maxRetryAttempts) {
+      Clipboard.setData(ClipboardData(text: url));
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            "Failed to open the URL: $url",
+            "Couldn't open $url. Copied to clipboard.",
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
