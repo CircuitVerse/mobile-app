@@ -17,10 +17,7 @@ Future<void> launchURL(
       final email = url.replaceFirst('mailto:', '');
       Clipboard.setData(ClipboardData(text: email));
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Email copied to clipboard: $email"),
-          // duration: Duration(seconds: 1),
-        ),
+        SnackBar(content: Text("Email copied to clipboard: $email")),
       );
       await launchUrlString(
         'https://mail.google.com/mail/u/0/?fs=1&to=$email&tf=cm',
