@@ -19,6 +19,7 @@ import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProjectDetailsView extends StatefulWidget {
   const ProjectDetailsView({super.key, required this.project});
@@ -35,14 +36,26 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   late ProjectDetailsViewModel _model;
   final _formKey = GlobalKey<FormState>();
   late String _emails;
-  late Project _recievedProject;
+  late Project _receivedProject;
   final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
       GlobalKey<CVFlatButtonState>();
 
   @override
   void initState() {
     super.initState();
-    _recievedProject = widget.project;
+    _receivedProject = widget.project;
+  }
+
+  Future<void> _launchProjectUrl() async {
+    final url =
+        'https://circuitverse.org/users/${_receivedProject.relationships.author.data.id}/projects/${_receivedProject.id}';
+    final Uri uri = Uri.parse(url);
+
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Could not launch URL')));
+    }
   }
 
   void onShareButtonPressed() {
@@ -62,6 +75,17 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         onPressed: onShareButtonPressed,
         icon: const Icon(Icons.share),
         tooltip: 'Share',
+      ),
+    );
+  }
+
+  Widget _buildBrowserActionButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: IconButton(
+        onPressed: _launchProjectUrl,
+        icon: const Icon(Icons.public),
+        tooltip: 'Open in Browser',
       ),
     );
   }
@@ -89,7 +113,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                       0,
                       EnvironmentConfig.CV_API_BASE_URL.length - 7,
                     ) +
-                    _recievedProject.attributes.imagePreview.url,
+                    _receivedProject.attributes.imagePreview.url,
               ),
             ),
             Material(
@@ -98,7 +122,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 onPressed: () {
                   Get.toNamed(
                     ProjectPreviewFullScreen.id,
-                    arguments: _recievedProject,
+                    arguments: _receivedProject,
                   );
                 },
                 icon: const Icon(Icons.fullscreen, color: Colors.white),
@@ -123,7 +147,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return Row(
       children: <Widget>[
         const Icon(Icons.visibility, size: 18),
-        Text(' ${_recievedProject.attributes.view} Views'),
+        Text(' ${_receivedProject.attributes.view} Views'),
       ],
     );
   }
@@ -148,7 +172,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Widget _buildProjectNameHeader() {
     return Column(
       children: <Widget>[
-        _buildProjectHeader(_recievedProject.attributes.name),
+        _buildProjectHeader(_receivedProject.attributes.name),
         const SizedBox(height: 4),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -198,9 +222,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                         () => Get.toNamed(
                           ProfileView.id,
                           arguments:
-                              _recievedProject.relationships.author.data.id,
+                              _receivedProject.relationships.author.data.id,
                         ),
-              text: _recievedProject.attributes.authorName,
+              text: _receivedProject.attributes.authorName,
               style: const TextStyle(
                 fontSize: 18,
                 decoration: TextDecoration.underline,
@@ -214,7 +238,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   }
 
   Widget _buildProjectDescription() {
-    return (_recievedProject.attributes.description ?? '') != ''
+    return (_receivedProject.attributes.description ?? '') != ''
         ? Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0),
           child: Column(
@@ -228,7 +252,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 ),
               ),
               Html(
-                data: _recievedProject.attributes.description ?? '',
+                data: _receivedProject.attributes.description ?? '',
                 style: {'body': Style(fontSize: FontSize(18))},
               ),
             ],
@@ -247,7 +271,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Forking');
 
-      await _model.forkProject(_recievedProject.id);
+      await _model.forkProject(_receivedProject.id);
 
       _dialogService.popDialog();
 
@@ -293,7 +317,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Future<void> onStarProjectPressed() async {
     if (_model.isBusy(_model.TOGGLE_STAR)) return;
-    await _model.toggleStarForProject(_recievedProject.id);
+    await _model.toggleStarForProject(_receivedProject.id);
 
     if (_model.isSuccess(_model.TOGGLE_STAR)) {
       SnackBarUtils.showDark(
@@ -342,7 +366,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
       _dialogService.showCustomProgressDialog(title: 'Adding');
 
-      await _model.addCollaborators(_recievedProject.id, _emails);
+      await _model.addCollaborators(_receivedProject.id, _emails);
 
       _dialogService.popDialog();
 
@@ -431,11 +455,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Future<void> onEditProjectPressed() async {
     var _updatedProject = await Get.toNamed(
       EditProjectView.id,
-      arguments: _recievedProject,
+      arguments: _receivedProject,
     );
     if (_updatedProject is Project) {
       setState(() {
-        _recievedProject = _updatedProject;
+        _receivedProject = _updatedProject;
       });
     }
   }
@@ -471,7 +495,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(title: 'Deleting Project');
 
-      await _model.deleteProject(_recievedProject.id);
+      await _model.deleteProject(_receivedProject.id);
 
       _dialogService.popDialog();
 
@@ -576,13 +600,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return BaseView<ProjectDetailsViewModel>(
       onModelReady: (model) {
         _model = model;
-        _model.receivedProject = _recievedProject;
-        // initialize collaborators & isStarred for the project..
-        _model.collaborators = _recievedProject.collaborators;
-        _model.isProjectStarred = _recievedProject.attributes.isStarred;
-        _model.starCount = _recievedProject.attributes.starsCount;
+        _model.receivedProject = _receivedProject;
+        _model.collaborators = _receivedProject.collaborators;
+        _model.isProjectStarred = _receivedProject.attributes.isStarred;
+        _model.starCount = _receivedProject.attributes.starsCount;
 
-        _model.fetchProjectDetails(_recievedProject.id);
+        _model.fetchProjectDetails(_receivedProject.id);
       },
       builder:
           (context, model, child) => PopScope(
@@ -591,28 +614,37 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               if (didPop) return;
               final bool isChanged =
                   model.receivedProject!.attributes.isStarred ^
-                  _recievedProject.attributes.isStarred;
+                  _receivedProject.attributes.isStarred;
               Get.back(result: isChanged ? model.receivedProject : null);
             },
             child: Scaffold(
               appBar: AppBar(
-                title: const Text('Project Details'),
-                actions: [_buildShareActionButton()],
+                title: SizedBox(
+                  width:
+                      MediaQuery.of(context).size.width *
+                      0.7, 
+                  child: const Text(
+                    'Project Details',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 20, 
+                    ),
+                  ),
+                ),
+                actions: [
+                  _buildBrowserActionButton(),
+                  _buildShareActionButton(),
+                ],
               ),
               body: Builder(
                 builder: (context) {
-                  var _projectAttrs = _recievedProject.attributes;
+                  var _projectAttrs = _receivedProject.attributes;
                   var _items = <Widget>[];
 
-                  // Adds project preview..
                   _items.add(_buildProjectPreview());
-
                   _items.add(const SizedBox(height: 16));
-
-                  // Adds Project Name, Star & View count..
                   _items.add(_buildProjectNameHeader());
 
-                  // Adds Project attributes..
                   _items.add(
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -633,16 +665,16 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                             spacing: 8,
                             crossAxisAlignment: WrapCrossAlignment.center,
                             children: <Widget>[
-                              if (!_recievedProject.hasAuthorAccess &&
+                              if (!_receivedProject.hasAuthorAccess &&
                                   model.isLoggedIn)
                                 _buildForkProjectButton(),
                               if (model.isLoggedIn) _buildStarProjectButton(),
-                              if (_recievedProject.hasAuthorAccess)
+                              if (_receivedProject.hasAuthorAccess)
                                 _buildAddCollaboratorsButton(),
                             ],
                           ),
                           const Divider(height: 32),
-                          if (_recievedProject.hasAuthorAccess)
+                          if (_receivedProject.hasAuthorAccess)
                             Wrap(
                               spacing: 8,
                               children: <Widget>[
@@ -658,7 +690,6 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   if (_model.isSuccess(_model.FETCH_PROJECT_DETAILS) &&
                       _model.collaborators.isNotEmpty) {
                     _items.add(const Divider());
-
                     _items.add(_buildProjectHeader('Collaborators'));
 
                     for (var collaborator in _model.collaborators) {
