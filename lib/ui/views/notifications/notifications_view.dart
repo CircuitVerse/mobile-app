@@ -82,103 +82,112 @@ class NotificationsView extends StatelessWidget {
 
         return Scaffold(
           body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: SizedBox(
-                      width: 110,
-                      child: DropdownButtonFormField<String>(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: SizedBox(
+                        width: 130,
+                        child: DropdownButtonFormField<String>(
+                          isDense: true,
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
                           ),
+                          value: model.value,
+                          items: const [
+                            DropdownMenuItem(value: 'All', child: Text('All')),
+                            DropdownMenuItem(
+                              value: 'Unread',
+                              child: Text('Unread'),
+                            ),
+                          ],
+                          onChanged: (value) {
+                            if (value == null) return;
+                            model.value = value;
+                          },
                         ),
-                        value: model.value,
-                        items: const [
-                          DropdownMenuItem(value: 'All', child: Text('All')),
-                          DropdownMenuItem(
-                            value: 'Unread',
-                            child: Text('Unread'),
-                          ),
-                        ],
-                        onChanged: (value) {
-                          if (value == null) {
-                            return;
-                          }
-
-                          model.value = value;
-                        },
                       ),
                     ),
                   ),
-                ),
-                if (hasNoNotifications || hasNoUnread)
-                  _emptyState(context, hasNoNotifications: hasNoNotifications),
-
-                ...model.notifications.map((notification) {
-                  if (model.value == 'Unread' &&
-                      !notification.attributes.unread) {
-                    return const SizedBox();
-                  }
-
-                  NotificationType type =
-                      notification.attributes.type.toLowerCase().contains(
-                            'star',
-                          )
-                          ? NotificationType.Star
-                          : NotificationType.Fork;
-
-                  return Card(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                  if (hasNoNotifications || hasNoUnread)
+                    _emptyState(
+                      context,
+                      hasNoNotifications: hasNoNotifications,
                     ),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.all(8.0),
-                      onTap: () {
-                        model.markAsRead(notification.id);
-                      },
-                      leading: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey.withValues(alpha: 0.5),
+                  ...model.notifications.map((notification) {
+                    if (model.value == 'Unread' &&
+                        !notification.attributes.unread) {
+                      return const SizedBox();
+                    }
+
+                    NotificationType type =
+                        notification.attributes.type.toLowerCase().contains(
+                              'star',
+                            )
+                            ? NotificationType.Star
+                            : NotificationType.Fork;
+
+                    return Card(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.all(8.0),
+                        onTap: () {
+                          model.markAsRead(notification.id);
+                        },
+                        leading: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.grey.withAlpha(50),
+                          ),
+                          child: Icon(
+                            type == NotificationType.Star
+                                ? FontAwesome.star
+                                : FontAwesome.fork,
+                            color: CVTheme.primaryColor,
+                          ),
                         ),
-                        child: Icon(
-                          type == NotificationType.Star
-                              ? FontAwesome.star
-                              : FontAwesome.fork,
-                          color: CVTheme.primaryColor,
+                        title: Text(
+                          '${notification.attributes.params.user.data.attributes.name} '
+                          '${type == NotificationType.Fork ? 'forked' : 'starred'} your project '
+                          '${notification.attributes.params.project.name}',
+                          style: TextStyle(
+                            fontWeight:
+                                notification.attributes.unread
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
+                        subtitle: Text(
+                          DateFormat.yMMMMd().add_jm().format(
+                            notification.attributes.updatedAt,
+                          ),
+                          style: TextStyle(
+                            fontWeight:
+                                notification.attributes.unread
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      title: Text(
-                        '${notification.attributes.params.user.data.attributes.name} '
-                        'forked your project '
-                        '${notification.attributes.params.project.name}',
-                        style: TextStyle(
-                          fontWeight:
-                              notification.attributes.unread
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                        ),
-                      ),
-                      subtitle: Text(
-                        DateFormat.yMMMMd().add_jm().format(
-                          notification.attributes.updatedAt,
-                        ),
-                        style: TextStyle(
-                          fontWeight:
-                              notification.attributes.unread
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-              ],
+                    );
+                  }),
+                ],
+              ),
             ),
           ),
         );
