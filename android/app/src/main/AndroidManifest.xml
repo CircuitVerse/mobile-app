@@ -1,17 +1,44 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- io.flutter.app.FlutterApplication is an android.app.Application that
+
+     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
+
+    <!-- Queries section needed for Android 11+ to handle mailto and other URLs -->
+    <queries>
+        <!-- For mailto: links -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="mailto" />
+        </intent>
+        
+        <!-- For https: links -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+        
+        <!-- For tel: links -->
+        <intent>
+            <action android:name="android.intent.action.DIAL" />
+            <data android:scheme="tel" />
+        </intent>
+    </queries>
+
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name="${applicationName}"
         android:label="CircuitVerse"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/launcher_icon">
+        
+        <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -24,21 +51,24 @@
             <!-- until Flutter renders its first frame. -->
             <!-- Theme to apply as soon as Flutter begins rendering frames -->
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+
+        <!-- Flutter embedding meta-data -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        
+
         <!-- Facebook authentication configuration -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-        <activity android:name="com.facebook.FacebookActivity"
+        <activity
+            android:name="com.facebook.FacebookActivity"
             android:exported="true"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
@@ -52,6 +82,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:exported="true"
@@ -59,9 +90,9 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <!-- Github authentication configuration -->
-        <activity 
+        <activity
             android:name="com.linusu.flutter_web_auth.CallbackActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter android:label="flutter_web_auth">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -69,5 +100,6 @@
                 <data android:scheme="circuitverse" />
             </intent-filter>
         </activity>
+
     </application>
 </manifest>
