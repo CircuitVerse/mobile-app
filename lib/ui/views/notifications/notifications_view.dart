@@ -123,69 +123,71 @@ class NotificationsView extends StatelessWidget {
                       context,
                       hasNoNotifications: hasNoNotifications,
                     ),
-                  ...model.notifications.map((notification) {
-                    if (model.value == 'Unread' &&
-                        !notification.attributes.unread) {
-                      return const SizedBox();
-                    }
 
-                    NotificationType type =
-                        notification.attributes.type.toLowerCase().contains(
-                              'star',
-                            )
-                            ? NotificationType.Star
-                            : NotificationType.Fork;
+                  ...model.notifications
+                      .where(
+                        (notification) =>
+                            model.value != 'Unread' ||
+                            notification.attributes.unread,
+                      )
+                      .map((notification) {
+                        NotificationType type =
+                            notification.attributes.type.toLowerCase().contains(
+                                  'star',
+                                )
+                                ? NotificationType.Star
+                                : NotificationType.Fork;
 
-                    return Card(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.all(8.0),
-                        onTap: () {
-                          model.markAsRead(notification.id);
-                        },
-                        leading: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey.withAlpha(50),
+                        return Card(
+                          margin: const EdgeInsets.symmetric(vertical: 6),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Icon(
-                            type == NotificationType.Star
-                                ? FontAwesome.star
-                                : FontAwesome.fork,
-                            color: CVTheme.primaryColor,
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.all(12),
+                            onTap: () => model.markAsRead(notification.id),
+                            leading: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.grey.withAlpha(50),
+                              ),
+                              child: Icon(
+                                type == NotificationType.Star
+                                    ? FontAwesome.star
+                                    : FontAwesome.fork,
+                                color: CVTheme.primaryColor,
+                                size: 20,
+                              ),
+                            ),
+                            title: Text(
+                              '${notification.attributes.params.user.data.attributes.name} '
+                              '${type == NotificationType.Fork ? 'forked' : 'starred'} your project '
+                              '${notification.attributes.params.project.name}',
+                              style: TextStyle(
+                                fontWeight:
+                                    notification.attributes.unread
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
+                            subtitle: Text(
+                              DateFormat.yMMMMd().add_jm().format(
+                                notification.attributes.updatedAt,
+                              ),
+                              style: TextStyle(
+                                fontWeight:
+                                    notification.attributes.unread
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                        title: Text(
-                          '${notification.attributes.params.user.data.attributes.name} '
-                          '${type == NotificationType.Fork ? 'forked' : 'starred'} your project '
-                          '${notification.attributes.params.project.name}',
-                          style: TextStyle(
-                            fontWeight:
-                                notification.attributes.unread
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                        ),
-                        subtitle: Text(
-                          DateFormat.yMMMMd().add_jm().format(
-                            notification.attributes.updatedAt,
-                          ),
-                          style: TextStyle(
-                            fontWeight:
-                                notification.attributes.unread
-                                    ? FontWeight.bold
-                                    : FontWeight.normal,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    );
-                  }),
+                        );
+                      }),
                 ],
               ),
             ),
