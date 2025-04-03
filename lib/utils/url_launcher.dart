@@ -9,6 +9,32 @@ Future<void> launchURL(
   int retryCount = 0,
 }) async {
   const int maxRetryAttempts = 2;
+
+  void showCustomSnackBar({
+    required String message,
+    Color backgroundColor = Colors.grey,
+    Duration duration = const Duration(seconds: 2),
+    SnackBarAction? action,
+  }) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: backgroundColor,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        duration: duration,
+        margin: const EdgeInsets.all(16),
+        action: action,
+      ),
+    );
+  }
+
   if (url.startsWith('mailto:')) {
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
@@ -16,23 +42,10 @@ Future<void> launchURL(
     } else {
       final email = url.replaceFirst('mailto:', '');
       Clipboard.setData(ClipboardData(text: email));
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            "Email copied to clipboard: $email",
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: Colors.grey[800],
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          duration: const Duration(seconds: 1),
-          margin: const EdgeInsets.all(16),
-        ),
+      showCustomSnackBar(
+        message: "Email copied to clipboard: $email",
+        backgroundColor: Colors.grey.shade800,
+        duration: const Duration(seconds: 2),
       );
       await launchUrlString(
         'https://mail.google.com/mail/u/0/?fs=1&to=$email&tf=cm',
@@ -46,70 +59,34 @@ Future<void> launchURL(
     } else {
       final phone = url.replaceFirst('sms:', '');
       Clipboard.setData(ClipboardData(text: phone));
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            "Error, Phone no copied to clipboard: $phone",
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: Colors.grey[800],
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          duration: const Duration(seconds: 1),
-          margin: const EdgeInsets.all(16),
-        ),
+      showCustomSnackBar(
+        message: "Phone number copied to clipboard: $phone",
+        backgroundColor: Colors.grey.shade800,
+        duration: const Duration(seconds: 1),
       );
     }
   } else {
     if (await canLaunchUrlString(url)) {
-      await launchUrlString(url);
+      await launchUrlString(url, mode: LaunchMode.externalApplication);
     } else if (retryCount < maxRetryAttempts) {
       Clipboard.setData(ClipboardData(text: url));
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            "Couldn't open $url. Copied to clipboard.",
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: Colors.redAccent,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          duration: const Duration(seconds: 2),
-          margin: const EdgeInsets.all(16),
-          action: SnackBarAction(
-            label: "Retry",
-            textColor: Colors.white,
-            onPressed: () async {
-              await launchURL(context, url, retryCount: retryCount + 1);
-            },
-          ),
+      showCustomSnackBar(
+        message: "Couldn't open $url. Copied to clipboard.",
+        backgroundColor: Colors.redAccent,
+        duration: const Duration(seconds: 2),
+        action: SnackBarAction(
+          label: "Retry",
+          textColor: Colors.white,
+          onPressed: () async {
+            await launchURL(context, url, retryCount: retryCount + 1);
+          },
         ),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            "Failed to open the URL after several attempts.",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Colors.redAccent,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          duration: Duration(seconds: 2),
-          margin: EdgeInsets.all(16),
-        ),
+      showCustomSnackBar(
+        message: "Failed to open the URL after several attempts.",
+        backgroundColor: Colors.redAccent,
+        duration: const Duration(seconds: 2),
       );
     }
   }
