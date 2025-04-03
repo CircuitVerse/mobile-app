@@ -12,7 +12,7 @@ class ContributorAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => launchURL(context, contributor.htmlUrl),
+      onTap: () => launchURL(contributor.htmlUrl),
       child: Tooltip(
         message: contributor.login,
         child: Container(
