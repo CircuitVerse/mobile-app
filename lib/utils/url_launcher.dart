@@ -65,10 +65,12 @@ Future<void> launchURL(
         backgroundColor: Colors.grey.shade800,
         duration: const Duration(seconds: 2),
       );
-      await launchUrlString(
-        'https://mail.google.com/mail/u/0/?fs=1&to=$email&tf=cm',
-        mode: LaunchMode.externalApplication,
-      );
+      final emailurl = 'https://mail.google.com/mail/u/0/?fs=1&to=$email&tf=cm';
+      if (await canLaunchUrlString(emailurl)) {
+        await launchUrlString(emailurl, mode: LaunchMode.externalApplication);
+      } else {
+        showFallbackDialog(context, "Failed to open the email client");
+      }
     }
   } else if (url.startsWith('sms:')) {
     final Uri smsUri = Uri.parse(url);
