@@ -20,7 +20,7 @@ class CircuitVerseSocialCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        launchURL(url);
+        launchURL(context, url);
       },
       child: Card(
         color:
