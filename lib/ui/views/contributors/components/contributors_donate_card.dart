@@ -21,7 +21,7 @@ class ContributeDonateCard extends StatelessWidget {
         const SizedBox(height: 10),
         GestureDetector(
           onTap: () async {
-            launchURL(url);
+            launchURL(context, url);
           },
           child: Container(
             decoration: BoxDecoration(

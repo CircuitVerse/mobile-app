@@ -128,7 +128,7 @@ class _IbPageViewState extends State<IbPageView> {
       } else {
         // Try to navigate to another page using url
         // (TODO) We need [IbLandingViewModel] to be able to get Chapter using [httpUrl]
-        launchURL(href);
+        launchURL(context, href);
       }
     }
 
