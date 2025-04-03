@@ -62,7 +62,7 @@ Future<void> launchURL(
       showCustomSnackBar(
         message: "Phone number copied to clipboard: $phone",
         backgroundColor: Colors.grey.shade800,
-        duration: const Duration(seconds: 1),
+        duration: const Duration(seconds: 2),
       );
     }
   } else {
