@@ -35,6 +35,24 @@ Future<void> launchURL(
     );
   }
 
+  void showFallbackDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Notification"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   if (url.startsWith('mailto:')) {
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
@@ -70,24 +88,35 @@ Future<void> launchURL(
       await launchUrlString(url, mode: LaunchMode.externalApplication);
     } else if (retryCount < maxRetryAttempts) {
       Clipboard.setData(ClipboardData(text: url));
-      showCustomSnackBar(
-        message: "Couldn't open $url. Copied to clipboard.",
-        backgroundColor: Colors.redAccent,
-        duration: const Duration(seconds: 2),
-        action: SnackBarAction(
-          label: "Retry",
-          textColor: Colors.white,
-          onPressed: () async {
-            await launchURL(context, url, retryCount: retryCount + 1);
-          },
-        ),
-      );
+      if (ScaffoldMessenger.of(context).mounted) {
+        showCustomSnackBar(
+          message: "Couldn't open $url. Copied to clipboard.",
+          backgroundColor: Colors.redAccent,
+          duration: const Duration(seconds: 2),
+          action: SnackBarAction(
+            label: "Retry",
+            textColor: Colors.white,
+            onPressed: () async {
+              await launchURL(context, url, retryCount: retryCount + 1);
+            },
+          ),
+        );
+      } else {
+        showFallbackDialog(context, "Failed to open the URL");
+      }
     } else {
-      showCustomSnackBar(
-        message: "Failed to open the URL after several attempts.",
-        backgroundColor: Colors.redAccent,
-        duration: const Duration(seconds: 2),
-      );
+      if (ScaffoldMessenger.of(context).mounted) {
+        showCustomSnackBar(
+          message: "Failed to open the URL after several attempts.",
+          backgroundColor: Colors.redAccent,
+          duration: const Duration(seconds: 2),
+        );
+      } else {
+        showFallbackDialog(
+          context,
+          "Failed to open the URL after several attempts.",
+        );
+      }
     }
   }
 }
