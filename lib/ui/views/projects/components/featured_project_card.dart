@@ -21,6 +21,8 @@ class FeaturedProjectCard extends StatefulWidget {
 
 class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
   Widget _buildPreview() {
+    final hasImage = widget.project.attributes.imagePreview.url.isNotEmpty;
+
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: CVTheme.primaryColor),
@@ -36,24 +38,60 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         ),
         child: AspectRatio(
           aspectRatio: 1.6,
-          child: FadeInImage.memoryNetwork(
-            fit: BoxFit.cover,
-            placeholder: kTransparentImage,
-            image:
-                EnvironmentConfig.CV_API_BASE_URL.substring(
-                  0,
-                  EnvironmentConfig.CV_API_BASE_URL.length - 7,
-                ) +
-                widget.project.attributes.imagePreview.url,
-          ),
+          child:
+              hasImage
+                  ? FadeInImage.memoryNetwork(
+                    fit: BoxFit.cover,
+                    placeholder: kTransparentImage,
+                    image: _getImageUrl(),
+                    imageErrorBuilder:
+                        (context, error, stackTrace) =>
+                            _buildPlaceholderImage(),
+                  )
+                  : _buildPlaceholderImage(),
         ),
       ),
     );
   }
 
+  Widget _buildPlaceholderImage() {
+    return Container(
+      color: Color.lerp(CVTheme.primaryColorLight, Colors.white, 0.95),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.bolt,
+              size: 48,
+              color: Color.lerp(CVTheme.primaryColor, Colors.white, 0.7),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'CircuitVerse Project',
+              style: TextStyle(
+                color: Color.lerp(CVTheme.primaryColor, Colors.white, 0.4),
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  String _getImageUrl() {
+    return EnvironmentConfig.CV_API_BASE_URL.substring(
+          0,
+          EnvironmentConfig.CV_API_BASE_URL.length - 7,
+        ) +
+        widget.project.attributes.imagePreview.url;
+  }
+
   Widget _buildFooter() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: const BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.only(
@@ -63,24 +101,19 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         border: Border.fromBorderSide(BorderSide(color: CVTheme.primaryColor)),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
             child: Text(
               widget.project.attributes.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.start,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: CVTheme.textColor(context),
               ),
             ),
           ),
-          CVPrimaryButton(
-            title: 'View',
-            padding: const EdgeInsets.all(2),
-            onPressed: widget.onViewPressed,
-          ),
+          const SizedBox(width: 10),
+          CVPrimaryButton.small(title: 'View', onPressed: widget.onViewPressed),
         ],
       ),
     );
