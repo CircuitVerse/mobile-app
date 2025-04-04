@@ -39,6 +39,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
       GlobalKey<CVFlatButtonState>();
 
+  String _getProjectUrl() {
+    return 'https://circuitverse.org/users/${_recievedProject.relationships.author.data.id}/projects/${_recievedProject.id}';
+  }
+
   @override
   void initState() {
     super.initState();
@@ -47,10 +51,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   void onShareButtonPressed() {
     final RenderBox? box = context.findRenderObject() as RenderBox?;
-    var URL =
-        'https://circuitverse.org/users/${widget.project.relationships.author.data.id}/projects/${widget.project.id}';
     Share.share(
-      URL,
+      _getProjectUrl(),
       sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
     );
   }
