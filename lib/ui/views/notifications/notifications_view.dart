@@ -74,6 +74,21 @@ class NotificationsView extends StatelessWidget {
           context.read<CVLandingViewModel>().hasPendingNotif = model.hasUnread;
         });
 
+        if (model.isBusy(model.FETCH_NOTIFICATIONS)) {
+          return const Column(
+            children: [
+              SizedBox(height: 200),
+              Center(
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: CircularProgressIndicator(strokeWidth: 3),
+                ),
+              ),
+            ],
+          );
+        }
+
         final hasNoNotifications = model.notifications.isEmpty;
         final hasNoUnread =
             !hasNoNotifications &&
