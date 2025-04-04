@@ -25,27 +25,50 @@ class _AboutViewState extends State<AboutView> {
   late AboutViewModel _model;
 
   Widget _buildTosAndPrivacyButtons() {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 32),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: CVPrimaryButton(
-              title: AppLocalizations.of(context)!.terms_of_service,
-              isBodyText: true,
-              onPressed: () => Get.toNamed(AboutTosView.id),
-            ),
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 8),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: CVPrimaryButton(
+                    title: AppLocalizations.of(context)!.terms_of_service,
+                    isBodyText: true,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    onPressed: () => Get.toNamed(AboutTosView.id),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: CVPrimaryButton(
+                    title: AppLocalizations.of(context)!.privacy_policy,
+                    isBodyText: true,
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    onPressed: () => Get.toNamed(AboutPrivacyPolicyView.id),
+                  ),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: CVPrimaryButton(
-              title: AppLocalizations.of(context)!.privacy_policy,
-              isBodyText: true,
-              onPressed: () => Get.toNamed(AboutPrivacyPolicyView.id),
-            ),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 16), // Added space after the buttons
+      ],
     );
   }
 
