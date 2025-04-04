@@ -80,6 +80,21 @@ class _UserProjectsViewState extends State<UserProjectsView>
       builder: (context, model, child) {
         final _items = <Widget>[];
 
+        if (model.isBusy(model.FETCH_USER_PROJECTS)) {
+          return const Column(
+            children: [
+              SizedBox(height: 120),
+              Center(
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: CircularProgressIndicator(strokeWidth: 3),
+                ),
+              ),
+            ],
+          );
+        }
+
         if (model.isSuccess(model.FETCH_USER_PROJECTS)) {
           if (model.userProjects.isEmpty) {
             _items.add(_emptyState());

@@ -79,6 +79,21 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
         });
       },
       builder: (context, model, child) {
+        if (model.isBusy(model.FETCH_USER_FAVOURITES)) {
+          return const Column(
+            children: [
+              SizedBox(height: 120),
+              Center(
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: CircularProgressIndicator(strokeWidth: 3),
+                ),
+              ),
+            ],
+          );
+        }
+
         final _items = <Widget>[];
 
         if (model.isSuccess(model.FETCH_USER_FAVOURITES)) {
