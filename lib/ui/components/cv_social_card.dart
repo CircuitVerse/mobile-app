@@ -40,19 +40,34 @@ class CircuitVerseSocialCard extends StatelessWidget {
                   children: [
                     Positioned(
                       top: 0,
-                      right: -4,
+                      right: 0,
                       child: IconButton(
-                        onPressed: () {
-                          Clipboard.setData(ClipboardData(text: url));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: const Text('Copied to clipboard!'),
-                              duration: const Duration(seconds: 2),
-                              behavior: SnackBarBehavior.floating,
-                            ),
-                          );
+                        onPressed: () async {
+                          try {
+                            await Clipboard.setData(ClipboardData(text: url));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Copied to clipboard!'),
+                                duration: Duration(seconds: 2),
+                                behavior: SnackBarBehavior.floating,
+                              ),
+                            );
+                          } catch (error) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Failed to copy to clipboard.'),
+                                duration: Duration(seconds: 2),
+                                behavior: SnackBarBehavior.floating,
+                              ),
+                            );
+                          }
                         },
-                        icon: Icon(Icons.copy),
+                        icon: Icon(
+                          Icons.copy,
+                          color: Theme.of(context).iconTheme.color,
+                        ),
+                        splashColor: Theme.of(context).splashColor,
+                        highlightColor: Theme.of(context).highlightColor,
                         tooltip: 'Copy',
                       ),
                     ),
