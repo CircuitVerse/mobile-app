@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:flutter/services.dart';
+import 'dart:math';
 
 class CircuitVerseSocialCard extends StatelessWidget {
   const CircuitVerseSocialCard({
@@ -19,6 +20,12 @@ class CircuitVerseSocialCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = min(MediaQuery.of(context).size.width, 430);
+    double dynamicPadding = screenWidth * 0.02;
+    double imageWidth = screenWidth * 0.10;
+    double buttonSize = screenWidth * 0.08;
+    double textWidth =
+        screenWidth - imageWidth - buttonSize - (dynamicPadding * 4);
     return GestureDetector(
       onTap: () async {
         launchURL(url);
@@ -29,71 +36,80 @@ class CircuitVerseSocialCard extends StatelessWidget {
                 ? CVTheme.primaryColor
                 : CVTheme.primaryColorShadow,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          padding: EdgeInsets.symmetric(
+            vertical: dynamicPadding,
+            horizontal: dynamicPadding * 2,
+          ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Image.asset(imagePath, width: 48),
-              const SizedBox(width: 20),
+              Container(
+                width: imageWidth,
+                alignment: Alignment.centerLeft,
+                child: Image.asset(imagePath, width: imageWidth),
+              ),
+              SizedBox(width: dynamicPadding),
+
               Expanded(
-                child: Stack(
-                  children: [
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      child: IconButton(
-                        onPressed: () async {
-                          try {
-                            await Clipboard.setData(ClipboardData(text: url));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Copied to clipboard!'),
-                                duration: Duration(seconds: 2),
-                                behavior: SnackBarBehavior.floating,
-                              ),
-                            );
-                          } catch (error) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Failed to copy to clipboard.'),
-                                duration: Duration(seconds: 2),
-                                behavior: SnackBarBehavior.floating,
-                              ),
-                            );
-                          }
-                        },
-                        icon: Icon(
-                          Icons.copy,
-                          color: Theme.of(context).iconTheme.color,
+                child: Container(
+                  width: textWidth,
+                  padding: EdgeInsets.symmetric(horizontal: dynamicPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: CVTheme.textColor(context),
                         ),
-                        splashColor: Theme.of(context).splashColor,
-                        highlightColor: Theme.of(context).highlightColor,
-                        tooltip: 'Copy',
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(
-                            context,
-                          ).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: CVTheme.textColor(context),
-                          ),
+                      Text(
+                        description,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              Container(
+                width: buttonSize,
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  onPressed: () async {
+                    try {
+                      await Clipboard.setData(ClipboardData(text: url));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Copied to clipboard!'),
+                          duration: Duration(seconds: 2),
+                          behavior: SnackBarBehavior.floating,
                         ),
-                        Text(
-                          description,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleMedium,
+                      );
+                    } catch (error) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Failed to copy to clipboard.'),
+                          duration: Duration(seconds: 2),
+                          behavior: SnackBarBehavior.floating,
                         ),
-                      ],
-                    ),
-                  ],
+                      );
+                    }
+                  },
+                  icon: Icon(
+                    Icons.copy,
+                    color: Theme.of(context).iconTheme.color,
+                    size: buttonSize * 0.8,
+                  ),
+                  splashColor: Theme.of(context).splashColor,
+                  highlightColor: Theme.of(context).highlightColor,
+                  tooltip: 'Copy',
                 ),
               ),
             ],
