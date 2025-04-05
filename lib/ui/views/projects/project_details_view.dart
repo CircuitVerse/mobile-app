@@ -39,6 +39,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   final GlobalKey<CVFlatButtonState> addButtonGlobalKey =
       GlobalKey<CVFlatButtonState>();
 
+  String _getProjectUrl() {
+    return 'https://circuitverse.org/users/${_recievedProject.relationships.author.data.id}/projects/${_recievedProject.id}';
+  }
+
   @override
   void initState() {
     super.initState();
@@ -47,10 +51,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   void onShareButtonPressed() {
     final RenderBox? box = context.findRenderObject() as RenderBox?;
-    var URL =
-        'https://circuitverse.org/users/${widget.project.relationships.author.data.id}/projects/${widget.project.id}';
     Share.share(
-      URL,
+      _getProjectUrl(),
       sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
     );
   }
@@ -577,7 +579,6 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       onModelReady: (model) {
         _model = model;
         _model.receivedProject = _recievedProject;
-        // initialize collaborators & isStarred for the project..
         _model.collaborators = _recievedProject.collaborators;
         _model.isProjectStarred = _recievedProject.attributes.isStarred;
         _model.starCount = _recievedProject.attributes.starsCount;
@@ -604,15 +605,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   var _projectAttrs = _recievedProject.attributes;
                   var _items = <Widget>[];
 
-                  // Adds project preview..
                   _items.add(_buildProjectPreview());
 
                   _items.add(const SizedBox(height: 16));
 
-                  // Adds Project Name, Star & View count..
                   _items.add(_buildProjectNameHeader());
 
-                  // Adds Project attributes..
                   _items.add(
                     Container(
                       padding: const EdgeInsets.symmetric(
