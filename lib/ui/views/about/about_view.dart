@@ -32,14 +32,8 @@ class _AboutViewState extends State<AboutView> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: CVPrimaryButton(
+              child: CVPrimaryButton.small(
                 title: AppLocalizations.of(context)!.terms_of_service,
-                isBodyText: true,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
                 onPressed: () => Get.toNamed(AboutTosView.id),
               ),
             ),
@@ -48,14 +42,8 @@ class _AboutViewState extends State<AboutView> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: CVPrimaryButton(
+              child: CVPrimaryButton.small(
                 title: AppLocalizations.of(context)!.privacy_policy,
-                isBodyText: true,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
                 onPressed: () => Get.toNamed(AboutPrivacyPolicyView.id),
               ),
             ),
