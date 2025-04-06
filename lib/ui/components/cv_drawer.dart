@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/controllers/language_controller.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
@@ -41,6 +42,102 @@ class CVDrawer extends StatelessWidget {
                   iconData: Icons.home,
                 ),
               ),
+
+              Obx(() {
+                final langController = Get.find<LanguageController>();
+                final isEnglish =
+                    langController.currentLocale.value.languageCode == 'en';
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.translate_sharp,
+                        color: CVTheme.drawerIcon(
+                          context,
+                        ), // You can pick any color
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ), // spacing between icon and toggle
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding: const EdgeInsets.all(4),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                if (!isEnglish) langController.toggleLanguage();
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 250),
+                                curve: Curves.easeInOut,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color:
+                                      isEnglish
+                                          ? CVTheme.primaryColor
+                                          : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  'English',
+                                  style: TextStyle(
+                                    color:
+                                        isEnglish
+                                            ? Colors.white
+                                            : CVTheme.textColor(context),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                if (isEnglish) langController.toggleLanguage();
+                              },
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 250),
+                                curve: Curves.easeInOut,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color:
+                                      !isEnglish
+                                          ? CVTheme.primaryColor
+                                          : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  'हिंदी',
+                                  style: TextStyle(
+                                    color:
+                                        !isEnglish
+                                            ? Colors.white
+                                            : CVTheme.textColor(context),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }),
+
               Theme(
                 data: CVTheme.themeData(context),
                 child: ExpansionTile(
@@ -75,6 +172,7 @@ class CVDrawer extends StatelessWidget {
                   iconData: Icons.chrome_reader_mode,
                 ),
               ),
+
               InkWell(
                 onTap: () async {
                   final url = await Get.toNamed(SimulatorView.id);
@@ -123,6 +221,7 @@ class CVDrawer extends StatelessWidget {
                   iconData: Icons.account_balance,
                 ),
               ),
+
               if (_model.isLoggedIn) ...[
                 InkWell(
                   onTap: () => _model.setSelectedIndexTo(8),
@@ -178,6 +277,7 @@ class CVDrawer extends StatelessWidget {
                 ),
             ],
           ),
+
           Positioned(
             right: 5,
             top: 35,
