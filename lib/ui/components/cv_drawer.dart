@@ -45,95 +45,56 @@ class CVDrawer extends StatelessWidget {
 
               Obx(() {
                 final langController = Get.find<LanguageController>();
-                final isEnglish =
-                    langController.currentLocale.value.languageCode == 'en';
+                final currentLocale = langController.currentLocale.value;
 
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.translate_sharp,
-                        color: CVTheme.drawerIcon(
-                          context,
-                        ), // You can pick any color
+                final languages = {
+                  const Locale('en'): 'English',
+                  const Locale('hi'): 'हिंदी',
+                };
+
+                return Theme(
+                  data: CVTheme.themeData(context),
+                  child: ExpansionTile(
+                    key: const PageStorageKey<String>('language_tile'),
+                    initiallyExpanded: langController.isLanguageExpanded.value,
+                    onExpansionChanged: (expanded) {
+                      langController.isLanguageExpanded.value = expanded;
+                    },
+                    maintainState: true,
+                    title: ListTile(
+                      contentPadding: const EdgeInsets.all(0),
+                      leading: Icon(
+                        Icons.translate,
+                        color: CVTheme.drawerIcon(context),
                       ),
-                      const SizedBox(
-                        width: 12,
-                      ), // spacing between icon and toggle
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        padding: const EdgeInsets.all(4),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                if (!isEnglish) langController.toggleLanguage();
-                              },
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 250),
-                                curve: Curves.easeInOut,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 8,
-                                ),
-                                decoration: BoxDecoration(
-                                  color:
-                                      isEnglish
-                                          ? CVTheme.primaryColor
-                                          : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Text(
-                                  'English',
-                                  style: TextStyle(
-                                    color:
-                                        isEnglish
-                                            ? Colors.white
-                                            : CVTheme.textColor(context),
-                                  ),
-                                ),
+                      title: Text(
+                        AppLocalizations.of(context)!.language,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                    iconColor: CVTheme.textColor(context),
+                    children:
+                        languages.entries.map((entry) {
+                          final isSelected = currentLocale == entry.key;
+                          return InkWell(
+                            onTap: () {
+                              langController.changeLanguage(entry.key);
+                              langController.isLanguageExpanded.value = false;
+                            },
+                            child: ListTile(
+                              leading: Icon(
+                                isSelected
+                                    ? Icons.radio_button_checked
+                                    : Icons.radio_button_off,
+                                color: CVTheme.drawerIcon(context),
+                              ),
+                              title: Text(
+                                entry.value,
+                                style: Theme.of(context).textTheme.titleLarge,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                if (isEnglish) langController.toggleLanguage();
-                              },
-                              child: AnimatedContainer(
-                                duration: const Duration(milliseconds: 250),
-                                curve: Curves.easeInOut,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 8,
-                                ),
-                                decoration: BoxDecoration(
-                                  color:
-                                      !isEnglish
-                                          ? CVTheme.primaryColor
-                                          : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Text(
-                                  'हिंदी',
-                                  style: TextStyle(
-                                    color:
-                                        !isEnglish
-                                            ? Colors.white
-                                            : CVTheme.textColor(context),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                          );
+                        }).toList(),
                   ),
                 );
               }),

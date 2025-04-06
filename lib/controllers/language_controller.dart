@@ -2,14 +2,16 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class LanguageController extends GetxController {
-  final currentLocale = const Locale('en').obs;
+  var currentLocale = const Locale('en').obs;
+  var isLanguageExpanded = false.obs;
 
-  void toggleLanguage() {
-    if (currentLocale.value.languageCode == 'en') {
-      currentLocale.value = const Locale('hi');
-    } else {
-      currentLocale.value = const Locale('en');
-    }
-    Get.updateLocale(currentLocale.value);
+  void changeLanguage(Locale locale) {
+    currentLocale.value = locale;
+    Get.updateLocale(locale);
+    isLanguageExpanded.value = false; // manually collapse
+  }
+
+  void toggleExpansion() {
+    isLanguageExpanded.value = !isLanguageExpanded.value;
   }
 }
