@@ -49,25 +49,18 @@ class CVDrawer extends StatelessWidget {
                         ? Icons.nightlight_round
                         : Icons.wb_sunny,
                     key: ValueKey(Theme.of(context).brightness),
-                    color:
-                        Theme.of(context).brightness == Brightness.dark
-                            ? CVTheme.drawerIcon(context)
-                            : Colors.orangeAccent,
+                    color: CVTheme.drawerIcon(context),
                   ),
                 ),
                 title: AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 100),
-                  style: TextStyle(
-                    color:
-                        Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black87,
-                    fontSize: 21,
-                  ),
+
+                  style: Theme.of(context).textTheme.titleLarge!,
+
                   child: Text(
                     Theme.of(context).brightness == Brightness.dark
-                        ? "Dark Mode "
-                        : "Light Mode ",
+                        ? AppLocalizations.of(context)!.dark_mode
+                        : AppLocalizations.of(context)!.light_mode,
                   ),
                 ),
                 trailing: Switch(
@@ -75,9 +68,8 @@ class CVDrawer extends StatelessWidget {
                   onChanged:
                       (_) => ThemeProvider.controllerOf(context).nextTheme(),
                   activeColor: CVTheme.drawerIcon(context),
-                  inactiveThumbColor: Colors.grey,
+                  inactiveThumbColor: CVTheme.drawerIcon(context),
                   activeTrackColor: CVTheme.drawerIcon(context).withAlpha(128),
-                  inactiveTrackColor: Colors.grey.withAlpha(102),
                 ),
               ),
 
