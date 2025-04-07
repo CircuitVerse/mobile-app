@@ -1,8 +1,10 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/controllers/language_controller.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
@@ -41,6 +43,63 @@ class CVDrawer extends StatelessWidget {
                   iconData: Icons.home,
                 ),
               ),
+
+              Obx(() {
+                final langController = Get.find<LanguageController>();
+                final currentLocale = langController.currentLocale.value;
+
+                final languages = {
+                  const Locale('en'): 'English',
+                  const Locale('hi'): 'हिंदी',
+                };
+
+                return Theme(
+                  data: CVTheme.themeData(context),
+                  child: ExpansionTile(
+                    key: const PageStorageKey<String>('language_tile'),
+                    initiallyExpanded: langController.isLanguageExpanded.value,
+                    onExpansionChanged: (expanded) {
+                      langController.isLanguageExpanded.value = expanded;
+                    },
+                    maintainState: true,
+                    title: ListTile(
+                      contentPadding: const EdgeInsets.all(0),
+                      leading: Icon(
+                        Icons.translate,
+                        color: CVTheme.drawerIcon(context),
+                      ),
+                      title: Text(
+                        AppLocalizations.of(context)!.language,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    ),
+                    iconColor: CVTheme.textColor(context),
+                    children:
+                        languages.entries.map((entry) {
+                          final isSelected = currentLocale == entry.key;
+                          return InkWell(
+                            onTap: () {
+                              langController.changeLanguage(entry.key);
+                              langController.isLanguageExpanded.value = false;
+                            },
+                            child: ListTile(
+                              leading: Icon(
+                                isSelected
+                                    ? Icons.radio_button_checked
+                                    : Icons.radio_button_off,
+                                color: CVTheme.drawerIcon(context),
+                              ),
+                              title: Text(
+                                entry.value,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                  ),
+                );
+              }),
+
               Theme(
                 data: CVTheme.themeData(context),
                 child: ExpansionTile(
@@ -75,6 +134,7 @@ class CVDrawer extends StatelessWidget {
                   iconData: Icons.chrome_reader_mode,
                 ),
               ),
+
               InkWell(
                 onTap: () async {
                   final url = await Get.toNamed(SimulatorView.id);
@@ -123,6 +183,7 @@ class CVDrawer extends StatelessWidget {
                   iconData: Icons.account_balance,
                 ),
               ),
+
               if (_model.isLoggedIn) ...[
                 InkWell(
                   onTap: () => _model.setSelectedIndexTo(8),
@@ -178,6 +239,7 @@ class CVDrawer extends StatelessWidget {
                 ),
             ],
           ),
+
           Positioned(
             right: 5,
             top: 35,
