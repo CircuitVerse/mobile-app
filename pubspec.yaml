@@ -55,7 +55,7 @@ dependencies:
   share_plus: ^10.1.4
   shared_preferences: ^2.0.12
   showcaseview: ^4.0.1
-  simple_chips_input: ^1.2.0
+  simple_chips_input: ^1.2.1
   theme_provider: ^0.6.0
   timeago: ^3.1.0
   transparent_image: ^2.0.0
