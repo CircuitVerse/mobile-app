@@ -40,7 +40,7 @@ dependencies:
   google_sign_in: ^6.3.0
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  html: ^0.15.0
+  html: ^0.15.6
   html_unescape: ^2.0.0
   image_cropper: ^9.1.0
   image_picker: ^1.1.2
