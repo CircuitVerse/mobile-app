@@ -1,3 +1,4 @@
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -31,6 +32,16 @@ class ProjectDetailsView extends StatefulWidget {
 }
 
 class _ProjectDetailsViewState extends State<ProjectDetailsView> {
+  void _launchProjectURL(String url) async {
+  final uri = Uri.parse(url);
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  } else {
+    // Optional: Display a snackbar or toast instead
+    print('Could not launch $url');
+  }
+}
+
   final DialogService _dialogService = locator<DialogService>();
   late ProjectDetailsViewModel _model;
   final _formKey = GlobalKey<FormState>();
