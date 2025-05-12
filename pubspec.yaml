@@ -57,7 +57,7 @@ dependencies:
   showcaseview: ^4.0.1
   simple_chips_input: ^1.2.1
   theme_provider: ^0.6.0
-  timeago: ^3.1.0
+  timeago: ^3.7.1
   transparent_image: ^2.0.0
   url_launcher: ^6.1.11
   flutter_facebook_auth: ^6.0.4
