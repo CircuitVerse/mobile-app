@@ -73,7 +73,7 @@ dev_dependencies:
     sdk: flutter
   hive_generator: ^2.0.0
 
-  webview_flutter_platform_interface: 2.11.0
+  webview_flutter_platform_interface: 2.13.0
   webview_flutter_android: 4.3.5
   collection: any
 dependency_overrides:
