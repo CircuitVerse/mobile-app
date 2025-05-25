@@ -57,6 +57,7 @@ if (releaseKeystorePropertiesFile.exists()) {
 android {
     compileSdkVersion 35
     namespace 'org.circuitverse.mobile_app'
+    ndkVersion = "28.0.13004108"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
