@@ -11,7 +11,7 @@ import 'package:mobile_app/ui/views/about/about_tos_view.dart';
 import 'package:mobile_app/ui/views/about/components/contributor_avatar.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class AboutView extends StatefulWidget {
   const AboutView({super.key});

@@ -12,7 +12,7 @@ import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class CVLandingView extends StatefulWidget {
   const CVLandingView({super.key});

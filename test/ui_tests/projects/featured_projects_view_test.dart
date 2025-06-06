@@ -15,7 +15,7 @@ import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart'
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_data/mock_projects.dart';
 
