@@ -173,7 +173,7 @@ class _ProfileViewState extends State<ProfileView> {
               color: CVTheme.lightGrey.withValues(alpha: 0.2),
               tabBar: const TabBar(
                 labelColor: Colors.white,
-                unselectedLabelColor: Colors.black87,
+                unselectedLabelColor: Colors.white,
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicator: BoxDecoration(
                   color: CVTheme.primaryColor,
