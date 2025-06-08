@@ -143,25 +143,9 @@ class _IbPageViewState extends State<IbPageView> {
     }
   }
 
-  Widget _buildMarkdownImage(Uri uri, String? title, String? alt) {
-    if (uri.toString().endsWith('.svg')) {
-      var url = uri.toString();
-      if (uri.toString().startsWith('/assets')) {
-        url = EnvironmentConfig.IB_BASE_URL + url;
-      }
-      var widgets = <Widget>[SvgPicture.network(url)];
-      if (alt != null) {
-        widgets.add(Text(alt));
-      }
-      return Column(children: widgets);
-    } else {
-      // Handle non-SVG images
-      if (alt != null) {
-        return Column(children: [Image.network(uri.toString()), Text(alt)]);
-      } else {
-        return Image.network(uri.toString());
-      }
-    }
+  void _onTapImage(String src) {
+    // Implement your image tap handling logic here
+    debugPrint('Image tapped: $src');
   }
 
   Widget _buildMarkdown(IbMd data) {
@@ -186,8 +170,11 @@ class _IbPageViewState extends State<IbPageView> {
       selectable: _selectable,
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
       onTapLink: _onTapLink,
-      imageBuilder: _buildMarkdownImage,
       builders: {
+        'img': CustomImageBuilder(
+          onTapImage: _onTapImage,
+          wrapImages: true,
+        ),
         'h1': _headingsBuilder,
         'h2': _headingsBuilder,
         'h3': _headingsBuilder,
@@ -560,5 +547,45 @@ class _IbPageViewState extends State<IbPageView> {
         );
       },
     );
+  }
+}
+
+class CustomImageBuilder extends MarkdownElementBuilder {
+  final void Function(String)? onTapImage;
+  final bool wrapImages;
+
+  CustomImageBuilder({
+    this.onTapImage,
+    this.wrapImages = true,
+  });
+
+  @override
+  Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
+    final src = element.attributes['src'] ?? '';
+    final alt = element.textContent;
+
+    Widget image;
+
+    if (src.toLowerCase().endsWith('.svg')) {
+      image = SvgPicture.network(src, semanticsLabel: alt);
+    } else {
+      image = Image.network(src, semanticLabel: alt);
+    }
+
+    if (wrapImages) {
+      image = Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: image,
+      );
+    }
+
+    if (onTapImage != null) {
+      image = GestureDetector(
+        onTap: () => onTapImage!(src),
+        child: image,
+      );
+    }
+
+    return image;
   }
 }
