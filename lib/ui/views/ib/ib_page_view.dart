@@ -171,10 +171,7 @@ class _IbPageViewState extends State<IbPageView> {
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
       onTapLink: _onTapLink,
       builders: {
-        'img': CustomImageBuilder(
-          onTapImage: _onTapImage,
-          wrapImages: true,
-        ),
+        'img': CustomImageBuilder(onTapImage: _onTapImage, wrapImages: true),
         'h1': _headingsBuilder,
         'h2': _headingsBuilder,
         'h3': _headingsBuilder,
@@ -554,10 +551,7 @@ class CustomImageBuilder extends MarkdownElementBuilder {
   final void Function(String)? onTapImage;
   final bool wrapImages;
 
-  CustomImageBuilder({
-    this.onTapImage,
-    this.wrapImages = true,
-  });
+  CustomImageBuilder({this.onTapImage, this.wrapImages = true});
 
   @override
   Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
@@ -580,10 +574,7 @@ class CustomImageBuilder extends MarkdownElementBuilder {
     }
 
     if (onTapImage != null) {
-      image = GestureDetector(
-        onTap: () => onTapImage!(src),
-        child: image,
-      );
+      image = GestureDetector(onTap: () => onTapImage!(src), child: image);
     }
 
     return image;
