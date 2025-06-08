@@ -558,12 +558,38 @@ class CustomImageBuilder extends MarkdownElementBuilder {
     final src = element.attributes['src'] ?? '';
     final alt = element.textContent;
 
+    // Validate URL
+    if (src.isEmpty) {
+      return _buildErrorWidget('No image source provided');
+    }
+
     Widget image;
 
-    if (src.toLowerCase().endsWith('.svg')) {
-      image = SvgPicture.network(src, semanticsLabel: alt);
-    } else {
-      image = Image.network(src, semanticLabel: alt);
+    try {
+      if (src.toLowerCase().endsWith('.svg')) {
+        image = SvgPicture.network(
+          src,
+          semanticsLabel: alt,
+          placeholderBuilder: (context) => _buildLoadingIndicator(),
+          height: 200, // Set a reasonable default height for SVG
+          fit: BoxFit.contain,
+        );
+      } else {
+        image = Image.network(
+          src,
+          semanticLabel: alt,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return _buildLoadingIndicator();
+          },
+          errorBuilder: (context, error, stackTrace) {
+            return _buildErrorWidget('Failed to load image');
+          },
+          fit: BoxFit.contain,
+        );
+      }
+    } catch (e) {
+      image = _buildErrorWidget('Error loading image: ${e.toString()}');
     }
 
     if (wrapImages) {
@@ -578,5 +604,33 @@ class CustomImageBuilder extends MarkdownElementBuilder {
     }
 
     return image;
+  }
+
+  Widget _buildLoadingIndicator() {
+    return const SizedBox(
+      height: 200,
+      child: Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  Widget _buildErrorWidget(String message) {
+    return Container(
+      height: 200,
+      color: Colors.grey[200],
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.broken_image, size: 50, color: Colors.grey),
+            const SizedBox(height: 8),
+            Text(
+              message,
+              style: const TextStyle(color: Colors.grey),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
