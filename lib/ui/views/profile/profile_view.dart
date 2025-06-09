@@ -26,6 +26,13 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   late ProfileViewModel _model;
 
+  Color _getUnselectedTabColor(BuildContext context) {
+    return Theme.of(context).brightness == Brightness.dark
+        ? Colors
+            .white // Night mode
+        : Colors.black87; // Day mode
+  }
+
   Widget _buildProfileImage() {
     final imageURL =
         EnvironmentConfig.CV_BASE_URL +
@@ -171,15 +178,17 @@ class _ProfileViewState extends State<ProfileView> {
           child: Scaffold(
             appBar: CVTabBar(
               color: CVTheme.lightGrey.withValues(alpha: 0.2),
-              tabBar: const TabBar(
+              tabBar: TabBar(
                 labelColor: Colors.white,
-                unselectedLabelColor: Colors.black87,
+                unselectedLabelColor: _getUnselectedTabColor(
+                  context,
+                ), // Dynamic color
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicator: BoxDecoration(
                   color: CVTheme.primaryColor,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
                 ),
-                tabs: [Tab(text: 'Circuits'), Tab(text: 'Favourites')],
+                tabs: const [Tab(text: 'Circuits'), Tab(text: 'Favourites')],
               ),
             ),
             body: TabBarView(
