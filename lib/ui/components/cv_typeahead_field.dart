@@ -129,9 +129,9 @@ class _CVTypeAheadFieldState extends State<CVTypeAheadField> {
                 child: Container(
                   constraints: const BoxConstraints(maxHeight: 200),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.grey.shade300),
+                    border: Border.all(color: Theme.of(context).dividerColor),
                   ),
                   child: ListView.builder(
                     shrinkWrap: true,

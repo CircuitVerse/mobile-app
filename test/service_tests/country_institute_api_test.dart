@@ -64,21 +64,14 @@ void main() {
         // IMPORTANT: Disable fallback for testing
         var _countryApi = HttpCountryInstituteAPI(useFallbackOnError: false);
 
-        // Test with query 'ta' - check what your mockInstitutes actually contains
-        final taResult = await _countryApi.getInstitutes('ta');
-        // If your mockInstitutes has 'Test' which contains 'ta', expect ['Test']
-        // If it doesn't have any matches, expect []
-        expect(taResult, ['Test']); // Adjust based on your mock data
-
-        // Test with query 't' - should return institutes matching 't'
-        final tResult = await _countryApi.getInstitutes('t');
-        expect(tResult, ['Test']); // Adjust based on your mock data
-
-        // Test with empty query - should return empty list (per your API logic)
-        expect(
-          await _countryApi.getInstitutes(''),
-          [], // Empty query returns empty list
-        );
+        // Since mockInstitutes contains "Test":
+        // - 'ta' shouldn't match "Test" (returns empty)
+        // - 'Te' should match "Test" (case insensitive)
+        // - 'Test' should match "Test" (exact match)
+        expect(await _countryApi.getInstitutes('ta'), []);
+        expect(await _countryApi.getInstitutes('Te'), ['Test']);
+        expect(await _countryApi.getInstitutes('Test'), ['Test']);
+        expect(await _countryApi.getInstitutes(''), []);
       });
 
       test('When called & http client throws Exceptions', () async {
@@ -87,7 +80,7 @@ void main() {
 
         ApiUtils.client = MockClient((_) => throw Exception('Network error'));
 
-        // After fixing the implementation, it should throw a Failure
+        // Since useFallbackOnError is false, it should throw a Failure
         expect(
           () => _countriesApi.getInstitutes('test'),
           throwsA(isA<Failure>()),
