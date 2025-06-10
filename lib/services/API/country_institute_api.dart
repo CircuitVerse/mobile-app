@@ -18,6 +18,253 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
   HttpCountryInstituteAPI({bool useFallbackOnError = true})
     : _useFallbackOnError = useFallbackOnError;
 
+  // Static constants for better performance - lists are created once and reused
+  static const List<String> _fallbackCountries = [
+    'Afghanistan',
+    'Albania',
+    'Algeria',
+    'Andorra',
+    'Angola',
+    'Antigua and Barbuda',
+    'Argentina',
+    'Armenia',
+    'Australia',
+    'Austria',
+    'Azerbaijan',
+    'Bahamas',
+    'Bahrain',
+    'Bangladesh',
+    'Barbados',
+    'Belarus',
+    'Belgium',
+    'Belize',
+    'Benin',
+    'Bhutan',
+    'Bolivia',
+    'Bosnia and Herzegovina',
+    'Botswana',
+    'Brazil',
+    'Brunei',
+    'Bulgaria',
+    'Burkina Faso',
+    'Burundi',
+    'Cabo Verde',
+    'Cambodia',
+    'Cameroon',
+    'Canada',
+    'Central African Republic',
+    'Chad',
+    'Chile',
+    'China',
+    'Colombia',
+    'Comoros',
+    'Congo',
+    'Costa Rica',
+    'Croatia',
+    'Cuba',
+    'Cyprus',
+    'Czech Republic',
+    'Denmark',
+    'Djibouti',
+    'Dominica',
+    'Dominican Republic',
+    'Ecuador',
+    'Egypt',
+    'El Salvador',
+    'Equatorial Guinea',
+    'Eritrea',
+    'Estonia',
+    'Eswatini',
+    'Ethiopia',
+    'Fiji',
+    'Finland',
+    'France',
+    'Gabon',
+    'Gambia',
+    'Georgia',
+    'Germany',
+    'Ghana',
+    'Greece',
+    'Grenada',
+    'Guatemala',
+    'Guinea',
+    'Guinea-Bissau',
+    'Guyana',
+    'Haiti',
+    'Honduras',
+    'Hungary',
+    'Iceland',
+    'India',
+    'Indonesia',
+    'Iran',
+    'Iraq',
+    'Ireland',
+    'Israel',
+    'Italy',
+    'Jamaica',
+    'Japan',
+    'Jordan',
+    'Kazakhstan',
+    'Kenya',
+    'Kiribati',
+    'Korea, North',
+    'Korea, South',
+    'Kosovo',
+    'Kuwait',
+    'Kyrgyzstan',
+    'Laos',
+    'Latvia',
+    'Lebanon',
+    'Lesotho',
+    'Liberia',
+    'Libya',
+    'Liechtenstein',
+    'Lithuania',
+    'Luxembourg',
+    'Madagascar',
+    'Malawi',
+    'Malaysia',
+    'Maldives',
+    'Mali',
+    'Malta',
+    'Marshall Islands',
+    'Mauritania',
+    'Mauritius',
+    'Mexico',
+    'Micronesia',
+    'Moldova',
+    'Monaco',
+    'Mongolia',
+    'Montenegro',
+    'Morocco',
+    'Mozambique',
+    'Myanmar',
+    'Namibia',
+    'Nauru',
+    'Nepal',
+    'Netherlands',
+    'New Zealand',
+    'Nicaragua',
+    'Niger',
+    'Nigeria',
+    'North Macedonia',
+    'Norway',
+    'Oman',
+    'Pakistan',
+    'Palau',
+    'Panama',
+    'Papua New Guinea',
+    'Paraguay',
+    'Peru',
+    'Philippines',
+    'Poland',
+    'Portugal',
+    'Qatar',
+    'Romania',
+    'Russia',
+    'Rwanda',
+    'Saint Kitts and Nevis',
+    'Saint Lucia',
+    'Saint Vincent and the Grenadines',
+    'Samoa',
+    'San Marino',
+    'Sao Tome and Principe',
+    'Saudi Arabia',
+    'Senegal',
+    'Serbia',
+    'Seychelles',
+    'Sierra Leone',
+    'Singapore',
+    'Slovakia',
+    'Slovenia',
+    'Solomon Islands',
+    'Somalia',
+    'South Africa',
+    'South Sudan',
+    'Spain',
+    'Sri Lanka',
+    'Sudan',
+    'Suriname',
+    'Sweden',
+    'Switzerland',
+    'Syria',
+    'Taiwan',
+    'Tajikistan',
+    'Tanzania',
+    'Thailand',
+    'Togo',
+    'Tonga',
+    'Trinidad and Tobago',
+    'Tunisia',
+    'Turkey',
+    'Turkmenistan',
+    'Tuvalu',
+    'Uganda',
+    'Ukraine',
+    'United Arab Emirates',
+    'United Kingdom',
+    'United States',
+    'Uruguay',
+    'Uzbekistan',
+    'Vanuatu',
+    'Vatican City',
+    'Venezuela',
+    'Vietnam',
+  ];
+
+  static const List<String> _famousUniversities = [
+    'Harvard University',
+    'Stanford University',
+    'Massachusetts Institute of Technology',
+    'University of Cambridge',
+    'University of Oxford',
+    'California Institute of Technology',
+    'ETH Zurich',
+    'University of Chicago',
+    'University College London',
+    'Imperial College London',
+    'National University of Singapore',
+    'Princeton University',
+    'Nanyang Technological University',
+    'Tsinghua University',
+    'Peking University',
+    'Yale University',
+    'Cornell University',
+    'Columbia University',
+    'University of Edinburgh',
+    'University of Pennsylvania',
+    'University of Michigan',
+    'Johns Hopkins University',
+    'University of Toronto',
+    'University of Hong Kong',
+    'University of Tokyo',
+    'University of California, Berkeley',
+    'University of Manchester',
+    'Northwestern University',
+    'University of Sydney',
+    'University of Melbourne',
+    'University of British Columbia',
+    'University of California, Los Angeles',
+    'University of New South Wales',
+    'Duke University',
+    'University of Queensland',
+    'Carnegie Mellon University',
+    'New York University',
+    'University of Washington',
+    'University of Bristol',
+    'King\'s College London',
+    'Delft University of Technology',
+    'University of Warwick',
+    'Brown University',
+    'University of Amsterdam',
+    'University of Glasgow',
+    'University of Illinois at Urbana-Champaign',
+    'University of Texas at Austin',
+    'University of Wisconsin-Madison',
+    'University of Zurich',
+    'Boston University',
+  ];
+
   Future<List<String>> _fetchCountries(String query) async {
     try {
       // Return empty list for empty queries to allow TypeAhead to work properly
@@ -124,7 +371,7 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
       // Source 1: Hipolabs API
       try {
         final url1 =
-            'http://universities.hipolabs.com/search?name=${Uri.encodeComponent(query)}';
+            'https://universities.hipolabs.com/search?name=${Uri.encodeComponent(query)}';
         final data1 = await ApiUtils.get(url1);
 
         if (data1 is List) {
@@ -132,7 +379,12 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
             if (institute is Map && institute.containsKey('name')) {
               final name = institute['name'];
               if (name is String && name.trim().isNotEmpty) {
-                matches.add(name.trim());
+                final nameStr = name.trim();
+                final lowerName = nameStr.toLowerCase();
+                // Use contains for partial matching (original behavior)
+                if (lowerName.contains(trimmedQuery)) {
+                  matches.add(nameStr);
+                }
               }
             }
           }
@@ -158,8 +410,7 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
 
       // Source 2: Famous universities fallback (only if fallback is enabled)
       if (_useFallbackOnError) {
-        final famousUniversities = _getFamousUniversities();
-        for (var university in famousUniversities) {
+        for (var university in _famousUniversities) {
           if (university.toLowerCase().contains(trimmedQuery)) {
             matches.add(university);
           }
@@ -200,257 +451,6 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
     }
   }
 
-  // Fallback countries list
-  List<String> _getFallbackCountries() {
-    return [
-      'Afghanistan',
-      'Albania',
-      'Algeria',
-      'Andorra',
-      'Angola',
-      'Antigua and Barbuda',
-      'Argentina',
-      'Armenia',
-      'Australia',
-      'Austria',
-      'Azerbaijan',
-      'Bahamas',
-      'Bahrain',
-      'Bangladesh',
-      'Barbados',
-      'Belarus',
-      'Belgium',
-      'Belize',
-      'Benin',
-      'Bhutan',
-      'Bolivia',
-      'Bosnia and Herzegovina',
-      'Botswana',
-      'Brazil',
-      'Brunei',
-      'Bulgaria',
-      'Burkina Faso',
-      'Burundi',
-      'Cabo Verde',
-      'Cambodia',
-      'Cameroon',
-      'Canada',
-      'Central African Republic',
-      'Chad',
-      'Chile',
-      'China',
-      'Colombia',
-      'Comoros',
-      'Congo',
-      'Costa Rica',
-      'Croatia',
-      'Cuba',
-      'Cyprus',
-      'Czech Republic',
-      'Denmark',
-      'Djibouti',
-      'Dominica',
-      'Dominican Republic',
-      'Ecuador',
-      'Egypt',
-      'El Salvador',
-      'Equatorial Guinea',
-      'Eritrea',
-      'Estonia',
-      'Eswatini',
-      'Ethiopia',
-      'Fiji',
-      'Finland',
-      'France',
-      'Gabon',
-      'Gambia',
-      'Georgia',
-      'Germany',
-      'Ghana',
-      'Greece',
-      'Grenada',
-      'Guatemala',
-      'Guinea',
-      'Guinea-Bissau',
-      'Guyana',
-      'Haiti',
-      'Honduras',
-      'Hungary',
-      'Iceland',
-      'India',
-      'Indonesia',
-      'Iran',
-      'Iraq',
-      'Ireland',
-      'Israel',
-      'Italy',
-      'Jamaica',
-      'Japan',
-      'Jordan',
-      'Kazakhstan',
-      'Kenya',
-      'Kiribati',
-      'Korea, North',
-      'Korea, South',
-      'Kosovo',
-      'Kuwait',
-      'Kyrgyzstan',
-      'Laos',
-      'Latvia',
-      'Lebanon',
-      'Lesotho',
-      'Liberia',
-      'Libya',
-      'Liechtenstein',
-      'Lithuania',
-      'Luxembourg',
-      'Madagascar',
-      'Malawi',
-      'Malaysia',
-      'Maldives',
-      'Mali',
-      'Malta',
-      'Marshall Islands',
-      'Mauritania',
-      'Mauritius',
-      'Mexico',
-      'Micronesia',
-      'Moldova',
-      'Monaco',
-      'Mongolia',
-      'Montenegro',
-      'Morocco',
-      'Mozambique',
-      'Myanmar',
-      'Namibia',
-      'Nauru',
-      'Nepal',
-      'Netherlands',
-      'New Zealand',
-      'Nicaragua',
-      'Niger',
-      'Nigeria',
-      'North Macedonia',
-      'Norway',
-      'Oman',
-      'Pakistan',
-      'Palau',
-      'Panama',
-      'Papua New Guinea',
-      'Paraguay',
-      'Peru',
-      'Philippines',
-      'Poland',
-      'Portugal',
-      'Qatar',
-      'Romania',
-      'Russia',
-      'Rwanda',
-      'Saint Kitts and Nevis',
-      'Saint Lucia',
-      'Saint Vincent and the Grenadines',
-      'Samoa',
-      'San Marino',
-      'Sao Tome and Principe',
-      'Saudi Arabia',
-      'Senegal',
-      'Serbia',
-      'Seychelles',
-      'Sierra Leone',
-      'Singapore',
-      'Slovakia',
-      'Slovenia',
-      'Solomon Islands',
-      'Somalia',
-      'South Africa',
-      'South Sudan',
-      'Spain',
-      'Sri Lanka',
-      'Sudan',
-      'Suriname',
-      'Sweden',
-      'Switzerland',
-      'Syria',
-      'Taiwan',
-      'Tajikistan',
-      'Tanzania',
-      'Thailand',
-      'Togo',
-      'Tonga',
-      'Trinidad and Tobago',
-      'Tunisia',
-      'Turkey',
-      'Turkmenistan',
-      'Tuvalu',
-      'Uganda',
-      'Ukraine',
-      'United Arab Emirates',
-      'United Kingdom',
-      'United States',
-      'Uruguay',
-      'Uzbekistan',
-      'Vanuatu',
-      'Vatican City',
-      'Venezuela',
-      'Vietnam',
-    ];
-  }
-
-  List<String> _getFamousUniversities() {
-    return [
-      'Harvard University',
-      'Stanford University',
-      'Massachusetts Institute of Technology',
-      'University of Cambridge',
-      'University of Oxford',
-      'California Institute of Technology',
-      'ETH Zurich',
-      'University of Chicago',
-      'University College London',
-      'Imperial College London',
-      'National University of Singapore',
-      'Princeton University',
-      'Nanyang Technological University',
-      'Tsinghua University',
-      'Peking University',
-      'Yale University',
-      'Cornell University',
-      'Columbia University',
-      'University of Edinburgh',
-      'University of Pennsylvania',
-      'University of Michigan',
-      'Johns Hopkins University',
-      'University of Toronto',
-      'University of Hong Kong',
-      'University of Tokyo',
-      'University of California, Berkeley',
-      'University of Manchester',
-      'Northwestern University',
-      'University of Sydney',
-      'University of Melbourne',
-      'University of British Columbia',
-      'University of California, Los Angeles',
-      'University of New South Wales',
-      'Duke University',
-      'University of Queensland',
-      'Carnegie Mellon University',
-      'New York University',
-      'University of Washington',
-      'University of Bristol',
-      'King\'s College London',
-      'Delft University of Technology',
-      'University of Warwick',
-      'Brown University',
-      'University of Amsterdam',
-      'University of Glasgow',
-      'University of Illinois at Urbana-Champaign',
-      'University of Texas at Austin',
-      'University of Wisconsin-Madison',
-      'University of Zurich',
-      'Boston University',
-    ];
-  }
-
   @override
   Future<List<String>> getCountries(String query) async {
     try {
@@ -458,7 +458,7 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
     } on Failure {
       // Only use fallback if enabled
       if (_useFallbackOnError) {
-        return _getFallbackCountries()
+        return _fallbackCountries
             .where(
               (country) => country.toLowerCase().contains(query.toLowerCase()),
             )
@@ -468,7 +468,7 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
       rethrow;
     } catch (e) {
       if (_useFallbackOnError) {
-        return _getFallbackCountries()
+        return _fallbackCountries
             .where(
               (country) => country.toLowerCase().contains(query.toLowerCase()),
             )
@@ -486,7 +486,7 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
     } on Failure {
       // Only use fallback if enabled
       if (_useFallbackOnError) {
-        return _getFamousUniversities()
+        return _famousUniversities
             .where((uni) => uni.toLowerCase().contains(query.toLowerCase()))
             .take(15)
             .toList();
@@ -494,7 +494,7 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
       rethrow;
     } catch (e) {
       if (_useFallbackOnError) {
-        return _getFamousUniversities()
+        return _famousUniversities
             .where((uni) => uni.toLowerCase().contains(query.toLowerCase()))
             .take(15)
             .toList();
@@ -509,19 +509,53 @@ class HttpCountryInstituteAPI implements CountryInstituteAPI {
     _instituteCache.clear();
   }
 
-  Future<void> debugCountryStructure() async {
+  /// Debug method to inspect and validate the structure of country data from the API
+  /// Useful for development and troubleshooting API response format changes
+  Future<Map<String, dynamic>> debugCountryStructure() async {
     try {
       final url = 'https://restcountries.com/v3.1/all';
       final data = await ApiUtils.get(url);
 
+      final debugInfo = <String, dynamic>{
+        'isValidResponse': false,
+        'totalCountries': 0,
+        'firstCountryStructure': null,
+        'sampleCountryNames': <String>[],
+      };
+
       if (data is List && data.isNotEmpty) {
+        debugInfo['totalCountries'] = data.length;
+
         final firstCountry = data[0];
         if (firstCountry is Map) {
+          debugInfo['firstCountryStructure'] = {
+            'hasNameField': firstCountry.containsKey('name'),
+            'nameFieldType': firstCountry['name']?.runtimeType.toString(),
+            'availableFields': firstCountry.keys.toList(),
+          };
+
           if (firstCountry.containsKey('name')) {
-            // Structure is valid
+            debugInfo['isValidResponse'] = true;
+
+            // Extract sample country names for verification
+            final sampleNames = <String>[];
+            for (int i = 0; i < data.length && i < 5; i++) {
+              final country = data[i];
+              if (country is Map && country.containsKey('name')) {
+                final nameField = country['name'];
+                if (nameField is Map && nameField.containsKey('common')) {
+                  sampleNames.add(nameField['common'].toString());
+                } else if (nameField is String) {
+                  sampleNames.add(nameField);
+                }
+              }
+            }
+            debugInfo['sampleCountryNames'] = sampleNames;
           }
         }
       }
+
+      return debugInfo;
     } on Failure {
       rethrow;
     } catch (e) {
