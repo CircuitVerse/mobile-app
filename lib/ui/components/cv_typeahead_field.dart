@@ -122,7 +122,7 @@ class _CVTypeAheadFieldState extends State<CVTypeAheadField> {
             child: CompositedTransformFollower(
               link: _layerLink,
               showWhenUnlinked: false,
-              offset: const Offset(0, 60),
+              offset: const Offset(0, 52),
               child: Material(
                 elevation: 4,
                 borderRadius: BorderRadius.circular(8),
@@ -135,6 +135,7 @@ class _CVTypeAheadFieldState extends State<CVTypeAheadField> {
                   ),
                   child: ListView.builder(
                     shrinkWrap: true,
+                    padding: EdgeInsets.zero,
                     itemCount: _suggestions.length,
                     itemBuilder: (context, index) {
                       final suggestion = _suggestions[index];
@@ -142,8 +143,9 @@ class _CVTypeAheadFieldState extends State<CVTypeAheadField> {
                         dense: true,
                         title: Text(suggestion),
                         onTap: () {
+                          widget.controller?.removeListener(_onTextChanged);
+
                           widget.controller?.text = suggestion;
-                          _hideSuggestions();
                           widget
                               .controller
                               ?.selection = TextSelection.fromPosition(
@@ -151,6 +153,17 @@ class _CVTypeAheadFieldState extends State<CVTypeAheadField> {
                               offset: widget.controller?.text.length ?? 0,
                             ),
                           );
+
+                          setState(() {
+                            _showSuggestions = false;
+                            _suggestions = [];
+                          });
+                          _removeOverlay();
+
+                          Future.delayed(const Duration(milliseconds: 100), () {
+                            widget.controller?.addListener(_onTextChanged);
+                            widget.focusNode?.unfocus();
+                          });
                         },
                       );
                     },
