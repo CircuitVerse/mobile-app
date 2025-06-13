@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/CircuitVerse/mobile-app/compare/v1.0.2...v1.1.0) (2025-06-13)
+
+### Features
+
+* enhance image loading with error handling and loading indicators ([34d9e95](https://github.com/CircuitVerse/mobile-app/commit/34d9e957485bc4673134e5583e7606bf02a7c6a7))
+* **profile:** complete profile editing overhaul with enhanced typeahead and tests ([df57279](https://github.com/CircuitVerse/mobile-app/commit/df57279caae1b82f0836bf92c2906696b03b1306))
+
+### Bug Fixes
+
+* **build:** resolve Java heap space error during assembleRelease ([e9982a6](https://github.com/CircuitVerse/mobile-app/commit/e9982a68d3816148f4191eb5d7ae96588264710c))
+* **localization:** resolve flutter_gen and imageBuilder errors ([5d09712](https://github.com/CircuitVerse/mobile-app/commit/5d09712954bb1e239dd9c212bd912ad0fcfd0dd6))
+* resolve suggestion list not closing and reduce gaps in the suggestion list ([40b7883](https://github.com/CircuitVerse/mobile-app/commit/40b788358436873c0ad0e7c738bf999623a9c45a))
+
+### Styles
+
+* format code for consistency ([e3e1f9a](https://github.com/CircuitVerse/mobile-app/commit/e3e1f9ab48e292eedcb8e8cffe35b27bafc29e84))
+
+### Code Refactoring
+
+* apply code review suggestions ([f73c5c1](https://github.com/CircuitVerse/mobile-app/commit/f73c5c1ae455cf502bbcac579315e710293b7793))
+
+### Continuous Integration
+
+* add conventional commits action ([c222762](https://github.com/CircuitVerse/mobile-app/commit/c22276255095261de0062dddfd6464051d859a05))
+* auto merge dependabot updates ([da4e7ed](https://github.com/CircuitVerse/mobile-app/commit/da4e7ed94d6691e7421edb11858cecf8d2ed36bd))
+* fix repository name ([90c148d](https://github.com/CircuitVerse/mobile-app/commit/90c148d0e0d2f87fd9a75e9aedae93c5911ce582))
+
 ## [1.0.2](https://github.com/CircuitVerse/mobile-app/compare/v1.0.1...v1.0.2) (2025-03-24)
 
 ### Continuous Integration
