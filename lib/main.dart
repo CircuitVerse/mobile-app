@@ -4,6 +4,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/controllers/language_controller.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/database_service.dart';
@@ -19,6 +20,7 @@ Future<void> main() async {
 
   // Init Hive
   await locator<DatabaseService>().init();
+  Get.put(LanguageController());
 
   runApp(const CircuitVerseMobile());
 }
@@ -76,14 +78,15 @@ class CircuitVerseMobile extends StatelessWidget {
             builder:
                 (themeContext) => GetMaterialApp(
                   title: 'CircuitVerse Mobile',
+                  debugShowCheckedModeBanner: false,
                   localizationsDelegates: delegates,
                   supportedLocales: AppLocalizations.supportedLocales,
+                  locale: Get.find<LanguageController>().currentLocale.value,
+                  fallbackLocale: const Locale('en'),
                   onGenerateTitle:
-                      (BuildContext context) =>
-                          AppLocalizations.of(context)!.title,
-                  debugShowCheckedModeBanner: false,
-                  onGenerateRoute: CVRouter.generateRoute,
+                      (context) => AppLocalizations.of(context)!.title,
                   theme: ThemeProvider.themeOf(themeContext).data,
+                  onGenerateRoute: CVRouter.generateRoute,
                   home: const StartUpView(),
                 ),
           ),
