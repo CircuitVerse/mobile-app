@@ -59,7 +59,7 @@ class _ProfileViewState extends State<ProfileView> {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Text(
         _model.user?.data.attributes.name ??
-            AppLocalizations.of(context)!.profile_not_available,
+            AppLocalizations.of(context)!.profile_view_not_available,
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -87,7 +87,7 @@ class _ProfileViewState extends State<ProfileView> {
             TextSpan(
               text:
                   description?.isEmpty ?? true
-                      ? AppLocalizations.of(context)!.profile_not_available
+                      ? AppLocalizations.of(context)!.profile_view_not_available
                       : description,
             ),
           ],
@@ -111,7 +111,7 @@ class _ProfileViewState extends State<ProfileView> {
           });
         },
         child: Text(
-          AppLocalizations.of(context)!.profile_edit,
+          AppLocalizations.of(context)!.profile_view_edit,
           style: Theme.of(
             context,
           ).textTheme.bodyLarge?.copyWith(color: Colors.white),
@@ -145,7 +145,7 @@ class _ProfileViewState extends State<ProfileView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   _buildProfileComponent(
-                    AppLocalizations.of(context)!.profile_joined,
+                    AppLocalizations.of(context)!.profile_view_joined,
                     _attrs?.createdAt != null
                         ? timeago.format(_attrs!.createdAt!)
                         : null,
@@ -160,10 +160,12 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                   if (_model.isLoggedIn && _model.isPersonalProfile)
                     _buildProfileComponent(
-                      AppLocalizations.of(context)!.profile_subscribed_to_mails,
+                      AppLocalizations.of(
+                        context,
+                      )!.profile_view_subscribed_to_mails,
                       _attrs?.subscribed == true
-                          ? AppLocalizations.of(context)!.profile_yes
-                          : AppLocalizations.of(context)!.profile_no,
+                          ? AppLocalizations.of(context)!.profile_view_yes
+                          : AppLocalizations.of(context)!.profile_view_no,
                     ),
                   _buildEditProfileButton(),
                 ],
@@ -199,8 +201,12 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                 ),
                 tabs: [
-                  Tab(text: AppLocalizations.of(context)!.profile_circuits),
-                  Tab(text: AppLocalizations.of(context)!.profile_favourites),
+                  Tab(
+                    text: AppLocalizations.of(context)!.profile_view_circuits,
+                  ),
+                  Tab(
+                    text: AppLocalizations.of(context)!.profile_view_favourites,
+                  ),
                 ],
               ),
             ),
@@ -229,7 +235,9 @@ class _ProfileViewState extends State<ProfileView> {
             appBar:
                 widget.userId != null
                     ? AppBar(
-                      title: Text(AppLocalizations.of(context)!.profile_title),
+                      title: Text(
+                        AppLocalizations.of(context)!.profile_view_title,
+                      ),
                       centerTitle: true,
                     )
                     : null,

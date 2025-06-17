@@ -1730,59 +1730,71 @@ abstract class AppLocalizations {
   /// **'your project'**
   String get notifications_your_project;
 
-  /// No description provided for @profile_not_available.
+  /// No description provided for @profile_view_not_available.
   ///
   /// In en, this message translates to:
   /// **'N.A'**
-  String get profile_not_available;
+  String get profile_view_not_available;
 
-  /// No description provided for @profile_edit.
+  /// No description provided for @profile_view_edit.
   ///
   /// In en, this message translates to:
   /// **'Edit Profile'**
-  String get profile_edit;
+  String get profile_view_edit;
 
-  /// No description provided for @profile_joined.
+  /// No description provided for @profile_view_joined.
   ///
   /// In en, this message translates to:
   /// **'Joined'**
-  String get profile_joined;
+  String get profile_view_joined;
 
-  /// No description provided for @profile_subscribed_to_mails.
+  /// No description provided for @profile_view_country.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get profile_view_country;
+
+  /// No description provided for @profile_view_educational_institute.
+  ///
+  /// In en, this message translates to:
+  /// **'Educational Institute'**
+  String get profile_view_educational_institute;
+
+  /// No description provided for @profile_view_subscribed_to_mails.
   ///
   /// In en, this message translates to:
   /// **'Subscribed to mails'**
-  String get profile_subscribed_to_mails;
+  String get profile_view_subscribed_to_mails;
 
-  /// No description provided for @profile_yes.
+  /// No description provided for @profile_view_yes.
   ///
   /// In en, this message translates to:
   /// **'Yes'**
-  String get profile_yes;
+  String get profile_view_yes;
 
-  /// No description provided for @profile_no.
+  /// No description provided for @profile_view_no.
   ///
   /// In en, this message translates to:
   /// **'No'**
-  String get profile_no;
+  String get profile_view_no;
 
-  /// No description provided for @profile_title.
+  /// No description provided for @profile_view_title.
   ///
   /// In en, this message translates to:
   /// **'Profile'**
-  String get profile_title;
+  String get profile_view_title;
 
-  /// No description provided for @profile_circuits.
+  /// No description provided for @profile_view_circuits.
   ///
   /// In en, this message translates to:
   /// **'Circuits'**
-  String get profile_circuits;
+  String get profile_view_circuits;
 
-  /// No description provided for @profile_favourites.
+  /// No description provided for @profile_view_favourites.
   ///
   /// In en, this message translates to:
   /// **'Favourites'**
-  String get profile_favourites;
+  String get profile_view_favourites;
 
   /// No description provided for @edit_project_name.
   ///
@@ -2263,6 +2275,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Join and chat with us at'**
   String get join_slack;
+
+  /// No description provided for @about_slack_channel.
+  ///
+  /// In en, this message translates to:
+  /// **'Slack channel'**
+  String get about_slack_channel;
 
   /// No description provided for @contributors.
   ///

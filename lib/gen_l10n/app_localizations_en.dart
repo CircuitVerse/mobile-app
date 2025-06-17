@@ -881,31 +881,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifications_your_project => 'your project';
 
   @override
-  String get profile_not_available => 'N.A';
+  String get profile_view_not_available => 'N.A';
 
   @override
-  String get profile_edit => 'Edit Profile';
+  String get profile_view_edit => 'Edit Profile';
 
   @override
-  String get profile_joined => 'Joined';
+  String get profile_view_joined => 'Joined';
 
   @override
-  String get profile_subscribed_to_mails => 'Subscribed to mails';
+  String get profile_view_country => 'Country';
 
   @override
-  String get profile_yes => 'Yes';
+  String get profile_view_educational_institute => 'Educational Institute';
 
   @override
-  String get profile_no => 'No';
+  String get profile_view_subscribed_to_mails => 'Subscribed to mails';
 
   @override
-  String get profile_title => 'Profile';
+  String get profile_view_yes => 'Yes';
 
   @override
-  String get profile_circuits => 'Circuits';
+  String get profile_view_no => 'No';
 
   @override
-  String get profile_favourites => 'Favourites';
+  String get profile_view_title => 'Profile';
+
+  @override
+  String get profile_view_circuits => 'Circuits';
+
+  @override
+  String get profile_view_favourites => 'Favourites';
 
   @override
   String get edit_project_name => 'Name';
@@ -1156,6 +1162,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get join_slack => 'Join and chat with us at';
+
+  @override
+  String get about_slack_channel => 'Slack channel';
 
   @override
   String get contributors => 'Contributors';

@@ -886,31 +886,37 @@ class AppLocalizationsHi extends AppLocalizations {
   String get notifications_your_project => 'आपका प्रोजेक्ट';
 
   @override
-  String get profile_not_available => 'उपलब्ध नहीं';
+  String get profile_view_not_available => 'उपलब्ध नहीं';
 
   @override
-  String get profile_edit => 'प्रोफ़ाइल संपादित करें';
+  String get profile_view_edit => 'प्रोफ़ाइल संपादित करें';
 
   @override
-  String get profile_joined => 'जुड़े';
+  String get profile_view_joined => 'जुड़े';
 
   @override
-  String get profile_subscribed_to_mails => 'मेल की सदस्यता ली';
+  String get profile_view_country => 'देश';
 
   @override
-  String get profile_yes => 'हाँ';
+  String get profile_view_educational_institute => 'शैक्षणिक संस्थान';
 
   @override
-  String get profile_no => 'नहीं';
+  String get profile_view_subscribed_to_mails => 'मेल की सदस्यता ली';
 
   @override
-  String get profile_title => 'प्रोफ़ाइल';
+  String get profile_view_yes => 'हाँ';
 
   @override
-  String get profile_circuits => 'सर्किट';
+  String get profile_view_no => 'नहीं';
 
   @override
-  String get profile_favourites => 'पसंदीदा';
+  String get profile_view_title => 'प्रोफ़ाइल';
+
+  @override
+  String get profile_view_circuits => 'सर्किट';
+
+  @override
+  String get profile_view_favourites => 'पसंदीदा';
 
   @override
   String get edit_project_name => 'नाम';
@@ -1165,6 +1171,9 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get join_slack => 'हमारे साथ जुड़ें और चैट करें';
+
+  @override
+  String get about_slack_channel => 'स्लैक चैनल';
 
   @override
   String get contributors => 'योगदानकर्ता';
