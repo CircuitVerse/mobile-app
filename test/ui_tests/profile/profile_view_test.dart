@@ -70,9 +70,7 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-          ],
+          localizationsDelegates: [AppLocalizations.delegate],
           supportedLocales: AppLocalizations.supportedLocales,
           home: const ProfileView(),
         ),

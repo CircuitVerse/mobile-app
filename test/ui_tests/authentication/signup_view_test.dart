@@ -39,9 +39,7 @@ void main() {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [
-            Locale('en', ''),
-          ],
+          supportedLocales: const [Locale('en', '')],
           locale: const Locale('en', ''),
           home: const LoginView(),
         ),
@@ -71,7 +69,8 @@ void main() {
       expect(
         find.byWidgetPredicate((widget) {
           return widget is RichText &&
-              widget.text.toPlainText() == '${localizations.new_user} ${localizations.sign_up}';
+              widget.text.toPlainText() ==
+                  '${localizations.new_user} ${localizations.sign_up}';
         }),
         findsOneWidget,
       );
@@ -86,10 +85,12 @@ void main() {
       final context = tester.element(find.byType(LoginView));
       final localizations = AppLocalizations.of(context)!;
 
+      clearInteractions(mockObserver);
+
       await tester.tap(find.text(localizations.forgot_password));
       await tester.pumpAndSettle();
 
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any, any)).called(1);
       expect(find.byType(ForgotPasswordView), findsOneWidget);
     });
 
@@ -102,15 +103,18 @@ void main() {
       final context = tester.element(find.byType(LoginView));
       final localizations = AppLocalizations.of(context)!;
 
+      clearInteractions(mockObserver);
+
       await tester.tap(
         find.byWidgetPredicate((widget) {
           return widget is RichText &&
-              widget.text.toPlainText() == '${localizations.new_user} ${localizations.sign_up}';
+              widget.text.toPlainText() ==
+                  '${localizations.new_user} ${localizations.sign_up}';
         }),
       );
       await tester.pumpAndSettle();
 
-      verify(mockObserver.didPush(any, any));
+      verify(mockObserver.didPush(any, any)).called(1);
       expect(find.byType(SignupView), findsOneWidget);
     });
 
@@ -130,14 +134,20 @@ void main() {
 
         verifyNever(_usersApiMock.login('', ''));
         expect(find.text(localizations.email_validation_error), findsOneWidget);
-        expect(find.text(localizations.password_validation_error), findsOneWidget);
+        expect(
+          find.text(localizations.password_validation_error),
+          findsOneWidget,
+        );
 
         await tester.enterText(find.byType(CVTextField), 'test@test.com');
         await tester.tap(find.byType(CVPrimaryButton));
         await tester.pumpAndSettle();
 
         verifyNever(_usersApiMock.login('test@test.com', ''));
-        expect(find.text(localizations.password_validation_error), findsOneWidget);
+        expect(
+          find.text(localizations.password_validation_error),
+          findsOneWidget,
+        );
       },
     );
   });

@@ -56,7 +56,7 @@ void main() {
         ),
       );
       when(model.keyMap).thenAnswer((_) => {});
-      when(model.close()).thenAnswer((_) => VoidCallback);
+      when(model.close()).thenAnswer((_) => {});
 
       when(
         pageViewModel.IB_FETCH_PAGE_DATA,

@@ -142,7 +142,9 @@ void main() {
       when(
         groupDetailsViewModel.FETCH_GROUP_DETAILS,
       ).thenReturn('fetch_group_details');
-      when(groupDetailsViewModel.fetchGroupDetails(any)).thenReturn(null);
+      when(
+        groupDetailsViewModel.fetchGroupDetails(any),
+      ).thenAnswer((_) async {});
       when(groupDetailsViewModel.isMentor).thenReturn(false);
       when(groupDetailsViewModel.isSuccess(any)).thenReturn(false);
 

@@ -10,7 +10,7 @@ import 'package:mobile_app/services/database_service.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:mobile_app/ui/views/startup_view.dart';
-import 'package:mobile_app/controllers/launguage_controller.dart';
+import 'package:mobile_app/controllers/language_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

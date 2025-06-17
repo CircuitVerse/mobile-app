@@ -419,7 +419,7 @@ abstract class AppLocalizations {
   /// No description provided for @name.
   ///
   /// In en, this message translates to:
-  /// **'नाम'**
+  /// **'Name'**
   String get name;
 
   /// No description provided for @name_empty_error.
@@ -560,17 +560,17 @@ abstract class AppLocalizations {
   /// **'Password reset instructions have been sent to your email'**
   String get instructions_sent_message;
 
-  /// No description provided for @password_validation_error.
-  ///
-  /// In en, this message translates to:
-  /// **'Password can\'t be empty'**
-  String get password_validation_error;
-
   /// No description provided for @forgot_password.
   ///
   /// In en, this message translates to:
   /// **'Forgot Password?'**
   String get forgot_password;
+
+  /// No description provided for @password_validation_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Password can\'t be empty'**
+  String get password_validation_error;
 
   /// No description provided for @authenticating.
   ///
@@ -599,7 +599,7 @@ abstract class AppLocalizations {
   /// No description provided for @name_validation_error.
   ///
   /// In en, this message translates to:
-  /// **'नाम खाली नहीं हो सकता'**
+  /// **'Name cannot be empty'**
   String get name_validation_error;
 
   /// No description provided for @password_length_error.
@@ -1535,7 +1535,7 @@ abstract class AppLocalizations {
   /// No description provided for @tags_list.
   ///
   /// In en, this message translates to:
-  /// **'टैग सूची'**
+  /// **'Tags List'**
   String get tags_list;
 
   /// No description provided for @project_access_type.
@@ -1547,80 +1547,50 @@ abstract class AppLocalizations {
   /// No description provided for @project_access_type_validation_error.
   ///
   /// In en, this message translates to:
-  /// **'एक प्रोजेक्ट पहुंच प्रकार चुनें'**
+  /// **'Please select project access type'**
   String get project_access_type_validation_error;
 
   /// No description provided for @public.
   ///
   /// In en, this message translates to:
-  /// **'सार्वजनिक'**
+  /// **'Public'**
   String get public;
 
   /// No description provided for @private.
   ///
   /// In en, this message translates to:
-  /// **'निजी'**
+  /// **'Private'**
   String get private;
 
   /// No description provided for @limited_access.
   ///
   /// In en, this message translates to:
-  /// **'सीमित पहुंच'**
+  /// **'Limited Access'**
   String get limited_access;
 
   /// No description provided for @updating_project.
   ///
   /// In en, this message translates to:
-  /// **'प्रोजेक्ट अपडेट किया जा रहा है...'**
+  /// **'Updating project...'**
   String get updating_project;
 
   /// No description provided for @project_updated.
   ///
   /// In en, this message translates to:
-  /// **'प्रोजेक्ट अपडेट हो गया'**
+  /// **'Project updated'**
   String get project_updated;
 
   /// No description provided for @project_update_success.
   ///
   /// In en, this message translates to:
-  /// **'प्रोजेक्ट सफलतापूर्वक अपडेट हो गया'**
+  /// **'Project updated successfully'**
   String get project_update_success;
 
   /// No description provided for @update_project.
   ///
   /// In en, this message translates to:
-  /// **'प्रोजेक्ट अपडेट करें'**
+  /// **'Update Project'**
   String get update_project;
-
-  /// No description provided for @editor_picks.
-  ///
-  /// In en, this message translates to:
-  /// **'संपादक की पसंद'**
-  String get editor_picks;
-
-  /// No description provided for @editor_picks_description.
-  ///
-  /// In en, this message translates to:
-  /// **'ये सर्किट हमारे लेखकों द्वारा उनकी अद्भुतता के लिए चुने गए हैं।'**
-  String get editor_picks_description;
-
-  /// No description provided for @featured_circuits.
-  ///
-  /// In en, this message translates to:
-  /// **'Featured Circuits'**
-  String get featured_circuits;
-
-  /// No description provided for @search_for_circuits.
-  ///
-  /// In en, this message translates to:
-  /// **'सर्किट खोजें'**
-  String get search_for_circuits;
-
-  /// No description provided for @no_result_found.
-  ///
-  /// In en, this message translates to:
-  /// **'कोई परिणाम नहीं मिला'**
-  String get no_result_found;
 
   /// No description provided for @project_details.
   ///
@@ -1661,7 +1631,7 @@ abstract class AppLocalizations {
   /// No description provided for @add_a_collaborator.
   ///
   /// In en, this message translates to:
-  /// **'Add A Collaborator'**
+  /// **'Add Collaborator'**
   String get add_a_collaborator;
 
   /// No description provided for @collaborators.
@@ -1691,13 +1661,13 @@ abstract class AppLocalizations {
   /// No description provided for @project_starred.
   ///
   /// In en, this message translates to:
-  /// **'Project Starred'**
+  /// **'Project starred'**
   String get project_starred;
 
   /// No description provided for @project_unstarred.
   ///
   /// In en, this message translates to:
-  /// **'Project Unstarred'**
+  /// **'Project unstarred'**
   String get project_unstarred;
 
   /// No description provided for @starred_success.
@@ -1721,19 +1691,19 @@ abstract class AppLocalizations {
   /// No description provided for @email_ids.
   ///
   /// In en, this message translates to:
-  /// **'Email Ids'**
+  /// **'Email IDs'**
   String get email_ids;
 
   /// No description provided for @email_hint.
   ///
   /// In en, this message translates to:
-  /// **'Enter Email IDs separated by commas'**
+  /// **'Enter email IDs separated by comma'**
   String get email_hint;
 
   /// No description provided for @collaborators_added.
   ///
   /// In en, this message translates to:
-  /// **'Collaborators Added'**
+  /// **'Collaborators added'**
   String get collaborators_added;
 
   /// No description provided for @delete_project.
@@ -1757,38 +1727,62 @@ abstract class AppLocalizations {
   /// No description provided for @project_deleted.
   ///
   /// In en, this message translates to:
-  /// **'Project Deleted'**
+  /// **'Project deleted'**
   String get project_deleted;
 
   /// No description provided for @delete_success.
   ///
   /// In en, this message translates to:
-  /// **'Project is successfully deleted'**
+  /// **'Project deleted successfully'**
   String get delete_success;
 
   /// No description provided for @delete_collaborator.
   ///
   /// In en, this message translates to:
-  /// **'Delete Collaborator'**
+  /// **'Remove Collaborator'**
   String get delete_collaborator;
 
   /// No description provided for @delete_collaborator_confirmation.
   ///
   /// In en, this message translates to:
-  /// **'Are you sure you want to delete this collaborator?'**
+  /// **'Are you sure you want to remove this collaborator?'**
   String get delete_collaborator_confirmation;
 
   /// No description provided for @collaborator_deleted.
   ///
   /// In en, this message translates to:
-  /// **'Collaborator Deleted'**
+  /// **'Collaborator removed'**
   String get collaborator_deleted;
 
   /// No description provided for @collaborator_delete_success.
   ///
   /// In en, this message translates to:
-  /// **'Collaborator was successfully deleted'**
+  /// **'Collaborator removed successfully'**
   String get collaborator_delete_success;
+
+  /// No description provided for @no_result_found.
+  ///
+  /// In en, this message translates to:
+  /// **'No result found'**
+  String get no_result_found;
+
+  /// No description provided for @editor_picks.
+  ///
+  /// In en, this message translates to:
+  /// **'Editor\'s Picks'**
+  String get editor_picks;
+
+  /// No description provided for @editor_picks_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Curated list of the best projects'**
+  String get editor_picks_description;
+
+  /// No description provided for @search_for_circuits.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for circuits'**
+  String get search_for_circuits;
 
   /// No description provided for @title.
   ///
@@ -1801,6 +1795,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Groups'**
   String get groups;
+
+  /// No description provided for @featured_circuits.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured Circuits'**
+  String get featured_circuits;
 
   /// No description provided for @logout.
   ///

@@ -64,9 +64,7 @@ void main() {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [
-            Locale('en', ''),
-          ],
+          supportedLocales: const [Locale('en', '')],
           locale: const Locale('en', ''),
           home: BaseView<ProfileViewModel>(
             builder: (context, model, child) {

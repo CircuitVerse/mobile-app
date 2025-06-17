@@ -29,7 +29,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   Color _getUnselectedTabColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
-        ? Colors.white
+        ? Colors.white70
         : Colors.black87;
   }
 
