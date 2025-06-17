@@ -17,6 +17,7 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_data/mock_groups.dart';
 import '../../setup/test_data/mock_user.dart';
@@ -66,8 +67,11 @@ void main() {
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: GroupDetailsView(group: group),
-          localizationsDelegates:
-              FlutterQuillLocalizations.localizationsDelegates,
+          localizationsDelegates: [
+            ...FlutterQuillLocalizations.localizationsDelegates,
+            AppLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
         ),
       );
 
@@ -82,23 +86,34 @@ void main() {
       await _pumpGroupDetailsView(tester);
       await tester.pumpAndSettle();
 
+      // FIXED: Get the AppLocalizations instance using the current context
+      final context = tester.element(find.byType(GroupDetailsView));
+      final localizations = AppLocalizations.of(context);
+
+      // Verify localizations is not null
+      expect(localizations, isNotNull);
+
       // Finds Group Name
       expect(find.text('Test Group'), findsOneWidget);
 
       // Finds Edit Group Button
-      expect(find.text('Edit'), findsNWidgets(2));
+      expect(find.text(localizations!.edit), findsNWidgets(2));
 
       // Finds Mentor Name
       expect(
         find.byWidgetPredicate((widget) {
           return widget is RichText &&
-              widget.text.toPlainText() == 'Primary Mentor : Test User';
+              widget.text.toPlainText() ==
+                  '${localizations.primary_mentor} : Test User';
         }),
         findsOneWidget,
       );
 
       // Make Add Mentors, Add Members and Add Assignments Button
-      expect(find.widgetWithText(CVPrimaryButton, '+ Add'), findsNWidgets(3));
+      expect(
+        find.widgetWithText(CVPrimaryButton, '${localizations.add} +'),
+        findsNWidgets(3),
+      );
 
       // Finds Member Card (1)
       expect(find.byType(MemberCard), findsOneWidget);
@@ -113,8 +128,14 @@ void main() {
       await _pumpGroupDetailsView(tester);
       await tester.pumpAndSettle();
 
+      final context = tester.element(find.byType(GroupDetailsView));
+      final localizations = AppLocalizations.of(context);
+
+      // Verify localizations is not null
+      expect(localizations, isNotNull);
+
       // Tap Edit Button
-      await tester.tap(find.text('Edit').first);
+      await tester.tap(find.text(localizations!.edit).first);
       await tester.pumpAndSettle();
 
       // Expect EditGroupView is Pushed
@@ -128,8 +149,15 @@ void main() {
       await _pumpGroupDetailsView(tester);
       await tester.pumpAndSettle();
 
+      final context = tester.element(find.byType(GroupDetailsView));
+      final localizations = AppLocalizations.of(context);
+
+      expect(localizations, isNotNull);
+
       // Tap Add Members button
-      await tester.tap(find.widgetWithText(CVPrimaryButton, '+ Add').first);
+      await tester.tap(
+        find.widgetWithText(CVPrimaryButton, '${localizations!.add} +').first,
+      );
       await tester.pumpAndSettle();
 
       // Expect Alert Dialog is visible
@@ -142,8 +170,15 @@ void main() {
       await _pumpGroupDetailsView(tester);
       await tester.pumpAndSettle();
 
+      final context = tester.element(find.byType(GroupDetailsView));
+      final localizations = AppLocalizations.of(context);
+
+      expect(localizations, isNotNull);
+
       // Tap Add Assignment Button
-      await tester.tap(find.widgetWithText(CVPrimaryButton, '+ Add').last);
+      await tester.tap(
+        find.widgetWithText(CVPrimaryButton, '${localizations!.add} +').last,
+      );
       await tester.pumpAndSettle();
 
       // Expect AddAssignmentView is Pushed

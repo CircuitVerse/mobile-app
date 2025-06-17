@@ -12,6 +12,7 @@ import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key, this.userId});
@@ -28,9 +29,8 @@ class _ProfileViewState extends State<ProfileView> {
 
   Color _getUnselectedTabColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
-        ? Colors
-            .white // Night mode
-        : Colors.black87; // Day mode
+        ? Colors.white
+        : Colors.black87;
   }
 
   Widget _buildProfileImage() {
@@ -58,7 +58,8 @@ class _ProfileViewState extends State<ProfileView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Text(
-        _model.user?.data.attributes.name ?? 'N.A',
+        _model.user?.data.attributes.name ??
+            AppLocalizations.of(context)!.not_available,
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -83,7 +84,12 @@ class _ProfileViewState extends State<ProfileView> {
                 context,
               ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
             ),
-            TextSpan(text: description?.isEmpty ?? true ? 'N.A' : description),
+            TextSpan(
+              text:
+                  description?.isEmpty ?? true
+                      ? AppLocalizations.of(context)!.not_available
+                      : description,
+            ),
           ],
         ),
       ),
@@ -105,19 +111,18 @@ class _ProfileViewState extends State<ProfileView> {
           });
         },
         child: Text(
-          'Edit Profile',
+          AppLocalizations.of(context)!.edit_profile,
           style: Theme.of(
             context,
           ).textTheme.bodyLarge?.copyWith(color: Colors.white),
         ),
       );
     }
-
     return Container();
   }
 
   Widget _buildProfileCard() {
-    var _attrs = _model.user?.data.attributes;
+    final _attrs = _model.user?.data.attributes;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -140,20 +145,25 @@ class _ProfileViewState extends State<ProfileView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   _buildProfileComponent(
-                    'Joined',
+                    AppLocalizations.of(context)!.joined,
                     _attrs?.createdAt != null
                         ? timeago.format(_attrs!.createdAt!)
                         : null,
                   ),
-                  _buildProfileComponent('Country', _attrs?.country),
                   _buildProfileComponent(
-                    'Educational Institute',
+                    AppLocalizations.of(context)!.country,
+                    _attrs?.country,
+                  ),
+                  _buildProfileComponent(
+                    AppLocalizations.of(context)!.educational_institute,
                     _attrs?.educationalInstitute,
                   ),
                   if (_model.isLoggedIn && _model.isPersonalProfile)
                     _buildProfileComponent(
-                      'Subscribed to mails',
-                      _attrs?.subscribed == true ? "Yes" : "No",
+                      AppLocalizations.of(context)!.subscribed_to_mails,
+                      _attrs?.subscribed == true
+                          ? AppLocalizations.of(context)!.yes
+                          : AppLocalizations.of(context)!.no,
                     ),
                   _buildEditProfileButton(),
                 ],
@@ -180,15 +190,18 @@ class _ProfileViewState extends State<ProfileView> {
               color: CVTheme.lightGrey.withValues(alpha: 0.2),
               tabBar: TabBar(
                 labelColor: Colors.white,
-                unselectedLabelColor: _getUnselectedTabColor(
-                  context,
-                ), // Dynamic color
+                unselectedLabelColor: _getUnselectedTabColor(context),
                 indicatorSize: TabBarIndicatorSize.tab,
                 indicator: BoxDecoration(
                   color: CVTheme.primaryColor,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(4)),
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(4),
+                  ),
                 ),
-                tabs: const [Tab(text: 'Circuits'), Tab(text: 'Favourites')],
+                tabs: [
+                  Tab(text: AppLocalizations.of(context)!.circuits),
+                  Tab(text: AppLocalizations.of(context)!.favourites),
+                ],
               ),
             ),
             body: TabBarView(
@@ -215,7 +228,10 @@ class _ProfileViewState extends State<ProfileView> {
           (context, model, child) => Scaffold(
             appBar:
                 widget.userId != null
-                    ? AppBar(title: const Text('Profile'), centerTitle: true)
+                    ? AppBar(
+                      title: Text(AppLocalizations.of(context)!.profile),
+                      centerTitle: true,
+                    )
                     : null,
             body: Padding(
               padding: const EdgeInsets.all(8),

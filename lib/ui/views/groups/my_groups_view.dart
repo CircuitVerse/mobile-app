@@ -13,6 +13,7 @@ import 'package:mobile_app/ui/views/groups/edit_group_view.dart';
 import 'package:mobile_app/ui/views/groups/new_group_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class MyGroupsView extends StatefulWidget {
   const MyGroupsView({super.key});
@@ -35,7 +36,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
       children: <Widget>[
         SvgPicture.asset('assets/images/group/no_group.svg', height: 250),
         _buildSubHeader(
-          title: "Explore and join groups of your school and friends!",
+          title: AppLocalizations.of(context)!.explore_groups_message,
         ),
       ],
     );
@@ -66,13 +67,15 @@ class _MyGroupsViewState extends State<MyGroupsView>
 
   Future<void> onDeleteGroupPressed(String groupId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: 'Delete Group',
-      description: 'Are you sure you want to delete this group?',
-      confirmationTitle: 'DELETE',
+      title: AppLocalizations.of(context)!.delete_group,
+      description: AppLocalizations.of(context)!.delete_group_confirmation,
+      confirmationTitle: AppLocalizations.of(context)!.delete.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
-      _dialogService.showCustomProgressDialog(title: 'Deleting Group');
+      _dialogService.showCustomProgressDialog(
+        title: AppLocalizations.of(context)!.deleting_group,
+      );
 
       await _model.deleteGroup(groupId);
 
@@ -80,12 +83,12 @@ class _MyGroupsViewState extends State<MyGroupsView>
 
       if (_model.isSuccess(_model.DELETE_GROUP)) {
         SnackBarUtils.showDark(
-          'Group Deleted',
-          'Group was successfully deleted.',
+          AppLocalizations.of(context)!.group_deleted,
+          AppLocalizations.of(context)!.group_deleted_success,
         );
       } else if (_model.isError(_model.DELETE_GROUP)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context)!.error,
           _model.errorMessageFor(_model.DELETE_GROUP),
         );
       }
@@ -113,7 +116,10 @@ class _MyGroupsViewState extends State<MyGroupsView>
                 controller: _tabController,
                 labelColor: CVTheme.textColor(context),
                 indicatorColor: CVTheme.primaryColor,
-                tabs: const [Tab(text: 'Owned'), Tab(text: 'Joined')],
+                tabs: [
+                  Tab(text: AppLocalizations.of(context)!.owned),
+                  Tab(text: AppLocalizations.of(context)!.joined),
+                ],
               ),
             ),
             body: Builder(
@@ -122,7 +128,6 @@ class _MyGroupsViewState extends State<MyGroupsView>
                 var _joinedGroups = <Widget>[];
 
                 if (_model.isSuccess(_model.FETCH_OWNED_GROUPS)) {
-                  // creates GroupMentorCard corresponding to each mentor group
                   for (var group in _model.ownedGroups) {
                     _ownedGroups.add(
                       GroupMentorCard(
@@ -132,7 +137,6 @@ class _MyGroupsViewState extends State<MyGroupsView>
                       ),
                     );
                   }
-                  // Adds fetch more groups icon if link to next set exists
                   if (_model.previousMentoredGroupsBatch?.links.next != null) {
                     _ownedGroups.add(
                       CVAddIconButton(onPressed: _model.fetchMentoredGroups),
@@ -140,12 +144,10 @@ class _MyGroupsViewState extends State<MyGroupsView>
                   }
                 }
                 if (_model.isSuccess(_model.FETCH_MEMBER_GROUPS)) {
-                  // creates GroupMemberCard corresponding to each member group
                   for (var group in _model.memberGroups) {
                     _joinedGroups.add(GroupMemberCard(group: group));
                   }
 
-                  // Adds fetch more groups icon if link to next set exists
                   if (_model.previousMemberGroupsBatch?.links.next != null) {
                     _joinedGroups.add(
                       CVAddIconButton(onPressed: _model.fetchMemberGroups),

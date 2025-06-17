@@ -11,6 +11,7 @@ import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:theme_provider/theme_provider.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class IbLandingView extends StatefulWidget {
   const IbLandingView({super.key});
@@ -72,7 +73,7 @@ class _IbLandingViewState extends State<IbLandingView> {
               },
               icon: const Icon(Icons.arrow_back),
             ),
-            hint: 'Search CircuitVerse',
+            hint: AppLocalizations.of(context)!.search_circuitverse,
             onFieldSubmitted: (_) {
               _model.query = _controller.text;
             },
@@ -132,7 +133,7 @@ class _IbLandingViewState extends State<IbLandingView> {
         },
         icon: Showcase(
           key: _model.drawer,
-          description: 'Navigate to different chapters',
+          description: AppLocalizations.of(context)!.navigate_chapters,
           targetPadding: const EdgeInsets.all(12.0),
           onTargetClick: () {
             _model.onShowCased('drawer');
@@ -144,8 +145,8 @@ class _IbLandingViewState extends State<IbLandingView> {
       ),
       title: Text(
         _model.selectedChapter.id == _model.homeChapter.id
-            ? 'CircuitVerse'
-            : 'Interactive Book',
+            ? AppLocalizations.of(context)!.circuitverse
+            : AppLocalizations.of(context)!.interactive_book,
       ),
       actions: [
         IconButton(
@@ -160,7 +161,7 @@ class _IbLandingViewState extends State<IbLandingView> {
             return value != null
                 ? Showcase(
                   key: _model.toc,
-                  description: 'Show Table of Contents',
+                  description: AppLocalizations.of(context)!.show_toc,
                   onTargetClick: () {
                     _model.onShowCased('toc');
                     if (_key.currentState!.isDrawerOpen) Get.back();
@@ -256,7 +257,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                   Get.back();
                 },
                 child: CVDrawerTile(
-                  title: 'Return to Home',
+                  title: AppLocalizations.of(context)!.return_home,
                   color: IbTheme.textColor(context),
                 ),
               ),
@@ -264,7 +265,7 @@ class _IbLandingViewState extends State<IbLandingView> {
               InkWell(
                 onTap: () => setSelectedChapter(_model.homeChapter),
                 child: CVDrawerTile(
-                  title: 'Interactive Book Home',
+                  title: AppLocalizations.of(context)!.ib_home,
                   color:
                       (_model.selectedChapter.id == _model.homeChapter.id)
                           ? IbTheme.getPrimaryColor(context)
@@ -272,13 +273,13 @@ class _IbLandingViewState extends State<IbLandingView> {
                 ),
               ),
               if (!_model.isSuccess(_model.IB_FETCH_CHAPTERS))
-                const ListTile(
-                  leading: SizedBox(
+                ListTile(
+                  leading: const SizedBox(
                     width: 24,
                     height: 24,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   ),
-                  title: Text('Loading Chapters...'),
+                  title: Text(AppLocalizations.of(context)!.loading_chapters),
                 )
               else
                 _buildChapters(_model.chapters),

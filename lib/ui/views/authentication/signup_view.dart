@@ -11,6 +11,7 @@ import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/signup_viewmodel.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class SignupView extends StatefulWidget {
   const SignupView({super.key});
@@ -53,9 +54,12 @@ class _SignupViewState extends State<SignupView> {
 
   Widget _buildNameInput() {
     return CVTextField(
-      label: 'Name',
+      label: AppLocalizations.of(context)!.name,
       validator:
-          (value) => value?.isEmpty ?? true ? 'Name can\'t be empty' : null,
+          (value) =>
+              value?.isEmpty ?? true
+                  ? AppLocalizations.of(context)!.name_validation_error
+                  : null,
       onSaved: (value) => _name = value!.trim(),
       onFieldSubmitted:
           (_) => FocusScope.of(context).requestFocus(_nameFocusNode),
@@ -65,13 +69,13 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildEmailInput() {
     return CVTextField(
       focusNode: _nameFocusNode,
-      label: 'Email',
+      label: AppLocalizations.of(context)!.email,
       type: TextInputType.emailAddress,
       validator:
           (value) =>
               Validators.isEmailValid(value)
                   ? null
-                  : 'Please enter a valid email',
+                  : AppLocalizations.of(context)!.email_validation_error,
       onSaved: (value) => _email = value!.trim(),
       onFieldSubmitted: (_) {
         _nameFocusNode.unfocus();
@@ -85,9 +89,9 @@ class _SignupViewState extends State<SignupView> {
       focusNode: _emailFocusNode,
       validator: (value) {
         if (value!.isEmpty) {
-          return "Password can't be empty";
+          return AppLocalizations.of(context)!.password_validation_error;
         } else if (value.length < 6) {
-          return "Password length should be at least 6";
+          return AppLocalizations.of(context)!.password_length_error;
         }
         return null;
       },
@@ -102,8 +106,8 @@ class _SignupViewState extends State<SignupView> {
       child: CVPrimaryButton(
         title:
             _signUpModel.isBusy(_signUpModel.SIGNUP)
-                ? 'Authenticating..'
-                : 'REGISTER',
+                ? AppLocalizations.of(context)!.authenticating
+                : AppLocalizations.of(context)!.register.toUpperCase(),
         onPressed: _validateAndSubmit,
       ),
     );
@@ -114,11 +118,11 @@ class _SignupViewState extends State<SignupView> {
       onTap: () => Get.offAllNamed(LoginView.id),
       child: RichText(
         text: TextSpan(
-          text: 'Already Registered? ',
+          text: '${AppLocalizations.of(context)!.already_registered} ',
           style: Theme.of(context).textTheme.bodyLarge,
           children: <TextSpan>[
             TextSpan(
-              text: 'Login',
+              text: AppLocalizations.of(context)!.login,
               style: TextStyle(
                 color: CVTheme.highlightText(context),
                 fontSize: 16,
@@ -138,16 +142,16 @@ class _SignupViewState extends State<SignupView> {
       await _signUpModel.signup(_name, _email, _password);
 
       if (_signUpModel.isSuccess(_signUpModel.SIGNUP)) {
-        // show signup successful snackbar..
-        SnackBarUtils.showDark('Signup Successful', 'Welcome to CircuitVerse!');
+        SnackBarUtils.showDark(
+          AppLocalizations.of(context)!.signup_success_title,
+          AppLocalizations.of(context)!.signup_success_message,
+        );
 
-        // move to home view on successful signup..
         await Future.delayed(const Duration(seconds: 1));
         await Get.offAllNamed(CVLandingView.id);
       } else if (_signUpModel.isError(_signUpModel.SIGNUP)) {
-        // show failure snackbar..
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context)!.error,
           _signUpModel.errorMessageFor(_signUpModel.SIGNUP),
         );
         _formKey.currentState?.reset();

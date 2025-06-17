@@ -9,16 +9,900 @@ class AppLocalizationsHi extends AppLocalizations {
   AppLocalizationsHi([String locale = 'hi']) : super(locale);
 
   @override
-  String get title => 'सर्किटवर्स';
+  String get home_header_title =>
+      'तर्क सर्किट की दुनिया में मुफ्त में डुबकी लगाएं!';
 
   @override
-  String get groups => 'आपके समूह';
+  String get home_header_subtitle =>
+      'सरल गेट्स से लेकर जटिल अनुक्रमिक सर्किट्स तक, टाइमिंग डायग्राम प्लॉट करें, स्वचालित सर्किट जनरेशन, मानक आईसी एक्सप्लोर करें और बहुत कुछ';
+
+  @override
+  String get teachers_button => 'शिक्षकों के लिए';
+
+  @override
+  String get contributors_button => 'योगदानकर्ताओं के लिए';
+
+  @override
+  String get features_title => 'विशेषताएं';
+
+  @override
+  String get features_subtitle =>
+      'ड्रैग-एंड-ड्रॉप, कॉपी/पेस्ट, ज़ूम और अन्य आधुनिक व सहज यूजर इंटरफेस के साथ सर्किट्स को जल्दी और आसानी से डिज़ाइन करें।';
+
+  @override
+  String get feature1_title => 'हाई रेजोल्यूशन इमेजेज एक्सप्लोर करें';
+
+  @override
+  String get feature1_description =>
+      'सर्किटवर्स एसवीजी सहित कई फॉर्मेट में हाई रेजोल्यूशन इमेजेज एक्सपोर्ट कर सकता है।';
+
+  @override
+  String get feature2_title => 'कॉम्बिनेशनल एनालिसिस';
+
+  @override
+  String get feature2_description =>
+      'ट्रुथ टेबल डेटा के आधार पर स्वचालित रूप से सर्किट जनरेट करें। यह जटिल लॉजिक सर्किट बनाने के लिए बेहतरीन है और आसानी से सबसर्किट में बदला जा सकता है।';
+
+  @override
+  String get feature3_title => 'ब्लॉग्स में एम्बेड करें';
+
+  @override
+  String get feature3_description =>
+      'चूंकि सर्किटवर्स HTML5 में बना है, प्रत्येक प्रोजेक्ट के लिए एक आईफ्रेम जनरेट किया जा सकता है जिसे लगभग कहीं भी एम्बेड किया जा सकता है।';
+
+  @override
+  String get feature4_title => 'सब सर्किट्स का उपयोग करें';
+
+  @override
+  String get feature4_description =>
+      'सबसर्किट्स एक बार बनाएं और बार-बार उनका उपयोग करें। इससे डिज़ाइन आसान और अधिक संरचित होता है।';
+
+  @override
+  String get feature5_title => 'मल्टी बिट बसें और कंपोनेंट्स';
+
+  @override
+  String get feature5_description =>
+      'सर्किटवर्स मल्टी बिट वायर्स को सपोर्ट करता है, इसका मतलब है कि सर्किट डिज़ाइन आसान, तेज़ और अव्यवस्था रहित है।';
+
+  @override
+  String get editor_picks_title => 'एडिटर की पसंद';
+
+  @override
+  String get editor_picks_subtitle =>
+      'ये सर्किट्स हमारे लेखकों द्वारा उनकी शानदारता के लिए चुने गए हैं';
+
+  @override
+  String get explore_more_button => 'और एक्सप्लोर करें';
+
+  @override
+  String get teachers_title => 'शिक्षक';
+
+  @override
+  String get teachers_description =>
+      'CircuitVerse को कक्षा में उपयोग करने में बहुत आसान बनाया गया है। प्लेटफॉर्म में शिक्षकों की सहायता के लिए विशेषताएं हैं।';
+
+  @override
+  String get benefits_title => 'लाभ';
+
+  @override
+  String get teachers_feature1_title => 'समूह बनाएं और अपने छात्रों को जोड़ें';
+
+  @override
+  String get teachers_feature1_description =>
+      'आप समूह बना सकते हैं और उनमें अपने छात्रों को जोड़ सकते हैं! यदि छात्र पहले से ही CircuitVerse के साथ पंजीकृत हैं तो वे स्वचालित रूप से जोड़ दिए जाएंगे। यदि वे अभी तक CircuitVerse के साथ पंजीकृत नहीं हैं, तो पंजीकरण के लिए एक निमंत्रण भेजा जाएगा। एक बार पंजीकृत होने के बाद, वे स्वचालित रूप से जोड़ दिए जाएंगे।';
+
+  @override
+  String get teachers_feature2_title => 'असाइनमेंट पोस्ट करें';
+
+  @override
+  String get teachers_feature2_description =>
+      'असाइनमेंट बनाने के लिए, बस एक नया असाइनमेंट बटन पर क्लिक करें। असाइनमेंट का विवरण और समय सीमा दें। असाइनमेंट स्वचालित रूप से समय सीमा पर बंद हो जाएगा। छात्र अपना असाइनमेंट तब तक जारी नहीं रख सकते जब तक कि शिक्षक असाइनमेंट को फिर से न खोल दे।';
+
+  @override
+  String get teachers_feature3_title => 'असाइनमेंट ग्रेडिंग';
+
+  @override
+  String get teachers_feature3_description =>
+      'इन-बिल्ड पूर्वावलोकन के साथ असाइनमेंट को बहुत आसानी से ग्रेड करें। बस छात्र का चयन करें, उसके असाइनमेंट कार्य पर।';
+
+  @override
+  String get teachers_feature4_title =>
+      'अपने ब्लॉग्स, अध्ययन सामग्री या PowerPoint प्रस्तुतियों में इंटरैक्टिव सर्किट का उपयोग करें';
+
+  @override
+  String get teachers_feature4_description =>
+      'सुनिश्चित करें कि प्रोजेक्ट सार्वजनिक है। एम्बेड HTML5 कोड प्राप्त करने के लिए एम्बेड पर क्लिक करें, फिर बस सर्किट को एम्बेड करें। लाइव सर्किट को एम्बेड करने के लिए आपको PowerPoint प्लगइन जैसे लाइव स्लाइड्स का उपयोग करने की आवश्यकता हो सकती है।';
+
+  @override
+  String get contribute_title => 'योगदान दें';
+
+  @override
+  String get contribute_description =>
+      'CircuitVerse का लक्ष्य हमेशा मुफ्त रहना है और हम वादा करते हैं कि हम कोई विज्ञापन नहीं चलाएंगे! यह परियोजना ओपन सोर्स है और इसके निरंतर विकास और रखरखाव के लिए हमें आपके समर्थन की आवश्यकता है।';
+
+  @override
+  String get email_us_title => 'हमें ईमेल करें';
+
+  @override
+  String get join_chat_title => 'हमसे जुड़ें और चैट करें';
+
+  @override
+  String get slack_channel => 'स्लैक चैनल';
+
+  @override
+  String get open_source_title => 'ओपन सोर्स में योगदान दें';
+
+  @override
+  String get how_to_support => 'कैसे समर्थन करें?';
+
+  @override
+  String get student_role => 'मैं एक छात्र हूँ';
+
+  @override
+  String get student_support1 =>
+      'अद्भुत सर्किट बनाएं और प्लेटफॉर्म पर साझा करें';
+
+  @override
+  String get student_support2 => 'बग ढूंढें और रिपोर्ट करें। एक बग हंटर बनें';
+
+  @override
+  String get student_support3 => 'प्लेटफॉर्म को अपने दोस्तों से परिचित कराएं';
+
+  @override
+  String get teacher_role => 'मैं एक शिक्षक हूँ';
+
+  @override
+  String get teacher_support1 => 'प्लेटफॉर्म को अपने छात्रों से परिचित कराएं';
+
+  @override
+  String get teacher_support2 => 'अपने मंडली में प्लेटफॉर्म को प्रचारित करें';
+
+  @override
+  String get teacher_support3 =>
+      'CircuitVerse का उपयोग करके रोमांचक शैक्षिक सामग्री बनाएं';
+
+  @override
+  String get developer_role => 'मैं एक डेवलपर हूँ';
+
+  @override
+  String get developer_support1 => 'ओपन सोर्स परियोजनाओं में योगदान दें';
+
+  @override
+  String get developer_support2 =>
+      'परियोजनाओं में नई सुविधाएँ जोड़ें और प्रस्तावित करें';
+
+  @override
+  String get developer_support3 =>
+      'CircuitVerse परियोजनाओं में बग ढूंढें और ठीक करें';
+
+  @override
+  String get become_patreon => 'Patreon बनें';
+
+  @override
+  String get donate_paypal => 'PayPal के माध्यम से दान करें';
+
+  @override
+  String get update_profile => 'प्रोफ़ाइल अपडेट करें';
+
+  @override
+  String get profile_picture => 'प्रोफ़ाइल चित्र';
+
+  @override
+  String get name => 'नाम';
+
+  @override
+  String get name_empty_error => 'नाम खाली नहीं हो सकता';
+
+  @override
+  String get country => 'देश';
+
+  @override
+  String get educational_institute => 'शैक्षणिक संस्थान';
+
+  @override
+  String get subscribe_mails => 'मेल प्राप्त करें?';
+
+  @override
+  String get save_details => 'विवरण सहेजें';
+
+  @override
+  String get updating => 'अपडेट हो रहा है...';
+
+  @override
+  String get profile_updated => 'प्रोफ़ाइल अपडेट हो गई';
+
+  @override
+  String get profile_update_success =>
+      'आपकी प्रोफ़ाइल सफलतापूर्वक अपडेट हो गई।';
+
+  @override
+  String get profile_update_error =>
+      'आपकी प्रोफ़ाइल अपडेट करते समय एक त्रुटि हुई।';
+
+  @override
+  String get error => 'त्रुटि';
+
+  @override
+  String get no_favorites_title => 'अभी तक कोई पसंदीदा नहीं!';
+
+  @override
+  String get no_favorites_subtitle =>
+      'प्रोजेक्ट्स एक्सप्लोर करें और उन्हें अपनी पसंदीदा सूची में जोड़ें';
+
+  @override
+  String get no_projects_title => 'अभी तक कोई प्रोजेक्ट नहीं!';
+
+  @override
+  String get no_projects_subtitle =>
+      'नए डिज़ाइन से शुरुआत करें या मौजूदा टेम्प्लेट को फोर्क करें';
+
+  @override
+  String get email => 'ईमेल';
+
+  @override
+  String get email_validation_error => 'मान्य प्रारूप में ईमेल दर्ज करें';
+
+  @override
+  String get send_instructions => 'निर्देश भेजें';
+
+  @override
+  String get sending => 'भेजा जा रहा है..';
+
+  @override
+  String get new_user => 'नया उपयोगकर्ता?';
+
+  @override
+  String get sign_up => 'साइन अप करें';
+
+  @override
+  String get sending_instructions => 'निर्देश भेजे जा रहे हैं';
+
+  @override
+  String get instructions_sent_title => 'निर्देश भेजे गए';
+
+  @override
+  String get instructions_sent_message =>
+      'पासवर्ड रीसेट निर्देश आपके ईमेल पर भेज दिए गए हैं';
+
+  @override
+  String get password_validation_error => 'पासवर्ड खाली नहीं हो सकता';
+
+  @override
+  String get forgot_password => 'पासवर्ड भूल गए?';
+
+  @override
+  String get authenticating => 'प्रमाणीकरण हो रहा है...';
+
+  @override
+  String get login => 'लॉग इन करें';
+
+  @override
+  String get login_success_title => 'लॉगिन सफल';
+
+  @override
+  String get login_success_message => 'वापसी का स्वागत है!';
+
+  @override
+  String get name_validation_error => 'नाम खाली नहीं हो सकता';
+
+  @override
+  String get password_length_error => 'पासवर्ड की लंबाई कम से कम 6 होनी चाहिए';
+
+  @override
+  String get register => 'रजिस्टर करें';
+
+  @override
+  String get already_registered => 'पहले से पंजीकृत?';
+
+  @override
+  String get signup_success_title => 'साइनअप सफल';
+
+  @override
+  String get signup_success_message => 'सर्किटवर्स में आपका स्वागत है!';
+
+  @override
+  String get letter_grade => 'लेटर ग्रेड';
+
+  @override
+  String get percent => 'प्रतिशत';
+
+  @override
+  String get custom => 'कस्टम';
+
+  @override
+  String get deadline => 'अंतिम तिथि';
+
+  @override
+  String get grading_scale => 'ग्रेडिंग स्केल';
+
+  @override
+  String get elements_restriction => 'तत्व प्रतिबंध';
+
+  @override
+  String get enable_elements_restriction => 'तत्व प्रतिबंध सक्षम करें';
+
+  @override
+  String get create_assignment => 'असाइनमेंट बनाएं';
+
+  @override
+  String get adding_assignment => 'असाइनमेंट जोड़ा जा रहा है';
+
+  @override
+  String get assignment_added => 'असाइनमेंट जोड़ा गया';
+
+  @override
+  String get assignment_add_success => 'नया असाइनमेंट सफलतापूर्वक जोड़ा गया';
+
+  @override
+  String get add_assignment => 'असाइनमेंट जोड़ें';
+
+  @override
+  String get no_scale => 'कोई स्केल नहीं';
+
+  @override
+  String get edit => 'संपादित करें';
+
+  @override
+  String get not_applicable => 'लागू नहीं';
+
+  @override
+  String get description => 'विवरण';
+
+  @override
+  String get submissions => 'प्रस्तुतियाँ';
+
+  @override
+  String get no_submissions_yet => 'अभी तक कोई प्रस्तुति नहीं!';
+
+  @override
+  String get adding_grades => 'ग्रेड जोड़े जा रहे हैं...';
+
+  @override
+  String get project_graded_successfully =>
+      'प्रोजेक्ट सफलतापूर्वक ग्रेड किया गया';
+
+  @override
+  String get project_graded_message => 'आपने प्रोजेक्ट को ग्रेड कर दिया है';
+
+  @override
+  String get updating_grade => 'ग्रेड अपडेट किया जा रहा है...';
+
+  @override
+  String get grade_updated_successfully => 'ग्रेड सफलतापूर्वक अपडेट हो गया';
+
+  @override
+  String get grade_updated_message => 'ग्रेड सफलतापूर्वक अपडेट हो गया है';
+
+  @override
+  String get delete_grade => 'ग्रेड हटाएं';
+
+  @override
+  String get delete_grade_confirmation => 'क्या आप वाकई ग्रेड हटाना चाहते हैं?';
+
+  @override
+  String get delete => 'हटाएं';
+
+  @override
+  String get deleting_grade => 'ग्रेड हटाया जा रहा है...';
+
+  @override
+  String get grade_deleted => 'ग्रेड हटा दिया गया';
+
+  @override
+  String get grade_deleted_message => 'ग्रेड सफलतापूर्वक हटा दिया गया है';
+
+  @override
+  String get grades_and_remarks => 'ग्रेड और टिप्पणियाँ';
+
+  @override
+  String get grade => 'ग्रेड';
+
+  @override
+  String get grade_validation_error => 'ग्रेड खाली नहीं हो सकता';
+
+  @override
+  String get remarks => 'टिप्पणियाँ';
+
+  @override
+  String get update => 'अपडेट करें';
+
+  @override
+  String get submit => 'सबमिट करें';
+
+  @override
+  String get assignment_details => 'असाइनमेंट विवरण';
+
+  @override
+  String get time_remaining => 'शेष समय';
+
+  @override
+  String get days => 'दिन';
+
+  @override
+  String get hours => 'घंटे';
+
+  @override
+  String get minutes => 'मिनट';
+
+  @override
+  String get restricted_elements => 'प्रतिबंधित तत्व';
+
+  @override
+  String get group_updated => 'समूह अपडेट हो गया';
+
+  @override
+  String get group_update_success => 'समूह सफलतापूर्वक अपडेट हो गया है';
+
+  @override
+  String get edit_group => 'समूह संपादित करें';
+
+  @override
+  String get edit_group_description =>
+      'आप यहां समूह विवरण अपडेट कर सकते हैं। समूह का नाम खाली न छोड़ें।';
+
+  @override
+  String get group_name => 'समूह का नाम';
+
+  @override
+  String get group_name_validation_error => 'कृपया एक समूह नाम दर्ज करें';
+
+  @override
+  String get save => 'सहेजें';
+
+  @override
+  String get primary_mentor => 'प्राथमिक सलाहकार';
+
+  @override
+  String get adding => 'जोड़ा जा रहा है';
+
+  @override
+  String get group_members_added => 'समूह सदस्य जोड़े गए';
+
+  @override
+  String get add_group_members => 'समूह सदस्य जोड़ें';
+
+  @override
+  String get add_mentors => 'सलाहकार जोड़ें';
+
+  @override
+  String get add_members_description =>
+      'कॉमा से अलग किए गए ईमेल आईडी दर्ज करें। यदि उपयोगकर्ता पंजीकृत नहीं हैं, तो उन्हें साइन अप करने के लिए एक ईमेल आईडी भेजा जाएगा।';
+
+  @override
+  String get cancel => 'रद्द करें';
+
+  @override
+  String get remove_group_member => 'समूह सदस्य हटाएं';
+
+  @override
+  String get remove_mentor => 'सलाहकार हटाएं';
+
+  @override
+  String get remove_member_confirmation =>
+      'क्या आप वाकई इस समूह सदस्य को हटाना चाहते हैं?';
+
+  @override
+  String get remove_mentor_confirmation =>
+      'क्या आप वाकई इस सलाहकार को हटाना चाहते हैं?';
+
+  @override
+  String get remove => 'हटाएं';
+
+  @override
+  String get removing => 'हटाया जा रहा है...';
+
+  @override
+  String get group_member_removed => 'समूह सदस्य हटाया गया';
+
+  @override
+  String get mentor_removed => 'सलाहकार हटाया गया';
+
+  @override
+  String get member_removed_success => 'सफलतापूर्वक हटाया गया';
+
+  @override
+  String get mentors => 'सलाहकार';
+
+  @override
+  String get members => 'सदस्य';
+
+  @override
+  String get assignments => 'असाइनमेंट';
+
+  @override
+  String get add => 'जोड़ें';
+
+  @override
+  String get delete_assignment => 'असाइनमेंट हटाएं';
+
+  @override
+  String get delete_assignment_confirmation =>
+      'क्या आप वाकई इस असाइनमेंट को हटाना चाहते हैं?';
+
+  @override
+  String get deleting_assignment => 'असाइनमेंट हटाया जा रहा है...';
+
+  @override
+  String get assignment_deleted => 'असाइनमेंट हटाया गया';
+
+  @override
+  String get assignment_deleted_success => 'असाइनमेंट सफलतापूर्वक हटाया गया';
+
+  @override
+  String get reopen_assignment => 'असाइनमेंट पुनः खोलें';
+
+  @override
+  String get reopen_assignment_confirmation =>
+      'क्या आप वाकई इस असाइनमेंट को पुनः खोलना चाहते हैं?';
+
+  @override
+  String get reopen => 'पुनः खोलें';
+
+  @override
+  String get reopening_assignment => 'असाइनमेंट पुनः खोला जा रहा है...';
+
+  @override
+  String get assignment_reopened => 'असाइनमेंट पुनः खोला गया';
+
+  @override
+  String get assignment_reopened_success => 'असाइनमेंट अब पुनः खुला है';
+
+  @override
+  String get start_assignment => 'असाइनमेंट शुरू करें';
+
+  @override
+  String get start_assignment_confirmation =>
+      'क्या आप वाकई इस असाइनमेंट पर काम शुरू करना चाहते हैं?';
+
+  @override
+  String get start => 'शुरू करें';
+
+  @override
+  String get starting_assignment => 'असाइनमेंट शुरू किया जा रहा है...';
+
+  @override
+  String get project_created => 'प्रोजेक्ट बनाया गया';
+
+  @override
+  String get project_created_success => 'प्रोजेक्ट सफलतापूर्वक बनाया गया';
+
+  @override
+  String get member => 'सदस्य';
+
+  @override
+  String get mentor => 'सलाहकार';
+
+  @override
+  String get make => 'बनाएं';
+
+  @override
+  String get are_you_sure_you_want_to => 'क्या आप वाकई चाहते हैं';
+
+  @override
+  String get promote => 'पदोन्नत करें';
+
+  @override
+  String get demote => 'पदावनत करें';
+
+  @override
+  String get this_group => 'इस समूह के';
+
+  @override
+  String get to_a => 'को एक';
+
+  @override
+  String get yes => 'हाँ';
+
+  @override
+  String get promoting => 'पदोन्नत किया जा रहा है...';
+
+  @override
+  String get demoting => 'पदावनत किया जा रहा है...';
+
+  @override
+  String get promoted => 'पदोन्नत किया गया';
+
+  @override
+  String get demoted => 'पदावनत किया गया';
+
+  @override
+  String get member_updated_success => 'समूह सदस्य सफलतापूर्वक अपडेट किया गया';
+
+  @override
+  String get group_details => 'समूह विवरण';
+
+  @override
+  String get explore_groups_message =>
+      'अपने स्कूल और दोस्तों के समूहों को एक्सप्लोर करें और जॉइन करें!';
+
+  @override
+  String get delete_group => 'समूह हटाएं';
+
+  @override
+  String get delete_group_confirmation =>
+      'क्या आप वाकई इस समूह को हटाना चाहते हैं?';
+
+  @override
+  String get deleting_group => 'समूह हटाया जा रहा है...';
+
+  @override
+  String get group_deleted => 'समूह हटाया गया';
+
+  @override
+  String get group_deleted_success => 'समूह सफलतापूर्वक हटाया गया';
+
+  @override
+  String get owned => 'स्वामित्व वाले';
+
+  @override
+  String get view => 'देखना';
+
+  @override
+  String get joined => 'जुड़े';
+
+  @override
+  String get creating => 'बनाया जा रहा है...';
+
+  @override
+  String get group_created => 'समूह बनाया गया';
+
+  @override
+  String get group_created_success => 'नया समूह सफलतापूर्वक बनाया गया';
+
+  @override
+  String get new_group => 'नया समूह';
+
+  @override
+  String get group_description =>
+      'समूहों का उपयोग सलाहकारों द्वारा छात्रों के लिए परियोजनाएँ निर्धारित करने और ग्रेड देने के लिए किया जा सकता है';
+
+  @override
+  String get assignment_description_hint => 'असाइनमेंट विवरण दर्ज करें...';
+
+  @override
+  String get update_assignment => 'असाइनमेंट अपडेट करें';
+
+  @override
+  String get assignment_updated => 'असाइनमेंट अपडेट हो गया';
+
+  @override
+  String get assignment_update_success => 'असाइनमेंट सफलतापूर्वक अपडेट हो गया';
+
+  @override
+  String get search_circuitverse => 'सर्किटवर्स खोजें';
+
+  @override
+  String get navigate_chapters => 'विभिन्न अध्यायों पर नेविगेट करें';
+
+  @override
+  String get circuitverse => 'सर्किटवर्स';
+
+  @override
+  String get interactive_book => 'इंटरएक्टिव बुक';
+
+  @override
+  String get return_home => 'होम पर वापस जाएं';
+
+  @override
+  String get ib_home => 'इंटरएक्टिव बुक होम';
+
+  @override
+  String get loading_chapters => 'अध्याय लोड हो रहे हैं...';
+
+  @override
+  String get show_toc => 'विषय सूची दिखाएं';
+
+  @override
+  String get copyright_notice =>
+      'कॉपीराइट © 2021 सर्किटवर्स के योगदानकर्ता। [CC-by-sa] लाइसेंस के तहत वितरित।';
+
+  @override
+  String get table_of_contents => 'विषय सूची';
+
+  @override
+  String get navigate_previous_page => 'पिछले पृष्ठ पर जाने के लिए टैप करें';
+
+  @override
+  String get navigate_next_page => 'अगले पृष्ठ पर जाने के लिए टैप करें';
+
+  @override
+  String get loading_image => 'छवि लोड हो रही है...';
+
+  @override
+  String get image_load_error => 'छवि लोड करने में विफल';
+
+  @override
+  String get no_image_source => 'कोई छवि स्रोत प्रदान नहीं किया गया';
+
+  @override
+  String get no_notifications => 'अभी तक कोई सूचनाएं नहीं हैं';
+
+  @override
+  String get notifications_will_appear => 'आपकी सूचनाएं यहां दिखाई देंगी';
+
+  @override
+  String get no_unread_notifications => 'कोई अनपढ़ सूचनाएं नहीं';
+
+  @override
+  String get no_unread_notifications_desc =>
+      'आपके पास कोई अनपढ़ सूचनाएं नहीं हैं';
+
+  @override
+  String get all => 'सभी';
+
+  @override
+  String get unread => 'अनपढ़';
+
+  @override
+  String get starred => 'स्टार किया';
+
+  @override
+  String get forked => 'फोर्क किया';
+
+  @override
+  String get your_project => 'आपका प्रोजेक्ट';
+
+  @override
+  String get not_available => 'उपलब्ध नहीं';
+
+  @override
+  String get edit_profile => 'प्रोफ़ाइल संपादित करें';
+
+  @override
+  String get subscribed_to_mails => 'मेल के लिए सदस्यता ली';
+
+  @override
+  String get no => 'नहीं';
 
   @override
   String get profile => 'प्रोफ़ाइल';
 
   @override
+  String get circuits => 'सर्किट';
+
+  @override
+  String get favourites => 'पसंदीदा';
+
+  @override
+  String get tags_list => 'टैग सूची';
+
+  @override
+  String get project_access_type => 'प्रोजेक्ट पहुंच प्रकार';
+
+  @override
+  String get project_access_type_validation_error =>
+      'प्रोजेक्ट एक्सेस प्रकार चुनें';
+
+  @override
+  String get public => 'सार्वजनिक';
+
+  @override
+  String get private => 'निजी';
+
+  @override
+  String get limited_access => 'सीमित पहुंच';
+
+  @override
+  String get updating_project => 'प्रोजेक्ट अपडेट हो रहा है...';
+
+  @override
+  String get project_updated => 'प्रोजेक्ट अपडेट हो गया';
+
+  @override
+  String get project_update_success => 'प्रोजेक्ट सफलतापूर्वक अपडेट हो गया';
+
+  @override
+  String get update_project => 'प्रोजेक्ट अपडेट करें';
+
+  @override
+  String get editor_picks => 'संपादक की पसंद';
+
+  @override
+  String get editor_picks_description =>
+      'ये सर्किट हमारे लेखकों द्वारा उनकी अद्भुतता के लिए चुने गए हैं।';
+
+  @override
   String get featured_circuits => 'विशेष रुप से प्रदर्शित सर्किट';
+
+  @override
+  String get search_for_circuits => 'सर्किट खोजें';
+
+  @override
+  String get no_result_found => 'कोई परिणाम नहीं मिला';
+
+  @override
+  String get project_details => 'प्रोजेक्ट विवरण';
+
+  @override
+  String get share => 'शेयर करें';
+
+  @override
+  String get fork => 'फोर्क';
+
+  @override
+  String get stars => 'स्टार्स';
+
+  @override
+  String get views => 'व्यूज';
+
+  @override
+  String get author => 'लेखक';
+
+  @override
+  String get add_a_collaborator => 'सहयोगी जोड़ें';
+
+  @override
+  String get collaborators => 'सहयोगी';
+
+  @override
+  String get fork_project => 'प्रोजेक्ट फोर्क करें';
+
+  @override
+  String get fork_confirmation =>
+      'क्या आप वाकई इस प्रोजेक्ट को फोर्क करना चाहते हैं?';
+
+  @override
+  String get forking => 'फोर्क किया जा रहा है';
+
+  @override
+  String get project_starred => 'प्रोजेक्ट स्टार किया गया';
+
+  @override
+  String get project_unstarred => 'प्रोजेक्ट अनस्टार किया गया';
+
+  @override
+  String get starred_success => 'आपने प्रोजेक्ट को सफलतापूर्वक स्टार किया है';
+
+  @override
+  String get unstarred_success =>
+      'आपने प्रोजेक्ट को सफलतापूर्वक अनस्टार किया है';
+
+  @override
+  String get add_collaborators => 'सहयोगी जोड़ें';
+
+  @override
+  String get email_ids => 'ईमेल आईडी';
+
+  @override
+  String get email_hint => 'ईमेल आईडी को कॉमा से अलग करके दर्ज करें';
+
+  @override
+  String get collaborators_added => 'सहयोगी जोड़े गए';
+
+  @override
+  String get delete_project => 'प्रोजेक्ट हटाएं';
+
+  @override
+  String get delete_confirmation =>
+      'क्या आप वाकई इस प्रोजेक्ट को हटाना चाहते हैं?';
+
+  @override
+  String get deleting => 'हटाया जा रहा है';
+
+  @override
+  String get project_deleted => 'प्रोजेक्ट हटा दिया गया';
+
+  @override
+  String get delete_success => 'प्रोजेक्ट सफलतापूर्वक हटा दिया गया';
+
+  @override
+  String get delete_collaborator => 'सहयोगी हटाएं';
+
+  @override
+  String get delete_collaborator_confirmation =>
+      'क्या आप वाकई इस सहयोगी को हटाना चाहते हैं?';
+
+  @override
+  String get collaborator_deleted => 'सहयोगी हटा दिया गया';
+
+  @override
+  String get collaborator_delete_success => 'सहयोगी सफलतापूर्वक हटा दिया गया';
+
+  @override
+  String get title => 'सर्किटवर्स';
+
+  @override
+  String get groups => 'आपके समूह';
 
   @override
   String get logout => 'लॉग आउट करे';
@@ -45,9 +929,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get simulator => 'सिम्युलेटर';
 
   @override
-  String get interactive_book => 'इंटरएक्टिव बुक';
-
-  @override
   String get about => 'सर्किटवर्स के बारे में';
 
   @override
@@ -60,10 +941,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get my_groups => 'मेरे समूह';
 
   @override
-  String get login => 'लॉग इन करें';
+  String get notifications => 'सूचनाएं';
 
   @override
-  String get notifications => 'सूचनाएं';
+  String get language => 'भाषा';
 
   @override
   String get terms_of_service => 'सेवा की शर्तें';
@@ -90,9 +971,6 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get join_slack => 'हमारे साथ जुड़ें और चैट करें';
-
-  @override
-  String get slack_channel => 'स्लैक चैनल';
 
   @override
   String get contributors => 'योगदानकर्ता';

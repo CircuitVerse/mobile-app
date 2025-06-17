@@ -19,6 +19,7 @@ import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class ProjectDetailsView extends StatefulWidget {
   const ProjectDetailsView({super.key, required this.project});
@@ -63,7 +64,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       child: IconButton(
         onPressed: onShareButtonPressed,
         icon: const Icon(Icons.share),
-        tooltip: 'Share',
+        tooltip: AppLocalizations.of(context)!.share,
       ),
     );
   }
@@ -116,7 +117,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return Row(
       children: <Widget>[
         const Icon(Icons.star, color: Colors.yellow, size: 18),
-        Text(' ${_model.starCount} Stars'),
+        Text(' ${_model.starCount} ${AppLocalizations.of(context)!.stars}'),
       ],
     );
   }
@@ -125,7 +126,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return Row(
       children: <Widget>[
         const Icon(Icons.visibility, size: 18),
-        Text(' ${_recievedProject.attributes.view} Views'),
+        Text(
+          ' ${_recievedProject.attributes.view} ${AppLocalizations.of(context)!.views}',
+        ),
       ],
     );
   }
@@ -189,9 +192,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         text: TextSpan(
           style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
           children: <TextSpan>[
-            const TextSpan(
-              text: 'Author : ',
-              style: TextStyle(fontWeight: FontWeight.bold),
+            TextSpan(
+              text: '${AppLocalizations.of(context)!.author} : ',
+              style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(
               recognizer:
@@ -223,7 +226,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Description :',
+                '${AppLocalizations.of(context)!.description} :',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -241,13 +244,15 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Future<void> onForkProjectPressed() async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: 'Fork Project',
-      description: 'Are you sure you want to fork this project?',
-      confirmationTitle: 'FORK',
+      title: AppLocalizations.of(context)!.fork_project,
+      description: AppLocalizations.of(context)!.fork_confirmation,
+      confirmationTitle: AppLocalizations.of(context)!.fork,
     );
 
     if (_dialogResponse?.confirmed ?? false) {
-      _dialogService.showCustomProgressDialog(title: 'Forking');
+      _dialogService.showCustomProgressDialog(
+        title: AppLocalizations.of(context)!.forking,
+      );
 
       await _model.forkProject(_recievedProject.id);
 
@@ -260,7 +265,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         );
       } else if (_model.isError(_model.FORK_PROJECT)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context)!.error,
           _model.errorMessageFor(_model.FORK_PROJECT),
         );
       }
@@ -282,7 +287,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             Image.asset('assets/icons/fork_project.png', width: 12),
             const SizedBox(width: 4),
             Text(
-              'Fork',
+              AppLocalizations.of(context)!.fork,
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(color: Colors.white),
@@ -299,12 +304,16 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
     if (_model.isSuccess(_model.TOGGLE_STAR)) {
       SnackBarUtils.showDark(
-        'Project ${_model.isProjectStarred ? 'Starred' : 'Unstarred'}',
-        'You have successfully ${_model.isProjectStarred ? 'stared' : 'unstarred'} the project',
+        _model.isProjectStarred
+            ? AppLocalizations.of(context)!.project_starred
+            : AppLocalizations.of(context)!.project_unstarred,
+        _model.isProjectStarred
+            ? AppLocalizations.of(context)!.starred_success
+            : AppLocalizations.of(context)!.unstarred_success,
       );
     } else if (_model.isError(_model.TOGGLE_STAR)) {
       SnackBarUtils.showDark(
-        'Error',
+        AppLocalizations.of(context)!.error,
         _model.errorMessageFor(_model.TOGGLE_STAR),
       );
     }
@@ -342,7 +351,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       FocusScope.of(context).requestFocus(FocusNode());
       Navigator.pop(context);
 
-      _dialogService.showCustomProgressDialog(title: 'Adding');
+      _dialogService.showCustomProgressDialog(
+        title: AppLocalizations.of(context)!.adding,
+      );
 
       await _model.addCollaborators(_recievedProject.id, _emails);
 
@@ -351,12 +362,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       if (_model.isSuccess(_model.ADD_COLLABORATORS) &&
           _model.addedCollaboratorsSuccessMessage.isNotEmpty) {
         SnackBarUtils.showDark(
-          'Collaborators Added',
+          AppLocalizations.of(context)!.collaborators_added,
           _model.addedCollaboratorsSuccessMessage,
         );
       } else if (_model.isError(_model.ADD_COLLABORATORS)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context)!.error,
           _model.errorMessageFor(_model.ADD_COLLABORATORS),
         );
       }
@@ -372,12 +383,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
-                'Add Collaborators',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              Text(
+                AppLocalizations.of(context)!.add_collaborators,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(
-                'Enter Email IDs separated by commas. Users need to be registered already on the platform. Note that collaboration is not real time as of now. Every save overwrites the previous data.',
+                AppLocalizations.of(context)!.email_hint,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
@@ -393,7 +404,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               },
               autofocus: true,
               decoration: CVTheme.textFieldDecoration.copyWith(
-                hintText: 'Email Ids',
+                hintText: AppLocalizations.of(context)!.email_ids,
               ),
               validator:
                   (emails) =>
@@ -406,13 +417,13 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('CANCEL'),
+              child: Text(AppLocalizations.of(context)!.cancel.toUpperCase()),
             ),
             CVFlatButton(
               key: addButtonGlobalKey,
               triggerFunction: onAddCollaboratorsPressed,
               context: context,
-              buttonText: 'ADD',
+              buttonText: AppLocalizations.of(context)!.add.toUpperCase(),
             ),
           ],
         );
@@ -425,7 +436,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       onTap: showAddCollaboratorsDialog,
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: const <Widget>[Icon(Icons.add), Text('Add A Collaborator')],
+        children: <Widget>[
+          const Icon(Icons.add),
+          Text(AppLocalizations.of(context)!.add_a_collaborator),
+        ],
       ),
     );
   }
@@ -456,7 +470,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           children: <Widget>[
             const Icon(Icons.edit, size: 16),
             const SizedBox(width: 4),
-            Text('Edit', style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              AppLocalizations.of(context)!.edit,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
           ],
         ),
       ),
@@ -465,13 +482,15 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Future<void> onDeleteProjectPressed() async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: 'Delete Project',
-      description: 'Are you sure you want to delete this project?',
-      confirmationTitle: 'DELETE',
+      title: AppLocalizations.of(context)!.delete_project,
+      description: AppLocalizations.of(context)!.delete_confirmation,
+      confirmationTitle: AppLocalizations.of(context)!.delete.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
-      _dialogService.showCustomProgressDialog(title: 'Deleting Project');
+      _dialogService.showCustomProgressDialog(
+        title: AppLocalizations.of(context)!.deleting,
+      );
 
       await _model.deleteProject(_recievedProject.id);
 
@@ -480,12 +499,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       if (_model.isSuccess(_model.DELETE_PROJECT)) {
         Get.back(result: true);
         SnackBarUtils.showDark(
-          'Project Deleted',
-          'Project is successfully deleted.',
+          AppLocalizations.of(context)!.project_deleted,
+          AppLocalizations.of(context)!.delete_success,
         );
       } else if (_model.isError(_model.DELETE_PROJECT)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context)!.error,
           _model.errorMessageFor(_model.DELETE_PROJECT),
         );
       }
@@ -506,7 +525,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           children: <Widget>[
             const Icon(Icons.delete, size: 16),
             const SizedBox(width: 4),
-            Text('Delete', style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              AppLocalizations.of(context)!.delete,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
           ],
         ),
       ),
@@ -515,13 +537,16 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Future<void> onDeleteCollaboratorPressed(Collaborator collaborator) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: 'Delete Collaborator',
-      description: 'Are you sure you want to delete this collaborator?',
-      confirmationTitle: 'DELETE',
+      title: AppLocalizations.of(context)!.delete_collaborator,
+      description:
+          AppLocalizations.of(context)!.delete_collaborator_confirmation,
+      confirmationTitle: AppLocalizations.of(context)!.delete.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
-      _dialogService.showCustomProgressDialog(title: 'Deleting..');
+      _dialogService.showCustomProgressDialog(
+        title: AppLocalizations.of(context)!.deleting,
+      );
 
       await _model.deleteCollaborator(_model.project!.id, collaborator.id);
 
@@ -529,12 +554,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
       if (_model.isSuccess(_model.DELETE_COLLABORATORS)) {
         SnackBarUtils.showDark(
-          'Collaborator Deleted',
-          'Collaborator was successfully deleted.',
+          AppLocalizations.of(context)!.collaborator_deleted,
+          AppLocalizations.of(context)!.collaborator_delete_success,
         );
       } else if (_model.isError(_model.DELETE_COLLABORATORS)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context)!.error,
           _model.errorMessageFor(_model.DELETE_COLLABORATORS),
         );
       }
@@ -597,7 +622,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             },
             child: Scaffold(
               appBar: AppBar(
-                title: const Text('Project Details'),
+                title: Text(AppLocalizations.of(context)!.project_details),
                 actions: [_buildShareActionButton()],
               ),
               body: Builder(
@@ -606,9 +631,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   var _items = <Widget>[];
 
                   _items.add(_buildProjectPreview());
-
                   _items.add(const SizedBox(height: 16));
-
                   _items.add(_buildProjectNameHeader());
 
                   _items.add(
@@ -622,7 +645,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                         children: <Widget>[
                           _buildProjectAuthor(),
                           _buildProjectDetailComponent(
-                            'Project Access Type',
+                            AppLocalizations.of(context)!.project_access_type,
                             _projectAttrs.projectAccessType,
                           ),
                           _buildProjectDescription(),
@@ -656,8 +679,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   if (_model.isSuccess(_model.FETCH_PROJECT_DETAILS) &&
                       _model.collaborators.isNotEmpty) {
                     _items.add(const Divider());
-
-                    _items.add(_buildProjectHeader('Collaborators'));
+                    _items.add(
+                      _buildProjectHeader(
+                        AppLocalizations.of(context)!.collaborators,
+                      ),
+                    );
 
                     for (var collaborator in _model.collaborators) {
                       _items.add(_buildCollaborator(collaborator));

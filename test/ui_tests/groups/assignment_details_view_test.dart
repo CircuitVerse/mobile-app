@@ -10,6 +10,8 @@ import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../../setup/test_data/mock_assignments.dart';
 import '../../setup/test_helpers.mocks.dart';
@@ -59,6 +61,13 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('en', '')],
           home: AssignmentDetailsView(assignment: _assignment),
         ),
       );
@@ -75,6 +84,12 @@ void main() {
         await _pumpAssignmentDetailsView(tester);
         await tester.pumpAndSettle();
 
+        // Get the localized strings
+        final BuildContext context = tester.element(
+          find.byType(AssignmentDetailsView),
+        );
+        final localizations = AppLocalizations.of(context)!;
+
         // Scroll
         final gesture = await tester.startGesture(const Offset(0, 300));
         await gesture.moveBy(const Offset(0, 900));
@@ -86,13 +101,16 @@ void main() {
         // Finds Assignment Edit Button, Submit Grade and Delete Grade Button
         expect(find.byType(ElevatedButton), findsNWidgets(3));
 
-        // Finds Name, Deadline, Restricted Elements
+        // Finds Name, Deadline, Restricted Elements using localized strings
         expect(
           find.byWidgetPredicate((widget) {
             return widget is RichText &&
-                (widget.text.toPlainText() == 'Name : Test' ||
-                    widget.text.toPlainText().contains('Deadline : ') ||
-                    widget.text.toPlainText() == 'Restricted Elements : N.A');
+                (widget.text.toPlainText() == '${localizations.name} : Test' ||
+                    widget.text.toPlainText().contains(
+                      '${localizations.deadline} : ',
+                    ) ||
+                    widget.text.toPlainText() ==
+                        '${localizations.restricted_elements} : ${localizations.not_applicable}');
           }),
           findsNWidgets(3),
         );

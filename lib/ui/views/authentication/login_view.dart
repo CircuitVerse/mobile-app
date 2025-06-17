@@ -12,6 +12,7 @@ import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -26,6 +27,7 @@ class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
   late String _email, _password;
   final _emailFocusNode = FocusNode();
+
   @override
   void dispose() {
     _emailFocusNode.dispose();
@@ -49,13 +51,13 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _buildEmailInput() {
     return CVTextField(
-      label: 'Email',
+      label: AppLocalizations.of(context)!.email,
       type: TextInputType.emailAddress,
       validator:
           (value) =>
               Validators.isEmailValid(value)
                   ? null
-                  : 'Please enter a valid email',
+                  : AppLocalizations.of(context)!.email_validation_error,
       onSaved: (value) => _email = value!.trim(),
       onFieldSubmitted:
           (_) => FocusScope.of(context).requestFocus(_emailFocusNode),
@@ -66,7 +68,10 @@ class _LoginViewState extends State<LoginView> {
     return CVPasswordField(
       focusNode: _emailFocusNode,
       validator:
-          (value) => value?.isEmpty ?? true ? 'Password can\'t be empty' : null,
+          (value) =>
+              value?.isEmpty ?? true
+                  ? AppLocalizations.of(context)!.password_validation_error
+                  : null,
       onSaved: (value) => _password = value!.trim(),
     );
   }
@@ -78,7 +83,7 @@ class _LoginViewState extends State<LoginView> {
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Text(
-          'Forgot Password?',
+          AppLocalizations.of(context)!.forgot_password,
           style: TextStyle(color: CVTheme.highlightText(context)),
         ),
       ),
@@ -90,7 +95,10 @@ class _LoginViewState extends State<LoginView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _model.isBusy(_model.LOGIN) ? 'Authenticating..' : 'LOGIN',
+        title:
+            _model.isBusy(_model.LOGIN)
+                ? AppLocalizations.of(context)!.authenticating
+                : AppLocalizations.of(context)!.login.toUpperCase(),
         onPressed: _validateAndSubmit,
       ),
     );
@@ -101,11 +109,11 @@ class _LoginViewState extends State<LoginView> {
       onTap: () => Get.toNamed(SignupView.id),
       child: RichText(
         text: TextSpan(
-          text: 'New User? ',
+          text: '${AppLocalizations.of(context)!.new_user} ',
           style: Theme.of(context).textTheme.bodyLarge,
           children: <TextSpan>[
             TextSpan(
-              text: 'Sign Up',
+              text: AppLocalizations.of(context)!.sign_up,
               style: TextStyle(
                 color: CVTheme.highlightText(context),
                 fontSize: 16,
@@ -123,14 +131,17 @@ class _LoginViewState extends State<LoginView> {
       FocusScope.of(context).requestFocus(FocusNode());
       await _model.login(_email, _password);
       if (_model.isSuccess(_model.LOGIN)) {
-        // show login successful snackbar..
-        SnackBarUtils.showDark('Login Successful', 'Welcome back!');
-        // move to home view on successful login..
+        SnackBarUtils.showDark(
+          AppLocalizations.of(context)!.login_success_title,
+          AppLocalizations.of(context)!.login_success_message,
+        );
         await Future.delayed(const Duration(seconds: 1));
         await Get.offAllNamed(CVLandingView.id);
       } else if (_model.isError(_model.LOGIN)) {
-        // show failure snackbar..
-        SnackBarUtils.showDark('Error', _model.errorMessageFor(_model.LOGIN));
+        SnackBarUtils.showDark(
+          AppLocalizations.of(context)!.error,
+          _model.errorMessageFor(_model.LOGIN),
+        );
         _formKey.currentState?.reset();
       }
     }

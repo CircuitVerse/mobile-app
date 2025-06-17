@@ -16,6 +16,7 @@ import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_data/mock_user.dart';
 import '../../setup/test_helpers.dart';
@@ -33,7 +34,6 @@ void main() {
     setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpEditProfileView(WidgetTester tester) async {
-      // Mock Edit Profile View Model
       var _editProfileViewModel = MockEditProfileViewModel();
       locator.registerSingleton<EditProfileViewModel>(_editProfileViewModel);
 
@@ -46,7 +46,7 @@ void main() {
       ).thenReturn(null);
       when(_editProfileViewModel.isSuccess(any)).thenReturn(true);
       when(_editProfileViewModel.updatedUser).thenAnswer((_) => null);
-      // Mock Local Storage
+
       var _localStorageService = getAndRegisterLocalStorageServiceMock();
 
       var user = User.fromJson(mockUser);
@@ -57,14 +57,15 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          localizationsDelegates:
-              FlutterQuillLocalizations.localizationsDelegates,
+          localizationsDelegates: [
+            AppLocalizations.delegate,
+            ...FlutterQuillLocalizations.localizationsDelegates,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
           home: const EditProfileView(),
         ),
       );
 
-      /// The tester.pumpWidget() call above just built our app widget
-      /// and triggered the pushObserver method on the mockObserver once.
       verify(mockObserver.didPush(any, any));
     }
 
@@ -75,30 +76,14 @@ void main() {
         await _pumpEditProfileView(tester);
         await tester.pumpAndSettle();
 
-        // Finds Name, Country, Educational Institute
-        expect(
-          find.byWidgetPredicate((widget) {
-            return (widget is CVTextField && widget.label == 'Name') ||
-                (widget is CVTypeAheadField &&
-                    (widget.label == 'Country' ||
-                        widget.label == 'Educational Institute'));
-          }),
-          findsNWidgets(3),
-        );
-
-        // Finds Subscribe to mail checkbox
+        expect(find.byType(CVTextField), findsOneWidget);
+        expect(find.byType(CVTypeAheadField), findsNWidgets(2));
         expect(find.byType(CheckboxListTile), findsOneWidget);
-
-        // Finds Save Details button
-        expect(
-          find.widgetWithText(CVPrimaryButton, 'Save Details'),
-          findsOneWidget,
-        );
+        expect(find.byType(CVPrimaryButton), findsOneWidget);
       });
     });
 
     testWidgets('pick profile picture', (WidgetTester tester) async {
-      // Pump Edit Profile View
       await _pumpEditProfileView(tester);
       await tester.pumpAndSettle();
 
@@ -108,7 +93,6 @@ void main() {
       await tester.tap(_profilePictureWidget);
       await tester.pumpAndSettle();
 
-      // Bottom sheet is opened
       verify(mockObserver.didPush(any, any));
 
       final _galleryPickerIcon = find.byIcon(Icons.collections);
@@ -121,7 +105,6 @@ void main() {
     });
 
     testWidgets('remove picked profile picture', (WidgetTester tester) async {
-      // Pump Edit Profile View
       await _pumpEditProfileView(tester);
       await tester.pumpAndSettle();
 
@@ -133,7 +116,6 @@ void main() {
       await tester.tap(_profilePictureWidget);
       await tester.pumpAndSettle();
 
-      // Bottom sheet is opened
       verify(mockObserver.didPush(any, any));
 
       final _deleteImageWidget = find.byIcon(Icons.delete);
@@ -142,16 +124,13 @@ void main() {
       await tester.tap(_deleteImageWidget);
       await tester.pumpAndSettle();
 
-      // Set the selected image to null
       when(_editProfileViewModel.updatedImage).thenAnswer((_) => null);
 
-      // Bottom Sheet is closed
       verify(mockObserver.didPop(any, any));
       expect(_editProfileViewModel.updatedImage, isNull);
     });
 
     testWidgets('on Save Details is Tapped', (WidgetTester tester) async {
-      // Mock Dialog Service
       var _dialogService = MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
@@ -160,17 +139,14 @@ void main() {
       ).thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(_dialogService.popDialog()).thenReturn(null);
 
-      // Pump Edit Profile View
       await _pumpEditProfileView(tester);
       await tester.pumpAndSettle();
 
-      // Tap Save Details Button
-      await tester.tap(find.widgetWithText(CVPrimaryButton, 'Save Details'));
+      await tester.tap(find.byType(CVPrimaryButton));
       await tester.pumpAndSettle();
 
       await tester.pump(const Duration(seconds: 5));
 
-      // Verify Dialog Service is called to show Dialog of Updating
       verify(
         _dialogService.showCustomProgressDialog(title: anyNamed('title')),
       ).called(1);

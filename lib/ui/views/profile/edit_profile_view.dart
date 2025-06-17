@@ -11,7 +11,7 @@ import 'package:mobile_app/ui/components/cv_typeahead_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
-
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import '../../../config/environment_config.dart';
 
 class EditProfileView extends StatefulWidget {
@@ -35,7 +35,6 @@ class _EditProfileViewState extends State<EditProfileView> {
   final _countryFocusNode = FocusNode();
   final _instituteFocusNode = FocusNode();
 
-  // Controllers for country and institute
   late TextEditingController _countryController;
   late TextEditingController _instituteController;
 
@@ -44,8 +43,6 @@ class _EditProfileViewState extends State<EditProfileView> {
     _nameFocusNode.dispose();
     _countryFocusNode.dispose();
     _instituteFocusNode.dispose();
-    _countryController.removeListener(_onCountryChanged);
-    _instituteController.removeListener(_onInstituteChanged);
     _countryController.dispose();
     _instituteController.dispose();
     super.dispose();
@@ -105,7 +102,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                   children: [
                     const SizedBox(width: 10),
                     Text(
-                      'Profile Picture',
+                      AppLocalizations.of(context)!.profile_picture,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const Spacer(),
@@ -190,10 +187,13 @@ class _EditProfileViewState extends State<EditProfileView> {
 
   Widget _buildNameInput() {
     return CVTextField(
-      label: 'Name',
+      label: AppLocalizations.of(context)!.name,
       initialValue: _name,
       validator:
-          (value) => value?.isEmpty ?? true ? "Name can't be empty" : null,
+          (value) =>
+              value?.isEmpty ?? true
+                  ? AppLocalizations.of(context)!.name_empty_error
+                  : null,
       onSaved: (value) {
         _name = value!.trim();
       },
@@ -206,7 +206,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget _buildCountryField() {
     return CVTypeAheadField(
       focusNode: _countryFocusNode,
-      label: 'Country',
+      label: AppLocalizations.of(context)!.country,
       controller: _countryController,
       toggle: CVTypeAheadField.COUNTRY,
       validator: (value) => null,
@@ -226,7 +226,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget _buildInstituteField() {
     return CVTypeAheadField(
       focusNode: _instituteFocusNode,
-      label: 'Educational Institute',
+      label: AppLocalizations.of(context)!.educational_institute,
       controller: _instituteController,
       toggle: CVTypeAheadField.EDUCATIONAL_INSTITUTE,
       validator: (value) => null,
@@ -246,7 +246,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget _buildSubscribedField() {
     return CheckboxListTile(
       value: _subscribed,
-      title: const Text('Subscribe to mails?'),
+      title: Text(AppLocalizations.of(context)!.subscribe_mails),
       onChanged: (value) {
         if (value == null) return;
         setState(() {
@@ -269,7 +269,9 @@ class _EditProfileViewState extends State<EditProfileView> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      _dialogService.showCustomProgressDialog(title: 'Updating..');
+      _dialogService.showCustomProgressDialog(
+        title: AppLocalizations.of(context)!.updating,
+      );
 
       try {
         await _model.updateProfile(
@@ -292,24 +294,22 @@ class _EditProfileViewState extends State<EditProfileView> {
           await Future.delayed(const Duration(seconds: 1));
           Get.back(result: _model.updatedUser);
           SnackBarUtils.showDark(
-            'Profile Updated',
-            'Your profile was successfully updated.',
+            AppLocalizations.of(context)!.profile_updated,
+            AppLocalizations.of(context)!.profile_update_success,
           );
         } else if (_model.isError(_model.UPDATE_PROFILE)) {
           SnackBarUtils.showDark(
-            'Error',
+            AppLocalizations.of(context)!.error,
             _model.errorMessageFor(_model.UPDATE_PROFILE),
           );
         }
       } catch (e) {
         _dialogService.popDialog();
         SnackBarUtils.showDark(
-          'Error',
-          'An error occurred while updating your profile.',
+          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.profile_update_error,
         );
       }
-    } else {
-      return;
     }
   }
 
@@ -317,7 +317,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: CVPrimaryButton(
-        title: 'Save Details',
+        title: AppLocalizations.of(context)!.save_details,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -331,7 +331,9 @@ class _EditProfileViewState extends State<EditProfileView> {
       },
       builder: (context, model, child) {
         return Scaffold(
-          appBar: AppBar(title: const Text('Update Profile')),
+          appBar: AppBar(
+            title: Text(AppLocalizations.of(context)!.update_profile),
+          ),
           body: GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();

@@ -18,6 +18,7 @@ import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class AssignmentDetailsView extends StatefulWidget {
   const AssignmentDetailsView({super.key, required this.assignment});
@@ -73,7 +74,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           const Icon(Icons.edit, color: Colors.white),
           const SizedBox(width: 8),
           Text(
-            'Edit',
+            AppLocalizations.of(context)!.edit,
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(color: Colors.white),
@@ -106,7 +107,17 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
     );
   }
 
-  Widget _buildDetailComponent(String title, String? description) {
+  Widget _buildDetailComponent(String titleKey, String? description) {
+    final title =
+        {
+          'name': AppLocalizations.of(context)!.name,
+          'deadline': AppLocalizations.of(context)!.deadline,
+          'time_remaining': AppLocalizations.of(context)!.time_remaining,
+          'restricted_elements':
+              AppLocalizations.of(context)!.restricted_elements,
+        }[titleKey] ??
+        titleKey;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4),
       alignment: Alignment.centerLeft,
@@ -121,7 +132,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             TextSpan(
               text:
                   description == null || description.isEmpty
-                      ? 'N.A'
+                      ? AppLocalizations.of(context)!.not_applicable
                       : description,
               style: const TextStyle(fontSize: 18),
             ),
@@ -138,7 +149,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Description',
+            AppLocalizations.of(context)!.description,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -203,7 +214,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           Align(
             alignment: Alignment.topLeft,
             child: Text(
-              'Submissions : ',
+              '${AppLocalizations.of(context)!.submissions} : ',
               style: Theme.of(
                 context,
               ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
@@ -220,7 +231,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                     ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        'No Submissions yet!',
+                        AppLocalizations.of(context)!.no_submissions_yet,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     )
@@ -254,7 +265,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   }
 
   Future<void> addGrade() async {
-    _dialogService.showCustomProgressDialog(title: 'Adding Grades');
+    _dialogService.showCustomProgressDialog(
+      title: AppLocalizations.of(context)!.adding_grades,
+    );
 
     await _model.addGrade(
       _recievedAssignment.id,
@@ -266,16 +279,21 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
     if (_model.isSuccess(_model.ADD_GRADE)) {
       SnackBarUtils.showDark(
-        'Project Graded Successfully',
-        'You have graded the project.',
+        AppLocalizations.of(context)!.project_graded_successfully,
+        AppLocalizations.of(context)!.project_graded_message,
       );
     } else if (_model.isError(_model.ADD_GRADE)) {
-      SnackBarUtils.showDark('Error', _model.errorMessageFor(_model.ADD_GRADE));
+      SnackBarUtils.showDark(
+        AppLocalizations.of(context)!.error,
+        _model.errorMessageFor(_model.ADD_GRADE),
+      );
     }
   }
 
   Future<void> updateGrade(String gradeId) async {
-    _dialogService.showCustomProgressDialog(title: 'Updating Grade');
+    _dialogService.showCustomProgressDialog(
+      title: AppLocalizations.of(context)!.updating_grade,
+    );
 
     await _model.updateGrade(
       gradeId,
@@ -287,12 +305,12 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
     if (_model.isSuccess(_model.UPDATE_GRADE)) {
       SnackBarUtils.showDark(
-        'Grade updated Successfully',
-        'Grade has been updated successfully.',
+        AppLocalizations.of(context)!.grade_updated_successfully,
+        AppLocalizations.of(context)!.grade_updated_message,
       );
     } else if (_model.isError(_model.UPDATE_GRADE)) {
       SnackBarUtils.showDark(
-        'Error',
+        AppLocalizations.of(context)!.error,
         _model.errorMessageFor(_model.UPDATE_GRADE),
       );
     }
@@ -300,13 +318,15 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
   Future<void> deleteGrade(String gradeId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: 'Delete Grade',
-      description: 'Are you sure you want to delete the grade?',
-      confirmationTitle: 'DELETE',
+      title: AppLocalizations.of(context)!.delete_grade,
+      description: AppLocalizations.of(context)!.delete_grade_confirmation,
+      confirmationTitle: AppLocalizations.of(context)!.delete,
     );
 
     if (_dialogResponse?.confirmed ?? false) {
-      _dialogService.showCustomProgressDialog(title: 'Deleting Grade');
+      _dialogService.showCustomProgressDialog(
+        title: AppLocalizations.of(context)!.deleting_grade,
+      );
 
       await _model.deleteGrade(gradeId);
 
@@ -314,14 +334,14 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
       if (_model.isSuccess(_model.DELETE_GRADE)) {
         SnackBarUtils.showDark(
-          'Grade Deleted',
-          'Grade has been removed successfully.',
+          AppLocalizations.of(context)!.grade_deleted,
+          AppLocalizations.of(context)!.grade_deleted_message,
         );
         _gradesController.clear();
         _remarksController.clear();
       } else if (_model.isError(_model.DELETE_GRADE)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context)!.error,
           _model.errorMessageFor(_model.DELETE_GRADE),
         );
       }
@@ -352,13 +372,13 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                'Grades & Remarks',
+                AppLocalizations.of(context)!.grades_and_remarks,
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               CVTextField(
-                label: 'Grade',
+                label: AppLocalizations.of(context)!.grade,
                 controller: _gradesController,
                 padding: const EdgeInsets.all(0),
                 type:
@@ -367,13 +387,17 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                         : TextInputType.text,
                 validator:
                     (value) =>
-                        value?.isEmpty ?? true ? "Grade can't be empty" : null,
+                        value?.isEmpty ?? true
+                            ? AppLocalizations.of(
+                              context,
+                            )!.grade_validation_error
+                            : null,
                 onFieldSubmitted:
                     (_) => FocusScope.of(context).requestFocus(_gradeFocusNode),
               ),
               const SizedBox(height: 4),
               CVTextField(
-                label: 'Remarks',
+                label: AppLocalizations.of(context)!.remarks,
                 focusNode: _gradeFocusNode,
                 controller: _remarksController,
                 padding: const EdgeInsets.all(0),
@@ -382,7 +406,10 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
               Row(
                 children: <Widget>[
                   CVPrimaryButton(
-                    title: _submittedGrade != null ? 'Update' : 'Submit',
+                    title:
+                        _submittedGrade != null
+                            ? AppLocalizations.of(context)!.update
+                            : AppLocalizations.of(context)!.submit,
                     onPressed: () {
                       if (Validators.validateAndSaveForm(_formKey)) {
                         FocusScope.of(context).requestFocus(FocusNode());
@@ -403,7 +430,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                       ),
                       onPressed: () => deleteGrade(_submittedGrade.id),
                       child: Text(
-                        'Delete',
+                        AppLocalizations.of(context)!.delete,
                         style: Theme.of(
                           context,
                         ).textTheme.titleLarge?.copyWith(color: Colors.white),
@@ -433,7 +460,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
       },
       builder:
           (context, model, child) => Scaffold(
-            appBar: AppBar(title: const Text('Assignment Details')),
+            appBar: AppBar(
+              title: Text(AppLocalizations.of(context)!.assignment_details),
+            ),
             body: Builder(
               builder: (context) {
                 var _attrs = _recievedAssignment.attributes;
@@ -444,19 +473,21 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                   children: <Widget>[
                     _buildHeader(),
                     const SizedBox(height: 16),
-                    _buildDetailComponent('Name', _attrs.name),
+                    _buildDetailComponent('name', _attrs.name),
                     _buildDetailComponent(
-                      'Deadline',
+                      'deadline',
                       DateFormat.yMEd().add_jms().format(_attrs.deadline),
                     ),
                     if (!_remainingTime.isNegative)
                       _buildDetailComponent(
-                        'Time Remaining',
-                        '${_remainingTime.inDays} days ${_remainingTime.inHours.remainder(24)} hours ${_remainingTime.inMinutes.remainder(60)} minutes',
+                        'time_remaining',
+                        '${_remainingTime.inDays} ${AppLocalizations.of(context)!.days} '
+                            '${_remainingTime.inHours.remainder(24)} ${AppLocalizations.of(context)!.hours} '
+                            '${_remainingTime.inMinutes.remainder(60)} ${AppLocalizations.of(context)!.minutes}',
                       ),
                     _buildAssignmentDescription(),
                     _buildDetailComponent(
-                      'Restricted Elements',
+                      'restricted_elements',
                       json.decode(_attrs.restrictions).join(' , '),
                     ),
                     const Divider(height: 32),
