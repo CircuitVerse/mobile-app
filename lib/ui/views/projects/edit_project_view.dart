@@ -53,12 +53,14 @@ class _EditProjectViewState extends State<EditProjectView> {
 
   Widget _buildNameInput() {
     return CVTextField(
-      label: AppLocalizations.of(context)!.name,
+      label: AppLocalizations.of(context)!.edit_project_name,
       initialValue: _name,
       validator:
           (value) =>
               value?.isEmpty ?? true
-                  ? AppLocalizations.of(context)!.name_validation_error
+                  ? AppLocalizations.of(
+                    context,
+                  )!.edit_project_name_validation_error
                   : null,
       onSaved: (value) => _name = value!.trim(),
       onFieldSubmitted:
@@ -68,7 +70,7 @@ class _EditProjectViewState extends State<EditProjectView> {
 
   Widget _buildTagsInput() {
     return CVTextField(
-      label: AppLocalizations.of(context)!.tags_list,
+      label: AppLocalizations.of(context)!.edit_project_tags_list,
       focusNode: _nameFocusNode,
       initialValue: _tags.join(' , '),
       onSaved:
@@ -87,7 +89,7 @@ class _EditProjectViewState extends State<EditProjectView> {
       child: DropdownButtonFormField<String>(
         focusNode: _tagsListFocusNode,
         decoration: CVTheme.textFieldDecoration.copyWith(
-          labelText: AppLocalizations.of(context)!.project_access_type,
+          labelText: AppLocalizations.of(context)!.edit_project_access_type,
         ),
         value: _projectAccessType,
         onChanged: (String? value) {
@@ -101,13 +103,13 @@ class _EditProjectViewState extends State<EditProjectView> {
                 category == null
                     ? AppLocalizations.of(
                       context,
-                    )!.project_access_type_validation_error
+                    )!.edit_project_access_type_validation_error
                     : null,
         items:
             [
-              AppLocalizations.of(context)!.public,
-              AppLocalizations.of(context)!.private,
-              AppLocalizations.of(context)!.limited_access,
+              AppLocalizations.of(context)!.edit_project_public,
+              AppLocalizations.of(context)!.edit_project_private,
+              AppLocalizations.of(context)!.edit_project_limited_access,
             ].map<DropdownMenuItem<String>>((type) {
               return DropdownMenuItem<String>(value: type, child: Text(type));
             }).toList(),
@@ -127,7 +129,7 @@ class _EditProjectViewState extends State<EditProjectView> {
       FocusScope.of(context).requestFocus(FocusNode());
 
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.updating_project,
+        title: AppLocalizations.of(context)!.edit_project_updating,
       );
 
       await _model.updateProject(
@@ -144,12 +146,12 @@ class _EditProjectViewState extends State<EditProjectView> {
         await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedProject);
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.project_updated,
-          AppLocalizations.of(context)!.project_update_success,
+          AppLocalizations.of(context)!.edit_project_updated,
+          AppLocalizations.of(context)!.edit_project_update_success,
         );
       } else if (_model.isError(_model.UPDATE_PROJECT)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.edit_project_error,
           _model.errorMessageFor(_model.UPDATE_PROJECT),
         );
       }
@@ -160,7 +162,7 @@ class _EditProjectViewState extends State<EditProjectView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: CVPrimaryButton(
-        title: AppLocalizations.of(context)!.update_project,
+        title: AppLocalizations.of(context)!.edit_project_title,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -174,7 +176,7 @@ class _EditProjectViewState extends State<EditProjectView> {
           (context, model, child) => Scaffold(
             appBar: AppBar(
               title: Text(
-                '${AppLocalizations.of(context)!.edit} ${widget.project.attributes.name}',
+                '${AppLocalizations.of(context)!.edit_project_edit} ${widget.project.attributes.name}',
               ),
             ),
             body: SingleChildScrollView(

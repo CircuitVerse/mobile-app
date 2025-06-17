@@ -182,31 +182,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get donate_paypal => 'Donate through PayPal';
 
   @override
-  String get update_profile => 'Update Profile';
+  String get profile_update_title => 'Update Profile';
 
   @override
   String get profile_picture => 'Profile Picture';
 
   @override
-  String get name => 'Name';
+  String get profile_name => 'Name';
 
   @override
-  String get name_empty_error => 'Name can\'t be empty';
+  String get profile_name_empty_error => 'Name can\'t be empty';
 
   @override
-  String get country => 'Country';
+  String get profile_country => 'Country';
 
   @override
-  String get educational_institute => 'Educational Institute';
+  String get profile_educational_institute => 'Educational Institute';
 
   @override
-  String get subscribe_mails => 'Subscribe to mails?';
+  String get profile_subscribe_mails => 'Subscribe to mails?';
 
   @override
-  String get save_details => 'Save Details';
+  String get profile_save_details => 'Save Details';
 
   @override
-  String get updating => 'Updating...';
+  String get profile_updating => 'Updating...';
 
   @override
   String get profile_updated => 'Profile Updated';
@@ -217,9 +217,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get profile_update_error =>
       'An error occurred while updating your profile.';
-
-  @override
-  String get error => 'Error';
 
   @override
   String get no_favorites_title => 'No favorites yet!';
@@ -236,44 +233,63 @@ class AppLocalizationsEn extends AppLocalizations {
       'Start fresh with a new design or fork existing templates';
 
   @override
-  String get email => 'Email';
+  String get forgot_password_email => 'Email';
 
   @override
-  String get email_validation_error => 'Enter emails in valid format';
+  String get forgot_password_email_validation_error =>
+      'Please enter a valid email';
 
   @override
-  String get send_instructions => 'SEND INSTRUCTIONS';
+  String get forgot_password_send_instructions => 'SEND INSTRUCTIONS';
 
   @override
-  String get sending => 'Sending..';
+  String get forgot_password_sending => 'Sending..';
 
   @override
-  String get new_user => 'New User?';
+  String get forgot_password_new_user => 'New User?';
 
   @override
-  String get sign_up => 'Sign Up';
+  String get forgot_password_sign_up => 'Sign Up';
 
   @override
-  String get sending_instructions => 'Sending Instructions';
+  String get forgot_password_sending_instructions => 'Sending Instructions';
 
   @override
-  String get instructions_sent_title => 'Instructions Sent';
+  String get forgot_password_instructions_sent_title => 'Instructions Sent';
 
   @override
-  String get instructions_sent_message =>
+  String get forgot_password_instructions_sent_message =>
       'Password reset instructions have been sent to your email';
 
   @override
-  String get forgot_password => 'Forgot Password?';
+  String get forgot_password_error => 'Error';
 
   @override
-  String get password_validation_error => 'Password can\'t be empty';
+  String get forgot_password_link => 'Forgot Password?';
 
   @override
-  String get authenticating => 'Authenticating...';
+  String get login_email => 'Email';
 
   @override
-  String get login => 'Login';
+  String get login_email_validation_error => 'Please enter a valid email';
+
+  @override
+  String get login_password_validation_error => 'Password can\'t be empty';
+
+  @override
+  String get login_forgot_password => 'Forgot Password?';
+
+  @override
+  String get login_authenticating => 'Authenticating...';
+
+  @override
+  String get login_button => 'Login';
+
+  @override
+  String get login_new_user => 'New User?';
+
+  @override
+  String get login_sign_up => 'Sign Up';
 
   @override
   String get login_success_title => 'Login Successful';
@@ -282,16 +298,38 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_success_message => 'Welcome back!';
 
   @override
-  String get name_validation_error => 'Name cannot be empty';
+  String get login_error => 'Error';
 
   @override
-  String get password_length_error => 'Password length should be at least 6';
+  String get signup_name => 'Name';
 
   @override
-  String get register => 'Register';
+  String get signup_name_validation_error => 'Name can\'t be empty';
 
   @override
-  String get already_registered => 'Already Registered?';
+  String get signup_email => 'Email';
+
+  @override
+  String get signup_email_validation_error => 'Please enter a valid email';
+
+  @override
+  String get signup_password_validation_error => 'Password can\'t be empty';
+
+  @override
+  String get signup_password_length_error =>
+      'Password length should be at least 6';
+
+  @override
+  String get signup_authenticating => 'Authenticating...';
+
+  @override
+  String get signup_register => 'Register';
+
+  @override
+  String get signup_already_registered => 'Already Registered?';
+
+  @override
+  String get signup_login => 'Login';
 
   @override
   String get signup_success_title => 'Signup Successful';
@@ -300,31 +338,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signup_success_message => 'Welcome to CircuitVerse!';
 
   @override
-  String get letter_grade => 'Letter Grade';
+  String get signup_error => 'Error';
 
   @override
-  String get percent => 'Percent';
+  String get assignment_letter_grade => 'Letter Grade';
 
   @override
-  String get custom => 'Custom';
+  String get assignment_percent => 'Percent';
 
   @override
-  String get deadline => 'Deadline';
+  String get assignment_custom => 'Custom';
 
   @override
-  String get grading_scale => 'Grading Scale';
+  String get assignment_name => 'Name';
 
   @override
-  String get elements_restriction => 'Elements restriction';
+  String get assignment_name_validation_error => 'Please enter a valid name';
 
   @override
-  String get enable_elements_restriction => 'Enable elements restriction';
+  String get assignment_deadline => 'Deadline';
 
   @override
-  String get create_assignment => 'Create Assignment';
+  String get assignment_grading_scale => 'Grading Scale';
 
   @override
-  String get adding_assignment => 'Adding Assignment';
+  String get assignment_elements_restriction => 'Elements Restriction';
+
+  @override
+  String get assignment_enable_elements_restriction =>
+      'Enable elements restriction';
+
+  @override
+  String get assignment_create => 'Create Assignment';
+
+  @override
+  String get assignment_adding => 'Adding Assignment';
 
   @override
   String get assignment_added => 'Assignment Added';
@@ -333,614 +381,755 @@ class AppLocalizationsEn extends AppLocalizations {
   String get assignment_add_success => 'New assignment was successfully added';
 
   @override
-  String get add_assignment => 'Add Assignment';
+  String get assignment_add_error => 'Error';
 
   @override
-  String get no_scale => 'No Scale';
+  String get assignment_add_title => 'Add Assignment';
 
   @override
-  String get edit => 'Edit';
+  String get assignment_no_scale => 'No Scale';
 
   @override
-  String get not_applicable => 'N.A';
+  String get assignment_details_edit => 'Edit';
 
   @override
-  String get description => 'Description';
+  String get assignment_details_name => 'Name';
 
   @override
-  String get submissions => 'Submissions';
+  String get assignment_details_not_applicable => 'N.A';
 
   @override
-  String get no_submissions_yet => 'No Submissions yet!';
+  String get assignment_details_description => 'Description';
 
   @override
-  String get adding_grades => 'Adding Grades...';
+  String get assignment_details_submissions => 'Submissions';
 
   @override
-  String get project_graded_successfully => 'Project Graded Successfully';
+  String get assignment_details_no_submissions_yet => 'No Submissions yet!';
 
   @override
-  String get project_graded_message => 'You have graded the project';
+  String get assignment_details_adding_grades => 'Adding Grades...';
 
   @override
-  String get updating_grade => 'Updating Grade...';
+  String get assignment_details_project_graded_successfully =>
+      'Project Graded Successfully';
 
   @override
-  String get grade_updated_successfully => 'Grade updated Successfully';
+  String get assignment_details_project_graded_message =>
+      'You have graded the project';
 
   @override
-  String get grade_updated_message => 'Grade has been updated successfully';
+  String get assignment_details_error => 'Error';
 
   @override
-  String get delete_grade => 'Delete Grade';
+  String get assignment_details_updating_grade => 'Updating Grade...';
 
   @override
-  String get delete_grade_confirmation =>
+  String get assignment_details_grade_updated_successfully =>
+      'Grade updated Successfully';
+
+  @override
+  String get assignment_details_grade_updated_message =>
+      'Grade has been updated successfully';
+
+  @override
+  String get assignment_details_delete_grade => 'Delete Grade';
+
+  @override
+  String get assignment_details_delete_grade_confirmation =>
       'Are you sure you want to delete the grade?';
 
   @override
-  String get delete => 'Delete';
+  String get assignment_details_delete => 'DELETE';
 
   @override
-  String get deleting_grade => 'Deleting Grade...';
+  String get assignment_details_deleting_grade => 'Deleting Grade...';
 
   @override
-  String get grade_deleted => 'Grade Deleted';
+  String get assignment_details_grade_deleted => 'Grade Deleted';
 
   @override
-  String get grade_deleted_message => 'Grade has been removed successfully';
+  String get assignment_details_grade_deleted_message =>
+      'Grade has been removed successfully';
 
   @override
-  String get grades_and_remarks => 'Grades & Remarks';
+  String get assignment_details_grades_and_remarks => 'Grades & Remarks';
 
   @override
-  String get grade => 'Grade';
+  String get assignment_details_grade => 'Grade';
 
   @override
-  String get grade_validation_error => 'Grade can\'t be empty';
+  String get assignment_details_grade_validation_error =>
+      'Grade can\'t be empty';
 
   @override
-  String get remarks => 'Remarks';
+  String get assignment_details_remarks => 'Remarks';
 
   @override
-  String get update => 'Update';
+  String get assignment_details_update => 'Update';
 
   @override
-  String get submit => 'Submit';
+  String get assignment_details_submit => 'Submit';
 
   @override
-  String get assignment_details => 'Assignment Details';
+  String get assignment_details_title => 'Assignment Details';
 
   @override
-  String get time_remaining => 'Time Remaining';
+  String get assignment_details_deadline => 'Deadline';
 
   @override
-  String get days => 'days';
+  String get assignment_details_time_remaining => 'Time Remaining';
 
   @override
-  String get hours => 'hours';
+  String get assignment_details_days => 'days';
 
   @override
-  String get minutes => 'minutes';
+  String get assignment_details_hours => 'hours';
 
   @override
-  String get restricted_elements => 'Restricted Elements';
+  String get assignment_details_minutes => 'minutes';
 
   @override
-  String get group_updated => 'Group Updated';
+  String get assignment_details_restricted_elements => 'Restricted Elements';
 
   @override
-  String get group_update_success => 'Group has been successfully updated';
+  String get edit_group_updating => 'Updating...';
 
   @override
-  String get edit_group => 'Edit Group';
+  String get edit_group_updated => 'Group Updated';
+
+  @override
+  String get edit_group_update_success => 'Group has been successfully updated';
+
+  @override
+  String get edit_group_error => 'Error';
+
+  @override
+  String get edit_group_title => 'Edit Group';
 
   @override
   String get edit_group_description =>
       'You can update Group details here. Don\'t leave the Group Name blank.';
 
   @override
-  String get group_name => 'Group Name';
+  String get edit_group_name => 'Group Name';
 
   @override
-  String get group_name_validation_error => 'Please enter a Group Name';
+  String get edit_group_name_validation_error => 'Please enter a Group Name';
 
   @override
-  String get save => 'Save';
+  String get edit_group_save => 'Save';
 
   @override
-  String get primary_mentor => 'Primary Mentor';
+  String get group_details_edit => 'Edit';
 
   @override
-  String get adding => 'Adding';
+  String get group_details_primary_mentor => 'Primary Mentor';
 
   @override
-  String get group_members_added => 'Group Members Added';
+  String get group_details_adding => 'Adding...';
 
   @override
-  String get add_group_members => 'Add Group Members';
+  String get group_details_members_added => 'Group Members Added';
 
   @override
-  String get add_mentors => 'Add Mentors';
+  String get group_details_error => 'Error';
 
   @override
-  String get add_members_description =>
+  String get group_details_add_members => 'Add Group Members';
+
+  @override
+  String get group_details_add_mentors => 'Add Mentors';
+
+  @override
+  String get group_details_add_members_description =>
       'Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.';
 
   @override
-  String get cancel => 'Cancel';
+  String get group_details_email_validation_error =>
+      'Enter emails in valid format';
 
   @override
-  String get remove_group_member => 'Remove Group Member';
+  String get group_details_cancel => 'Cancel';
 
   @override
-  String get remove_mentor => 'Remove Mentor';
+  String get group_details_remove_member => 'Remove Group Member';
 
   @override
-  String get remove_member_confirmation =>
+  String get group_details_remove_mentor => 'Remove Mentor';
+
+  @override
+  String get group_details_remove_member_confirmation =>
       'Are you sure you want to remove this group member?';
 
   @override
-  String get remove_mentor_confirmation =>
+  String get group_details_remove_mentor_confirmation =>
       'Are you sure you want to remove this mentor?';
 
   @override
-  String get remove => 'Remove';
+  String get group_details_remove => 'Remove';
 
   @override
-  String get removing => 'Removing...';
+  String get group_details_removing => 'Removing...';
 
   @override
-  String get group_member_removed => 'Group Member Removed';
+  String get group_details_member_removed => 'Group Member Removed';
 
   @override
-  String get mentor_removed => 'Mentor Removed';
+  String get group_details_mentor_removed => 'Mentor Removed';
 
   @override
-  String get member_removed_success => 'Successfully removed';
+  String get group_details_member_removed_success => 'Successfully removed';
 
   @override
-  String get mentors => 'Mentors';
+  String get group_details_mentors => 'Mentors';
 
   @override
-  String get members => 'Members';
+  String get group_details_members => 'Members';
 
   @override
-  String get assignments => 'Assignments';
+  String get group_details_assignments => 'Assignments';
 
   @override
-  String get add => 'Add';
+  String get group_details_add => 'Add';
 
   @override
-  String get delete_assignment => 'Delete Assignment';
+  String get group_details_delete_assignment => 'Delete Assignment';
 
   @override
-  String get delete_assignment_confirmation =>
+  String get group_details_delete_assignment_confirmation =>
       'Are you sure you want to delete this assignment?';
 
   @override
-  String get deleting_assignment => 'Deleting Assignment...';
+  String get group_details_delete => 'Delete';
 
   @override
-  String get assignment_deleted => 'Assignment Deleted';
+  String get group_details_deleting_assignment => 'Deleting Assignment...';
 
   @override
-  String get assignment_deleted_success =>
+  String get group_details_assignment_deleted => 'Assignment Deleted';
+
+  @override
+  String get group_details_assignment_deleted_success =>
       'The assignment was successfully deleted';
 
   @override
-  String get reopen_assignment => 'Reopen Assignment';
+  String get group_details_reopen_assignment => 'Reopen Assignment';
 
   @override
-  String get reopen_assignment_confirmation =>
+  String get group_details_reopen_assignment_confirmation =>
       'Are you sure you want to reopen this assignment?';
 
   @override
-  String get reopen => 'Reopen';
+  String get group_details_reopen => 'Reopen';
 
   @override
-  String get reopening_assignment => 'Reopening Assignment...';
+  String get group_details_reopening_assignment => 'Reopening Assignment...';
 
   @override
-  String get assignment_reopened => 'Assignment Reopened';
+  String get group_details_assignment_reopened => 'Assignment Reopened';
 
   @override
-  String get assignment_reopened_success => 'The assignment is reopened now';
+  String get group_details_assignment_reopened_success =>
+      'The assignment is reopened now';
 
   @override
-  String get start_assignment => 'Start Assignment';
+  String get group_details_start_assignment => 'Start Assignment';
 
   @override
-  String get start_assignment_confirmation =>
+  String get group_details_start_assignment_confirmation =>
       'Are you sure you want to start working on this assignment?';
 
   @override
-  String get start => 'Start';
+  String get group_details_start => 'Start';
 
   @override
-  String get starting_assignment => 'Starting Assignment...';
+  String get group_details_starting_assignment => 'Starting Assignment...';
 
   @override
-  String get project_created => 'Project Created';
+  String get group_details_project_created => 'Project Created';
 
   @override
-  String get project_created_success => 'Project is successfully created';
+  String get group_details_project_created_success =>
+      'Project is successfully created';
 
   @override
-  String get member => 'member';
+  String get group_details_member => 'member';
 
   @override
-  String get mentor => 'mentor';
+  String get group_details_mentor => 'mentor';
 
   @override
-  String get make => 'Make';
+  String get group_details_make => 'Make';
 
   @override
-  String get are_you_sure_you_want_to => 'Are you sure you want to';
+  String get group_details_are_you_sure_you_want_to =>
+      'Are you sure you want to';
 
   @override
-  String get promote => 'promote';
+  String get group_details_promote => 'promote';
 
   @override
-  String get demote => 'demote';
+  String get group_details_demote => 'demote';
 
   @override
-  String get this_group => 'this group';
+  String get group_details_this_group => 'this group';
 
   @override
-  String get to_a => 'to a';
+  String get group_details_to_a => 'to a';
 
   @override
-  String get yes => 'Yes';
+  String get group_details_yes => 'Yes';
 
   @override
-  String get promoting => 'Promoting...';
+  String get group_details_promoting => 'Promoting...';
 
   @override
-  String get demoting => 'Demoting...';
+  String get group_details_demoting => 'Demoting...';
 
   @override
-  String get promoted => 'Promoted';
+  String get group_details_promoted => 'Promoted';
 
   @override
-  String get demoted => 'Demoted';
+  String get group_details_demoted => 'Demoted';
 
   @override
-  String get member_updated_success => 'Group member was successfully updated';
+  String get group_details_member_updated_success =>
+      'Group member was successfully updated';
 
   @override
-  String get group_details => 'Group Details';
+  String get group_details_title => 'Group Details';
 
   @override
-  String get explore_groups_message =>
+  String get my_groups_explore_message =>
       'Explore and join groups of your school and friends!';
 
   @override
-  String get delete_group => 'Delete Group';
+  String get my_groups_delete_group => 'Delete Group';
 
   @override
-  String get delete_group_confirmation =>
+  String get my_groups_delete_group_confirmation =>
       'Are you sure you want to delete this group?';
 
   @override
-  String get deleting_group => 'Deleting Group...';
+  String get my_groups_delete => 'Delete';
 
   @override
-  String get group_deleted => 'Group Deleted';
+  String get my_groups_deleting_group => 'Deleting Group...';
 
   @override
-  String get group_deleted_success => 'Group was successfully deleted';
+  String get my_groups_group_deleted => 'Group Deleted';
 
   @override
-  String get owned => 'Owned';
+  String get my_groups_group_deleted_success =>
+      'Group was successfully deleted';
 
   @override
-  String get view => 'View';
+  String get my_groups_error => 'Error';
 
   @override
-  String get joined => 'Joined';
+  String get my_groups_owned => 'Owned';
 
   @override
-  String get creating => 'Creating...';
+  String get my_groups_view => 'View';
 
   @override
-  String get group_created => 'Group Created';
+  String get my_groups_joined => 'Joined';
 
   @override
-  String get group_created_success => 'New group was created successfully';
+  String get my_groups_edit => 'Edit';
 
   @override
-  String get new_group => 'New Group';
+  String get new_group_creating => 'Creating...';
 
   @override
-  String get group_description =>
+  String get new_group_created => 'Group Created';
+
+  @override
+  String get new_group_created_success => 'New group was created successfully';
+
+  @override
+  String get new_group_error => 'Error';
+
+  @override
+  String get new_group_title => 'New Group';
+
+  @override
+  String get new_group_description =>
       'Groups can be used by mentors to set projects for and give grades to students';
 
   @override
-  String get assignment_description_hint => 'Enter assignment description...';
+  String get new_group_name => 'Group Name';
 
   @override
-  String get update_assignment => 'Update Assignment';
+  String get new_group_name_validation_error => 'Please enter a Group Name';
 
   @override
-  String get assignment_updated => 'Assignment Updated';
+  String get new_group_save => 'Save';
 
   @override
-  String get assignment_update_success => 'Assignment was updated successfully';
+  String get update_assignment_name => 'Name';
 
   @override
-  String get search_circuitverse => 'Search CircuitVerse';
+  String get update_assignment_name_validation_error =>
+      'Please enter a valid name';
 
   @override
-  String get navigate_chapters => 'Navigate to different chapters';
+  String get update_assignment_description_hint =>
+      'Enter assignment description...';
 
   @override
-  String get circuitverse => 'CircuitVerse';
+  String get update_assignment_deadline => 'Deadline';
 
   @override
-  String get interactive_book => 'Interactive Book';
+  String get update_assignment_elements_restriction => 'Elements restriction';
 
   @override
-  String get return_home => 'Return to Home';
+  String get update_assignment_enable_elements_restriction =>
+      'Enable elements restriction';
+
+  @override
+  String get update_assignment_title => 'Update Assignment';
+
+  @override
+  String get update_assignment_updating => 'Updating...';
+
+  @override
+  String get update_assignment_description => 'Description';
+
+  @override
+  String get update_assignment_updated => 'Assignment Updated';
+
+  @override
+  String get update_assignment_update_success =>
+      'Assignment was updated successfully';
+
+  @override
+  String get update_assignment_error => 'Error';
+
+  @override
+  String get ib_search_circuitverse => 'Search CircuitVerse';
+
+  @override
+  String get ib_navigate_chapters => 'Navigate to different chapters';
+
+  @override
+  String get ib_circuitverse => 'CircuitVerse';
+
+  @override
+  String get ib_interactive_book => 'Interactive Book';
+
+  @override
+  String get ib_return_home => 'Return to Home';
 
   @override
   String get ib_home => 'Interactive Book Home';
 
   @override
-  String get loading_chapters => 'Loading Chapters...';
+  String get ib_loading_chapters => 'Loading Chapters...';
 
   @override
-  String get show_toc => 'Show Table of Contents';
+  String get ib_show_toc => 'Show Table of Contents';
 
   @override
-  String get copyright_notice =>
+  String get ib_page_copyright_notice =>
       'Copyright © 2021 Contributors to CircuitVerse. Distributed under a [CC-by-sa] license.';
 
   @override
-  String get table_of_contents => 'Table of Contents';
+  String get ib_page_table_of_contents => 'Table of Contents';
 
   @override
-  String get navigate_previous_page => 'Tap to navigate to previous page';
+  String get ib_page_navigate_previous => 'Tap to navigate to previous page';
 
   @override
-  String get navigate_next_page => 'Tap to navigate to next page';
+  String get ib_page_navigate_next => 'Tap to navigate to next page';
 
   @override
-  String get loading_image => 'Loading image...';
+  String get ib_page_loading_image => 'Loading image...';
 
   @override
-  String get image_load_error => 'Failed to load image';
+  String get ib_page_image_load_error => 'Failed to load image';
 
   @override
-  String get no_image_source => 'No image source provided';
+  String get ib_page_no_image_source => 'No image source provided';
 
   @override
-  String get no_notifications => 'No notifications yet';
+  String get notifications_no_notifications => 'No notifications yet';
 
   @override
   String get notifications_will_appear => 'Your notifications will appear here';
 
   @override
-  String get no_unread_notifications => 'No unread notifications';
+  String get notifications_no_unread => 'No unread notifications';
 
   @override
-  String get no_unread_notifications_desc => 'You have no unread notifications';
+  String get notifications_no_unread_desc => 'You have no unread notifications';
 
   @override
-  String get all => 'All';
+  String get notifications_all => 'All';
 
   @override
-  String get unread => 'Unread';
+  String get notifications_unread => 'Unread';
 
   @override
-  String get starred => 'starred';
+  String get notifications_starred => 'starred';
 
   @override
-  String get forked => 'forked';
+  String get notifications_forked => 'forked';
 
   @override
-  String get your_project => 'your project';
+  String get notifications_your_project => 'your project';
 
   @override
-  String get not_available => 'N.A';
+  String get profile_not_available => 'N.A';
 
   @override
-  String get edit_profile => 'Edit Profile';
+  String get profile_edit => 'Edit Profile';
 
   @override
-  String get subscribed_to_mails => 'Subscribed to mails';
+  String get profile_joined => 'Joined';
 
   @override
-  String get no => 'No';
+  String get profile_subscribed_to_mails => 'Subscribed to mails';
 
   @override
-  String get profile => 'Profile';
+  String get profile_yes => 'Yes';
 
   @override
-  String get circuits => 'Circuits';
+  String get profile_no => 'No';
 
   @override
-  String get favourites => 'Favourites';
+  String get profile_title => 'Profile';
 
   @override
-  String get tags_list => 'Tags List';
+  String get profile_circuits => 'Circuits';
 
   @override
-  String get project_access_type => 'Project Access Type';
+  String get profile_favourites => 'Favourites';
 
   @override
-  String get project_access_type_validation_error =>
+  String get edit_project_name => 'Name';
+
+  @override
+  String get edit_project_name_validation_error => 'Name cannot be empty';
+
+  @override
+  String get edit_project_tags_list => 'Tags List';
+
+  @override
+  String get edit_project_access_type => 'Project Access Type';
+
+  @override
+  String get edit_project_access_type_validation_error =>
       'Please select project access type';
 
   @override
-  String get public => 'Public';
+  String get edit_project_public => 'Public';
 
   @override
-  String get private => 'Private';
+  String get edit_project_private => 'Private';
 
   @override
-  String get limited_access => 'Limited Access';
+  String get edit_project_limited_access => 'Limited Access';
 
   @override
-  String get updating_project => 'Updating project...';
+  String get edit_project_updating => 'Updating project...';
 
   @override
-  String get project_updated => 'Project updated';
+  String get edit_project_updated => 'Project updated';
 
   @override
-  String get project_update_success => 'Project updated successfully';
+  String get edit_project_update_success => 'Project updated successfully';
 
   @override
-  String get update_project => 'Update Project';
+  String get edit_project_error => 'Error';
 
   @override
-  String get project_details => 'Project Details';
+  String get edit_project_title => 'Update Project';
 
   @override
-  String get share => 'Share';
+  String get edit_project_edit => 'Edit';
 
   @override
-  String get fork => 'Fork';
+  String get edit_project_details => 'Project Details';
 
   @override
-  String get stars => 'Stars';
+  String get edit_project_share => 'Share';
 
   @override
-  String get views => 'Views';
+  String get edit_project_fork => 'Fork';
 
   @override
-  String get author => 'Author';
+  String get edit_project_stars => 'Stars';
 
   @override
-  String get add_a_collaborator => 'Add Collaborator';
+  String get edit_project_views => 'Views';
 
   @override
-  String get collaborators => 'Collaborators';
+  String get edit_project_author => 'Author';
 
   @override
-  String get fork_project => 'Fork Project';
+  String get edit_project_description => 'Description';
 
   @override
-  String get fork_confirmation => 'Are you sure you want to fork this project?';
+  String get edit_project_add_collaborator => 'Add Collaborator';
 
   @override
-  String get forking => 'Forking';
+  String get edit_project_delete => 'Delete';
 
   @override
-  String get project_starred => 'Project starred';
+  String get edit_project_collaborators => 'Collaborators';
 
   @override
-  String get project_unstarred => 'Project unstarred';
+  String get edit_project_fork_project => 'Fork Project';
 
   @override
-  String get starred_success => 'You have successfully starred the project';
+  String get edit_project_fork_confirmation =>
+      'Are you sure you want to fork this project?';
 
   @override
-  String get unstarred_success => 'You have successfully unstarred the project';
+  String get edit_project_forking => 'Forking';
 
   @override
-  String get add_collaborators => 'Add Collaborators';
+  String get edit_project_starred => 'Project starred';
 
   @override
-  String get email_ids => 'Email IDs';
+  String get edit_project_unstarred => 'Project unstarred';
 
   @override
-  String get email_hint => 'Enter email IDs separated by comma';
+  String get edit_project_starred_success =>
+      'You have successfully starred the project';
 
   @override
-  String get collaborators_added => 'Collaborators added';
+  String get edit_project_unstarred_success =>
+      'You have successfully unstarred the project';
 
   @override
-  String get delete_project => 'Delete Project';
+  String get edit_project_add_collaborators => 'Add Collaborators';
 
   @override
-  String get delete_confirmation =>
+  String get edit_project_email_ids => 'Email IDs';
+
+  @override
+  String get edit_project_email_hint => 'Enter email IDs separated by comma';
+
+  @override
+  String get edit_project_adding => 'Adding';
+
+  @override
+  String get edit_project_collaborators_added => 'Collaborators added';
+
+  @override
+  String get edit_project_delete_project => 'Delete Project';
+
+  @override
+  String get edit_project_delete_confirmation =>
       'Are you sure you want to delete this project?';
 
   @override
-  String get deleting => 'Deleting';
+  String get edit_project_deleting => 'Deleting';
 
   @override
-  String get project_deleted => 'Project deleted';
+  String get edit_project_deleted => 'Project deleted';
 
   @override
-  String get delete_success => 'Project deleted successfully';
+  String get edit_project_delete_success => 'Project deleted successfully';
 
   @override
-  String get delete_collaborator => 'Remove Collaborator';
+  String get edit_project_delete_collaborator => 'Remove Collaborator';
 
   @override
-  String get delete_collaborator_confirmation =>
+  String get edit_project_delete_collaborator_confirmation =>
       'Are you sure you want to remove this collaborator?';
 
   @override
-  String get collaborator_deleted => 'Collaborator removed';
+  String get edit_project_collaborator_deleted => 'Collaborator removed';
 
   @override
-  String get collaborator_delete_success => 'Collaborator removed successfully';
+  String get edit_project_collaborator_delete_success =>
+      'Collaborator removed successfully';
 
   @override
-  String get no_result_found => 'No result found';
+  String get edit_cancel => 'Cancel';
 
   @override
-  String get editor_picks => 'Editor\'s Picks';
+  String get edit_add => 'Add';
 
   @override
-  String get editor_picks_description => 'Curated list of the best projects';
+  String get featured_no_result_found => 'No result found';
 
   @override
-  String get search_for_circuits => 'Search for circuits';
+  String get featured_editor_picks => 'Editor\'s Picks';
 
   @override
-  String get title => 'CircuitVerse';
+  String get featured_editor_picks_description =>
+      'Curated list of the best projects';
 
   @override
-  String get groups => 'Groups';
+  String get featured_search_for_circuits => 'Search for circuits';
 
   @override
   String get featured_circuits => 'Featured Circuits';
 
   @override
-  String get logout => 'Log Out';
+  String get cv_title => 'CircuitVerse';
 
   @override
-  String get logout_confirmation => 'Are you sure you want to logout?';
+  String get cv_groups => 'Groups';
 
   @override
-  String get logout_confirmation_button => 'LOGOUT';
+  String get cv_profile => 'Profile';
 
   @override
-  String get logout_success => 'Logged Out Successfully';
+  String get cv_featured_circuits => 'Featured Circuits';
 
   @override
-  String get logout_success_acknowledgement => 'You have been signed out.';
+  String get cv_logout => 'Log Out';
 
   @override
-  String get home => 'Home';
+  String get cv_logout_confirmation => 'Are you sure you want to logout?';
 
   @override
-  String get explore => 'Explore';
+  String get cv_logout_confirmation_button => 'LOGOUT';
 
   @override
-  String get simulator => 'Simulator';
+  String get cv_logout_success => 'Logged Out Successfully';
 
   @override
-  String get about => 'About';
+  String get cv_logout_success_acknowledgement => 'You have been signed out.';
 
   @override
-  String get contribute => 'Contribute';
+  String get cv_home => 'Home';
 
   @override
-  String get teachers => 'Teachers';
+  String get cv_explore => 'Explore';
 
   @override
-  String get my_groups => 'My Groups';
+  String get cv_simulator => 'Simulator';
 
   @override
-  String get notifications => 'Notifications';
+  String get cv_interactive_book => 'Interactive Book';
 
   @override
-  String get language => 'Language';
+  String get cv_about => 'About';
+
+  @override
+  String get cv_contribute => 'Contribute';
+
+  @override
+  String get cv_teachers => 'Teachers';
+
+  @override
+  String get cv_my_groups => 'My Groups';
+
+  @override
+  String get cv_login => 'Login';
+
+  @override
+  String get cv_notifications => 'Notifications';
+
+  @override
+  String get cv_language => 'Language';
 
   @override
   String get terms_of_service => 'Terms Of Service';

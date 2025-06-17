@@ -34,7 +34,7 @@ class _EditGroupViewState extends State<EditGroupView> {
       FocusScope.of(context).requestFocus(FocusNode());
 
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.updating,
+        title: AppLocalizations.of(context)!.edit_group_updating,
       );
 
       await _model.updateGroup(widget.group.id, _name);
@@ -45,12 +45,12 @@ class _EditGroupViewState extends State<EditGroupView> {
         await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedGroup);
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.group_updated,
-          AppLocalizations.of(context)!.group_update_success,
+          AppLocalizations.of(context)!.edit_group_updated,
+          AppLocalizations.of(context)!.edit_group_update_success,
         );
       } else if (_model.isError(_model.UPDATE_GROUP)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.edit_group_error,
           _model.errorMessageFor(_model.UPDATE_GROUP),
         );
       }
@@ -75,7 +75,7 @@ class _EditGroupViewState extends State<EditGroupView> {
                       title:
                           AppLocalizations.of(
                             context,
-                          )!.edit_group.toUpperCase(),
+                          )!.edit_group_title.toUpperCase(),
                       subtitle:
                           AppLocalizations.of(context)!.edit_group_description,
                     ),
@@ -87,21 +87,21 @@ class _EditGroupViewState extends State<EditGroupView> {
                     const SizedBox(height: 16),
                     CVTextField(
                       padding: const EdgeInsets.all(0),
-                      label: AppLocalizations.of(context)!.group_name,
+                      label: AppLocalizations.of(context)!.edit_group_name,
                       initialValue: widget.group.attributes.name,
                       validator:
                           (value) =>
                               value?.isEmpty ?? true
                                   ? AppLocalizations.of(
                                     context,
-                                  )!.group_name_validation_error
+                                  )!.edit_group_name_validation_error
                                   : null,
                       onSaved: (value) => _name = value!.trim(),
                       action: TextInputAction.done,
                     ),
                     const SizedBox(height: 16),
                     CVPrimaryButton(
-                      title: AppLocalizations.of(context)!.save,
+                      title: AppLocalizations.of(context)!.edit_group_save,
                       onPressed: _validateAndSubmit,
                     ),
                   ],

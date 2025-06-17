@@ -109,7 +109,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
               height: 400,
             ),
             Text(
-              AppLocalizations.of(context)!.no_result_found,
+              AppLocalizations.of(context)!.featured_no_result_found,
               style: TextStyle(fontSize: 16, color: CVTheme.textColor(context)),
             ),
           ]);
@@ -123,9 +123,11 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
           _items.insert(
             0,
             CVHeader(
-              title: AppLocalizations.of(context)!.editor_picks,
+              title: AppLocalizations.of(context)!.featured_editor_picks,
               description:
-                  AppLocalizations.of(context)!.editor_picks_description,
+                  AppLocalizations.of(
+                    context,
+                  )!.featured_editor_picks_description,
             ),
           );
         }
@@ -157,7 +159,10 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                     },
                     icon: const Icon(Icons.arrow_back),
                   ),
-                  hint: AppLocalizations.of(context)!.search_for_circuits,
+                  hint:
+                      AppLocalizations.of(
+                        context,
+                      )!.featured_search_for_circuits,
                   action: TextInputAction.search,
                   controller: _controller,
                   onFieldSubmitted: (value) {

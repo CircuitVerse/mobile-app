@@ -22,14 +22,16 @@ class NotificationsView extends StatelessWidget {
             context,
             title:
                 hasNoNotifications
-                    ? AppLocalizations.of(context)!.no_notifications
-                    : AppLocalizations.of(context)!.no_unread_notifications,
+                    ? AppLocalizations.of(
+                      context,
+                    )!.notifications_no_notifications
+                    : AppLocalizations.of(context)!.notifications_no_unread,
             subtitle:
                 hasNoNotifications
                     ? AppLocalizations.of(context)!.notifications_will_appear
                     : AppLocalizations.of(
                       context,
-                    )!.no_unread_notifications_desc,
+                    )!.notifications_no_unread_desc,
           ),
         ],
       ),
@@ -95,14 +97,16 @@ class NotificationsView extends StatelessWidget {
         final hasNoNotifications = model.notifications.isEmpty;
         final hasNoUnread =
             !hasNoNotifications &&
-            model.value == AppLocalizations.of(context)!.unread &&
+            model.value == AppLocalizations.of(context)!.notifications_unread &&
             model.notifications.every((n) => !n.attributes.unread);
 
         final String allValue = 'all';
         final String unreadValue = 'unread';
 
-        final String allDisplayText = AppLocalizations.of(context)!.all;
-        final String unreadDisplayText = AppLocalizations.of(context)!.unread;
+        final String allDisplayText =
+            AppLocalizations.of(context)!.notifications_all;
+        final String unreadDisplayText =
+            AppLocalizations.of(context)!.notifications_unread;
 
         return Scaffold(
           body: SingleChildScrollView(
@@ -196,8 +200,8 @@ class NotificationsView extends StatelessWidget {
                             ),
                             title: Text(
                               '${notification.attributes.params.user.data.attributes.name} '
-                              '${type == NotificationType.Fork ? AppLocalizations.of(context)!.forked : AppLocalizations.of(context)!.starred} '
-                              '${AppLocalizations.of(context)!.your_project} '
+                              '${type == NotificationType.Fork ? AppLocalizations.of(context)!.notifications_forked : AppLocalizations.of(context)!.notifications_starred} '
+                              '${AppLocalizations.of(context)!.notifications_your_project} '
                               '${notification.attributes.params.project.name}',
                               style: TextStyle(
                                 fontWeight:

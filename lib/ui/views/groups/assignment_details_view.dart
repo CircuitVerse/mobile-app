@@ -74,7 +74,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           const Icon(Icons.edit, color: Colors.white),
           const SizedBox(width: 8),
           Text(
-            AppLocalizations.of(context)!.edit,
+            AppLocalizations.of(context)!.assignment_details_edit,
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(color: Colors.white),
@@ -110,11 +110,14 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   Widget _buildDetailComponent(String titleKey, String? description) {
     final title =
         {
-          'name': AppLocalizations.of(context)!.name,
-          'deadline': AppLocalizations.of(context)!.deadline,
-          'time_remaining': AppLocalizations.of(context)!.time_remaining,
+          'name': AppLocalizations.of(context)!.assignment_details_name,
+          'deadline': AppLocalizations.of(context)!.assignment_details_deadline,
+          'time_remaining':
+              AppLocalizations.of(context)!.assignment_details_time_remaining,
           'restricted_elements':
-              AppLocalizations.of(context)!.restricted_elements,
+              AppLocalizations.of(
+                context,
+              )!.assignment_details_restricted_elements,
         }[titleKey] ??
         titleKey;
 
@@ -132,7 +135,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             TextSpan(
               text:
                   description == null || description.isEmpty
-                      ? AppLocalizations.of(context)!.not_applicable
+                      ? AppLocalizations.of(
+                        context,
+                      )!.assignment_details_not_applicable
                       : description,
               style: const TextStyle(fontSize: 18),
             ),
@@ -149,7 +154,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context)!.description,
+            AppLocalizations.of(context)!.assignment_details_description,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -214,7 +219,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           Align(
             alignment: Alignment.topLeft,
             child: Text(
-              '${AppLocalizations.of(context)!.submissions} : ',
+              '${AppLocalizations.of(context)!.assignment_details_submissions} : ',
               style: Theme.of(
                 context,
               ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
@@ -231,7 +236,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                     ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        AppLocalizations.of(context)!.no_submissions_yet,
+                        AppLocalizations.of(
+                          context,
+                        )!.assignment_details_no_submissions_yet,
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     )
@@ -266,7 +273,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
   Future<void> addGrade() async {
     _dialogService.showCustomProgressDialog(
-      title: AppLocalizations.of(context)!.adding_grades,
+      title: AppLocalizations.of(context)!.assignment_details_adding_grades,
     );
 
     await _model.addGrade(
@@ -279,12 +286,14 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
     if (_model.isSuccess(_model.ADD_GRADE)) {
       SnackBarUtils.showDark(
-        AppLocalizations.of(context)!.project_graded_successfully,
-        AppLocalizations.of(context)!.project_graded_message,
+        AppLocalizations.of(
+          context,
+        )!.assignment_details_project_graded_successfully,
+        AppLocalizations.of(context)!.assignment_details_project_graded_message,
       );
     } else if (_model.isError(_model.ADD_GRADE)) {
       SnackBarUtils.showDark(
-        AppLocalizations.of(context)!.error,
+        AppLocalizations.of(context)!.assignment_details_error,
         _model.errorMessageFor(_model.ADD_GRADE),
       );
     }
@@ -292,7 +301,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
   Future<void> updateGrade(String gradeId) async {
     _dialogService.showCustomProgressDialog(
-      title: AppLocalizations.of(context)!.updating_grade,
+      title: AppLocalizations.of(context)!.assignment_details_updating_grade,
     );
 
     await _model.updateGrade(
@@ -305,12 +314,14 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
     if (_model.isSuccess(_model.UPDATE_GRADE)) {
       SnackBarUtils.showDark(
-        AppLocalizations.of(context)!.grade_updated_successfully,
-        AppLocalizations.of(context)!.grade_updated_message,
+        AppLocalizations.of(
+          context,
+        )!.assignment_details_grade_updated_successfully,
+        AppLocalizations.of(context)!.assignment_details_grade_updated_message,
       );
     } else if (_model.isError(_model.UPDATE_GRADE)) {
       SnackBarUtils.showDark(
-        AppLocalizations.of(context)!.error,
+        AppLocalizations.of(context)!.assignment_details_error,
         _model.errorMessageFor(_model.UPDATE_GRADE),
       );
     }
@@ -318,14 +329,18 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
   Future<void> deleteGrade(String gradeId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: AppLocalizations.of(context)!.delete_grade,
-      description: AppLocalizations.of(context)!.delete_grade_confirmation,
-      confirmationTitle: AppLocalizations.of(context)!.delete,
+      title: AppLocalizations.of(context)!.assignment_details_delete_grade,
+      description:
+          AppLocalizations.of(
+            context,
+          )!.assignment_details_delete_grade_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.assignment_details_delete,
     );
 
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.deleting_grade,
+        title: AppLocalizations.of(context)!.assignment_details_deleting_grade,
       );
 
       await _model.deleteGrade(gradeId);
@@ -334,14 +349,16 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
       if (_model.isSuccess(_model.DELETE_GRADE)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.grade_deleted,
-          AppLocalizations.of(context)!.grade_deleted_message,
+          AppLocalizations.of(context)!.assignment_details_grade_deleted,
+          AppLocalizations.of(
+            context,
+          )!.assignment_details_grade_deleted_message,
         );
         _gradesController.clear();
         _remarksController.clear();
       } else if (_model.isError(_model.DELETE_GRADE)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.assignment_details_error,
           _model.errorMessageFor(_model.DELETE_GRADE),
         );
       }
@@ -372,13 +389,15 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                AppLocalizations.of(context)!.grades_and_remarks,
+                AppLocalizations.of(
+                  context,
+                )!.assignment_details_grades_and_remarks,
                 style: Theme.of(
                   context,
                 ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               CVTextField(
-                label: AppLocalizations.of(context)!.grade,
+                label: AppLocalizations.of(context)!.assignment_details_grade,
                 controller: _gradesController,
                 padding: const EdgeInsets.all(0),
                 type:
@@ -390,14 +409,14 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                         value?.isEmpty ?? true
                             ? AppLocalizations.of(
                               context,
-                            )!.grade_validation_error
+                            )!.assignment_details_grade_validation_error
                             : null,
                 onFieldSubmitted:
                     (_) => FocusScope.of(context).requestFocus(_gradeFocusNode),
               ),
               const SizedBox(height: 4),
               CVTextField(
-                label: AppLocalizations.of(context)!.remarks,
+                label: AppLocalizations.of(context)!.assignment_details_remarks,
                 focusNode: _gradeFocusNode,
                 controller: _remarksController,
                 padding: const EdgeInsets.all(0),
@@ -408,8 +427,12 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                   CVPrimaryButton(
                     title:
                         _submittedGrade != null
-                            ? AppLocalizations.of(context)!.update
-                            : AppLocalizations.of(context)!.submit,
+                            ? AppLocalizations.of(
+                              context,
+                            )!.assignment_details_update
+                            : AppLocalizations.of(
+                              context,
+                            )!.assignment_details_submit,
                     onPressed: () {
                       if (Validators.validateAndSaveForm(_formKey)) {
                         FocusScope.of(context).requestFocus(FocusNode());
@@ -430,7 +453,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                       ),
                       onPressed: () => deleteGrade(_submittedGrade.id),
                       child: Text(
-                        AppLocalizations.of(context)!.delete,
+                        AppLocalizations.of(context)!.assignment_details_delete,
                         style: Theme.of(
                           context,
                         ).textTheme.titleLarge?.copyWith(color: Colors.white),
@@ -461,7 +484,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
       builder:
           (context, model, child) => Scaffold(
             appBar: AppBar(
-              title: Text(AppLocalizations.of(context)!.assignment_details),
+              title: Text(
+                AppLocalizations.of(context)!.assignment_details_title,
+              ),
             ),
             body: Builder(
               builder: (context) {
@@ -481,9 +506,9 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                     if (!_remainingTime.isNegative)
                       _buildDetailComponent(
                         'time_remaining',
-                        '${_remainingTime.inDays} ${AppLocalizations.of(context)!.days} '
-                            '${_remainingTime.inHours.remainder(24)} ${AppLocalizations.of(context)!.hours} '
-                            '${_remainingTime.inMinutes.remainder(60)} ${AppLocalizations.of(context)!.minutes}',
+                        '${_remainingTime.inDays} ${AppLocalizations.of(context)!.assignment_details_days} '
+                            '${_remainingTime.inHours.remainder(24)} ${AppLocalizations.of(context)!.assignment_details_hours} '
+                            '${_remainingTime.inMinutes.remainder(60)} ${AppLocalizations.of(context)!.assignment_details_minutes}',
                       ),
                     _buildAssignmentDescription(),
                     _buildDetailComponent(

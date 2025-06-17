@@ -84,7 +84,9 @@ void main() {
       expect(find.byType(FloatingActionButton), findsOneWidget);
 
       // Tap Joined Groups Tab
-      await tester.tap(find.widgetWithText(Tab, localizations.joined));
+      await tester.tap(
+        find.widgetWithText(Tab, localizations.my_groups_joined),
+      );
       await tester.pumpAndSettle();
 
       // Member Group Card validations
@@ -92,12 +94,12 @@ void main() {
       expect(find.text('Test Group'), findsOneWidget);
       expect(find.text('Total Members: 1'), findsOneWidget);
       expect(
-        find.widgetWithText(CardButton, localizations.view),
+        find.widgetWithText(CardButton, localizations.my_groups_view),
         findsOneWidget,
       );
 
       // Tap Owned Groups Tab
-      await tester.tap(find.widgetWithText(Tab, localizations.owned));
+      await tester.tap(find.widgetWithText(Tab, localizations.my_groups_owned));
       await tester.pumpAndSettle();
 
       // Mentor Group Card validations
@@ -105,15 +107,15 @@ void main() {
       expect(find.text('Test Group'), findsOneWidget);
       expect(find.text('Total Members: 1'), findsOneWidget);
       expect(
-        find.widgetWithText(CardButton, localizations.edit),
+        find.widgetWithText(CardButton, localizations.my_groups_edit),
         findsOneWidget,
       );
       expect(
-        find.widgetWithText(CardButton, localizations.delete),
+        find.widgetWithText(CardButton, localizations.my_groups_delete),
         findsOneWidget,
       );
       expect(
-        find.widgetWithText(CardButton, localizations.view),
+        find.widgetWithText(CardButton, localizations.my_groups_view),
         findsOneWidget,
       );
     });
@@ -149,7 +151,7 @@ void main() {
       when(groupDetailsViewModel.isSuccess(any)).thenReturn(false);
 
       await tester.tap(
-        find.widgetWithText(CardButton, localizations.view).first,
+        find.widgetWithText(CardButton, localizations.my_groups_view).first,
       );
       await tester.pumpAndSettle();
 
@@ -160,7 +162,9 @@ void main() {
     testWidgets('Edit Group View is Pushed onTap', (WidgetTester tester) async {
       await _pumpMyGroupsView(tester);
 
-      await tester.tap(find.widgetWithText(CardButton, localizations.edit));
+      await tester.tap(
+        find.widgetWithText(CardButton, localizations.my_groups_edit),
+      );
       await tester.pumpAndSettle();
 
       verify(mockObserver.didPush(any, any));
@@ -183,7 +187,9 @@ void main() {
 
       await _pumpMyGroupsView(tester);
 
-      await tester.tap(find.widgetWithText(CardButton, localizations.delete));
+      await tester.tap(
+        find.widgetWithText(CardButton, localizations.my_groups_delete),
+      );
       await tester.pumpAndSettle();
 
       verify(

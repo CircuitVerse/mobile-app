@@ -77,7 +77,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           const Icon(Icons.edit, color: Colors.white),
           const SizedBox(width: 8),
           Text(
-            AppLocalizations.of(context)!.edit,
+            AppLocalizations.of(context)!.group_details_edit,
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(color: Colors.white),
@@ -111,7 +111,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         ),
         RichText(
           text: TextSpan(
-            text: '${AppLocalizations.of(context)!.primary_mentor} : ',
+            text:
+                '${AppLocalizations.of(context)!.group_details_primary_mentor} : ',
             style: Theme.of(
               context,
             ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -133,7 +134,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     Navigator.pop(context);
 
     _dialogService.showCustomProgressDialog(
-      title: AppLocalizations.of(context)!.adding,
+      title: AppLocalizations.of(context)!.group_details_adding,
     );
 
     await _model.addMembers(_recievedGroup.id, _emails!, isMentor);
@@ -143,12 +144,12 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     if (_model.isSuccess(_model.ADD_GROUP_MEMBERS) &&
         _model.addedMembersSuccessMessage.isNotEmpty) {
       SnackBarUtils.showDark(
-        AppLocalizations.of(context)!.group_members_added,
+        AppLocalizations.of(context)!.group_details_members_added,
         _model.addedMembersSuccessMessage,
       );
     } else if (_model.isError(_model.ADD_GROUP_MEMBERS)) {
       SnackBarUtils.showDark(
-        AppLocalizations.of(context)!.error,
+        AppLocalizations.of(context)!.group_details_error,
         _model.errorMessageFor(_model.ADD_GROUP_MEMBERS),
       );
     }
@@ -166,12 +167,14 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             children: <Widget>[
               Text(
                 member
-                    ? AppLocalizations.of(context)!.add_group_members
-                    : AppLocalizations.of(context)!.add_mentors,
+                    ? AppLocalizations.of(context)!.group_details_add_members
+                    : AppLocalizations.of(context)!.group_details_add_mentors,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(
-                AppLocalizations.of(context)!.add_members_description,
+                AppLocalizations.of(
+                  context,
+                )!.group_details_add_members_description,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
@@ -195,7 +198,9 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 (emails) =>
                     Validators.areEmailsValid(emails)
                         ? null
-                        : AppLocalizations.of(context)!.email_validation_error,
+                        : AppLocalizations.of(
+                          context,
+                        )!.group_details_email_validation_error,
             onChanged: (emails) {
               addButtonGlobalKey.currentState?.setDynamicFunction(
                 emails.isNotEmpty,
@@ -206,14 +211,19 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(AppLocalizations.of(context)!.cancel.toUpperCase()),
+              child: Text(
+                AppLocalizations.of(
+                  context,
+                )!.group_details_cancel.toUpperCase(),
+              ),
             ),
             CVFlatButton(
               key: addButtonGlobalKey,
               triggerFunction:
                   (context) => onAddMemberPressed(context, !member),
               context: context,
-              buttonText: AppLocalizations.of(context)!.add.toUpperCase(),
+              buttonText:
+                  AppLocalizations.of(context)!.group_details_add.toUpperCase(),
             ),
           ],
         );
@@ -225,18 +235,23 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title:
           member
-              ? AppLocalizations.of(context)!.remove_group_member
-              : AppLocalizations.of(context)!.remove_mentor,
+              ? AppLocalizations.of(context)!.group_details_remove_member
+              : AppLocalizations.of(context)!.group_details_remove_mentor,
       description:
           member
-              ? AppLocalizations.of(context)!.remove_member_confirmation
-              : AppLocalizations.of(context)!.remove_mentor_confirmation,
-      confirmationTitle: AppLocalizations.of(context)!.remove.toUpperCase(),
+              ? AppLocalizations.of(
+                context,
+              )!.group_details_remove_member_confirmation
+              : AppLocalizations.of(
+                context,
+              )!.group_details_remove_mentor_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.group_details_remove.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.removing,
+        title: AppLocalizations.of(context)!.group_details_removing,
       );
 
       await _model.deleteGroupMember(memberId, member);
@@ -246,13 +261,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       if (_model.isSuccess(_model.DELETE_GROUP_MEMBER)) {
         SnackBarUtils.showDark(
           member
-              ? AppLocalizations.of(context)!.group_member_removed
-              : AppLocalizations.of(context)!.mentor_removed,
-          AppLocalizations.of(context)!.member_removed_success,
+              ? AppLocalizations.of(context)!.group_details_member_removed
+              : AppLocalizations.of(context)!.group_details_mentor_removed,
+          AppLocalizations.of(context)!.group_details_member_removed_success,
         );
       } else if (_model.isError(_model.DELETE_GROUP_MEMBER)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.group_details_error,
           _model.errorMessageFor(_model.DELETE_GROUP_MEMBER),
         );
       }
@@ -266,9 +281,10 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   }) {
     final title =
         {
-          'mentors': AppLocalizations.of(context)!.mentors,
-          'members': AppLocalizations.of(context)!.members,
-          'assignments': AppLocalizations.of(context)!.assignments,
+          'mentors': AppLocalizations.of(context)!.group_details_mentors,
+          'members': AppLocalizations.of(context)!.group_details_members,
+          'assignments':
+              AppLocalizations.of(context)!.group_details_assignments,
         }[titleKey] ??
         titleKey;
 
@@ -285,7 +301,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           ),
           if (_recievedGroup.isPrimaryMentor || extraCondition)
             CVPrimaryButton(
-              title: '${AppLocalizations.of(context)!.add} +',
+              title: '${AppLocalizations.of(context)!.group_details_add} +',
               onPressed: onAddPressed,
               padding: const EdgeInsets.symmetric(horizontal: 10),
             ),
@@ -305,14 +321,18 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
   Future<void> onDeleteAssignmentPressed(String assignmentId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: AppLocalizations.of(context)!.delete_assignment,
-      description: AppLocalizations.of(context)!.delete_assignment_confirmation,
-      confirmationTitle: AppLocalizations.of(context)!.delete.toUpperCase(),
+      title: AppLocalizations.of(context)!.group_details_delete_assignment,
+      description:
+          AppLocalizations.of(
+            context,
+          )!.group_details_delete_assignment_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.group_details_delete.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.deleting_assignment,
+        title: AppLocalizations.of(context)!.group_details_deleting_assignment,
       );
 
       await _model.deleteAssignment(assignmentId);
@@ -321,12 +341,14 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       if (_model.isSuccess(_model.DELETE_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.assignment_deleted,
-          AppLocalizations.of(context)!.assignment_deleted_success,
+          AppLocalizations.of(context)!.group_details_assignment_deleted,
+          AppLocalizations.of(
+            context,
+          )!.group_details_assignment_deleted_success,
         );
       } else if (_model.isError(_model.DELETE_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.group_details_error,
           _model.errorMessageFor(_model.DELETE_ASSIGNMENT),
         );
       }
@@ -344,14 +366,18 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
   Future<void> onReopenAssignmentPressed(String assignmentId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: AppLocalizations.of(context)!.reopen_assignment,
-      description: AppLocalizations.of(context)!.reopen_assignment_confirmation,
-      confirmationTitle: AppLocalizations.of(context)!.reopen.toUpperCase(),
+      title: AppLocalizations.of(context)!.group_details_reopen_assignment,
+      description:
+          AppLocalizations.of(
+            context,
+          )!.group_details_reopen_assignment_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.group_details_reopen.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.reopening_assignment,
+        title: AppLocalizations.of(context)!.group_details_reopening_assignment,
       );
 
       await _model.reopenAssignment(assignmentId);
@@ -360,12 +386,14 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       if (_model.isSuccess(_model.REOPEN_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.assignment_reopened,
-          AppLocalizations.of(context)!.assignment_reopened_success,
+          AppLocalizations.of(context)!.group_details_assignment_reopened,
+          AppLocalizations.of(
+            context,
+          )!.group_details_assignment_reopened_success,
         );
       } else if (_model.isError(_model.REOPEN_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.group_details_error,
           _model.errorMessageFor(_model.REOPEN_ASSIGNMENT),
         );
       }
@@ -374,14 +402,18 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
   Future<void> onStartAssignmentPressed(String assignmentId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: AppLocalizations.of(context)!.start_assignment,
-      description: AppLocalizations.of(context)!.start_assignment_confirmation,
-      confirmationTitle: AppLocalizations.of(context)!.start.toUpperCase(),
+      title: AppLocalizations.of(context)!.group_details_start_assignment,
+      description:
+          AppLocalizations.of(
+            context,
+          )!.group_details_start_assignment_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.group_details_start.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.starting_assignment,
+        title: AppLocalizations.of(context)!.group_details_starting_assignment,
       );
 
       await _model.startAssignment(assignmentId);
@@ -390,12 +422,12 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
       if (_model.isSuccess(_model.START_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.project_created,
-          AppLocalizations.of(context)!.project_created_success,
+          AppLocalizations.of(context)!.group_details_project_created,
+          AppLocalizations.of(context)!.group_details_project_created_success,
         );
       } else {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.group_details_error,
           _model.errorMessageFor(_model.START_ASSIGNMENT),
         );
       }
@@ -404,27 +436,29 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
   String role(bool isMember) {
     return isMember
-        ? AppLocalizations.of(context)!.member
-        : AppLocalizations.of(context)!.mentor;
+        ? AppLocalizations.of(context)!.group_details_member
+        : AppLocalizations.of(context)!.group_details_mentor;
   }
 
   Future<void> onEditGroupRole(String id, {bool member = true}) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: '${AppLocalizations.of(context)!.make} ${role(!member)}',
+      title:
+          '${AppLocalizations.of(context)!.group_details_make} ${role(!member)}',
       description:
-          '${AppLocalizations.of(context)!.are_you_sure_you_want_to} '
-          '${member ? AppLocalizations.of(context)!.promote : AppLocalizations.of(context)!.demote} '
-          '${AppLocalizations.of(context)!.this_group} ${role(member)} '
-          '${AppLocalizations.of(context)!.to_a} ${role(!member)}?',
-      confirmationTitle: AppLocalizations.of(context)!.yes.toUpperCase(),
+          '${AppLocalizations.of(context)!.group_details_are_you_sure_you_want_to} '
+          '${member ? AppLocalizations.of(context)!.group_details_promote : AppLocalizations.of(context)!.group_details_demote} '
+          '${AppLocalizations.of(context)!.group_details_this_group} ${role(member)} '
+          '${AppLocalizations.of(context)!.group_details_to_a} ${role(!member)}?',
+      confirmationTitle:
+          AppLocalizations.of(context)!.group_details_yes.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(
         title:
             member
-                ? AppLocalizations.of(context)!.promoting
-                : AppLocalizations.of(context)!.demoting,
+                ? AppLocalizations.of(context)!.group_details_promoting
+                : AppLocalizations.of(context)!.group_details_demoting,
       );
 
       await _model.updateMemberRole(id, member, _recievedGroup.id);
@@ -434,13 +468,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       if (_model.isSuccess(_model.UPDATE_MEMBER_ROLE)) {
         SnackBarUtils.showDark(
           member
-              ? AppLocalizations.of(context)!.promoted
-              : AppLocalizations.of(context)!.demoted,
-          AppLocalizations.of(context)!.member_updated_success,
+              ? AppLocalizations.of(context)!.group_details_promoted
+              : AppLocalizations.of(context)!.group_details_demoted,
+          AppLocalizations.of(context)!.group_details_member_updated_success,
         );
       } else if (_model.isError(_model.UPDATE_MEMBER_ROLE)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.group_details_error,
           _model.errorMessageFor(_model.UPDATE_MEMBER_ROLE),
         );
       }
@@ -457,7 +491,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
       builder:
           (context, model, child) => Scaffold(
             appBar: AppBar(
-              title: Text(AppLocalizations.of(context)!.group_details),
+              title: Text(AppLocalizations.of(context)!.group_details_title),
             ),
             body: Builder(
               builder: (context) {

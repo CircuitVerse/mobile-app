@@ -54,11 +54,11 @@ class _SignupViewState extends State<SignupView> {
 
   Widget _buildNameInput() {
     return CVTextField(
-      label: AppLocalizations.of(context)!.name,
+      label: AppLocalizations.of(context)!.signup_name,
       validator:
           (value) =>
               value?.isEmpty ?? true
-                  ? AppLocalizations.of(context)!.name_validation_error
+                  ? AppLocalizations.of(context)!.signup_name_validation_error
                   : null,
       onSaved: (value) => _name = value!.trim(),
       onFieldSubmitted:
@@ -69,13 +69,13 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildEmailInput() {
     return CVTextField(
       focusNode: _nameFocusNode,
-      label: AppLocalizations.of(context)!.email,
+      label: AppLocalizations.of(context)!.signup_email,
       type: TextInputType.emailAddress,
       validator:
           (value) =>
               Validators.isEmailValid(value)
                   ? null
-                  : AppLocalizations.of(context)!.email_validation_error,
+                  : AppLocalizations.of(context)!.signup_email_validation_error,
       onSaved: (value) => _email = value!.trim(),
       onFieldSubmitted: (_) {
         _nameFocusNode.unfocus();
@@ -89,9 +89,9 @@ class _SignupViewState extends State<SignupView> {
       focusNode: _emailFocusNode,
       validator: (value) {
         if (value!.isEmpty) {
-          return AppLocalizations.of(context)!.password_validation_error;
+          return AppLocalizations.of(context)!.signup_password_validation_error;
         } else if (value.length < 6) {
-          return AppLocalizations.of(context)!.password_length_error;
+          return AppLocalizations.of(context)!.signup_password_length_error;
         }
         return null;
       },
@@ -106,8 +106,8 @@ class _SignupViewState extends State<SignupView> {
       child: CVPrimaryButton(
         title:
             _signUpModel.isBusy(_signUpModel.SIGNUP)
-                ? AppLocalizations.of(context)!.authenticating
-                : AppLocalizations.of(context)!.register.toUpperCase(),
+                ? AppLocalizations.of(context)!.signup_authenticating
+                : AppLocalizations.of(context)!.signup_register.toUpperCase(),
         onPressed: _validateAndSubmit,
       ),
     );
@@ -118,11 +118,11 @@ class _SignupViewState extends State<SignupView> {
       onTap: () => Get.offAllNamed(LoginView.id),
       child: RichText(
         text: TextSpan(
-          text: '${AppLocalizations.of(context)!.already_registered} ',
+          text: '${AppLocalizations.of(context)!.signup_already_registered} ',
           style: Theme.of(context).textTheme.bodyLarge,
           children: <TextSpan>[
             TextSpan(
-              text: AppLocalizations.of(context)!.login,
+              text: AppLocalizations.of(context)!.signup_login,
               style: TextStyle(
                 color: CVTheme.highlightText(context),
                 fontSize: 16,
@@ -151,7 +151,7 @@ class _SignupViewState extends State<SignupView> {
         await Get.offAllNamed(CVLandingView.id);
       } else if (_signUpModel.isError(_signUpModel.SIGNUP)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.signup_error,
           _signUpModel.errorMessageFor(_signUpModel.SIGNUP),
         );
         _formKey.currentState?.reset();

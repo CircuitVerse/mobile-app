@@ -64,7 +64,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       child: IconButton(
         onPressed: onShareButtonPressed,
         icon: const Icon(Icons.share),
-        tooltip: AppLocalizations.of(context)!.share,
+        tooltip: AppLocalizations.of(context)!.edit_project_share,
       ),
     );
   }
@@ -117,7 +117,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return Row(
       children: <Widget>[
         const Icon(Icons.star, color: Colors.yellow, size: 18),
-        Text(' ${_model.starCount} ${AppLocalizations.of(context)!.stars}'),
+        Text(
+          ' ${_model.starCount} ${AppLocalizations.of(context)!.edit_project_stars}',
+        ),
       ],
     );
   }
@@ -127,7 +129,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       children: <Widget>[
         const Icon(Icons.visibility, size: 18),
         Text(
-          ' ${_recievedProject.attributes.view} ${AppLocalizations.of(context)!.views}',
+          ' ${_recievedProject.attributes.view} ${AppLocalizations.of(context)!.edit_project_views}',
         ),
       ],
     );
@@ -193,7 +195,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
           children: <TextSpan>[
             TextSpan(
-              text: '${AppLocalizations.of(context)!.author} : ',
+              text: '${AppLocalizations.of(context)!.edit_project_author} : ',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(
@@ -226,7 +228,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${AppLocalizations.of(context)!.description} :',
+                '${AppLocalizations.of(context)!.edit_project_description} :',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -244,14 +246,14 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Future<void> onForkProjectPressed() async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: AppLocalizations.of(context)!.fork_project,
-      description: AppLocalizations.of(context)!.fork_confirmation,
-      confirmationTitle: AppLocalizations.of(context)!.fork,
+      title: AppLocalizations.of(context)!.edit_project_fork_project,
+      description: AppLocalizations.of(context)!.edit_project_fork_confirmation,
+      confirmationTitle: AppLocalizations.of(context)!.edit_project_fork,
     );
 
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.forking,
+        title: AppLocalizations.of(context)!.edit_project_forking,
       );
 
       await _model.forkProject(_recievedProject.id);
@@ -265,7 +267,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         );
       } else if (_model.isError(_model.FORK_PROJECT)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.edit_project_error,
           _model.errorMessageFor(_model.FORK_PROJECT),
         );
       }
@@ -287,7 +289,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             Image.asset('assets/icons/fork_project.png', width: 12),
             const SizedBox(width: 4),
             Text(
-              AppLocalizations.of(context)!.fork,
+              AppLocalizations.of(context)!.edit_project_fork,
               style: Theme.of(
                 context,
               ).textTheme.titleMedium?.copyWith(color: Colors.white),
@@ -305,15 +307,15 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     if (_model.isSuccess(_model.TOGGLE_STAR)) {
       SnackBarUtils.showDark(
         _model.isProjectStarred
-            ? AppLocalizations.of(context)!.project_starred
-            : AppLocalizations.of(context)!.project_unstarred,
+            ? AppLocalizations.of(context)!.edit_project_starred
+            : AppLocalizations.of(context)!.edit_project_unstarred,
         _model.isProjectStarred
-            ? AppLocalizations.of(context)!.starred_success
-            : AppLocalizations.of(context)!.unstarred_success,
+            ? AppLocalizations.of(context)!.edit_project_starred_success
+            : AppLocalizations.of(context)!.edit_project_unstarred_success,
       );
     } else if (_model.isError(_model.TOGGLE_STAR)) {
       SnackBarUtils.showDark(
-        AppLocalizations.of(context)!.error,
+        AppLocalizations.of(context)!.edit_project_error,
         _model.errorMessageFor(_model.TOGGLE_STAR),
       );
     }
@@ -352,7 +354,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       Navigator.pop(context);
 
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.adding,
+        title: AppLocalizations.of(context)!.edit_project_adding,
       );
 
       await _model.addCollaborators(_recievedProject.id, _emails);
@@ -362,12 +364,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       if (_model.isSuccess(_model.ADD_COLLABORATORS) &&
           _model.addedCollaboratorsSuccessMessage.isNotEmpty) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.collaborators_added,
+          AppLocalizations.of(context)!.edit_project_collaborators_added,
           _model.addedCollaboratorsSuccessMessage,
         );
       } else if (_model.isError(_model.ADD_COLLABORATORS)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.edit_project_error,
           _model.errorMessageFor(_model.ADD_COLLABORATORS),
         );
       }
@@ -384,11 +386,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                AppLocalizations.of(context)!.add_collaborators,
+                AppLocalizations.of(context)!.edit_project_add_collaborators,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               Text(
-                AppLocalizations.of(context)!.email_hint,
+                AppLocalizations.of(context)!.edit_project_email_hint,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
@@ -404,7 +406,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               },
               autofocus: true,
               decoration: CVTheme.textFieldDecoration.copyWith(
-                hintText: AppLocalizations.of(context)!.email_ids,
+                hintText: AppLocalizations.of(context)!.edit_project_email_ids,
               ),
               validator:
                   (emails) =>
@@ -417,13 +419,15 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text(AppLocalizations.of(context)!.cancel.toUpperCase()),
+              child: Text(
+                AppLocalizations.of(context)!.edit_cancel.toUpperCase(),
+              ),
             ),
             CVFlatButton(
               key: addButtonGlobalKey,
               triggerFunction: onAddCollaboratorsPressed,
               context: context,
-              buttonText: AppLocalizations.of(context)!.add.toUpperCase(),
+              buttonText: AppLocalizations.of(context)!.edit_add.toUpperCase(),
             ),
           ],
         );
@@ -438,7 +442,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           const Icon(Icons.add),
-          Text(AppLocalizations.of(context)!.add_a_collaborator),
+          Text(AppLocalizations.of(context)!.edit_project_add_collaborator),
         ],
       ),
     );
@@ -471,7 +475,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             const Icon(Icons.edit, size: 16),
             const SizedBox(width: 4),
             Text(
-              AppLocalizations.of(context)!.edit,
+              AppLocalizations.of(context)!.edit_project_edit,
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],
@@ -482,14 +486,16 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Future<void> onDeleteProjectPressed() async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: AppLocalizations.of(context)!.delete_project,
-      description: AppLocalizations.of(context)!.delete_confirmation,
-      confirmationTitle: AppLocalizations.of(context)!.delete.toUpperCase(),
+      title: AppLocalizations.of(context)!.edit_project_delete_project,
+      description:
+          AppLocalizations.of(context)!.edit_project_delete_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.edit_project_delete.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.deleting,
+        title: AppLocalizations.of(context)!.edit_project_deleting,
       );
 
       await _model.deleteProject(_recievedProject.id);
@@ -499,12 +505,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
       if (_model.isSuccess(_model.DELETE_PROJECT)) {
         Get.back(result: true);
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.project_deleted,
-          AppLocalizations.of(context)!.delete_success,
+          AppLocalizations.of(context)!.edit_project_deleted,
+          AppLocalizations.of(context)!.edit_project_delete_success,
         );
       } else if (_model.isError(_model.DELETE_PROJECT)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.edit_project_error,
           _model.errorMessageFor(_model.DELETE_PROJECT),
         );
       }
@@ -526,7 +532,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             const Icon(Icons.delete, size: 16),
             const SizedBox(width: 4),
             Text(
-              AppLocalizations.of(context)!.delete,
+              AppLocalizations.of(context)!.edit_project_delete,
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],
@@ -537,15 +543,18 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Future<void> onDeleteCollaboratorPressed(Collaborator collaborator) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: AppLocalizations.of(context)!.delete_collaborator,
+      title: AppLocalizations.of(context)!.edit_project_delete_collaborator,
       description:
-          AppLocalizations.of(context)!.delete_collaborator_confirmation,
-      confirmationTitle: AppLocalizations.of(context)!.delete.toUpperCase(),
+          AppLocalizations.of(
+            context,
+          )!.edit_project_delete_collaborator_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.edit_project_delete.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.deleting,
+        title: AppLocalizations.of(context)!.edit_project_deleting,
       );
 
       await _model.deleteCollaborator(_model.project!.id, collaborator.id);
@@ -554,12 +563,14 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
       if (_model.isSuccess(_model.DELETE_COLLABORATORS)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.collaborator_deleted,
-          AppLocalizations.of(context)!.collaborator_delete_success,
+          AppLocalizations.of(context)!.edit_project_collaborator_deleted,
+          AppLocalizations.of(
+            context,
+          )!.edit_project_collaborator_delete_success,
         );
       } else if (_model.isError(_model.DELETE_COLLABORATORS)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.edit_project_error,
           _model.errorMessageFor(_model.DELETE_COLLABORATORS),
         );
       }
@@ -622,7 +633,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             },
             child: Scaffold(
               appBar: AppBar(
-                title: Text(AppLocalizations.of(context)!.project_details),
+                title: Text(AppLocalizations.of(context)!.edit_project_details),
                 actions: [_buildShareActionButton()],
               ),
               body: Builder(
@@ -645,7 +656,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                         children: <Widget>[
                           _buildProjectAuthor(),
                           _buildProjectDetailComponent(
-                            AppLocalizations.of(context)!.project_access_type,
+                            AppLocalizations.of(
+                              context,
+                            )!.edit_project_access_type,
                             _projectAttrs.projectAccessType,
                           ),
                           _buildProjectDescription(),
@@ -681,7 +694,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     _items.add(const Divider());
                     _items.add(
                       _buildProjectHeader(
-                        AppLocalizations.of(context)!.collaborators,
+                        AppLocalizations.of(
+                          context,
+                        )!.edit_project_collaborators,
                       ),
                     );
 

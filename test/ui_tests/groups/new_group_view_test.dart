@@ -60,7 +60,7 @@ void main() {
           find.byWidgetPredicate(
             (widget) =>
                 widget is CVTextField &&
-                widget.label == localizations.group_name,
+                widget.label == localizations.new_group_name,
           ),
           findsOneWidget,
         );
@@ -68,7 +68,7 @@ void main() {
         expect(
           find.widgetWithText(
             CVPrimaryButton,
-            localizations.save.toUpperCase(),
+            localizations.new_group_save.toUpperCase(),
           ),
           findsOneWidget,
         );
@@ -111,14 +111,14 @@ void main() {
           find.byWidgetPredicate(
             (widget) =>
                 widget is CVTextField &&
-                widget.label == localizations.group_name,
+                widget.label == localizations.new_group_name,
           ),
           'Test',
         );
         await tester.tap(
           find.widgetWithText(
             CVPrimaryButton,
-            localizations.save.toUpperCase(),
+            localizations.new_group_save.toUpperCase(),
           ),
         );
       } else {

@@ -68,7 +68,7 @@ void main() {
       expect(
         find.byWidgetPredicate((widget) {
           if (widget is CVTextField) {
-            return widget.label == localizations.name;
+            return widget.label == localizations.assignment_name;
           } else if (widget is CVHtmlEditor) {
             return true;
           } else if (widget is DateTimeField) {
@@ -89,7 +89,7 @@ void main() {
 
       // Finds Save button
       expect(
-        find.widgetWithText(CVPrimaryButton, localizations.create_assignment),
+        find.widgetWithText(CVPrimaryButton, localizations.assignment_create),
         findsOneWidget,
       );
     });
@@ -132,7 +132,8 @@ void main() {
       await tester.enterText(
         find.byWidgetPredicate(
           (widget) =>
-              widget is CVTextField && widget.label == localizations.name,
+              widget is CVTextField &&
+              widget.label == localizations.assignment_name,
         ),
         'Test',
       );

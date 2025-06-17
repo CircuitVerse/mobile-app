@@ -162,9 +162,11 @@ class _IbPageViewState extends State<IbPageView> {
         'img': CustomImageBuilder(
           onTapImage: (src) => debugPrint('Image tapped: $src'),
           wrapImages: true,
-          noImageSourceText: AppLocalizations.of(context)!.no_image_source,
-          imageLoadErrorText: AppLocalizations.of(context)!.image_load_error,
-          loadingImageText: AppLocalizations.of(context)!.loading_image,
+          noImageSourceText:
+              AppLocalizations.of(context)!.ib_page_no_image_source,
+          imageLoadErrorText:
+              AppLocalizations.of(context)!.ib_page_image_load_error,
+          loadingImageText: AppLocalizations.of(context)!.ib_page_loading_image,
         ),
         'h1': _headingsBuilder,
         'h2': _headingsBuilder,
@@ -236,7 +238,7 @@ class _IbPageViewState extends State<IbPageView> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Text(
-        AppLocalizations.of(context)!.copyright_notice,
+        AppLocalizations.of(context)!.ib_page_copyright_notice,
         style: const TextStyle(fontSize: 10),
       ),
     );
@@ -322,7 +324,7 @@ class _IbPageViewState extends State<IbPageView> {
           children: [
             ListTile(
               title: Text(
-                AppLocalizations.of(context)!.table_of_contents,
+                AppLocalizations.of(context)!.ib_page_table_of_contents,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onPrimary,
                 ),
@@ -369,7 +371,7 @@ class _IbPageViewState extends State<IbPageView> {
                   child: Showcase(
                     key: _model.prevPage,
                     description:
-                        AppLocalizations.of(context)!.navigate_previous_page,
+                        AppLocalizations.of(context)!.ib_page_navigate_previous,
                     targetPadding: const EdgeInsets.all(12.0),
                     targetShapeBorder: const CircleBorder(),
                     onTargetClick: () {
@@ -412,7 +414,7 @@ class _IbPageViewState extends State<IbPageView> {
                   child: Showcase(
                     key: _model.nextPage,
                     description:
-                        AppLocalizations.of(context)!.navigate_next_page,
+                        AppLocalizations.of(context)!.ib_page_navigate_next,
                     targetPadding: const EdgeInsets.all(12.0),
                     targetShapeBorder: const CircleBorder(),
                     onTargetClick: () {

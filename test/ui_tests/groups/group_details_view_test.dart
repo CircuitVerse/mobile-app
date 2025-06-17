@@ -97,21 +97,24 @@ void main() {
       expect(find.text('Test Group'), findsOneWidget);
 
       // Finds Edit Group Button
-      expect(find.text(localizations!.edit), findsNWidgets(2));
+      expect(find.text(localizations!.group_details_edit), findsNWidgets(2));
 
       // Finds Mentor Name
       expect(
         find.byWidgetPredicate((widget) {
           return widget is RichText &&
               widget.text.toPlainText() ==
-                  '${localizations.primary_mentor} : Test User';
+                  '${localizations.group_details_primary_mentor} : Test User';
         }),
         findsOneWidget,
       );
 
       // Make Add Mentors, Add Members and Add Assignments Button
       expect(
-        find.widgetWithText(CVPrimaryButton, '${localizations.add} +'),
+        find.widgetWithText(
+          CVPrimaryButton,
+          '${localizations.group_details_add} +',
+        ),
         findsNWidgets(3),
       );
 
@@ -135,7 +138,7 @@ void main() {
       expect(localizations, isNotNull);
 
       // Tap Edit Button
-      await tester.tap(find.text(localizations!.edit).first);
+      await tester.tap(find.text(localizations!.group_details_edit).first);
       await tester.pumpAndSettle();
 
       // Expect EditGroupView is Pushed
@@ -156,7 +159,12 @@ void main() {
 
       // Tap Add Members button
       await tester.tap(
-        find.widgetWithText(CVPrimaryButton, '${localizations!.add} +').first,
+        find
+            .widgetWithText(
+              CVPrimaryButton,
+              '${localizations!.group_details_add} +',
+            )
+            .first,
       );
       await tester.pumpAndSettle();
 
@@ -177,7 +185,12 @@ void main() {
 
       // Tap Add Assignment Button
       await tester.tap(
-        find.widgetWithText(CVPrimaryButton, '${localizations!.add} +').last,
+        find
+            .widgetWithText(
+              CVPrimaryButton,
+              '${localizations!.group_details_add} +',
+            )
+            .last,
       );
       await tester.pumpAndSettle();
 

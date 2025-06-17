@@ -36,7 +36,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
       children: <Widget>[
         SvgPicture.asset('assets/images/group/no_group.svg', height: 250),
         _buildSubHeader(
-          title: AppLocalizations.of(context)!.explore_groups_message,
+          title: AppLocalizations.of(context)!.my_groups_explore_message,
         ),
       ],
     );
@@ -67,14 +67,16 @@ class _MyGroupsViewState extends State<MyGroupsView>
 
   Future<void> onDeleteGroupPressed(String groupId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: AppLocalizations.of(context)!.delete_group,
-      description: AppLocalizations.of(context)!.delete_group_confirmation,
-      confirmationTitle: AppLocalizations.of(context)!.delete.toUpperCase(),
+      title: AppLocalizations.of(context)!.my_groups_delete_group,
+      description:
+          AppLocalizations.of(context)!.my_groups_delete_group_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.my_groups_delete.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.deleting_group,
+        title: AppLocalizations.of(context)!.my_groups_deleting_group,
       );
 
       await _model.deleteGroup(groupId);
@@ -83,12 +85,12 @@ class _MyGroupsViewState extends State<MyGroupsView>
 
       if (_model.isSuccess(_model.DELETE_GROUP)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.group_deleted,
-          AppLocalizations.of(context)!.group_deleted_success,
+          AppLocalizations.of(context)!.my_groups_group_deleted,
+          AppLocalizations.of(context)!.my_groups_group_deleted_success,
         );
       } else if (_model.isError(_model.DELETE_GROUP)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.my_groups_error,
           _model.errorMessageFor(_model.DELETE_GROUP),
         );
       }
@@ -117,8 +119,8 @@ class _MyGroupsViewState extends State<MyGroupsView>
                 labelColor: CVTheme.textColor(context),
                 indicatorColor: CVTheme.primaryColor,
                 tabs: [
-                  Tab(text: AppLocalizations.of(context)!.owned),
-                  Tab(text: AppLocalizations.of(context)!.joined),
+                  Tab(text: AppLocalizations.of(context)!.my_groups_owned),
+                  Tab(text: AppLocalizations.of(context)!.my_groups_joined),
                 ],
               ),
             ),
