@@ -265,10 +265,10 @@ class AppLocalizationsHi extends AppLocalizations {
       'पासवर्ड रीसेट निर्देश आपके ईमेल पर भेज दिए गए हैं';
 
   @override
-  String get password_validation_error => 'पासवर्ड खाली नहीं हो सकता';
+  String get forgot_password => 'पासवर्ड भूल गए?';
 
   @override
-  String get forgot_password => 'पासवर्ड भूल गए?';
+  String get password_validation_error => 'पासवर्ड खाली नहीं हो सकता';
 
   @override
   String get authenticating => 'प्रमाणीकरण हो रहा है...';
@@ -795,22 +795,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get update_project => 'प्रोजेक्ट अपडेट करें';
 
   @override
-  String get editor_picks => 'संपादक की पसंद';
-
-  @override
-  String get editor_picks_description =>
-      'ये सर्किट हमारे लेखकों द्वारा उनकी अद्भुतता के लिए चुने गए हैं।';
-
-  @override
-  String get featured_circuits => 'विशेष रुप से प्रदर्शित सर्किट';
-
-  @override
-  String get search_for_circuits => 'सर्किट खोजें';
-
-  @override
-  String get no_result_found => 'कोई परिणाम नहीं मिला';
-
-  @override
   String get project_details => 'प्रोजेक्ट विवरण';
 
   @override
@@ -899,10 +883,26 @@ class AppLocalizationsHi extends AppLocalizations {
   String get collaborator_delete_success => 'सहयोगी सफलतापूर्वक हटा दिया गया';
 
   @override
+  String get no_result_found => 'कोई परिणाम नहीं मिला';
+
+  @override
+  String get editor_picks => 'संपादक की पसंद';
+
+  @override
+  String get editor_picks_description =>
+      'सर्वश्रेष्ठ प्रोजेक्ट्स की चयनित सूची';
+
+  @override
+  String get search_for_circuits => 'सर्किट खोजें';
+
+  @override
   String get title => 'सर्किटवर्स';
 
   @override
   String get groups => 'आपके समूह';
+
+  @override
+  String get featured_circuits => 'विशेष रुप से प्रदर्शित सर्किट';
 
   @override
   String get logout => 'लॉग आउट करे';

@@ -188,7 +188,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profile_picture => 'Profile Picture';
 
   @override
-  String get name => 'नाम';
+  String get name => 'Name';
 
   @override
   String get name_empty_error => 'Name can\'t be empty';
@@ -264,10 +264,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Password reset instructions have been sent to your email';
 
   @override
-  String get password_validation_error => 'Password can\'t be empty';
+  String get forgot_password => 'Forgot Password?';
 
   @override
-  String get forgot_password => 'Forgot Password?';
+  String get password_validation_error => 'Password can\'t be empty';
 
   @override
   String get authenticating => 'Authenticating...';
@@ -282,7 +282,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_success_message => 'Welcome back!';
 
   @override
-  String get name_validation_error => 'नाम खाली नहीं हो सकता';
+  String get name_validation_error => 'Name cannot be empty';
 
   @override
   String get password_length_error => 'Password length should be at least 6';
@@ -763,51 +763,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get favourites => 'Favourites';
 
   @override
-  String get tags_list => 'टैग सूची';
+  String get tags_list => 'Tags List';
 
   @override
   String get project_access_type => 'Project Access Type';
 
   @override
   String get project_access_type_validation_error =>
-      'एक प्रोजेक्ट पहुंच प्रकार चुनें';
+      'Please select project access type';
 
   @override
-  String get public => 'सार्वजनिक';
+  String get public => 'Public';
 
   @override
-  String get private => 'निजी';
+  String get private => 'Private';
 
   @override
-  String get limited_access => 'सीमित पहुंच';
+  String get limited_access => 'Limited Access';
 
   @override
-  String get updating_project => 'प्रोजेक्ट अपडेट किया जा रहा है...';
+  String get updating_project => 'Updating project...';
 
   @override
-  String get project_updated => 'प्रोजेक्ट अपडेट हो गया';
+  String get project_updated => 'Project updated';
 
   @override
-  String get project_update_success => 'प्रोजेक्ट सफलतापूर्वक अपडेट हो गया';
+  String get project_update_success => 'Project updated successfully';
 
   @override
-  String get update_project => 'प्रोजेक्ट अपडेट करें';
-
-  @override
-  String get editor_picks => 'संपादक की पसंद';
-
-  @override
-  String get editor_picks_description =>
-      'ये सर्किट हमारे लेखकों द्वारा उनकी अद्भुतता के लिए चुने गए हैं।';
-
-  @override
-  String get featured_circuits => 'Featured Circuits';
-
-  @override
-  String get search_for_circuits => 'सर्किट खोजें';
-
-  @override
-  String get no_result_found => 'कोई परिणाम नहीं मिला';
+  String get update_project => 'Update Project';
 
   @override
   String get project_details => 'Project Details';
@@ -828,7 +812,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get author => 'Author';
 
   @override
-  String get add_a_collaborator => 'Add A Collaborator';
+  String get add_a_collaborator => 'Add Collaborator';
 
   @override
   String get collaborators => 'Collaborators';
@@ -843,10 +827,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get forking => 'Forking';
 
   @override
-  String get project_starred => 'Project Starred';
+  String get project_starred => 'Project starred';
 
   @override
-  String get project_unstarred => 'Project Unstarred';
+  String get project_unstarred => 'Project unstarred';
 
   @override
   String get starred_success => 'You have successfully starred the project';
@@ -858,13 +842,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get add_collaborators => 'Add Collaborators';
 
   @override
-  String get email_ids => 'Email Ids';
+  String get email_ids => 'Email IDs';
 
   @override
-  String get email_hint => 'Enter Email IDs separated by commas';
+  String get email_hint => 'Enter email IDs separated by comma';
 
   @override
-  String get collaborators_added => 'Collaborators Added';
+  String get collaborators_added => 'Collaborators added';
 
   @override
   String get delete_project => 'Delete Project';
@@ -877,30 +861,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleting => 'Deleting';
 
   @override
-  String get project_deleted => 'Project Deleted';
+  String get project_deleted => 'Project deleted';
 
   @override
-  String get delete_success => 'Project is successfully deleted';
+  String get delete_success => 'Project deleted successfully';
 
   @override
-  String get delete_collaborator => 'Delete Collaborator';
+  String get delete_collaborator => 'Remove Collaborator';
 
   @override
   String get delete_collaborator_confirmation =>
-      'Are you sure you want to delete this collaborator?';
+      'Are you sure you want to remove this collaborator?';
 
   @override
-  String get collaborator_deleted => 'Collaborator Deleted';
+  String get collaborator_deleted => 'Collaborator removed';
 
   @override
-  String get collaborator_delete_success =>
-      'Collaborator was successfully deleted';
+  String get collaborator_delete_success => 'Collaborator removed successfully';
+
+  @override
+  String get no_result_found => 'No result found';
+
+  @override
+  String get editor_picks => 'Editor\'s Picks';
+
+  @override
+  String get editor_picks_description => 'Curated list of the best projects';
+
+  @override
+  String get search_for_circuits => 'Search for circuits';
 
   @override
   String get title => 'CircuitVerse';
 
   @override
   String get groups => 'Groups';
+
+  @override
+  String get featured_circuits => 'Featured Circuits';
 
   @override
   String get logout => 'Log Out';
