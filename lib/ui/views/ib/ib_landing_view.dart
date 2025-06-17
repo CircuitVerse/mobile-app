@@ -73,7 +73,7 @@ class _IbLandingViewState extends State<IbLandingView> {
               },
               icon: const Icon(Icons.arrow_back),
             ),
-            hint: AppLocalizations.of(context)!.search_circuitverse,
+            hint: AppLocalizations.of(context)!.ib_search_circuitverse,
             onFieldSubmitted: (_) {
               _model.query = _controller.text;
             },
@@ -133,7 +133,7 @@ class _IbLandingViewState extends State<IbLandingView> {
         },
         icon: Showcase(
           key: _model.drawer,
-          description: AppLocalizations.of(context)!.navigate_chapters,
+          description: AppLocalizations.of(context)!.ib_navigate_chapters,
           targetPadding: const EdgeInsets.all(12.0),
           onTargetClick: () {
             _model.onShowCased('drawer');
@@ -145,8 +145,8 @@ class _IbLandingViewState extends State<IbLandingView> {
       ),
       title: Text(
         _model.selectedChapter.id == _model.homeChapter.id
-            ? AppLocalizations.of(context)!.circuitverse
-            : AppLocalizations.of(context)!.interactive_book,
+            ? AppLocalizations.of(context)!.ib_circuitverse
+            : AppLocalizations.of(context)!.ib_interactive_book,
       ),
       actions: [
         IconButton(
@@ -161,7 +161,7 @@ class _IbLandingViewState extends State<IbLandingView> {
             return value != null
                 ? Showcase(
                   key: _model.toc,
-                  description: AppLocalizations.of(context)!.show_toc,
+                  description: AppLocalizations.of(context)!.ib_show_toc,
                   onTargetClick: () {
                     _model.onShowCased('toc');
                     if (_key.currentState!.isDrawerOpen) Get.back();
@@ -257,7 +257,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                   Get.back();
                 },
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.return_home,
+                  title: AppLocalizations.of(context)!.ib_return_home,
                   color: IbTheme.textColor(context),
                 ),
               ),
@@ -279,7 +279,9 @@ class _IbLandingViewState extends State<IbLandingView> {
                     height: 24,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   ),
-                  title: Text(AppLocalizations.of(context)!.loading_chapters),
+                  title: Text(
+                    AppLocalizations.of(context)!.ib_loading_chapters,
+                  ),
                 )
               else
                 _buildChapters(_model.chapters),

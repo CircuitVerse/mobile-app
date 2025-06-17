@@ -45,8 +45,6 @@ void main() {
         ),
       );
 
-      /// The tester.pumpWidget() call above just built our app widget
-      /// and triggered the pushObserver method on the mockObserver once.
       verify(mockObserver.didPush(any, any));
     }
 
@@ -113,25 +111,23 @@ void main() {
         await _pumpLoginView(tester);
         await tester.pumpAndSettle();
 
-        // Trigger validation by tapping login button with empty fields
         await tester.tap(find.byType(CVPrimaryButton));
         await tester.pumpAndSettle();
 
-        // Verify API was not called with empty credentials
-        verifyNever(_usersApiMock.login('', ''));
+        // Add delay for async validation
+        await tester.pump(const Duration(milliseconds: 200));
 
-        // Check for actual error messages shown in debug output
-        expect(find.text('Enter emails in valid format'), findsOneWidget);
+        verifyNever(_usersApiMock.login('', ''));
+        expect(find.text('Please enter a valid email'), findsOneWidget);
         expect(find.text('Password can\'t be empty'), findsOneWidget);
 
-        // Enter valid email but keep password empty
         await tester.enterText(find.byType(CVTextField), 'test@test.com');
         await tester.pumpAndSettle();
 
         await tester.tap(find.byType(CVPrimaryButton));
         await tester.pumpAndSettle();
+        await tester.pump(const Duration(milliseconds: 200));
 
-        // Verify API was not called with empty password
         verifyNever(_usersApiMock.login('test@test.com', ''));
         expect(find.text('Password can\'t be empty'), findsOneWidget);
       },

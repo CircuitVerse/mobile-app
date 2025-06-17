@@ -40,13 +40,15 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
   Widget _buildEmailInput() {
     return CVTextField(
-      label: AppLocalizations.of(context)!.email,
+      label: AppLocalizations.of(context)!.forgot_password_email,
       type: TextInputType.emailAddress,
       validator:
           (value) =>
               Validators.isEmailValid(value)
                   ? null
-                  : AppLocalizations.of(context)!.email_validation_error,
+                  : AppLocalizations.of(
+                    context,
+                  )!.forgot_password_email_validation_error,
       onSaved: (value) => _email = value!.trim(),
       action: TextInputAction.done,
     );
@@ -59,8 +61,10 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       child: CVPrimaryButton(
         title:
             _model.isBusy(_model.SEND_RESET_INSTRUCTIONS)
-                ? AppLocalizations.of(context)!.sending
-                : AppLocalizations.of(context)!.send_instructions,
+                ? AppLocalizations.of(context)!.forgot_password_sending
+                : AppLocalizations.of(
+                  context,
+                )!.forgot_password_send_instructions,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -71,11 +75,11 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       onTap: () => Get.offNamed(SignupView.id),
       child: RichText(
         text: TextSpan(
-          text: '${AppLocalizations.of(context)!.new_user} ',
+          text: '${AppLocalizations.of(context)!.forgot_password_new_user} ',
           style: Theme.of(context).textTheme.bodyLarge,
           children: <TextSpan>[
             TextSpan(
-              text: AppLocalizations.of(context)!.sign_up,
+              text: AppLocalizations.of(context)!.forgot_password_sign_up,
               style: const TextStyle(color: CVTheme.primaryColorDark),
             ),
           ],
@@ -92,7 +96,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       FocusScope.of(context).requestFocus(FocusNode());
 
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.sending_instructions,
+        title:
+            AppLocalizations.of(context)!.forgot_password_sending_instructions,
       );
 
       await _model.onForgotPassword(_email);
@@ -101,14 +106,16 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
       if (_model.isSuccess(_model.SEND_RESET_INSTRUCTIONS)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.instructions_sent_title,
-          AppLocalizations.of(context)!.instructions_sent_message,
+          AppLocalizations.of(context)!.forgot_password_instructions_sent_title,
+          AppLocalizations.of(
+            context,
+          )!.forgot_password_instructions_sent_message,
         );
         await Future.delayed(const Duration(seconds: 1));
         Get.back();
       } else if (_model.isError(_model.SEND_RESET_INSTRUCTIONS)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.forgot_password_error,
           _model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS),
         );
         _formKey.currentState?.reset();

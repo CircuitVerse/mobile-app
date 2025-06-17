@@ -125,7 +125,7 @@ void main() {
 
         expect(find.byType(AppBar), findsOneWidget);
 
-        expect(find.text(localizations.circuitverse), findsOneWidget);
+        expect(find.text(localizations.ib_circuitverse), findsOneWidget);
 
         expect(find.byType(IconButton), findsNWidgets(2));
 
@@ -145,7 +145,7 @@ void main() {
         state.openDrawer();
         await tester.pump();
 
-        expect(find.text(localizations.return_home), findsOneWidget);
+        expect(find.text(localizations.ib_return_home), findsOneWidget);
         expect(find.text(localizations.ib_home), findsOneWidget);
         expect(find.byType(ExpansionTile), findsWidgets);
 

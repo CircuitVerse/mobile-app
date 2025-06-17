@@ -69,14 +69,15 @@ void main() {
       expect(
         find.byWidgetPredicate(
           (widget) =>
-              widget is CVTextField && widget.label == localizations.group_name,
+              widget is CVTextField &&
+              widget.label == localizations.edit_group_name,
         ),
         findsOneWidget,
       );
 
       // Finds Save button
       expect(
-        find.widgetWithText(CVPrimaryButton, localizations.save),
+        find.widgetWithText(CVPrimaryButton, localizations.edit_group_save),
         findsOneWidget,
       );
     });
@@ -112,12 +113,13 @@ void main() {
       await tester.enterText(
         find.byWidgetPredicate(
           (widget) =>
-              widget is CVTextField && widget.label == localizations.group_name,
+              widget is CVTextField &&
+              widget.label == localizations.edit_group_name,
         ),
         'Test',
       );
       await tester.tap(
-        find.widgetWithText(CVPrimaryButton, localizations.save),
+        find.widgetWithText(CVPrimaryButton, localizations.edit_group_save),
       );
       await tester.pumpAndSettle();
 

@@ -40,7 +40,7 @@ class CVDrawer extends StatelessWidget {
               InkWell(
                 onTap: () => _model.setSelectedIndexTo(0),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.home,
+                  title: AppLocalizations.of(context)!.cv_home,
                   iconData: Icons.home,
                 ),
               ),
@@ -55,7 +55,7 @@ class CVDrawer extends StatelessWidget {
                     color: CVTheme.drawerIcon(context),
                   ),
                   title: Text(
-                    AppLocalizations.of(context)!.explore,
+                    AppLocalizations.of(context)!.cv_explore,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   iconColor: CVTheme.textColor(context),
@@ -97,7 +97,7 @@ class CVDrawer extends StatelessWidget {
                       color: CVTheme.drawerIcon(context),
                     ),
                     title: Text(
-                      localizations.language,
+                      localizations.cv_language,
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     iconColor: CVTheme.textColor(context),
@@ -125,7 +125,7 @@ class CVDrawer extends StatelessWidget {
               InkWell(
                 onTap: () => Get.toNamed(IbLandingView.id),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.interactive_book,
+                  title: AppLocalizations.of(context)!.cv_interactive_book,
                   iconData: Icons.chrome_reader_mode,
                 ),
               ),
@@ -150,28 +150,28 @@ class CVDrawer extends StatelessWidget {
                   }
                 },
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.simulator,
+                  title: AppLocalizations.of(context)!.cv_simulator,
                   iconData: FontAwesome5.atom,
                 ),
               ),
               InkWell(
                 onTap: () => _model.setSelectedIndexTo(2),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.about,
+                  title: AppLocalizations.of(context)!.cv_about,
                   iconData: FontAwesome5.address_card,
                 ),
               ),
               InkWell(
                 onTap: () => _model.setSelectedIndexTo(3),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.contribute,
+                  title: AppLocalizations.of(context)!.cv_contribute,
                   iconData: Icons.add,
                 ),
               ),
               InkWell(
                 onTap: () => _model.setSelectedIndexTo(4),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.teachers,
+                  title: AppLocalizations.of(context)!.cv_teachers,
                   iconData: Icons.account_balance,
                 ),
               ),
@@ -179,7 +179,7 @@ class CVDrawer extends StatelessWidget {
                 InkWell(
                   onTap: () => _model.setSelectedIndexTo(8),
                   child: CVDrawerTile(
-                    title: AppLocalizations.of(context)!.notifications,
+                    title: AppLocalizations.of(context)!.cv_notifications,
                     iconData: FontAwesome.bell,
                     pending: _model.hasPendingNotif,
                   ),
@@ -201,21 +201,21 @@ class CVDrawer extends StatelessWidget {
                       InkWell(
                         onTap: () => _model.setSelectedIndexTo(5),
                         child: CVDrawerTile(
-                          title: AppLocalizations.of(context)!.profile,
+                          title: AppLocalizations.of(context)!.cv_profile,
                           iconData: FontAwesome5.user,
                         ),
                       ),
                       InkWell(
                         onTap: () => _model.setSelectedIndexTo(6),
                         child: CVDrawerTile(
-                          title: AppLocalizations.of(context)!.my_groups,
+                          title: AppLocalizations.of(context)!.cv_my_groups,
                           iconData: FontAwesome5.object_group,
                         ),
                       ),
                       InkWell(
                         onTap: _model.onLogoutPressed,
                         child: CVDrawerTile(
-                          title: AppLocalizations.of(context)!.logout,
+                          title: AppLocalizations.of(context)!.cv_logout,
                           iconData: FontAwesome.logout,
                         ),
                       ),
@@ -226,7 +226,7 @@ class CVDrawer extends StatelessWidget {
                 InkWell(
                   onTap: () => Get.offAndToNamed(LoginView.id),
                   child: CVDrawerTile(
-                    title: AppLocalizations.of(context)!.login,
+                    title: AppLocalizations.of(context)!.cv_login,
                     iconData: FontAwesome.login,
                   ),
                 ),

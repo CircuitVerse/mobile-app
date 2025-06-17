@@ -32,7 +32,7 @@ class _NewGroupViewState extends State<NewGroupView> {
       FocusScope.of(context).requestFocus(FocusNode());
 
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.creating,
+        title: AppLocalizations.of(context)!.new_group_creating,
       );
 
       await _model.addGroup(_name);
@@ -43,12 +43,12 @@ class _NewGroupViewState extends State<NewGroupView> {
         await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.newGroup);
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.group_created,
-          AppLocalizations.of(context)!.group_created_success,
+          AppLocalizations.of(context)!.new_group_created,
+          AppLocalizations.of(context)!.new_group_created_success,
         );
       } else if (_model.isError(_model.ADD_GROUP)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.new_group_error,
           _model.errorMessageFor(_model.ADD_GROUP),
         );
       }
@@ -71,8 +71,11 @@ class _NewGroupViewState extends State<NewGroupView> {
                   children: <Widget>[
                     CVSubheader(
                       title:
-                          AppLocalizations.of(context)!.new_group.toUpperCase(),
-                      subtitle: AppLocalizations.of(context)!.group_description,
+                          AppLocalizations.of(
+                            context,
+                          )!.new_group_title.toUpperCase(),
+                      subtitle:
+                          AppLocalizations.of(context)!.new_group_description,
                     ),
                     const SizedBox(height: 16),
                     SvgPicture.asset(
@@ -82,20 +85,23 @@ class _NewGroupViewState extends State<NewGroupView> {
                     const SizedBox(height: 16),
                     CVTextField(
                       padding: const EdgeInsets.all(0),
-                      label: AppLocalizations.of(context)!.group_name,
+                      label: AppLocalizations.of(context)!.new_group_name,
                       validator:
                           (value) =>
                               value?.isEmpty ?? true
                                   ? AppLocalizations.of(
                                     context,
-                                  )!.group_name_validation_error
+                                  )!.new_group_name_validation_error
                                   : null,
                       onSaved: (value) => _name = value!.trim(),
                       action: TextInputAction.done,
                     ),
                     const SizedBox(height: 16),
                     CVPrimaryButton(
-                      title: AppLocalizations.of(context)!.save.toUpperCase(),
+                      title:
+                          AppLocalizations.of(
+                            context,
+                          )!.new_group_save.toUpperCase(),
                       onPressed: _validateAndSubmit,
                     ),
                   ],

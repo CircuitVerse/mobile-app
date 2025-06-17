@@ -404,11 +404,11 @@ abstract class AppLocalizations {
   /// **'Donate through PayPal'**
   String get donate_paypal;
 
-  /// No description provided for @update_profile.
+  /// No description provided for @profile_update_title.
   ///
   /// In en, this message translates to:
   /// **'Update Profile'**
-  String get update_profile;
+  String get profile_update_title;
 
   /// No description provided for @profile_picture.
   ///
@@ -416,47 +416,47 @@ abstract class AppLocalizations {
   /// **'Profile Picture'**
   String get profile_picture;
 
-  /// No description provided for @name.
+  /// No description provided for @profile_name.
   ///
   /// In en, this message translates to:
   /// **'Name'**
-  String get name;
+  String get profile_name;
 
-  /// No description provided for @name_empty_error.
+  /// No description provided for @profile_name_empty_error.
   ///
   /// In en, this message translates to:
   /// **'Name can\'t be empty'**
-  String get name_empty_error;
+  String get profile_name_empty_error;
 
-  /// No description provided for @country.
+  /// No description provided for @profile_country.
   ///
   /// In en, this message translates to:
   /// **'Country'**
-  String get country;
+  String get profile_country;
 
-  /// No description provided for @educational_institute.
+  /// No description provided for @profile_educational_institute.
   ///
   /// In en, this message translates to:
   /// **'Educational Institute'**
-  String get educational_institute;
+  String get profile_educational_institute;
 
-  /// No description provided for @subscribe_mails.
+  /// No description provided for @profile_subscribe_mails.
   ///
   /// In en, this message translates to:
   /// **'Subscribe to mails?'**
-  String get subscribe_mails;
+  String get profile_subscribe_mails;
 
-  /// No description provided for @save_details.
+  /// No description provided for @profile_save_details.
   ///
   /// In en, this message translates to:
   /// **'Save Details'**
-  String get save_details;
+  String get profile_save_details;
 
-  /// No description provided for @updating.
+  /// No description provided for @profile_updating.
   ///
   /// In en, this message translates to:
   /// **'Updating...'**
-  String get updating;
+  String get profile_updating;
 
   /// No description provided for @profile_updated.
   ///
@@ -475,12 +475,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An error occurred while updating your profile.'**
   String get profile_update_error;
-
-  /// No description provided for @error.
-  ///
-  /// In en, this message translates to:
-  /// **'Error'**
-  String get error;
 
   /// No description provided for @no_favorites_title.
   ///
@@ -506,83 +500,119 @@ abstract class AppLocalizations {
   /// **'Start fresh with a new design or fork existing templates'**
   String get no_projects_subtitle;
 
-  /// No description provided for @email.
+  /// No description provided for @forgot_password_email.
   ///
   /// In en, this message translates to:
   /// **'Email'**
-  String get email;
+  String get forgot_password_email;
 
-  /// No description provided for @email_validation_error.
+  /// No description provided for @forgot_password_email_validation_error.
   ///
   /// In en, this message translates to:
-  /// **'Enter emails in valid format'**
-  String get email_validation_error;
+  /// **'Please enter a valid email'**
+  String get forgot_password_email_validation_error;
 
-  /// No description provided for @send_instructions.
+  /// No description provided for @forgot_password_send_instructions.
   ///
   /// In en, this message translates to:
   /// **'SEND INSTRUCTIONS'**
-  String get send_instructions;
+  String get forgot_password_send_instructions;
 
-  /// No description provided for @sending.
+  /// No description provided for @forgot_password_sending.
   ///
   /// In en, this message translates to:
   /// **'Sending..'**
-  String get sending;
+  String get forgot_password_sending;
 
-  /// No description provided for @new_user.
+  /// No description provided for @forgot_password_new_user.
   ///
   /// In en, this message translates to:
   /// **'New User?'**
-  String get new_user;
+  String get forgot_password_new_user;
 
-  /// No description provided for @sign_up.
+  /// No description provided for @forgot_password_sign_up.
   ///
   /// In en, this message translates to:
   /// **'Sign Up'**
-  String get sign_up;
+  String get forgot_password_sign_up;
 
-  /// No description provided for @sending_instructions.
+  /// No description provided for @forgot_password_sending_instructions.
   ///
   /// In en, this message translates to:
   /// **'Sending Instructions'**
-  String get sending_instructions;
+  String get forgot_password_sending_instructions;
 
-  /// No description provided for @instructions_sent_title.
+  /// No description provided for @forgot_password_instructions_sent_title.
   ///
   /// In en, this message translates to:
   /// **'Instructions Sent'**
-  String get instructions_sent_title;
+  String get forgot_password_instructions_sent_title;
 
-  /// No description provided for @instructions_sent_message.
+  /// No description provided for @forgot_password_instructions_sent_message.
   ///
   /// In en, this message translates to:
   /// **'Password reset instructions have been sent to your email'**
-  String get instructions_sent_message;
+  String get forgot_password_instructions_sent_message;
 
-  /// No description provided for @forgot_password.
+  /// No description provided for @forgot_password_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get forgot_password_error;
+
+  /// No description provided for @forgot_password_link.
   ///
   /// In en, this message translates to:
   /// **'Forgot Password?'**
-  String get forgot_password;
+  String get forgot_password_link;
 
-  /// No description provided for @password_validation_error.
+  /// No description provided for @login_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get login_email;
+
+  /// No description provided for @login_email_validation_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get login_email_validation_error;
+
+  /// No description provided for @login_password_validation_error.
   ///
   /// In en, this message translates to:
   /// **'Password can\'t be empty'**
-  String get password_validation_error;
+  String get login_password_validation_error;
 
-  /// No description provided for @authenticating.
+  /// No description provided for @login_forgot_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get login_forgot_password;
+
+  /// No description provided for @login_authenticating.
   ///
   /// In en, this message translates to:
   /// **'Authenticating...'**
-  String get authenticating;
+  String get login_authenticating;
 
-  /// No description provided for @login.
+  /// No description provided for @login_button.
   ///
   /// In en, this message translates to:
   /// **'Login'**
-  String get login;
+  String get login_button;
+
+  /// No description provided for @login_new_user.
+  ///
+  /// In en, this message translates to:
+  /// **'New User?'**
+  String get login_new_user;
+
+  /// No description provided for @login_sign_up.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get login_sign_up;
 
   /// No description provided for @login_success_title.
   ///
@@ -596,29 +626,71 @@ abstract class AppLocalizations {
   /// **'Welcome back!'**
   String get login_success_message;
 
-  /// No description provided for @name_validation_error.
+  /// No description provided for @login_error.
   ///
   /// In en, this message translates to:
-  /// **'Name cannot be empty'**
-  String get name_validation_error;
+  /// **'Error'**
+  String get login_error;
 
-  /// No description provided for @password_length_error.
+  /// No description provided for @signup_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get signup_name;
+
+  /// No description provided for @signup_name_validation_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Name can\'t be empty'**
+  String get signup_name_validation_error;
+
+  /// No description provided for @signup_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get signup_email;
+
+  /// No description provided for @signup_email_validation_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get signup_email_validation_error;
+
+  /// No description provided for @signup_password_validation_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Password can\'t be empty'**
+  String get signup_password_validation_error;
+
+  /// No description provided for @signup_password_length_error.
   ///
   /// In en, this message translates to:
   /// **'Password length should be at least 6'**
-  String get password_length_error;
+  String get signup_password_length_error;
 
-  /// No description provided for @register.
+  /// No description provided for @signup_authenticating.
+  ///
+  /// In en, this message translates to:
+  /// **'Authenticating...'**
+  String get signup_authenticating;
+
+  /// No description provided for @signup_register.
   ///
   /// In en, this message translates to:
   /// **'Register'**
-  String get register;
+  String get signup_register;
 
-  /// No description provided for @already_registered.
+  /// No description provided for @signup_already_registered.
   ///
   /// In en, this message translates to:
   /// **'Already Registered?'**
-  String get already_registered;
+  String get signup_already_registered;
+
+  /// No description provided for @signup_login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get signup_login;
 
   /// No description provided for @signup_success_title.
   ///
@@ -632,59 +704,77 @@ abstract class AppLocalizations {
   /// **'Welcome to CircuitVerse!'**
   String get signup_success_message;
 
-  /// No description provided for @letter_grade.
+  /// No description provided for @signup_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get signup_error;
+
+  /// No description provided for @assignment_letter_grade.
   ///
   /// In en, this message translates to:
   /// **'Letter Grade'**
-  String get letter_grade;
+  String get assignment_letter_grade;
 
-  /// No description provided for @percent.
+  /// No description provided for @assignment_percent.
   ///
   /// In en, this message translates to:
   /// **'Percent'**
-  String get percent;
+  String get assignment_percent;
 
-  /// No description provided for @custom.
+  /// No description provided for @assignment_custom.
   ///
   /// In en, this message translates to:
   /// **'Custom'**
-  String get custom;
+  String get assignment_custom;
 
-  /// No description provided for @deadline.
+  /// No description provided for @assignment_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get assignment_name;
+
+  /// No description provided for @assignment_name_validation_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid name'**
+  String get assignment_name_validation_error;
+
+  /// No description provided for @assignment_deadline.
   ///
   /// In en, this message translates to:
   /// **'Deadline'**
-  String get deadline;
+  String get assignment_deadline;
 
-  /// No description provided for @grading_scale.
+  /// No description provided for @assignment_grading_scale.
   ///
   /// In en, this message translates to:
   /// **'Grading Scale'**
-  String get grading_scale;
+  String get assignment_grading_scale;
 
-  /// No description provided for @elements_restriction.
+  /// No description provided for @assignment_elements_restriction.
   ///
   /// In en, this message translates to:
-  /// **'Elements restriction'**
-  String get elements_restriction;
+  /// **'Elements Restriction'**
+  String get assignment_elements_restriction;
 
-  /// No description provided for @enable_elements_restriction.
+  /// No description provided for @assignment_enable_elements_restriction.
   ///
   /// In en, this message translates to:
   /// **'Enable elements restriction'**
-  String get enable_elements_restriction;
+  String get assignment_enable_elements_restriction;
 
-  /// No description provided for @create_assignment.
+  /// No description provided for @assignment_create.
   ///
   /// In en, this message translates to:
   /// **'Create Assignment'**
-  String get create_assignment;
+  String get assignment_create;
 
-  /// No description provided for @adding_assignment.
+  /// No description provided for @assignment_adding.
   ///
   /// In en, this message translates to:
   /// **'Adding Assignment'**
-  String get adding_assignment;
+  String get assignment_adding;
 
   /// No description provided for @assignment_added.
   ///
@@ -698,209 +788,245 @@ abstract class AppLocalizations {
   /// **'New assignment was successfully added'**
   String get assignment_add_success;
 
-  /// No description provided for @add_assignment.
+  /// No description provided for @assignment_add_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get assignment_add_error;
+
+  /// No description provided for @assignment_add_title.
   ///
   /// In en, this message translates to:
   /// **'Add Assignment'**
-  String get add_assignment;
+  String get assignment_add_title;
 
-  /// No description provided for @no_scale.
+  /// No description provided for @assignment_no_scale.
   ///
   /// In en, this message translates to:
   /// **'No Scale'**
-  String get no_scale;
+  String get assignment_no_scale;
 
-  /// No description provided for @edit.
+  /// No description provided for @assignment_details_edit.
   ///
   /// In en, this message translates to:
   /// **'Edit'**
-  String get edit;
+  String get assignment_details_edit;
 
-  /// No description provided for @not_applicable.
+  /// No description provided for @assignment_details_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get assignment_details_name;
+
+  /// No description provided for @assignment_details_not_applicable.
   ///
   /// In en, this message translates to:
   /// **'N.A'**
-  String get not_applicable;
+  String get assignment_details_not_applicable;
 
-  /// No description provided for @description.
+  /// No description provided for @assignment_details_description.
   ///
   /// In en, this message translates to:
   /// **'Description'**
-  String get description;
+  String get assignment_details_description;
 
-  /// No description provided for @submissions.
+  /// No description provided for @assignment_details_submissions.
   ///
   /// In en, this message translates to:
   /// **'Submissions'**
-  String get submissions;
+  String get assignment_details_submissions;
 
-  /// No description provided for @no_submissions_yet.
+  /// No description provided for @assignment_details_no_submissions_yet.
   ///
   /// In en, this message translates to:
   /// **'No Submissions yet!'**
-  String get no_submissions_yet;
+  String get assignment_details_no_submissions_yet;
 
-  /// No description provided for @adding_grades.
+  /// No description provided for @assignment_details_adding_grades.
   ///
   /// In en, this message translates to:
   /// **'Adding Grades...'**
-  String get adding_grades;
+  String get assignment_details_adding_grades;
 
-  /// No description provided for @project_graded_successfully.
+  /// No description provided for @assignment_details_project_graded_successfully.
   ///
   /// In en, this message translates to:
   /// **'Project Graded Successfully'**
-  String get project_graded_successfully;
+  String get assignment_details_project_graded_successfully;
 
-  /// No description provided for @project_graded_message.
+  /// No description provided for @assignment_details_project_graded_message.
   ///
   /// In en, this message translates to:
   /// **'You have graded the project'**
-  String get project_graded_message;
+  String get assignment_details_project_graded_message;
 
-  /// No description provided for @updating_grade.
+  /// No description provided for @assignment_details_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get assignment_details_error;
+
+  /// No description provided for @assignment_details_updating_grade.
   ///
   /// In en, this message translates to:
   /// **'Updating Grade...'**
-  String get updating_grade;
+  String get assignment_details_updating_grade;
 
-  /// No description provided for @grade_updated_successfully.
+  /// No description provided for @assignment_details_grade_updated_successfully.
   ///
   /// In en, this message translates to:
   /// **'Grade updated Successfully'**
-  String get grade_updated_successfully;
+  String get assignment_details_grade_updated_successfully;
 
-  /// No description provided for @grade_updated_message.
+  /// No description provided for @assignment_details_grade_updated_message.
   ///
   /// In en, this message translates to:
   /// **'Grade has been updated successfully'**
-  String get grade_updated_message;
+  String get assignment_details_grade_updated_message;
 
-  /// No description provided for @delete_grade.
+  /// No description provided for @assignment_details_delete_grade.
   ///
   /// In en, this message translates to:
   /// **'Delete Grade'**
-  String get delete_grade;
+  String get assignment_details_delete_grade;
 
-  /// No description provided for @delete_grade_confirmation.
+  /// No description provided for @assignment_details_delete_grade_confirmation.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to delete the grade?'**
-  String get delete_grade_confirmation;
+  String get assignment_details_delete_grade_confirmation;
 
-  /// No description provided for @delete.
+  /// No description provided for @assignment_details_delete.
   ///
   /// In en, this message translates to:
-  /// **'Delete'**
-  String get delete;
+  /// **'DELETE'**
+  String get assignment_details_delete;
 
-  /// No description provided for @deleting_grade.
+  /// No description provided for @assignment_details_deleting_grade.
   ///
   /// In en, this message translates to:
   /// **'Deleting Grade...'**
-  String get deleting_grade;
+  String get assignment_details_deleting_grade;
 
-  /// No description provided for @grade_deleted.
+  /// No description provided for @assignment_details_grade_deleted.
   ///
   /// In en, this message translates to:
   /// **'Grade Deleted'**
-  String get grade_deleted;
+  String get assignment_details_grade_deleted;
 
-  /// No description provided for @grade_deleted_message.
+  /// No description provided for @assignment_details_grade_deleted_message.
   ///
   /// In en, this message translates to:
   /// **'Grade has been removed successfully'**
-  String get grade_deleted_message;
+  String get assignment_details_grade_deleted_message;
 
-  /// No description provided for @grades_and_remarks.
+  /// No description provided for @assignment_details_grades_and_remarks.
   ///
   /// In en, this message translates to:
   /// **'Grades & Remarks'**
-  String get grades_and_remarks;
+  String get assignment_details_grades_and_remarks;
 
-  /// No description provided for @grade.
+  /// No description provided for @assignment_details_grade.
   ///
   /// In en, this message translates to:
   /// **'Grade'**
-  String get grade;
+  String get assignment_details_grade;
 
-  /// No description provided for @grade_validation_error.
+  /// No description provided for @assignment_details_grade_validation_error.
   ///
   /// In en, this message translates to:
   /// **'Grade can\'t be empty'**
-  String get grade_validation_error;
+  String get assignment_details_grade_validation_error;
 
-  /// No description provided for @remarks.
+  /// No description provided for @assignment_details_remarks.
   ///
   /// In en, this message translates to:
   /// **'Remarks'**
-  String get remarks;
+  String get assignment_details_remarks;
 
-  /// No description provided for @update.
+  /// No description provided for @assignment_details_update.
   ///
   /// In en, this message translates to:
   /// **'Update'**
-  String get update;
+  String get assignment_details_update;
 
-  /// No description provided for @submit.
+  /// No description provided for @assignment_details_submit.
   ///
   /// In en, this message translates to:
   /// **'Submit'**
-  String get submit;
+  String get assignment_details_submit;
 
-  /// No description provided for @assignment_details.
+  /// No description provided for @assignment_details_title.
   ///
   /// In en, this message translates to:
   /// **'Assignment Details'**
-  String get assignment_details;
+  String get assignment_details_title;
 
-  /// No description provided for @time_remaining.
+  /// No description provided for @assignment_details_deadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Deadline'**
+  String get assignment_details_deadline;
+
+  /// No description provided for @assignment_details_time_remaining.
   ///
   /// In en, this message translates to:
   /// **'Time Remaining'**
-  String get time_remaining;
+  String get assignment_details_time_remaining;
 
-  /// No description provided for @days.
+  /// No description provided for @assignment_details_days.
   ///
   /// In en, this message translates to:
   /// **'days'**
-  String get days;
+  String get assignment_details_days;
 
-  /// No description provided for @hours.
+  /// No description provided for @assignment_details_hours.
   ///
   /// In en, this message translates to:
   /// **'hours'**
-  String get hours;
+  String get assignment_details_hours;
 
-  /// No description provided for @minutes.
+  /// No description provided for @assignment_details_minutes.
   ///
   /// In en, this message translates to:
   /// **'minutes'**
-  String get minutes;
+  String get assignment_details_minutes;
 
-  /// No description provided for @restricted_elements.
+  /// No description provided for @assignment_details_restricted_elements.
   ///
   /// In en, this message translates to:
   /// **'Restricted Elements'**
-  String get restricted_elements;
+  String get assignment_details_restricted_elements;
 
-  /// No description provided for @group_updated.
+  /// No description provided for @edit_group_updating.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating...'**
+  String get edit_group_updating;
+
+  /// No description provided for @edit_group_updated.
   ///
   /// In en, this message translates to:
   /// **'Group Updated'**
-  String get group_updated;
+  String get edit_group_updated;
 
-  /// No description provided for @group_update_success.
+  /// No description provided for @edit_group_update_success.
   ///
   /// In en, this message translates to:
   /// **'Group has been successfully updated'**
-  String get group_update_success;
+  String get edit_group_update_success;
 
-  /// No description provided for @edit_group.
+  /// No description provided for @edit_group_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get edit_group_error;
+
+  /// No description provided for @edit_group_title.
   ///
   /// In en, this message translates to:
   /// **'Edit Group'**
-  String get edit_group;
+  String get edit_group_title;
 
   /// No description provided for @edit_group_description.
   ///
@@ -908,473 +1034,587 @@ abstract class AppLocalizations {
   /// **'You can update Group details here. Don\'t leave the Group Name blank.'**
   String get edit_group_description;
 
-  /// No description provided for @group_name.
+  /// No description provided for @edit_group_name.
   ///
   /// In en, this message translates to:
   /// **'Group Name'**
-  String get group_name;
+  String get edit_group_name;
 
-  /// No description provided for @group_name_validation_error.
+  /// No description provided for @edit_group_name_validation_error.
   ///
   /// In en, this message translates to:
   /// **'Please enter a Group Name'**
-  String get group_name_validation_error;
+  String get edit_group_name_validation_error;
 
-  /// No description provided for @save.
+  /// No description provided for @edit_group_save.
   ///
   /// In en, this message translates to:
   /// **'Save'**
-  String get save;
+  String get edit_group_save;
 
-  /// No description provided for @primary_mentor.
+  /// No description provided for @group_details_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get group_details_edit;
+
+  /// No description provided for @group_details_primary_mentor.
   ///
   /// In en, this message translates to:
   /// **'Primary Mentor'**
-  String get primary_mentor;
+  String get group_details_primary_mentor;
 
-  /// No description provided for @adding.
+  /// No description provided for @group_details_adding.
   ///
   /// In en, this message translates to:
-  /// **'Adding'**
-  String get adding;
+  /// **'Adding...'**
+  String get group_details_adding;
 
-  /// No description provided for @group_members_added.
+  /// No description provided for @group_details_members_added.
   ///
   /// In en, this message translates to:
   /// **'Group Members Added'**
-  String get group_members_added;
+  String get group_details_members_added;
 
-  /// No description provided for @add_group_members.
+  /// No description provided for @group_details_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get group_details_error;
+
+  /// No description provided for @group_details_add_members.
   ///
   /// In en, this message translates to:
   /// **'Add Group Members'**
-  String get add_group_members;
+  String get group_details_add_members;
 
-  /// No description provided for @add_mentors.
+  /// No description provided for @group_details_add_mentors.
   ///
   /// In en, this message translates to:
   /// **'Add Mentors'**
-  String get add_mentors;
+  String get group_details_add_mentors;
 
-  /// No description provided for @add_members_description.
+  /// No description provided for @group_details_add_members_description.
   ///
   /// In en, this message translates to:
   /// **'Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.'**
-  String get add_members_description;
+  String get group_details_add_members_description;
 
-  /// No description provided for @cancel.
+  /// No description provided for @group_details_email_validation_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter emails in valid format'**
+  String get group_details_email_validation_error;
+
+  /// No description provided for @group_details_cancel.
   ///
   /// In en, this message translates to:
   /// **'Cancel'**
-  String get cancel;
+  String get group_details_cancel;
 
-  /// No description provided for @remove_group_member.
+  /// No description provided for @group_details_remove_member.
   ///
   /// In en, this message translates to:
   /// **'Remove Group Member'**
-  String get remove_group_member;
+  String get group_details_remove_member;
 
-  /// No description provided for @remove_mentor.
+  /// No description provided for @group_details_remove_mentor.
   ///
   /// In en, this message translates to:
   /// **'Remove Mentor'**
-  String get remove_mentor;
+  String get group_details_remove_mentor;
 
-  /// No description provided for @remove_member_confirmation.
+  /// No description provided for @group_details_remove_member_confirmation.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to remove this group member?'**
-  String get remove_member_confirmation;
+  String get group_details_remove_member_confirmation;
 
-  /// No description provided for @remove_mentor_confirmation.
+  /// No description provided for @group_details_remove_mentor_confirmation.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to remove this mentor?'**
-  String get remove_mentor_confirmation;
+  String get group_details_remove_mentor_confirmation;
 
-  /// No description provided for @remove.
+  /// No description provided for @group_details_remove.
   ///
   /// In en, this message translates to:
   /// **'Remove'**
-  String get remove;
+  String get group_details_remove;
 
-  /// No description provided for @removing.
+  /// No description provided for @group_details_removing.
   ///
   /// In en, this message translates to:
   /// **'Removing...'**
-  String get removing;
+  String get group_details_removing;
 
-  /// No description provided for @group_member_removed.
+  /// No description provided for @group_details_member_removed.
   ///
   /// In en, this message translates to:
   /// **'Group Member Removed'**
-  String get group_member_removed;
+  String get group_details_member_removed;
 
-  /// No description provided for @mentor_removed.
+  /// No description provided for @group_details_mentor_removed.
   ///
   /// In en, this message translates to:
   /// **'Mentor Removed'**
-  String get mentor_removed;
+  String get group_details_mentor_removed;
 
-  /// No description provided for @member_removed_success.
+  /// No description provided for @group_details_member_removed_success.
   ///
   /// In en, this message translates to:
   /// **'Successfully removed'**
-  String get member_removed_success;
+  String get group_details_member_removed_success;
 
-  /// No description provided for @mentors.
+  /// No description provided for @group_details_mentors.
   ///
   /// In en, this message translates to:
   /// **'Mentors'**
-  String get mentors;
+  String get group_details_mentors;
 
-  /// No description provided for @members.
+  /// No description provided for @group_details_members.
   ///
   /// In en, this message translates to:
   /// **'Members'**
-  String get members;
+  String get group_details_members;
 
-  /// No description provided for @assignments.
+  /// No description provided for @group_details_assignments.
   ///
   /// In en, this message translates to:
   /// **'Assignments'**
-  String get assignments;
+  String get group_details_assignments;
 
-  /// No description provided for @add.
+  /// No description provided for @group_details_add.
   ///
   /// In en, this message translates to:
   /// **'Add'**
-  String get add;
+  String get group_details_add;
 
-  /// No description provided for @delete_assignment.
+  /// No description provided for @group_details_delete_assignment.
   ///
   /// In en, this message translates to:
   /// **'Delete Assignment'**
-  String get delete_assignment;
+  String get group_details_delete_assignment;
 
-  /// No description provided for @delete_assignment_confirmation.
+  /// No description provided for @group_details_delete_assignment_confirmation.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to delete this assignment?'**
-  String get delete_assignment_confirmation;
+  String get group_details_delete_assignment_confirmation;
 
-  /// No description provided for @deleting_assignment.
+  /// No description provided for @group_details_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get group_details_delete;
+
+  /// No description provided for @group_details_deleting_assignment.
   ///
   /// In en, this message translates to:
   /// **'Deleting Assignment...'**
-  String get deleting_assignment;
+  String get group_details_deleting_assignment;
 
-  /// No description provided for @assignment_deleted.
+  /// No description provided for @group_details_assignment_deleted.
   ///
   /// In en, this message translates to:
   /// **'Assignment Deleted'**
-  String get assignment_deleted;
+  String get group_details_assignment_deleted;
 
-  /// No description provided for @assignment_deleted_success.
+  /// No description provided for @group_details_assignment_deleted_success.
   ///
   /// In en, this message translates to:
   /// **'The assignment was successfully deleted'**
-  String get assignment_deleted_success;
+  String get group_details_assignment_deleted_success;
 
-  /// No description provided for @reopen_assignment.
+  /// No description provided for @group_details_reopen_assignment.
   ///
   /// In en, this message translates to:
   /// **'Reopen Assignment'**
-  String get reopen_assignment;
+  String get group_details_reopen_assignment;
 
-  /// No description provided for @reopen_assignment_confirmation.
+  /// No description provided for @group_details_reopen_assignment_confirmation.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to reopen this assignment?'**
-  String get reopen_assignment_confirmation;
+  String get group_details_reopen_assignment_confirmation;
 
-  /// No description provided for @reopen.
+  /// No description provided for @group_details_reopen.
   ///
   /// In en, this message translates to:
   /// **'Reopen'**
-  String get reopen;
+  String get group_details_reopen;
 
-  /// No description provided for @reopening_assignment.
+  /// No description provided for @group_details_reopening_assignment.
   ///
   /// In en, this message translates to:
   /// **'Reopening Assignment...'**
-  String get reopening_assignment;
+  String get group_details_reopening_assignment;
 
-  /// No description provided for @assignment_reopened.
+  /// No description provided for @group_details_assignment_reopened.
   ///
   /// In en, this message translates to:
   /// **'Assignment Reopened'**
-  String get assignment_reopened;
+  String get group_details_assignment_reopened;
 
-  /// No description provided for @assignment_reopened_success.
+  /// No description provided for @group_details_assignment_reopened_success.
   ///
   /// In en, this message translates to:
   /// **'The assignment is reopened now'**
-  String get assignment_reopened_success;
+  String get group_details_assignment_reopened_success;
 
-  /// No description provided for @start_assignment.
+  /// No description provided for @group_details_start_assignment.
   ///
   /// In en, this message translates to:
   /// **'Start Assignment'**
-  String get start_assignment;
+  String get group_details_start_assignment;
 
-  /// No description provided for @start_assignment_confirmation.
+  /// No description provided for @group_details_start_assignment_confirmation.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to start working on this assignment?'**
-  String get start_assignment_confirmation;
+  String get group_details_start_assignment_confirmation;
 
-  /// No description provided for @start.
+  /// No description provided for @group_details_start.
   ///
   /// In en, this message translates to:
   /// **'Start'**
-  String get start;
+  String get group_details_start;
 
-  /// No description provided for @starting_assignment.
+  /// No description provided for @group_details_starting_assignment.
   ///
   /// In en, this message translates to:
   /// **'Starting Assignment...'**
-  String get starting_assignment;
+  String get group_details_starting_assignment;
 
-  /// No description provided for @project_created.
+  /// No description provided for @group_details_project_created.
   ///
   /// In en, this message translates to:
   /// **'Project Created'**
-  String get project_created;
+  String get group_details_project_created;
 
-  /// No description provided for @project_created_success.
+  /// No description provided for @group_details_project_created_success.
   ///
   /// In en, this message translates to:
   /// **'Project is successfully created'**
-  String get project_created_success;
+  String get group_details_project_created_success;
 
-  /// No description provided for @member.
+  /// No description provided for @group_details_member.
   ///
   /// In en, this message translates to:
   /// **'member'**
-  String get member;
+  String get group_details_member;
 
-  /// No description provided for @mentor.
+  /// No description provided for @group_details_mentor.
   ///
   /// In en, this message translates to:
   /// **'mentor'**
-  String get mentor;
+  String get group_details_mentor;
 
-  /// No description provided for @make.
+  /// No description provided for @group_details_make.
   ///
   /// In en, this message translates to:
   /// **'Make'**
-  String get make;
+  String get group_details_make;
 
-  /// No description provided for @are_you_sure_you_want_to.
+  /// No description provided for @group_details_are_you_sure_you_want_to.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to'**
-  String get are_you_sure_you_want_to;
+  String get group_details_are_you_sure_you_want_to;
 
-  /// No description provided for @promote.
+  /// No description provided for @group_details_promote.
   ///
   /// In en, this message translates to:
   /// **'promote'**
-  String get promote;
+  String get group_details_promote;
 
-  /// No description provided for @demote.
+  /// No description provided for @group_details_demote.
   ///
   /// In en, this message translates to:
   /// **'demote'**
-  String get demote;
+  String get group_details_demote;
 
-  /// No description provided for @this_group.
+  /// No description provided for @group_details_this_group.
   ///
   /// In en, this message translates to:
   /// **'this group'**
-  String get this_group;
+  String get group_details_this_group;
 
-  /// No description provided for @to_a.
+  /// No description provided for @group_details_to_a.
   ///
   /// In en, this message translates to:
   /// **'to a'**
-  String get to_a;
+  String get group_details_to_a;
 
-  /// No description provided for @yes.
+  /// No description provided for @group_details_yes.
   ///
   /// In en, this message translates to:
   /// **'Yes'**
-  String get yes;
+  String get group_details_yes;
 
-  /// No description provided for @promoting.
+  /// No description provided for @group_details_promoting.
   ///
   /// In en, this message translates to:
   /// **'Promoting...'**
-  String get promoting;
+  String get group_details_promoting;
 
-  /// No description provided for @demoting.
+  /// No description provided for @group_details_demoting.
   ///
   /// In en, this message translates to:
   /// **'Demoting...'**
-  String get demoting;
+  String get group_details_demoting;
 
-  /// No description provided for @promoted.
+  /// No description provided for @group_details_promoted.
   ///
   /// In en, this message translates to:
   /// **'Promoted'**
-  String get promoted;
+  String get group_details_promoted;
 
-  /// No description provided for @demoted.
+  /// No description provided for @group_details_demoted.
   ///
   /// In en, this message translates to:
   /// **'Demoted'**
-  String get demoted;
+  String get group_details_demoted;
 
-  /// No description provided for @member_updated_success.
+  /// No description provided for @group_details_member_updated_success.
   ///
   /// In en, this message translates to:
   /// **'Group member was successfully updated'**
-  String get member_updated_success;
+  String get group_details_member_updated_success;
 
-  /// No description provided for @group_details.
+  /// No description provided for @group_details_title.
   ///
   /// In en, this message translates to:
   /// **'Group Details'**
-  String get group_details;
+  String get group_details_title;
 
-  /// No description provided for @explore_groups_message.
+  /// No description provided for @my_groups_explore_message.
   ///
   /// In en, this message translates to:
   /// **'Explore and join groups of your school and friends!'**
-  String get explore_groups_message;
+  String get my_groups_explore_message;
 
-  /// No description provided for @delete_group.
+  /// No description provided for @my_groups_delete_group.
   ///
   /// In en, this message translates to:
   /// **'Delete Group'**
-  String get delete_group;
+  String get my_groups_delete_group;
 
-  /// No description provided for @delete_group_confirmation.
+  /// No description provided for @my_groups_delete_group_confirmation.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to delete this group?'**
-  String get delete_group_confirmation;
+  String get my_groups_delete_group_confirmation;
 
-  /// No description provided for @deleting_group.
+  /// No description provided for @my_groups_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get my_groups_delete;
+
+  /// No description provided for @my_groups_deleting_group.
   ///
   /// In en, this message translates to:
   /// **'Deleting Group...'**
-  String get deleting_group;
+  String get my_groups_deleting_group;
 
-  /// No description provided for @group_deleted.
+  /// No description provided for @my_groups_group_deleted.
   ///
   /// In en, this message translates to:
   /// **'Group Deleted'**
-  String get group_deleted;
+  String get my_groups_group_deleted;
 
-  /// No description provided for @group_deleted_success.
+  /// No description provided for @my_groups_group_deleted_success.
   ///
   /// In en, this message translates to:
   /// **'Group was successfully deleted'**
-  String get group_deleted_success;
+  String get my_groups_group_deleted_success;
 
-  /// No description provided for @owned.
+  /// No description provided for @my_groups_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get my_groups_error;
+
+  /// No description provided for @my_groups_owned.
   ///
   /// In en, this message translates to:
   /// **'Owned'**
-  String get owned;
+  String get my_groups_owned;
 
-  /// No description provided for @view.
+  /// No description provided for @my_groups_view.
   ///
   /// In en, this message translates to:
   /// **'View'**
-  String get view;
+  String get my_groups_view;
 
-  /// No description provided for @joined.
+  /// No description provided for @my_groups_joined.
   ///
   /// In en, this message translates to:
   /// **'Joined'**
-  String get joined;
+  String get my_groups_joined;
 
-  /// No description provided for @creating.
+  /// No description provided for @my_groups_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get my_groups_edit;
+
+  /// No description provided for @new_group_creating.
   ///
   /// In en, this message translates to:
   /// **'Creating...'**
-  String get creating;
+  String get new_group_creating;
 
-  /// No description provided for @group_created.
+  /// No description provided for @new_group_created.
   ///
   /// In en, this message translates to:
   /// **'Group Created'**
-  String get group_created;
+  String get new_group_created;
 
-  /// No description provided for @group_created_success.
+  /// No description provided for @new_group_created_success.
   ///
   /// In en, this message translates to:
   /// **'New group was created successfully'**
-  String get group_created_success;
+  String get new_group_created_success;
 
-  /// No description provided for @new_group.
+  /// No description provided for @new_group_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get new_group_error;
+
+  /// No description provided for @new_group_title.
   ///
   /// In en, this message translates to:
   /// **'New Group'**
-  String get new_group;
+  String get new_group_title;
 
-  /// No description provided for @group_description.
+  /// No description provided for @new_group_description.
   ///
   /// In en, this message translates to:
   /// **'Groups can be used by mentors to set projects for and give grades to students'**
-  String get group_description;
+  String get new_group_description;
 
-  /// No description provided for @assignment_description_hint.
+  /// No description provided for @new_group_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Group Name'**
+  String get new_group_name;
+
+  /// No description provided for @new_group_name_validation_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a Group Name'**
+  String get new_group_name_validation_error;
+
+  /// No description provided for @new_group_save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get new_group_save;
+
+  /// No description provided for @update_assignment_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get update_assignment_name;
+
+  /// No description provided for @update_assignment_name_validation_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid name'**
+  String get update_assignment_name_validation_error;
+
+  /// No description provided for @update_assignment_description_hint.
   ///
   /// In en, this message translates to:
   /// **'Enter assignment description...'**
-  String get assignment_description_hint;
+  String get update_assignment_description_hint;
 
-  /// No description provided for @update_assignment.
+  /// No description provided for @update_assignment_deadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Deadline'**
+  String get update_assignment_deadline;
+
+  /// No description provided for @update_assignment_elements_restriction.
+  ///
+  /// In en, this message translates to:
+  /// **'Elements restriction'**
+  String get update_assignment_elements_restriction;
+
+  /// No description provided for @update_assignment_enable_elements_restriction.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable elements restriction'**
+  String get update_assignment_enable_elements_restriction;
+
+  /// No description provided for @update_assignment_title.
   ///
   /// In en, this message translates to:
   /// **'Update Assignment'**
-  String get update_assignment;
+  String get update_assignment_title;
 
-  /// No description provided for @assignment_updated.
+  /// No description provided for @update_assignment_updating.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating...'**
+  String get update_assignment_updating;
+
+  /// No description provided for @update_assignment_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get update_assignment_description;
+
+  /// No description provided for @update_assignment_updated.
   ///
   /// In en, this message translates to:
   /// **'Assignment Updated'**
-  String get assignment_updated;
+  String get update_assignment_updated;
 
-  /// No description provided for @assignment_update_success.
+  /// No description provided for @update_assignment_update_success.
   ///
   /// In en, this message translates to:
   /// **'Assignment was updated successfully'**
-  String get assignment_update_success;
+  String get update_assignment_update_success;
 
-  /// No description provided for @search_circuitverse.
+  /// No description provided for @update_assignment_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get update_assignment_error;
+
+  /// No description provided for @ib_search_circuitverse.
   ///
   /// In en, this message translates to:
   /// **'Search CircuitVerse'**
-  String get search_circuitverse;
+  String get ib_search_circuitverse;
 
-  /// No description provided for @navigate_chapters.
+  /// No description provided for @ib_navigate_chapters.
   ///
   /// In en, this message translates to:
   /// **'Navigate to different chapters'**
-  String get navigate_chapters;
+  String get ib_navigate_chapters;
 
-  /// No description provided for @circuitverse.
+  /// No description provided for @ib_circuitverse.
   ///
   /// In en, this message translates to:
   /// **'CircuitVerse'**
-  String get circuitverse;
+  String get ib_circuitverse;
 
-  /// No description provided for @interactive_book.
+  /// No description provided for @ib_interactive_book.
   ///
   /// In en, this message translates to:
   /// **'Interactive Book'**
-  String get interactive_book;
+  String get ib_interactive_book;
 
-  /// No description provided for @return_home.
+  /// No description provided for @ib_return_home.
   ///
   /// In en, this message translates to:
   /// **'Return to Home'**
-  String get return_home;
+  String get ib_return_home;
 
   /// No description provided for @ib_home.
   ///
@@ -1382,65 +1622,65 @@ abstract class AppLocalizations {
   /// **'Interactive Book Home'**
   String get ib_home;
 
-  /// No description provided for @loading_chapters.
+  /// No description provided for @ib_loading_chapters.
   ///
   /// In en, this message translates to:
   /// **'Loading Chapters...'**
-  String get loading_chapters;
+  String get ib_loading_chapters;
 
-  /// No description provided for @show_toc.
+  /// No description provided for @ib_show_toc.
   ///
   /// In en, this message translates to:
   /// **'Show Table of Contents'**
-  String get show_toc;
+  String get ib_show_toc;
 
-  /// No description provided for @copyright_notice.
+  /// No description provided for @ib_page_copyright_notice.
   ///
   /// In en, this message translates to:
   /// **'Copyright © 2021 Contributors to CircuitVerse. Distributed under a [CC-by-sa] license.'**
-  String get copyright_notice;
+  String get ib_page_copyright_notice;
 
-  /// No description provided for @table_of_contents.
+  /// No description provided for @ib_page_table_of_contents.
   ///
   /// In en, this message translates to:
   /// **'Table of Contents'**
-  String get table_of_contents;
+  String get ib_page_table_of_contents;
 
-  /// No description provided for @navigate_previous_page.
+  /// No description provided for @ib_page_navigate_previous.
   ///
   /// In en, this message translates to:
   /// **'Tap to navigate to previous page'**
-  String get navigate_previous_page;
+  String get ib_page_navigate_previous;
 
-  /// No description provided for @navigate_next_page.
+  /// No description provided for @ib_page_navigate_next.
   ///
   /// In en, this message translates to:
   /// **'Tap to navigate to next page'**
-  String get navigate_next_page;
+  String get ib_page_navigate_next;
 
-  /// No description provided for @loading_image.
+  /// No description provided for @ib_page_loading_image.
   ///
   /// In en, this message translates to:
   /// **'Loading image...'**
-  String get loading_image;
+  String get ib_page_loading_image;
 
-  /// No description provided for @image_load_error.
+  /// No description provided for @ib_page_image_load_error.
   ///
   /// In en, this message translates to:
   /// **'Failed to load image'**
-  String get image_load_error;
+  String get ib_page_image_load_error;
 
-  /// No description provided for @no_image_source.
+  /// No description provided for @ib_page_no_image_source.
   ///
   /// In en, this message translates to:
   /// **'No image source provided'**
-  String get no_image_source;
+  String get ib_page_no_image_source;
 
-  /// No description provided for @no_notifications.
+  /// No description provided for @notifications_no_notifications.
   ///
   /// In en, this message translates to:
   /// **'No notifications yet'**
-  String get no_notifications;
+  String get notifications_no_notifications;
 
   /// No description provided for @notifications_will_appear.
   ///
@@ -1448,353 +1688,407 @@ abstract class AppLocalizations {
   /// **'Your notifications will appear here'**
   String get notifications_will_appear;
 
-  /// No description provided for @no_unread_notifications.
+  /// No description provided for @notifications_no_unread.
   ///
   /// In en, this message translates to:
   /// **'No unread notifications'**
-  String get no_unread_notifications;
+  String get notifications_no_unread;
 
-  /// No description provided for @no_unread_notifications_desc.
+  /// No description provided for @notifications_no_unread_desc.
   ///
   /// In en, this message translates to:
   /// **'You have no unread notifications'**
-  String get no_unread_notifications_desc;
+  String get notifications_no_unread_desc;
 
-  /// No description provided for @all.
+  /// No description provided for @notifications_all.
   ///
   /// In en, this message translates to:
   /// **'All'**
-  String get all;
+  String get notifications_all;
 
-  /// No description provided for @unread.
+  /// No description provided for @notifications_unread.
   ///
   /// In en, this message translates to:
   /// **'Unread'**
-  String get unread;
+  String get notifications_unread;
 
-  /// No description provided for @starred.
+  /// No description provided for @notifications_starred.
   ///
   /// In en, this message translates to:
   /// **'starred'**
-  String get starred;
+  String get notifications_starred;
 
-  /// No description provided for @forked.
+  /// No description provided for @notifications_forked.
   ///
   /// In en, this message translates to:
   /// **'forked'**
-  String get forked;
+  String get notifications_forked;
 
-  /// No description provided for @your_project.
+  /// No description provided for @notifications_your_project.
   ///
   /// In en, this message translates to:
   /// **'your project'**
-  String get your_project;
+  String get notifications_your_project;
 
-  /// No description provided for @not_available.
+  /// No description provided for @profile_not_available.
   ///
   /// In en, this message translates to:
   /// **'N.A'**
-  String get not_available;
+  String get profile_not_available;
 
-  /// No description provided for @edit_profile.
+  /// No description provided for @profile_edit.
   ///
   /// In en, this message translates to:
   /// **'Edit Profile'**
-  String get edit_profile;
+  String get profile_edit;
 
-  /// No description provided for @subscribed_to_mails.
+  /// No description provided for @profile_joined.
+  ///
+  /// In en, this message translates to:
+  /// **'Joined'**
+  String get profile_joined;
+
+  /// No description provided for @profile_subscribed_to_mails.
   ///
   /// In en, this message translates to:
   /// **'Subscribed to mails'**
-  String get subscribed_to_mails;
+  String get profile_subscribed_to_mails;
 
-  /// No description provided for @no.
+  /// No description provided for @profile_yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get profile_yes;
+
+  /// No description provided for @profile_no.
   ///
   /// In en, this message translates to:
   /// **'No'**
-  String get no;
+  String get profile_no;
 
-  /// No description provided for @profile.
+  /// No description provided for @profile_title.
   ///
   /// In en, this message translates to:
   /// **'Profile'**
-  String get profile;
+  String get profile_title;
 
-  /// No description provided for @circuits.
+  /// No description provided for @profile_circuits.
   ///
   /// In en, this message translates to:
   /// **'Circuits'**
-  String get circuits;
+  String get profile_circuits;
 
-  /// No description provided for @favourites.
+  /// No description provided for @profile_favourites.
   ///
   /// In en, this message translates to:
   /// **'Favourites'**
-  String get favourites;
+  String get profile_favourites;
 
-  /// No description provided for @tags_list.
+  /// No description provided for @edit_project_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get edit_project_name;
+
+  /// No description provided for @edit_project_name_validation_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Name cannot be empty'**
+  String get edit_project_name_validation_error;
+
+  /// No description provided for @edit_project_tags_list.
   ///
   /// In en, this message translates to:
   /// **'Tags List'**
-  String get tags_list;
+  String get edit_project_tags_list;
 
-  /// No description provided for @project_access_type.
+  /// No description provided for @edit_project_access_type.
   ///
   /// In en, this message translates to:
   /// **'Project Access Type'**
-  String get project_access_type;
+  String get edit_project_access_type;
 
-  /// No description provided for @project_access_type_validation_error.
+  /// No description provided for @edit_project_access_type_validation_error.
   ///
   /// In en, this message translates to:
   /// **'Please select project access type'**
-  String get project_access_type_validation_error;
+  String get edit_project_access_type_validation_error;
 
-  /// No description provided for @public.
+  /// No description provided for @edit_project_public.
   ///
   /// In en, this message translates to:
   /// **'Public'**
-  String get public;
+  String get edit_project_public;
 
-  /// No description provided for @private.
+  /// No description provided for @edit_project_private.
   ///
   /// In en, this message translates to:
   /// **'Private'**
-  String get private;
+  String get edit_project_private;
 
-  /// No description provided for @limited_access.
+  /// No description provided for @edit_project_limited_access.
   ///
   /// In en, this message translates to:
   /// **'Limited Access'**
-  String get limited_access;
+  String get edit_project_limited_access;
 
-  /// No description provided for @updating_project.
+  /// No description provided for @edit_project_updating.
   ///
   /// In en, this message translates to:
   /// **'Updating project...'**
-  String get updating_project;
+  String get edit_project_updating;
 
-  /// No description provided for @project_updated.
+  /// No description provided for @edit_project_updated.
   ///
   /// In en, this message translates to:
   /// **'Project updated'**
-  String get project_updated;
+  String get edit_project_updated;
 
-  /// No description provided for @project_update_success.
+  /// No description provided for @edit_project_update_success.
   ///
   /// In en, this message translates to:
   /// **'Project updated successfully'**
-  String get project_update_success;
+  String get edit_project_update_success;
 
-  /// No description provided for @update_project.
+  /// No description provided for @edit_project_error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get edit_project_error;
+
+  /// No description provided for @edit_project_title.
   ///
   /// In en, this message translates to:
   /// **'Update Project'**
-  String get update_project;
+  String get edit_project_title;
 
-  /// No description provided for @project_details.
+  /// No description provided for @edit_project_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit_project_edit;
+
+  /// No description provided for @edit_project_details.
   ///
   /// In en, this message translates to:
   /// **'Project Details'**
-  String get project_details;
+  String get edit_project_details;
 
-  /// No description provided for @share.
+  /// No description provided for @edit_project_share.
   ///
   /// In en, this message translates to:
   /// **'Share'**
-  String get share;
+  String get edit_project_share;
 
-  /// No description provided for @fork.
+  /// No description provided for @edit_project_fork.
   ///
   /// In en, this message translates to:
   /// **'Fork'**
-  String get fork;
+  String get edit_project_fork;
 
-  /// No description provided for @stars.
+  /// No description provided for @edit_project_stars.
   ///
   /// In en, this message translates to:
   /// **'Stars'**
-  String get stars;
+  String get edit_project_stars;
 
-  /// No description provided for @views.
+  /// No description provided for @edit_project_views.
   ///
   /// In en, this message translates to:
   /// **'Views'**
-  String get views;
+  String get edit_project_views;
 
-  /// No description provided for @author.
+  /// No description provided for @edit_project_author.
   ///
   /// In en, this message translates to:
   /// **'Author'**
-  String get author;
+  String get edit_project_author;
 
-  /// No description provided for @add_a_collaborator.
+  /// No description provided for @edit_project_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get edit_project_description;
+
+  /// No description provided for @edit_project_add_collaborator.
   ///
   /// In en, this message translates to:
   /// **'Add Collaborator'**
-  String get add_a_collaborator;
+  String get edit_project_add_collaborator;
 
-  /// No description provided for @collaborators.
+  /// No description provided for @edit_project_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get edit_project_delete;
+
+  /// No description provided for @edit_project_collaborators.
   ///
   /// In en, this message translates to:
   /// **'Collaborators'**
-  String get collaborators;
+  String get edit_project_collaborators;
 
-  /// No description provided for @fork_project.
+  /// No description provided for @edit_project_fork_project.
   ///
   /// In en, this message translates to:
   /// **'Fork Project'**
-  String get fork_project;
+  String get edit_project_fork_project;
 
-  /// No description provided for @fork_confirmation.
+  /// No description provided for @edit_project_fork_confirmation.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to fork this project?'**
-  String get fork_confirmation;
+  String get edit_project_fork_confirmation;
 
-  /// No description provided for @forking.
+  /// No description provided for @edit_project_forking.
   ///
   /// In en, this message translates to:
   /// **'Forking'**
-  String get forking;
+  String get edit_project_forking;
 
-  /// No description provided for @project_starred.
+  /// No description provided for @edit_project_starred.
   ///
   /// In en, this message translates to:
   /// **'Project starred'**
-  String get project_starred;
+  String get edit_project_starred;
 
-  /// No description provided for @project_unstarred.
+  /// No description provided for @edit_project_unstarred.
   ///
   /// In en, this message translates to:
   /// **'Project unstarred'**
-  String get project_unstarred;
+  String get edit_project_unstarred;
 
-  /// No description provided for @starred_success.
+  /// No description provided for @edit_project_starred_success.
   ///
   /// In en, this message translates to:
   /// **'You have successfully starred the project'**
-  String get starred_success;
+  String get edit_project_starred_success;
 
-  /// No description provided for @unstarred_success.
+  /// No description provided for @edit_project_unstarred_success.
   ///
   /// In en, this message translates to:
   /// **'You have successfully unstarred the project'**
-  String get unstarred_success;
+  String get edit_project_unstarred_success;
 
-  /// No description provided for @add_collaborators.
+  /// No description provided for @edit_project_add_collaborators.
   ///
   /// In en, this message translates to:
   /// **'Add Collaborators'**
-  String get add_collaborators;
+  String get edit_project_add_collaborators;
 
-  /// No description provided for @email_ids.
+  /// No description provided for @edit_project_email_ids.
   ///
   /// In en, this message translates to:
   /// **'Email IDs'**
-  String get email_ids;
+  String get edit_project_email_ids;
 
-  /// No description provided for @email_hint.
+  /// No description provided for @edit_project_email_hint.
   ///
   /// In en, this message translates to:
   /// **'Enter email IDs separated by comma'**
-  String get email_hint;
+  String get edit_project_email_hint;
 
-  /// No description provided for @collaborators_added.
+  /// No description provided for @edit_project_adding.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding'**
+  String get edit_project_adding;
+
+  /// No description provided for @edit_project_collaborators_added.
   ///
   /// In en, this message translates to:
   /// **'Collaborators added'**
-  String get collaborators_added;
+  String get edit_project_collaborators_added;
 
-  /// No description provided for @delete_project.
+  /// No description provided for @edit_project_delete_project.
   ///
   /// In en, this message translates to:
   /// **'Delete Project'**
-  String get delete_project;
+  String get edit_project_delete_project;
 
-  /// No description provided for @delete_confirmation.
+  /// No description provided for @edit_project_delete_confirmation.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to delete this project?'**
-  String get delete_confirmation;
+  String get edit_project_delete_confirmation;
 
-  /// No description provided for @deleting.
+  /// No description provided for @edit_project_deleting.
   ///
   /// In en, this message translates to:
   /// **'Deleting'**
-  String get deleting;
+  String get edit_project_deleting;
 
-  /// No description provided for @project_deleted.
+  /// No description provided for @edit_project_deleted.
   ///
   /// In en, this message translates to:
   /// **'Project deleted'**
-  String get project_deleted;
+  String get edit_project_deleted;
 
-  /// No description provided for @delete_success.
+  /// No description provided for @edit_project_delete_success.
   ///
   /// In en, this message translates to:
   /// **'Project deleted successfully'**
-  String get delete_success;
+  String get edit_project_delete_success;
 
-  /// No description provided for @delete_collaborator.
+  /// No description provided for @edit_project_delete_collaborator.
   ///
   /// In en, this message translates to:
   /// **'Remove Collaborator'**
-  String get delete_collaborator;
+  String get edit_project_delete_collaborator;
 
-  /// No description provided for @delete_collaborator_confirmation.
+  /// No description provided for @edit_project_delete_collaborator_confirmation.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to remove this collaborator?'**
-  String get delete_collaborator_confirmation;
+  String get edit_project_delete_collaborator_confirmation;
 
-  /// No description provided for @collaborator_deleted.
+  /// No description provided for @edit_project_collaborator_deleted.
   ///
   /// In en, this message translates to:
   /// **'Collaborator removed'**
-  String get collaborator_deleted;
+  String get edit_project_collaborator_deleted;
 
-  /// No description provided for @collaborator_delete_success.
+  /// No description provided for @edit_project_collaborator_delete_success.
   ///
   /// In en, this message translates to:
   /// **'Collaborator removed successfully'**
-  String get collaborator_delete_success;
+  String get edit_project_collaborator_delete_success;
 
-  /// No description provided for @no_result_found.
+  /// No description provided for @edit_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get edit_cancel;
+
+  /// No description provided for @edit_add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get edit_add;
+
+  /// No description provided for @featured_no_result_found.
   ///
   /// In en, this message translates to:
   /// **'No result found'**
-  String get no_result_found;
+  String get featured_no_result_found;
 
-  /// No description provided for @editor_picks.
+  /// No description provided for @featured_editor_picks.
   ///
   /// In en, this message translates to:
   /// **'Editor\'s Picks'**
-  String get editor_picks;
+  String get featured_editor_picks;
 
-  /// No description provided for @editor_picks_description.
+  /// No description provided for @featured_editor_picks_description.
   ///
   /// In en, this message translates to:
   /// **'Curated list of the best projects'**
-  String get editor_picks_description;
+  String get featured_editor_picks_description;
 
-  /// No description provided for @search_for_circuits.
+  /// No description provided for @featured_search_for_circuits.
   ///
   /// In en, this message translates to:
   /// **'Search for circuits'**
-  String get search_for_circuits;
-
-  /// No description provided for @title.
-  ///
-  /// In en, this message translates to:
-  /// **'CircuitVerse'**
-  String get title;
-
-  /// No description provided for @groups.
-  ///
-  /// In en, this message translates to:
-  /// **'Groups'**
-  String get groups;
+  String get featured_search_for_circuits;
 
   /// No description provided for @featured_circuits.
   ///
@@ -1802,89 +2096,125 @@ abstract class AppLocalizations {
   /// **'Featured Circuits'**
   String get featured_circuits;
 
-  /// No description provided for @logout.
+  /// No description provided for @cv_title.
+  ///
+  /// In en, this message translates to:
+  /// **'CircuitVerse'**
+  String get cv_title;
+
+  /// No description provided for @cv_groups.
+  ///
+  /// In en, this message translates to:
+  /// **'Groups'**
+  String get cv_groups;
+
+  /// No description provided for @cv_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get cv_profile;
+
+  /// No description provided for @cv_featured_circuits.
+  ///
+  /// In en, this message translates to:
+  /// **'Featured Circuits'**
+  String get cv_featured_circuits;
+
+  /// No description provided for @cv_logout.
   ///
   /// In en, this message translates to:
   /// **'Log Out'**
-  String get logout;
+  String get cv_logout;
 
-  /// No description provided for @logout_confirmation.
+  /// No description provided for @cv_logout_confirmation.
   ///
   /// In en, this message translates to:
   /// **'Are you sure you want to logout?'**
-  String get logout_confirmation;
+  String get cv_logout_confirmation;
 
-  /// No description provided for @logout_confirmation_button.
+  /// No description provided for @cv_logout_confirmation_button.
   ///
   /// In en, this message translates to:
   /// **'LOGOUT'**
-  String get logout_confirmation_button;
+  String get cv_logout_confirmation_button;
 
-  /// No description provided for @logout_success.
+  /// No description provided for @cv_logout_success.
   ///
   /// In en, this message translates to:
   /// **'Logged Out Successfully'**
-  String get logout_success;
+  String get cv_logout_success;
 
-  /// No description provided for @logout_success_acknowledgement.
+  /// No description provided for @cv_logout_success_acknowledgement.
   ///
   /// In en, this message translates to:
   /// **'You have been signed out.'**
-  String get logout_success_acknowledgement;
+  String get cv_logout_success_acknowledgement;
 
-  /// No description provided for @home.
+  /// No description provided for @cv_home.
   ///
   /// In en, this message translates to:
   /// **'Home'**
-  String get home;
+  String get cv_home;
 
-  /// No description provided for @explore.
+  /// No description provided for @cv_explore.
   ///
   /// In en, this message translates to:
   /// **'Explore'**
-  String get explore;
+  String get cv_explore;
 
-  /// No description provided for @simulator.
+  /// No description provided for @cv_simulator.
   ///
   /// In en, this message translates to:
   /// **'Simulator'**
-  String get simulator;
+  String get cv_simulator;
 
-  /// No description provided for @about.
+  /// No description provided for @cv_interactive_book.
+  ///
+  /// In en, this message translates to:
+  /// **'Interactive Book'**
+  String get cv_interactive_book;
+
+  /// No description provided for @cv_about.
   ///
   /// In en, this message translates to:
   /// **'About'**
-  String get about;
+  String get cv_about;
 
-  /// No description provided for @contribute.
+  /// No description provided for @cv_contribute.
   ///
   /// In en, this message translates to:
   /// **'Contribute'**
-  String get contribute;
+  String get cv_contribute;
 
-  /// No description provided for @teachers.
+  /// No description provided for @cv_teachers.
   ///
   /// In en, this message translates to:
   /// **'Teachers'**
-  String get teachers;
+  String get cv_teachers;
 
-  /// No description provided for @my_groups.
+  /// No description provided for @cv_my_groups.
   ///
   /// In en, this message translates to:
   /// **'My Groups'**
-  String get my_groups;
+  String get cv_my_groups;
 
-  /// No description provided for @notifications.
+  /// No description provided for @cv_login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get cv_login;
+
+  /// No description provided for @cv_notifications.
   ///
   /// In en, this message translates to:
   /// **'Notifications'**
-  String get notifications;
+  String get cv_notifications;
 
-  /// No description provided for @language.
+  /// No description provided for @cv_language.
   ///
   /// In en, this message translates to:
   /// **'Language'**
-  String get language;
+  String get cv_language;
 
   /// No description provided for @terms_of_service.
   ///

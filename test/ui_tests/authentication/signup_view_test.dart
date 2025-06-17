@@ -64,13 +64,13 @@ void main() {
 
       expect(find.byType(CVTextField), findsOneWidget);
       expect(find.byType(CVPasswordField), findsOneWidget);
-      expect(find.text(localizations.forgot_password), findsOneWidget);
+      expect(find.text(localizations.login_forgot_password), findsOneWidget);
       expect(find.byType(CVPrimaryButton), findsOneWidget);
       expect(
         find.byWidgetPredicate((widget) {
           return widget is RichText &&
               widget.text.toPlainText() ==
-                  '${localizations.new_user} ${localizations.sign_up}';
+                  '${localizations.login_new_user} ${localizations.login_sign_up}';
         }),
         findsOneWidget,
       );
@@ -87,7 +87,7 @@ void main() {
 
       clearInteractions(mockObserver);
 
-      await tester.tap(find.text(localizations.forgot_password));
+      await tester.tap(find.text(localizations.login_forgot_password));
       await tester.pumpAndSettle();
 
       verify(mockObserver.didPush(any, any)).called(1);
@@ -109,7 +109,7 @@ void main() {
         find.byWidgetPredicate((widget) {
           return widget is RichText &&
               widget.text.toPlainText() ==
-                  '${localizations.new_user} ${localizations.sign_up}';
+                  '${localizations.login_new_user} ${localizations.login_sign_up}';
         }),
       );
       await tester.pumpAndSettle();
@@ -133,9 +133,12 @@ void main() {
         await tester.pumpAndSettle();
 
         verifyNever(_usersApiMock.login('', ''));
-        expect(find.text(localizations.email_validation_error), findsOneWidget);
         expect(
-          find.text(localizations.password_validation_error),
+          find.text(localizations.login_email_validation_error),
+          findsOneWidget,
+        );
+        expect(
+          find.text(localizations.login_password_validation_error),
           findsOneWidget,
         );
 
@@ -145,7 +148,7 @@ void main() {
 
         verifyNever(_usersApiMock.login('test@test.com', ''));
         expect(
-          find.text(localizations.password_validation_error),
+          find.text(localizations.login_password_validation_error),
           findsOneWidget,
         );
       },

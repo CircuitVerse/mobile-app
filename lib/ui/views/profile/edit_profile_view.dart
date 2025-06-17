@@ -187,12 +187,12 @@ class _EditProfileViewState extends State<EditProfileView> {
 
   Widget _buildNameInput() {
     return CVTextField(
-      label: AppLocalizations.of(context)!.name,
+      label: AppLocalizations.of(context)!.profile_name,
       initialValue: _name,
       validator:
           (value) =>
               value?.isEmpty ?? true
-                  ? AppLocalizations.of(context)!.name_empty_error
+                  ? AppLocalizations.of(context)!.profile_name_empty_error
                   : null,
       onSaved: (value) {
         _name = value!.trim();
@@ -206,7 +206,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget _buildCountryField() {
     return CVTypeAheadField(
       focusNode: _countryFocusNode,
-      label: AppLocalizations.of(context)!.country,
+      label: AppLocalizations.of(context)!.profile_country,
       controller: _countryController,
       toggle: CVTypeAheadField.COUNTRY,
       validator: (value) => null,
@@ -226,7 +226,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget _buildInstituteField() {
     return CVTypeAheadField(
       focusNode: _instituteFocusNode,
-      label: AppLocalizations.of(context)!.educational_institute,
+      label: AppLocalizations.of(context)!.profile_educational_institute,
       controller: _instituteController,
       toggle: CVTypeAheadField.EDUCATIONAL_INSTITUTE,
       validator: (value) => null,
@@ -246,7 +246,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   Widget _buildSubscribedField() {
     return CheckboxListTile(
       value: _subscribed,
-      title: Text(AppLocalizations.of(context)!.subscribe_mails),
+      title: Text(AppLocalizations.of(context)!.profile_subscribe_mails),
       onChanged: (value) {
         if (value == null) return;
         setState(() {
@@ -270,7 +270,7 @@ class _EditProfileViewState extends State<EditProfileView> {
       _formKey.currentState!.save();
 
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.updating,
+        title: AppLocalizations.of(context)!.profile_updating,
       );
 
       try {
@@ -299,14 +299,14 @@ class _EditProfileViewState extends State<EditProfileView> {
           );
         } else if (_model.isError(_model.UPDATE_PROFILE)) {
           SnackBarUtils.showDark(
-            AppLocalizations.of(context)!.error,
+            AppLocalizations.of(context)!.profile_update_error,
             _model.errorMessageFor(_model.UPDATE_PROFILE),
           );
         }
       } catch (e) {
         _dialogService.popDialog();
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.profile_update_error,
           AppLocalizations.of(context)!.profile_update_error,
         );
       }
@@ -317,7 +317,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: CVPrimaryButton(
-        title: AppLocalizations.of(context)!.save_details,
+        title: AppLocalizations.of(context)!.profile_save_details,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -332,7 +332,7 @@ class _EditProfileViewState extends State<EditProfileView> {
       builder: (context, model, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(AppLocalizations.of(context)!.update_profile),
+            title: Text(AppLocalizations.of(context)!.profile_update_title),
           ),
           body: GestureDetector(
             onTap: () {

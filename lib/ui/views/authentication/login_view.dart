@@ -51,13 +51,13 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _buildEmailInput() {
     return CVTextField(
-      label: AppLocalizations.of(context)!.email,
+      label: AppLocalizations.of(context)!.login_email,
       type: TextInputType.emailAddress,
       validator:
           (value) =>
               Validators.isEmailValid(value)
                   ? null
-                  : AppLocalizations.of(context)!.email_validation_error,
+                  : AppLocalizations.of(context)!.login_email_validation_error,
       onSaved: (value) => _email = value!.trim(),
       onFieldSubmitted:
           (_) => FocusScope.of(context).requestFocus(_emailFocusNode),
@@ -70,7 +70,9 @@ class _LoginViewState extends State<LoginView> {
       validator:
           (value) =>
               value?.isEmpty ?? true
-                  ? AppLocalizations.of(context)!.password_validation_error
+                  ? AppLocalizations.of(
+                    context,
+                  )!.login_password_validation_error
                   : null,
       onSaved: (value) => _password = value!.trim(),
     );
@@ -83,7 +85,7 @@ class _LoginViewState extends State<LoginView> {
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Text(
-          AppLocalizations.of(context)!.forgot_password,
+          AppLocalizations.of(context)!.login_forgot_password,
           style: TextStyle(color: CVTheme.highlightText(context)),
         ),
       ),
@@ -97,8 +99,8 @@ class _LoginViewState extends State<LoginView> {
       child: CVPrimaryButton(
         title:
             _model.isBusy(_model.LOGIN)
-                ? AppLocalizations.of(context)!.authenticating
-                : AppLocalizations.of(context)!.login.toUpperCase(),
+                ? AppLocalizations.of(context)!.login_authenticating
+                : AppLocalizations.of(context)!.login_button.toUpperCase(),
         onPressed: _validateAndSubmit,
       ),
     );
@@ -109,11 +111,11 @@ class _LoginViewState extends State<LoginView> {
       onTap: () => Get.toNamed(SignupView.id),
       child: RichText(
         text: TextSpan(
-          text: '${AppLocalizations.of(context)!.new_user} ',
+          text: '${AppLocalizations.of(context)!.login_new_user} ',
           style: Theme.of(context).textTheme.bodyLarge,
           children: <TextSpan>[
             TextSpan(
-              text: AppLocalizations.of(context)!.sign_up,
+              text: AppLocalizations.of(context)!.login_sign_up,
               style: TextStyle(
                 color: CVTheme.highlightText(context),
                 fontSize: 16,
@@ -139,7 +141,7 @@ class _LoginViewState extends State<LoginView> {
         await Get.offAllNamed(CVLandingView.id);
       } else if (_model.isError(_model.LOGIN)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.login_error,
           _model.errorMessageFor(_model.LOGIN),
         );
         _formKey.currentState?.reset();

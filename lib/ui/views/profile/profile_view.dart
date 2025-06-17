@@ -59,7 +59,7 @@ class _ProfileViewState extends State<ProfileView> {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: Text(
         _model.user?.data.attributes.name ??
-            AppLocalizations.of(context)!.not_available,
+            AppLocalizations.of(context)!.profile_not_available,
         textAlign: TextAlign.center,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -87,7 +87,7 @@ class _ProfileViewState extends State<ProfileView> {
             TextSpan(
               text:
                   description?.isEmpty ?? true
-                      ? AppLocalizations.of(context)!.not_available
+                      ? AppLocalizations.of(context)!.profile_not_available
                       : description,
             ),
           ],
@@ -111,7 +111,7 @@ class _ProfileViewState extends State<ProfileView> {
           });
         },
         child: Text(
-          AppLocalizations.of(context)!.edit_profile,
+          AppLocalizations.of(context)!.profile_edit,
           style: Theme.of(
             context,
           ).textTheme.bodyLarge?.copyWith(color: Colors.white),
@@ -145,25 +145,25 @@ class _ProfileViewState extends State<ProfileView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   _buildProfileComponent(
-                    AppLocalizations.of(context)!.joined,
+                    AppLocalizations.of(context)!.profile_joined,
                     _attrs?.createdAt != null
                         ? timeago.format(_attrs!.createdAt!)
                         : null,
                   ),
                   _buildProfileComponent(
-                    AppLocalizations.of(context)!.country,
+                    AppLocalizations.of(context)!.profile_country,
                     _attrs?.country,
                   ),
                   _buildProfileComponent(
-                    AppLocalizations.of(context)!.educational_institute,
+                    AppLocalizations.of(context)!.profile_educational_institute,
                     _attrs?.educationalInstitute,
                   ),
                   if (_model.isLoggedIn && _model.isPersonalProfile)
                     _buildProfileComponent(
-                      AppLocalizations.of(context)!.subscribed_to_mails,
+                      AppLocalizations.of(context)!.profile_subscribed_to_mails,
                       _attrs?.subscribed == true
-                          ? AppLocalizations.of(context)!.yes
-                          : AppLocalizations.of(context)!.no,
+                          ? AppLocalizations.of(context)!.profile_yes
+                          : AppLocalizations.of(context)!.profile_no,
                     ),
                   _buildEditProfileButton(),
                 ],
@@ -199,8 +199,8 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                 ),
                 tabs: [
-                  Tab(text: AppLocalizations.of(context)!.circuits),
-                  Tab(text: AppLocalizations.of(context)!.favourites),
+                  Tab(text: AppLocalizations.of(context)!.profile_circuits),
+                  Tab(text: AppLocalizations.of(context)!.profile_favourites),
                 ],
               ),
             ),
@@ -229,7 +229,7 @@ class _ProfileViewState extends State<ProfileView> {
             appBar:
                 widget.userId != null
                     ? AppBar(
-                      title: Text(AppLocalizations.of(context)!.profile),
+                      title: Text(AppLocalizations.of(context)!.profile_title),
                       centerTitle: true,
                     )
                     : null,

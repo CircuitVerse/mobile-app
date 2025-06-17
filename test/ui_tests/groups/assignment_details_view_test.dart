@@ -105,12 +105,13 @@ void main() {
         expect(
           find.byWidgetPredicate((widget) {
             return widget is RichText &&
-                (widget.text.toPlainText() == '${localizations.name} : Test' ||
+                (widget.text.toPlainText() ==
+                        '${localizations.assignment_details_name} : Test' ||
                     widget.text.toPlainText().contains(
-                      '${localizations.deadline} : ',
+                      '${localizations.assignment_details_deadline} : ',
                     ) ||
                     widget.text.toPlainText() ==
-                        '${localizations.restricted_elements} : ${localizations.not_applicable}');
+                        '${localizations.assignment_details_restricted_elements} : ${localizations.assignment_details_not_applicable}');
           }),
           findsNWidgets(3),
         );

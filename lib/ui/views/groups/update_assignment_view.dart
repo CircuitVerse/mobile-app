@@ -55,11 +55,13 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   Widget _buildNameInput() {
     return CVTextField(
       initialValue: widget.assignment.attributes.name,
-      label: AppLocalizations.of(context)!.name,
+      label: AppLocalizations.of(context)!.update_assignment_name,
       validator:
           (name) =>
               name?.isEmpty ?? true
-                  ? AppLocalizations.of(context)!.name_validation_error
+                  ? AppLocalizations.of(
+                    context,
+                  )!.update_assignment_name_validation_error
                   : null,
       onSaved: (name) => _name = name!.trim(),
     );
@@ -72,7 +74,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            AppLocalizations.of(context)!.description,
+            AppLocalizations.of(context)!.update_assignment_description,
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -92,7 +94,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: widget.assignment.attributes.deadline,
         decoration: CVTheme.textFieldDecoration.copyWith(
-          labelText: AppLocalizations.of(context)!.deadline,
+          labelText: AppLocalizations.of(context)!.update_assignment_deadline,
         ),
         onShowPicker: (context, currentValue) async {
           final date = await showDatePicker(
@@ -124,13 +126,15 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       child: CheckboxListTile(
         value: _isRestrictionEnabled,
         title: Text(
-          AppLocalizations.of(context)!.elements_restriction,
+          AppLocalizations.of(context)!.update_assignment_elements_restriction,
           style: Theme.of(
             context,
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         subtitle: Text(
-          AppLocalizations.of(context)!.enable_elements_restriction,
+          AppLocalizations.of(
+            context,
+          )!.update_assignment_enable_elements_restriction,
         ),
         onChanged: (value) {
           if (value == null) return;
@@ -200,7 +204,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: CVPrimaryButton(
         key: const Key('update_assignment_button'),
-        title: AppLocalizations.of(context)!.update_assignment,
+        title: AppLocalizations.of(context)!.update_assignment_title,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -211,7 +215,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       FocusScope.of(context).requestFocus(FocusNode());
 
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(context)!.updating,
+        title: AppLocalizations.of(context)!.update_assignment_updating,
       );
 
       String _descriptionEditorText;
@@ -238,12 +242,12 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedAssignment);
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.assignment_updated,
-          AppLocalizations.of(context)!.assignment_update_success,
+          AppLocalizations.of(context)!.update_assignment_updated,
+          AppLocalizations.of(context)!.update_assignment_update_success,
         );
       } else if (_model.isError(_model.UPDATE_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.error,
+          AppLocalizations.of(context)!.update_assignment_error,
           _model.errorMessageFor(_model.UPDATE_ASSIGNMENT),
         );
       }
@@ -257,7 +261,9 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       builder:
           (context, model, child) => Scaffold(
             appBar: AppBar(
-              title: Text(AppLocalizations.of(context)!.update_assignment),
+              title: Text(
+                AppLocalizations.of(context)!.update_assignment_title,
+              ),
             ),
             body: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(vertical: 16),

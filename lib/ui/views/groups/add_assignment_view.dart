@@ -56,10 +56,10 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     if (!_isInitialized) {
       final localizations = AppLocalizations.of(context)!;
       _gradingOptions = {
-        'no_scale': localizations.no_scale,
-        'letter': localizations.letter_grade,
-        'percent': localizations.percent,
-        'custom': localizations.custom,
+        'no_scale': localizations.assignment_no_scale,
+        'letter': localizations.assignment_letter_grade,
+        'percent': localizations.assignment_percent,
+        'custom': localizations.assignment_custom,
       };
       _isInitialized = true;
     }
@@ -74,11 +74,11 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   Widget _buildNameInput() {
     final localizations = AppLocalizations.of(context)!;
     return CVTextField(
-      label: localizations.name,
+      label: localizations.assignment_name,
       validator:
           (name) =>
               name?.isEmpty ?? true
-                  ? localizations.name_validation_error
+                  ? localizations.assignment_name_validation_error
                   : null,
       onSaved: (name) => _name = name!.trim(),
       action: TextInputAction.done,
@@ -101,7 +101,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: DateTime.now().add(const Duration(days: 7)),
         decoration: CVTheme.textFieldDecoration.copyWith(
-          labelText: localizations.deadline,
+          labelText: localizations.assignment_deadline,
         ),
         onShowPicker: (context, currentValue) async {
           final date = await showDatePicker(
@@ -134,7 +134,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       child: DropdownButtonFormField<String>(
         key: const Key('cv_assignment_grading_dropdown'),
         decoration: CVTheme.textFieldDecoration.copyWith(
-          labelText: localizations.grading_scale,
+          labelText: localizations.assignment_grading_scale,
         ),
         value: _gradingScale,
         onChanged: (String? value) {
@@ -163,12 +163,12 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       child: CheckboxListTile(
         value: _isRestrictionEnabled,
         title: Text(
-          localizations.elements_restriction,
+          localizations.assignment_elements_restriction,
           style: Theme.of(
             context,
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
-        subtitle: Text(localizations.enable_elements_restriction),
+        subtitle: Text(localizations.assignment_enable_elements_restriction),
         onChanged: (value) {
           if (value == null) return;
           setState(() {
@@ -237,7 +237,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: CVPrimaryButton(
-        title: localizations.create_assignment,
+        title: localizations.assignment_create,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -250,7 +250,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       final localizations = AppLocalizations.of(context)!;
 
       _dialogService.showCustomProgressDialog(
-        title: localizations.adding_assignment,
+        title: localizations.assignment_adding,
       );
 
       String _descriptionEditorText;
@@ -285,7 +285,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         );
       } else if (_model.isError(_model.ADD_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          localizations.error,
+          localizations.assignment_add_error,
           _model.errorMessageFor(_model.ADD_ASSIGNMENT),
         );
         _formKey.currentState?.reset();
@@ -301,7 +301,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       onModelReady: (model) => _model = model,
       builder:
           (context, model, child) => Scaffold(
-            appBar: AppBar(title: Text(localizations.add_assignment)),
+            appBar: AppBar(title: Text(localizations.assignment_add_title)),
             body: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Form(
