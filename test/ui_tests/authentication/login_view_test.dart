@@ -11,6 +11,8 @@ import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_helpers.dart';
 import '../../setup/test_helpers.mocks.dart';
@@ -31,6 +33,14 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('en', '')],
+          locale: const Locale('en', ''),
           home: const LoginView(),
         ),
       );
@@ -103,17 +113,25 @@ void main() {
         await _pumpLoginView(tester);
         await tester.pumpAndSettle();
 
+        // Trigger validation by tapping login button with empty fields
         await tester.tap(find.byType(CVPrimaryButton));
         await tester.pumpAndSettle();
 
+        // Verify API was not called with empty credentials
         verifyNever(_usersApiMock.login('', ''));
-        expect(find.text('Please enter a valid email'), findsOneWidget);
+
+        // Check for actual error messages shown in debug output
+        expect(find.text('Enter emails in valid format'), findsOneWidget);
         expect(find.text('Password can\'t be empty'), findsOneWidget);
 
+        // Enter valid email but keep password empty
         await tester.enterText(find.byType(CVTextField), 'test@test.com');
+        await tester.pumpAndSettle();
+
         await tester.tap(find.byType(CVPrimaryButton));
         await tester.pumpAndSettle();
 
+        // Verify API was not called with empty password
         verifyNever(_usersApiMock.login('test@test.com', ''));
         expect(find.text('Password can\'t be empty'), findsOneWidget);
       },

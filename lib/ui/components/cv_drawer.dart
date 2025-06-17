@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/controllers/launguage_controller.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
@@ -19,6 +20,8 @@ class CVDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _model = context.read<CVLandingViewModel>();
+    final langController = Get.find<LanguageController>();
+
     return Drawer(
       child: Stack(
         children: [
@@ -45,16 +48,15 @@ class CVDrawer extends StatelessWidget {
                 data: CVTheme.themeData(context),
                 child: ExpansionTile(
                   maintainState: true,
-                  title: ListTile(
-                    contentPadding: const EdgeInsets.all(0),
-                    leading: Icon(
-                      Icons.explore,
-                      color: CVTheme.drawerIcon(context),
-                    ),
-                    title: Text(
-                      AppLocalizations.of(context)!.explore,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
+                  tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  childrenPadding: EdgeInsets.zero,
+                  leading: Icon(
+                    Icons.explore,
+                    color: CVTheme.drawerIcon(context),
+                  ),
+                  title: Text(
+                    AppLocalizations.of(context)!.explore,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   iconColor: CVTheme.textColor(context),
                   children: <Widget>[
@@ -68,6 +70,58 @@ class CVDrawer extends StatelessWidget {
                   ],
                 ),
               ),
+
+              // Language Selection Tile
+              Obx(() {
+                final currentLocale = langController.currentLocale.value;
+                final localizations = AppLocalizations.of(context)!;
+
+                final languages = {
+                  const Locale('en'): 'English',
+                  const Locale('hi'): 'हिंदी',
+                };
+
+                return Theme(
+                  data: CVTheme.themeData(context),
+                  child: ExpansionTile(
+                    key: ValueKey(currentLocale),
+                    initiallyExpanded: langController.isLanguageExpanded.value,
+                    onExpansionChanged: (expanded) {
+                      langController.isLanguageExpanded.value = expanded;
+                    },
+                    maintainState: true,
+                    tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    childrenPadding: EdgeInsets.zero,
+                    leading: Icon(
+                      Icons.translate,
+                      color: CVTheme.drawerIcon(context),
+                    ),
+                    title: Text(
+                      localizations.language,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    iconColor: CVTheme.textColor(context),
+                    children:
+                        languages.entries.map((entry) {
+                          final isSelected = currentLocale == entry.key;
+                          return InkWell(
+                            onTap: () {
+                              langController.changeLanguage(entry.key);
+                              langController.isLanguageExpanded.value = false;
+                            },
+                            child: CVDrawerTile(
+                              title: entry.value,
+                              iconData:
+                                  isSelected
+                                      ? Icons.radio_button_checked
+                                      : Icons.radio_button_off,
+                            ),
+                          );
+                        }).toList(),
+                  ),
+                );
+              }),
+
               InkWell(
                 onTap: () => Get.toNamed(IbLandingView.id),
                 child: CVDrawerTile(
@@ -83,9 +137,7 @@ class CVDrawer extends StatelessWidget {
                     if (url.contains('sign_out')) {
                       _model.onLogoutPressed();
                     } else if (url.contains('edit')) {
-                      // close the drawer
                       Get.back();
-                      // show the snackbar
                       SnackBarUtils.showDark(
                         'New project created',
                         'Please check your profile to edit..',
@@ -136,6 +188,8 @@ class CVDrawer extends StatelessWidget {
                   data: CVTheme.themeData(context),
                   child: ExpansionTile(
                     maintainState: true,
+                    tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    childrenPadding: EdgeInsets.zero,
                     iconColor: CVTheme.textColor(context),
                     title: Text(
                       _model.currentUser?.data.attributes.name ?? '',

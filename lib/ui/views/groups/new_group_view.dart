@@ -10,6 +10,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class NewGroupView extends StatefulWidget {
   const NewGroupView({super.key});
@@ -30,7 +31,9 @@ class _NewGroupViewState extends State<NewGroupView> {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      _dialogService.showCustomProgressDialog(title: 'Creating..');
+      _dialogService.showCustomProgressDialog(
+        title: AppLocalizations.of(context)!.creating,
+      );
 
       await _model.addGroup(_name);
 
@@ -40,12 +43,12 @@ class _NewGroupViewState extends State<NewGroupView> {
         await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.newGroup);
         SnackBarUtils.showDark(
-          'Group Created',
-          'New group was created successfully.',
+          AppLocalizations.of(context)!.group_created,
+          AppLocalizations.of(context)!.group_created_success,
         );
       } else if (_model.isError(_model.ADD_GROUP)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context)!.error,
           _model.errorMessageFor(_model.ADD_GROUP),
         );
       }
@@ -66,10 +69,10 @@ class _NewGroupViewState extends State<NewGroupView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    const CVSubheader(
-                      title: 'NEW GROUP',
-                      subtitle:
-                          'Groups an be used by mentors to set projects for and give grades to students.',
+                    CVSubheader(
+                      title:
+                          AppLocalizations.of(context)!.new_group.toUpperCase(),
+                      subtitle: AppLocalizations.of(context)!.group_description,
                     ),
                     const SizedBox(height: 16),
                     SvgPicture.asset(
@@ -79,18 +82,20 @@ class _NewGroupViewState extends State<NewGroupView> {
                     const SizedBox(height: 16),
                     CVTextField(
                       padding: const EdgeInsets.all(0),
-                      label: 'Group Name',
+                      label: AppLocalizations.of(context)!.group_name,
                       validator:
                           (value) =>
                               value?.isEmpty ?? true
-                                  ? 'Please enter a Group Name'
+                                  ? AppLocalizations.of(
+                                    context,
+                                  )!.group_name_validation_error
                                   : null,
                       onSaved: (value) => _name = value!.trim(),
                       action: TextInputAction.done,
                     ),
                     const SizedBox(height: 16),
                     CVPrimaryButton(
-                      title: 'SAVE',
+                      title: AppLocalizations.of(context)!.save.toUpperCase(),
                       onPressed: _validateAndSubmit,
                     ),
                   ],

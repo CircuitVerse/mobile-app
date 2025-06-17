@@ -9,16 +9,898 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get title => 'CircuitVerse';
+  String get home_header_title =>
+      'Dive into the world of Logic Circuits for free!';
 
   @override
-  String get groups => 'Groups';
+  String get home_header_subtitle =>
+      'From Simple gates to complex sequential circuits, plot timing diagrams, automatic circuit generation, explore standard ICs, and much more';
+
+  @override
+  String get teachers_button => 'For Teachers';
+
+  @override
+  String get contributors_button => 'For Contributors';
+
+  @override
+  String get features_title => 'Features';
+
+  @override
+  String get features_subtitle =>
+      'Design circuits quickly and easily with a modern and intuitive user interface with drag-and-drop, copy/paste, zoom and more.';
+
+  @override
+  String get feature1_title => 'Explore High Resolution Images';
+
+  @override
+  String get feature1_description =>
+      'CircuitVerse can export high resolution images in multiple formats including SVG.';
+
+  @override
+  String get feature2_title => 'Combinational Analysis';
+
+  @override
+  String get feature2_description =>
+      'Automatically generate circuit based on truth table data. This is great to create complex logic circuits and can be easily be made into a subcircuit.';
+
+  @override
+  String get feature3_title => 'Embed in Blogs';
+
+  @override
+  String get feature3_description =>
+      'Since CircuitVerse is built in HTML5, an iFrame can be generated for each project allowing the user to embed it almost anywhere.';
+
+  @override
+  String get feature4_title => 'Use Sub circuits';
+
+  @override
+  String get feature4_description =>
+      'Create subcircuits once and use them repeatedly. This allows easier and more structured design.';
+
+  @override
+  String get feature5_title => 'Multi Bit Buses and components';
+
+  @override
+  String get feature5_description =>
+      'CircuitVerse supports multi bit wires, this means circuit design is easier, faster and uncluttered.';
+
+  @override
+  String get editor_picks_title => 'Editor Picks';
+
+  @override
+  String get editor_picks_subtitle =>
+      'These circuits have been hand-picked by our authors for their awesomeness';
+
+  @override
+  String get explore_more_button => 'Explore More';
+
+  @override
+  String get teachers_title => 'TEACHERS';
+
+  @override
+  String get teachers_description =>
+      'CircuitVerse has been designed to be very easy to use in class. The platform has features to assist teachers in class and assignments.';
+
+  @override
+  String get benefits_title => 'Benefits';
+
+  @override
+  String get teachers_feature1_title => 'Create Groups and add your students';
+
+  @override
+  String get teachers_feature1_description =>
+      'You can create groups and add your students to them! If students are already registered with CircuitVerse they will be added automatically. If they are not registered with CircuitVerse yet, an invitation will be sent to register. Once they register, they will be added automatically.';
+
+  @override
+  String get teachers_feature2_title => 'Post Assignments';
+
+  @override
+  String get teachers_feature2_description =>
+      'To create an assignment, simply click an add new assignment button. Give the details of the assignment and the deadline. The assignment will automatically close at deadline. Students cannot continue their assignment unless the teacher reopens the assignment again.';
+
+  @override
+  String get teachers_feature3_title => 'Grading assignments';
+
+  @override
+  String get teachers_feature3_description =>
+      'Grade assignments very easily with the in build preview. Simply select the student, to his/her assignment work.';
+
+  @override
+  String get teachers_feature4_title =>
+      'Use Interactive Circuits in your Blogs, Study Materials or PowerPoint presentations';
+
+  @override
+  String get teachers_feature4_description =>
+      'Make sure the project is public. Click on embed, to get the embed HTML5 code, then simply embed the circuit. You may need to use a PowerPoint plugin like Live Slides to embed the live Circuit.';
+
+  @override
+  String get contribute_title => 'CONTRIBUTE';
+
+  @override
+  String get contribute_description =>
+      'CircuitVerse aims to be free forever and we promise that we won\'t run any ads! The project is open source and to ensure its continued development and maintenance we need your support.';
+
+  @override
+  String get email_us_title => 'Email us at';
+
+  @override
+  String get join_chat_title => 'Join and chat with us at';
+
+  @override
+  String get slack_channel => 'Slack channel';
+
+  @override
+  String get open_source_title => 'Contribute to open source';
+
+  @override
+  String get how_to_support => 'How to Support?';
+
+  @override
+  String get student_role => 'I am a Student';
+
+  @override
+  String get student_support1 =>
+      'Create amazing circuits and share on the platform';
+
+  @override
+  String get student_support2 => 'Find and report bugs. Become a bug hunter';
+
+  @override
+  String get student_support3 => 'Introduce the platform to your buddies';
+
+  @override
+  String get teacher_role => 'I am a Teacher';
+
+  @override
+  String get teacher_support1 => 'Introduce the platform to your students';
+
+  @override
+  String get teacher_support2 => 'Promote the platform within your circles';
+
+  @override
+  String get teacher_support3 =>
+      'Create exciting educational content using CircuitVerse';
+
+  @override
+  String get developer_role => 'I am a Developer';
+
+  @override
+  String get developer_support1 => 'Contribute to the OpenSource projects';
+
+  @override
+  String get developer_support2 =>
+      'Add and propose new features to the projects';
+
+  @override
+  String get developer_support3 =>
+      'Find and fix bugs in the CircuitVerse projects';
+
+  @override
+  String get become_patreon => 'Become a Patreon';
+
+  @override
+  String get donate_paypal => 'Donate through PayPal';
+
+  @override
+  String get update_profile => 'Update Profile';
+
+  @override
+  String get profile_picture => 'Profile Picture';
+
+  @override
+  String get name => 'नाम';
+
+  @override
+  String get name_empty_error => 'Name can\'t be empty';
+
+  @override
+  String get country => 'Country';
+
+  @override
+  String get educational_institute => 'Educational Institute';
+
+  @override
+  String get subscribe_mails => 'Subscribe to mails?';
+
+  @override
+  String get save_details => 'Save Details';
+
+  @override
+  String get updating => 'Updating...';
+
+  @override
+  String get profile_updated => 'Profile Updated';
+
+  @override
+  String get profile_update_success => 'Your profile was successfully updated.';
+
+  @override
+  String get profile_update_error =>
+      'An error occurred while updating your profile.';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get no_favorites_title => 'No favorites yet!';
+
+  @override
+  String get no_favorites_subtitle =>
+      'Explore projects and add them to your favorites list';
+
+  @override
+  String get no_projects_title => 'No Projects Yet!';
+
+  @override
+  String get no_projects_subtitle =>
+      'Start fresh with a new design or fork existing templates';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get email_validation_error => 'Enter emails in valid format';
+
+  @override
+  String get send_instructions => 'SEND INSTRUCTIONS';
+
+  @override
+  String get sending => 'Sending..';
+
+  @override
+  String get new_user => 'New User?';
+
+  @override
+  String get sign_up => 'Sign Up';
+
+  @override
+  String get sending_instructions => 'Sending Instructions';
+
+  @override
+  String get instructions_sent_title => 'Instructions Sent';
+
+  @override
+  String get instructions_sent_message =>
+      'Password reset instructions have been sent to your email';
+
+  @override
+  String get password_validation_error => 'Password can\'t be empty';
+
+  @override
+  String get forgot_password => 'Forgot Password?';
+
+  @override
+  String get authenticating => 'Authenticating...';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get login_success_title => 'Login Successful';
+
+  @override
+  String get login_success_message => 'Welcome back!';
+
+  @override
+  String get name_validation_error => 'नाम खाली नहीं हो सकता';
+
+  @override
+  String get password_length_error => 'Password length should be at least 6';
+
+  @override
+  String get register => 'Register';
+
+  @override
+  String get already_registered => 'Already Registered?';
+
+  @override
+  String get signup_success_title => 'Signup Successful';
+
+  @override
+  String get signup_success_message => 'Welcome to CircuitVerse!';
+
+  @override
+  String get letter_grade => 'Letter Grade';
+
+  @override
+  String get percent => 'Percent';
+
+  @override
+  String get custom => 'Custom';
+
+  @override
+  String get deadline => 'Deadline';
+
+  @override
+  String get grading_scale => 'Grading Scale';
+
+  @override
+  String get elements_restriction => 'Elements restriction';
+
+  @override
+  String get enable_elements_restriction => 'Enable elements restriction';
+
+  @override
+  String get create_assignment => 'Create Assignment';
+
+  @override
+  String get adding_assignment => 'Adding Assignment';
+
+  @override
+  String get assignment_added => 'Assignment Added';
+
+  @override
+  String get assignment_add_success => 'New assignment was successfully added';
+
+  @override
+  String get add_assignment => 'Add Assignment';
+
+  @override
+  String get no_scale => 'No Scale';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get not_applicable => 'N.A';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get submissions => 'Submissions';
+
+  @override
+  String get no_submissions_yet => 'No Submissions yet!';
+
+  @override
+  String get adding_grades => 'Adding Grades...';
+
+  @override
+  String get project_graded_successfully => 'Project Graded Successfully';
+
+  @override
+  String get project_graded_message => 'You have graded the project';
+
+  @override
+  String get updating_grade => 'Updating Grade...';
+
+  @override
+  String get grade_updated_successfully => 'Grade updated Successfully';
+
+  @override
+  String get grade_updated_message => 'Grade has been updated successfully';
+
+  @override
+  String get delete_grade => 'Delete Grade';
+
+  @override
+  String get delete_grade_confirmation =>
+      'Are you sure you want to delete the grade?';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get deleting_grade => 'Deleting Grade...';
+
+  @override
+  String get grade_deleted => 'Grade Deleted';
+
+  @override
+  String get grade_deleted_message => 'Grade has been removed successfully';
+
+  @override
+  String get grades_and_remarks => 'Grades & Remarks';
+
+  @override
+  String get grade => 'Grade';
+
+  @override
+  String get grade_validation_error => 'Grade can\'t be empty';
+
+  @override
+  String get remarks => 'Remarks';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String get submit => 'Submit';
+
+  @override
+  String get assignment_details => 'Assignment Details';
+
+  @override
+  String get time_remaining => 'Time Remaining';
+
+  @override
+  String get days => 'days';
+
+  @override
+  String get hours => 'hours';
+
+  @override
+  String get minutes => 'minutes';
+
+  @override
+  String get restricted_elements => 'Restricted Elements';
+
+  @override
+  String get group_updated => 'Group Updated';
+
+  @override
+  String get group_update_success => 'Group has been successfully updated';
+
+  @override
+  String get edit_group => 'Edit Group';
+
+  @override
+  String get edit_group_description =>
+      'You can update Group details here. Don\'t leave the Group Name blank.';
+
+  @override
+  String get group_name => 'Group Name';
+
+  @override
+  String get group_name_validation_error => 'Please enter a Group Name';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get primary_mentor => 'Primary Mentor';
+
+  @override
+  String get adding => 'Adding';
+
+  @override
+  String get group_members_added => 'Group Members Added';
+
+  @override
+  String get add_group_members => 'Add Group Members';
+
+  @override
+  String get add_mentors => 'Add Mentors';
+
+  @override
+  String get add_members_description =>
+      'Enter Email IDs separated by commas. If users are not registered, an email ID will be sent requesting them to sign up.';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get remove_group_member => 'Remove Group Member';
+
+  @override
+  String get remove_mentor => 'Remove Mentor';
+
+  @override
+  String get remove_member_confirmation =>
+      'Are you sure you want to remove this group member?';
+
+  @override
+  String get remove_mentor_confirmation =>
+      'Are you sure you want to remove this mentor?';
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get removing => 'Removing...';
+
+  @override
+  String get group_member_removed => 'Group Member Removed';
+
+  @override
+  String get mentor_removed => 'Mentor Removed';
+
+  @override
+  String get member_removed_success => 'Successfully removed';
+
+  @override
+  String get mentors => 'Mentors';
+
+  @override
+  String get members => 'Members';
+
+  @override
+  String get assignments => 'Assignments';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get delete_assignment => 'Delete Assignment';
+
+  @override
+  String get delete_assignment_confirmation =>
+      'Are you sure you want to delete this assignment?';
+
+  @override
+  String get deleting_assignment => 'Deleting Assignment...';
+
+  @override
+  String get assignment_deleted => 'Assignment Deleted';
+
+  @override
+  String get assignment_deleted_success =>
+      'The assignment was successfully deleted';
+
+  @override
+  String get reopen_assignment => 'Reopen Assignment';
+
+  @override
+  String get reopen_assignment_confirmation =>
+      'Are you sure you want to reopen this assignment?';
+
+  @override
+  String get reopen => 'Reopen';
+
+  @override
+  String get reopening_assignment => 'Reopening Assignment...';
+
+  @override
+  String get assignment_reopened => 'Assignment Reopened';
+
+  @override
+  String get assignment_reopened_success => 'The assignment is reopened now';
+
+  @override
+  String get start_assignment => 'Start Assignment';
+
+  @override
+  String get start_assignment_confirmation =>
+      'Are you sure you want to start working on this assignment?';
+
+  @override
+  String get start => 'Start';
+
+  @override
+  String get starting_assignment => 'Starting Assignment...';
+
+  @override
+  String get project_created => 'Project Created';
+
+  @override
+  String get project_created_success => 'Project is successfully created';
+
+  @override
+  String get member => 'member';
+
+  @override
+  String get mentor => 'mentor';
+
+  @override
+  String get make => 'Make';
+
+  @override
+  String get are_you_sure_you_want_to => 'Are you sure you want to';
+
+  @override
+  String get promote => 'promote';
+
+  @override
+  String get demote => 'demote';
+
+  @override
+  String get this_group => 'this group';
+
+  @override
+  String get to_a => 'to a';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get promoting => 'Promoting...';
+
+  @override
+  String get demoting => 'Demoting...';
+
+  @override
+  String get promoted => 'Promoted';
+
+  @override
+  String get demoted => 'Demoted';
+
+  @override
+  String get member_updated_success => 'Group member was successfully updated';
+
+  @override
+  String get group_details => 'Group Details';
+
+  @override
+  String get explore_groups_message =>
+      'Explore and join groups of your school and friends!';
+
+  @override
+  String get delete_group => 'Delete Group';
+
+  @override
+  String get delete_group_confirmation =>
+      'Are you sure you want to delete this group?';
+
+  @override
+  String get deleting_group => 'Deleting Group...';
+
+  @override
+  String get group_deleted => 'Group Deleted';
+
+  @override
+  String get group_deleted_success => 'Group was successfully deleted';
+
+  @override
+  String get owned => 'Owned';
+
+  @override
+  String get view => 'View';
+
+  @override
+  String get joined => 'Joined';
+
+  @override
+  String get creating => 'Creating...';
+
+  @override
+  String get group_created => 'Group Created';
+
+  @override
+  String get group_created_success => 'New group was created successfully';
+
+  @override
+  String get new_group => 'New Group';
+
+  @override
+  String get group_description =>
+      'Groups can be used by mentors to set projects for and give grades to students';
+
+  @override
+  String get assignment_description_hint => 'Enter assignment description...';
+
+  @override
+  String get update_assignment => 'Update Assignment';
+
+  @override
+  String get assignment_updated => 'Assignment Updated';
+
+  @override
+  String get assignment_update_success => 'Assignment was updated successfully';
+
+  @override
+  String get search_circuitverse => 'Search CircuitVerse';
+
+  @override
+  String get navigate_chapters => 'Navigate to different chapters';
+
+  @override
+  String get circuitverse => 'CircuitVerse';
+
+  @override
+  String get interactive_book => 'Interactive Book';
+
+  @override
+  String get return_home => 'Return to Home';
+
+  @override
+  String get ib_home => 'Interactive Book Home';
+
+  @override
+  String get loading_chapters => 'Loading Chapters...';
+
+  @override
+  String get show_toc => 'Show Table of Contents';
+
+  @override
+  String get copyright_notice =>
+      'Copyright © 2021 Contributors to CircuitVerse. Distributed under a [CC-by-sa] license.';
+
+  @override
+  String get table_of_contents => 'Table of Contents';
+
+  @override
+  String get navigate_previous_page => 'Tap to navigate to previous page';
+
+  @override
+  String get navigate_next_page => 'Tap to navigate to next page';
+
+  @override
+  String get loading_image => 'Loading image...';
+
+  @override
+  String get image_load_error => 'Failed to load image';
+
+  @override
+  String get no_image_source => 'No image source provided';
+
+  @override
+  String get no_notifications => 'No notifications yet';
+
+  @override
+  String get notifications_will_appear => 'Your notifications will appear here';
+
+  @override
+  String get no_unread_notifications => 'No unread notifications';
+
+  @override
+  String get no_unread_notifications_desc => 'You have no unread notifications';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get unread => 'Unread';
+
+  @override
+  String get starred => 'starred';
+
+  @override
+  String get forked => 'forked';
+
+  @override
+  String get your_project => 'your project';
+
+  @override
+  String get not_available => 'N.A';
+
+  @override
+  String get edit_profile => 'Edit Profile';
+
+  @override
+  String get subscribed_to_mails => 'Subscribed to mails';
+
+  @override
+  String get no => 'No';
 
   @override
   String get profile => 'Profile';
 
   @override
+  String get circuits => 'Circuits';
+
+  @override
+  String get favourites => 'Favourites';
+
+  @override
+  String get tags_list => 'टैग सूची';
+
+  @override
+  String get project_access_type => 'Project Access Type';
+
+  @override
+  String get project_access_type_validation_error =>
+      'एक प्रोजेक्ट पहुंच प्रकार चुनें';
+
+  @override
+  String get public => 'सार्वजनिक';
+
+  @override
+  String get private => 'निजी';
+
+  @override
+  String get limited_access => 'सीमित पहुंच';
+
+  @override
+  String get updating_project => 'प्रोजेक्ट अपडेट किया जा रहा है...';
+
+  @override
+  String get project_updated => 'प्रोजेक्ट अपडेट हो गया';
+
+  @override
+  String get project_update_success => 'प्रोजेक्ट सफलतापूर्वक अपडेट हो गया';
+
+  @override
+  String get update_project => 'प्रोजेक्ट अपडेट करें';
+
+  @override
+  String get editor_picks => 'संपादक की पसंद';
+
+  @override
+  String get editor_picks_description =>
+      'ये सर्किट हमारे लेखकों द्वारा उनकी अद्भुतता के लिए चुने गए हैं।';
+
+  @override
   String get featured_circuits => 'Featured Circuits';
+
+  @override
+  String get search_for_circuits => 'सर्किट खोजें';
+
+  @override
+  String get no_result_found => 'कोई परिणाम नहीं मिला';
+
+  @override
+  String get project_details => 'Project Details';
+
+  @override
+  String get share => 'Share';
+
+  @override
+  String get fork => 'Fork';
+
+  @override
+  String get stars => 'Stars';
+
+  @override
+  String get views => 'Views';
+
+  @override
+  String get author => 'Author';
+
+  @override
+  String get add_a_collaborator => 'Add A Collaborator';
+
+  @override
+  String get collaborators => 'Collaborators';
+
+  @override
+  String get fork_project => 'Fork Project';
+
+  @override
+  String get fork_confirmation => 'Are you sure you want to fork this project?';
+
+  @override
+  String get forking => 'Forking';
+
+  @override
+  String get project_starred => 'Project Starred';
+
+  @override
+  String get project_unstarred => 'Project Unstarred';
+
+  @override
+  String get starred_success => 'You have successfully starred the project';
+
+  @override
+  String get unstarred_success => 'You have successfully unstarred the project';
+
+  @override
+  String get add_collaborators => 'Add Collaborators';
+
+  @override
+  String get email_ids => 'Email Ids';
+
+  @override
+  String get email_hint => 'Enter Email IDs separated by commas';
+
+  @override
+  String get collaborators_added => 'Collaborators Added';
+
+  @override
+  String get delete_project => 'Delete Project';
+
+  @override
+  String get delete_confirmation =>
+      'Are you sure you want to delete this project?';
+
+  @override
+  String get deleting => 'Deleting';
+
+  @override
+  String get project_deleted => 'Project Deleted';
+
+  @override
+  String get delete_success => 'Project is successfully deleted';
+
+  @override
+  String get delete_collaborator => 'Delete Collaborator';
+
+  @override
+  String get delete_collaborator_confirmation =>
+      'Are you sure you want to delete this collaborator?';
+
+  @override
+  String get collaborator_deleted => 'Collaborator Deleted';
+
+  @override
+  String get collaborator_delete_success =>
+      'Collaborator was successfully deleted';
+
+  @override
+  String get title => 'CircuitVerse';
+
+  @override
+  String get groups => 'Groups';
 
   @override
   String get logout => 'Log Out';
@@ -45,9 +927,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get simulator => 'Simulator';
 
   @override
-  String get interactive_book => 'Interactive Book';
-
-  @override
   String get about => 'About';
 
   @override
@@ -60,10 +939,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get my_groups => 'My Groups';
 
   @override
-  String get login => 'Login';
+  String get notifications => 'Notifications';
 
   @override
-  String get notifications => 'Notifications';
+  String get language => 'Language';
 
   @override
   String get terms_of_service => 'Terms Of Service';
@@ -90,9 +969,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get join_slack => 'Join and chat with us at';
-
-  @override
-  String get slack_channel => 'Slack channel';
 
   @override
   String get contributors => 'Contributors';

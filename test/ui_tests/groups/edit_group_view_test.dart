@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
@@ -11,6 +12,8 @@ import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/edit_group_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../../setup/test_data/mock_groups.dart';
 // import '../../setup/test_helpers.dart';
@@ -36,6 +39,13 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('en', '')],
           home: EditGroupView(group: group),
         ),
       );
@@ -51,16 +61,24 @@ void main() {
       await _pumpEditGroupView(tester);
       await tester.pumpAndSettle();
 
+      // Get the localized strings
+      final BuildContext context = tester.element(find.byType(EditGroupView));
+      final localizations = AppLocalizations.of(context)!;
+
       // Finds Group Name field
       expect(
         find.byWidgetPredicate(
-          (widget) => widget is CVTextField && widget.label == 'Group Name',
+          (widget) =>
+              widget is CVTextField && widget.label == localizations.group_name,
         ),
         findsOneWidget,
       );
 
       // Finds Save button
-      expect(find.widgetWithText(CVPrimaryButton, 'Save'), findsOneWidget);
+      expect(
+        find.widgetWithText(CVPrimaryButton, localizations.save),
+        findsOneWidget,
+      );
     });
 
     testWidgets('on Save button is Tapped', (WidgetTester tester) async {
@@ -86,14 +104,21 @@ void main() {
       await _pumpEditGroupView(tester);
       await tester.pumpAndSettle();
 
+      // Get the localized strings
+      final BuildContext context = tester.element(find.byType(EditGroupView));
+      final localizations = AppLocalizations.of(context)!;
+
       // Tap Save Details Button
       await tester.enterText(
         find.byWidgetPredicate(
-          (widget) => widget is CVTextField && widget.label == 'Group Name',
+          (widget) =>
+              widget is CVTextField && widget.label == localizations.group_name,
         ),
         'Test',
       );
-      await tester.tap(find.widgetWithText(CVPrimaryButton, 'Save'));
+      await tester.tap(
+        find.widgetWithText(CVPrimaryButton, localizations.save),
+      );
       await tester.pumpAndSettle();
 
       await tester.pump(const Duration(seconds: 5));

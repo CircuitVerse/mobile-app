@@ -14,6 +14,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class AddAssignmentView extends StatefulWidget {
   const AddAssignmentView({super.key, required this.groupId});
@@ -29,18 +30,40 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   final DialogService _dialogService = locator<DialogService>();
   late AddAssignmentViewModel _model;
   final _formKey = GlobalKey<FormState>();
-  String _gradingScale = 'No Scale';
+  String _gradingScale = 'no_scale';
   late String _name;
   final QuillController _controller = QuillController.basic();
   late DateTime _deadline;
   final List<String> _restrictions = [];
-  final List<String> _gradingOptions = [
-    'No Scale',
-    'Letter',
-    'Percent',
-    'Custom',
-  ];
+
+  // Remove the late keyword and initialize in didChangeDependencies
+  Map<String, String> _gradingOptions = {};
   bool _isRestrictionEnabled = false;
+  bool _isInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Remove the AppLocalizations.of(context) call from here
+    // Only initialize non-context dependent variables
+    _gradingScale = 'no_scale';
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Initialize localization-dependent variables here
+    if (!_isInitialized) {
+      final localizations = AppLocalizations.of(context)!;
+      _gradingOptions = {
+        'no_scale': localizations.no_scale,
+        'letter': localizations.letter_grade,
+        'percent': localizations.percent,
+        'custom': localizations.custom,
+      };
+      _isInitialized = true;
+    }
+  }
 
   @override
   void dispose() {
@@ -49,10 +72,14 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   }
 
   Widget _buildNameInput() {
+    final localizations = AppLocalizations.of(context)!;
     return CVTextField(
-      label: 'Name',
+      label: localizations.name,
       validator:
-          (name) => name?.isEmpty ?? true ? 'Please enter a valid name' : null,
+          (name) =>
+              name?.isEmpty ?? true
+                  ? localizations.name_validation_error
+                  : null,
       onSaved: (name) => _name = name!.trim(),
       action: TextInputAction.done,
     );
@@ -66,13 +93,16 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   }
 
   Widget _buildDeadlineInput() {
+    final localizations = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: DateTimeField(
         key: const Key('cv_assignment_deadline_field'),
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: DateTime.now().add(const Duration(days: 7)),
-        decoration: CVTheme.textFieldDecoration.copyWith(labelText: 'Deadline'),
+        decoration: CVTheme.textFieldDecoration.copyWith(
+          labelText: localizations.deadline,
+        ),
         onShowPicker: (context, currentValue) async {
           final date = await showDatePicker(
             context: context,
@@ -98,12 +128,13 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   }
 
   Widget _buildGradingScaleDropdown() {
+    final localizations = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: DropdownButtonFormField<String>(
         key: const Key('cv_assignment_grading_dropdown'),
         decoration: CVTheme.textFieldDecoration.copyWith(
-          labelText: 'Grading Scale',
+          labelText: localizations.grading_scale,
         ),
         value: _gradingScale,
         onChanged: (String? value) {
@@ -113,25 +144,31 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
           });
         },
         items:
-            _gradingOptions.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(value: value, child: Text(value));
-            }).toList(),
+            _gradingOptions.entries
+                .map<DropdownMenuItem<String>>(
+                  (entry) => DropdownMenuItem<String>(
+                    value: entry.key,
+                    child: Text(entry.value),
+                  ),
+                )
+                .toList(),
       ),
     );
   }
 
   Widget _buildRestrictionsHeader() {
+    final localizations = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: CheckboxListTile(
         value: _isRestrictionEnabled,
         title: Text(
-          'Elements restriction',
+          localizations.elements_restriction,
           style: Theme.of(
             context,
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
-        subtitle: const Text('Enable elements restriction'),
+        subtitle: Text(localizations.enable_elements_restriction),
         onChanged: (value) {
           if (value == null) return;
           setState(() {
@@ -196,10 +233,11 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
   }
 
   Widget _buildCreateButton() {
+    final localizations = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: CVPrimaryButton(
-        title: 'Create Assignment',
+        title: localizations.create_assignment,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -209,10 +247,12 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      // Shows progress dialog..
-      _dialogService.showCustomProgressDialog(title: 'Adding..');
+      final localizations = AppLocalizations.of(context)!;
 
-      // [ISSUE] [html_editor] Throws error in Tests
+      _dialogService.showCustomProgressDialog(
+        title: localizations.adding_assignment,
+      );
+
       String _descriptionEditorText;
       try {
         _descriptionEditorText = _controller.document.toPlainText();
@@ -237,18 +277,15 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       if (_model.isSuccess(_model.ADD_ASSIGNMENT)) {
         await Future.delayed(const Duration(seconds: 1));
 
-        // returns the added assignment..
         Get.back(result: _model.addedAssignment);
 
-        // Show success snackbar..
         SnackBarUtils.showDark(
-          'Assignment Added',
-          'New assignment was successfully added.',
+          localizations.assignment_added,
+          localizations.assignment_add_success,
         );
       } else if (_model.isError(_model.ADD_ASSIGNMENT)) {
-        // Show failure snackbar
         SnackBarUtils.showDark(
-          'Error',
+          localizations.error,
           _model.errorMessageFor(_model.ADD_ASSIGNMENT),
         );
         _formKey.currentState?.reset();
@@ -258,11 +295,13 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return BaseView<AddAssignmentViewModel>(
       onModelReady: (model) => _model = model,
       builder:
           (context, model, child) => Scaffold(
-            appBar: AppBar(title: const Text('Add Assignment')),
+            appBar: AppBar(title: Text(localizations.add_assignment)),
             body: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Form(

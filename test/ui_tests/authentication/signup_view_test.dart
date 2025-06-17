@@ -5,16 +5,20 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/ui/components/cv_password_field.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
+import 'package:mobile_app/ui/views/authentication/forgot_password_view.dart';
+import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_helpers.dart';
 import '../../setup/test_helpers.mocks.dart';
 
 void main() {
-  group('SignupViewTest -', () {
+  group('LoginViewTest -', () {
     late MockNavigatorObserver mockObserver;
 
     setUpAll(() async {
@@ -24,25 +28,34 @@ void main() {
 
     setUp(() => mockObserver = MockNavigatorObserver());
 
-    Future<void> _pumpSignupView(WidgetTester tester) async {
+    Future<void> _pumpLoginView(WidgetTester tester) async {
       await tester.pumpWidget(
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
-          home: const SignupView(),
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en', ''),
+          ],
+          locale: const Locale('en', ''),
+          home: const LoginView(),
         ),
       );
 
-      /// The tester.pumpWidget() call above just built our app widget
-      /// and triggered the pushObserver method on the mockObserver once.
       verify(mockObserver.didPush(any, any));
     }
 
-    testWidgets('finds Generic SignupView widgets', (
-      WidgetTester tester,
-    ) async {
-      await _pumpSignupView(tester);
+    testWidgets('finds Generic LoginView widgets', (WidgetTester tester) async {
+      await _pumpLoginView(tester);
       await tester.pumpAndSettle();
+
+      final context = tester.element(find.byType(LoginView));
+      final localizations = AppLocalizations.of(context)!;
 
       expect(
         find.byWidgetPredicate(
@@ -50,79 +63,81 @@ void main() {
         ),
         findsOneWidget,
       );
-      expect(find.byType(CVTextField), findsNWidgets(2));
+
+      expect(find.byType(CVTextField), findsOneWidget);
       expect(find.byType(CVPasswordField), findsOneWidget);
+      expect(find.text(localizations.forgot_password), findsOneWidget);
       expect(find.byType(CVPrimaryButton), findsOneWidget);
       expect(
         find.byWidgetPredicate((widget) {
           return widget is RichText &&
-              widget.text.toPlainText() == 'Already Registered? Login';
+              widget.text.toPlainText() == '${localizations.new_user} ${localizations.sign_up}';
         }),
         findsOneWidget,
       );
     });
 
+    testWidgets('ForgotPassword? onTap takes to ForgotPasswordView', (
+      WidgetTester tester,
+    ) async {
+      await _pumpLoginView(tester);
+      await tester.pumpAndSettle();
+
+      final context = tester.element(find.byType(LoginView));
+      final localizations = AppLocalizations.of(context)!;
+
+      await tester.tap(find.text(localizations.forgot_password));
+      await tester.pumpAndSettle();
+
+      verify(mockObserver.didPush(any, any));
+      expect(find.byType(ForgotPasswordView), findsOneWidget);
+    });
+
+    testWidgets('New User? Sign Up onTap takes to SignupView', (
+      WidgetTester tester,
+    ) async {
+      await _pumpLoginView(tester);
+      await tester.pumpAndSettle();
+
+      final context = tester.element(find.byType(LoginView));
+      final localizations = AppLocalizations.of(context)!;
+
+      await tester.tap(
+        find.byWidgetPredicate((widget) {
+          return widget is RichText &&
+              widget.text.toPlainText() == '${localizations.new_user} ${localizations.sign_up}';
+        }),
+      );
+      await tester.pumpAndSettle();
+
+      verify(mockObserver.didPush(any, any));
+      expect(find.byType(SignupView), findsOneWidget);
+    });
+
     testWidgets(
-      'When name/email/password is not valid or empty, proper error message should be shown',
+      'When email/password is not valid or empty, proper error message should be shown',
       (WidgetTester tester) async {
         var _usersApiMock = getAndRegisterUsersApiMock();
-        // var _usersApiMock = MockUsersApi();
 
-        await _pumpSignupView(tester);
+        await _pumpLoginView(tester);
         await tester.pumpAndSettle();
 
-        expect(
-          find.byWidgetPredicate(
-            (Widget widget) => widget is CVTextField && widget.label == 'Name',
-          ),
-          findsOneWidget,
-        );
+        final context = tester.element(find.byType(LoginView));
+        final localizations = AppLocalizations.of(context)!;
 
         await tester.tap(find.byType(CVPrimaryButton));
         await tester.pumpAndSettle();
 
-        verifyNever(_usersApiMock.signup('', '', ''));
-        expect(find.text('Name can\'t be empty'), findsOneWidget);
-        expect(find.text('Please enter a valid email'), findsOneWidget);
-        expect(find.text('Password can\'t be empty'), findsOneWidget);
+        verifyNever(_usersApiMock.login('', ''));
+        expect(find.text(localizations.email_validation_error), findsOneWidget);
+        expect(find.text(localizations.password_validation_error), findsOneWidget);
 
-        await tester.enterText(
-          find.byWidgetPredicate(
-            (Widget widget) => widget is CVTextField && widget.label == 'Name',
-          ),
-          'test',
-        );
+        await tester.enterText(find.byType(CVTextField), 'test@test.com');
         await tester.tap(find.byType(CVPrimaryButton));
         await tester.pumpAndSettle();
 
-        verifyNever(_usersApiMock.signup('test', '', ''));
-        expect(find.text('Please enter a valid email'), findsOneWidget);
-        expect(find.text('Password can\'t be empty'), findsOneWidget);
-
-        await tester.enterText(
-          find.byWidgetPredicate(
-            (Widget widget) => widget is CVTextField && widget.label == 'Email',
-          ),
-          'test@test.com',
-        );
-        await tester.tap(find.byType(CVPrimaryButton));
-        await tester.pumpAndSettle();
-
-        verifyNever(_usersApiMock.signup('test', 'test@test.com', ''));
-        expect(find.text('Password can\'t be empty'), findsOneWidget);
-
-        await tester.enterText(
-          find.byWidgetPredicate((Widget widget) => widget is CVPasswordField),
-          'abcd',
-        );
-        await tester.tap(find.byType(CVPrimaryButton));
-        await tester.pumpAndSettle();
-
-        verifyNever(_usersApiMock.signup('test', 'test@test.com', 'abcd'));
-        expect(
-          find.text('Password length should be at least 6'),
-          findsOneWidget,
-        );
+        verifyNever(_usersApiMock.login('test@test.com', ''));
+        expect(find.text(localizations.password_validation_error), findsOneWidget);
       },
     );
   });

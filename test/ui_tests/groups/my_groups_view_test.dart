@@ -18,6 +18,7 @@ import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_data/mock_groups.dart';
 import '../../setup/test_data/mock_user.dart';
@@ -27,6 +28,7 @@ import '../../setup/test_helpers.mocks.dart';
 void main() {
   group('MyGroupsViewTest -', () {
     late MockNavigatorObserver mockObserver;
+    late AppLocalizations localizations;
 
     setUpAll(() async {
       SharedPreferences.setMockInitialValues({});
@@ -43,28 +45,33 @@ void main() {
       var groups = <Group>[];
       groups.add(Group.fromJson(mockGroup));
 
+      // Simplified mocking - only what's needed
       when(model.FETCH_OWNED_GROUPS).thenAnswer((_) => 'fetch_owned_groups');
       when(model.FETCH_MEMBER_GROUPS).thenAnswer((_) => 'fetch_member_groups');
       when(model.previousMemberGroupsBatch).thenReturn(null);
       when(model.previousMentoredGroupsBatch).thenReturn(null);
       when(model.fetchMentoredGroups()).thenReturn(null);
       when(model.fetchMemberGroups()).thenReturn(null);
-
-      when(model.isSuccess(any)).thenAnswer((_) => true);
-
-      when(model.ownedGroups).thenAnswer((_) => groups);
-      when(model.memberGroups).thenAnswer((_) => groups);
+      when(model.isSuccess(any)).thenReturn(true); // Simplified
+      when(model.ownedGroups).thenReturn(groups);
+      when(model.memberGroups).thenReturn(groups);
 
       await tester.pumpWidget(
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: const MyGroupsView(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
         ),
       );
 
-      /// The tester.pumpWidget() call above just built our app widget
-      /// and triggered the pushObserver method on the mockObserver once.
+      await tester.pumpAndSettle();
+
+      // Get localizations once and store
+      final context = tester.element(find.byType(MyGroupsView));
+      localizations = AppLocalizations.of(context)!;
+
       verify(mockObserver.didPush(any, any));
     }
 
@@ -72,51 +79,47 @@ void main() {
       WidgetTester tester,
     ) async {
       await _pumpMyGroupsView(tester);
-      await tester.pumpAndSettle();
 
       // Make New Group Button
       expect(find.byType(FloatingActionButton), findsOneWidget);
 
       // Tap Joined Groups Tab
-      await tester.tap(find.widgetWithText(Tab, "Joined"));
+      await tester.tap(find.widgetWithText(Tab, localizations.joined));
       await tester.pumpAndSettle();
 
-      // Member Group Card (1)
+      // Member Group Card validations
       expect(find.byType(GroupMemberCard), findsOneWidget);
-
-      // Group Names text inside Member Card
       expect(find.text('Test Group'), findsOneWidget);
-
-      // Total Members text inside Member Card
       expect(find.text('Total Members: 1'), findsOneWidget);
+      expect(
+        find.widgetWithText(CardButton, localizations.view),
+        findsOneWidget,
+      );
 
-      // View Button for Member Group Card
-      expect(find.widgetWithText(CardButton, 'View'), findsOneWidget);
-
-      // Tap Mentored Groups Tab
-      await tester.tap(find.widgetWithText(Tab, "Owned"));
+      // Tap Owned Groups Tab
+      await tester.tap(find.widgetWithText(Tab, localizations.owned));
       await tester.pumpAndSettle();
 
-      // Mentored Group Card (1)
+      // Mentor Group Card validations
       expect(find.byType(GroupMentorCard), findsOneWidget);
-
-      // Group Names text inside Mentor Card
       expect(find.text('Test Group'), findsOneWidget);
-
-      // Total Members text inside Mentor Card
       expect(find.text('Total Members: 1'), findsOneWidget);
-
-      // Edit, Delete Buttons for Mentored Group Card
-      expect(find.widgetWithText(CardButton, 'Edit'), findsOneWidget);
-      expect(find.widgetWithText(CardButton, 'Delete'), findsOneWidget);
-
-      // View Button for Mentored Group Card
-      expect(find.widgetWithText(CardButton, 'View'), findsOneWidget);
+      expect(
+        find.widgetWithText(CardButton, localizations.edit),
+        findsOneWidget,
+      );
+      expect(
+        find.widgetWithText(CardButton, localizations.delete),
+        findsOneWidget,
+      );
+      expect(
+        find.widgetWithText(CardButton, localizations.view),
+        findsOneWidget,
+      );
     });
 
     testWidgets('New Group Page is Pushed onTap', (WidgetTester tester) async {
       await _pumpMyGroupsView(tester);
-      await tester.pumpAndSettle();
 
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
@@ -129,27 +132,23 @@ void main() {
       WidgetTester tester,
     ) async {
       await _pumpMyGroupsView(tester);
-      await tester.pumpAndSettle();
 
-      // Mock Local Storage
-      var _localStorage = getAndRegisterLocalStorageServiceMock();
+      // Setup only what's needed for this test
+      var localStorage = getAndRegisterLocalStorageServiceMock();
+      when(localStorage.currentUser).thenReturn(User.fromJson(mockUser));
 
+      var groupDetailsViewModel = MockGroupDetailsViewModel();
+      locator.registerSingleton<GroupDetailsViewModel>(groupDetailsViewModel);
       when(
-        _localStorage.currentUser,
-      ).thenAnswer((_) => User.fromJson(mockUser));
+        groupDetailsViewModel.FETCH_GROUP_DETAILS,
+      ).thenReturn('fetch_group_details');
+      when(groupDetailsViewModel.fetchGroupDetails(any)).thenReturn(null);
+      when(groupDetailsViewModel.isMentor).thenReturn(false);
+      when(groupDetailsViewModel.isSuccess(any)).thenReturn(false);
 
-      // Mock View Model
-      var _groupDetailsViewModel = MockGroupDetailsViewModel();
-      locator.registerSingleton<GroupDetailsViewModel>(_groupDetailsViewModel);
-
-      when(
-        _groupDetailsViewModel.FETCH_GROUP_DETAILS,
-      ).thenAnswer((_) => 'fetch_group_details');
-      when(_groupDetailsViewModel.fetchGroupDetails(any)).thenReturn(null);
-      when(_groupDetailsViewModel.isMentor).thenAnswer((_) => false);
-      when(_groupDetailsViewModel.isSuccess(any)).thenAnswer((_) => false);
-
-      await tester.tap(find.widgetWithText(CardButton, 'View').first);
+      await tester.tap(
+        find.widgetWithText(CardButton, localizations.view).first,
+      );
       await tester.pumpAndSettle();
 
       verify(mockObserver.didPush(any, any));
@@ -158,9 +157,8 @@ void main() {
 
     testWidgets('Edit Group View is Pushed onTap', (WidgetTester tester) async {
       await _pumpMyGroupsView(tester);
-      await tester.pumpAndSettle();
 
-      await tester.tap(find.widgetWithText(CardButton, 'Edit'));
+      await tester.tap(find.widgetWithText(CardButton, localizations.edit));
       await tester.pumpAndSettle();
 
       verify(mockObserver.didPush(any, any));
@@ -170,12 +168,11 @@ void main() {
     testWidgets('Delete Group Dialog is visible onTap', (
       WidgetTester tester,
     ) async {
-      var _dialogService = MockDialogService();
-      locator.registerSingleton<DialogService>(_dialogService);
+      var dialogService = MockDialogService();
+      locator.registerSingleton<DialogService>(dialogService);
 
-      // Mock Dialog Service
       when(
-        _dialogService.showConfirmationDialog(
+        dialogService.showConfirmationDialog(
           title: anyNamed('title'),
           description: anyNamed('description'),
           confirmationTitle: anyNamed('confirmationTitle'),
@@ -183,14 +180,12 @@ void main() {
       ).thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
 
       await _pumpMyGroupsView(tester);
+
+      await tester.tap(find.widgetWithText(CardButton, localizations.delete));
       await tester.pumpAndSettle();
 
-      await tester.tap(find.widgetWithText(CardButton, 'Delete'));
-      await tester.pumpAndSettle();
-
-      // Verify Dialog Service was called after Delete Button is pressed
       verify(
-        _dialogService.showConfirmationDialog(
+        dialogService.showConfirmationDialog(
           title: anyNamed('title'),
           description: anyNamed('description'),
           confirmationTitle: anyNamed('confirmationTitle'),

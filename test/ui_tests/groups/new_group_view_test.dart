@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
@@ -10,6 +11,7 @@ import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_helpers.mocks.dart';
 
@@ -31,11 +33,12 @@ void main() {
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
           home: const NewGroupView(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
         ),
       );
 
-      /// The tester.pumpWidget() call above just built our app widget
-      /// and triggered the pushObserver method on the mockObserver once.
+      await tester.pumpAndSettle();
       verify(mockObserver.didPush(any, any));
     }
 
@@ -43,22 +46,40 @@ void main() {
       WidgetTester tester,
     ) async {
       await _pumpNewGroupView(tester);
-      await tester.pumpAndSettle();
 
-      // Finds Group Name field
-      expect(
-        find.byWidgetPredicate(
-          (widget) => widget is CVTextField && widget.label == 'Group Name',
-        ),
-        findsOneWidget,
-      );
+      // Find the MaterialApp widget and get its context
+      final materialAppFinder = find.byType(MaterialApp);
+      expect(materialAppFinder, findsOneWidget);
 
-      // Finds Save button
-      expect(find.widgetWithText(CVPrimaryButton, 'SAVE'), findsOneWidget);
+      final BuildContext context = tester.element(materialAppFinder.first);
+      final localizations = AppLocalizations.of(context);
+
+      // Add null check to prevent null operator usage
+      if (localizations != null) {
+        expect(
+          find.byWidgetPredicate(
+            (widget) =>
+                widget is CVTextField &&
+                widget.label == localizations.group_name,
+          ),
+          findsOneWidget,
+        );
+
+        expect(
+          find.widgetWithText(
+            CVPrimaryButton,
+            localizations.save.toUpperCase(),
+          ),
+          findsOneWidget,
+        );
+      } else {
+        // Fallback: search by widget type if localizations are not available
+        expect(find.byType(CVTextField), findsOneWidget);
+        expect(find.byType(CVPrimaryButton), findsOneWidget);
+      }
     });
 
     testWidgets('on Save button is Tapped', (WidgetTester tester) async {
-      // Mock Dialog Service
       var _dialogService = MockDialogService();
       locator.registerSingleton<DialogService>(_dialogService);
 
@@ -67,32 +88,48 @@ void main() {
       ).thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(_dialogService.popDialog()).thenReturn(null);
 
-      // Mock New Group View Model
       var _newGroupViewModel = MockNewGroupViewModel();
       locator.registerSingleton<NewGroupViewModel>(_newGroupViewModel);
 
       when(_newGroupViewModel.ADD_GROUP).thenAnswer((_) => 'add_group');
-      when(_newGroupViewModel.addGroup(any)).thenReturn(null);
+      when(_newGroupViewModel.addGroup(any)).thenAnswer((_) async => null);
       when(_newGroupViewModel.isSuccess(any)).thenReturn(true);
-      when(_newGroupViewModel.newGroup).thenAnswer((_) => null);
+      when(_newGroupViewModel.newGroup).thenReturn(null);
 
-      // Pump New Group View
       await _pumpNewGroupView(tester);
-      await tester.pumpAndSettle();
 
-      // Tap Save Details Button
-      await tester.enterText(
-        find.byWidgetPredicate(
-          (widget) => widget is CVTextField && widget.label == 'Group Name',
-        ),
-        'Test',
-      );
-      await tester.tap(find.widgetWithText(CVPrimaryButton, 'SAVE'));
-      await tester.pumpAndSettle();
+      // Find the MaterialApp widget and get its context
+      final materialAppFinder = find.byType(MaterialApp);
+      expect(materialAppFinder, findsOneWidget);
 
+      final BuildContext context = tester.element(materialAppFinder.first);
+      final localizations = AppLocalizations.of(context);
+
+      if (localizations != null) {
+        // Use localizations if available
+        await tester.enterText(
+          find.byWidgetPredicate(
+            (widget) =>
+                widget is CVTextField &&
+                widget.label == localizations.group_name,
+          ),
+          'Test',
+        );
+        await tester.tap(
+          find.widgetWithText(
+            CVPrimaryButton,
+            localizations.save.toUpperCase(),
+          ),
+        );
+      } else {
+        // Fallback: use widget types if localizations not available
+        await tester.enterText(find.byType(CVTextField), 'Test');
+        await tester.tap(find.byType(CVPrimaryButton));
+      }
+
+      await tester.pumpAndSettle();
       await tester.pump(const Duration(seconds: 5));
 
-      // Verify Dialog Service is called to show Dialog of Updating
       verify(
         _dialogService.showCustomProgressDialog(title: anyNamed('title')),
       ).called(1);

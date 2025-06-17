@@ -6,6 +6,8 @@ import 'package:mobile_app/ui/components/cv_subheader.dart';
 import 'package:mobile_app/ui/views/home/components/feature_card.dart';
 import 'package:mobile_app/ui/views/home/home_view.dart';
 import 'package:mobile_app/utils/router.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,12 +29,17 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
           home: const HomeView(),
         ),
       );
 
-      /// The tester.pumpWidget() call above just built our app widget
-      /// and triggered the pushObserver method on the mockObserver once.
       verify(mockObserver.didPush(any, any));
     }
 
@@ -45,10 +52,10 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      expect(
-        find.text('Dive into the world of Logic Circuits for free!'),
-        findsOneWidget,
-      );
+      final context = tester.element(find.byType(HomeView));
+      final localizations = AppLocalizations.of(context)!;
+
+      expect(find.text(localizations.home_header_title), findsOneWidget);
       expect(find.byType(CVSubheader), findsNWidgets(2));
       expect(find.byType(CVOutlineButton), findsNWidgets(3));
       expect(find.byType(FeatureCard), findsNWidgets(5));

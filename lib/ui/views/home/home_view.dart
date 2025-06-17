@@ -10,6 +10,7 @@ import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -28,7 +29,7 @@ class _HomeViewState extends State<HomeView> {
         child: Column(
           children: <Widget>[
             Text(
-              'Dive into the world of Logic Circuits for free!',
+              AppLocalizations.of(context)!.home_header_title,
               style: Theme.of(
                 context,
               ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -36,7 +37,7 @@ class _HomeViewState extends State<HomeView> {
             ),
             const SizedBox(height: 8),
             Text(
-              'From Simple gates to complex sequential circuits, plot timing diagrams, automatic circuit generation, explore standard ICs, and much more',
+              AppLocalizations.of(context)!.home_header_subtitle,
               style: Theme.of(context).textTheme.titleMedium,
               textAlign: TextAlign.center,
             ),
@@ -68,7 +69,7 @@ class _HomeViewState extends State<HomeView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CVOutlineButton(
-                  title: 'For Teachers',
+                  title: AppLocalizations.of(context)!.teachers_button,
                   isPrimaryDark: true,
                   onPressed: () => Get.toNamed(TeachersView.id),
                   isBodyText: true,
@@ -78,7 +79,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 SizedBox(width: isWide ? 16 : 0, height: isWide ? 0 : 12),
                 CVOutlineButton(
-                  title: 'For Contributors',
+                  title: AppLocalizations.of(context)!.contributors_button,
                   isPrimaryDark: true,
                   onPressed: () => Get.toNamed(ContributorsView.id),
                   isBodyText: true,
@@ -104,54 +105,53 @@ class _HomeViewState extends State<HomeView> {
                   const SizedBox(height: 16),
                   _buildHomePageSketch(),
                   _buildTeachersAndContributorButtons(),
-                  const CVSubheader(
-                    title: 'Features',
-                    subtitle:
-                        'Design circuits quickly and easily with a modern and intuitive user interface with drag-and-drop, copy/paste, zoom and more.',
+                  CVSubheader(
+                    title: AppLocalizations.of(context)!.features_title,
+                    subtitle: AppLocalizations.of(context)!.features_subtitle,
                   ),
-                  const FeatureCard(
+                  FeatureCard(
                     assetPath: 'assets/images/homepage/export-hd.png',
-                    cardHeading: 'Explore High Resolution Images',
+                    cardHeading: AppLocalizations.of(context)!.feature1_title,
                     cardDescription:
-                        'CircuitVerse can export high resolution images in multiple formats including SVG.',
+                        AppLocalizations.of(context)!.feature1_description,
                   ),
-                  const FeatureCard(
+                  FeatureCard(
                     assetPath:
                         'assets/images/homepage/combinational-analysis.png',
-                    cardHeading: 'Combinational Analysis',
+                    cardHeading: AppLocalizations.of(context)!.feature2_title,
                     cardDescription:
-                        'Automatically generate circuit based on truth table data. This is great to create complex logic circuits and can be easily be made into a subcircuit.',
+                        AppLocalizations.of(context)!.feature2_description,
                   ),
-                  const FeatureCard(
+                  FeatureCard(
                     assetPath: 'assets/images/homepage/embed.png',
-                    cardHeading: 'Embed in Blogs',
+                    cardHeading: AppLocalizations.of(context)!.feature3_title,
                     cardDescription:
-                        'Since CircuitVerse is built in HTML5, an iFrame can be generated for each project allowing the user to embed it almost anywhere.',
+                        AppLocalizations.of(context)!.feature3_description,
                   ),
-                  const FeatureCard(
+                  FeatureCard(
                     assetPath: 'assets/images/homepage/sub-circuit.png',
-                    cardHeading: 'Use Sub circuits',
+                    cardHeading: AppLocalizations.of(context)!.feature4_title,
                     cardDescription:
-                        'Create subcircuits once and use them repeatedly. This allows easier and more structured design.',
+                        AppLocalizations.of(context)!.feature4_description,
                   ),
-                  const FeatureCard(
+                  FeatureCard(
                     assetPath: 'assets/images/homepage/multi-bit-bus.png',
-                    cardHeading: 'Multi Bit Buses and components',
+                    cardHeading: AppLocalizations.of(context)!.feature5_title,
                     cardDescription:
-                        'CircuitVerse supports multi bit wires, this means circuit design is easier, faster and uncluttered.',
+                        AppLocalizations.of(context)!.feature5_description,
                   ),
                   const SizedBox(height: 16),
-                  const CVSubheader(
-                    title: 'Editor Picks',
+                  CVSubheader(
+                    title: AppLocalizations.of(context)!.editor_picks_title,
                     subtitle:
-                        'These circuits have been hand-picked by our authors for their awesomeness',
+                        AppLocalizations.of(context)!.editor_picks_subtitle,
                   ),
                   const FeaturedProjectsView(embed: true),
                   const SizedBox(height: 16),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: CVOutlineButton(
-                      title: 'Explore More',
+                      title: AppLocalizations.of(context)!.explore_more_button,
                       isPrimaryDark: true,
                       onPressed:
                           () =>
