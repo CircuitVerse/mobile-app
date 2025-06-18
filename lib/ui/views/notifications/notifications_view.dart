@@ -7,6 +7,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/notifications/notifications_viewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class NotificationsView extends StatelessWidget {
   const NotificationsView({super.key});
@@ -21,12 +22,16 @@ class NotificationsView extends StatelessWidget {
             context,
             title:
                 hasNoNotifications
-                    ? "No notifications yet"
-                    : "No unread notifications",
+                    ? AppLocalizations.of(
+                      context,
+                    )!.notifications_no_notifications
+                    : AppLocalizations.of(context)!.notifications_no_unread,
             subtitle:
                 hasNoNotifications
-                    ? "Your notifications will appear here"
-                    : "You have no unread notifications",
+                    ? AppLocalizations.of(context)!.notifications_will_appear
+                    : AppLocalizations.of(
+                      context,
+                    )!.notifications_no_unread_desc,
           ),
         ],
       ),
@@ -92,8 +97,16 @@ class NotificationsView extends StatelessWidget {
         final hasNoNotifications = model.notifications.isEmpty;
         final hasNoUnread =
             !hasNoNotifications &&
-            model.value == 'Unread' &&
+            model.value == AppLocalizations.of(context)!.notifications_unread &&
             model.notifications.every((n) => !n.attributes.unread);
+
+        final String allValue = 'all';
+        final String unreadValue = 'unread';
+
+        final String allDisplayText =
+            AppLocalizations.of(context)!.notifications_all;
+        final String unreadDisplayText =
+            AppLocalizations.of(context)!.notifications_unread;
 
         return Scaffold(
           body: SingleChildScrollView(
@@ -117,17 +130,28 @@ class NotificationsView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          value: model.value,
-                          items: const [
-                            DropdownMenuItem(value: 'All', child: Text('All')),
+                          // Fix: Use model.value but map it properly
+                          value:
+                              model.value == allDisplayText
+                                  ? allValue
+                                  : unreadValue,
+                          items: [
                             DropdownMenuItem(
-                              value: 'Unread',
-                              child: Text('Unread'),
+                              value: allValue,
+                              child: Text(allDisplayText),
+                            ),
+                            DropdownMenuItem(
+                              value: unreadValue,
+                              child: Text(unreadDisplayText),
                             ),
                           ],
                           onChanged: (value) {
                             if (value == null) return;
-                            model.value = value;
+                            // Fix: Map back to localized string for model
+                            model.value =
+                                value == allValue
+                                    ? allDisplayText
+                                    : unreadDisplayText;
                           },
                         ),
                       ),
@@ -138,11 +162,10 @@ class NotificationsView extends StatelessWidget {
                       context,
                       hasNoNotifications: hasNoNotifications,
                     ),
-
                   ...model.notifications
                       .where(
                         (notification) =>
-                            model.value != 'Unread' ||
+                            model.value != unreadDisplayText ||
                             notification.attributes.unread,
                       )
                       .map((notification) {
@@ -177,7 +200,8 @@ class NotificationsView extends StatelessWidget {
                             ),
                             title: Text(
                               '${notification.attributes.params.user.data.attributes.name} '
-                              '${type == NotificationType.Fork ? 'forked' : 'starred'} your project '
+                              '${type == NotificationType.Fork ? AppLocalizations.of(context)!.notifications_forked : AppLocalizations.of(context)!.notifications_starred} '
+                              '${AppLocalizations.of(context)!.notifications_your_project} '
                               '${notification.attributes.params.project.name}',
                               style: TextStyle(
                                 fontWeight:

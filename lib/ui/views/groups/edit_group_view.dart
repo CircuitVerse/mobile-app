@@ -11,6 +11,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/edit_group_viewmodel.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class EditGroupView extends StatefulWidget {
   const EditGroupView({super.key, required this.group});
@@ -32,7 +33,9 @@ class _EditGroupViewState extends State<EditGroupView> {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      _dialogService.showCustomProgressDialog(title: 'Updating..');
+      _dialogService.showCustomProgressDialog(
+        title: AppLocalizations.of(context)!.edit_group_updating,
+      );
 
       await _model.updateGroup(widget.group.id, _name);
 
@@ -42,12 +45,12 @@ class _EditGroupViewState extends State<EditGroupView> {
         await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedGroup);
         SnackBarUtils.showDark(
-          'Group Updated',
-          'Group has been successfully updated.',
+          AppLocalizations.of(context)!.edit_group_updated,
+          AppLocalizations.of(context)!.edit_group_update_success,
         );
       } else if (_model.isError(_model.UPDATE_GROUP)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context)!.edit_group_error,
           _model.errorMessageFor(_model.UPDATE_GROUP),
         );
       }
@@ -68,10 +71,13 @@ class _EditGroupViewState extends State<EditGroupView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    const CVSubheader(
-                      title: 'EDIT GROUP',
+                    CVSubheader(
+                      title:
+                          AppLocalizations.of(
+                            context,
+                          )!.edit_group_title.toUpperCase(),
                       subtitle:
-                          "You can update Group details here. Don't leave the Group Name blank.",
+                          AppLocalizations.of(context)!.edit_group_description,
                     ),
                     const SizedBox(height: 16),
                     SvgPicture.asset(
@@ -81,19 +87,21 @@ class _EditGroupViewState extends State<EditGroupView> {
                     const SizedBox(height: 16),
                     CVTextField(
                       padding: const EdgeInsets.all(0),
-                      label: 'Group Name',
+                      label: AppLocalizations.of(context)!.edit_group_name,
                       initialValue: widget.group.attributes.name,
                       validator:
                           (value) =>
                               value?.isEmpty ?? true
-                                  ? 'Please enter a Group Name'
+                                  ? AppLocalizations.of(
+                                    context,
+                                  )!.edit_group_name_validation_error
                                   : null,
                       onSaved: (value) => _name = value!.trim(),
                       action: TextInputAction.done,
                     ),
                     const SizedBox(height: 16),
                     CVPrimaryButton(
-                      title: 'Save',
+                      title: AppLocalizations.of(context)!.edit_group_save,
                       onPressed: _validateAndSubmit,
                     ),
                   ],

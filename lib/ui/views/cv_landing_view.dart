@@ -44,13 +44,13 @@ class _CVLandingViewState extends State<CVLandingView> {
       case 1:
         return AppLocalizations.of(context)!.featured_circuits;
       case 5:
-        return AppLocalizations.of(context)!.profile;
+        return AppLocalizations.of(context)!.cv_profile;
       case 6:
-        return AppLocalizations.of(context)!.groups;
+        return AppLocalizations.of(context)!.cv_groups;
       case 8:
-        return AppLocalizations.of(context)!.notifications;
+        return AppLocalizations.of(context)!.cv_notifications;
       default:
-        return AppLocalizations.of(context)!.title;
+        return AppLocalizations.of(context)!.cv_title;
     }
   }
 

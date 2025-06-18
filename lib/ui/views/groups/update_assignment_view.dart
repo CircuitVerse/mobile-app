@@ -17,6 +17,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class UpdateAssignmentView extends StatefulWidget {
   const UpdateAssignmentView({super.key, required this.assignment});
@@ -54,9 +55,14 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   Widget _buildNameInput() {
     return CVTextField(
       initialValue: widget.assignment.attributes.name,
-      label: 'Name',
+      label: AppLocalizations.of(context)!.update_assignment_name,
       validator:
-          (name) => name?.isEmpty ?? true ? 'Please enter a valid name' : null,
+          (name) =>
+              name?.isEmpty ?? true
+                  ? AppLocalizations.of(
+                    context,
+                  )!.update_assignment_name_validation_error
+                  : null,
       onSaved: (name) => _name = name!.trim(),
     );
   }
@@ -64,7 +70,19 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   Widget _buildDescriptionInput() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: CVHtmlEditor(controller: _controller),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            AppLocalizations.of(context)!.update_assignment_description,
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          CVHtmlEditor(controller: _controller),
+        ],
+      ),
     );
   }
 
@@ -75,7 +93,9 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         key: const Key('cv_assignment_deadline_field'),
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
         initialValue: widget.assignment.attributes.deadline,
-        decoration: CVTheme.textFieldDecoration.copyWith(labelText: 'Deadline'),
+        decoration: CVTheme.textFieldDecoration.copyWith(
+          labelText: AppLocalizations.of(context)!.update_assignment_deadline,
+        ),
         onShowPicker: (context, currentValue) async {
           final date = await showDatePicker(
             context: context,
@@ -106,12 +126,16 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       child: CheckboxListTile(
         value: _isRestrictionEnabled,
         title: Text(
-          'Elements restriction',
+          AppLocalizations.of(context)!.update_assignment_elements_restriction,
           style: Theme.of(
             context,
           ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
-        subtitle: const Text('Enable elements restriction'),
+        subtitle: Text(
+          AppLocalizations.of(
+            context,
+          )!.update_assignment_enable_elements_restriction,
+        ),
         onChanged: (value) {
           if (value == null) return;
           setState(() {
@@ -179,7 +203,8 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: CVPrimaryButton(
-        title: 'Update Assignment',
+        key: const Key('update_assignment_button'),
+        title: AppLocalizations.of(context)!.update_assignment_title,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -189,10 +214,10 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      // Shows progress dialog..
-      _dialogService.showCustomProgressDialog(title: 'Updating..');
+      _dialogService.showCustomProgressDialog(
+        title: AppLocalizations.of(context)!.update_assignment_updating,
+      );
 
-      // [ISSUE] [html_editor] Throws error in Tests
       String _descriptionEditorText;
       try {
         _descriptionEditorText = _controller.document.toPlainText();
@@ -217,12 +242,12 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
         await Future.delayed(const Duration(seconds: 1));
         Get.back(result: _model.updatedAssignment);
         SnackBarUtils.showDark(
-          'Assignment Updated',
-          'Assignment was updated successfully',
+          AppLocalizations.of(context)!.update_assignment_updated,
+          AppLocalizations.of(context)!.update_assignment_update_success,
         );
       } else if (_model.isError(_model.UPDATE_ASSIGNMENT)) {
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context)!.update_assignment_error,
           _model.errorMessageFor(_model.UPDATE_ASSIGNMENT),
         );
       }
@@ -235,7 +260,11 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
       onModelReady: (model) => _model = model,
       builder:
           (context, model, child) => Scaffold(
-            appBar: AppBar(title: const Text('Update Assignment')),
+            appBar: AppBar(
+              title: Text(
+                AppLocalizations.of(context)!.update_assignment_title,
+              ),
+            ),
             body: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Form(

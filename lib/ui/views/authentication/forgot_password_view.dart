@@ -11,6 +11,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart'; // Added import
 
 class ForgotPasswordView extends StatefulWidget {
   const ForgotPasswordView({super.key});
@@ -39,13 +40,15 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
   Widget _buildEmailInput() {
     return CVTextField(
-      label: 'Email',
+      label: AppLocalizations.of(context)!.forgot_password_email,
       type: TextInputType.emailAddress,
       validator:
           (value) =>
               Validators.isEmailValid(value)
                   ? null
-                  : 'Please enter a valid email',
+                  : AppLocalizations.of(
+                    context,
+                  )!.forgot_password_email_validation_error,
       onSaved: (value) => _email = value!.trim(),
       action: TextInputAction.done,
     );
@@ -58,8 +61,10 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       child: CVPrimaryButton(
         title:
             _model.isBusy(_model.SEND_RESET_INSTRUCTIONS)
-                ? 'Sending..'
-                : 'SEND INSTRUCTIONS',
+                ? AppLocalizations.of(context)!.forgot_password_sending
+                : AppLocalizations.of(
+                  context,
+                )!.forgot_password_send_instructions,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -70,12 +75,12 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       onTap: () => Get.offNamed(SignupView.id),
       child: RichText(
         text: TextSpan(
-          text: 'New User? ',
+          text: '${AppLocalizations.of(context)!.forgot_password_new_user} ',
           style: Theme.of(context).textTheme.bodyLarge,
-          children: const <TextSpan>[
+          children: <TextSpan>[
             TextSpan(
-              text: 'Sign Up',
-              style: TextStyle(color: CVTheme.primaryColorDark),
+              text: AppLocalizations.of(context)!.forgot_password_sign_up,
+              style: const TextStyle(color: CVTheme.primaryColorDark),
             ),
           ],
         ),
@@ -90,26 +95,27 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
         !_model.isBusy(_model.SEND_RESET_INSTRUCTIONS)) {
       FocusScope.of(context).requestFocus(FocusNode());
 
-      _dialogService.showCustomProgressDialog(title: 'Sending Instructions');
+      _dialogService.showCustomProgressDialog(
+        title:
+            AppLocalizations.of(context)!.forgot_password_sending_instructions,
+      );
 
       await _model.onForgotPassword(_email);
 
       _dialogService.popDialog();
 
       if (_model.isSuccess(_model.SEND_RESET_INSTRUCTIONS)) {
-        // show instructions sent snackbar
         SnackBarUtils.showDark(
-          'Instructions Sent to $_email',
-          'Please check your mail for password reset link.',
+          AppLocalizations.of(context)!.forgot_password_instructions_sent_title,
+          AppLocalizations.of(
+            context,
+          )!.forgot_password_instructions_sent_message,
         );
-
-        // route back to previous screen
         await Future.delayed(const Duration(seconds: 1));
         Get.back();
       } else if (_model.isError(_model.SEND_RESET_INSTRUCTIONS)) {
-        // show failure snackbar
         SnackBarUtils.showDark(
-          'Error',
+          AppLocalizations.of(context)!.forgot_password_error,
           _model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS),
         );
         _formKey.currentState?.reset();

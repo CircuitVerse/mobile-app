@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/controllers/language_controller.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
@@ -19,6 +20,8 @@ class CVDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _model = context.read<CVLandingViewModel>();
+    final langController = Get.find<LanguageController>();
+
     return Drawer(
       child: Stack(
         children: [
@@ -37,7 +40,7 @@ class CVDrawer extends StatelessWidget {
               InkWell(
                 onTap: () => _model.setSelectedIndexTo(0),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.home,
+                  title: AppLocalizations.of(context)!.cv_home,
                   iconData: Icons.home,
                 ),
               ),
@@ -45,16 +48,15 @@ class CVDrawer extends StatelessWidget {
                 data: CVTheme.themeData(context),
                 child: ExpansionTile(
                   maintainState: true,
-                  title: ListTile(
-                    contentPadding: const EdgeInsets.all(0),
-                    leading: Icon(
-                      Icons.explore,
-                      color: CVTheme.drawerIcon(context),
-                    ),
-                    title: Text(
-                      AppLocalizations.of(context)!.explore,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
+                  tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  childrenPadding: EdgeInsets.zero,
+                  leading: Icon(
+                    Icons.explore,
+                    color: CVTheme.drawerIcon(context),
+                  ),
+                  title: Text(
+                    AppLocalizations.of(context)!.cv_explore,
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   iconColor: CVTheme.textColor(context),
                   children: <Widget>[
@@ -68,10 +70,62 @@ class CVDrawer extends StatelessWidget {
                   ],
                 ),
               ),
+
+              // Language Selection Tile
+              Obx(() {
+                final currentLocale = langController.currentLocale.value;
+                final localizations = AppLocalizations.of(context)!;
+
+                final languages = {
+                  const Locale('en'): 'English',
+                  const Locale('hi'): 'हिंदी',
+                };
+
+                return Theme(
+                  data: CVTheme.themeData(context),
+                  child: ExpansionTile(
+                    key: ValueKey(currentLocale),
+                    initiallyExpanded: langController.isLanguageExpanded.value,
+                    onExpansionChanged: (expanded) {
+                      langController.isLanguageExpanded.value = expanded;
+                    },
+                    maintainState: true,
+                    tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    childrenPadding: EdgeInsets.zero,
+                    leading: Icon(
+                      Icons.translate,
+                      color: CVTheme.drawerIcon(context),
+                    ),
+                    title: Text(
+                      localizations.cv_language,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    iconColor: CVTheme.textColor(context),
+                    children:
+                        languages.entries.map((entry) {
+                          final isSelected = currentLocale == entry.key;
+                          return InkWell(
+                            onTap: () {
+                              langController.changeLanguage(entry.key);
+                              langController.isLanguageExpanded.value = false;
+                            },
+                            child: CVDrawerTile(
+                              title: entry.value,
+                              iconData:
+                                  isSelected
+                                      ? Icons.radio_button_checked
+                                      : Icons.radio_button_off,
+                            ),
+                          );
+                        }).toList(),
+                  ),
+                );
+              }),
+
               InkWell(
                 onTap: () => Get.toNamed(IbLandingView.id),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.interactive_book,
+                  title: AppLocalizations.of(context)!.cv_interactive_book,
                   iconData: Icons.chrome_reader_mode,
                 ),
               ),
@@ -83,9 +137,7 @@ class CVDrawer extends StatelessWidget {
                     if (url.contains('sign_out')) {
                       _model.onLogoutPressed();
                     } else if (url.contains('edit')) {
-                      // close the drawer
                       Get.back();
-                      // show the snackbar
                       SnackBarUtils.showDark(
                         'New project created',
                         'Please check your profile to edit..',
@@ -98,28 +150,28 @@ class CVDrawer extends StatelessWidget {
                   }
                 },
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.simulator,
+                  title: AppLocalizations.of(context)!.cv_simulator,
                   iconData: FontAwesome5.atom,
                 ),
               ),
               InkWell(
                 onTap: () => _model.setSelectedIndexTo(2),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.about,
+                  title: AppLocalizations.of(context)!.cv_about,
                   iconData: FontAwesome5.address_card,
                 ),
               ),
               InkWell(
                 onTap: () => _model.setSelectedIndexTo(3),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.contribute,
+                  title: AppLocalizations.of(context)!.cv_contribute,
                   iconData: Icons.add,
                 ),
               ),
               InkWell(
                 onTap: () => _model.setSelectedIndexTo(4),
                 child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.teachers,
+                  title: AppLocalizations.of(context)!.cv_teachers,
                   iconData: Icons.account_balance,
                 ),
               ),
@@ -127,7 +179,7 @@ class CVDrawer extends StatelessWidget {
                 InkWell(
                   onTap: () => _model.setSelectedIndexTo(8),
                   child: CVDrawerTile(
-                    title: AppLocalizations.of(context)!.notifications,
+                    title: AppLocalizations.of(context)!.cv_notifications,
                     iconData: FontAwesome.bell,
                     pending: _model.hasPendingNotif,
                   ),
@@ -136,6 +188,8 @@ class CVDrawer extends StatelessWidget {
                   data: CVTheme.themeData(context),
                   child: ExpansionTile(
                     maintainState: true,
+                    tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    childrenPadding: EdgeInsets.zero,
                     iconColor: CVTheme.textColor(context),
                     title: Text(
                       _model.currentUser?.data.attributes.name ?? '',
@@ -147,21 +201,21 @@ class CVDrawer extends StatelessWidget {
                       InkWell(
                         onTap: () => _model.setSelectedIndexTo(5),
                         child: CVDrawerTile(
-                          title: AppLocalizations.of(context)!.profile,
+                          title: AppLocalizations.of(context)!.cv_profile,
                           iconData: FontAwesome5.user,
                         ),
                       ),
                       InkWell(
                         onTap: () => _model.setSelectedIndexTo(6),
                         child: CVDrawerTile(
-                          title: AppLocalizations.of(context)!.my_groups,
+                          title: AppLocalizations.of(context)!.cv_my_groups,
                           iconData: FontAwesome5.object_group,
                         ),
                       ),
                       InkWell(
                         onTap: _model.onLogoutPressed,
                         child: CVDrawerTile(
-                          title: AppLocalizations.of(context)!.logout,
+                          title: AppLocalizations.of(context)!.cv_logout,
                           iconData: FontAwesome.logout,
                         ),
                       ),
@@ -172,7 +226,7 @@ class CVDrawer extends StatelessWidget {
                 InkWell(
                   onTap: () => Get.offAndToNamed(LoginView.id),
                   child: CVDrawerTile(
-                    title: AppLocalizations.of(context)!.login,
+                    title: AppLocalizations.of(context)!.cv_login,
                     iconData: FontAwesome.login,
                   ),
                 ),

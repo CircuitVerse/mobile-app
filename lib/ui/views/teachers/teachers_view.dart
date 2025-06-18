@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_subheader.dart';
 import 'package:mobile_app/ui/views/teachers/components/teachers_card.dart';
@@ -16,37 +17,39 @@ class TeachersView extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
-          children: const <Widget>[
+          children: <Widget>[
             CVHeader(
-              title: 'TEACHERS',
-              description:
-                  'CircuitVerse has been designed to be very easy to use in class. The platform has features to assist teachers in class and assignments.',
+              title: AppLocalizations.of(context)!.teachers_title,
+              description: AppLocalizations.of(context)!.teachers_description,
             ),
-            CVSubheader(title: 'Benefits'),
+            CVSubheader(title: AppLocalizations.of(context)!.benefits_title),
             TeachersCard(
               assetPath: 'assets/images/teachers/groups.png',
-              cardHeading: 'Create Groups and add your students',
+              cardHeading:
+                  AppLocalizations.of(context)!.teachers_feature1_title,
               cardDescription:
-                  'You can create groups and add your students to them! If students are already registered with CircuitVerse they will be added automatically. If they are not registered with CircuitVerse yet, an invitation will be sent to register. Once they register, they will be added automatically.',
+                  AppLocalizations.of(context)!.teachers_feature1_description,
             ),
             TeachersCard(
               assetPath: 'assets/images/teachers/assignment.png',
-              cardHeading: 'Post Assignments',
+              cardHeading:
+                  AppLocalizations.of(context)!.teachers_feature2_title,
               cardDescription:
-                  'To create an assignment, simply click an add new assignment button. Give the details of the assignment and the deadline. The assignment will automatically close at deadline. Students cannot continue their assignment unless the teacher reopens the assignment again.',
+                  AppLocalizations.of(context)!.teachers_feature2_description,
             ),
             TeachersCard(
               assetPath: 'assets/images/teachers/grading.png',
-              cardHeading: 'Grading assignments',
+              cardHeading:
+                  AppLocalizations.of(context)!.teachers_feature3_title,
               cardDescription:
-                  'Grade assignments very easily with the in build preview. Simply select the student, to his/her assignment work.',
+                  AppLocalizations.of(context)!.teachers_feature3_description,
             ),
             TeachersCard(
               assetPath: 'assets/images/teachers/embed.png',
               cardHeading:
-                  'Use Interactive Circuits in your Blogs, Study Materials or PowerPoint presentations',
+                  AppLocalizations.of(context)!.teachers_feature4_title,
               cardDescription:
-                  'Make sure the project is public. Click on embed, to get the embed HTML5 code, then simply embed the circuit. You may need to use a PowerPoint plugin like Live Slides to embed the live Circuit.',
+                  AppLocalizations.of(context)!.teachers_feature4_description,
             ),
           ],
         ),

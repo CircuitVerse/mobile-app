@@ -14,6 +14,8 @@ import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import '../../setup/test_data/mock_ib_raw_page_data.dart';
 import '../../setup/test_helpers.mocks.dart';
@@ -82,6 +84,13 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('en', '')],
           home: ShowCaseWidget(
             builder:
                 (context) => Builder(
