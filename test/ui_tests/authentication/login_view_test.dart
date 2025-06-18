@@ -11,6 +11,8 @@ import 'package:mobile_app/ui/views/authentication/signup_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_helpers.dart';
 import '../../setup/test_helpers.mocks.dart';
@@ -31,12 +33,18 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('en', '')],
+          locale: const Locale('en', ''),
           home: const LoginView(),
         ),
       );
 
-      /// The tester.pumpWidget() call above just built our app widget
-      /// and triggered the pushObserver method on the mockObserver once.
       verify(mockObserver.didPush(any, any));
     }
 
@@ -106,13 +114,19 @@ void main() {
         await tester.tap(find.byType(CVPrimaryButton));
         await tester.pumpAndSettle();
 
+        // Add delay for async validation
+        await tester.pump(const Duration(milliseconds: 200));
+
         verifyNever(_usersApiMock.login('', ''));
         expect(find.text('Please enter a valid email'), findsOneWidget);
         expect(find.text('Password can\'t be empty'), findsOneWidget);
 
         await tester.enterText(find.byType(CVTextField), 'test@test.com');
+        await tester.pumpAndSettle();
+
         await tester.tap(find.byType(CVPrimaryButton));
         await tester.pumpAndSettle();
+        await tester.pump(const Duration(milliseconds: 200));
 
         verifyNever(_usersApiMock.login('test@test.com', ''));
         expect(find.text('Password can\'t be empty'), findsOneWidget);

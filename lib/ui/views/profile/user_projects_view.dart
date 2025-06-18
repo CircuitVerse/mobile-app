@@ -8,10 +8,12 @@ import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class UserProjectsView extends StatefulWidget {
   const UserProjectsView({super.key, required this.userId});
 
+  static const String id = 'user_projects_view';
   final String userId;
 
   @override
@@ -30,9 +32,8 @@ class _UserProjectsViewState extends State<UserProjectsView>
         children: <Widget>[
           const SizedBox(height: 100),
           _buildSubHeader(
-            title: "No Projects Yet!",
-            subtitle:
-                "Start fresh with a new design or fork existing templates",
+            title: AppLocalizations.of(context)!.no_projects_title,
+            subtitle: AppLocalizations.of(context)!.no_projects_subtitle,
           ),
         ],
       ),

@@ -15,6 +15,8 @@ import 'package:mobile_app/viewmodels/profile/user_projects_viewmodel.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 import '../../setup/test_data/mock_projects.dart';
 
@@ -31,11 +33,9 @@ void main() {
     setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpUserProjectsView(WidgetTester tester) async {
-      // Mock User Profile ViewModel
       final _profileViewModel = MockProfileViewModel();
       locator.registerSingleton<ProfileViewModel>(_profileViewModel);
 
-      // Mock User Projects ViewModel
       var _userProjectsViewModel = MockUserProjectsViewModel();
       locator.registerSingleton<UserProjectsViewModel>(_userProjectsViewModel);
 
@@ -58,6 +58,14 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('en', '')],
+          locale: const Locale('en', ''),
           home: BaseView<ProfileViewModel>(
             builder: (context, model, child) {
               return const Scaffold(body: UserProjectsView(userId: 'user_id'));
@@ -66,8 +74,6 @@ void main() {
         ),
       );
 
-      /// The tester.pumpWidget() call above just built our app widget
-      /// and triggered the pushObserver method on the mockObserver once.
       verify(mockObserver.didPush(any, any));
     }
 
@@ -78,7 +84,6 @@ void main() {
         await _pumpUserProjectsView(tester);
         await tester.pumpAndSettle();
 
-        // Finds Project Card
         expect(find.byType(ProjectCard), findsOneWidget);
       });
     });
@@ -112,7 +117,6 @@ void main() {
 
         expect(find.byType(ProjectCard), findsOneWidget);
 
-        // ISSUE: tester.tap() is not working
         Widget widget = find.byType(ProjectCard).evaluate().first.widget;
         (widget as ProjectCard).onPressed();
         await tester.pumpAndSettle();

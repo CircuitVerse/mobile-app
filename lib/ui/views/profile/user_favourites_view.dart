@@ -8,10 +8,12 @@ import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class UserFavouritesView extends StatefulWidget {
   const UserFavouritesView({super.key, this.userId});
 
+  static const String id = 'user_favourites_view';
   final String? userId;
 
   @override
@@ -32,8 +34,8 @@ class _UserFavouritesViewState extends State<UserFavouritesView>
         children: <Widget>[
           const SizedBox(height: 100),
           _buildSubHeader(
-            title: "No favorites yet!",
-            subtitle: "Explore projects and add them to your favorites list",
+            title: AppLocalizations.of(context)!.no_favorites_title,
+            subtitle: AppLocalizations.of(context)!.no_favorites_subtitle,
           ),
         ],
       ),

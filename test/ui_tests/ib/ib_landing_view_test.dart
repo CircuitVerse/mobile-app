@@ -9,6 +9,8 @@ import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
@@ -28,7 +30,6 @@ void main() {
     setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpHomeView(WidgetTester tester) async {
-      // Mock ViewModel
       var model = MockIbLandingViewModel();
       locator.registerSingleton<IbLandingViewModel>(model);
 
@@ -55,9 +56,8 @@ void main() {
         ),
       );
       when(model.keyMap).thenAnswer((_) => {});
-      when(model.close()).thenAnswer((_) => VoidCallback);
+      when(model.close()).thenAnswer((_) => {});
 
-      // Mock Page View Model
       when(
         pageViewModel.IB_FETCH_PAGE_DATA,
       ).thenAnswer((_) => 'mock_fetch_page_data');
@@ -71,7 +71,6 @@ void main() {
         IbPageData(id: 'test', pageUrl: 'test', title: 'test', content: []),
       );
 
-      // Mock Page Drawer List
       when(model.fetchChapters()).thenReturn(null);
       when(model.isSuccess(any)).thenAnswer((_) => true);
       when(model.chapters).thenAnswer(
@@ -95,6 +94,13 @@ void main() {
         GetMaterialApp(
           onGenerateRoute: CVRouter.generateRoute,
           navigatorObservers: [mockObserver],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: AppLocalizations.supportedLocales,
           home: ShowCaseWidget(
             builder:
                 (context) => Builder(
@@ -106,8 +112,6 @@ void main() {
         ),
       );
 
-      /// The tester.pumpWidget() call above just built our app widget
-      /// and triggered the pushObserver method on the mockObserver once.
       verify(mockObserver.didPush(any, any));
     }
 
@@ -116,16 +120,15 @@ void main() {
         await _pumpHomeView(tester);
         await tester.pumpAndSettle();
 
-        // Finds AppBar
+        final context = tester.element(find.byType(IbLandingView));
+        final localizations = AppLocalizations.of(context)!;
+
         expect(find.byType(AppBar), findsOneWidget);
 
-        // Finds AppBar Text
-        expect(find.text('CircuitVerse'), findsOneWidget);
+        expect(find.text(localizations.ib_circuitverse), findsOneWidget);
 
-        // Finds Search Icon and Table of Contents Icon
         expect(find.byType(IconButton), findsNWidgets(2));
 
-        // Finds Floating Action Buttons
         expect(find.byType(FloatingActionButton), findsNWidgets(1));
       });
     });
@@ -135,17 +138,17 @@ void main() {
         await _pumpHomeView(tester);
         await tester.pumpAndSettle();
 
-        // Finds Scaffold
+        final context = tester.element(find.byType(IbLandingView));
+        final localizations = AppLocalizations.of(context)!;
+
         final state = tester.firstState(find.byType(Scaffold)) as ScaffoldState;
         state.openDrawer();
         await tester.pump();
 
-        // Finds Drawer Widgets
-        expect(find.text('Return to Home'), findsOneWidget);
-        expect(find.text('Interactive Book Home'), findsOneWidget);
+        expect(find.text(localizations.ib_return_home), findsOneWidget);
+        expect(find.text(localizations.ib_home), findsOneWidget);
         expect(find.byType(ExpansionTile), findsWidgets);
 
-        // Finds Chapter
         expect(find.text('Test Chapter'), findsOneWidget);
       });
     });

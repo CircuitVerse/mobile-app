@@ -118,7 +118,8 @@ class _AboutViewState extends State<AboutView> {
                   CircuitVerseSocialCard(
                     imagePath: 'assets/images/contribute/slack.png',
                     title: AppLocalizations.of(context)!.join_slack,
-                    description: AppLocalizations.of(context)!.slack_channel,
+                    description:
+                        AppLocalizations.of(context)!.about_slack_channel,
                     url: 'https://circuitverse.org/slack',
                   ),
                   const Divider(),

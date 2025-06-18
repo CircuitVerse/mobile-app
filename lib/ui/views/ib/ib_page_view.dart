@@ -34,6 +34,7 @@ import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 import '../../../viewmodels/ib/ib_floating_button_state.dart';
 
@@ -71,7 +72,6 @@ class _IbPageViewState extends State<IbPageView> {
   late IbFloatingButtonState _ibFloatingButtonState;
   late ShowCaseWidgetState _showCaseWidgetState;
 
-  /// To track index through slug for scroll_to_index
   final Map<String, int> _slugMap = {};
 
   @override
@@ -119,33 +119,21 @@ class _IbPageViewState extends State<IbPageView> {
 
   void _onTapLink(String text, String? href, String title) async {
     if (href == null) return;
-    // If Absolute Interactive Book link
     if (href.startsWith(EnvironmentConfig.IB_BASE_URL)) {
-      // If URI is same as the current page
       if (_model.pageData!.pageUrl.startsWith(href)) {
-        // It's local link
         return _scrollToWidget(href.substring(1));
       } else {
-        // Try to navigate to another page using url
-        // (TODO) We need [IbLandingViewModel] to be able to get Chapter using [httpUrl]
         launchURL(href);
       }
     }
 
-    // Local links
     if (href.startsWith('#')) {
       return _scrollToWidget(href.substring(1));
     }
 
-    // Confirm if it's a valid URL
     if (await canLaunchUrlString(href)) {
       await launchUrlString(href);
     }
-  }
-
-  void _onTapImage(String src) {
-    // Implement your image tap handling logic here
-    debugPrint('Image tapped: $src');
   }
 
   Widget _buildMarkdown(IbMd data) {
@@ -171,7 +159,15 @@ class _IbPageViewState extends State<IbPageView> {
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
       onTapLink: _onTapLink,
       builders: {
-        'img': CustomImageBuilder(onTapImage: _onTapImage, wrapImages: true),
+        'img': CustomImageBuilder(
+          onTapImage: (src) => debugPrint('Image tapped: $src'),
+          wrapImages: true,
+          noImageSourceText:
+              AppLocalizations.of(context)!.ib_page_no_image_source,
+          imageLoadErrorText:
+              AppLocalizations.of(context)!.ib_page_image_load_error,
+          loadingImageText: AppLocalizations.of(context)!.ib_page_loading_image,
+        ),
         'h1': _headingsBuilder,
         'h2': _headingsBuilder,
         'h3': _headingsBuilder,
@@ -239,19 +235,13 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   Widget _buildFooter() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Text(
-        'Copyright © 2021 Contributors to CircuitVerse. Distributed under a [CC-by-sa] license.',
-        style: TextStyle(fontSize: 10),
+        AppLocalizations.of(context)!.ib_page_copyright_notice,
+        style: const TextStyle(fontSize: 10),
       ),
     );
-  }
-
-  Future _onTocListTileTap(String title) async {
-    var slug = IbEngineService.getSlug(title);
-    Navigator.pop(context);
-    await _scrollToWidget(slug);
   }
 
   Widget _buildTocListTile(
@@ -261,23 +251,25 @@ class _IbPageViewState extends State<IbPageView> {
     bool padding = true,
     bool isEnabled = true,
   }) {
-    if (!root) {
-      return ListTile(
-        leading: const Text(''),
-        visualDensity: !padding ? const VisualDensity(vertical: -3) : null,
-        contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
-        minLeadingWidth: 20,
-        title: Text('$leading $content'),
-        onTap: isEnabled ? () async => _onTocListTileTap(content) : () {},
-      );
-    }
-
-    return ListTile(
+    final tile = ListTile(
+      leading: root ? null : const Text(''),
       visualDensity: !padding ? const VisualDensity(vertical: -3) : null,
       contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
+      minLeadingWidth: 20,
       title: Text('$leading $content'),
-      onTap: isEnabled ? () async => _onTocListTileTap(content) : () {},
+      onTap:
+          isEnabled
+              ? () async {
+                final slug = IbEngineService.getSlug(content);
+                if (Navigator.canPop(context)) Navigator.pop(context);
+                await _scrollToWidget(slug);
+              }
+              : null,
     );
+
+    return root
+        ? tile
+        : Padding(padding: const EdgeInsets.only(left: 16.0), child: tile);
   }
 
   List<Widget> _buildTocItems(
@@ -286,7 +278,7 @@ class _IbPageViewState extends State<IbPageView> {
     bool padding = true,
     bool isEnabled = true,
   }) {
-    var items = <Widget>[
+    final items = <Widget>[
       _buildTocListTile(
         item.leading,
         item.content,
@@ -297,7 +289,7 @@ class _IbPageViewState extends State<IbPageView> {
     ];
 
     if (item.items != null) {
-      for (var e in item.items!) {
+      for (final e in item.items!) {
         items.addAll(_buildTocItems(e, padding: padding, isEnabled: isEnabled));
       }
     }
@@ -310,9 +302,8 @@ class _IbPageViewState extends State<IbPageView> {
     bool padding = true,
     bool isEnabled = true,
   }) {
-    var items = <Widget>[];
-
-    for (var item in toc) {
+    final items = <Widget>[];
+    for (final item in toc) {
       items.addAll(
         _buildTocItems(
           item,
@@ -322,7 +313,6 @@ class _IbPageViewState extends State<IbPageView> {
         ),
       );
     }
-
     return Column(children: items);
   }
 
@@ -334,7 +324,7 @@ class _IbPageViewState extends State<IbPageView> {
           children: [
             ListTile(
               title: Text(
-                'Table of Contents',
+                AppLocalizations.of(context)!.ib_page_table_of_contents,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onPrimary,
                 ),
@@ -353,16 +343,17 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   Widget _buildFloatingActionButtons() {
-    var alignment = MainAxisAlignment.spaceBetween;
-    var buttons = <Widget>[];
+    final buttons = <Widget>[];
+    final alignment =
+        widget.chapter.prev != null && widget.chapter.next != null
+            ? MainAxisAlignment.spaceBetween
+            : widget.chapter.prev != null
+            ? MainAxisAlignment.start
+            : MainAxisAlignment.end;
 
     if (widget.chapter.prev != null) {
-      if (widget.chapter.next == null) {
-        alignment = MainAxisAlignment.start;
-      }
-
       buttons.add(
-        ChangeNotifierProvider<IbFloatingButtonState>.value(
+        ChangeNotifierProvider.value(
           value: _ibFloatingButtonState,
           child: Consumer<IbFloatingButtonState>(
             builder: (context, _, child) {
@@ -373,16 +364,14 @@ class _IbPageViewState extends State<IbPageView> {
                   heroTag: 'previousPage',
                   mini: true,
                   backgroundColor: Theme.of(context).primaryIconTheme.color,
-                  onPressed: () {
-                    //If FAB are not visible do not do anything.
-                    if (!_ibFloatingButtonState.isVisible) {
-                      return;
-                    }
-                    widget.setPage(widget.chapter.prev);
-                  },
+                  onPressed:
+                      _ibFloatingButtonState.isVisible
+                          ? () => widget.setPage(widget.chapter.prev)
+                          : null,
                   child: Showcase(
                     key: _model.prevPage,
-                    description: 'Tap to navigate to previous page',
+                    description:
+                        AppLocalizations.of(context)!.ib_page_navigate_previous,
                     targetPadding: const EdgeInsets.all(12.0),
                     targetShapeBorder: const CircleBorder(),
                     onTargetClick: () {
@@ -406,12 +395,8 @@ class _IbPageViewState extends State<IbPageView> {
     }
 
     if (widget.chapter.next != null) {
-      if (widget.chapter.prev == null) {
-        alignment = MainAxisAlignment.end;
-      }
-
       buttons.add(
-        ChangeNotifierProvider<IbFloatingButtonState>.value(
+        ChangeNotifierProvider.value(
           value: _ibFloatingButtonState,
           child: Consumer<IbFloatingButtonState>(
             builder: (context, _, child) {
@@ -422,16 +407,14 @@ class _IbPageViewState extends State<IbPageView> {
                   heroTag: 'nextPage',
                   mini: true,
                   backgroundColor: Theme.of(context).primaryIconTheme.color,
-                  onPressed: () {
-                    //If FAB are not visible do not do anything.
-                    if (!_ibFloatingButtonState.isVisible) {
-                      return;
-                    }
-                    widget.setPage(widget.chapter.next);
-                  },
+                  onPressed:
+                      _ibFloatingButtonState.isVisible
+                          ? () => widget.setPage(widget.chapter.next)
+                          : null,
                   child: Showcase(
                     key: _model.nextPage,
-                    description: 'Tap to navigate to next page',
+                    description:
+                        AppLocalizations.of(context)!.ib_page_navigate_next,
                     targetPadding: const EdgeInsets.all(12.0),
                     targetShapeBorder: const CircleBorder(),
                     onTargetClick: () {
@@ -460,7 +443,7 @@ class _IbPageViewState extends State<IbPageView> {
   List<Widget> _buildPageContent(IbPageData? pageData) {
     if (pageData == null) {
       return [
-        Column(
+        const Column(
           children: [
             SizedBox(height: 120),
             Center(
@@ -475,18 +458,13 @@ class _IbPageViewState extends State<IbPageView> {
       ];
     }
 
-    var contents = <Widget>[];
-
-    for (var content in pageData.content ?? []) {
-      switch (content.runtimeType) {
-        case const (IbMd):
-          contents.add(_buildMarkdown(content as IbMd));
-          break;
+    final contents = <Widget>[];
+    for (final content in pageData.content ?? []) {
+      if (content is IbMd) {
+        contents.add(_buildMarkdown(content));
       }
     }
-
     contents.addAll([_buildDivider(), _buildFooter()]);
-
     return contents;
   }
 
@@ -509,7 +487,6 @@ class _IbPageViewState extends State<IbPageView> {
         );
       },
       builder: (context, model, child) {
-        // Set the callback to show bottom sheet for Table of Contents
         if (_model.isSuccess(_model.IB_FETCH_PAGE_DATA) &&
             (model.pageData?.tableOfContents?.isNotEmpty ?? false)) {
           widget.tocCallback(_showBottomSheet);
@@ -537,9 +514,7 @@ class _IbPageViewState extends State<IbPageView> {
                   padding: const EdgeInsets.all(16.0),
                   child: _buildFloatingActionButtons(),
                 ),
-              )
-            else
-              Container(),
+              ),
           ],
         );
       },
@@ -550,46 +525,50 @@ class _IbPageViewState extends State<IbPageView> {
 class CustomImageBuilder extends MarkdownElementBuilder {
   final void Function(String)? onTapImage;
   final bool wrapImages;
+  final String noImageSourceText;
+  final String imageLoadErrorText;
+  final String loadingImageText;
 
-  CustomImageBuilder({this.onTapImage, this.wrapImages = true});
+  CustomImageBuilder({
+    this.onTapImage,
+    this.wrapImages = true,
+    this.noImageSourceText = 'No image source provided',
+    this.imageLoadErrorText = 'Failed to load image',
+    this.loadingImageText = 'Loading image...',
+  });
 
   @override
   Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
     final src = element.attributes['src'] ?? '';
     final alt = element.textContent;
 
-    // Validate URL
     if (src.isEmpty) {
-      return _buildErrorWidget('No image source provided');
+      return _buildErrorWidget(noImageSourceText);
     }
 
     Widget image;
-
     try {
       if (src.toLowerCase().endsWith('.svg')) {
         image = SvgPicture.network(
           src,
           semanticsLabel: alt,
-          placeholderBuilder: (context) => _buildLoadingIndicator(),
-          height: 200, // Set a reasonable default height for SVG
+          placeholderBuilder: (_) => _buildLoadingIndicator(),
+          height: 200,
           fit: BoxFit.contain,
         );
       } else {
         image = Image.network(
           src,
           semanticLabel: alt,
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return _buildLoadingIndicator();
-          },
-          errorBuilder: (context, error, stackTrace) {
-            return _buildErrorWidget('Failed to load image');
-          },
+          loadingBuilder:
+              (_, child, progress) =>
+                  progress == null ? child : _buildLoadingIndicator(),
+          errorBuilder: (_, __, ___) => _buildErrorWidget(imageLoadErrorText),
           fit: BoxFit.contain,
         );
       }
     } catch (e) {
-      image = _buildErrorWidget('Error loading image: ${e.toString()}');
+      image = _buildErrorWidget('$imageLoadErrorText: $e');
     }
 
     if (wrapImages) {
@@ -599,17 +578,24 @@ class CustomImageBuilder extends MarkdownElementBuilder {
       );
     }
 
-    if (onTapImage != null) {
-      image = GestureDetector(onTap: () => onTapImage!(src), child: image);
-    }
-
-    return image;
+    return onTapImage != null
+        ? GestureDetector(onTap: () => onTapImage!(src), child: image)
+        : image;
   }
 
   Widget _buildLoadingIndicator() {
-    return const SizedBox(
+    return SizedBox(
       height: 200,
-      child: Center(child: CircularProgressIndicator()),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const CircularProgressIndicator(),
+            const SizedBox(height: 8),
+            Text(loadingImageText),
+          ],
+        ),
+      ),
     );
   }
 
@@ -623,11 +609,7 @@ class CustomImageBuilder extends MarkdownElementBuilder {
           children: [
             const Icon(Icons.broken_image, size: 50, color: Colors.grey),
             const SizedBox(height: 8),
-            Text(
-              message,
-              style: const TextStyle(color: Colors.grey),
-              textAlign: TextAlign.center,
-            ),
+            Text(message, style: const TextStyle(color: Colors.grey)),
           ],
         ),
       ),

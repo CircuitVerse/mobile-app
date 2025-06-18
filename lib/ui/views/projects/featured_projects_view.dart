@@ -29,11 +29,8 @@ class FeaturedProjectsView extends StatefulWidget {
 
 class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
   final TextEditingController _controller = TextEditingController();
-
   final ScrollController controller = ScrollController();
-
   late final FeaturedProjectsViewModel _model;
-
   List<Widget> _projects = [];
 
   void handleScrolling() {
@@ -55,8 +52,9 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
 
   @override
   void dispose() {
-    super.dispose();
     controller.dispose();
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -86,7 +84,6 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                     ProjectDetailsView.id,
                     arguments: project,
                   );
-
                   if (_result is Project) {
                     model.updateFeaturedProject(_result);
                   }
@@ -95,14 +92,11 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
             );
           }
 
-          // add loading indicator if there are more projects to load..
           if (!widget.embed &&
               model.previousProjectsBatch?.links.next != null) {
             _items.add(const Center(child: CircularProgressIndicator()));
           }
 
-          // maintaing another state of projects to prevent blank screen when
-          // projects fetched from loadMore() is being added to the list..
           _projects = _items;
         }
 
@@ -115,7 +109,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
               height: 400,
             ),
             Text(
-              'No Result found',
+              AppLocalizations.of(context)!.featured_no_result_found,
               style: TextStyle(fontSize: 16, color: CVTheme.textColor(context)),
             ),
           ]);
@@ -128,10 +122,12 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
         if (!model.showSearchBar) {
           _items.insert(
             0,
-            const CVHeader(
-              title: 'Editor Picks',
+            CVHeader(
+              title: AppLocalizations.of(context)!.featured_editor_picks,
               description:
-                  'These circuits have been hand-picked by our authors for their awesomeness.',
+                  AppLocalizations.of(
+                    context,
+                  )!.featured_editor_picks_description,
             ),
           );
         }
@@ -163,7 +159,10 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                     },
                     icon: const Icon(Icons.arrow_back),
                   ),
-                  hint: 'Search for circuits',
+                  hint:
+                      AppLocalizations.of(
+                        context,
+                      )!.featured_search_for_circuits,
                   action: TextInputAction.search,
                   controller: _controller,
                   onFieldSubmitted: (value) {
