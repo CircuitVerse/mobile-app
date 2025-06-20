@@ -240,7 +240,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please enter a valid email';
 
   @override
-  String get forgot_password_send_instructions => 'SEND INSTRUCTIONS';
+  String get forgot_password_send_instructions => 'Send Instructions';
 
   @override
   String get forgot_password_sending => 'Sending..';

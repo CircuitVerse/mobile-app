@@ -84,7 +84,7 @@
   "@forgot_password_view": {},
   "forgot_password_email": "Email",
   "forgot_password_email_validation_error": "Please enter a valid email",
-  "forgot_password_send_instructions": "SEND INSTRUCTIONS", 
+  "forgot_password_send_instructions": "Send Instructions", 
   "forgot_password_sending": "Sending..",
   "forgot_password_new_user": "New User?",
   "forgot_password_sign_up": "Sign Up",

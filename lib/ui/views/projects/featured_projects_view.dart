@@ -128,6 +128,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                   AppLocalizations.of(
                     context,
                   )!.featured_editor_picks_description,
+              subtitleToDescriptionSpace: 8,
             ),
           );
         }

@@ -6,12 +6,16 @@ class CVHeader extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.description,
+    this.titleToSubtitleSpace = 0,
+    this.subtitleToDescriptionSpace = 16,
     super.key,
   });
 
   final String title;
   final String? subtitle;
   final String? description;
+  final double titleToSubtitleSpace;
+  final double subtitleToDescriptionSpace;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +29,7 @@ class CVHeader extends StatelessWidget {
           ),
           textAlign: TextAlign.center,
         ),
+        SizedBox(height: titleToSubtitleSpace),
         if (subtitle != null)
           Text(
             subtitle!,
@@ -33,20 +38,14 @@ class CVHeader extends StatelessWidget {
               color: CVTheme.textColor(context),
             ),
             textAlign: TextAlign.center,
-          )
-        else
-          Container(),
+          ),
+        SizedBox(height: subtitleToDescriptionSpace),
         if (description != null)
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Text(
-              description!,
-              style: Theme.of(context).textTheme.titleMedium,
-              textAlign: TextAlign.center,
-            ),
-          )
-        else
-          Container(),
+          Text(
+            description!,
+            style: Theme.of(context).textTheme.titleMedium,
+            textAlign: TextAlign.center,
+          ),
       ],
     );
   }
