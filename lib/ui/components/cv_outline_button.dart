@@ -12,6 +12,7 @@ class CVOutlineButton extends StatelessWidget {
     this.minWidth = 160,
     this.maxWidth = double.infinity,
     this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+    this.fontSize,
   });
 
   final String title;
@@ -22,6 +23,7 @@ class CVOutlineButton extends StatelessWidget {
   final double minWidth;
   final double maxWidth;
   final EdgeInsets padding;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +52,10 @@ class CVOutlineButton extends StatelessWidget {
               child: Text(
                 title,
                 overflow: TextOverflow.ellipsis,
-                style:
-                    isBodyText
+                style: (isBodyText
                         ? Theme.of(context).textTheme.bodyLarge
-                        : Theme.of(context).textTheme.titleLarge,
+                        : Theme.of(context).textTheme.titleLarge)
+                    ?.copyWith(fontSize: fontSize),
               ),
             ),
           ],
