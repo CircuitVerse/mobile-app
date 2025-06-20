@@ -159,6 +159,7 @@ class _HomeViewState extends State<HomeView> {
                                   1,
                       minWidth: 180,
                       maxWidth: 300,
+                      fontSize: 18,
                     ),
                   ),
                 ],

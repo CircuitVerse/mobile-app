@@ -515,7 +515,7 @@ abstract class AppLocalizations {
   /// No description provided for @forgot_password_send_instructions.
   ///
   /// In en, this message translates to:
-  /// **'SEND INSTRUCTIONS'**
+  /// **'Send Instructions'**
   String get forgot_password_send_instructions;
 
   /// No description provided for @forgot_password_sending.
