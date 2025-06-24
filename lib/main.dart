@@ -79,7 +79,6 @@ class CircuitVerseMobile extends StatelessWidget {
             builder:
                 (themeContext) => GetBuilder<LanguageController>(
                   builder: (languageController) {
-                    // Use currentLocale.value instead of locale
                     final locale = languageController.currentLocale.value;
 
                     return GetMaterialApp(

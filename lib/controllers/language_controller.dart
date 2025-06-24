@@ -6,7 +6,6 @@ class LanguageController extends GetxController {
   var isLanguageExpanded = false.obs;
   var isRTL = false.obs;
 
-  // Supported languages with their display names and RTL status
   final Map<Locale, Map<String, dynamic>> supportedLanguages = {
     const Locale('en'): {'name': 'English', 'isRTL': false},
     const Locale('hi'): {'name': 'हिन्दी', 'isRTL': false},
@@ -25,24 +24,20 @@ class LanguageController extends GetxController {
     isRTL.value = _isLanguageRTL(locale);
     Get.updateLocale(locale);
     isLanguageExpanded.value = false;
-    // Removed unnecessary Get.forceAppUpdate()
   }
 
   void toggleExpansion() {
     isLanguageExpanded.value = !isLanguageExpanded.value;
   }
 
-  // Simplified RTL checking - no fallback needed since we control the supported languages
   bool _isLanguageRTL(Locale locale) {
     return supportedLanguages[locale]?['isRTL'] ?? false;
   }
 
-  // Helper method to get language name
   String getLanguageName(Locale locale) {
     return supportedLanguages[locale]?['name'] ??
         locale.languageCode.toUpperCase();
   }
 
-  // Get all supported locales
   List<Locale> get supportedLocales => supportedLanguages.keys.toList();
 }
