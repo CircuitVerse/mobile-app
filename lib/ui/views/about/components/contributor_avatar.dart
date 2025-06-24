@@ -16,7 +16,7 @@ class ContributorAvatar extends StatelessWidget {
       child: Tooltip(
         message: contributor.login,
         child: Container(
-          margin: const EdgeInsets.all(4),
+          margin: const EdgeInsetsDirectional.all(4),
           width: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,

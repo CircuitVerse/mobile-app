@@ -25,8 +25,8 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsetsDirectional.all(16),
+      margin: const EdgeInsetsDirectional.all(8),
       decoration: BoxDecoration(
         border: const Border(
           top: BorderSide(width: 10, color: CVTheme.primaryColor),
@@ -50,7 +50,7 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
             textAlign: TextAlign.center,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsetsDirectional.symmetric(vertical: 12),
             child: Text(
               'Total Members: ${widget.group.attributes.memberCount}',
               style: Theme.of(context).textTheme.titleMedium,

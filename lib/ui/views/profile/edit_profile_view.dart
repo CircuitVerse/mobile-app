@@ -123,9 +123,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                         Get.back();
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding: const EdgeInsetsDirectional.all(12.0),
                         child: Container(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: const EdgeInsetsDirectional.all(12.0),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(color: CVTheme.grey),
@@ -151,7 +151,7 @@ class _EditProfileViewState extends State<EditProfileView> {
             Container(
               height: 120,
               width: 120,
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsetsDirectional.all(8),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
@@ -171,7 +171,7 @@ class _EditProfileViewState extends State<EditProfileView> {
               right: 0,
               bottom: 0,
               child: Container(
-                padding: const EdgeInsets.all(4),
+                padding: const EdgeInsetsDirectional.all(4),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: CVTheme.highlightText(context),
@@ -315,7 +315,7 @@ class _EditProfileViewState extends State<EditProfileView> {
 
   Widget _buildSaveDetailsButton() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
       child: CVPrimaryButton(
         title: AppLocalizations.of(context)!.profile_save_details,
         onPressed: _validateAndSubmit,
@@ -339,7 +339,7 @@ class _EditProfileViewState extends State<EditProfileView> {
               FocusScope.of(context).unfocus();
             },
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsetsDirectional.symmetric(vertical: 16),
               child: Form(
                 key: _formKey,
                 child: Column(

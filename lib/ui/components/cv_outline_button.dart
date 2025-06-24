@@ -11,7 +11,10 @@ class CVOutlineButton extends StatelessWidget {
     this.leadingIcon,
     this.minWidth = 160,
     this.maxWidth = double.infinity,
-    this.padding = const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+    this.padding = const EdgeInsetsDirectional.symmetric(
+      horizontal: 12,
+      vertical: 10,
+    ),
     this.fontSize,
   });
 
@@ -22,7 +25,7 @@ class CVOutlineButton extends StatelessWidget {
   final IconData? leadingIcon;
   final double minWidth;
   final double maxWidth;
-  final EdgeInsets padding;
+  final EdgeInsetsDirectional padding;
   final double? fontSize;
 
   @override

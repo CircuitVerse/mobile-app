@@ -45,7 +45,7 @@ class _SignupViewState extends State<SignupView> {
               ? MediaQuery.of(context).size.height * 0.52
               : MediaQuery.of(context).size.height * 0.43,
       color: CVTheme.imageBackground,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsetsDirectional.all(16),
       child: SafeArea(
         child: Image.asset('assets/images/signup/cv_signup.png', height: 300),
       ),
@@ -101,7 +101,7 @@ class _SignupViewState extends State<SignupView> {
 
   Widget _buildRegisterButton() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
         title:

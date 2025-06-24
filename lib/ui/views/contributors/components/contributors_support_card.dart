@@ -16,14 +16,14 @@ class ContributeSupportCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsetsDirectional.symmetric(vertical: 8),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsetsDirectional.all(16.0),
         child: Column(
           children: <Widget>[
             Image.asset(imagePath, scale: 2, height: 180),
             Padding(
-              padding: const EdgeInsets.only(top: 12, bottom: 16),
+              padding: const EdgeInsetsDirectional.only(top: 12, bottom: 16),
               child: Text(
                 title,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -38,7 +38,9 @@ class ContributeSupportCard extends StatelessWidget {
                   cardDescriptionList
                       .map(
                         (item) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 6),
+                          padding: const EdgeInsetsDirectional.symmetric(
+                            vertical: 6,
+                          ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

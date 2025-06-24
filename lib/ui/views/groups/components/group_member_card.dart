@@ -13,8 +13,8 @@ class GroupMemberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsetsDirectional.all(16),
+      margin: const EdgeInsetsDirectional.all(8),
       decoration: BoxDecoration(
         border: const Border(
           left: BorderSide(width: 10, color: CVTheme.primaryColor),
@@ -44,7 +44,7 @@ class GroupMemberCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  padding: const EdgeInsetsDirectional.symmetric(vertical: 4),
                   child: Text(
                     'Total Members: ${group.attributes.memberCount}',
                     style: Theme.of(context).textTheme.titleMedium,

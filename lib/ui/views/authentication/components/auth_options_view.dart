@@ -65,7 +65,7 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
           (context, model, child) => Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 32),
                 child: Row(
                   children: <Widget>[
                     const Expanded(child: Divider(thickness: 1)),
@@ -80,7 +80,7 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
                   GestureDetector(
                     onTap: onGoogleAuthPressed,
                     child: Container(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsetsDirectional.all(8),
                       decoration: const BoxDecoration(shape: BoxShape.circle),
                       child: Image.asset(
                         'assets/icons/google_icon.png',
@@ -91,7 +91,7 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
                   GestureDetector(
                     onTap: onFacebookAuthPressed,
                     child: Container(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsetsDirectional.all(8),
                       decoration: const BoxDecoration(shape: BoxShape.circle),
                       child: Image.asset(
                         'assets/icons/facebook_icon.png',
@@ -102,7 +102,7 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
                   GestureDetector(
                     onTap: onGithubAuthPressed,
                     child: Container(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsetsDirectional.all(8),
                       decoration: const BoxDecoration(shape: BoxShape.circle),
                       child: const Icon(FontAwesome5.github, size: 40),
                     ),

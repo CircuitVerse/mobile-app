@@ -60,7 +60,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Widget _buildShareActionButton() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
       child: IconButton(
         onPressed: onShareButtonPressed,
         icon: const Icon(Icons.share),
@@ -137,7 +137,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Widget _buildProjectHeader(String title) {
     return Container(
-      padding: const EdgeInsets.all(4),
+      padding: const EdgeInsetsDirectional.all(4),
       color: CVTheme.primaryColor,
       width: double.infinity,
       child: Text(
@@ -171,7 +171,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Widget _buildProjectDetailComponent(String heading, String description) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsetsDirectional.symmetric(vertical: 4.0),
       child: RichText(
         text: TextSpan(
           style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
@@ -189,7 +189,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Widget _buildProjectAuthor() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      padding: const EdgeInsetsDirectional.symmetric(vertical: 4.0),
       child: RichText(
         text: TextSpan(
           style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
@@ -223,7 +223,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Widget _buildProjectDescription() {
     return (_recievedProject.attributes.description ?? '') != ''
         ? Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0),
+          padding: const EdgeInsetsDirectional.symmetric(vertical: 4.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -278,7 +278,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return InkWell(
       onTap: onForkProjectPressed,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+        padding: const EdgeInsetsDirectional.symmetric(
+          vertical: 4,
+          horizontal: 12,
+        ),
         decoration: BoxDecoration(
           color: CVTheme.primaryColor,
           borderRadius: BorderRadius.circular(4),
@@ -325,7 +328,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return InkWell(
       onTap: onStarProjectPressed,
       child: Container(
-        padding: const EdgeInsets.all(4),
+        padding: const EdgeInsetsDirectional.all(4),
         decoration: BoxDecoration(
           color: CVTheme.primaryColor,
           borderRadius: BorderRadius.circular(4),
@@ -464,7 +467,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return InkWell(
       onTap: onEditProjectPressed,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+        padding: const EdgeInsetsDirectional.symmetric(
+          vertical: 4,
+          horizontal: 12,
+        ),
         decoration: BoxDecoration(
           border: Border.all(color: CVTheme.primaryColorDark),
           borderRadius: BorderRadius.circular(4),
@@ -521,7 +527,10 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     return InkWell(
       onTap: onDeleteProjectPressed,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+        padding: const EdgeInsetsDirectional.symmetric(
+          vertical: 4,
+          horizontal: 12,
+        ),
         decoration: BoxDecoration(
           border: Border.all(color: CVTheme.primaryColorDark),
           borderRadius: BorderRadius.circular(4),
@@ -579,7 +588,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   Widget _buildCollaborator(Collaborator collaborator) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsetsDirectional.all(8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -599,7 +608,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           ),
           if (_model.project!.hasAuthorAccess)
             IconButton(
-              padding: const EdgeInsets.all(0),
+              padding: const EdgeInsetsDirectional.all(0),
               icon: const Icon(Icons.delete_outline),
               color: CVTheme.red,
               onPressed: () => onDeleteCollaboratorPressed(collaborator),
@@ -647,7 +656,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
                   _items.add(
                     Container(
-                      padding: const EdgeInsets.symmetric(
+                      padding: const EdgeInsetsDirectional.symmetric(
                         vertical: 16,
                         horizontal: 8,
                       ),
@@ -706,7 +715,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                   }
                   return ListView(
                     shrinkWrap: true,
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsetsDirectional.all(16),
                     children: _items,
                   );
                 },

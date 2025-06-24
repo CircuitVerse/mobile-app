@@ -65,7 +65,8 @@ class _IbLandingViewState extends State<IbLandingView> {
             ),
           ),
           child: CVTextField(
-            padding: EdgeInsets.zero,
+            padding:
+                const EdgeInsetsDirectional.only(), // Use only() to specify explicit values if needed
             prefixIcon: IconButton(
               onPressed: () {
                 _controller.clear();
@@ -324,61 +325,64 @@ class _IbLandingViewState extends State<IbLandingView> {
               _model.saveShowcaseState();
             }
           },
-          child: Theme(
-            data: IbTheme.getThemeData(context),
-            child: ShowCaseWidget(
-              onComplete: (index, globalKey) {
-                final String key =
-                    globalKey
-                        .toString()
-                        .substring(1, globalKey.toString().length - 1)
-                        .split(" ")
-                        .last;
-                model.onShowCased(key);
-              },
-              builder:
-                  (context) => Builder(
-                    builder: (context) {
-                      return Scaffold(
-                        key: _key,
-                        appBar: _buildAppBar(),
-                        drawer: _buildDrawer(),
-                        body: PageTransitionSwitcher(
-                          transitionBuilder: (
-                            Widget child,
-                            Animation<double> animation,
-                            Animation<double> secondaryAnimation,
-                          ) {
-                            return FadeThroughTransition(
-                              animation: animation,
-                              secondaryAnimation: secondaryAnimation,
-                              child: child,
-                            );
-                          },
-                          child: IbPageView(
-                            key: Key(_model.selectedChapter.toString()),
-                            tocCallback: (val) {
-                              Future.delayed(Duration.zero, () async {
-                                if (mounted) {
-                                  _tocNotifier.value = val;
-                                }
-                              });
+          child: Directionality(
+            textDirection: TextDirection.ltr, // Force LTR layout
+            child: Theme(
+              data: IbTheme.getThemeData(context),
+              child: ShowCaseWidget(
+                onComplete: (index, globalKey) {
+                  final String key =
+                      globalKey
+                          .toString()
+                          .substring(1, globalKey.toString().length - 1)
+                          .split(" ")
+                          .last;
+                  model.onShowCased(key);
+                },
+                builder:
+                    (context) => Builder(
+                      builder: (context) {
+                        return Scaffold(
+                          key: _key,
+                          appBar: _buildAppBar(),
+                          drawer: _buildDrawer(),
+                          body: PageTransitionSwitcher(
+                            transitionBuilder: (
+                              Widget child,
+                              Animation<double> animation,
+                              Animation<double> secondaryAnimation,
+                            ) {
+                              return FadeThroughTransition(
+                                animation: animation,
+                                secondaryAnimation: secondaryAnimation,
+                                child: child,
+                              );
                             },
-                            setPage: (chapter) {
-                              if (chapter == null) return;
-                              model.selectedChapter = chapter;
-                            },
-                            chapter: model.selectedChapter,
-                            setShowCase: (updatedState) {
-                              model.showCaseState = updatedState;
-                            },
-                            showCase: model.showCaseState,
-                            globalKeysMap: model.keyMap,
+                            child: IbPageView(
+                              key: Key(_model.selectedChapter.toString()),
+                              tocCallback: (val) {
+                                Future.delayed(Duration.zero, () async {
+                                  if (mounted) {
+                                    _tocNotifier.value = val;
+                                  }
+                                });
+                              },
+                              setPage: (chapter) {
+                                if (chapter == null) return;
+                                model.selectedChapter = chapter;
+                              },
+                              chapter: model.selectedChapter,
+                              setShowCase: (updatedState) {
+                                model.showCaseState = updatedState;
+                              },
+                              showCase: model.showCaseState,
+                              globalKeysMap: model.keyMap,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
+                        );
+                      },
+                    ),
+              ),
             ),
           ),
         );

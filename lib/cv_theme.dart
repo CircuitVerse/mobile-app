@@ -86,7 +86,7 @@ class CVTheme {
   );
 
   static const InputDecoration textFieldDecoration = InputDecoration(
-    contentPadding: EdgeInsets.all(8),
+    contentPadding: EdgeInsetsDirectional.all(8),
     focusedBorder: CVTheme.primaryDarkOutlineBorder,
     enabledBorder: CVTheme.primaryDarkOutlineBorder,
     errorBorder: CVTheme.redOutlineBorder,

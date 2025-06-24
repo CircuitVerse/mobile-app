@@ -91,7 +91,10 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
 
   Widget _buildFooter() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: const EdgeInsetsDirectional.symmetric(
+        vertical: 8,
+        horizontal: 16,
+      ),
       decoration: const BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.only(
@@ -122,7 +125,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsetsDirectional.all(8.0),
       child: Card(
         elevation: 5,
         shadowColor: CVTheme.primaryColorLight,

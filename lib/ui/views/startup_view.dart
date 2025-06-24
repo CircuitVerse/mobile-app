@@ -13,7 +13,7 @@ class StartUpView extends StatelessWidget {
           (context, model, child) => Scaffold(
             body: Center(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 42),
+                padding: const EdgeInsetsDirectional.symmetric(horizontal: 42),
                 child: Image.asset(
                   'assets/images/landing/cv_full_logo.png',
                   key: const Key('cv_startup_logo'),

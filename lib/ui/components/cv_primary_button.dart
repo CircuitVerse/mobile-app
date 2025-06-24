@@ -7,7 +7,7 @@ class CVPrimaryButton extends StatelessWidget {
     this.onPressed,
     this.isBodyText = false,
     this.isPrimaryDark = false,
-    this.padding = const EdgeInsets.all(8),
+    this.padding = const EdgeInsetsDirectional.all(8),
     this.textStyle,
     super.key,
   });
@@ -29,7 +29,10 @@ class CVPrimaryButton extends StatelessWidget {
       title: title,
       onPressed: onPressed,
       isPrimaryDark: isPrimaryDark,
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+      padding: const EdgeInsetsDirectional.symmetric(
+        vertical: 6,
+        horizontal: 12,
+      ),
       textStyle: const TextStyle(
         fontSize: 14,
         color: Colors.white,
