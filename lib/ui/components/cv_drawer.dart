@@ -28,7 +28,7 @@ class CVDrawer extends StatelessWidget {
           ListView(
             children: <Widget>[
               Container(
-                padding: const EdgeInsets.symmetric(
+                padding: const EdgeInsetsDirectional.symmetric(
                   vertical: 32,
                   horizontal: 10,
                 ),
@@ -48,8 +48,10 @@ class CVDrawer extends StatelessWidget {
                 data: CVTheme.themeData(context),
                 child: ExpansionTile(
                   maintainState: true,
-                  tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  childrenPadding: EdgeInsets.zero,
+                  tilePadding: const EdgeInsetsDirectional.symmetric(
+                    horizontal: 16.0,
+                  ),
+                  childrenPadding: EdgeInsetsDirectional.zero,
                   leading: Icon(
                     Icons.explore,
                     color: CVTheme.drawerIcon(context),
@@ -79,6 +81,7 @@ class CVDrawer extends StatelessWidget {
                 final languages = {
                   const Locale('en'): 'English',
                   const Locale('hi'): 'हिंदी',
+                  const Locale('ar'): 'العربية',
                 };
 
                 return Theme(
@@ -90,8 +93,10 @@ class CVDrawer extends StatelessWidget {
                       langController.isLanguageExpanded.value = expanded;
                     },
                     maintainState: true,
-                    tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    childrenPadding: EdgeInsets.zero,
+                    tilePadding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: 16.0,
+                    ),
+                    childrenPadding: EdgeInsetsDirectional.zero,
                     leading: Icon(
                       Icons.translate,
                       color: CVTheme.drawerIcon(context),
@@ -188,8 +193,10 @@ class CVDrawer extends StatelessWidget {
                   data: CVTheme.themeData(context),
                   child: ExpansionTile(
                     maintainState: true,
-                    tilePadding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    childrenPadding: EdgeInsets.zero,
+                    tilePadding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: 16.0,
+                    ),
+                    childrenPadding: EdgeInsetsDirectional.zero,
                     iconColor: CVTheme.textColor(context),
                     title: Text(
                       _model.currentUser?.data.attributes.name ?? '',

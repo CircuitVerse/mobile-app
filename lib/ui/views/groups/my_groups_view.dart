@@ -44,7 +44,10 @@ class _MyGroupsViewState extends State<MyGroupsView>
 
   Widget _buildSubHeader({required String title}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 48.0),
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: 16.0,
+        vertical: 48.0,
+      ),
       child: Text(
         title,
         textAlign: TextAlign.center,

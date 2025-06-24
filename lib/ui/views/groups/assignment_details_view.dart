@@ -55,7 +55,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   Widget _buildEditAssignmentButton() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 4),
         backgroundColor: CVTheme.primaryColor,
       ),
       onPressed: () async {
@@ -122,8 +122,8 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         titleKey;
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      alignment: Alignment.centerLeft,
+      padding: const EdgeInsetsDirectional.symmetric(vertical: 4),
+      alignment: AlignmentDirectional.centerStart,
       child: RichText(
         text: TextSpan(
           style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 18),
@@ -149,7 +149,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
   Widget _buildAssignmentDescription() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsetsDirectional.symmetric(vertical: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -193,7 +193,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsetsDirectional.all(8.0),
                       child: Text(
                         submission.attributes.authorName,
                         textAlign: TextAlign.center,
@@ -234,7 +234,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             child:
                 _model.projects.isEmpty
                     ? Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsetsDirectional.all(8.0),
                       child: Text(
                         AppLocalizations.of(
                           context,
@@ -379,7 +379,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
       return Container(
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsetsDirectional.all(16),
         decoration: BoxDecoration(
           border: Border.all(color: CVTheme.primaryColorDark),
         ),
@@ -399,7 +399,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
               CVTextField(
                 label: AppLocalizations.of(context)!.assignment_details_grade,
                 controller: _gradesController,
-                padding: const EdgeInsets.all(0),
+                padding: const EdgeInsetsDirectional.all(0),
                 type:
                     _recievedAssignment.attributes.gradingScale == 'percent'
                         ? TextInputType.number
@@ -419,7 +419,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 label: AppLocalizations.of(context)!.assignment_details_remarks,
                 focusNode: _gradeFocusNode,
                 controller: _remarksController,
-                padding: const EdgeInsets.all(0),
+                padding: const EdgeInsetsDirectional.all(0),
               ),
               const SizedBox(height: 16),
               Row(
@@ -448,7 +448,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                   if (_submittedGrade != null)
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsetsDirectional.all(8),
                         backgroundColor: CVTheme.red,
                       ),
                       onPressed: () => deleteGrade(_submittedGrade.id),
@@ -494,7 +494,7 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 var _remainingTime = _attrs.deadline.difference(DateTime.now());
 
                 return ListView(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsetsDirectional.all(16),
                   children: <Widget>[
                     _buildHeader(),
                     const SizedBox(height: 16),

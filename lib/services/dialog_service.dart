@@ -74,7 +74,10 @@ class DialogService {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+            padding: const EdgeInsetsDirectional.symmetric(
+              vertical: 12,
+              horizontal: 24,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[

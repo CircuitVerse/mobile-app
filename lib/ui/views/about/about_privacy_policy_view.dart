@@ -92,7 +92,7 @@ class AboutPrivacyPolicyView extends StatelessWidget {
               )
               : null,
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsetsDirectional.all(16),
         child: Column(
           children: <Widget>[
             _buildSection(

@@ -69,7 +69,10 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
 
   Widget _buildDescriptionInput() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -88,7 +91,10 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
 
   Widget _buildDeadlineInput() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
       child: DateTimeField(
         key: const Key('cv_assignment_deadline_field'),
         format: DateFormat('yyyy-MM-dd HH:mm:ss'),
@@ -122,7 +128,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
 
   Widget _buildRestrictionsHeader() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsetsDirectional.symmetric(vertical: 16.0),
       child: CheckboxListTile(
         value: _isRestrictionEnabled,
         title: Text(
@@ -169,7 +175,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
 
   Widget _buildRestrictionComponent(String title, List<String> components) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsetsDirectional.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -188,7 +194,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
 
   Widget _buildRestrictions() {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsetsDirectional.all(8),
       child: Column(
         children:
             restrictionElements.entries
@@ -201,7 +207,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
 
   Widget _buildUpdateButton() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
       child: CVPrimaryButton(
         key: const Key('update_assignment_button'),
         title: AppLocalizations.of(context)!.update_assignment_title,
@@ -266,7 +272,7 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
               ),
             ),
             body: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsetsDirectional.symmetric(vertical: 16),
               child: Form(
                 key: _formKey,
                 child: Column(

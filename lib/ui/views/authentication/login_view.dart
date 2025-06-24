@@ -42,7 +42,7 @@ class _LoginViewState extends State<LoginView> {
               ? MediaQuery.of(context).size.height * 0.56
               : MediaQuery.of(context).size.height * 0.475,
       color: CVTheme.imageBackground,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsetsDirectional.all(16),
       child: SafeArea(
         child: Image.asset('assets/images/login/cv_login.png', height: 300),
       ),
@@ -83,7 +83,7 @@ class _LoginViewState extends State<LoginView> {
       onTap: () => Get.toNamed(ForgotPasswordView.id),
       child: Container(
         alignment: Alignment.centerRight,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
         child: Text(
           AppLocalizations.of(context)!.login_forgot_password,
           style: TextStyle(color: CVTheme.highlightText(context)),
@@ -94,7 +94,7 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _buildLoginButton() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
         title:

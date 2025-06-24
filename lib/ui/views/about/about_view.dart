@@ -26,12 +26,12 @@ class _AboutViewState extends State<AboutView> {
 
   Widget _buildTosAndPrivacyButtons() {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 12),
+      margin: const EdgeInsetsDirectional.symmetric(vertical: 12),
       child: Row(
         children: <Widget>[
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 4),
               child: CVPrimaryButton.small(
                 title: AppLocalizations.of(context)!.terms_of_service,
                 onPressed: () => Get.toNamed(AboutTosView.id),
@@ -41,7 +41,7 @@ class _AboutViewState extends State<AboutView> {
           const SizedBox(width: 8),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 4),
               child: CVPrimaryButton.small(
                 title: AppLocalizations.of(context)!.privacy_policy,
                 onPressed: () => Get.toNamed(AboutPrivacyPolicyView.id),
@@ -70,7 +70,7 @@ class _AboutViewState extends State<AboutView> {
         );
       case ViewState.Busy:
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32),
+          padding: const EdgeInsetsDirectional.symmetric(vertical: 32),
           child: Text(
             AppLocalizations.of(context)!.loading_contributors,
             textAlign: TextAlign.center,
@@ -78,7 +78,7 @@ class _AboutViewState extends State<AboutView> {
         );
       case ViewState.Error:
         return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32),
+          padding: const EdgeInsetsDirectional.symmetric(vertical: 32),
           child: Text(
             _model.errorMessageFor(_model.FETCH_CONTRIBUTORS),
             textAlign: TextAlign.center,
@@ -99,7 +99,7 @@ class _AboutViewState extends State<AboutView> {
       builder:
           (context, model, child) => Scaffold(
             body: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsetsDirectional.all(16),
               child: Column(
                 children: <Widget>[
                   CVHeader(

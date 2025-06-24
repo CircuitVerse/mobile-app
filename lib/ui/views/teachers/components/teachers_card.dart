@@ -15,20 +15,20 @@ class TeachersCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 16),
+      margin: const EdgeInsetsDirectional.symmetric(vertical: 16),
       elevation: 5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       child: Column(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsetsDirectional.all(8.0),
             child: Image.asset(
               assetPath,
               width: MediaQuery.of(context).size.width,
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
             child: Text(
               cardHeading,
               textAlign: TextAlign.center,
@@ -36,7 +36,7 @@ class TeachersCard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsetsDirectional.all(16.0),
             child: Text(
               cardDescription,
               textAlign: TextAlign.center,

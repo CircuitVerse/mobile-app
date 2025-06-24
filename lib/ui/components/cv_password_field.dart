@@ -30,7 +30,10 @@ class _CVPasswordFieldState extends State<CVPasswordField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
       child: TextFormField(
         focusNode: widget.focusNode,
         maxLines: 1,

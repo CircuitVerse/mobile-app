@@ -17,7 +17,10 @@ class CVTextField extends StatelessWidget {
     this.initialValue,
     this.validator,
     this.onSaved,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    this.padding = const EdgeInsetsDirectional.symmetric(
+      horizontal: 16,
+      vertical: 8,
+    ),
     this.focusNode,
     this.onFieldSubmitted,
     this.onChanged,
@@ -38,7 +41,7 @@ class CVTextField extends StatelessWidget {
   final Function(String)? onFieldSubmitted;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
-  final EdgeInsets padding;
+  final EdgeInsetsDirectional padding;
   final FocusNode? focusNode;
   final Function(String)? onChanged;
 
