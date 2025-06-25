@@ -82,7 +82,7 @@ class CircuitVerseSocialCard extends StatelessWidget {
 
               Container(
                 width: buttonSize,
-                alignment: Alignment.centerRight,
+                alignment: AlignmentDirectional.centerEnd,
                 child: IconButton(
                   onPressed: () async {
                     try {

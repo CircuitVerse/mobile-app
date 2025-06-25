@@ -16,8 +16,8 @@ class GroupMemberCard extends StatelessWidget {
       padding: const EdgeInsetsDirectional.all(16),
       margin: const EdgeInsetsDirectional.all(8),
       decoration: BoxDecoration(
-        border: const Border(
-          left: BorderSide(width: 10, color: CVTheme.primaryColor),
+        border: BorderDirectional(
+          start: BorderSide(width: 10, color: CVTheme.primaryColor),
         ),
         boxShadow: [
           BoxShadow(
