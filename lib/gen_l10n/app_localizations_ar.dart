@@ -9,7 +9,7 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get home_header_title => 'اغوص في عالم الدوائر المنطقية مجانًا!';
+  String get home_header_title => 'غوص في عالم الدوائر المنطقية مجانًا!';
 
   @override
   String get home_header_subtitle =>
@@ -74,43 +74,43 @@ class AppLocalizationsAr extends AppLocalizations {
   String get explore_more_button => 'استكشف المزيد';
 
   @override
-  String get teachers_title => 'المعلمون';
+  String get teachers_title => 'المعلمين';
 
   @override
   String get teachers_description =>
-      'تم تصميم CircuitVerse ليكون سهل الاستخدام في الفصل. يحتوي النظام على ميزات لمساعدة المعلمين في الفصل والواجبات.';
+      'صُممت منصة CircuitVerse لتكون سهلة الاستخدام للغاية في الفصل الدراسي. تحتوي المنصة على ميزات لمساعدة المعلمين في الفصل الدراسي وفي أداء الواجبات.';
 
   @override
-  String get benefits_title => 'المزايا';
+  String get benefits_title => 'فوائد';
 
   @override
-  String get teachers_feature1_title => 'أنشئ مجموعات وأضف طلابك';
+  String get teachers_feature1_title => 'إنشاء مجموعات وإضافة طلابك';
 
   @override
   String get teachers_feature1_description =>
-      'يمكنك إنشاء مجموعات وإضافة طلابك إليها! إذا كان الطلاب مسجلين بالفعل في CircuitVerse فسيتم إضافتهم تلقائيًا. إذا لم يكونوا مسجلين بعد، سيتم إرسال دعوة للتسجيل. بمجرد تسجيلهم، سيتم إضافتهم تلقائيًا.';
+      'يمكنك إنشاء مجموعات وإضافة طلابك إليها! إذا كان الطلاب مسجلين مسبقًا في CircuitVerse، فسيتم إضافتهم تلقائيًا. أما إذا لم يكونوا مسجلين بعد، فسيتم إرسال دعوة لهم للتسجيل. بمجرد تسجيلهم، سيتم إضافتهم تلقائيًا.';
 
   @override
   String get teachers_feature2_title => 'نشر الواجبات';
 
   @override
   String get teachers_feature2_description =>
-      'لإنشاء واجب، ما عليك سوى النقر على زر إضافة واجب جديد. اكتب تفاصيل الواجب والموعد النهائي. سيغلق الواجب تلقائيًا عند الموعد النهائي. لا يمكن للطلاب متابعة واجبهم إلا إذا أعاد المعلم فتح الواجب مرة أخرى.';
+      'لإنشاء مهمة، ما عليك سوى النقر على زر \"إضافة مهمة جديدة\". أدخل تفاصيل المهمة والموعد النهائي. سيتم إغلاق المهمة تلقائيًا عند الموعد النهائي. لا يمكن للطلاب متابعة مهمتهم إلا إذا أعاد المعلم فتحها.';
 
   @override
-  String get teachers_feature3_title => 'تقييم الواجبات';
+  String get teachers_feature3_title => 'مهام الدرجات';
 
   @override
   String get teachers_feature3_description =>
-      'قيم الواجبات بسهولة شديدة مع المعاينة المدمجة. ما عليك سوى اختيار الطالب، لعرض عمله في الواجب.';
+      'قيّم واجباتك بسهولة تامة مع المعاينة المضمنة. ما عليك سوى اختيار الطالب لواجبه.';
 
   @override
   String get teachers_feature4_title =>
-      'استخدم الدوائر التفاعلية في مدوناتك أو موادك الدراسية أو عروض PowerPoint التقديمية';
+      'استخدم الدوائر التفاعلية في مدوناتك أو مواد الدراسة أو عروض PowerPoint';
 
   @override
   String get teachers_feature4_description =>
-      'تأكد من أن المشروع عام. انقر على تضمين، للحصول على كود HTML5 للتضمين، ثم ببساطة قم بتضمين الدائرة. قد تحتاج إلى استخدام إضافة PowerPoint مثل Live Slides لتضمين الدائرة الحية.';
+      'تأكد من أن المشروع عام. انقر على \"تضمين\" للحصول على كود HTML5 للتضمين، ثم قم بتضمين الدائرة. قد تحتاج إلى استخدام إضافة PowerPoint مثل Live Slides لتضمين الدائرة المباشرة.';
 
   @override
   String get contribute_title => 'المساهمة';

@@ -82,7 +82,7 @@ class _LoginViewState extends State<LoginView> {
     return GestureDetector(
       onTap: () => Get.toNamed(ForgotPasswordView.id),
       child: Container(
-        alignment: Alignment.centerRight,
+        alignment: AlignmentDirectional.centerEnd,
         padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
         child: Text(
           AppLocalizations.of(context)!.login_forgot_password,

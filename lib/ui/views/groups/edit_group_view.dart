@@ -86,7 +86,7 @@ class _EditGroupViewState extends State<EditGroupView> {
                     ),
                     const SizedBox(height: 16),
                     CVTextField(
-                      padding: const EdgeInsetsDirectional.all(0),
+                      padding: EdgeInsetsDirectional.zero,
                       label: AppLocalizations.of(context)!.edit_group_name,
                       initialValue: widget.group.attributes.name,
                       validator:

@@ -45,9 +45,9 @@ class ContributeSupportCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(
+                                padding: const EdgeInsetsDirectional.only(
                                   top: 3,
-                                  right: 8,
+                                  start: 8,
                                 ),
                                 child: Text(
                                   '•',
