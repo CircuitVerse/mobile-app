@@ -19,8 +19,8 @@ class MemberCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsetsDirectional.all(16),
+      margin: const EdgeInsetsDirectional.all(8),
       decoration: BoxDecoration(
         border: Border.all(color: CVTheme.primaryColorLight),
         boxShadow: [

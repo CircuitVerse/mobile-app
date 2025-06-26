@@ -152,7 +152,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                   ),
                 ),
                 child: CVTextField(
-                  padding: EdgeInsets.zero,
+                  padding: EdgeInsetsDirectional.zero,
                   prefixIcon: IconButton(
                     onPressed: () {
                       _controller.clear();
@@ -194,7 +194,7 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
           ),
           drawer: const CVDrawer(),
           body: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsetsDirectional.all(16),
             child: ListView.builder(
               controller: controller,
               itemCount: _projects.length,

@@ -15,13 +15,13 @@ class FeatureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsetsDirectional.symmetric(vertical: 8),
       elevation: 5,
       child: Column(
         children: <Widget>[
           Image.asset(assetPath, width: 200),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
             child: Text(
               cardHeading,
               textAlign: TextAlign.center,
@@ -29,7 +29,7 @@ class FeatureCard extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsetsDirectional.all(16),
             child: Text(
               cardDescription,
               textAlign: TextAlign.center,

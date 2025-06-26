@@ -65,7 +65,7 @@ class _EditGroupViewState extends State<EditGroupView> {
           (context, model, child) => Scaffold(
             appBar: AppBar(),
             body: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsetsDirectional.all(16),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -86,7 +86,7 @@ class _EditGroupViewState extends State<EditGroupView> {
                     ),
                     const SizedBox(height: 16),
                     CVTextField(
-                      padding: const EdgeInsets.all(0),
+                      padding: EdgeInsetsDirectional.zero,
                       label: AppLocalizations.of(context)!.edit_group_name,
                       initialValue: widget.group.attributes.name,
                       validator:

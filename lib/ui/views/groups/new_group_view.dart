@@ -63,7 +63,7 @@ class _NewGroupViewState extends State<NewGroupView> {
           (context, model, child) => Scaffold(
             appBar: AppBar(),
             body: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsetsDirectional.all(16),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -84,7 +84,7 @@ class _NewGroupViewState extends State<NewGroupView> {
                     ),
                     const SizedBox(height: 16),
                     CVTextField(
-                      padding: const EdgeInsets.all(0),
+                      padding: const EdgeInsetsDirectional.all(0),
                       label: AppLocalizations.of(context)!.new_group_name,
                       validator:
                           (value) =>

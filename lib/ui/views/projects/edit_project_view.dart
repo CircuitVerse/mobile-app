@@ -85,7 +85,10 @@ class _EditProjectViewState extends State<EditProjectView> {
 
   Widget _buildProjectAccessTypeInput() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
       child: DropdownButtonFormField<String>(
         focusNode: _tagsListFocusNode,
         decoration: CVTheme.textFieldDecoration.copyWith(
@@ -119,7 +122,10 @@ class _EditProjectViewState extends State<EditProjectView> {
 
   Widget _buildDescriptionInput() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
       child: CVHtmlEditor(controller: _controller),
     );
   }
@@ -160,7 +166,7 @@ class _EditProjectViewState extends State<EditProjectView> {
 
   Widget _buildUpdateProjectButton() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
       child: CVPrimaryButton(
         title: AppLocalizations.of(context)!.edit_project_title,
         onPressed: _validateAndSubmit,
@@ -180,7 +186,7 @@ class _EditProjectViewState extends State<EditProjectView> {
               ),
             ),
             body: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsetsDirectional.symmetric(vertical: 16),
               child: Form(
                 key: _formKey,
                 child: Column(

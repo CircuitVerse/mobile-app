@@ -58,7 +58,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   Widget _buildEditGroupButton() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
         backgroundColor: CVTheme.primaryColor,
       ),
       onPressed: () async {
@@ -289,7 +289,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         titleKey;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -303,7 +303,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             CVPrimaryButton(
               title: '${AppLocalizations.of(context)!.group_details_add} +',
               onPressed: onAddPressed,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
             ),
         ],
       ),
@@ -574,7 +574,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                 }
 
                 return ListView(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsetsDirectional.all(8),
                   children: _items,
                 );
               },

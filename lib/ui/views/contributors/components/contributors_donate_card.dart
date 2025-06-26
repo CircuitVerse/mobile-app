@@ -37,7 +37,7 @@ class ContributeDonateCard extends StatelessWidget {
               ],
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
                 child: Image.asset(

@@ -3,3 +3,4 @@ template-arb-file: app_en.arb
 output-localization-file: app_localizations.dart
 output-dir: lib/gen_l10n
 synthetic-package: false
+preferred-supported-locales: ['en', 'ar', 'hi']

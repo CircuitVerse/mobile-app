@@ -36,7 +36,7 @@ class CircuitVerseSocialCard extends StatelessWidget {
                 ? CVTheme.primaryColor
                 : CVTheme.primaryColorShadow,
         child: Padding(
-          padding: EdgeInsets.symmetric(
+          padding: EdgeInsetsDirectional.symmetric(
             vertical: dynamicPadding,
             horizontal: dynamicPadding * 2,
           ),
@@ -44,7 +44,7 @@ class CircuitVerseSocialCard extends StatelessWidget {
             children: <Widget>[
               Container(
                 width: imageWidth,
-                alignment: Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 child: Image.asset(imagePath, width: imageWidth),
               ),
               SizedBox(width: dynamicPadding),
@@ -52,7 +52,9 @@ class CircuitVerseSocialCard extends StatelessWidget {
               Expanded(
                 child: Container(
                   width: textWidth,
-                  padding: EdgeInsets.symmetric(horizontal: dynamicPadding),
+                  padding: EdgeInsetsDirectional.symmetric(
+                    horizontal: dynamicPadding,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -80,7 +82,7 @@ class CircuitVerseSocialCard extends StatelessWidget {
 
               Container(
                 width: buttonSize,
-                alignment: Alignment.centerRight,
+                alignment: AlignmentDirectional.centerEnd,
                 child: IconButton(
                   onPressed: () async {
                     try {

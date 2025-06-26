@@ -31,7 +31,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     return Container(
       width: MediaQuery.of(context).size.width,
       color: CVTheme.imageBackground,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsetsDirectional.all(16),
       child: SafeArea(
         child: Image.asset('assets/images/login/cv_login.png', height: 300),
       ),
@@ -56,7 +56,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
   Widget _buildSendInstructionsButton() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
         title:

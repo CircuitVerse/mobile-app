@@ -25,7 +25,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     Widget _buildHeader() {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
         child: Column(
           children: <Widget>[
             Text(
@@ -48,7 +48,7 @@ class _HomeViewState extends State<HomeView> {
 
     Widget _buildHomePageSketch() {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 8),
         child: Image.asset(
           'assets/images/homepage/new-homepage-sketch.png',
           gaplessPlayback: true,
@@ -59,8 +59,8 @@ class _HomeViewState extends State<HomeView> {
 
     Widget _buildTeachersAndContributorButtons() {
       return Container(
-        margin: const EdgeInsets.symmetric(vertical: 24),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        margin: const EdgeInsetsDirectional.symmetric(vertical: 24),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
         child: LayoutBuilder(
           builder: (context, constraints) {
             final isWide = constraints.maxWidth > 500;
@@ -98,7 +98,7 @@ class _HomeViewState extends State<HomeView> {
       builder:
           (context, model, child) => SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsetsDirectional.all(16),
               child: Column(
                 children: <Widget>[
                   _buildHeader(),
@@ -149,7 +149,9 @@ class _HomeViewState extends State<HomeView> {
                   const FeaturedProjectsView(embed: true),
                   const SizedBox(height: 16),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: 16,
+                    ),
                     child: CVOutlineButton(
                       title: AppLocalizations.of(context)!.explore_more_button,
                       isPrimaryDark: true,
