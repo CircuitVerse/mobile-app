@@ -1078,6 +1078,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featured_circuits => 'Featured Circuits';
 
   @override
+  String get group_member_count => 'Total Members';
+
+  @override
+  String get group_member_card_view => 'View';
+
+  @override
+  String get group_mentor_card_view => 'View';
+
+  @override
+  String get group_mentor_card_edit => 'Edit';
+
+  @override
+  String get group_mentor_card_delete => 'Delete';
+
+  @override
+  String get group_mentor_count => 'Count';
+
+  @override
+  String get assignment_card_view => 'Show';
+
+  @override
+  String get assignment_card_edit => 'Edit';
+
+  @override
+  String get assignment_card_reopen => 'Reopen';
+
+  @override
+  String get assignment_card_delete => 'Delete';
+
+  @override
+  String get assignment_card_view_submission => 'View Submission';
+
+  @override
+  String get assignment_card_view_your_work => 'View Your Work';
+
+  @override
+  String get assignment_card_start_working => 'Start Working';
+
+  @override
+  String get assignment_card_not_submitted => 'Not Submitted!';
+
+  @override
+  String get assignment_card_no_name => 'No Name';
+
+  @override
+  String get assignment_card_grading => 'Grading';
+
+  @override
+  String get assignment_card_deadline => 'Deadline';
+
+  @override
   String get cv_title => 'CircuitVerse';
 
   @override

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/group_details_view.dart';
 
 class GroupMemberCard extends StatelessWidget {
   const GroupMemberCard({super.key, required this.group});
+
+  static const String id = 'group_member_card_view';
 
   final Group group;
 
@@ -46,7 +49,7 @@ class GroupMemberCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsetsDirectional.symmetric(vertical: 4),
                   child: Text(
-                    'Total Members: ${group.attributes.memberCount}',
+                    '${AppLocalizations.of(context)!.group_member_count}: ${group.attributes.memberCount}',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -56,7 +59,7 @@ class GroupMemberCard extends StatelessWidget {
           CardButton(
             onPressed: () => Get.toNamed(GroupDetailsView.id, arguments: group),
             color: CVTheme.primaryColor,
-            title: 'View',
+            title: AppLocalizations.of(context)!.group_member_card_view,
           ),
         ],
       ),
