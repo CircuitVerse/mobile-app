@@ -82,16 +82,18 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
   }
 
   String _getImageUrl() {
-    return EnvironmentConfig.CV_API_BASE_URL.substring(
-          0,
-          EnvironmentConfig.CV_API_BASE_URL.length - 7,
-        ) +
-        widget.project.attributes.imagePreview.url;
+    final base = Uri.parse(
+      EnvironmentConfig.CV_API_BASE_URL,
+    ).replace(pathSegments: []).toString().replaceAll(RegExp(r'\/+$'), '');
+    return '$base${widget.project.attributes.imagePreview.url}';
   }
 
   Widget _buildFooter() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: const EdgeInsetsDirectional.symmetric(
+        vertical: 8,
+        horizontal: 16,
+      ),
       decoration: const BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.only(
@@ -122,7 +124,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsetsDirectional.all(8.0),
       child: Card(
         elevation: 5,
         shadowColor: CVTheme.primaryColorLight,

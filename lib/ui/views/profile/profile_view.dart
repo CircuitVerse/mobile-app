@@ -41,7 +41,7 @@ class _ProfileViewState extends State<ProfileView> {
       key: const Key('profile_image'),
       height: 80,
       width: 80,
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsetsDirectional.all(8),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         image: DecorationImage(
@@ -56,7 +56,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   Widget _buildNameComponent() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4),
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 4),
       child: Text(
         _model.user?.data.attributes.name ??
             AppLocalizations.of(context)!.profile_view_not_available,
@@ -72,8 +72,8 @@ class _ProfileViewState extends State<ProfileView> {
 
   Widget _buildProfileComponent(String title, String? description) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      alignment: Alignment.centerLeft,
+      padding: const EdgeInsetsDirectional.symmetric(vertical: 4),
+      alignment: AlignmentDirectional.centerStart,
       child: RichText(
         text: TextSpan(
           style: Theme.of(context).textTheme.bodyLarge,
@@ -130,7 +130,7 @@ class _ProfileViewState extends State<ProfileView> {
         borderRadius: BorderRadius.circular(4),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsetsDirectional.symmetric(vertical: 8),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -242,7 +242,7 @@ class _ProfileViewState extends State<ProfileView> {
                     )
                     : null,
             body: Padding(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsetsDirectional.all(8),
               child: Column(
                 children: <Widget>[
                   _buildProfileCard(),

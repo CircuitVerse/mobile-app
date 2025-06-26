@@ -14,7 +14,10 @@ class CVTypeAheadField extends StatefulWidget {
     this.maxLines = 1,
     this.validator,
     this.onSaved,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    this.padding = const EdgeInsetsDirectional.symmetric(
+      horizontal: 16,
+      vertical: 8,
+    ),
     this.focusNode,
     this.onFieldSubmitted,
     required this.countryInstituteObject,
@@ -31,7 +34,7 @@ class CVTypeAheadField extends StatefulWidget {
   final String? Function(String?)? validator;
   final Function(String?)? onSaved;
   final Function? onFieldSubmitted;
-  final EdgeInsets padding;
+  final EdgeInsetsDirectional padding;
   final FocusNode? focusNode;
   final CountryInstituteAPI countryInstituteObject;
   final String toggle;
@@ -135,7 +138,7 @@ class _CVTypeAheadFieldState extends State<CVTypeAheadField> {
                   ),
                   child: ListView.builder(
                     shrinkWrap: true,
-                    padding: EdgeInsets.zero,
+                    padding: EdgeInsetsDirectional.zero,
                     itemCount: _suggestions.length,
                     itemBuilder: (context, index) {
                       final suggestion = _suggestions[index];
@@ -222,7 +225,7 @@ class _CVTypeAheadFieldState extends State<CVTypeAheadField> {
                       width: 20,
                       height: 20,
                       child: Padding(
-                        padding: EdgeInsets.all(12.0),
+                        padding: EdgeInsetsDirectional.all(12.0),
                         child: CircularProgressIndicator(strokeWidth: 2),
                       ),
                     )

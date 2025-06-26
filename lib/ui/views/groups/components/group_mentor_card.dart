@@ -4,6 +4,7 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/ui/views/groups/group_details_view.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class GroupMentorCard extends StatefulWidget {
   const GroupMentorCard({
@@ -12,6 +13,8 @@ class GroupMentorCard extends StatefulWidget {
     required this.onEdit,
     required this.onDelete,
   });
+
+  static const String id = 'group_mentor_card_view';
 
   final Group group;
   final VoidCallback onEdit;
@@ -25,8 +28,8 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.all(8),
+      padding: const EdgeInsetsDirectional.all(16),
+      margin: const EdgeInsetsDirectional.all(8),
       decoration: BoxDecoration(
         border: const Border(
           top: BorderSide(width: 10, color: CVTheme.primaryColor),
@@ -50,9 +53,9 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
             textAlign: TextAlign.center,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsetsDirectional.symmetric(vertical: 12),
             child: Text(
-              'Total Members: ${widget.group.attributes.memberCount}',
+              '${AppLocalizations.of(context)!.group_mentor_count}: ${widget.group.attributes.memberCount}',
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
@@ -67,21 +70,21 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
                         arguments: widget.group,
                       ),
                   color: CVTheme.primaryColor,
-                  title: 'View',
+                  title: AppLocalizations.of(context)!.group_mentor_card_view,
                 ),
               ),
               Flexible(
                 child: CardButton(
                   onPressed: widget.onEdit,
                   color: CVTheme.blue,
-                  title: 'Edit',
+                  title: AppLocalizations.of(context)!.group_mentor_card_edit,
                 ),
               ),
               Flexible(
                 child: CardButton(
                   onPressed: widget.onDelete,
                   color: CVTheme.red,
-                  title: 'Delete',
+                  title: AppLocalizations.of(context)!.group_mentor_card_delete,
                 ),
               ),
             ],

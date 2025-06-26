@@ -27,7 +27,7 @@ class _UserProjectsViewState extends State<UserProjectsView>
 
   Widget _emptyState() {
     return Padding(
-      padding: const EdgeInsets.all(32.0),
+      padding: const EdgeInsetsDirectional.all(32.0),
       child: Column(
         children: <Widget>[
           const SizedBox(height: 100),
@@ -130,7 +130,10 @@ class _UserProjectsViewState extends State<UserProjectsView>
           );
         }
 
-        return ListView(padding: const EdgeInsets.all(8), children: _items);
+        return ListView(
+          padding: const EdgeInsetsDirectional.all(8),
+          children: _items,
+        );
       },
     );
   }

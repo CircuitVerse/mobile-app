@@ -33,7 +33,10 @@ class _ProjectCardState extends State<ProjectCard> {
 
   Widget _buildHeader() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+      padding: const EdgeInsetsDirectional.symmetric(
+        vertical: 4,
+        horizontal: 12,
+      ),
       decoration: BoxDecoration(
         color:
             widget.isHeaderFilled ? CVTheme.primaryColor : Colors.transparent,
@@ -112,7 +115,7 @@ class _ProjectCardState extends State<ProjectCard> {
     return GestureDetector(
       onTap: widget.onPressed,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsetsDirectional.all(8.0),
         child: Card(
           elevation: 5,
           shadowColor: CVTheme.primaryColorLight,

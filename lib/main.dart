@@ -35,6 +35,7 @@ class CircuitVerseMobile extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
     var delegates = AppLocalizations.localizationsDelegates.toList();
     delegates.add(FlutterQuillLocalizations.delegate);
 
@@ -76,16 +77,25 @@ class CircuitVerseMobile extends StatelessWidget {
         child: ThemeConsumer(
           child: Builder(
             builder:
-                (themeContext) => GetMaterialApp(
-                  title: 'CircuitVerse Mobile',
-                  debugShowCheckedModeBanner: false,
-                  localizationsDelegates: delegates,
-                  supportedLocales: AppLocalizations.supportedLocales,
-                  onGenerateTitle:
-                      (context) => AppLocalizations.of(context)!.cv_title,
-                  theme: ThemeProvider.themeOf(themeContext).data,
-                  onGenerateRoute: CVRouter.generateRoute,
-                  home: const StartUpView(),
+                (themeContext) => GetBuilder<LanguageController>(
+                  builder: (languageController) {
+                    final locale = languageController.currentLocale.value;
+
+                    return GetMaterialApp(
+                      title: 'CircuitVerse Mobile',
+                      debugShowCheckedModeBanner: false,
+                      locale: locale,
+                      localizationsDelegates: delegates,
+                      supportedLocales: AppLocalizations.supportedLocales,
+                      onGenerateTitle:
+                          (context) => AppLocalizations.of(context)!.cv_title,
+                      theme: ThemeProvider.themeOf(
+                        themeContext,
+                      ).data.copyWith(platform: TargetPlatform.android),
+                      onGenerateRoute: CVRouter.generateRoute,
+                      home: const StartUpView(),
+                    );
+                  },
                 ),
           ),
         ),

@@ -14,7 +14,7 @@ class NotificationsView extends StatelessWidget {
 
   Widget _emptyState(BuildContext context, {required bool hasNoNotifications}) {
     return Padding(
-      padding: const EdgeInsets.all(32.0),
+      padding: const EdgeInsetsDirectional.all(32.0),
       child: Column(
         children: <Widget>[
           const SizedBox(height: 100),
@@ -111,11 +111,13 @@ class NotificationsView extends StatelessWidget {
         return Scaffold(
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 12.0),
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsetsDirectional.symmetric(
+                      vertical: 10,
+                    ),
                     child: Align(
                       alignment: Alignment.topRight,
                       child: SizedBox(
@@ -123,7 +125,9 @@ class NotificationsView extends StatelessWidget {
                         child: DropdownButtonFormField<String>(
                           isDense: true,
                           decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                            contentPadding: EdgeInsetsDirectional.symmetric(
+                              horizontal: 8,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(10),
@@ -177,15 +181,17 @@ class NotificationsView extends StatelessWidget {
                                 : NotificationType.Fork;
 
                         return Card(
-                          margin: const EdgeInsets.symmetric(vertical: 6),
+                          margin: const EdgeInsetsDirectional.symmetric(
+                            vertical: 6,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: ListTile(
-                            contentPadding: const EdgeInsets.all(12),
+                            contentPadding: const EdgeInsetsDirectional.all(12),
                             onTap: () => model.markAsRead(notification.id),
                             leading: Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: const EdgeInsetsDirectional.all(10),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.grey.withAlpha(50),
