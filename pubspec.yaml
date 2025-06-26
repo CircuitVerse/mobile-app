@@ -62,7 +62,7 @@ dependencies:
   url_launcher: ^6.1.11
   flutter_facebook_auth: ^6.0.4
 
-  http: any
+  http: 1.4.0
   markdown: any
   webview_flutter: any
   flutter_quill: ^11.1.2
