@@ -1423,10 +1423,10 @@ packages:
     dependency: "direct main"
     description:
       name: simple_chips_input
-      sha256: a7d1df74412070a5bb6f7f7dd2df8e671688af04ac92f8e9adf5dfbc746766a0
+      sha256: "263ba00bbb1205256c91b587187c8a9820e5162e864df8a791db745c7927b4bd"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   sky_engine:
     dependency: transitive
     description: flutter
