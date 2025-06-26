@@ -94,16 +94,7 @@ void main() {
       expect(find.byType(GroupMemberCard), findsOneWidget);
       expect(find.text('Test Group'), findsOneWidget);
 
-      // Use localized text instead of hardcoded string
-      // Check if your localization file has a key for "Total Members: {count}"
-      // If not, you might need to find the actual text being displayed
-      // For now, let's check for the existence of the card elements instead
-      expect(find.byType(GroupMemberCard), findsOneWidget);
-
-      // Alternative approach: Look for text that contains "Members" or the actual count
-      // You can uncomment one of these based on what's actually in your localization:
-      // expect(find.textContaining('Members'), findsOneWidget);
-      // expect(find.textContaining('1'), findsOneWidget);
+      expect(find.textContaining('1'), findsOneWidget);
 
       expect(
         find.widgetWithText(CardButton, localizations.my_groups_view),
@@ -115,7 +106,6 @@ void main() {
       await tester.pumpAndSettle();
 
       // Mentor Group Card validations
-      expect(find.byType(GroupMentorCard), findsOneWidget);
       expect(find.text('Test Group'), findsOneWidget);
 
       expect(find.byType(GroupMentorCard), findsOneWidget);

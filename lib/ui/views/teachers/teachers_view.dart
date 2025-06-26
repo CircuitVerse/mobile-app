@@ -14,14 +14,14 @@ class TeachersView extends StatelessWidget {
     if (baseName == 'grading') {
       return 'assets/images/teachers/grading.png';
     }
-    
+
     return 'assets/images/teachers/${baseName}_$locale.png';
   }
 
   @override
   Widget build(BuildContext context) {
     final locale = Localizations.localeOf(context).languageCode;
-    
+
     return Scaffold(
       appBar: showAppBar ? AppBar() : null,
       body: SingleChildScrollView(
