@@ -10,8 +10,18 @@ class TeachersView extends StatelessWidget {
   static const String id = 'teachers_view';
   final bool showAppBar;
 
+  String _getLocalizedImagePath(String baseName, String locale) {
+    if (baseName == 'grading') {
+      return 'assets/images/teachers/grading.png';
+    }
+    
+    return 'assets/images/teachers/${baseName}_$locale.png';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).languageCode;
+    
     return Scaffold(
       appBar: showAppBar ? AppBar() : null,
       body: SingleChildScrollView(
@@ -24,28 +34,28 @@ class TeachersView extends StatelessWidget {
             ),
             CVSubheader(title: AppLocalizations.of(context)!.benefits_title),
             TeachersCard(
-              assetPath: 'assets/images/teachers/groups.png',
+              assetPath: _getLocalizedImagePath('groups', locale),
               cardHeading:
                   AppLocalizations.of(context)!.teachers_feature1_title,
               cardDescription:
                   AppLocalizations.of(context)!.teachers_feature1_description,
             ),
             TeachersCard(
-              assetPath: 'assets/images/teachers/assignment.png',
+              assetPath: _getLocalizedImagePath('assignment', locale),
               cardHeading:
                   AppLocalizations.of(context)!.teachers_feature2_title,
               cardDescription:
                   AppLocalizations.of(context)!.teachers_feature2_description,
             ),
             TeachersCard(
-              assetPath: 'assets/images/teachers/grading.png',
+              assetPath: _getLocalizedImagePath('grading', locale),
               cardHeading:
                   AppLocalizations.of(context)!.teachers_feature3_title,
               cardDescription:
                   AppLocalizations.of(context)!.teachers_feature3_description,
             ),
             TeachersCard(
-              assetPath: 'assets/images/teachers/embed.png',
+              assetPath: _getLocalizedImagePath('embed', locale),
               cardHeading:
                   AppLocalizations.of(context)!.teachers_feature4_title,
               cardDescription:

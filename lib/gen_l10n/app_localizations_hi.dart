@@ -1086,6 +1086,57 @@ class AppLocalizationsHi extends AppLocalizations {
   String get featured_circuits => 'विशेष सर्किट';
 
   @override
+  String get group_member_count => 'कुल सदस्य';
+
+  @override
+  String get group_member_card_view => 'देखें';
+
+  @override
+  String get group_mentor_card_view => 'देखें';
+
+  @override
+  String get group_mentor_card_edit => 'संपादित करें';
+
+  @override
+  String get group_mentor_card_delete => 'हटाएं';
+
+  @override
+  String get group_mentor_count => 'गणना';
+
+  @override
+  String get assignment_card_view => 'दिखाएं';
+
+  @override
+  String get assignment_card_edit => 'संपादित करें';
+
+  @override
+  String get assignment_card_reopen => 'पुनः खोलें';
+
+  @override
+  String get assignment_card_delete => 'हटाएं';
+
+  @override
+  String get assignment_card_view_submission => 'जमा देखें';
+
+  @override
+  String get assignment_card_view_your_work => 'अपना काम देखें';
+
+  @override
+  String get assignment_card_start_working => 'काम शुरू करें';
+
+  @override
+  String get assignment_card_not_submitted => 'जमा नहीं किया गया!';
+
+  @override
+  String get assignment_card_no_name => 'कोई नाम नहीं';
+
+  @override
+  String get assignment_card_grading => 'ग्रेडिंग';
+
+  @override
+  String get assignment_card_deadline => 'समय सीमा';
+
+  @override
   String get cv_title => 'सर्किटवर्स';
 
   @override

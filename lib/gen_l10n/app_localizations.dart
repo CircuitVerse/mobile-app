@@ -2110,6 +2110,108 @@ abstract class AppLocalizations {
   /// **'Featured Circuits'**
   String get featured_circuits;
 
+  /// No description provided for @group_member_count.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Members'**
+  String get group_member_count;
+
+  /// No description provided for @group_member_card_view.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get group_member_card_view;
+
+  /// No description provided for @group_mentor_card_view.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get group_mentor_card_view;
+
+  /// No description provided for @group_mentor_card_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get group_mentor_card_edit;
+
+  /// No description provided for @group_mentor_card_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get group_mentor_card_delete;
+
+  /// No description provided for @group_mentor_count.
+  ///
+  /// In en, this message translates to:
+  /// **'Count'**
+  String get group_mentor_count;
+
+  /// No description provided for @assignment_card_view.
+  ///
+  /// In en, this message translates to:
+  /// **'Show'**
+  String get assignment_card_view;
+
+  /// No description provided for @assignment_card_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get assignment_card_edit;
+
+  /// No description provided for @assignment_card_reopen.
+  ///
+  /// In en, this message translates to:
+  /// **'Reopen'**
+  String get assignment_card_reopen;
+
+  /// No description provided for @assignment_card_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get assignment_card_delete;
+
+  /// No description provided for @assignment_card_view_submission.
+  ///
+  /// In en, this message translates to:
+  /// **'View Submission'**
+  String get assignment_card_view_submission;
+
+  /// No description provided for @assignment_card_view_your_work.
+  ///
+  /// In en, this message translates to:
+  /// **'View Your Work'**
+  String get assignment_card_view_your_work;
+
+  /// No description provided for @assignment_card_start_working.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Working'**
+  String get assignment_card_start_working;
+
+  /// No description provided for @assignment_card_not_submitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Submitted!'**
+  String get assignment_card_not_submitted;
+
+  /// No description provided for @assignment_card_no_name.
+  ///
+  /// In en, this message translates to:
+  /// **'No Name'**
+  String get assignment_card_no_name;
+
+  /// No description provided for @assignment_card_grading.
+  ///
+  /// In en, this message translates to:
+  /// **'Grading'**
+  String get assignment_card_grading;
+
+  /// No description provided for @assignment_card_deadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Deadline'**
+  String get assignment_card_deadline;
+
   /// No description provided for @cv_title.
   ///
   /// In en, this message translates to:

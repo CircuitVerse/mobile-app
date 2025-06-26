@@ -78,24 +78,24 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get teachers_description =>
-      'صُممت منصة CircuitVerse لتكون سهلة الاستخدام للغاية في الفصل الدراسي. تحتوي المنصة على ميزات لمساعدة المعلمين في الفصل الدراسي وفي أداء الواجبات.';
+      ' صُممت منصة CircuitVerse لتكون سهلة الاستخدام في الفصل الدراسي لمساعدة المعلمين في اداء الواجبات.';
 
   @override
-  String get benefits_title => 'فوائد';
+  String get benefits_title => 'الميزات';
 
   @override
-  String get teachers_feature1_title => 'إنشاء مجموعات وإضافة طلابك';
+  String get teachers_feature1_title => 'انشأ العديد من المجموعات واضف طلابك';
 
   @override
   String get teachers_feature1_description =>
-      'يمكنك إنشاء مجموعات وإضافة طلابك إليها! إذا كان الطلاب مسجلين مسبقًا في CircuitVerse، فسيتم إضافتهم تلقائيًا. أما إذا لم يكونوا مسجلين بعد، فسيتم إرسال دعوة لهم للتسجيل. بمجرد تسجيلهم، سيتم إضافتهم تلقائيًا.';
+      'يمكنك إنشاء العديد من المجموعات وإضافة طلابك إليها! إذا كان الطلاب مسجلين مسبقًا في المنصه فستتم إضافتهم تلقائيًا. في حال عدم تسجيلهم بشكل مسبق، فستتم ارسال الدعوات لهم للتسجيل. بمجرد اتمامهم عملية التسجيل ستتم اضافتهم في المجموعة.';
 
   @override
-  String get teachers_feature2_title => 'نشر الواجبات';
+  String get teachers_feature2_title => 'تصحيح الدرجات/ تصحيح الواجبات';
 
   @override
   String get teachers_feature2_description =>
-      'لإنشاء مهمة، ما عليك سوى النقر على زر \"إضافة مهمة جديدة\". أدخل تفاصيل المهمة والموعد النهائي. سيتم إغلاق المهمة تلقائيًا عند الموعد النهائي. لا يمكن للطلاب متابعة مهمتهم إلا إذا أعاد المعلم فتحها.';
+      'يمكنك تصحيح الواجبات بسهولة بالغة باستخدام معاينة البناء. ما عليك سوى تحديد الطالب لعمل واجباته.';
 
   @override
   String get teachers_feature3_title => 'مهام الدرجات';
@@ -1068,6 +1068,57 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get featured_circuits => 'دوائر مميزة';
+
+  @override
+  String get group_member_count => 'إجمالي الأعضاء';
+
+  @override
+  String get group_member_card_view => 'عرض';
+
+  @override
+  String get group_mentor_card_view => 'عرض';
+
+  @override
+  String get group_mentor_card_edit => 'تعديل';
+
+  @override
+  String get group_mentor_card_delete => 'حذف';
+
+  @override
+  String get group_mentor_count => 'العدد';
+
+  @override
+  String get assignment_card_view => 'عرض';
+
+  @override
+  String get assignment_card_edit => 'تحرير';
+
+  @override
+  String get assignment_card_reopen => 'إعادة فتح';
+
+  @override
+  String get assignment_card_delete => 'حذف';
+
+  @override
+  String get assignment_card_view_submission => 'عرض التسليم';
+
+  @override
+  String get assignment_card_view_your_work => 'عرض عملك';
+
+  @override
+  String get assignment_card_start_working => 'ابدأ العمل';
+
+  @override
+  String get assignment_card_not_submitted => 'لم يتم التسليم!';
+
+  @override
+  String get assignment_card_no_name => 'لا يوجد اسم';
+
+  @override
+  String get assignment_card_grading => 'التقييم';
+
+  @override
+  String get assignment_card_deadline => 'الموعد النهائي';
 
   @override
   String get cv_title => 'CircuitVerse';
