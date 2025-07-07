@@ -65,15 +65,19 @@ jobs:
             
       - name: Build APK (Android)
         if: ${{ matrix.platform == 'ubuntu-latest' }}
+        env:
+          FB_APP_ID:              ${{ secrets.FB_APP_ID }}
+          FB_APP_NAME:            ${{ secrets.FB_APP_NAME }}
+          GH_OAUTH_CLIENT_ID:     ${{ secrets.GH_OAUTH_CLIENT_ID }}
+          GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: |
           flutter build apk --release \
-            --dart-define=FB_APP_ID=${{ secrets.FB_APP_ID }} \
-            --dart-define=FB_APP_NAME=${{ secrets.FB_APP_NAME }} \
-            --dart-define=GITHUB_OAUTH_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }} \
-            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+            --dart-define=FB_APP_ID=$FB_APP_ID \
+            --dart-define=FB_APP_NAME=$FB_APP_NAME \
+            --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
+            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
             
       - name: Upload APK Artifact
-        if: ${{ matrix.platform == 'ubuntu-latest' }}
         uses: actions/upload-artifact@v4
         with:
           name: android-apk-${{ github.run_number }}
@@ -95,7 +99,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: android-apk-${{ github.run_number }}
-          path: ./
+          path: build/app/outputs/apk/release/  
           
       - name: Get Current Date
         id: date
@@ -113,7 +117,7 @@ jobs:
             Build date: ${{ steps.date.outputs.date }}
             
             Download and install the APK file below.
-          files: ./app-release.apk
+          files: build/app/outputs/apk/release/app-release.apk
           draft: false
           prerelease: false
           generate_release_notes: true
