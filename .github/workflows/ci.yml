@@ -62,22 +62,61 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
+            
       - name: Build APK (Android)
-        run: flutter build apk
-
+        if: ${{ matrix.platform == 'ubuntu-latest' }}
+        run: |
+          flutter build apk --release \
+            --dart-define=FB_APP_ID=${{ secrets.FB_APP_ID }} \
+            --dart-define=FB_APP_NAME=${{ secrets.FB_APP_NAME }} \
+            --dart-define=GITHUB_OAUTH_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }} \
+            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+            
+      - name: Upload APK Artifact
+        if: ${{ matrix.platform == 'ubuntu-latest' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk-${{ github.run_number }}
+          path: build/app/outputs/apk/release/app-release.apk
+          if-no-files-found: error
+          
       - name: Build iOS (MacOS Only)
         if: ${{ matrix.platform == 'macos-latest' }}
         run: |
           rm -f ios/Podfile.lock
           flutter build ios --release --no-codesign
 
-      - name: Upload APK as Artifact
-        uses: actions/upload-artifact@v4
+  release:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download APK Artifact
+        uses: actions/download-artifact@v4
         with:
-          name: release-apk-${{ matrix.platform }}-${{ github.run_id }}
-          path: build/app/outputs/apk/release/app-release.apk
-          if-no-files-found: error
+          name: android-apk-${{ github.run_number }}
+          path: ./
+          
+      - name: Get Current Date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v1.0.${{ github.run_number }}"
+          name: "Release v1.0.${{ github.run_number }} - ${{ steps.date.outputs.date }}"
+          body: |
+            Android APK release built from commit ${{ github.sha }}.
+            
+            Build number: ${{ github.run_number }}
+            Build date: ${{ steps.date.outputs.date }}
+            
+            Download and install the APK file below.
+          files: ./app-release.apk
+          draft: false
+          prerelease: false
+          generate_release_notes: true
 
   finish:
     needs: build
