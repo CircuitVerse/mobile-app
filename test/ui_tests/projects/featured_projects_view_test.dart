@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
-import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/views/projects/components/featured_project_card.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
@@ -107,16 +106,11 @@ void main() {
         when(projectDetailsViewModel.fetchProjectDetails(any)).thenReturn(null);
         when(projectDetailsViewModel.isSuccess(any)).thenReturn(false);
 
-        expect(find.widgetWithText(CVPrimaryButton, 'View'), findsOneWidget);
+        expect(find.widgetWithText(TextButton, 'VIEW'), findsOneWidget);
 
-        // ISSUE: tester.tap() is not working
         Widget button =
-            find
-                .widgetWithText(CVPrimaryButton, 'View')
-                .evaluate()
-                .first
-                .widget;
-        (button as CVPrimaryButton).onPressed!();
+            find.widgetWithText(TextButton, 'VIEW').evaluate().first.widget;
+        (button as TextButton).onPressed!();
         await tester.pumpAndSettle();
 
         verify(mockObserver.didPush(any, any));
