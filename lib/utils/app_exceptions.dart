@@ -17,11 +17,11 @@ class AppException implements Exception {
 }
 
 class BadRequestException extends AppException {
-  BadRequestException([message]) : super(message, 'Invalid Request');
+  BadRequestException([String? message]) : super(message, 'Invalid Request');
 }
 
 class UnauthorizedException extends AppException {
-  UnauthorizedException([message]) : super(message, 'Unauthorized');
+  UnauthorizedException([String? message]) : super(message, 'Unauthorized');
 }
 
 class ForbiddenException extends AppException {
