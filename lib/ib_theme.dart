@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class IbTheme {
   IbTheme._();
 
-  static ThemeData getThemeData(context) {
+  static ThemeData getThemeData(BuildContext context) {
     return Theme.of(context).copyWith(
       brightness: Theme.of(context).brightness,
       primaryIconTheme: Theme.of(
@@ -25,41 +25,41 @@ class IbTheme {
     );
   }
 
-  static Color textFieldLabelColor(context) {
+  static Color textFieldLabelColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? Colors.grey[300]!
         : Colors.grey[600]!;
   }
 
-  static Color textColor(context) {
+  static Color textColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? Colors.white
         : IbTheme.bodyTextColor;
   }
 
-  static Color primaryHeadingColor(context) {
+  static Color primaryHeadingColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? Colors.white
         : IbTheme.headingTextColor;
   }
 
-  static Color boxBg(context) {
+  static Color boxBg(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? bgCardDark
         : bgCard;
   }
 
-  static Color boxShadow(context) {
+  static Color boxShadow(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark ? bgCardDark : grey;
   }
 
-  static Color highlightText(context) {
+  static Color highlightText(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? primaryColor
         : primaryColorDark;
   }
 
-  static Color getPrimaryColor(context) {
+  static Color getPrimaryColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? IbTheme.brightPrimaryColor
         : IbTheme.primaryColor;
