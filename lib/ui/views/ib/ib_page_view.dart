@@ -563,7 +563,7 @@ class CustomImageBuilder extends MarkdownElementBuilder {
           loadingBuilder:
               (_, child, progress) =>
                   progress == null ? child : _buildLoadingIndicator(),
-          errorBuilder: (_, __, ___) => _buildErrorWidget(imageLoadErrorText),
+          errorBuilder: (_, _, _) => _buildErrorWidget(imageLoadErrorText),
           fit: BoxFit.contain,
         );
       }

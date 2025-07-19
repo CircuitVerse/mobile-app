@@ -3,55 +3,55 @@ import 'package:flutter/material.dart';
 class CVTheme {
   CVTheme._();
 
-  static Color textFieldLabelColor(context) {
+  static Color textFieldLabelColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? Colors.grey[300]!
         : Colors.grey[600]!;
   }
 
-  static Color textColor(context) {
+  static Color textColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? Colors.white
         : Colors.black;
   }
 
-  static Color primaryHeading(context) {
+  static Color primaryHeading(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? CVTheme.primaryColor
         : Colors.black;
   }
 
-  static Color boxBg(context) {
+  static Color boxBg(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? CVTheme.bgCardDark
         : CVTheme.bgCard;
   }
 
-  static Color boxShadow(context) {
+  static Color boxShadow(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? CVTheme.bgCardDark
         : CVTheme.grey;
   }
 
-  static Color appBarText(context) {
+  static Color appBarText(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? CVTheme.primaryColor
         : Colors.black;
   }
 
-  static Color drawerIcon(context) {
+  static Color drawerIcon(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? CVTheme.primaryColor
         : Colors.black;
   }
 
-  static Color highlightText(context) {
+  static Color highlightText(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark
         ? CVTheme.primaryColor
         : CVTheme.primaryColorDark;
   }
 
-  static ThemeData themeData(context) {
+  static ThemeData themeData(BuildContext context) {
     return ThemeData(
       brightness: Theme.of(context).brightness,
       colorScheme: ThemeData().colorScheme.copyWith(
