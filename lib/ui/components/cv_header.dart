@@ -25,7 +25,7 @@ class CVHeader extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.displaySmall?.copyWith(
             fontWeight: FontWeight.w400,
-            color: CVTheme.primaryColorDark,
+            color: CVTheme.primaryColor,
           ),
           textAlign: TextAlign.center,
         ),
