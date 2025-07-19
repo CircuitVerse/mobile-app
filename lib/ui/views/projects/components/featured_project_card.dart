@@ -77,11 +77,10 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
   }
 
   String _getImageUrl() {
-    return EnvironmentConfig.CV_API_BASE_URL.substring(
-          0,
-          EnvironmentConfig.CV_API_BASE_URL.length - 7,
-        ) +
-        widget.project.attributes.imagePreview.url;
+    final base = Uri.parse(
+      EnvironmentConfig.CV_API_BASE_URL,
+    ).replace(pathSegments: []).toString().replaceAll(RegExp(r'\/+$'), '');
+    return '$base${widget.project.attributes.imagePreview.url}';
   }
 
   String _stripHtml(String htmlString) {
