@@ -105,7 +105,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         elevation: 5,
         shadowColor:
             Theme.of(context).brightness == Brightness.dark
-                ? Colors.white.withValues(alpha: 1)
+                ? Colors.white.withValues(alpha: 0.1)
                 : CVTheme.boxShadow(context),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
