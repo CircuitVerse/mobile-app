@@ -51,7 +51,10 @@ class _CVHtmlEditorState extends State<CVHtmlEditor> {
               minHeight: widget.height,
               maxHeight: widget.height,
             ),
-            child: QuillEditor.basic(controller: widget.controller),
+            child: Container(
+              padding: EdgeInsets.all(16.0),
+              child: QuillEditor.basic(controller: widget.controller),
+            ),
           ),
         ],
       ),

@@ -6,6 +6,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/locator.dart';
+import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
@@ -17,30 +18,43 @@ import 'package:permission_handler/permission_handler.dart';
 class SimulatorViewModel extends BaseModel {
   // ViewState Keys
   static const String SIMULATOR = 'simulator';
-  final String url = '${EnvironmentConfig.CV_BASE_URL}/simulator';
 
   // Services
   final LocalStorageService _service = locator<LocalStorageService>();
   final cookieManager = CookieManager.instance();
 
+  // WebView Controller
+  InAppWebViewController? webViewController;
+
+  // Project to edit
+  Project? _projectToEdit;
+
+  String get url {
+    if (_projectToEdit != null) {
+      return '${EnvironmentConfig.CV_BASE_URL}/simulator/edit/${_projectToEdit!.id}';
+    }
+    return '${EnvironmentConfig.CV_BASE_URL}/simulator';
+  }
+
   String? get token {
     if (!_service.isLoggedIn) return null;
-
     return _service.token;
   }
 
   Uri get uri => Uri.parse(EnvironmentConfig.CV_BASE_URL);
 
+  void setProjectToEdit(Project? project) {
+    _projectToEdit = project;
+    notifyListeners();
+  }
+
   Future<bool> _requestPermission(Permission permission) async {
     if (await permission.isGranted) return true;
-
     final result = await permission.request();
-
     return result.isGranted;
   }
 
   Future<Directory> getAppDirectory() async {
-    // This is only applicable to Android
     final directory = await getExternalStorageDirectory();
     final folders = directory!.path.split('/');
 
@@ -80,7 +94,6 @@ class SimulatorViewModel extends BaseModel {
 
           if (await directory.exists()) {
             final file = File('${directory.path}/$fileName');
-
             file.writeAsBytesSync(
               List.from(request.url.data!.contentAsBytes()),
             );
@@ -93,7 +106,7 @@ class SimulatorViewModel extends BaseModel {
         }
       }
     } catch (e) {
-      debugPrint('Error occured while downloading: ${e.toString()}');
+      debugPrint('Error occurred while downloading: ${e.toString()}');
       rethrow;
     }
   }
@@ -108,12 +121,10 @@ class SimulatorViewModel extends BaseModel {
     } else if (url.contains('sign_in')) {
       Get.offAndToNamed(LoginView.id);
     } else if (url.contains('sign_out')) {
-      // clear all the cookies
       clearCookies();
       return true;
     }
 
-    // save new project
     final components = url.split('/');
     final length = components.length;
     if (components[length - 1] == 'edit' &&
@@ -121,7 +132,11 @@ class SimulatorViewModel extends BaseModel {
       return true;
     }
 
-    // navigate to profile or groups
+    if (url.contains('projects') &&
+        (url.contains('saved') || url.contains('updated'))) {
+      return true;
+    }
+
     if (url.contains('groups') || url.contains('users')) {
       return true;
     }
@@ -129,8 +144,11 @@ class SimulatorViewModel extends BaseModel {
     return false;
   }
 
-  void onModelReady() {
-    // Set the orientation of the screen
+  void onModelReady([Project? project]) {
+    if (project != null) {
+      setProjectToEdit(project);
+    }
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
@@ -138,7 +156,7 @@ class SimulatorViewModel extends BaseModel {
   }
 
   void onModelDestroy() {
-    // Reset to the screen orientation
+    _projectToEdit = null;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
