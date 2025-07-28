@@ -38,7 +38,11 @@ class CVRouter {
       case CVLandingView.id:
         return MaterialPageRoute(builder: (_) => const CVLandingView());
       case SimulatorView.id:
-        return MaterialPageRoute(builder: (_) => const SimulatorView());
+        final project = settings.arguments as Project?;
+        return MaterialPageRoute(
+          builder: (_) => const SimulatorView(),
+          settings: RouteSettings(name: SimulatorView.id, arguments: project),
+        );
       case TeachersView.id:
         return MaterialPageRoute(builder: (_) => const TeachersView());
       case ContributorsView.id:
