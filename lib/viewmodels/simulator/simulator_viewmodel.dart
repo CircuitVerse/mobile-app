@@ -23,9 +23,6 @@ class SimulatorViewModel extends BaseModel {
   final LocalStorageService _service = locator<LocalStorageService>();
   final cookieManager = CookieManager.instance();
 
-  // WebView Controller
-  InAppWebViewController? webViewController;
-
   // Project to edit
   Project? _projectToEdit;
 
