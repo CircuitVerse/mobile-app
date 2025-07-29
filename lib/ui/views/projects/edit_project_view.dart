@@ -9,6 +9,7 @@ import 'package:mobile_app/ui/components/cv_html_editor.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
+import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/edit_project_viewmodel.dart';
@@ -164,12 +165,38 @@ class _EditProjectViewState extends State<EditProjectView> {
     }
   }
 
+  Future<void> _openInSimulator() async {
+    try {
+      // Navigate to simulator with the project for editing
+      final result = await Get.toNamed(
+        SimulatorView.id,
+        arguments: widget.project,
+      );
+
+      if (result != null) {
+        SnackBarUtils.showDark('Simulator', 'Returned from simulator');
+      }
+    } catch (e) {
+      SnackBarUtils.showDark('Error', 'Failed to open project in simulator');
+    }
+  }
+
   Widget _buildUpdateProjectButton() {
     return Padding(
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
       child: CVPrimaryButton(
         title: AppLocalizations.of(context)!.edit_project_title,
         onPressed: _validateAndSubmit,
+      ),
+    );
+  }
+
+  Widget _buildOpenInSimulatorButton(BuildContext Context) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
+      child: CVPrimaryButton(
+        title: AppLocalizations.of(context)!.edit_open_in_simulator,
+        onPressed: _openInSimulator,
       ),
     );
   }
@@ -197,6 +224,8 @@ class _EditProjectViewState extends State<EditProjectView> {
                     _buildProjectAccessTypeInput(),
                     _buildDescriptionInput(),
                     const SizedBox(height: 16),
+                    _buildOpenInSimulatorButton(context),
+                    const SizedBox(height: 12),
                     _buildUpdateProjectButton(),
                   ],
                 ),

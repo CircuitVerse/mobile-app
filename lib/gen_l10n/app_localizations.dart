@@ -2080,6 +2080,12 @@ abstract class AppLocalizations {
   /// **'Add'**
   String get edit_add;
 
+  /// No description provided for @edit_open_in_simulator.
+  ///
+  /// In en, this message translates to:
+  /// **'Open in Simulator'**
+  String get edit_open_in_simulator;
+
   /// No description provided for @featured_no_result_found.
   ///
   /// In en, this message translates to:

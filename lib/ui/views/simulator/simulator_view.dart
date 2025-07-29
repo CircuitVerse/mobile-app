@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/enums/view_state.dart';
+import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/simulator/simulator_viewmodel.dart';
 
@@ -12,12 +13,15 @@ class SimulatorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get the project argument if passed
+    final Project? project = Get.arguments as Project?;
+
     return Scaffold(
       body: SafeArea(
         child: BaseView<SimulatorViewModel>(
-          onModelReady: (model) => model.onModelReady(),
+          onModelReady: (model) => model.onModelReady(project),
           onModelDestroy: (model) => model.onModelDestroy(),
-          builder: (context, model, _) {
+          builder: (context, model, child) {
             return IndexedStack(
               index: model.isIdle(SimulatorViewModel.SIMULATOR) ? 1 : 0,
               children: [

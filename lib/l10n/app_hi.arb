@@ -372,6 +372,7 @@
   "edit_project_collaborator_delete_success": "सहयोगी सफलतापूर्वक हटा दिया गया",
   "edit_cancel": "रद्द करें",
   "edit_add": "जोडें",
+  "edit_open_in_simulator": "सिम्युलेटर में खोलें",
 
   "@featured_projects_view": {},
   "featured_no_result_found": "कोई परिणाम नहीं मिला",
