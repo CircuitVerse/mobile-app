@@ -1070,6 +1070,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get edit_add => 'जोडें';
 
   @override
+  String get edit_open_in_simulator => 'सिम्युलेटर में खोलें';
+
+  @override
   String get featured_no_result_found => 'कोई परिणाम नहीं मिला';
 
   @override

@@ -374,6 +374,7 @@
   "edit_project_collaborator_delete_success": "Collaborator removed successfully",
   "edit_cancel": "Cancel",
   "edit_add": "Add",
+  "edit_open_in_simulator": "Open in Simulator",
 
   "@featured_projects_view": {},
   "featured_no_result_found": "No result found",

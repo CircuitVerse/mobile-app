@@ -1062,6 +1062,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get edit_add => 'Add';
 
   @override
+  String get edit_open_in_simulator => 'Open in Simulator';
+
+  @override
   String get featured_no_result_found => 'No result found';
 
   @override
