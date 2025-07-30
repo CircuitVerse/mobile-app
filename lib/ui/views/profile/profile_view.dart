@@ -39,82 +39,99 @@ class _ProfileViewState extends State<ProfileView> {
         (_model.user?.data.attributes.profilePicture ?? 'Default');
     return Container(
       key: const Key('profile_image'),
-      height: 80,
-      width: 80,
-      padding: const EdgeInsetsDirectional.all(8),
+      height: 100,
+      width: 100,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
+        border: Border.all(color: CVTheme.primaryColor.withAlpha(77), width: 3),
         image: DecorationImage(
           image:
               imageURL.toLowerCase().contains('default')
                   ? const AssetImage('assets/images/profile/default_icon.jpg')
                   : NetworkImage(imageURL) as ImageProvider,
+          fit: BoxFit.cover,
         ),
       ),
     );
   }
 
   Widget _buildNameComponent() {
-    return Padding(
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: 4),
-      child: Text(
-        _model.user?.data.attributes.name ??
-            AppLocalizations.of(context)!.profile_view_not_available,
-        textAlign: TextAlign.center,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-        style: Theme.of(
-          context,
-        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+    return Text(
+      _model.user?.data.attributes.name ??
+          AppLocalizations.of(context)!.profile_view_not_available,
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+        fontWeight: FontWeight.bold,
+        fontSize: 22,
       ),
     );
   }
 
-  Widget _buildProfileComponent(String title, String? description) {
+  Widget _buildProfileComponent(IconData icon, String? description) {
     return Container(
-      padding: const EdgeInsetsDirectional.symmetric(vertical: 4),
-      alignment: AlignmentDirectional.centerStart,
-      child: RichText(
-        text: TextSpan(
-          style: Theme.of(context).textTheme.bodyLarge,
-          children: <TextSpan>[
-            TextSpan(
-              text: '$title : ',
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: CVTheme.primaryColor.withAlpha(26),
+              borderRadius: BorderRadius.circular(8),
             ),
-            TextSpan(
-              text:
-                  description?.isEmpty ?? true
-                      ? AppLocalizations.of(context)!.profile_view_not_available
-                      : description,
+            child: Icon(icon, color: CVTheme.primaryColor, size: 20),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: Text(
+                description?.isEmpty ?? true
+                    ? AppLocalizations.of(context)!.profile_view_not_available
+                    : description!,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge?.copyWith(fontSize: 16, height: 1.4),
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildEditProfileButton() {
     if (_model.isLoggedIn && _model.isPersonalProfile) {
-      return ElevatedButton(
-        style: ElevatedButton.styleFrom(backgroundColor: CVTheme.primaryColor),
-        onPressed: () async {
-          await Get.toNamed(EditProfileView.id)?.then((_updatedUser) {
-            if (_updatedUser is User) {
-              setState(() {
-                _model.user = _updatedUser;
-              });
-            }
-            context.read<CVLandingViewModel>().onProfileUpdated();
-          });
-        },
-        child: Text(
-          AppLocalizations.of(context)!.profile_view_edit,
-          style: Theme.of(
-            context,
-          ).textTheme.bodyLarge?.copyWith(color: Colors.white),
+      return Container(
+        width: double.infinity,
+        margin: const EdgeInsets.only(top: 20),
+        child: ElevatedButton.icon(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: CVTheme.primaryColor,
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          onPressed: () async {
+            await Get.toNamed(EditProfileView.id)?.then((_updatedUser) {
+              if (_updatedUser is User) {
+                setState(() {
+                  _model.user = _updatedUser;
+                });
+              }
+              context.read<CVLandingViewModel>().onProfileUpdated();
+            });
+          },
+          icon: const Icon(Icons.edit, color: Colors.white, size: 18),
+          label: Text(
+            AppLocalizations.of(context)!.profile_view_edit,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+            ),
+          ),
         ),
       );
     }
@@ -127,50 +144,63 @@ class _ProfileViewState extends State<ProfileView> {
     return Card(
       shape: RoundedRectangleBorder(
         side: const BorderSide(color: CVTheme.lightGrey),
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Padding(
-        padding: const EdgeInsetsDirectional.symmetric(vertical: 8),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Column(
-                children: <Widget>[_buildProfileImage(), _buildNameComponent()],
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  _buildProfileComponent(
-                    AppLocalizations.of(context)!.profile_view_joined,
-                    _attrs?.createdAt != null
-                        ? timeago.format(_attrs!.createdAt!)
-                        : null,
-                  ),
-                  _buildProfileComponent(
-                    AppLocalizations.of(context)!.profile_country,
-                    _attrs?.country,
-                  ),
-                  _buildProfileComponent(
-                    AppLocalizations.of(context)!.profile_educational_institute,
-                    _attrs?.educationalInstitute,
-                  ),
-                  if (_model.isLoggedIn && _model.isPersonalProfile)
-                    _buildProfileComponent(
-                      AppLocalizations.of(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            _buildProfileImage(),
+            const SizedBox(height: 16),
+            _buildNameComponent(),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.access_time,
+                  size: 16,
+                  color: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.color?.withAlpha(153),
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  _attrs?.createdAt != null
+                      ? '${AppLocalizations.of(context)!.profile_view_joined} ${timeago.format(_attrs!.createdAt!)}'
+                      : AppLocalizations.of(
                         context,
-                      )!.profile_view_subscribed_to_mails,
-                      _attrs?.subscribed == true
-                          ? AppLocalizations.of(context)!.profile_view_yes
-                          : AppLocalizations.of(context)!.profile_view_no,
-                    ),
-                  _buildEditProfileButton(),
-                ],
-              ),
+                      )!.profile_view_not_available,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).textTheme.bodyMedium?.color?.withAlpha(153),
+                    fontSize: 14,
+                  ),
+                ),
+              ],
             ),
+            const SizedBox(height: 24),
+            Column(
+              children: [
+                _buildProfileComponent(Icons.public, _attrs?.country),
+                _buildProfileComponent(
+                  Icons.school,
+                  _attrs?.educationalInstitute,
+                ),
+                if (_model.isLoggedIn && _model.isPersonalProfile)
+                  _buildProfileComponent(
+                    _attrs?.subscribed == true
+                        ? Icons.mail
+                        : Icons.mail_outline,
+                    _attrs?.subscribed == true
+                        ? AppLocalizations.of(context)!.profile_view_yes
+                        : AppLocalizations.of(context)!.profile_view_no,
+                  ),
+              ],
+            ),
+            _buildEditProfileButton(),
           ],
         ),
       ),
@@ -179,12 +209,19 @@ class _ProfileViewState extends State<ProfileView> {
 
   Widget _buildProjectsTabBar() {
     if (_model.userId == null) return Container();
-    return Expanded(
-      child: Card(
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(color: CVTheme.lightGrey),
-          borderRadius: BorderRadius.circular(4),
-        ),
+
+    // Calculate safe height constraints
+    final screenHeight = MediaQuery.of(context).size.height;
+    final maxHeight = screenHeight * 0.6;
+    final minHeight = maxHeight < 400 ? maxHeight : 400.0;
+
+    return Card(
+      shape: RoundedRectangleBorder(
+        side: const BorderSide(color: CVTheme.lightGrey),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: minHeight, maxHeight: maxHeight),
         child: DefaultTabController(
           length: 2,
           child: Scaffold(
@@ -241,16 +278,21 @@ class _ProfileViewState extends State<ProfileView> {
                       centerTitle: true,
                     )
                     : null,
-            body: Padding(
-              padding: const EdgeInsetsDirectional.all(8),
-              child: Column(
-                children: <Widget>[
-                  _buildProfileCard(),
-                  const SizedBox(height: 8),
-                  _buildProjectsTabBar(),
-                ],
-              ),
-            ),
+            body:
+                _model.isSuccess(_model.FETCH_USER_PROFILE) ||
+                        _model.user != null
+                    ? SingleChildScrollView(
+                      padding: const EdgeInsets.all(8),
+                      child: Column(
+                        children: <Widget>[
+                          _buildProfileCard(),
+                          const SizedBox(height: 8),
+                          _buildProjectsTabBar(),
+                          const SizedBox(height: 16),
+                        ],
+                      ),
+                    )
+                    : const Center(child: CircularProgressIndicator()),
           ),
     );
   }
