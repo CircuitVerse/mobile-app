@@ -3,6 +3,8 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class FeaturedProjectCard extends StatefulWidget {
   const FeaturedProjectCard({
@@ -95,6 +97,23 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         .trim();
   }
 
+  String _getProjectUrl() {
+    final base = Uri.parse(
+      EnvironmentConfig.CV_API_BASE_URL,
+    ).replace(pathSegments: []).toString().replaceAll(RegExp(r'\/+$'), '');
+    return '$base/simulator/embed/${widget.project.id}';
+  }
+
+  void _shareProject() async {
+    final projectUrl = _getProjectUrl();
+
+    try {
+      await Share.share(projectUrl);
+    } catch (e) {
+      debugPrint('Error sharing project: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -177,13 +196,26 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
                         ),
                       ],
                       const Spacer(),
+                      IconButton(
+                        onPressed: _shareProject,
+                        icon: Icon(
+                          Icons.share,
+                          size: 20,
+                          color: CVTheme.textColor(
+                            context,
+                          ).withValues(alpha: 0.7),
+                        ),
+                        tooltip: 'Share project',
+                      ),
                       TextButton(
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.transparent,
                         ),
                         onPressed: widget.onViewPressed,
                         child: Text(
-                          "VIEW",
+                          AppLocalizations.of(
+                            context,
+                          )!.featured_projects_card_view,
                           style: TextStyle(
                             color: CVTheme.highlightText(context),
                           ),

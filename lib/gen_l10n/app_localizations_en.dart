@@ -1069,6 +1069,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Enter your Project Tags divided by comma[,]';
 
   @override
+  String get featured_projects_card_view => 'VIEW';
+
+  @override
   String get featured_no_result_found => 'No result found';
 
   @override

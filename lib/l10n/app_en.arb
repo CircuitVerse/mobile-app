@@ -377,6 +377,9 @@
   "edit_open_in_simulator": "Open in Simulator",
   "edit_project_tag_hint": "Enter your Project Tags divided by comma[,]",
 
+  "@featured_projects_card": {},
+  "featured_projects_card_view": "VIEW",
+
   "@featured_projects_view": {},
   "featured_no_result_found": "No result found",
   "featured_editor_picks": "Editor's Picks",
