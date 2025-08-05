@@ -231,17 +231,68 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 '${AppLocalizations.of(context)!.edit_project_description} :',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: 16,
                 ),
               ),
               Html(
                 data: _recievedProject.attributes.description ?? '',
-                style: {'body': Style(fontSize: FontSize(18))},
+                style: {'body': Style(fontSize: FontSize(16))},
               ),
             ],
           ),
         )
         : Container();
+  }
+
+  Widget _buildProjectTags() {
+    final tags = _recievedProject.attributes.tags;
+
+    if (tags.isEmpty) {
+      return Container();
+    }
+
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(vertical: 4.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${AppLocalizations.of(context)!.edit_project_tags_list} :',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 4,
+            children: tags.map((tag) => _buildTagChip(tag.name)).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTagChip(String tagName) {
+    return Container(
+      padding: const EdgeInsetsDirectional.symmetric(
+        horizontal: 12,
+        vertical: 6,
+      ),
+      decoration: BoxDecoration(
+        color: CVTheme.primaryColor.withAlpha(25),
+        border: Border.all(color: CVTheme.primaryColor.withAlpha(76), width: 1),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Text(
+        tagName,
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          color: CVTheme.primaryColor,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
   }
 
   Future<void> onForkProjectPressed() async {
@@ -671,6 +722,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                             _projectAttrs.projectAccessType,
                           ),
                           _buildProjectDescription(),
+                          _buildProjectTags(), 
                           const Divider(height: 32),
                           Wrap(
                             spacing: 8,

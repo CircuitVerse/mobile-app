@@ -31,16 +31,21 @@ class _EditProjectViewState extends State<EditProjectView> {
   final _formKey = GlobalKey<FormState>();
   late String _name, _projectAccessType;
   late List<String> _tags;
-  final QuillController _controller = QuillController.basic();
+  late QuillController _controller;
 
   final _nameFocusNode = FocusNode();
   final _tagsListFocusNode = FocusNode();
+
+  late TextEditingController _nameController;
+  late TextEditingController _tagsController;
 
   @override
   void dispose() {
     _nameFocusNode.dispose();
     _tagsListFocusNode.dispose();
     _controller.dispose();
+    _nameController.dispose();
+    _tagsController.dispose();
     super.dispose();
   }
 
@@ -50,12 +55,21 @@ class _EditProjectViewState extends State<EditProjectView> {
     _name = widget.project.attributes.name;
     _tags = widget.project.attributes.tags.map((tag) => tag.name).toList();
     _projectAccessType = widget.project.attributes.projectAccessType;
+
+    _nameController = TextEditingController(text: _name);
+    _tagsController = TextEditingController(text: _tags.join(', '));
+
+    _controller = QuillController.basic();
+    final existingDescription = widget.project.attributes.description ?? '';
+    if (existingDescription.isNotEmpty) {
+      _controller.document = Document()..insert(0, existingDescription);
+    }
   }
 
   Widget _buildNameInput() {
     return CVTextField(
       label: AppLocalizations.of(context)!.edit_project_name,
-      initialValue: _name,
+      controller: _nameController,
       validator:
           (value) =>
               value?.isEmpty ?? true
@@ -70,21 +84,54 @@ class _EditProjectViewState extends State<EditProjectView> {
   }
 
   Widget _buildTagsInput() {
-    return CVTextField(
-      label: AppLocalizations.of(context)!.edit_project_tags_list,
-      focusNode: _nameFocusNode,
-      initialValue: _tags.join(' , '),
-      onSaved:
-          (value) =>
-              _tags = value!.split(',').map((tag) => tag.trim()).toList(),
-      onFieldSubmitted: (_) {
-        _nameFocusNode.unfocus();
-        FocusScope.of(context).requestFocus(_tagsListFocusNode);
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CVTextField(
+          label: AppLocalizations.of(context)!.edit_project_tags_list,
+          focusNode: _nameFocusNode,
+          controller: _tagsController,
+          onSaved:
+              (value) =>
+                  _tags = value!.split(',').map((tag) => tag.trim()).toList(),
+          onFieldSubmitted: (_) {
+            _nameFocusNode.unfocus();
+            FocusScope.of(context).requestFocus(_tagsListFocusNode);
+          },
+        ),
+        Padding(
+          padding: const EdgeInsetsDirectional.only(start: 16, top: 2),
+          child: Text(
+            AppLocalizations.of(context)!.edit_project_tag_hint,
+            style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+          ),
+        ),
+      ],
     );
   }
 
   Widget _buildProjectAccessTypeInput() {
+    final accessTypes = [
+      AppLocalizations.of(context)!.edit_project_public,
+      AppLocalizations.of(context)!.edit_project_private,
+      AppLocalizations.of(context)!.edit_project_limited_access,
+    ];
+
+    String getCurrentValue() {
+      switch (_projectAccessType) {
+        case 'Public':
+          return AppLocalizations.of(context)!.edit_project_public;
+        case 'Private':
+          return AppLocalizations.of(context)!.edit_project_private;
+        case 'Limited Access':
+          return AppLocalizations.of(context)!.edit_project_limited_access;
+        default:
+          return accessTypes.contains(_projectAccessType)
+              ? _projectAccessType
+              : accessTypes.first;
+      }
+    }
+
     return Padding(
       padding: const EdgeInsetsDirectional.symmetric(
         horizontal: 16,
@@ -95,11 +142,21 @@ class _EditProjectViewState extends State<EditProjectView> {
         decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: AppLocalizations.of(context)!.edit_project_access_type,
         ),
-        value: _projectAccessType,
+        value: getCurrentValue(),
         onChanged: (String? value) {
           if (value == null) return;
           setState(() {
-            _projectAccessType = value;
+            if (value == AppLocalizations.of(context)!.edit_project_public) {
+              _projectAccessType = 'Public';
+            } else if (value ==
+                AppLocalizations.of(context)!.edit_project_private) {
+              _projectAccessType = 'Private';
+            } else if (value ==
+                AppLocalizations.of(context)!.edit_project_limited_access) {
+              _projectAccessType = 'Limited Access';
+            } else {
+              _projectAccessType = value;
+            }
           });
         },
         validator:
@@ -110,11 +167,7 @@ class _EditProjectViewState extends State<EditProjectView> {
                     )!.edit_project_access_type_validation_error
                     : null,
         items:
-            [
-              AppLocalizations.of(context)!.edit_project_public,
-              AppLocalizations.of(context)!.edit_project_private,
-              AppLocalizations.of(context)!.edit_project_limited_access,
-            ].map<DropdownMenuItem<String>>((type) {
+            accessTypes.map<DropdownMenuItem<String>>((type) {
               return DropdownMenuItem<String>(value: type, child: Text(type));
             }).toList(),
       ),
@@ -134,6 +187,9 @@ class _EditProjectViewState extends State<EditProjectView> {
   Future<void> _validateAndSubmit() async {
     if (Validators.validateAndSaveForm(_formKey)) {
       FocusScope.of(context).requestFocus(FocusNode());
+
+      _name = _nameController.text.trim();
+      _tags = _tagsController.text.split(',').map((tag) => tag.trim()).toList();
 
       _dialogService.showCustomProgressDialog(
         title: AppLocalizations.of(context)!.edit_project_updating,
@@ -167,7 +223,6 @@ class _EditProjectViewState extends State<EditProjectView> {
 
   Future<void> _openInSimulator() async {
     try {
-      // Navigate to simulator with the project for editing
       final result = await Get.toNamed(
         SimulatorView.id,
         arguments: widget.project,

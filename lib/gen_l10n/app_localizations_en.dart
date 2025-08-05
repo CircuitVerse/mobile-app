@@ -1065,6 +1065,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get edit_open_in_simulator => 'Open in Simulator';
 
   @override
+  String get edit_project_tag_hint =>
+      'Enter your Project Tags divided by comma[,]';
+
+  @override
   String get featured_no_result_found => 'No result found';
 
   @override
