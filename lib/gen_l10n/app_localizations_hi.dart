@@ -1077,6 +1077,9 @@ class AppLocalizationsHi extends AppLocalizations {
       'अपने प्रोजेक्ट टैग को अल्पविराम[,] से विभाजित करके दर्ज करें';
 
   @override
+  String get featured_projects_card_view => 'देखें';
+
+  @override
   String get featured_no_result_found => 'कोई परिणाम नहीं मिला';
 
   @override
