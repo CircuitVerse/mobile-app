@@ -1073,6 +1073,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get edit_open_in_simulator => 'सिम्युलेटर में खोलें';
 
   @override
+  String get edit_project_tag_hint =>
+      'अपने प्रोजेक्ट टैग को अल्पविराम[,] से विभाजित करके दर्ज करें';
+
+  @override
   String get featured_no_result_found => 'कोई परिणाम नहीं मिला';
 
   @override
