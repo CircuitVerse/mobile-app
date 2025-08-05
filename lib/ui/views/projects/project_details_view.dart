@@ -722,7 +722,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                             _projectAttrs.projectAccessType,
                           ),
                           _buildProjectDescription(),
-                          _buildProjectTags(), 
+                          _buildProjectTags(),
                           const Divider(height: 32),
                           Wrap(
                             spacing: 8,
