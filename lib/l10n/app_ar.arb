@@ -378,6 +378,9 @@
   "edit_open_in_simulator": "فتح في محاكي",
   "edit_project_tag_hint": "أدخل علامات مشروعك مقسمة بفاصلة[,]",
 
+  "@featured_projects_card": {},
+  "featured_projects_card_view": "منظر",
+
   "@featured_projects_view": {},
   "featured_no_result_found": "لم يتم العثور على نتائج",
   "featured_editor_picks": "اختيارات المحرر",
