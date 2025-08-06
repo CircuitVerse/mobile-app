@@ -2086,6 +2086,12 @@ abstract class AppLocalizations {
   /// **'Open in Simulator'**
   String get edit_open_in_simulator;
 
+  /// No description provided for @edit_project_tag_hint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your Project Tags divided by comma[,]'**
+  String get edit_project_tag_hint;
+
   /// No description provided for @featured_no_result_found.
   ///
   /// In en, this message translates to:
