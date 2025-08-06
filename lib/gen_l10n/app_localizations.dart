@@ -2092,6 +2092,12 @@ abstract class AppLocalizations {
   /// **'Enter your Project Tags divided by comma[,]'**
   String get edit_project_tag_hint;
 
+  /// No description provided for @featured_projects_card_view.
+  ///
+  /// In en, this message translates to:
+  /// **'VIEW'**
+  String get featured_projects_card_view;
+
   /// No description provided for @featured_no_result_found.
   ///
   /// In en, this message translates to:
