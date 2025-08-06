@@ -1057,6 +1057,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get edit_open_in_simulator => 'فتح في محاكي';
 
   @override
+  String get edit_project_tag_hint => 'أدخل علامات مشروعك مقسمة بفاصلة[,]';
+
+  @override
   String get featured_no_result_found => 'لم يتم العثور على نتائج';
 
   @override

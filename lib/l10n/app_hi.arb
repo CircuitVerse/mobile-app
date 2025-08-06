@@ -373,6 +373,7 @@
   "edit_cancel": "रद्द करें",
   "edit_add": "जोडें",
   "edit_open_in_simulator": "सिम्युलेटर में खोलें",
+  "edit_project_tag_hint": "अपने प्रोजेक्ट टैग को अल्पविराम[,] से विभाजित करके दर्ज करें",
 
   "@featured_projects_view": {},
   "featured_no_result_found": "कोई परिणाम नहीं मिला",
