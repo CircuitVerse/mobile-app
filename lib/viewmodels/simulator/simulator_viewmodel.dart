@@ -33,10 +33,7 @@ class SimulatorViewModel extends BaseModel {
     return '${EnvironmentConfig.CV_BASE_URL}/simulator';
   }
 
-  String? get token {
-    if (!_service.isLoggedIn) return null;
-    return _service.token;
-  }
+  String? get token => _service.isLoggedIn ? _service.token : null;
 
   Uri get uri => Uri.parse(EnvironmentConfig.CV_BASE_URL);
 
@@ -45,66 +42,138 @@ class SimulatorViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Future<bool> _requestPermission(Permission permission) async {
-    if (await permission.isGranted) return true;
-    final result = await permission.request();
-    return result.isGranted;
+  Future<bool> _requestStoragePermission() async {
+    if (Platform.isIOS) return true;
+
+    final permissions = [Permission.storage, Permission.photos];
+    for (final permission in permissions) {
+      if (await permission.isGranted) return true;
+      if (await permission.request().isGranted) return true;
+    }
+    return false;
   }
 
-  Future<Directory> getAppDirectory() async {
-    final directory = await getExternalStorageDirectory();
-    final folders = directory!.path.split('/');
-
-    String newPath = '';
-    for (final folder in folders) {
-      if (folder.isEmpty) continue;
-
-      if (folder == 'Android') {
-        newPath += '/CircuitVerse';
-        break;
+  Future<Directory> _getDownloadDirectory() async {
+    if (Platform.isAndroid) {
+      try {
+        final picturesDir = Directory(
+          '/storage/emulated/0/Pictures/CircuitVerse',
+        );
+        if (!await picturesDir.exists()) {
+          await picturesDir.create(recursive: true);
+        }
+        return picturesDir;
+      } catch (e) {
+        // Fallback to external storage
+        final externalDir = await getExternalStorageDirectory();
+        if (externalDir != null) return externalDir;
       }
-
-      newPath += '/$folder';
     }
 
-    return Directory(newPath);
+    // iOS or final fallback
+    final appDir = await getApplicationDocumentsDirectory();
+    final downloadDir = Directory('${appDir.path}/Downloads');
+    if (!await downloadDir.exists()) {
+      await downloadDir.create(recursive: true);
+    }
+    return downloadDir;
+  }
+
+  String _getFileExtension(String url, String? mimeType) {
+    // Extract from URL
+    final uri = Uri.parse(url);
+    if (uri.path.contains('.')) {
+      return uri.path.substring(uri.path.lastIndexOf('.'));
+    }
+
+    final mimeMap = {
+      'image/png': '.png',
+      'image/jpeg': '.jpg',
+      'image/jpg': '.jpg',
+      'image/gif': '.gif',
+      'image/webp': '.webp',
+      'image/svg+xml': '.svg',
+      'application/pdf': '.pdf',
+    };
+
+    return mimeMap[mimeType?.toLowerCase()] ?? '.png';
   }
 
   void download(DownloadStartRequest request) async {
     try {
-      if (Platform.isAndroid) {
-        if (await _requestPermission(Permission.storage)) {
-          final directory = await getAppDirectory();
+      // Request permissions
+      if (!await _requestStoragePermission()) {
+        SnackBarUtils.showDark(
+          'Permission Denied',
+          'Storage permission is required to download files.',
+        );
+        return;
+      }
 
-          if (!await directory.exists()) {
-            directory.create(recursive: true);
-          }
+      // Get download directory and generate filename
+      final downloadDir = await _getDownloadDirectory();
+      final extension = _getFileExtension(
+        request.url.toString(),
+        request.mimeType,
+      );
+      final fileName =
+          'CircuitVerse_${DateTime.now().millisecondsSinceEpoch}$extension';
 
-          final type = request.url.data?.mimeType.split('/');
+      List<int> bytes;
 
-          String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-          if (type?[0] == 'text') {
-            fileName = 'verilog-$fileName.v';
-          } else if (type?[0] == 'image') {
-            fileName = 'image-$fileName.${type?[1]}';
-          }
+      if (request.url.data != null) {
+        // Handle data URLs
+        bytes = request.url.data!.contentAsBytes();
+      } else {
+        // Handle HTTP URLs
+        final httpClient = HttpClient();
+        try {
+          final req = await httpClient.getUrl(
+            Uri.parse(request.url.toString()),
+          );
+          if (token != null) req.headers.add('Authorization', 'Token $token');
 
-          if (await directory.exists()) {
-            final file = File('${directory.path}/$fileName');
-            file.writeAsBytesSync(
-              List.from(request.url.data!.contentAsBytes()),
-            );
+          final res = await req.close();
+          if (res.statusCode != 200) throw Exception('HTTP ${res.statusCode}');
 
-            SnackBarUtils.showDark(
-              'Downloaded!!',
-              '$fileName downloaded at ${directory.path}',
-            );
-          }
+          bytes = await res.fold<List<int>>([], (a, b) => a..addAll(b));
+        } finally {
+          httpClient.close();
+        }
+      }
+
+      if (bytes.isEmpty) throw Exception('No data received');
+
+      debugPrint('Downloaded ${bytes.length} bytes');
+
+      // Save file
+      final file = File('${downloadDir.path}/$fileName');
+      await file.writeAsBytes(bytes);
+
+      // Show success message
+      SnackBarUtils.showDark(
+        'Download Complete!',
+        Platform.isAndroid
+            ? 'Saved to Pictures/CircuitVerse: $fileName'
+            : 'Saved to app directory: $fileName',
+      );
+
+      // Trigger media scanner for Android images
+      if (Platform.isAndroid &&
+          extension.toLowerCase().contains(
+            RegExp(r'\.(jpg|jpeg|png|gif|webp)'),
+          )) {
+        try {
+          const platform = MethodChannel(
+            'com.example.mobile_app/media_scanner',
+          );
+          await platform.invokeMethod('scanFile', {'path': file.path});
+        } catch (e) {
+          // Media scanner error is expected if not implemented
         }
       }
     } catch (e) {
-      debugPrint('Error occurred while downloading: ${e.toString()}');
-      rethrow;
+      SnackBarUtils.showDark('Download Failed', 'Error: ${e.toString()}');
     }
   }
 
@@ -124,16 +193,20 @@ class SimulatorViewModel extends BaseModel {
 
     final components = url.split('/');
     final length = components.length;
+
+    // Check for project edit URLs
     if (components[length - 1] == 'edit' &&
         components[length - 3] == 'projects') {
       return true;
     }
 
+    // Check for project save/update URLs
     if (url.contains('projects') &&
         (url.contains('saved') || url.contains('updated'))) {
       return true;
     }
 
+    // Check for groups or users URLs
     if (url.contains('groups') || url.contains('users')) {
       return true;
     }

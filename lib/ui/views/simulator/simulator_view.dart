@@ -5,11 +5,19 @@ import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/simulator/simulator_viewmodel.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class SimulatorView extends StatelessWidget {
+class SimulatorView extends StatefulWidget {
   static const String id = 'simulator_view';
 
   const SimulatorView({super.key});
+
+  @override
+  State<SimulatorView> createState() => _SimulatorViewState();
+}
+
+class _SimulatorViewState extends State<SimulatorView> {
+  InAppWebViewController? webViewController;
 
   @override
   Widget build(BuildContext context) {
@@ -22,47 +30,70 @@ class SimulatorView extends StatelessWidget {
           onModelReady: (model) => model.onModelReady(project),
           onModelDestroy: (model) => model.onModelDestroy(),
           builder: (context, model, child) {
-            return IndexedStack(
-              index: model.isIdle(SimulatorViewModel.SIMULATOR) ? 1 : 0,
-              children: [
-                Center(
-                  child: SizedBox(
-                    child: CircularProgressIndicator(
-                      backgroundColor: Colors.grey[300],
-                      color: Colors.grey[500],
-                      strokeWidth: 3.0,
+            return PopScope(
+              canPop: false,
+              onPopInvokedWithResult: (didPop, result) async {
+                if (didPop) return;
+
+                if (webViewController != null) {
+                  bool canGoBack = await webViewController!.canGoBack();
+                  if (canGoBack) {
+                    await webViewController!.goBack();
+                    return;
+                  }
+                }
+                Navigator.of(context).pop(result);
+              },
+              child: IndexedStack(
+                index: model.isIdle(SimulatorViewModel.SIMULATOR) ? 1 : 0,
+                children: [
+                  Center(
+                    child: SizedBox(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.grey[300],
+                        color: Colors.grey[500],
+                        strokeWidth: 3.0,
+                      ),
                     ),
                   ),
-                ),
-                InAppWebView(
-                  onLoadStop: (controller, uri) async {
-                    model.setStateFor(
-                      SimulatorViewModel.SIMULATOR,
-                      ViewState.Idle,
-                    );
-                  },
-                  initialUrlRequest: URLRequest(
-                    url: WebUri.uri(Uri.parse(model.url)),
-                    headers: {'Authorization': 'Token ${model.token}'},
-                  ),
-                  initialSettings: InAppWebViewSettings(
-                    useShouldOverrideUrlLoading: true,
-                    useOnDownloadStart: true,
-                  ),
-                  shouldOverrideUrlLoading: (con, navigationAction) async {
-                    final url = navigationAction.request.url.toString();
+                  InAppWebView(
+                    onWebViewCreated: (controller) {
+                      webViewController = controller;
+                    },
+                    onLoadStop: (controller, uri) async {
+                      model.setStateFor(
+                        SimulatorViewModel.SIMULATOR,
+                        ViewState.Idle,
+                      );
+                    },
+                    initialUrlRequest: URLRequest(
+                      url: WebUri.uri(Uri.parse(model.url)),
+                      headers: {'Authorization': 'Token ${model.token}'},
+                    ),
+                    initialSettings: InAppWebViewSettings(
+                      useShouldOverrideUrlLoading: true,
+                      useOnDownloadStart: true,
+                    ),
+                    shouldOverrideUrlLoading: (controller, action) async {
+                      final url = action.request.url.toString();
 
-                    if (model.findMatchInString(url)) {
-                      Get.back(result: url);
-                    }
+                      if (url.contains('learn.circuitverse.org') ||
+                          url.endsWith('.pdf')) {
+                        await launchUrl(
+                          Uri.parse(url),
+                          mode: LaunchMode.externalApplication,
+                        );
+                        return NavigationActionPolicy.CANCEL;
+                      }
 
-                    return NavigationActionPolicy.CANCEL;
-                  },
-                  onDownloadStartRequest: (controller, request) {
-                    model.download(request);
-                  },
-                ),
-              ],
+                      return NavigationActionPolicy.ALLOW;
+                    },
+                    onDownloadStartRequest: (controller, request) {
+                      model.download(request);
+                    },
+                  ),
+                ],
+              ),
             );
           },
         ),
