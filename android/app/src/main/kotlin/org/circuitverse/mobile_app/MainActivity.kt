@@ -18,11 +18,13 @@ class MainActivity: FlutterActivity() {
                     if (path != null) {
                         scanFile(path, result)
                     } else {
-                        result.error("INVALID_ARGUMENT", "Path cannot be null", null)
+                        runOnUiThread {
+                            result.error("INVALID_ARGUMENT", "Path cannot be null", null)
+                        }
                     }
                 }
                 else -> {
-                    result.notImplemented()
+                    runOnUiThread { result.notImplemented() }
                 }
             }
         }
@@ -35,14 +37,18 @@ class MainActivity: FlutterActivity() {
                 arrayOf(path),
                 null
             ) { _, uri ->
-                if (uri != null) {
-                    result.success("File scanned successfully")
-                } else {
-                    result.error("SCAN_FAILED", "Failed to scan file", null)
+                runOnUiThread {
+                    if (uri != null) {
+                        result.success("File scanned successfully")
+                    } else {
+                        result.error("SCAN_FAILED", "Failed to scan file", null)
+                    }
                 }
             }
         } catch (e: Exception) {
-            result.error("SCAN_ERROR", "Error scanning file: ${e.message}", null)
+            runOnUiThread {
+                result.error("SCAN_ERROR", "Error scanning file: ${e.message}", null)
+            }
         }
     }
 }
