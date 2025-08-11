@@ -24,8 +24,12 @@ class SimulatorViewModel extends BaseModel {
   final cookieManager = CookieManager.instance();
 
   // Method channels
-  static const _mediaScannerChannel = MethodChannel('com.example.mobile_app/media_scanner');
-  static const _mediaStoreChannel = MethodChannel('com.example.mobile_app/media_store');
+  static const _mediaScannerChannel = MethodChannel(
+    'com.example.mobile_app/media_scanner',
+  );
+  static const _mediaStoreChannel = MethodChannel(
+    'com.example.mobile_app/media_store',
+  );
 
   // Project to edit
   Project? _projectToEdit;
@@ -53,10 +57,12 @@ class SimulatorViewModel extends BaseModel {
       // Simplified permission logic
       try {
         // First try to get API level
-        final result = await _mediaStoreChannel.invokeMethod<int>('getApiLevel');
+        final result = await _mediaStoreChannel.invokeMethod<int>(
+          'getApiLevel',
+        );
         final apiLevel = result ?? 28;
         debugPrint('Android API Level: $apiLevel');
-        
+
         if (apiLevel >= 33) {
           // Android 13+: Request READ_MEDIA_IMAGES
           final permission = Permission.photos;
@@ -241,21 +247,21 @@ class SimulatorViewModel extends BaseModel {
 
       if (Platform.isAndroid && _isImageFile(extension)) {
         try {
-          final result = await _mediaStoreChannel.invokeMethod<int>('getApiLevel');
+          final result = await _mediaStoreChannel.invokeMethod<int>(
+            'getApiLevel',
+          );
           final apiLevel = result ?? 28;
           debugPrint('Using MediaStore for API level: $apiLevel');
-          
+
           if (apiLevel >= 29) {
             // Use MediaStore for Android 10+
             debugPrint('Attempting MediaStore save for: $fileName');
-            final success = await _mediaStoreChannel.invokeMethod<bool>(
-              'saveToPictures',
-              {
-                'bytes': bytes,
-                'filename': fileName,
-                'mimeType': _getMimeType(extension),
-              },
-            );
+            final success = await _mediaStoreChannel
+                .invokeMethod<bool>('saveToPictures', {
+                  'bytes': bytes,
+                  'filename': fileName,
+                  'mimeType': _getMimeType(extension),
+                });
 
             debugPrint('MediaStore save result: $success');
             if (success == true) {
@@ -269,7 +275,9 @@ class SimulatorViewModel extends BaseModel {
             }
           }
         } catch (e) {
-          debugPrint('MediaStore method failed, falling back to file system: $e');
+          debugPrint(
+            'MediaStore method failed, falling back to file system: $e',
+          );
         }
       }
 
@@ -289,7 +297,9 @@ class SimulatorViewModel extends BaseModel {
       // Trigger media scanner for Android images (legacy method)
       if (Platform.isAndroid && _isImageFile(extension)) {
         try {
-          await _mediaScannerChannel.invokeMethod('scanFile', {'path': file.path});
+          await _mediaScannerChannel.invokeMethod('scanFile', {
+            'path': file.path,
+          });
         } catch (e) {
           debugPrint('Media scan error: $e');
         }
