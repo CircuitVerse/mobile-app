@@ -75,15 +75,25 @@ class _SimulatorViewState extends State<SimulatorView> {
                       useOnDownloadStart: true,
                     ),
                     shouldOverrideUrlLoading: (controller, action) async {
-                      final url = action.request.url.toString();
+                      final uri = action.request.url;
+                      if (uri == null) {
+                        return NavigationActionPolicy.ALLOW;
+                      }
 
-                      if (url.contains('learn.circuitverse.org') ||
-                          url.endsWith('.pdf')) {
-                        await launchUrl(
-                          Uri.parse(url),
+                      final urlStr = uri.toString();
+                      final host = uri.host.toLowerCase();
+                      final path = uri.path.toLowerCase();
+                      final isLearn = host == 'learn.circuitverse.org';
+                      final isPdf = path.endsWith('.pdf');
+
+                      if (isLearn || isPdf) {
+                        final ok = await launchUrl(
+                          Uri.parse(urlStr),
                           mode: LaunchMode.externalApplication,
                         );
-                        return NavigationActionPolicy.CANCEL;
+                        if (ok) {
+                          return NavigationActionPolicy.CANCEL;
+                        }
                       }
 
                       return NavigationActionPolicy.ALLOW;
