@@ -1,54 +1,78 @@
 package org.circuitverse.mobile_app
 
+import android.content.ContentValues
 import android.media.MediaScannerConnection
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity: FlutterActivity() {
-    private val CHANNEL = "com.example.mobile_app/media_scanner"
-
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
-            when (call.method) {
-                "scanFile" -> {
+        // Legacy media scanner
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "com.example.mobile_app/media_scanner")
+            .setMethodCallHandler { call, result ->
+                if (call.method == "scanFile") {
                     val path = call.argument<String>("path")
                     if (path != null) {
-                        scanFile(path, result)
+                        MediaScannerConnection.scanFile(this, arrayOf(path), null) { _, uri ->
+                            if (uri != null) result.success("File scanned successfully")
+                            else result.error("SCAN_FAILED", "Failed to scan file", null)
+                        }
                     } else {
-                        runOnUiThread {
-                            result.error("INVALID_ARGUMENT", "Path cannot be null", null)
+                        result.error("INVALID_ARGUMENT", "Path cannot be null", null)
+                    }
+                } else {
+                    result.notImplemented()
+                }
+            }
+
+        // MediaStore for Android 10+
+        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "com.example.mobile_app/media_store")
+            .setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "getApiLevel" -> result.success(Build.VERSION.SDK_INT)
+                    "saveToPictures" -> {
+                        val bytes = call.argument<ByteArray>("bytes")
+                        val filename = call.argument<String>("filename")
+                        val mimeType = call.argument<String>("mimeType")
+                        
+                        if (bytes != null && filename != null && mimeType != null) {
+                            saveToPictures(bytes, filename, mimeType, result)
+                        } else {
+                            result.error("INVALID_ARGUMENT", "Missing required arguments", null)
                         }
                     }
-                }
-                else -> {
-                    runOnUiThread { result.notImplemented() }
+                    else -> result.notImplemented()
                 }
             }
-        }
     }
 
-    private fun scanFile(path: String, result: MethodChannel.Result) {
+    private fun saveToPictures(bytes: ByteArray, filename: String, mimeType: String, result: MethodChannel.Result) {
         try {
-            MediaScannerConnection.scanFile(
-                this,
-                arrayOf(path),
-                null
-            ) { _, uri ->
-                runOnUiThread {
-                    if (uri != null) {
-                        result.success("File scanned successfully")
-                    } else {
-                        result.error("SCAN_FAILED", "Failed to scan file", null)
-                    }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val contentValues = ContentValues().apply {
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+                    put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, "${Environment.DIRECTORY_PICTURES}/CircuitVerse")
                 }
+
+                val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                uri?.let {
+                    contentResolver.openOutputStream(it)?.use { outputStream ->
+                        outputStream.write(bytes)
+                    }
+                    result.success(true)
+                } ?: result.error("MEDIASTORE_ERROR", "Failed to create MediaStore entry", null)
+            } else {
+                result.error("API_VERSION_ERROR", "MediaStore method requires Android 10+", null)
             }
         } catch (e: Exception) {
-            runOnUiThread {
-                result.error("SCAN_ERROR", "Error scanning file: ${e.message}", null)
-            }
+            result.error("SAVE_ERROR", "Failed to save: ${e.message}", null)
         }
     }
 }

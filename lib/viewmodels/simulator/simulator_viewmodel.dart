@@ -23,6 +23,10 @@ class SimulatorViewModel extends BaseModel {
   final LocalStorageService _service = locator<LocalStorageService>();
   final cookieManager = CookieManager.instance();
 
+  // Method channels
+  static const _mediaScannerChannel = MethodChannel('com.example.mobile_app/media_scanner');
+  static const _mediaStoreChannel = MethodChannel('com.example.mobile_app/media_store');
+
   // Project to edit
   Project? _projectToEdit;
 
@@ -45,11 +49,43 @@ class SimulatorViewModel extends BaseModel {
   Future<bool> _requestStoragePermission() async {
     if (Platform.isIOS) return true;
 
-    final permissions = [Permission.storage, Permission.photos];
-    for (final permission in permissions) {
-      if (await permission.isGranted) return true;
-      if (await permission.request().isGranted) return true;
+    if (Platform.isAndroid) {
+      // Simplified permission logic
+      try {
+        // First try to get API level
+        final result = await _mediaStoreChannel.invokeMethod<int>('getApiLevel');
+        final apiLevel = result ?? 28;
+        debugPrint('Android API Level: $apiLevel');
+        
+        if (apiLevel >= 33) {
+          // Android 13+: Request READ_MEDIA_IMAGES
+          final permission = Permission.photos;
+          if (await permission.isGranted) return true;
+          final status = await permission.request();
+          debugPrint('Photos permission status: $status');
+          return status.isGranted;
+        } else if (apiLevel >= 29) {
+          // Android 10-12: No special permissions needed for MediaStore
+          return true;
+        } else {
+          // Android 9 and below: Need WRITE_EXTERNAL_STORAGE
+          final permission = Permission.storage;
+          if (await permission.isGranted) return true;
+          final status = await permission.request();
+          debugPrint('Storage permission status: $status');
+          return status.isGranted;
+        }
+      } catch (e) {
+        debugPrint('Error checking API level: $e');
+        // Fallback: try storage permission
+        final permission = Permission.storage;
+        if (await permission.isGranted) return true;
+        final status = await permission.request();
+        debugPrint('Fallback storage permission status: $status');
+        return status.isGranted;
+      }
     }
+
     return false;
   }
 
@@ -121,6 +157,24 @@ class SimulatorViewModel extends BaseModel {
     return mimeMap[mimeType?.toLowerCase()] ?? '.png';
   }
 
+  String _getMimeType(String extension) {
+    final mimeMap = {
+      '.png': 'image/png',
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.gif': 'image/gif',
+      '.webp': 'image/webp',
+      '.svg': 'image/svg+xml',
+      '.pdf': 'application/pdf',
+    };
+    return mimeMap[extension.toLowerCase()] ?? 'image/png';
+  }
+
+  bool _isImageFile(String extension) {
+    final imageExtensions = {'.jpg', '.jpeg', '.png', '.gif', '.webp'};
+    return imageExtensions.contains(extension.toLowerCase());
+  }
+
   Future<void> download(DownloadStartRequest request) async {
     try {
       // Request permissions
@@ -132,8 +186,7 @@ class SimulatorViewModel extends BaseModel {
         return;
       }
 
-      // Get download directory and generate filename
-      final downloadDir = await _getDownloadDirectory();
+      // Get file extension and generate filename
       final extension = _getFileExtension(
         url: request.url.toString(),
         mimeType: request.mimeType,
@@ -186,7 +239,42 @@ class SimulatorViewModel extends BaseModel {
 
       debugPrint('Downloaded ${bytes.length} bytes');
 
-      // Save file
+      if (Platform.isAndroid && _isImageFile(extension)) {
+        try {
+          final result = await _mediaStoreChannel.invokeMethod<int>('getApiLevel');
+          final apiLevel = result ?? 28;
+          debugPrint('Using MediaStore for API level: $apiLevel');
+          
+          if (apiLevel >= 29) {
+            // Use MediaStore for Android 10+
+            debugPrint('Attempting MediaStore save for: $fileName');
+            final success = await _mediaStoreChannel.invokeMethod<bool>(
+              'saveToPictures',
+              {
+                'bytes': bytes,
+                'filename': fileName,
+                'mimeType': _getMimeType(extension),
+              },
+            );
+
+            debugPrint('MediaStore save result: $success');
+            if (success == true) {
+              SnackBarUtils.showDark(
+                'Download Complete!',
+                'Image saved to Pictures/CircuitVerse: $fileName',
+              );
+              return;
+            } else {
+              throw Exception('MediaStore save returned false');
+            }
+          }
+        } catch (e) {
+          debugPrint('MediaStore method failed, falling back to file system: $e');
+        }
+      }
+
+      // Legacy method for non-images or Android 9 and below
+      final downloadDir = await _getDownloadDirectory();
       final file = File('${downloadDir.path}/$fileName');
       await file.writeAsBytes(bytes);
 
@@ -198,16 +286,10 @@ class SimulatorViewModel extends BaseModel {
             : 'Saved to app directory: $fileName',
       );
 
-      // Trigger media scanner for Android images
-      if (Platform.isAndroid &&
-          extension.toLowerCase().contains(
-            RegExp(r'\.(jpg|jpeg|png|gif|webp)'),
-          )) {
+      // Trigger media scanner for Android images (legacy method)
+      if (Platform.isAndroid && _isImageFile(extension)) {
         try {
-          const platform = MethodChannel(
-            'com.example.mobile_app/media_scanner',
-          );
-          await platform.invokeMethod('scanFile', {'path': file.path});
+          await _mediaScannerChannel.invokeMethod('scanFile', {'path': file.path});
         } catch (e) {
           debugPrint('Media scan error: $e');
         }
