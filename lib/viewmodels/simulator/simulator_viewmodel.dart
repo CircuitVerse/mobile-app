@@ -79,8 +79,30 @@ class SimulatorViewModel extends BaseModel {
     return downloadDir;
   }
 
-  String _getFileExtension(String url, String? mimeType) {
-    // Extract from URL
+  String _getFileExtension({
+    required String url,
+    String? mimeType,
+    String? suggestedFilename,
+    String? contentDisposition,
+  }) {
+    if (suggestedFilename?.contains('.') ?? false) {
+      return suggestedFilename!.substring(suggestedFilename.lastIndexOf('.'));
+    }
+
+    if (contentDisposition != null) {
+      final match = RegExp(
+        r"filename\*?=(?:UTF-8'')?"
+        r'"?([^";]+)"?',
+        caseSensitive: false,
+      ).firstMatch(contentDisposition);
+      if (match != null) {
+        final name = Uri.decodeFull(match.group(1)!);
+        if (name.contains('.')) {
+          return name.substring(name.lastIndexOf('.'));
+        }
+      }
+    }
+
     final uri = Uri.parse(url);
     if (uri.path.contains('.')) {
       return uri.path.substring(uri.path.lastIndexOf('.'));
@@ -99,7 +121,7 @@ class SimulatorViewModel extends BaseModel {
     return mimeMap[mimeType?.toLowerCase()] ?? '.png';
   }
 
-  void download(DownloadStartRequest request) async {
+  Future<void> download(DownloadStartRequest request) async {
     try {
       // Request permissions
       if (!await _requestStoragePermission()) {
@@ -113,13 +135,15 @@ class SimulatorViewModel extends BaseModel {
       // Get download directory and generate filename
       final downloadDir = await _getDownloadDirectory();
       final extension = _getFileExtension(
-        request.url.toString(),
-        request.mimeType,
+        url: request.url.toString(),
+        mimeType: request.mimeType,
+        suggestedFilename: request.suggestedFilename,
+        contentDisposition: request.contentDisposition,
       );
       final fileName =
           'CircuitVerse_${DateTime.now().millisecondsSinceEpoch}$extension';
 
-      List<int> bytes;
+      List<int> bytes = [];
 
       if (request.url.data != null) {
         // Handle data URLs
@@ -128,15 +152,31 @@ class SimulatorViewModel extends BaseModel {
         // Handle HTTP URLs
         final httpClient = HttpClient();
         try {
-          final req = await httpClient.getUrl(
-            Uri.parse(request.url.toString()),
-          );
-          if (token != null) req.headers.add('Authorization', 'Token $token');
-
-          final res = await req.close();
-          if (res.statusCode != 200) throw Exception('HTTP ${res.statusCode}');
-
-          bytes = await res.fold<List<int>>([], (a, b) => a..addAll(b));
+          Uri current = Uri.parse(request.url.toString());
+          for (var i = 0; i < 5; i++) {
+            final req = await httpClient.getUrl(current);
+            if (token != null) req.headers.add('Authorization', 'Token $token');
+            final cookies = await cookieManager.getCookies(
+              url: WebUri.uri(uri),
+            );
+            if (cookies.isNotEmpty) {
+              req.headers.add(
+                'Cookie',
+                cookies.map((c) => '${c.name}=${c.value}').join('; '),
+              );
+            }
+            final res = await req.close();
+            if (res.isRedirect && res.headers.value('location') != null) {
+              current = current.resolve(res.headers.value('location')!);
+              await res.drain<void>();
+              continue;
+            }
+            if (res.statusCode != 200) {
+              throw Exception('HTTP ${res.statusCode}');
+            }
+            bytes = await res.fold<List<int>>([], (a, b) => a..addAll(b));
+            break;
+          }
         } finally {
           httpClient.close();
         }
@@ -169,7 +209,7 @@ class SimulatorViewModel extends BaseModel {
           );
           await platform.invokeMethod('scanFile', {'path': file.path});
         } catch (e) {
-          // Media scanner error is expected if not implemented
+          debugPrint('Media scan error: $e');
         }
       }
     } catch (e) {
