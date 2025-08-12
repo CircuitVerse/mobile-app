@@ -4,9 +4,26 @@ allprojects {
         mavenCentral()
     }
     
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
+    extensions.findByType(org.gradle.api.plugins.JavaPluginExtension)
+        ?.toolchain
+        ?.setLanguageVersion(JavaLanguageVersion.of(17))
+}
+
+subprojects {
+    plugins.withId("org.jetbrains.kotlin.jvm") {
+        kotlin {
+            jvmToolchain {
+                languageVersion.set(JavaLanguageVersion.of(17))
+            }
+        }
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+            kotlinOptions.jvmTarget = "17"
+        }
+    }
+    
+    plugins.withId("org.jetbrains.kotlin.android") {
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+            kotlinOptions.jvmTarget = "17"
         }
     }
 }
