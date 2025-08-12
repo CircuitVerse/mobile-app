@@ -59,20 +59,29 @@ class MainActivity: FlutterActivity() {
                     put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
                     put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
                     put(MediaStore.MediaColumns.RELATIVE_PATH, "${Environment.DIRECTORY_PICTURES}/CircuitVerse")
+                    put(MediaStore.MediaColumns.IS_PENDING, 1)
                 }
 
                 val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
                 uri?.let {
-                    contentResolver.openOutputStream(it)?.use { outputStream ->
-                        outputStream.write(bytes)
+                    val out = contentResolver.openOutputStream(it)
+                    if (out == null) {
+                        runOnUiThread { result.error("SAVE_ERROR", "OutputStream is null", null) }
+                        return
                     }
-                    result.success(true)
-                } ?: result.error("MEDIASTORE_ERROR", "Failed to create MediaStore entry", null)
+                    out.use { stream -> stream.write(bytes) }
+                    // Mark as not pending
+                    val finalizeValues = ContentValues().apply {
+                        put(MediaStore.MediaColumns.IS_PENDING, 0)
+                    }
+                    contentResolver.update(it, finalizeValues, null, null)
+                    runOnUiThread { result.success(true) }
+                } ?: runOnUiThread { result.error("MEDIASTORE_ERROR", "Failed to create MediaStore entry", null) }
             } else {
-                result.error("API_VERSION_ERROR", "MediaStore method requires Android 10+", null)
+                runOnUiThread { result.error("API_VERSION_ERROR", "MediaStore method requires Android 10+", null) }
             }
         } catch (e: Exception) {
-            result.error("SAVE_ERROR", "Failed to save: ${e.message}", null)
+            runOnUiThread { result.error("SAVE_ERROR", "Failed to save: ${e.message}", null) }
         }
     }
 }
