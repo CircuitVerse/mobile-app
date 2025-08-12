@@ -270,10 +270,7 @@ class SimulatorViewModel extends BaseModel {
       await file.writeAsBytes(bytes);
 
       // Show success message
-      SnackBarUtils.showDark(
-        'Download Complete!',
-        'Saved to: ${file.path}',
-      );
+      SnackBarUtils.showDark('Download Complete!', 'Saved to: ${file.path}');
 
       // Trigger media scanner for Android images (legacy method)
       if (Platform.isAndroid && _isImageFile(extension)) {
