@@ -63,15 +63,8 @@ class SimulatorViewModel extends BaseModel {
         final apiLevel = result ?? 28;
         debugPrint('Android API Level: $apiLevel');
 
-        if (apiLevel >= 33) {
-          // Android 13+: Request READ_MEDIA_IMAGES
-          final permission = Permission.photos;
-          if (await permission.isGranted) return true;
-          final status = await permission.request();
-          debugPrint('Photos permission status: $status');
-          return status.isGranted;
-        } else if (apiLevel >= 29) {
-          // Android 10-12: No special permissions needed for MediaStore
+        if (apiLevel >= 29) {
+          // Android 10+: No runtime permission needed to write via MediaStore.
           return true;
         } else {
           // Android 9 and below: Need WRITE_EXTERNAL_STORAGE
@@ -97,19 +90,9 @@ class SimulatorViewModel extends BaseModel {
 
   Future<Directory> _getDownloadDirectory() async {
     if (Platform.isAndroid) {
-      try {
-        final picturesDir = Directory(
-          '/storage/emulated/0/Pictures/CircuitVerse',
-        );
-        if (!await picturesDir.exists()) {
-          await picturesDir.create(recursive: true);
-        }
-        return picturesDir;
-      } catch (e) {
-        // Fallback to external storage
-        final externalDir = await getExternalStorageDirectory();
-        if (externalDir != null) return externalDir;
-      }
+      // Use app-specific external storage as a safe fallback on all API levels.
+      final externalDir = await getExternalStorageDirectory();
+      if (externalDir != null) return externalDir;
     }
 
     // iOS or final fallback
@@ -160,7 +143,7 @@ class SimulatorViewModel extends BaseModel {
       'application/pdf': '.pdf',
     };
 
-    return mimeMap[mimeType?.toLowerCase()] ?? '.png';
+    return mimeMap[mimeType?.toLowerCase()] ?? '.bin';
   }
 
   String _getMimeType(String extension) {
@@ -173,7 +156,7 @@ class SimulatorViewModel extends BaseModel {
       '.svg': 'image/svg+xml',
       '.pdf': 'application/pdf',
     };
-    return mimeMap[extension.toLowerCase()] ?? 'image/png';
+    return mimeMap[extension.toLowerCase()] ?? 'application/octet-stream';
   }
 
   bool _isImageFile(String extension) {
@@ -216,7 +199,7 @@ class SimulatorViewModel extends BaseModel {
             final req = await httpClient.getUrl(current);
             if (token != null) req.headers.add('Authorization', 'Token $token');
             final cookies = await cookieManager.getCookies(
-              url: WebUri.uri(uri),
+              url: WebUri.uri(current),
             );
             if (cookies.isNotEmpty) {
               req.headers.add(
@@ -289,9 +272,7 @@ class SimulatorViewModel extends BaseModel {
       // Show success message
       SnackBarUtils.showDark(
         'Download Complete!',
-        Platform.isAndroid
-            ? 'Saved to Pictures/CircuitVerse: $fileName'
-            : 'Saved to app directory: $fileName',
+        'Saved to: ${file.path}',
       );
 
       // Trigger media scanner for Android images (legacy method)
