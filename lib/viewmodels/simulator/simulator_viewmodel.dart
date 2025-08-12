@@ -241,7 +241,7 @@ class SimulatorViewModel extends BaseModel {
             debugPrint('Attempting MediaStore save for: $fileName');
             final success = await _mediaStoreChannel
                 .invokeMethod<bool>('saveToPictures', {
-                  'bytes': bytes,
+                  'bytes': Uint8List.fromList(bytes),
                   'filename': fileName,
                   'mimeType': _getMimeType(extension),
                 });
