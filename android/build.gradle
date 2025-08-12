@@ -3,10 +3,13 @@ allprojects {
         google()
         mavenCentral()
     }
-    
-    extensions.findByType(org.gradle.api.plugins.JavaPluginExtension)
-        ?.toolchain
-        ?.setLanguageVersion(JavaLanguageVersion.of(17))
+
+    plugins.withId("java") {
+        extensions.getByType(org.gradle.api.plugins.JavaPluginExtension)
+            .toolchain
+            .languageVersion
+            .set(JavaLanguageVersion.of(17))
+    }
 }
 
 subprojects {
