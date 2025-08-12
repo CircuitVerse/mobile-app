@@ -3,6 +3,12 @@ allprojects {
         google()
         mavenCentral()
     }
+    
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
 }
 
 rootProject.buildDir = '../build'
