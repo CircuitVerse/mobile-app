@@ -10,7 +10,7 @@ jobs:
   build:
     strategy:
       matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
+        platform: [ubuntu-latest, macos-13, windows-latest]
     runs-on: ${{ matrix.platform }}
     timeout-minutes: 60
     steps:
@@ -87,7 +87,7 @@ jobs:
           if-no-files-found: error
           
       - name: Build iOS (MacOS Only)
-        if: ${{ matrix.platform == 'macos-latest' }}
+        if: ${{ matrix.platform == 'macos-13' }}
         run: |
           rm -f ios/Podfile.lock
           flutter build ios --release --no-codesign
