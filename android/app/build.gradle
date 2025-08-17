@@ -31,7 +31,7 @@ if (project.hasProperty('dart-defines')) {
     environmentVariables = environmentVariables + project.property('dart-defines')
         .split(',')
         .collectEntries { entry ->
-            def pair = URLDecoder.decode(entry).split('=')
+            def pair = URLDecoder.decode(entry, 'UTF-8').split('=')
             [(pair.first()): pair.last()]
         }
 }
@@ -65,14 +65,14 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
+    lint{
+        disable += ['InvalidPackage']
     }
 
     defaultConfig {
         applicationId "org.circuitverse.mobile_app"
         minSdkVersion 23
-        targetSdkVersion 33
+        targetSdkVersion 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -117,7 +117,11 @@ flutter {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:runner:1.6.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+}
+
+kotlin {
+    jvmToolchain(17)
 }
