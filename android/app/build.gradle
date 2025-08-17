@@ -31,8 +31,14 @@ if (project.hasProperty('dart-defines')) {
     environmentVariables = environmentVariables + project.property('dart-defines')
         .split(',')
         .collectEntries { entry ->
-            def pair = URLDecoder.decode(entry, 'UTF-8').split('=')
-            [(pair.first()): pair.last()]
+            def decoded = entry
+            try {
+                decoded = new String(java.util.Base64.getDecoder().decode(entry), 'UTF-8')
+            } catch (IllegalArgumentException ignored) {
+                decoded = URLDecoder.decode(entry, 'UTF-8')
+            }
+            def pair = decoded.split('=', 2)
+            [(pair[0]): (pair.size() > 1 ? pair[1] : '')]
         }
 }
 
@@ -53,7 +59,7 @@ if (releaseKeystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 35
+    compileSdk 35
     namespace 'org.circuitverse.mobile_app'
 
     compileOptions {
@@ -61,18 +67,22 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
 
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    lint{
-        disable += ['InvalidPackage']
+    lint {
+        disable.add('InvalidPackage')
     }
 
     defaultConfig {
         applicationId "org.circuitverse.mobile_app"
-        minSdkVersion 23
-        targetSdkVersion 35
+        minSdk 23
+        targetSdk 35
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
