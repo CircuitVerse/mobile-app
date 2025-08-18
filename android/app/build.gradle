@@ -22,8 +22,10 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+// Process dart-defines for environment variables (needed for GitHub OAuth)
+def environmentVariables = [:]
 if (project.hasProperty('dart-defines')) {
-    environmentVariables = environmentVariables + project.property('dart-defines')
+    environmentVariables += project.property('dart-defines')
         .split(',')
         .collectEntries { entry ->
             def decoded = entry
@@ -81,6 +83,11 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        // Make environment variables available to the app
+        environmentVariables.each { key, value ->
+            buildConfigField "String", key, "\"$value\""
+        }
     }
 
     signingConfigs {
