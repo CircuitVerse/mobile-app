@@ -135,7 +135,7 @@ class NotificationsView extends StatelessWidget {
                             ),
                           ),
                           // Fix: Use model.value but map it properly
-                          value:
+                          initialValue:
                               model.value == allDisplayText
                                   ? allValue
                                   : unreadValue,
