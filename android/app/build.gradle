@@ -75,6 +75,10 @@ android {
     lint {
         disable.add('InvalidPackage')
     }
+    
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId "org.circuitverse.mobile_app"
