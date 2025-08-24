@@ -5,10 +5,12 @@ on:
     branches:
       - master
       - main
+      - develop
   pull_request:
     branches:
       - master
       - main
+      - develop
 
 jobs:
   test:
@@ -32,32 +34,57 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          
+      - name: Cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            **/.dart_tool
+            **/.packages
+            **/.flutter-plugins
+            **/.flutter-plugin-dependencies
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
 
       - name: Clean and Get Dependencies
         run: |
           flutter clean
           flutter pub get
 
+      - name: Generate Localization Files
+        run: flutter gen-l10n
+
       - name: Build Runner (Generate Dart Files)
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
-      - name: Format Check (Exclude .mocks files)
-        run: dart format --set-exit-if-changed $(git ls-files '*.dart' ':!:*.mocks.dart')
+      - name: Format Check (Exclude generated files)
+        run: |
+          dart format --set-exit-if-changed \
+            $(find . -name "*.dart" \
+              -not -path "./lib/gen_l10n/*" \
+              -not -path "./.dart_tool/*" \
+              -not -path "./build/*" \
+              -not -name "*.g.dart" \
+              -not -name "*.freezed.dart" \
+              -not -name "*.mocks.dart")
 
       - name: Analyze Code
         run: flutter analyze
 
       - name: Run Tests with Coverage
-        run: flutter test --coverage
+        run: flutter test --coverage --test-randomize-ordering-seed random
 
       - name: Upload Coverage to Coveralls
+        if: matrix.platform == 'ubuntu-latest'
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: run-${{ matrix.platform }}
           parallel: true
 
-  build:
+  build-validation:
     name: Build Validation
     needs: test
     strategy:
@@ -86,7 +113,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-
+          
       - name: Cache Gradle (Android)
         if: matrix.build-type == 'android'
         uses: actions/cache@v4
@@ -94,6 +121,7 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
+            android/.gradle
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
@@ -111,10 +139,11 @@ jobs:
         run: |
           flutter clean
           flutter pub get
+          flutter gen-l10n
           flutter packages pub run build_runner build --delete-conflicting-outputs
 
       # Android Build Validation
-      - name: Build APK (Android)
+      - name: Build APK Debug (Android)
         if: matrix.build-type == 'android'
         env:
           FB_APP_ID: ${{ secrets.FB_APP_ID }}
@@ -128,8 +157,8 @@ jobs:
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
 
-      # iOS Build Validation
-      - name: Build iOS (No Code Signing)
+      # iOS Build Validation  
+      - name: Build iOS Debug (No Code Signing)
         if: matrix.build-type == 'ios'
         env:
           FB_APP_ID: ${{ secrets.FB_APP_ID }}
@@ -137,7 +166,7 @@ jobs:
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: |
-          rm -f ios/Podfile.lock
+          cd ios && pod install && cd ..
           flutter build ios --debug --no-codesign \
             --dart-define=FB_APP_ID=$FB_APP_ID \
             --dart-define=FB_APP_NAME=$FB_APP_NAME \
@@ -145,7 +174,7 @@ jobs:
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
 
       # Windows Build Validation
-      - name: Build Windows
+      - name: Build Windows Debug
         if: matrix.build-type == 'windows'
         env:
           FB_APP_ID: ${{ secrets.FB_APP_ID }}
@@ -170,8 +199,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
 
-  # Optional: Build preview APK for PRs
-  preview:
+  preview-apk:
     name: Build Preview APK
     if: github.event_name == 'pull_request'
     needs: test
@@ -190,6 +218,17 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            android/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Build Preview APK
         env:
@@ -200,8 +239,10 @@ jobs:
         run: |
           flutter clean
           flutter pub get
+          flutter gen-l10n
           flutter packages pub run build_runner build --delete-conflicting-outputs
           flutter build apk --release \
+            --build-number=${{ github.run_number }} \
             --dart-define=FB_APP_ID=$FB_APP_ID \
             --dart-define=FB_APP_NAME=$FB_APP_NAME \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
@@ -217,10 +258,26 @@ jobs:
       - name: Comment PR with APK Link
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '📱 Preview APK built successfully! Download from the [Actions artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}).'
-            })
+            const fs = require('fs');
+            const path = 'build/app/outputs/flutter-apk/app-release.apk';
+            
+            if (fs.existsSync(path)) {
+              const stats = fs.statSync(path);
+              const sizeInMB = (stats.size / (1024 * 1024)).toFixed(2);
+              
+              const comment = `### 📱 Preview APK Ready!\n\n` +
+                `**Size:** ${sizeInMB} MB\n` +
+                `**Build:** #${{ github.run_number }}\n` +
+                `**Commit:** \`${context.sha.substring(0, 7)}\`\n\n` +
+                `Download the APK from the [Actions artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}).\n\n` +
+                `> ⚠️ This is a preview build for testing purposes only.`;
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            }
