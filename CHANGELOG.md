@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0](https://github.com/CircuitVerse/mobile-app/compare/v1.1.0...v1.2.0) (2025-08-24)
+
+### Features
+
+* add new localization keys, RTL support improvements, and language-specific images ([aeadf50](https://github.com/CircuitVerse/mobile-app/commit/aeadf50c9c2695fc178648662774aab75ab0dcaf))
+* add RTL language support with Arabic localization ([cf14af2](https://github.com/CircuitVerse/mobile-app/commit/cf14af29fa5a5ccf97a2a59e19938db91a8d1aa6))
+* add share button to featured circuit card ([482ebde](https://github.com/CircuitVerse/mobile-app/commit/482ebde31d085dd43256fe133371b29dc52d744a))
+* allow users to re-edit their created projects ([3f8b8c4](https://github.com/CircuitVerse/mobile-app/commit/3f8b8c4041d12f0208c7f8de3321008c31863d2c))
+* enhance CI with automated releases ([553d97c](https://github.com/CircuitVerse/mobile-app/commit/553d97c9f5d617d8cc1dcf0b7798d94bd7b1126a))
+* enhance project cards with default images and stats ([305d968](https://github.com/CircuitVerse/mobile-app/commit/305d9683778a385f5cd8c6660ae135f6d43c1f11))
+* improve RTL support and localization configuration ([70a5087](https://github.com/CircuitVerse/mobile-app/commit/70a50872285bfecef884b112d075fb60414ada74))
+* modernize codebase for robust multilingual support ([e4e489e](https://github.com/CircuitVerse/mobile-app/commit/e4e489e59b03d555dd83d49763e134c16c227ecc))
+* revamp profile card UI ([c5cb6c2](https://github.com/CircuitVerse/mobile-app/commit/c5cb6c23c32faec17deab28087cbe1f1f90ae8e8))
+* use MediaStore API for saving images on Android 10+ to fix gallery visibility ([5e3a3ac](https://github.com/CircuitVerse/mobile-app/commit/5e3a3ac2be1c3dfded1fc6bda3363c80a321fcc3))
+
+### Bug Fixes
+
+* add platform condition to APK upload step ([01aeb37](https://github.com/CircuitVerse/mobile-app/commit/01aeb375abb67ffc9bc1a8ddc707684ffcf5bc3d))
+* address code quality issues pointed by coderabbit ([fdfcbf0](https://github.com/CircuitVerse/mobile-app/commit/fdfcbf0bf111443414babdac3a46ae6165df7725))
+* align APK build path and mask secrets ([088c97e](https://github.com/CircuitVerse/mobile-app/commit/088c97ea8b5d724662a27202c8dd97fb1dd69344))
+* implement CodeRabbit's suggested changes ([1e4fd3c](https://github.com/CircuitVerse/mobile-app/commit/1e4fd3c0e0a40532389cd8cea2c33cc9ca4c0135))
+* minor RTL fixes ([dc150e4](https://github.com/CircuitVerse/mobile-app/commit/dc150e4301584301e9a47ebb0d083fa8053dcc70))
+* pre-fill saved data and add tags support ([cc06af4](https://github.com/CircuitVerse/mobile-app/commit/cc06af4592c3f5c5f491a82e3034c2caa75c24c0))
+* remove duplicate keys in .arb files to unblock gen-l10n ([03b2d16](https://github.com/CircuitVerse/mobile-app/commit/03b2d16be026d6cb8fdc95fbe1978419a8a0121b))
+* remove remaining duplicate keys from .arb files ([1fcc158](https://github.com/CircuitVerse/mobile-app/commit/1fcc15870d90e8e06355a010d6c4079e5f4357ac))
+* resolve download, external links, and theme issues ([33b88b7](https://github.com/CircuitVerse/mobile-app/commit/33b88b77b907f14f9e415bfd4c54ad5f95315f2e))
+* send Uint8List to MediaStore over MethodChannel ([6225a31](https://github.com/CircuitVerse/mobile-app/commit/6225a31195fdda9b638a394405f2730f3dfa1d2a))
+
+### Styles
+
+* apply dart format to simulator_viewmodel.dart ([65fcb2a](https://github.com/CircuitVerse/mobile-app/commit/65fcb2a6599eff42125c725f16c033b8249f3f74))
+* standardize text capitalization and formatting ([d435451](https://github.com/CircuitVerse/mobile-app/commit/d435451f8fe95758d31ff641dbd708274f8e2f2c))
+
+### Code Refactoring
+
+* enhance file extension detection with priority-based approach ([cad0f09](https://github.com/CircuitVerse/mobile-app/commit/cad0f09e4e345bc338ef86767aeac6bd2b87cb07))
+* modernize storage handling per CodeRabbit suggestions ([51321e5](https://github.com/CircuitVerse/mobile-app/commit/51321e56732011514fdbefbe5ec01f9d867a4e75))
+* replace brittle string manipulation with Uri parsing for image URLs ([42832ed](https://github.com/CircuitVerse/mobile-app/commit/42832ed49f6ca9a6934ee8fd88674ef0849d6523))
+
+### Continuous Integration
+
+* add crowdin ci config ([52e5cb9](https://github.com/CircuitVerse/mobile-app/commit/52e5cb9f1fdf70351bee843ffb4d73bcd5e1dab9))
+
 ## [1.1.0](https://github.com/CircuitVerse/mobile-app/compare/v1.0.2...v1.1.0) (2025-06-13)
 
 ### Features
