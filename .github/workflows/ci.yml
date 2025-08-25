@@ -164,6 +164,14 @@ jobs:
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
 
+      - name: Upload Android APK
+        if: matrix.build-type == 'android'
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk-${{ github.run_number }}
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 7
+
       # iOS Build Validation  
       - name: Build iOS Debug (No Code Signing)
         if: matrix.build-type == 'ios'
@@ -189,7 +197,7 @@ jobs:
 
   coverage-finish:
     name: Finalize Coverage
-    needs: test
+    needs: [test, build-validation]
     runs-on: ubuntu-latest
     steps:
       - name: Finalize Coveralls Reporting
@@ -202,7 +210,7 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           name: android-apk-${{ github.run_number }}
-          path: build/app/outputs/apk/release/  
+          path: build/app/outputs/flutter-apk/  
           
       - name: Get Current Date
         id: date
@@ -249,26 +257,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build Preview APK
-        env:
-          GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
-          GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
-        run: |
-          flutter clean
-          flutter pub get
-          flutter gen-l10n
-          flutter packages pub run build_runner build --delete-conflicting-outputs
-          flutter build apk --release \
-            --build-number=${{ github.run_number }} \
-            --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
-            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
-
-      - name: Upload Preview APK
-        uses: actions/upload-artifact@v4
+      - name: Download Android APK from Build Validation
+        uses: actions/download-artifact@v5
         with:
-          name: preview-apk-pr-${{ github.event.pull_request.number }}
-          path: build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 7
+          name: android-apk-${{ github.run_number }}
+          path: build/app/outputs/flutter-apk/
 
       - name: Comment PR with APK Link
         uses: actions/github-script@v7
@@ -276,7 +269,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const path = 'build/app/outputs/flutter-apk/app-release.apk';
+            const path = 'build/app/outputs/flutter-apk/app-debug.apk';
             
             if (fs.existsSync(path)) {
               const stats = fs.statSync(path);
