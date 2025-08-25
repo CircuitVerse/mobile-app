@@ -157,14 +157,10 @@ jobs:
       - name: Build APK Debug (Android)
         if: matrix.build-type == 'android'
         env:
-          FB_APP_ID: ${{ secrets.FB_APP_ID }}
-          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: |
           flutter build apk --debug \
-            --dart-define=FB_APP_ID=$FB_APP_ID \
-            --dart-define=FB_APP_NAME=$FB_APP_NAME \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
 
@@ -172,15 +168,11 @@ jobs:
       - name: Build iOS Debug (No Code Signing)
         if: matrix.build-type == 'ios'
         env:
-          FB_APP_ID: ${{ secrets.FB_APP_ID }}
-          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: |
           cd ios && pod install && cd ..
           flutter build ios --debug --no-codesign \
-            --dart-define=FB_APP_ID=$FB_APP_ID \
-            --dart-define=FB_APP_NAME=$FB_APP_NAME \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
 
@@ -188,14 +180,10 @@ jobs:
       - name: Build Windows Debug
         if: matrix.build-type == 'windows'
         env:
-          FB_APP_ID: ${{ secrets.FB_APP_ID }}
-          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: |
           flutter build windows --debug \
-            --dart-define=FB_APP_ID=$FB_APP_ID \
-            --dart-define=FB_APP_NAME=$FB_APP_NAME \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
 
@@ -206,6 +194,10 @@ jobs:
     steps:
       - name: Finalize Coveralls Reporting
         uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
+
       - name: Download APK Artifact
         uses: actions/download-artifact@v5
         with:
@@ -219,8 +211,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
+          token: ${{ secrets.GITHUB_TOKEN }}
 
   preview-apk:
     name: Build Preview APK
@@ -260,8 +251,6 @@ jobs:
 
       - name: Build Preview APK
         env:
-          FB_APP_ID: ${{ secrets.FB_APP_ID }}
-          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: |
@@ -271,8 +260,6 @@ jobs:
           flutter packages pub run build_runner build --delete-conflicting-outputs
           flutter build apk --release \
             --build-number=${{ github.run_number }} \
-            --dart-define=FB_APP_ID=$FB_APP_ID \
-            --dart-define=FB_APP_NAME=$FB_APP_NAME \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
 
