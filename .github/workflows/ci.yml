@@ -68,6 +68,7 @@ jobs:
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
       - name: Format Check (Exclude generated files)
+        if: matrix.build-type != 'windows'
         run: |
           dart format --set-exit-if-changed \
             $(find . -name "*.dart" \
