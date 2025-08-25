@@ -202,6 +202,18 @@ jobs:
     steps:
       - name: Finalize Coveralls Reporting
         uses: coverallsapp/github-action@v2
+      - name: Download APK Artifact
+        uses: actions/download-artifact@v5
+        with:
+          name: android-apk-${{ github.run_number }}
+          path: build/app/outputs/apk/release/  
+          
+      - name: Get Current Date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
