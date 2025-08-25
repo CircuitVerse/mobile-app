@@ -4,15 +4,29 @@ on:
   push:
     branches:
       - master
+      - main
+      - develop
   pull_request:
+    branches:
+      - master
+      - main
+      - develop
+
+# Minimal permissions by default
+permissions:
+  contents: read
 
 jobs:
-  build:
+  test:
+    name: Test & Analyze
+    permissions:
+      contents: read
+      checks: write  # for test results
     strategy:
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.platform }}
-    timeout-minutes: 60
+    timeout-minutes: 30
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -27,75 +41,171 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: 3.32
+          
+      - name: Cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            **/.dart_tool
+            **/.packages
+            **/.flutter-plugins
+            **/.flutter-plugin-dependencies
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
 
       - name: Clean and Get Dependencies
         run: |
           flutter clean
-          flutter pub get
+          flutter pub get || (flutter pub upgrade --major-versions && flutter pub get)
+
+      - name: Generate Localization Files
+        run: flutter gen-l10n
 
       - name: Build Runner (Generate Dart Files)
         run: flutter packages pub run build_runner build --delete-conflicting-outputs
 
-      - name: Format Check (Exclude .mocks files)
-        run: dart format --set-exit-if-changed $(git ls-files '*.dart' ':!:*.mocks.dart')
+      - name: Format Check (Exclude generated files)
+        if: matrix.platform != 'windows-latest'
+        run: |
+          dart format --set-exit-if-changed \
+            $(find . -name "*.dart" \
+              -not -path "./lib/gen_l10n/*" \
+              -not -path "./.dart_tool/*" \
+              -not -path "./build/*" \
+              -not -name "*.g.dart" \
+              -not -name "*.freezed.dart" \
+              -not -name "*.mocks.dart")
 
       - name: Analyze Code
         run: flutter analyze
 
       - name: Run Tests with Coverage
-        run: flutter test --coverage
+        run: flutter test --coverage --test-randomize-ordering-seed random
 
       - name: Upload Coverage to Coveralls
+        if: matrix.platform == 'ubuntu-latest'
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: run-${{ matrix.platform }}
           parallel: true
 
-      - name: Cache Gradle Wrapper and Gradle Cache
+  build-validation:
+    name: Build Validation
+    needs: test
+    strategy:
+      matrix:
+        include:
+          - platform: ubuntu-latest
+            build-type: android
+          - platform: macos-latest
+            build-type: ios
+          - platform: windows-latest
+            build-type: windows
+    runs-on: ${{ matrix.platform }}
+    timeout-minutes: 45
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java (for Android)
+        if: matrix.build-type == 'android'
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: 3.32
+
+          
+      - name: Cache Gradle (Android)
+        if: matrix.build-type == 'android'
         uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-            build/app/outputs/apk/release/
+            android/.gradle
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build APK (Android)
-        if: ${{ matrix.platform == 'ubuntu-latest' }}
+      - name: Cache CocoaPods (iOS)
+        if: matrix.build-type == 'ios'
+        uses: actions/cache@v4
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
+      - name: Get Dependencies
+        run: |
+          flutter clean
+          flutter pub get
+          flutter gen-l10n
+          flutter packages pub run build_runner build --delete-conflicting-outputs
+
+      # Android Build Validation
+      - name: Build APK Debug (Android)
+        if: matrix.build-type == 'android'
         env:
           FB_APP_ID: ${{ secrets.FB_APP_ID }}
           FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: |
-          flutter build apk --release \
+          flutter build apk --debug \
             --dart-define=FB_APP_ID=$FB_APP_ID \
             --dart-define=FB_APP_NAME=$FB_APP_NAME \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
-            
-      - name: Upload APK Artifact
-        if: ${{ matrix.platform == 'ubuntu-latest' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-apk-${{ github.run_number }}
-          path: build/app/outputs/apk/release/app-release.apk
-          if-no-files-found: error
-          
-      - name: Build iOS (MacOS Only)
-        if: ${{ matrix.platform == 'macos-latest' }}
-        run: |
-          rm -f ios/Podfile.lock
-          flutter build ios --release --no-codesign
 
-  release:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
-    needs: build
+      # iOS Build Validation  
+      - name: Build iOS Debug (No Code Signing)
+        if: matrix.build-type == 'ios'
+        env:
+          FB_APP_ID: ${{ secrets.FB_APP_ID }}
+          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
+          GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
+          GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+        run: |
+          cd ios && pod install && cd ..
+          flutter build ios --debug --no-codesign \
+            --dart-define=FB_APP_ID=$FB_APP_ID \
+            --dart-define=FB_APP_NAME=$FB_APP_NAME \
+            --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
+            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
+
+      # Windows Build Validation
+      - name: Build Windows Debug
+        if: matrix.build-type == 'windows'
+        env:
+          FB_APP_ID: ${{ secrets.FB_APP_ID }}
+          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
+          GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
+          GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+        run: |
+          flutter build windows --debug \
+            --dart-define=FB_APP_ID=$FB_APP_ID \
+            --dart-define=FB_APP_NAME=$FB_APP_NAME \
+            --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
+            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
+
+  coverage-finish:
+    name: Finalize Coverage
+    needs: test
     runs-on: ubuntu-latest
     steps:
+      - name: Finalize Coveralls Reporting
+        uses: coverallsapp/github-action@v2
       - name: Download APK Artifact
         uses: actions/download-artifact@v5
         with:
@@ -109,26 +219,93 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: "v1.0.${{ github.run_number }}"
-          name: "Release v1.0.${{ github.run_number }} - ${{ steps.date.outputs.date }}"
-          body: |
-            Android APK release built from commit ${{ github.sha }}.
-            
-            Build number: ${{ github.run_number }}
-            Build date: ${{ steps.date.outputs.date }}
-            
-            Download and install the APK file below.
-          files: build/app/outputs/apk/release/app-release.apk
-          draft: false
-          prerelease: false
-          generate_release_notes: true
-
-  finish:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Finalize Coveralls Reporting
-        uses: coverallsapp/github-action@v2
-        with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
+
+  preview-apk:
+    name: Build Preview APK
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
+    needs: test
+    permissions:
+      contents: read
+      pull-requests: write  # for PR comments
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: 3.32
+
+          
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            android/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build Preview APK
+        env:
+          FB_APP_ID: ${{ secrets.FB_APP_ID }}
+          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
+          GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
+          GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+        run: |
+          flutter clean
+          flutter pub get
+          flutter gen-l10n
+          flutter packages pub run build_runner build --delete-conflicting-outputs
+          flutter build apk --release \
+            --build-number=${{ github.run_number }} \
+            --dart-define=FB_APP_ID=$FB_APP_ID \
+            --dart-define=FB_APP_NAME=$FB_APP_NAME \
+            --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
+            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
+
+      - name: Upload Preview APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-apk-pr-${{ github.event.pull_request.number }}
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 7
+
+      - name: Comment PR with APK Link
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const path = 'build/app/outputs/flutter-apk/app-release.apk';
+            
+            if (fs.existsSync(path)) {
+              const stats = fs.statSync(path);
+              const sizeInMB = (stats.size / (1024 * 1024)).toFixed(2);
+              
+              const comment = `### 📱 Preview APK Ready!\n\n` +
+                `**Size:** ${sizeInMB} MB\n` +
+                `**Build:** #${{ github.run_number }}\n` +
+                `**Commit:** \`${context.sha.substring(0, 7)}\`\n\n` +
+                `Download the APK from the [Actions artifacts](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}).\n\n` +
+                `> ⚠️ This is a preview build for testing purposes only.`;
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
+            }
