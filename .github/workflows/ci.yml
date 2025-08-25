@@ -12,9 +12,16 @@ on:
       - main
       - develop
 
+# Minimal permissions by default
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Test & Analyze
+    permissions:
+      contents: read
+      checks: write  # for test results
     strategy:
       matrix:
         platform: [ubuntu-latest, macos-latest, windows-latest]
@@ -51,7 +58,7 @@ jobs:
       - name: Clean and Get Dependencies
         run: |
           flutter clean
-          flutter pub get
+          flutter pub get || (flutter pub upgrade --major-versions && flutter pub get)
 
       - name: Generate Localization Files
         run: flutter gen-l10n
@@ -203,6 +210,9 @@ jobs:
     name: Build Preview APK
     if: github.event_name == 'pull_request'
     needs: test
+    permissions:
+      contents: read
+      pull-requests: write  # for PR comments
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
