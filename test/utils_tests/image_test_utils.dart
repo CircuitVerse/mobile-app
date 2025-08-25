@@ -30,6 +30,9 @@ MockHttpClient _createMockImageHttpClient(
   final response = MockHttpClientResponse();
   final headers = MockHttpHeaders();
 
+  when(request.followRedirects).thenReturn(true);
+  when(client.maxConnectionsPerHost).thenReturn(6);
+
   when(
     client.getUrl(any),
   ).thenAnswer((_) => Future<HttpClientRequest>.value(request));
