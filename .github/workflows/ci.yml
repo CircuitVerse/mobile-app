@@ -224,7 +224,7 @@ jobs:
 
   preview-apk:
     name: Build Preview APK
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
     needs: test
     permissions:
       contents: read
