@@ -172,7 +172,7 @@ jobs:
           path: build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 7
 
-      # iOS Build Validation  
+      # iOS Build Validation
       - name: Build iOS Debug (No Code Signing)
         if: matrix.build-type == 'ios'
         env:
@@ -197,7 +197,7 @@ jobs:
 
   coverage-finish:
     name: Finalize Coverage
-    needs: [test, build-validation]
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - name: Finalize Coveralls Reporting
@@ -210,7 +210,7 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           name: android-apk-${{ github.run_number }}
-          path: build/app/outputs/flutter-apk/  
+          path: build/app/outputs/flutter-apk/
           
       - name: Get Current Date
         id: date
