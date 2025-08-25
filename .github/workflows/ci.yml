@@ -168,7 +168,7 @@ jobs:
         if: matrix.build-type == 'android'
         uses: actions/upload-artifact@v4
         with:
-          name: android-apk-${{ github.run_number }}
+          name: android-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
           retention-days: 7
 
@@ -197,7 +197,7 @@ jobs:
 
   coverage-finish:
     name: Finalize Coverage
-    needs: [test]
+    needs: [test, build-validation]
     runs-on: ubuntu-latest
     steps:
       - name: Finalize Coveralls Reporting
@@ -209,7 +209,7 @@ jobs:
       - name: Download APK Artifact
         uses: actions/download-artifact@v5
         with:
-          name: android-apk-${{ github.run_number }}
+          name: android-apk
           path: build/app/outputs/flutter-apk/
           
       - name: Get Current Date
@@ -224,7 +224,7 @@ jobs:
   preview-apk:
     name: Build Preview APK
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
-    needs: test
+    needs: [test, build-validation]
     permissions:
       contents: read
       pull-requests: write  # for PR comments
@@ -260,7 +260,7 @@ jobs:
       - name: Download Android APK from Build Validation
         uses: actions/download-artifact@v5
         with:
-          name: android-apk-${{ github.run_number }}
+          name: android-apk
           path: build/app/outputs/flutter-apk/
 
       - name: Comment PR with APK Link
