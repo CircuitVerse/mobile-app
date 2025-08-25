@@ -39,18 +39,11 @@ void main() {
     setUp(() {
       mockObserver = MockNavigatorObserver();
 
-      // Register mock services for all tests
-      if (!locator.isRegistered<DialogService>()) {
-        var dialogService = MockDialogService();
-        locator.registerSingleton<DialogService>(dialogService);
-      }
-
-      if (!locator.isRegistered<UpdateAssignmentViewModel>()) {
-        var updateAssignmentViewModel = MockUpdateAssignmentViewModel();
-        locator.registerSingleton<UpdateAssignmentViewModel>(
-          updateAssignmentViewModel,
-        );
-      }
+      // Always override with mocks (allowReassignment is true)
+      locator.registerSingleton<DialogService>(MockDialogService());
+      locator.registerSingleton<UpdateAssignmentViewModel>(
+        MockUpdateAssignmentViewModel(),
+      );
     });
 
     tearDown(() {
