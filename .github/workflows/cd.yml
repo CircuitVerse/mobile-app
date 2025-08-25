@@ -1,25 +1,47 @@
 name: Release and Deploy
+
 on:
   workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Release type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      track:
+        description: 'Play Store deployment track'
+        required: true
+        default: 'internal'
+        type: choice
+        options:
+          - internal
+          - alpha
+          - beta
+          - production
 
 permissions:
   contents: write # for releases and tags
   issues: write # for issue comments
   pull-requests: write # for PR comments
-  id-token: write # for GitHub OIDC authentication with pub.dev
 
 jobs:
   release:
-    name: Release
+    name: Create Release
     runs-on: ubuntu-latest
     outputs:
       new_release_published: ${{ steps.semantic.outputs.new_release_published }}
       new_release_version: ${{ steps.semantic.outputs.new_release_version }}
+      release_notes: ${{ steps.release_notes.outputs.notes }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -30,6 +52,8 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+          flutter-version: 3.32
+
           
       - name: Install semantic-release and plugins
         run: |
@@ -44,39 +68,35 @@ jobs:
             semantic-release-pub \
             conventional-changelog-conventionalcommits
       
-      - name: Create semantic-release config file
+      - name: Create semantic-release config
         run: |
-          echo '{
-            "branches": ["master"],
+          cat > .releaserc.json << 'EOF'
+          {
+            "branches": ["master", "main"],
             "plugins": [
               ["@semantic-release/commit-analyzer", {
                 "preset": "conventionalcommits",
                 "releaseRules": [
                   {"type": "feat", "release": "minor"},
                   {"type": "fix", "release": "patch"},
-                  {"type": "docs", "release": "patch"},
-                  {"type": "style", "release": "patch"},
-                  {"type": "refactor", "release": "patch"},
                   {"type": "perf", "release": "patch"},
-                  {"type": "test", "scope": "breaking", "release": "major"},
-                  {"type": "build", "release": "patch"},
-                  {"type": "ci", "release": "patch"},
-                  {"type": "chore", "release": false}
+                  {"type": "refactor", "release": "patch"},
+                  {"breaking": true, "release": "major"}
                 ]
               }],
               ["@semantic-release/release-notes-generator", {
                 "preset": "conventionalcommits",
                 "presetConfig": {
                   "types": [
-                    {"type": "feat", "section": "Features"},
-                    {"type": "fix", "section": "Bug Fixes"},
-                    {"type": "docs", "section": "Documentation"},
-                    {"type": "style", "section": "Styles"},
-                    {"type": "refactor", "section": "Code Refactoring"},
-                    {"type": "perf", "section": "Performance Improvements"},
-                    {"type": "test", "section": "Tests"},
-                    {"type": "build", "section": "Build System"},
-                    {"type": "ci", "section": "Continuous Integration"}
+                    {"type": "feat", "section": "✨ Features"},
+                    {"type": "fix", "section": "🐛 Bug Fixes"},
+                    {"type": "perf", "section": "⚡ Performance Improvements"},
+                    {"type": "refactor", "section": "♻️ Code Refactoring"},
+                    {"type": "docs", "section": "📚 Documentation"},
+                    {"type": "style", "section": "💎 Styles"},
+                    {"type": "test", "section": "🧪 Tests"},
+                    {"type": "build", "section": "📦 Build System"},
+                    {"type": "ci", "section": "🎡 CI"}
                   ]
                 }
               }],
@@ -87,27 +107,39 @@ jobs:
               ["semantic-release-pub", {
                 "cli": "flutter",
                 "publishPub": false,
-                "updateBuildNumber": true,
-                "useGithubOidc": false
+                "updateBuildNumber": true
               }],
               ["@semantic-release/github", {
-                "assets": []
+                "assets": [],
+                "successComment": false,
+                "failComment": false
               }],
               ["@semantic-release/git", {
                 "assets": ["CHANGELOG.md", "pubspec.yaml"],
                 "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
               }]
             ]
-          }' > .releaserc.json
+          }
+          EOF
           
       - name: Run Semantic Release
         id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
+        
+      - name: Extract Release Notes
+        id: release_notes
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          # Extract the latest release notes from CHANGELOG.md
+          NOTES=$(awk '/^## \[/{if(p) exit; p=1; next} p' CHANGELOG.md)
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
           
-  deploy:
-    name: Deploy
+  build-and-deploy:
+    name: Build and Deploy to Play Store
     needs: release
     if: needs.release.outputs.new_release_published == 'true'
     runs-on: ubuntu-latest
@@ -123,6 +155,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+          flutter-version: 3.32
           
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -134,49 +167,166 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.0'
+          working-directory: android
           bundler-cache: true
           
-      - name: Setup credentials
+      - name: Setup signing credentials
         run: |
+          # Create directories if they don't exist
+          mkdir -p android/app
+          
+          # Decode and save Play Store service account key
           echo "${{ secrets.FASTLANE_SUPPLY_JSON_KEY }}" | base64 --decode > android/supply_json_key.json
-          echo "${{ secrets.RELEASE_KEYSTORE_PROPERTIES }}" | base64 --decode > android/key.release.properties
+          
+          # Decode and save keystore properties
+          echo "${{ secrets.RELEASE_KEYSTORE_PROPERTIES }}" | base64 --decode > android/key.properties
+          
+          # Decode and save keystore file
           echo "${{ secrets.RELEASE_KEYSTORE }}" | base64 --decode > android/app/cv_release.jks
           
-      - name: Flutter build
+          # Verify files were created
+          ls -la android/supply_json_key.json
+          ls -la android/key.properties
+          ls -la android/app/cv_release.jks
+          
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            android/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+            
+      - name: Cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            **/.dart_tool
+            **/.packages
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+          
+      - name: Flutter dependencies and code generation
         run: |
           flutter clean
           flutter pub get
+          flutter gen-l10n
           flutter packages pub run build_runner build --delete-conflicting-outputs
           
-          # Build both APK and App Bundle
-          flutter build apk --release \
-            --dart-define=FB_APP_ID=${{ secrets.FB_APP_ID }} \
-            --dart-define=FB_APP_NAME=${{ secrets.FB_APP_NAME }} \
-            --dart-define=GITHUB_OAUTH_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }} \
-            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+      - name: Build Android App Bundle
+        env:
+          FB_APP_ID: ${{ secrets.FB_APP_ID }}
+          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
+          GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
+          GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+        run: |
+          # Get version code from run number
+          VERSION_CODE=${{ github.run_number }}
           
+          # Build the app bundle for Play Store
           flutter build appbundle --release \
-            --dart-define=FB_APP_ID=${{ secrets.FB_APP_ID }} \
-            --dart-define=FB_APP_NAME=${{ secrets.FB_APP_NAME }} \
-            --dart-define=GITHUB_OAUTH_CLIENT_ID=${{ secrets.GH_OAUTH_CLIENT_ID }} \
-            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+            --build-name=${{ env.VERSION }} \
+            --build-number=$VERSION_CODE \
+            --dart-define=FB_APP_ID=$FB_APP_ID \
+            --dart-define=FB_APP_NAME=$FB_APP_NAME \
+            --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
+            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
             
-      - name: Deploy with Fastlane
-        uses: maierj/fastlane-action@v3.1.0
-        with:
-          lane: "production"
-          subdirectory: android
-      
+          # Also build APK for GitHub release
+          flutter build apk --release \
+            --build-name=${{ env.VERSION }} \
+            --build-number=$VERSION_CODE \
+            --dart-define=FB_APP_ID=$FB_APP_ID \
+            --dart-define=FB_APP_NAME=$FB_APP_NAME \
+            --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
+            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
+            
+      - name: Install Fastlane dependencies
+        working-directory: android
+        run: bundle install
+          
+      - name: Deploy to Play Store
+        working-directory: android
+        run: |
+          # Use the track specified in the workflow input
+          if [ "${{ github.event.inputs.track }}" = "production" ]; then
+            bundle exec fastlane prod
+          else
+            bundle exec fastlane ${{ github.event.inputs.track }}
+          fi
+        env:
+          PLAY_STORE_TRACK: ${{ github.event.inputs.track }}
+          VERSION: ${{ env.VERSION }}
+          
+      - name: Calculate APK size
+        id: apk_size
+        run: |
+          APK_SIZE=$(ls -lh build/app/outputs/flutter-apk/app-release.apk | awk '{print $5}')
+          echo "size=$APK_SIZE" >> $GITHUB_OUTPUT
+          
       - name: Upload APK to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ env.VERSION }}
+          name: Release v${{ env.VERSION }}
+          body: |
+            ## 🎉 CircuitVerse Mobile v${{ env.VERSION }}
+            
+            ${{ needs.release.outputs.release_notes }}
+            
+            ---
+            
+            ### 📱 Download Options
+            - **Direct Download:** `app-release.apk` (Size: ${{ steps.apk_size.outputs.size }})
+            - **Google Play Store:** Available on ${{ github.event.inputs.track }} track
+            
+            ### 📊 Build Information
+            - **Version:** ${{ env.VERSION }}
+            - **Build Number:** ${{ github.run_number }}
+            - **Commit:** [`${{ github.sha }}`](https://github.com/${{ github.repository }}/commit/${{ github.sha }})
+            - **Track:** ${{ github.event.inputs.track }}
+            
+            ### 🔧 Installation Instructions
+            1. Download the APK file below
+            2. Enable "Install from Unknown Sources" in your Android settings
+            3. Open the downloaded APK to install
+            
+            > **Note:** The Play Store version may take a few hours to become available after deployment.
           files: |
             build/app/outputs/flutter-apk/app-release.apk
           token: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Archive build artifacts
+      - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-v${{ env.VERSION }}
-          path: build/app/outputs/
+          name: release-artifacts-v${{ env.VERSION }}
+          path: |
+            build/app/outputs/bundle/release/app-release.aab
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/apk/release/output-metadata.json
+          retention-days: 90
+          
+      - name: Create deployment summary
+        run: |
+          echo "## 🚀 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Version** | v${{ env.VERSION }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Build Number** | ${{ github.run_number }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Track** | ${{ github.event.inputs.track }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **APK Size** | ${{ steps.apk_size.outputs.size }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Status** | ✅ Success |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "- Android App Bundle (AAB)" >> $GITHUB_STEP_SUMMARY
+          echo "- Android APK" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔗 Links" >> $GITHUB_STEP_SUMMARY
+          echo "- [GitHub Release](https://github.com/${{ github.repository }}/releases/tag/v${{ env.VERSION }})" >> $GITHUB_STEP_SUMMARY
+          echo "- [Play Console](https://play.google.com/console)" >> $GITHUB_STEP_SUMMARY
