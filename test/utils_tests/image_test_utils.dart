@@ -56,7 +56,7 @@ MockHttpClient _createMockImageHttpClient(
   ).thenReturn(HttpClientResponseCompressionState.notCompressed);
   when(response.contentLength).thenReturn(kTransparentImage.length);
   when(response.statusCode).thenReturn(HttpStatus.ok);
-  
+
   when(response.headers).thenReturn(headers);
   when(headers.forEach(any)).thenAnswer((invocation) {
     final callback =
