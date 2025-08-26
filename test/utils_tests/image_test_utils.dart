@@ -31,10 +31,21 @@ MockHttpClient _createMockImageHttpClient(
   final headers = MockHttpHeaders();
 
   when(request.followRedirects).thenReturn(true);
+  when(request.followRedirects = any).thenReturn(null);
+
+  when(request.persistentConnection).thenReturn(true);
+  when(request.persistentConnection = any).thenReturn(null);
+
+  when(request.bufferOutput).thenReturn(true);
+  when(request.bufferOutput = any).thenReturn(null);
+
   when(client.maxConnectionsPerHost).thenReturn(6);
 
   when(
     client.getUrl(any),
+  ).thenAnswer((_) => Future<HttpClientRequest>.value(request));
+  when(
+    client.openUrl(any, any),
   ).thenAnswer((_) => Future<HttpClientRequest>.value(request));
   when(request.headers).thenReturn(headers);
   when(
