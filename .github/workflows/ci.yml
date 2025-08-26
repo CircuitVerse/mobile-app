@@ -173,9 +173,23 @@ jobs:
           retention-days: 7
 
       # iOS Build Validation
-      - name: Update CocoaPods specs repo (iOS)
+      - name: Ensure CocoaPods (iOS)
         if: matrix.build-type == 'ios'
-        run: pod repo update
+        run: sudo gem install cocoapods --no-document || true
+
+      - name: Update CocoaPods Specs Repo (iOS)
+        if: matrix.build-type == 'ios'
+        run: |
+          cd ios
+          pod repo update
+          cd ..
+
+      - name: Install CocoaPods dependencies (iOS)
+        if: matrix.build-type == 'ios'
+        run: |
+          cd ios
+          pod install
+          cd ..
 
       - name: Build iOS Debug (No Code Signing)
         if: matrix.build-type == 'ios'
@@ -183,7 +197,6 @@ jobs:
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: |
-          cd ios && pod install && cd ..
           flutter build ios --debug --no-codesign \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
