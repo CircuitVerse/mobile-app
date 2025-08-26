@@ -173,6 +173,10 @@ jobs:
           retention-days: 7
 
       # iOS Build Validation
+      - name: Update CocoaPods specs repo (iOS)
+        if: matrix.build-type == 'ios'
+        run: pod repo update
+
       - name: Build iOS Debug (No Code Signing)
         if: matrix.build-type == 'ios'
         env:
