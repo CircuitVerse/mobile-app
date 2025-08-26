@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/models/cv_contributors.dart';
 import 'package:mobile_app/models/failure_model.dart';
@@ -19,7 +17,7 @@ class HttpContributorsApi implements ContributorsApi {
 
     try {
       var _jsonResponse = await ApiUtils.get(_url, headers: headers);
-      return circuitVerseContributorsFromJson(json.encode(_jsonResponse));
+      return circuitVerseContributorsFromList(_jsonResponse as List<dynamic>);
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on Exception {
