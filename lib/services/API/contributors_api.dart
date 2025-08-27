@@ -21,14 +21,14 @@ class HttpContributorsApi implements ContributorsApi {
 
       if (_jsonResponse is List) {
         contributorsList = _jsonResponse;
-      } else if (_jsonResponse is Map && _jsonResponse.containsKey('contributors')) {
+      } else if (_jsonResponse is Map &&
+          _jsonResponse.containsKey('contributors')) {
         contributorsList = _jsonResponse['contributors'] as List<dynamic>;
       } else {
         throw FormatException('Unexpected response format');
       }
 
       return circuitVerseContributorsFromList(contributorsList);
-
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on Exception {
