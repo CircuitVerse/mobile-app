@@ -211,10 +211,7 @@ jobs:
         env:
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
-        run: |
-          flutter build windows --debug \
-            --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
-            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
+        run: flutter build windows --debug --dart-define=GITHUB_OAUTH_CLIENT_ID=$env:GH_OAUTH_CLIENT_ID --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$env:GH_OAUTH_CLIENT_SECRET
 
   coverage-finish:
     name: Finalize Coverage
