@@ -101,7 +101,7 @@ jobs:
         include:
           - platform: ubuntu-latest
             build-type: android
-          - platform: macos-latest
+          - platform: macos-14
             build-type: ios
           - platform: windows-latest
             build-type: windows
@@ -191,13 +191,17 @@ jobs:
           pod install
           cd ..
 
-      - name: Build iOS Debug (No Code Signing, device SDK)
+      - name: List iOS Simulators
+        if: matrix.build-type == 'ios'
+        run: xcrun simctl list devices
+
+      - name: Build iOS Debug (No Code Signing)
         if: matrix.build-type == 'ios'
         env:
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: |
-          flutter build ios --debug --no-codesign \
+          flutter build ios --debug --no-codesign --simulator \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
 
