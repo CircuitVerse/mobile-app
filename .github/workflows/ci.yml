@@ -191,7 +191,7 @@ jobs:
           pod install
           cd ..
 
-      - name: Build iOS Debug (No Code Signing)
+      - name: Build iOS Debug (No Code Signing, device SDK)
         if: matrix.build-type == 'ios'
         env:
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
