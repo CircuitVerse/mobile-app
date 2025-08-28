@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/models/cv_contributors.dart';
 import 'package:mobile_app/models/failure_model.dart';
@@ -19,7 +17,18 @@ class HttpContributorsApi implements ContributorsApi {
 
     try {
       var _jsonResponse = await ApiUtils.get(_url, headers: headers);
-      return circuitVerseContributorsFromJson(jsonEncode(_jsonResponse));
+      List<dynamic> contributorsList;
+
+      if (_jsonResponse is List) {
+        contributorsList = _jsonResponse;
+      } else if (_jsonResponse is Map &&
+          _jsonResponse.containsKey('contributors')) {
+        contributorsList = _jsonResponse['contributors'] as List<dynamic>;
+      } else {
+        throw FormatException('Unexpected response format');
+      }
+
+      return circuitVerseContributorsFromList(contributorsList);
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on Exception {
