@@ -1,4 +1,3 @@
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobile_app/enums/auth_type.dart';
@@ -42,11 +41,6 @@ class CVLandingViewModel extends BaseModel {
     _storage.isLoggedIn = false;
     _storage.currentUser = null;
     _storage.token = null;
-
-    // Perform facebook logout if auth type is facebook..
-    if (_storage.authType == AuthType.FACEBOOK) {
-      await FacebookAuth.instance.logOut();
-    }
 
     // Perform google signout if auth type is google..
     if (_storage.authType == AuthType.GOOGLE) {

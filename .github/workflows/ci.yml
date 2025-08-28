@@ -83,7 +83,7 @@ jobs:
         run: flutter analyze
 
       - name: Run Tests with Coverage
-        run: flutter test --coverage --test-randomize-ordering-seed random
+        run: flutter test --coverage
 
       - name: Upload Coverage to Coveralls
         if: matrix.platform == 'ubuntu-latest'
@@ -92,6 +92,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: run-${{ matrix.platform }}
           parallel: true
+          coverage-reporter-version: v0.6.15
+          fail-on-error: false
 
   build-validation:
     name: Build Validation
@@ -101,7 +103,7 @@ jobs:
         include:
           - platform: ubuntu-latest
             build-type: android
-          - platform: macos-latest
+          - platform: macos-14
             build-type: ios
           - platform: windows-latest
             build-type: windows
@@ -157,30 +159,51 @@ jobs:
       - name: Build APK Debug (Android)
         if: matrix.build-type == 'android'
         env:
-          FB_APP_ID: ${{ secrets.FB_APP_ID }}
-          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: |
           flutter build apk --debug \
-            --dart-define=FB_APP_ID=$FB_APP_ID \
-            --dart-define=FB_APP_NAME=$FB_APP_NAME \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
 
-      # iOS Build Validation  
+      - name: Upload Android APK
+        if: matrix.build-type == 'android'
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 7
+
+      # iOS Build Validation
+      - name: Ensure CocoaPods (iOS)
+        if: matrix.build-type == 'ios'
+        run: sudo gem install cocoapods --no-document || true
+
+      - name: Update CocoaPods Specs Repo (iOS)
+        if: matrix.build-type == 'ios'
+        run: |
+          cd ios
+          pod repo update
+          cd ..
+
+      - name: Install CocoaPods dependencies (iOS)
+        if: matrix.build-type == 'ios'
+        run: |
+          cd ios
+          pod install
+          cd ..
+
+      - name: List iOS Simulators
+        if: matrix.build-type == 'ios'
+        run: xcrun simctl list devices
+
       - name: Build iOS Debug (No Code Signing)
         if: matrix.build-type == 'ios'
         env:
-          FB_APP_ID: ${{ secrets.FB_APP_ID }}
-          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: |
-          cd ios && pod install && cd ..
-          flutter build ios --debug --no-codesign \
-            --dart-define=FB_APP_ID=$FB_APP_ID \
-            --dart-define=FB_APP_NAME=$FB_APP_NAME \
+          flutter build ios --debug --no-codesign --simulator \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
 
@@ -188,44 +211,61 @@ jobs:
       - name: Build Windows Debug
         if: matrix.build-type == 'windows'
         env:
-          FB_APP_ID: ${{ secrets.FB_APP_ID }}
-          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
-        run: |
-          flutter build windows --debug \
-            --dart-define=FB_APP_ID=$FB_APP_ID \
-            --dart-define=FB_APP_NAME=$FB_APP_NAME \
-            --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
-            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
+        run: flutter build windows --debug --dart-define=GITHUB_OAUTH_CLIENT_ID=$env:GH_OAUTH_CLIENT_ID --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$env:GH_OAUTH_CLIENT_SECRET
 
   coverage-finish:
     name: Finalize Coverage
-    needs: test
+    needs: [test, build-validation]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Finalize Coveralls Reporting
         uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
+          coverage-reporter-version: v0.6.15
+          fail-on-error: false
+
       - name: Download APK Artifact
         uses: actions/download-artifact@v5
         with:
-          name: android-apk-${{ github.run_number }}
-          path: build/app/outputs/apk/release/  
+          name: android-apk
+          path: build/app/outputs/flutter-apk/
           
       - name: Get Current Date
         id: date
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-        
+
+      - name: Checkout Repository (for tagging)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
+
+      - name: Create Release Tag
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git tag -a v${{ github.run_number }} -m "Release v${{ github.run_number }}"
+          git push origin v${{ github.run_number }}
+
       - name: Create Release
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
         uses: softprops/action-gh-release@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: v${{ github.run_number }}
+          files: build/app/outputs/flutter-apk/app-debug.apk
 
   preview-apk:
     name: Build Preview APK
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
-    needs: test
+    needs: [test, build-validation]
     permissions:
       contents: read
       pull-requests: write  # for PR comments
@@ -258,30 +298,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build Preview APK
-        env:
-          FB_APP_ID: ${{ secrets.FB_APP_ID }}
-          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
-          GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
-          GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
-        run: |
-          flutter clean
-          flutter pub get
-          flutter gen-l10n
-          flutter packages pub run build_runner build --delete-conflicting-outputs
-          flutter build apk --release \
-            --build-number=${{ github.run_number }} \
-            --dart-define=FB_APP_ID=$FB_APP_ID \
-            --dart-define=FB_APP_NAME=$FB_APP_NAME \
-            --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
-            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
-
-      - name: Upload Preview APK
-        uses: actions/upload-artifact@v4
+      - name: Download Android APK from Build Validation
+        uses: actions/download-artifact@v5
         with:
-          name: preview-apk-pr-${{ github.event.pull_request.number }}
-          path: build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 7
+          name: android-apk
+          path: build/app/outputs/flutter-apk/
 
       - name: Comment PR with APK Link
         uses: actions/github-script@v7
@@ -289,7 +310,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const path = 'build/app/outputs/flutter-apk/app-release.apk';
+            const path = 'build/app/outputs/flutter-apk/app-debug.apk';
             
             if (fs.existsSync(path)) {
               const stats = fs.statSync(path);

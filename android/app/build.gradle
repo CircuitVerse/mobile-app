@@ -12,7 +12,6 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
     flutterVersionCode = '1'
@@ -23,10 +22,8 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-def environmentVariables = [
-    FB_APP_NAME: 'FB_APP_NAME',
-    FB_APP_ID: 'FB_APP_ID',
-];
+// Initialize environmentVariables as an empty map
+def environmentVariables = [:]
 
 if (project.hasProperty('dart-defines')) {
     environmentVariables = environmentVariables + project.property('dart-defines')
@@ -52,7 +49,6 @@ def releaseKeystorePropertiesFile = rootProject.file('key.release.properties')
 if (releaseKeystorePropertiesFile.exists()) {
     releaseKeystoreProperties.load(new FileInputStream(releaseKeystorePropertiesFile))
 }
-
 
 android {
     compileSdkVersion 35
@@ -82,9 +78,6 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resValue "string", "app_name", environmentVariables.FB_APP_NAME
-        resValue "string", "facebook_app_id", environmentVariables.FB_APP_ID
-        resValue "string", "fb_login_protocol_scheme", "fb" + environmentVariables.FB_APP_ID
     }
 
     signingConfigs {

@@ -36,7 +36,15 @@ void main() {
       WebViewPlatform.instance = AndroidWebViewPlatform();
     });
 
-    setUp(() => mockObserver = MockNavigatorObserver());
+    setUp(() {
+      mockObserver = MockNavigatorObserver();
+
+      // Always override with mocks (allowReassignment is true)
+      locator.registerSingleton<DialogService>(MockDialogService());
+      locator.registerSingleton<UpdateAssignmentViewModel>(
+        MockUpdateAssignmentViewModel(),
+      );
+    });
 
     tearDown(() {
       if (locator.isRegistered<DialogService>()) {
@@ -114,20 +122,14 @@ void main() {
     testWidgets('on Update Assignment button is Tapped', (
       WidgetTester tester,
     ) async {
-      // Mock Dialog Service
-      var dialogService = MockDialogService();
-      locator.registerSingleton<DialogService>(dialogService);
+      var dialogService = locator<DialogService>() as MockDialogService;
+      var updateAssignmentViewModel =
+          locator<UpdateAssignmentViewModel>() as MockUpdateAssignmentViewModel;
 
       when(
         dialogService.showCustomProgressDialog(title: anyNamed('title')),
       ).thenAnswer((_) => Future.value(DialogResponse(confirmed: false)));
       when(dialogService.popDialog()).thenReturn(null);
-
-      // Mock UpdateAssignment ViewModel
-      var updateAssignmentViewModel = MockUpdateAssignmentViewModel();
-      locator.registerSingleton<UpdateAssignmentViewModel>(
-        updateAssignmentViewModel,
-      );
 
       when(
         updateAssignmentViewModel.UPDATE_ASSIGNMENT,
