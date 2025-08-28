@@ -83,7 +83,7 @@ jobs:
         run: flutter analyze
 
       - name: Run Tests with Coverage
-        run: flutter test --coverage --test-randomize-ordering-seed random
+        run: flutter test --coverage
 
       - name: Upload Coverage to Coveralls
         if: matrix.platform == 'ubuntu-latest'

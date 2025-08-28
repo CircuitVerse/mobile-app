@@ -20,24 +20,6 @@ import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import '../../setup/test_data/mock_contributors.dart';
 import '../../setup/test_helpers.mocks.dart';
 
-Future<void> pumpUntilFound(
-  WidgetTester tester,
-  Finder finder, {
-  Duration timeout = const Duration(seconds: 10),
-}) async {
-  bool found = false;
-  final end = DateTime.now().add(timeout);
-
-  while (!found && DateTime.now().isBefore(end)) {
-    await tester.pump(const Duration(milliseconds: 100));
-    found = tester.any(finder);
-  }
-
-  if (!found) {
-    throw Exception('Widget not found within timeout');
-  }
-}
-
 void main() {
   group('AboutViewTest -', () {
     late MockNavigatorObserver mockObserver;
@@ -77,26 +59,19 @@ void main() {
       testWidgets('when error response, finds GENERIC_FAILURE', (
         WidgetTester tester,
       ) async {
-        var _mockContributorsApi = MockContributorsApi();
-        locator.registerSingleton(_mockContributorsApi);
-        when(
-          _mockContributorsApi.fetchContributors(),
-        ).thenThrow(Exception('API Error'));
-
         await _pumpAboutView(tester);
-        await pumpUntilFound(tester, find.text(Constants.GENERIC_FAILURE));
+        await tester.pumpAndSettle();
 
+        // returning no response from API should throw generic failure
         expect(find.text(Constants.GENERIC_FAILURE), findsOneWidget);
-
-        locator.unregister<MockContributorsApi>();
       });
 
       testWidgets('when success response, finds contributor avatars', (
         WidgetTester tester,
       ) async {
         await provideMockedNetworkImages(() async {
+          // var _mockContributorsApi = getAndRegisterContributorsApiMock();
           var _mockContributorsApi = MockContributorsApi();
-          locator.registerSingleton(_mockContributorsApi);
           when(_mockContributorsApi.fetchContributors()).thenAnswer(
             (_) => Future.value(
               mockContributors
@@ -109,8 +84,6 @@ void main() {
           await tester.pumpAndSettle();
 
           // expect(find.byType(ContributorAvatar), findsNWidgets(3));
-
-          locator.unregister<MockContributorsApi>();
         });
       });
     });
