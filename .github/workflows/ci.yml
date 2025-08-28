@@ -92,6 +92,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           flag-name: run-${{ matrix.platform }}
           parallel: true
+          coverage-reporter-version: v0.6.15
+          fail-on-error: false
 
   build-validation:
     name: Build Validation
@@ -217,12 +219,16 @@ jobs:
     name: Finalize Coverage
     needs: [test, build-validation]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Finalize Coveralls Reporting
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           parallel-finished: true
+          coverage-reporter-version: v0.6.15
+          fail-on-error: false
 
       - name: Download APK Artifact
         uses: actions/download-artifact@v5
@@ -233,11 +239,28 @@ jobs:
       - name: Get Current Date
         id: date
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-        
+
+      - name: Checkout Repository (for tagging)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.sha }}
+
+      - name: Create Release Tag
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git tag -a v${{ github.run_number }} -m "Release v${{ github.run_number }}"
+          git push origin v${{ github.run_number }}
+
       - name: Create Release
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
         uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: v${{ github.run_number }}
+          files: build/app/outputs/flutter-apk/app-debug.apk
 
   preview-apk:
     name: Build Preview APK
