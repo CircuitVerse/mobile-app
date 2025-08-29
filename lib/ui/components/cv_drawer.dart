@@ -37,6 +37,45 @@ class CVDrawer extends StatelessWidget {
                   width: 90,
                 ),
               ),
+
+              ListTile(
+                leading: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    return RotationTransition(
+                      turns: Tween(begin: 0.75, end: 1.0).animate(animation),
+                      child: FadeTransition(opacity: animation, child: child),
+                    );
+                  },
+                  child: Icon(
+                    Theme.of(context).brightness == Brightness.dark
+                        ? Icons.nightlight_round
+                        : Icons.wb_sunny,
+                    key: ValueKey(Theme.of(context).brightness),
+                    color: CVTheme.drawerIcon(context),
+                  ),
+                ),
+                title: AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 100),
+
+                  style: Theme.of(context).textTheme.titleLarge!,
+
+                  child: Text(
+                    Theme.of(context).brightness == Brightness.dark
+                        ? AppLocalizations.of(context)!.dark_mode
+                        : AppLocalizations.of(context)!.light_mode,
+                  ),
+                ),
+                trailing: Switch(
+                  value: Theme.of(context).brightness == Brightness.dark,
+                  onChanged:
+                      (_) => ThemeProvider.controllerOf(context).nextTheme(),
+                  activeColor: CVTheme.drawerIcon(context),
+                  inactiveThumbColor: CVTheme.drawerIcon(context),
+                  activeTrackColor: CVTheme.drawerIcon(context).withAlpha(128),
+                ),
+              ),
+
               InkWell(
                 onTap: () => _model.setSelectedIndexTo(0),
                 child: CVDrawerTile(
@@ -238,18 +277,6 @@ class CVDrawer extends StatelessWidget {
                   ),
                 ),
             ],
-          ),
-          Positioned(
-            right: 5,
-            top: 35,
-            child: IconButton(
-              icon:
-                  Theme.of(context).brightness == Brightness.dark
-                      ? const Icon(Icons.brightness_low)
-                      : const Icon(Icons.brightness_high),
-              iconSize: 28.0,
-              onPressed: () => ThemeProvider.controllerOf(context).nextTheme(),
-            ),
           ),
         ],
       ),
