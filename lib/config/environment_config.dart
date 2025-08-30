@@ -27,4 +27,8 @@ class EnvironmentConfig {
   );
 
   static String CV_BASE_URL = CV_API_BASE_URL.replaceAll('/api/v1', '');
+
+  // FB OAUTH ENV VARIABLES
+  static const String FB_APP_NAME = String.fromEnvironment('FB_APP_NAME');
+  static const String FB_APP_ID = String.fromEnvironment('FB_APP_ID');
 }

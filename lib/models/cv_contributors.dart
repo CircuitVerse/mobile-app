@@ -7,13 +7,6 @@ List<CircuitVerseContributor> circuitVerseContributorsFromJson(String str) =>
       json.decode(str).map((x) => CircuitVerseContributor.fromJson(x)),
     );
 
-List<CircuitVerseContributor> circuitVerseContributorsFromList(
-  List<dynamic> data,
-) =>
-    data
-        .map((x) => CircuitVerseContributor.fromJson(x as Map<String, dynamic>))
-        .toList();
-
 class CircuitVerseContributor {
   factory CircuitVerseContributor.fromJson(Map<String, dynamic> json) =>
       CircuitVerseContributor(
