@@ -1,3 +1,4 @@
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/enums/auth_type.dart';
@@ -13,11 +14,60 @@ import 'package:oauth2_client/oauth2_helper.dart';
 
 class AuthOptionsViewModel extends BaseModel {
   // ViewState Keys
+  final String FB_OAUTH = 'fb_oauth';
   final String GOOGLE_OAUTH = 'google_oauth';
   final String GITHUB_OAUTH = 'github_oauth';
 
   final UsersApi _userApi = locator<UsersApi>();
   final LocalStorageService _storage = locator<LocalStorageService>();
+
+  Future facebookAuth({bool isSignUp = false}) async {
+    final result = await FacebookAuth.instance.login();
+
+    switch (result.status) {
+      case LoginStatus.success:
+        setStateFor(FB_OAUTH, ViewState.Busy);
+
+        try {
+          // save token & current user to local storage..
+          if (isSignUp) {
+            _storage.token = await _userApi.oauthSignup(
+              accessToken: result.accessToken!.token,
+              provider: 'facebook',
+            );
+          } else {
+            _storage.token = await _userApi.oauthLogin(
+              accessToken: result.accessToken!.token,
+              provider: 'facebook',
+            );
+          }
+
+          _storage.currentUser = await _userApi.fetchCurrentUser();
+
+          // update authentication status..
+          _storage.isLoggedIn = true;
+
+          // save authentication type to local storage..
+          _storage.authType = AuthType.FACEBOOK;
+
+          setStateFor(FB_OAUTH, ViewState.Success);
+        } on Failure catch (f) {
+          setStateFor(FB_OAUTH, ViewState.Error);
+          setErrorMessageFor(FB_OAUTH, f.message);
+        }
+        break;
+      case LoginStatus.cancelled:
+        setStateFor(FB_OAUTH, ViewState.Error);
+        setErrorMessageFor(FB_OAUTH, 'Login Cancelled By User!');
+        break;
+      case LoginStatus.failed:
+        setStateFor(FB_OAUTH, ViewState.Error);
+        setErrorMessageFor(FB_OAUTH, 'Unable to authenticate!');
+        break;
+      case LoginStatus.operationInProgress:
+        break;
+    }
+  }
 
   Future googleAuth({bool isSignUp = false}) async {
     var _googleSignIn = GoogleSignIn(scopes: ['email']);

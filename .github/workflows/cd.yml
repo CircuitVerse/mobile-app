@@ -220,6 +220,8 @@ jobs:
           
       - name: Build Android App Bundle
         env:
+          FB_APP_ID: ${{ secrets.FB_APP_ID }}
+          FB_APP_NAME: ${{ secrets.FB_APP_NAME }}
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: |
@@ -230,6 +232,8 @@ jobs:
           flutter build appbundle --release \
             --build-name=${{ env.VERSION }} \
             --build-number=$VERSION_CODE \
+            --dart-define=FB_APP_ID=$FB_APP_ID \
+            --dart-define=FB_APP_NAME=$FB_APP_NAME \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
             
@@ -237,6 +241,8 @@ jobs:
           flutter build apk --release \
             --build-name=${{ env.VERSION }} \
             --build-number=$VERSION_CODE \
+            --dart-define=FB_APP_ID=$FB_APP_ID \
+            --dart-define=FB_APP_NAME=$FB_APP_NAME \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
             

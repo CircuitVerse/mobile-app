@@ -12,6 +12,7 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
     flutterVersionCode = '1'
@@ -22,8 +23,10 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-// Initialize environmentVariables as an empty map
-def environmentVariables = [:]
+def environmentVariables = [
+    FB_APP_NAME: 'FB_APP_NAME',
+    FB_APP_ID: 'FB_APP_ID',
+];
 
 if (project.hasProperty('dart-defines')) {
     environmentVariables = environmentVariables + project.property('dart-defines')
@@ -50,8 +53,9 @@ if (releaseKeystorePropertiesFile.exists()) {
     releaseKeystoreProperties.load(new FileInputStream(releaseKeystorePropertiesFile))
 }
 
+
 android {
-    compileSdkVersion 35
+    compileSdkVersion 36
     namespace 'org.circuitverse.mobile_app'
 
     compileOptions {
@@ -67,17 +71,20 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    lintOptions {
+    lint {
         disable 'InvalidPackage'
     }
 
     defaultConfig {
         applicationId "org.circuitverse.mobile_app"
-        minSdkVersion 23
-        targetSdkVersion 33
+        minSdkVersion flutter.minSdkVersion
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        resValue "string", "app_name", environmentVariables.FB_APP_NAME
+        resValue "string", "facebook_app_id", environmentVariables.FB_APP_ID
+        resValue "string", "fb_login_protocol_scheme", "fb" + environmentVariables.FB_APP_ID
     }
 
     signingConfigs {
