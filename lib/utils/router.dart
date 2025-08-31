@@ -30,89 +30,95 @@ class CVRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case SignupView.id:
-        return MaterialPageRoute(builder: (_) => const SignupView());
+        return _buildRoute(const SignupView());
       case LoginView.id:
-        return MaterialPageRoute(builder: (_) => const LoginView());
+        return _buildRoute(const LoginView());
       case ForgotPasswordView.id:
-        return MaterialPageRoute(builder: (_) => const ForgotPasswordView());
+        return _buildRoute(const ForgotPasswordView());
       case CVLandingView.id:
-        return MaterialPageRoute(builder: (_) => const CVLandingView());
+        return _buildRoute(const CVLandingView());
       case SimulatorView.id:
         final project = settings.arguments as Project?;
-        return MaterialPageRoute(
-          builder: (_) => const SimulatorView(),
+        return _buildRoute(
+          const SimulatorView(),
           settings: RouteSettings(name: SimulatorView.id, arguments: project),
         );
       case TeachersView.id:
-        return MaterialPageRoute(builder: (_) => const TeachersView());
+        return _buildRoute(const TeachersView());
       case ContributorsView.id:
-        return MaterialPageRoute(builder: (_) => const ContributorsView());
+        return _buildRoute(const ContributorsView());
       case AboutTosView.id:
-        return MaterialPageRoute(builder: (_) => const AboutTosView());
+        return _buildRoute(const AboutTosView());
       case AboutPrivacyPolicyView.id:
-        return MaterialPageRoute(
-          builder: (_) => const AboutPrivacyPolicyView(),
-        );
+        return _buildRoute(const AboutPrivacyPolicyView());
       case FeaturedProjectsView.id:
-        return MaterialPageRoute(builder: (_) => const FeaturedProjectsView());
+        return _buildRoute(const FeaturedProjectsView());
       case ProfileView.id:
         var _userId = settings.arguments as String;
-        return MaterialPageRoute(builder: (_) => ProfileView(userId: _userId));
+        return _buildRoute(ProfileView(userId: _userId));
       case EditProfileView.id:
-        return MaterialPageRoute(builder: (_) => const EditProfileView());
+        return _buildRoute(const EditProfileView());
       case ProjectDetailsView.id:
         var _project = settings.arguments as Project;
-        return MaterialPageRoute(
-          builder: (_) => ProjectDetailsView(project: _project),
-        );
+        return _buildRoute(ProjectDetailsView(project: _project));
       case EditProjectView.id:
         var _project = settings.arguments as Project;
-        return MaterialPageRoute(
-          builder: (_) => EditProjectView(project: _project),
-        );
+        return _buildRoute(EditProjectView(project: _project));
       case MyGroupsView.id:
-        return MaterialPageRoute(builder: (_) => const MyGroupsView());
+        return _buildRoute(const MyGroupsView());
       case GroupDetailsView.id:
         var group = settings.arguments as Group;
-        return MaterialPageRoute(
-          builder: (_) => GroupDetailsView(group: group),
-        );
+        return _buildRoute(GroupDetailsView(group: group));
       case NewGroupView.id:
-        return MaterialPageRoute(builder: (_) => const NewGroupView());
+        return _buildRoute(const NewGroupView());
       case EditGroupView.id:
         var group = settings.arguments as Group;
-        return MaterialPageRoute(builder: (_) => EditGroupView(group: group));
+        return _buildRoute(EditGroupView(group: group));
       case AssignmentDetailsView.id:
         var _assignment = settings.arguments as Assignment;
-        return MaterialPageRoute(
-          builder: (_) => AssignmentDetailsView(assignment: _assignment),
-        );
+        return _buildRoute(AssignmentDetailsView(assignment: _assignment));
       case AddAssignmentView.id:
         var _groupId = settings.arguments as String;
-        return MaterialPageRoute(
-          builder: (_) => AddAssignmentView(groupId: _groupId),
-        );
+        return _buildRoute(AddAssignmentView(groupId: _groupId));
       case UpdateAssignmentView.id:
         var _assignment = settings.arguments as Assignment;
-        return MaterialPageRoute(
-          builder: (_) => UpdateAssignmentView(assignment: _assignment),
-        );
+        return _buildRoute(UpdateAssignmentView(assignment: _assignment));
       case IbLandingView.id:
-        return MaterialPageRoute(builder: (_) => const IbLandingView());
+        return _buildRoute(const IbLandingView());
       case ProjectPreviewFullScreen.id:
         var _project = settings.arguments as Project;
-        return MaterialPageRoute(
-          builder: (_) => ProjectPreviewFullScreen(project: _project),
-        );
+        return _buildRoute(ProjectPreviewFullScreen(project: _project));
       default:
-        return MaterialPageRoute(
-          builder:
-              (_) => Scaffold(
-                body: Center(
-                  child: Text('No route defined for ${settings.name}'),
-                ),
-              ),
+        return _buildRoute(
+          Scaffold(
+            body: Center(child: Text('No route defined for ${settings.name}')),
+          ),
         );
     }
+  }
+
+  /// Premium fade + scale transition for optimal user experience
+  static PageRouteBuilder _buildRoute(Widget page, {RouteSettings? settings}) {
+    return PageRouteBuilder(
+      settings: settings,
+      transitionDuration: const Duration(milliseconds: 350),
+      reverseTransitionDuration: const Duration(milliseconds: 300),
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        // Combine fade and subtle scale for a premium, minimal feel
+        final fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(parent: animation, curve: Curves.easeInOutQuart),
+        );
+
+        final scaleAnimation = Tween<double>(begin: 0.96, end: 1.0).animate(
+          CurvedAnimation(parent: animation, curve: Curves.easeInOutQuart),
+        );
+
+        return FadeTransition(
+          opacity: fadeAnimation,
+          child: ScaleTransition(scale: scaleAnimation, child: child),
+        );
+      },
+    );
   }
 }

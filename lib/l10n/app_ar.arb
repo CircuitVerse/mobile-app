@@ -432,6 +432,10 @@
   "cv_login": "تسجيل الدخول",
   "cv_notifications": "الإشعارات",
   "cv_language": "اللغة",
+  "cv_exit_app_title": "الخروج من التطبيق",
+  "cv_exit_app_message": "هل أنت متأكد أنك تريد الخروج من التطبيق؟",
+  "cv_exit_app": "خروج",
+  "cv_cancel": "إلغاء",
   
   "@about": {},
   "terms_of_service": "شروط الخدمة",

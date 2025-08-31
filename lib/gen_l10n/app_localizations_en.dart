@@ -1199,6 +1199,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cv_language => 'Language';
 
   @override
+  String get cv_exit_app_title => 'Exit App';
+
+  @override
+  String get cv_exit_app_message =>
+      'Are you sure you want to exit the application?';
+
+  @override
+  String get cv_exit_app => 'Exit';
+
+  @override
+  String get cv_cancel => 'Cancel';
+
+  @override
   String get terms_of_service => 'Terms Of Service';
 
   @override
