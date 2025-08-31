@@ -431,6 +431,10 @@
   "cv_login": "Login",
   "cv_notifications": "Notifications",
   "cv_language": "Language",
+  "cv_exit_app_title": "Exit App",
+  "cv_exit_app_message": "Are you sure you want to exit the application?",
+  "cv_exit_app": "Exit",
+  "cv_cancel": "Cancel",
   
   "@about": {},
   "terms_of_service": "Terms Of Service",

@@ -163,6 +163,7 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         return AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           title: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
@@ -179,34 +180,36 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               ),
             ],
           ),
-          content: SimpleChipsInput(
-            formKey: _formKey,
-            widgetContainerDecoration: BoxDecoration(
-              border: Border.all(color: CVTheme.primaryColor, width: 1),
-              borderRadius: BorderRadius.circular(8),
+          content: SingleChildScrollView(
+            child: SimpleChipsInput(
+              formKey: _formKey,
+              widgetContainerDecoration: BoxDecoration(
+                border: Border.all(color: CVTheme.primaryColor, width: 1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              chipContainerDecoration: BoxDecoration(
+                color: CVTheme.primaryColor,
+                borderRadius: BorderRadius.circular(50),
+              ),
+              textFormFieldStyle: _textFormFieldStyle,
+              separatorCharacter: ',',
+              createCharacter: ',',
+              autoFocus: true,
+              validateInput: true,
+              validateInputMethod:
+                  (emails) =>
+                      Validators.areEmailsValid(emails)
+                          ? null
+                          : AppLocalizations.of(
+                            context,
+                          )!.group_details_email_validation_error,
+              onChanged: (emails) {
+                addButtonGlobalKey.currentState?.setDynamicFunction(
+                  emails.isNotEmpty,
+                );
+              },
+              onSaved: (emails) => _emails = emails.replaceAll(' ', '').trim(),
             ),
-            chipContainerDecoration: BoxDecoration(
-              color: CVTheme.primaryColor,
-              borderRadius: BorderRadius.circular(50),
-            ),
-            textFormFieldStyle: _textFormFieldStyle,
-            separatorCharacter: ',',
-            createCharacter: ',',
-            autoFocus: true,
-            validateInput: true,
-            validateInputMethod:
-                (emails) =>
-                    Validators.areEmailsValid(emails)
-                        ? null
-                        : AppLocalizations.of(
-                          context,
-                        )!.group_details_email_validation_error,
-            onChanged: (emails) {
-              addButtonGlobalKey.currentState?.setDynamicFunction(
-                emails.isNotEmpty,
-              );
-            },
-            onSaved: (emails) => _emails = emails.replaceAll(' ', '').trim(),
           ),
           actions: <Widget>[
             TextButton(

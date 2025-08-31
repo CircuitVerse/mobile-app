@@ -2350,6 +2350,30 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get cv_language;
 
+  /// No description provided for @cv_exit_app_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit App'**
+  String get cv_exit_app_title;
+
+  /// No description provided for @cv_exit_app_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to exit the application?'**
+  String get cv_exit_app_message;
+
+  /// No description provided for @cv_exit_app.
+  ///
+  /// In en, this message translates to:
+  /// **'Exit'**
+  String get cv_exit_app;
+
+  /// No description provided for @cv_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cv_cancel;
+
   /// No description provided for @terms_of_service.
   ///
   /// In en, this message translates to:
