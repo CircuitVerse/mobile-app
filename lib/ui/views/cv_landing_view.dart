@@ -1,6 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mobile_app/cv_theme.dart';
+import 'package:mobile_app/locator.dart';
+import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_drawer.dart';
 import 'package:mobile_app/ui/views/about/about_view.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -99,16 +102,38 @@ class _CVLandingViewState extends State<CVLandingView> {
     );
   }
 
+  Future<bool> _showExitConfirmationDialog() async {
+    final dialogService = locator<DialogService>();
+
+    var dialogResponse = await dialogService.showConfirmationDialog(
+      title: AppLocalizations.of(context)!.cv_exit_app_title,
+      description: AppLocalizations.of(context)!.cv_exit_app_message,
+      confirmationTitle: AppLocalizations.of(context)!.cv_exit_app,
+      cancelTitle: AppLocalizations.of(context)!.cv_cancel,
+    );
+
+    return dialogResponse?.confirmed ?? false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<CVLandingViewModel>(
       onModelReady: (model) => model.setUser(),
       builder:
           (context, model, child) => PopScope(
-            canPop: model.selectedIndex != 0,
-            onPopInvokedWithResult: (didPop, result) {
-              if (didPop) {
+            canPop: false,
+            onPopInvokedWithResult: (didPop, result) async {
+              if (didPop) return;
+
+              if (model.selectedIndex != 0) {
+                // If not on home screen, navigate to home
                 model.selectedIndex = 0;
+              } else {
+                // If on home screen, show exit confirmation
+                final shouldExit = await _showExitConfirmationDialog();
+                if (shouldExit) {
+                  SystemNavigator.pop();
+                }
               }
             },
             child: Scaffold(

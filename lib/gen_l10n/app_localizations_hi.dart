@@ -1208,6 +1208,18 @@ class AppLocalizationsHi extends AppLocalizations {
   String get cv_language => 'भाषा';
 
   @override
+  String get cv_exit_app_title => 'ऐप बंद करें';
+
+  @override
+  String get cv_exit_app_message => 'क्या आप वाकई ऐप बंद करना चाहते हैं?';
+
+  @override
+  String get cv_exit_app => 'बंद करें';
+
+  @override
+  String get cv_cancel => 'रद्द करें';
+
+  @override
   String get terms_of_service => 'सेवा की शर्तें';
 
   @override
