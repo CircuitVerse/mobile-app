@@ -1190,6 +1190,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cv_language => 'اللغة';
 
   @override
+  String get cv_exit_app_title => 'الخروج من التطبيق';
+
+  @override
+  String get cv_exit_app_message => 'هل أنت متأكد أنك تريد الخروج من التطبيق؟';
+
+  @override
+  String get cv_exit_app => 'خروج';
+
+  @override
+  String get cv_cancel => 'إلغاء';
+
+  @override
   String get terms_of_service => 'شروط الخدمة';
 
   @override
