@@ -108,7 +108,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
     final projectUrl = _getProjectUrl();
 
     try {
-      await Share.share(projectUrl);
+      await SharePlus.instance.share(ShareParams(text: projectUrl));
     } catch (e) {
       debugPrint('Error sharing project: $e');
     }
