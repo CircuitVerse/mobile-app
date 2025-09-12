@@ -30,22 +30,8 @@ MockHttpClient _createMockImageHttpClient(
   final response = MockHttpClientResponse();
   final headers = MockHttpHeaders();
 
-  when(request.followRedirects).thenReturn(true);
-  when(request.followRedirects = any).thenReturn(null);
-
-  when(request.persistentConnection).thenReturn(true);
-  when(request.persistentConnection = any).thenReturn(null);
-
-  when(request.bufferOutput).thenReturn(true);
-  when(request.bufferOutput = any).thenReturn(null);
-
-  when(client.maxConnectionsPerHost).thenReturn(6);
-
   when(
     client.getUrl(any),
-  ).thenAnswer((_) => Future<HttpClientRequest>.value(request));
-  when(
-    client.openUrl(any, any),
   ).thenAnswer((_) => Future<HttpClientRequest>.value(request));
   when(request.headers).thenReturn(headers);
   when(
@@ -56,15 +42,6 @@ MockHttpClient _createMockImageHttpClient(
   ).thenReturn(HttpClientResponseCompressionState.notCompressed);
   when(response.contentLength).thenReturn(kTransparentImage.length);
   when(response.statusCode).thenReturn(HttpStatus.ok);
-
-  when(response.headers).thenReturn(headers);
-  when(headers.forEach(any)).thenAnswer((invocation) {
-    final callback =
-        invocation.positionalArguments[0]
-            as void Function(String, List<String>);
-    callback('content-type', ['image/png']);
-  });
-
   when(
     response.listen(
       any,
