@@ -108,7 +108,13 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
     final projectUrl = _getProjectUrl();
 
     try {
-      await Share.share(projectUrl);
+      final box = context.findRenderObject() as RenderBox?;
+      await SharePlus.instance.share(
+        ShareParams(
+          text: projectUrl,
+          sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+        ),
+      );
     } catch (e) {
       debugPrint('Error sharing project: $e');
     }

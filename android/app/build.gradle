@@ -51,7 +51,7 @@ if (releaseKeystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 35
+    compileSdk 35
     namespace 'org.circuitverse.mobile_app'
 
     compileOptions {
@@ -67,7 +67,7 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    lintOptions {
+    lint {
         disable 'InvalidPackage'
     }
 
