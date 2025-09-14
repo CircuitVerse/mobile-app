@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/CircuitVerse/mobile-app/compare/v1.2.0...v1.3.0) (2025-09-14)
+
+### ✨ Features
+
+* improve UX with microinteractions, page transitions, and exit confirmation dialog ([4009070](https://github.com/CircuitVerse/mobile-app/commit/4009070d0bf8c37592f5d0783994f5893d300876))
+
+### 🐛 Bug Fixes
+
+* **ci:** resolve artifact download error in preview APK workflow ([6757e28](https://github.com/CircuitVerse/mobile-app/commit/6757e281069dca2318b6942fcb5cb4bac69975b0))
+* **ci:** resolve artifact download error in preview APK workflow ([8c2b691](https://github.com/CircuitVerse/mobile-app/commit/8c2b691a1e910eb7c367ba4d18eb8f60a5a1c1cb))
+* **ci:** resolve artifact upload/download issues with fixed naming ([71d3cb2](https://github.com/CircuitVerse/mobile-app/commit/71d3cb275080dd85c8e5f96ff79b7359d998eafb))
+* **ci:** resolve Windows PowerShell build issues ([8873ffb](https://github.com/CircuitVerse/mobile-app/commit/8873ffbba59b869101cbc810a2fb4172f0220a7b))
+* **ci:** update iOS build to support iOS 18 simulator ([0c6e208](https://github.com/CircuitVerse/mobile-app/commit/0c6e2083ecbdac9ca2b90d013898334989c0fdcd))
+* **ci:** update iOS build to use device SDK ([696b6e0](https://github.com/CircuitVerse/mobile-app/commit/696b6e063bd74e72852d99638eaeb68e03cfe85c))
+* correctly parse contributors API response ([b88e939](https://github.com/CircuitVerse/mobile-app/commit/b88e9395137c53eac6922d106e7befa4ffe851fc))
+* handle contributors API response type ([6774f2e](https://github.com/CircuitVerse/mobile-app/commit/6774f2ed835eaac19134ea3a744ffb8561f12c51))
+* **ios:** bump minimum deployment target to iOS 12.0 ([ddcca74](https://github.com/CircuitVerse/mobile-app/commit/ddcca74bde4cfd28ad491692356c36a0a0b27a44))
+* **ios:** resolve pod dependency conflict ([91dabfd](https://github.com/CircuitVerse/mobile-app/commit/91dabfddfd847ee7da69c58c710dd6cb32d9ed1e))
+* revert iOS deployment target to 11.0 ([ee9eaa4](https://github.com/CircuitVerse/mobile-app/commit/ee9eaa433a436dde759df14a58b52d5ba829bd6e))
+* Stub followRedirects to resolve FakeUsedError in CI ([cc19cb2](https://github.com/CircuitVerse/mobile-app/commit/cc19cb2f01eee67c1e5c0cb4b32726c9da771bb3))
+* **tests:** stub HttpClientResponse.headers.forEach in image_test_utils ([af96509](https://github.com/CircuitVerse/mobile-app/commit/af96509dd647c7a4957947680bc5c54a695dd49f))
+* update ci ([0c66a89](https://github.com/CircuitVerse/mobile-app/commit/0c66a89eb4db79ba351838fa7c7d404f1dcf7a06))
+* update test and ci ([baaecdc](https://github.com/CircuitVerse/mobile-app/commit/baaecdc728c56499c51bc9b79c5469205c2b6efd))
+
+### 💎 Styles
+
+* format contributors_api.dart with dart format ([8ead972](https://github.com/CircuitVerse/mobile-app/commit/8ead9728417115a98493ffbf968fea93532872a5))
+
+### 🧪 Tests
+
+* fix failing tests ([c7b913a](https://github.com/CircuitVerse/mobile-app/commit/c7b913af85a326db0fa8749a25172068120f3472))
+* fix FakeUsedError by stubbing HttpClient request properties ([3a29e64](https://github.com/CircuitVerse/mobile-app/commit/3a29e640e0ff97f2df9454b4ca04878265ac1c9a))
+* fix flakiness in AboutViewTest ([137438f](https://github.com/CircuitVerse/mobile-app/commit/137438f0b96ca1feea8158bb1259bcf0f4fada61))
+* fix UpdateAssignmentView tests by properly registering mocks ([3bb410e](https://github.com/CircuitVerse/mobile-app/commit/3bb410ea8d58e99cf3b9b393cc28c060514027df))
+* stabilize UpdateAssignmentView tests with proper mock handling ([9029d2b](https://github.com/CircuitVerse/mobile-app/commit/9029d2b02a83deb704c1240a9411bb9c23fe10ff))
+
+### 🎡 CI
+
+* fix iOS build by updating CocoaPods specs before pod install ([a9c9147](https://github.com/CircuitVerse/mobile-app/commit/a9c9147f454641dd555a8197d145d4c99d09dd9f))
+* separate CI and CD config ([#428](https://github.com/CircuitVerse/mobile-app/issues/428)) ([8cb3839](https://github.com/CircuitVerse/mobile-app/commit/8cb3839cbe3226bbf78c005f38ee061bb34f1059))
+* update CocoaPods specs before install to fix CI ([3579e75](https://github.com/CircuitVerse/mobile-app/commit/3579e75d2375576f38cf055a3211207a8228b00f))
+
 ## [1.2.0](https://github.com/CircuitVerse/mobile-app/compare/v1.1.0...v1.2.0) (2025-08-24)
 
 ### Features
