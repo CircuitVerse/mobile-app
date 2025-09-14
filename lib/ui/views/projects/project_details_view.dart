@@ -52,9 +52,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
   void onShareButtonPressed() {
     final RenderBox? box = context.findRenderObject() as RenderBox?;
-    Share.share(
-      _getProjectUrl(),
-      sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+
+    SharePlus.instance.share(
+      ShareParams(
+        text: _getProjectUrl(),
+        sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+      ),
     );
   }
 
