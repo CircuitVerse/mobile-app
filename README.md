@@ -41,10 +41,6 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 
 This project uses flutter version 1.20.2 and hence the support for compile time variables. To use compile time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
 
-#### Facebook Configuration
-
-1. `FB_APP_ID`
-
 #### Github Configuration
 
 1. `GITHUB_OAUTH_CLIENT_ID`
@@ -66,7 +62,7 @@ mobile-app/lib/
 ├── config/                         # configuration files like environment_config
 ├── enums/                          # enum files
 |   └── view_state.dart             # defines view states i.e Idle, Busy, Error
-|   └── auth_state.dart             # defines auth states i.e logged in using Google/FB/Github/Email
+|   └── auth_state.dart             # defines auth states i.e logged in using Google/Github/Email
 ├── l10n/                           # localization files like intl_en.arb
 ├── locale/                         # AppLocalization & AppLocalizationDelegate
 ├── managers/
