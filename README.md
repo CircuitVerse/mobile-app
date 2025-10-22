@@ -3,15 +3,22 @@
 [![CI](https://github.com/CircuitVerse/mobile-app/actions/workflows/ci.yml/badge.svg)](https://github.com/CircuitVerse/mobile-app/actions/workflows/ci.yml)
 [![CD](https://github.com/CircuitVerse/mobile-app/actions/workflows/cd.yml/badge.svg)](https://github.com/CircuitVerse/mobile-app/actions/workflows/cd.yml)
 
-CircuitVerse for mobile is a cross platform application built in [flutter](https://flutter.dev/) using CircuitVerse API.
+CircuitVerse for mobile is a cross platform application built in [Flutter](https://flutter.dev/) using CircuitVerse API.
 
 ## Getting Started
 
 Follow these instructions to build and run the project
 
+### Prerequisites
+
+- Flutter `3.32.2` (stable)
+- Dart `3.8.1`
+
+> Tip: To ensure you’re always using the correct Flutter version, consider using [FVM (Flutter Version Manager)](https://fvm.app/) to manage versions.
+
 ### Setup Flutter
 
-A detailed guide for multiple platforms setup could be find [here](https://flutter.dev/docs/get-started/install/)
+A detailed guide for multiple platforms setup can be found [here](https://docs.flutter.dev/get-started/install)
 
 ### Setup Project
 
@@ -39,9 +46,9 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 
 ### Android OAuth Config
 
-This project uses flutter version 1.20.2 and hence the support for compile time variables. To use compile time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
+This project uses Flutter 3.32.2 and hence the support for compile time variables. To use compile time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
 
-#### Github Configuration
+#### GitHub Configuration
 
 1. `GITHUB_OAUTH_CLIENT_ID`
 2. `GITHUB_OAUTH_CLIENT_SECRET`
@@ -116,41 +123,51 @@ mobile-app/lib/
 
 - View/Edit Profile
 
+### Multi-language Support
+
+- English
+- Hindi
+- Arabic
+
 ## Screenshots
 
 <p>
-<img src="https://user-images.githubusercontent.com/66873825/119156647-0fdb4b00-ba72-11eb-9b8f-591930ca1d85.jpg" alt="Splash View" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119160372-d4428000-ba75-11eb-85ba-b4713f11a582.jpg" alt="Home View" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119157561-eff85700-ba72-11eb-9ef9-7f039dba3dc1.jpg" alt="NavDrawer View" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119157733-1c13d800-ba73-11eb-9808-fd4513392b86.jpg" alt="NavDrawer View Login" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119168016-18d21980-ba7e-11eb-8b2f-680e4344a191.jpg" alt="Teachers View" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119168084-29828f80-ba7e-11eb-85bf-37cac4fd8807.jpg" alt="About View" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119168195-47e88b00-ba7e-11eb-83d5-8cb01fc79e1b.jpg" alt="Contribute View" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119168424-7f573780-ba7e-11eb-8153-968cfbbd34e9.jpg" alt="Groups View" width="200">
+<img src="https://github.com/user-attachments/assets/e5269288-f5a6-4e49-900f-3c510db36df4" alt="Splash View" width="200">
+<img src="https://github.com/user-attachments/assets/73e374d4-e9e9-4d47-af9a-43757b7d7bd5" alt="Home View" width="200">
+<img src="https://github.com/user-attachments/assets/98624460-b1b1-444e-a8c3-3558fe86a908" alt="NavDrawer View" width="200">
+<img src="https://github.com/user-attachments/assets/aedc23a6-0420-41ed-bfa2-e98801f5d947" alt="NavDrawer View Login" width="200">
+<img src="https://github.com/user-attachments/assets/45f8b4b7-8604-4d68-95eb-c1f9a467d3ae" alt="Teachers View" width="200">
+<img src="https://github.com/user-attachments/assets/7f319a5a-1c62-41b1-af56-3ceef3715963" alt="About View" width="200">
+<img src="https://github.com/user-attachments/assets/a08c6e70-80ab-47e1-8973-1c80620e477c" alt="Contribute View" width="200">
+<img src="https://github.com/user-attachments/assets/1dc6bb6d-ae37-46f4-9810-b6e6fdaf6233" alt="Groups View" width="200">
 <img src="https://user-images.githubusercontent.com/66873825/119169086-3eabee00-ba7f-11eb-81ee-954791c57893.jpg" alt="Assignment Details View" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119169235-64d18e00-ba7f-11eb-9c2a-6d199beb9cf2.jpg" alt="Assignment Date View" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119169318-7d41a880-ba7f-11eb-8aee-5ca206f7d105.jpg" alt="Assignment Time View" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119169369-8b8fc480-ba7f-11eb-9d22-221da88a83b2.jpg" alt="Login View" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119157976-58dfcf00-ba73-11eb-843b-9adae59ae2b6.jpg" alt="Register View" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119169783-0953d000-ba80-11eb-85c7-95e50e5f6aa2.jpg" alt="Profile View" width="200">
+<img src="https://github.com/user-attachments/assets/5ade9bd2-e0a7-44e8-bd83-5beb975ac852" alt="Assignment Date View" width="200">
+<img src="https://github.com/user-attachments/assets/a11bed45-d54d-4305-8c90-7e5682d5b941" alt="Assignment Time View" width="200">
+<img src="https://github.com/user-attachments/assets/7d66e4bb-77fb-462a-b972-a905603b6b06" alt="Login View" width="200">
+<img src="https://github.com/user-attachments/assets/1183b5a8-1745-456e-aced-5acced8ebfeb" alt="Register View" width="200">
+<img src="https://github.com/user-attachments/assets/135c115f-5739-41d2-8ddb-641935fc2047" alt="Profile View" width="200">
+<img src="https://github.com/user-attachments/assets/85a02088-8b6d-43fa-ad17-560158481685" alt="Featured Circuits" width="200">
+<img src="https://github.com/user-attachments/assets/3eeed6f8-88f2-47b5-a9b5-633abd83ee9c" alt="Exit Page" width="200">
+</p>
+
+### Simulator
+
+<p>
+<img src="https://github.com/user-attachments/assets/7a9b4796-6296-4099-bdb5-2b02b567daf4" alt="Simulator" height="375">       
+</p>
+
+### Multilingual Support
+
+<p>
+<img src="https://github.com/user-attachments/assets/73e374d4-e9e9-4d47-af9a-43757b7d7bd5" alt="English" width="200">
+<img src="https://github.com/user-attachments/assets/bfdfca57-79f5-4bc4-a5f2-49cca7a7427d" alt="Hindi" width="200">
+<img src="https://github.com/user-attachments/assets/757620f7-ef44-465c-a9f1-1b3087e8a416" alt="Arabic" width="200">       
 </p>
 
 ### Dark Mode
 
 <p>
-<img src="https://user-images.githubusercontent.com/66873825/119163883-7879f600-ba79-11eb-969f-4f4403db8c62.jpg" alt="Splash View Dark" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119164824-6e0c2c00-ba7a-11eb-8640-ac869b6f7b02.jpg" alt="Home View Dark" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119164989-a1e75180-ba7a-11eb-81a5-ae143312604b.jpg" alt="Featured Circuit View Dark" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119165304-fa1e5380-ba7a-11eb-880a-14e266384372.jpg" alt="About View Dark" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119165323-fe4a7100-ba7a-11eb-81b7-94211ba8ed02.jpg" alt="Contribute View Dark" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119165353-073b4280-ba7b-11eb-8bb5-9211f88a4339.jpg" alt="Teachers View Dark" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119165521-305bd300-ba7b-11eb-879b-291fd3f7709e.jpg" alt="Groups View Dark" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119165540-36ea4a80-ba7b-11eb-9bc2-1e74b7f73d8d.jpg" alt="Login View Dark" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119165553-3a7dd180-ba7b-11eb-8b97-235cd93da5fb.jpg" alt="Register View Dark" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119170075-6485c280-ba80-11eb-9c24-addbd80e7865.jpg" alt="Assignment Details View Dark" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119170080-664f8600-ba80-11eb-92cb-61fcf1d82323.jpg" alt="Assignment Date View Dark" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119170084-6780b300-ba80-11eb-8c2f-0751f615f8eb.jpg" alt="Assignment Time View Dark" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119165415-15895e80-ba7b-11eb-979e-f7a44a624864.jpg" alt="Profile View Dark" width="200">
+<img src="https://github.com/user-attachments/assets/e596dac9-29ef-4510-a3f0-4b8726f57435" alt="Splash View Dark" width="200">
 </p>
 
 ## Community
@@ -161,9 +178,15 @@ We would love to hear from you! We communicate on the following platforms:
 
 ## Contributing
 
-Whether you have some feauture requests/ideas, code improvements, refactoring, performance improvements, help is always Welcome. The more is done, better it gets.
+Whether you have feature requests/ideas, code improvements, refactoring, performance improvements, help is always welcome. The more contributions, the better it gets.
 
 If you found any bugs, consider opening an [issue](https://github.com/CircuitVerse/mobile-app/issues/new).
+
+## Contributors
+
+<a href="https://github.com/CircuitVerse/mobile-app/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=CircuitVerse/mobile-app" />
+</a>
 
 ## License
 
