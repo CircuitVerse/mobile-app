@@ -46,7 +46,7 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 
 ### Android OAuth Config
 
-This project uses Flutter 3.32.2 and hence the support for compile time variables. To use compile-time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
+This project uses Flutter 3.32.2 and hence the support for compile-time variables. To use compile-time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
 
 #### GitHub Configuration
 
