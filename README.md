@@ -3,7 +3,7 @@
 [![CI](https://github.com/CircuitVerse/mobile-app/actions/workflows/ci.yml/badge.svg)](https://github.com/CircuitVerse/mobile-app/actions/workflows/ci.yml)
 [![CD](https://github.com/CircuitVerse/mobile-app/actions/workflows/cd.yml/badge.svg)](https://github.com/CircuitVerse/mobile-app/actions/workflows/cd.yml)
 
-CircuitVerse for mobile is a cross platform application built in [Flutter](https://flutter.dev/) using CircuitVerse API.
+CircuitVerse for mobile is a cross-platform application built in [Flutter](https://flutter.dev/) using CircuitVerse API.
 
 ## Getting Started
 
@@ -18,7 +18,7 @@ Follow these instructions to build and run the project
 
 ### Setup Flutter
 
-A detailed guide for multiple platforms setup can be found [here](https://docs.flutter.dev/get-started/install)
+A detailed guide for multiple platforms setup can be found [in the Flutter installation guide](https://docs.flutter.dev/get-started/install)
 
 ### Setup Project
 
@@ -46,7 +46,7 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 
 ### Android OAuth Config
 
-This project uses Flutter 3.32.2 and hence the support for compile time variables. To use compile time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
+This project uses Flutter 3.32.2 and hence the support for compile time variables. To use compile-time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
 
 #### GitHub Configuration
 
@@ -140,7 +140,7 @@ mobile-app/lib/
 <img src="https://github.com/user-attachments/assets/7f319a5a-1c62-41b1-af56-3ceef3715963" alt="About View" width="200">
 <img src="https://github.com/user-attachments/assets/a08c6e70-80ab-47e1-8973-1c80620e477c" alt="Contribute View" width="200">
 <img src="https://github.com/user-attachments/assets/1dc6bb6d-ae37-46f4-9810-b6e6fdaf6233" alt="Groups View" width="200">
-<img src="https://user-images.githubusercontent.com/66873825/119169086-3eabee00-ba7f-11eb-81ee-954791c57893.jpg" alt="Assignment Details View" width="200">
+<img src="https://github.com/user-attachments/assets/7ed636d5-996b-4883-8141-ff31881f37e9" alt="Assignment Details View" width="200">
 <img src="https://github.com/user-attachments/assets/5ade9bd2-e0a7-44e8-bd83-5beb975ac852" alt="Assignment Date View" width="200">
 <img src="https://github.com/user-attachments/assets/a11bed45-d54d-4305-8c90-7e5682d5b941" alt="Assignment Time View" width="200">
 <img src="https://github.com/user-attachments/assets/7d66e4bb-77fb-462a-b972-a905603b6b06" alt="Login View" width="200">
@@ -185,7 +185,7 @@ If you found any bugs, consider opening an [issue](https://github.com/CircuitVer
 ## Contributors
 
 <a href="https://github.com/CircuitVerse/mobile-app/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=CircuitVerse/mobile-app" />
+  <img src="https://contrib.rocks/image?repo=CircuitVerse/mobile-app" alt="CircuitVerse Mobile App Contributors" />
 </a>
 
 ## License
