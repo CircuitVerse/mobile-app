@@ -130,14 +130,33 @@ class MyGroupsViewModel extends BaseModel {
   }
 
   Future<void> refreshOwnedGroups() async {
+    final List<Group> previousGroups = List.from(_ownedGroups);
+    final Groups? previousBatch = _previousMentoredGroupsBatch;
     _ownedGroups.clear();
     _previousMentoredGroupsBatch = null;
-    await fetchMentoredGroups();
+    try {
+      await fetchMentoredGroups();
+    } catch (e) {
+      _ownedGroups.addAll(previousGroups);
+      _previousMentoredGroupsBatch = previousBatch;
+      notifyListeners();
+      rethrow;
+    }
   }
 
   Future<void> refreshMemberGroups() async {
+    final List<Group> previousGroups = List.from(_memberGroups);
+    final Groups? previousBatch = _previousMemberGroupsBatch;
     _memberGroups.clear();
     _previousMemberGroupsBatch = null;
-    await fetchMemberGroups();
+
+    try {
+      await fetchMemberGroups();
+    } catch (e) {
+      _memberGroups.addAll(previousGroups);
+      _previousMemberGroupsBatch = previousBatch;
+      notifyListeners();
+      rethrow;
+    }
   }
 }

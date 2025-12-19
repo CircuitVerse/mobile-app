@@ -168,6 +168,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
                       onRefresh: () => _model.refreshOwnedGroups(),
                       child: _ownedGroups.isEmpty
                           ? ListView(
+                              physics: const AlwaysScrollableScrollPhysics(),
                               children: [
                                 SizedBox(
                                   height:
@@ -183,6 +184,7 @@ class _MyGroupsViewState extends State<MyGroupsView>
                       onRefresh: () => _model.refreshMemberGroups(),
                       child: _joinedGroups.isEmpty
                           ? ListView(
+                              physics: const AlwaysScrollableScrollPhysics(),
                               children: [
                                 SizedBox(
                                   height:
