@@ -128,4 +128,16 @@ class MyGroupsViewModel extends BaseModel {
       setErrorMessageFor(DELETE_GROUP, f.message);
     }
   }
+
+  Future<void> refreshOwnedGroups() async {
+    _ownedGroups.clear();
+    _previousMentoredGroupsBatch = null;
+    await fetchMentoredGroups();
+  }
+
+  Future<void> refreshMemberGroups() async {
+    _memberGroups.clear();
+    _previousMemberGroupsBatch = null;
+    await fetchMemberGroups();
+  }
 }
