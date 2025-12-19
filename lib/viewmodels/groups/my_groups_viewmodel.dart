@@ -134,13 +134,11 @@ class MyGroupsViewModel extends BaseModel {
     final Groups? previousBatch = _previousMentoredGroupsBatch;
     _ownedGroups.clear();
     _previousMentoredGroupsBatch = null;
-    try {
-      await fetchMentoredGroups();
-    } catch (e) {
+    await fetchMentoredGroups();
+    if (isError(FETCH_OWNED_GROUPS)) {
       _ownedGroups.addAll(previousGroups);
       _previousMentoredGroupsBatch = previousBatch;
       notifyListeners();
-      rethrow;
     }
   }
 
@@ -149,14 +147,11 @@ class MyGroupsViewModel extends BaseModel {
     final Groups? previousBatch = _previousMemberGroupsBatch;
     _memberGroups.clear();
     _previousMemberGroupsBatch = null;
-
-    try {
-      await fetchMemberGroups();
-    } catch (e) {
+    await fetchMemberGroups();
+    if (isError(FETCH_MEMBER_GROUPS)) {
       _memberGroups.addAll(previousGroups);
       _previousMemberGroupsBatch = previousBatch;
       notifyListeners();
-      rethrow;
     }
   }
 }
