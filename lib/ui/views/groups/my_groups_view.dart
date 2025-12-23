@@ -179,7 +179,10 @@ class _MyGroupsViewState extends State<MyGroupsView>
                                   ),
                                 ],
                               )
-                              : ListView(children: _ownedGroups),
+                              : ListView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                children: _ownedGroups,
+                              ),
                     ),
                     RefreshIndicator(
                       color: CVTheme.primaryColor,
@@ -197,7 +200,10 @@ class _MyGroupsViewState extends State<MyGroupsView>
                                   ),
                                 ],
                               )
-                              : ListView(children: _joinedGroups),
+                              : ListView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                children: _joinedGroups,
+                              ),
                     ),
                   ],
                 );
