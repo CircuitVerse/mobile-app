@@ -16,16 +16,16 @@ Follow these instructions to build and run the project
 
 > Tip: To ensure you’re always using the correct Flutter version, consider using [FVM (Flutter Version Manager)](https://fvm.app/) to manage versions.
 
-### Setup Flutter
+### Set Up Flutter
 
 A detailed guide for multiple platforms setup can be found [in the Flutter installation guide](https://docs.flutter.dev/get-started/install)
 
-### Setup Project
+### Set Up Project
 
 - Clone this repository using `git clone https://github.com/CircuitVerse/mobile-app.git`.
 - `cd` into `mobile_app`.
-- `flutter pub get` to get all the dependencies.
-- Generate files using Builder Runner (**required**) 
+- Run `flutter pub get` to fetch all dependencies. 
+- Generate files using Build Runner (**required**) 
 ```
 flutter pub run build_runner build --delete-conflicting-outputs
 ```
@@ -36,7 +36,7 @@ git config core.hooksPath .githooks/
 # Make sure npm is installed to run the next command
 npm install -g @commitlint/config-conventional @commitlint/cli
 ```
-> Mobile App enforces [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/), make sure to read and follow them.
+> The mobile app enforces [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/), make sure to read and follow them.
 
 ### Running the app
 
@@ -46,7 +46,7 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 
 ### Android OAuth Config
 
-This project uses Flutter 3.32.2 and hence the support for compile-time variables. To use compile-time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
+This project uses Flutter 3.32.2 and thus **supports** compile-time variables. To use compile-time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
 
 #### GitHub Configuration
 
@@ -55,12 +55,12 @@ This project uses Flutter 3.32.2 and hence the support for compile-time variable
 
 #### Google Configuration
 
-For Google OAuth we use [google_sign_in](https://pub.dev/packages/google_sign_in). You'll require a Java KeyStore(`.jks`)
+For Google OAuth we use [google_sign_in](https://pub.dev/packages/google_sign_in). You'll require a Java KeyStore (`.jks`)
 
-1. Add `cv_debug.jks` in `android/app/`.
-2. Add `key.debug.properties` in `android/`.
+1. Add `cv_debug.jks` to `android/app/`.
+2. Add `key.debug.properties` to `android/`.
 
-Note: The OAuth Configuration section is not mandatory to get started. To get hold of the above secrets/files drop a message on slack with clear requirements and we'll take care.
+> Note: The OAuth Configuration section is not mandatory to get started. To get the above secrets/files, drop a message on Slack with clear requirements and we'll take care of it.
 
 ## Project Structure
 
@@ -69,7 +69,7 @@ mobile-app/lib/
 ├── config/                         # configuration files like environment_config
 ├── enums/                          # enum files
 |   └── view_state.dart             # defines view states i.e Idle, Busy, Error
-|   └── auth_state.dart             # defines auth states i.e logged in using Google/Github/Email
+|   └── auth_state.dart             # defines auth states i.e logged in using Google/GitHub/Email
 ├── l10n/                           # localization files like intl_en.arb
 ├── locale/                         # AppLocalization & AppLocalizationDelegate
 ├── managers/
@@ -88,7 +88,7 @@ mobile-app/lib/
 |  |  └── startup_view.dart
 |  └── components/                  # shared components
 ├── utils/                          # utilities such as api_utils routes.dart and styles.dart
-├── viewmodels/                     # Viewmodels layer
+├── viewmodels/                     # ViewModels layer
 ├── app_theme.dart                  # Shared App Colors/border decorations etc.
 ├── constants.dart                  # App constants
 ├── locator.dart                    # dependency injection using get_it
@@ -105,17 +105,17 @@ mobile-app/lib/
 
 ### Assignments
 
-- Create/Add Assignment to a Group.
-- Edit Assignments.
-- Check Assignment Submissions.
-- Grade Assignment's projects.
-- Update/Delete Grades.
+- Create/Add Assignment to a group.
+- Edit assignments.
+- Check assignment submissions.
+- Grade assignment projects.
+- Update/Delete grades.
 
 ### Projects/Circuits
 
-- Fork Project.
-- Edit/Delete Project.
-- Add/Delete Collaborators.
+- Fork project.
+- Edit/Delete project.
+- Add/Delete collaborators.
 - Star Project to favourites.
 - View Projects you created/starred.
 
