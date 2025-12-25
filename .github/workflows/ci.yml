@@ -44,7 +44,7 @@ jobs:
           flutter-version: 3.32
           
       - name: Cache pub dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.pub-cache
@@ -129,7 +129,7 @@ jobs:
           
       - name: Cache Gradle (Android)
         if: matrix.build-type == 'android'
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
@@ -141,7 +141,7 @@ jobs:
 
       - name: Cache CocoaPods (iOS)
         if: matrix.build-type == 'ios'
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ios/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
@@ -288,7 +288,7 @@ jobs:
 
           
       - name: Cache Gradle
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.gradle/caches
