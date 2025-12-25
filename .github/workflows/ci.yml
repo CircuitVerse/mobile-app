@@ -168,7 +168,7 @@ jobs:
 
       - name: Upload Android APK
         if: matrix.build-type == 'android'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: android-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
