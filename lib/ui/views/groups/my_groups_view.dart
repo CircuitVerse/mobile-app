@@ -163,12 +163,48 @@ class _MyGroupsViewState extends State<MyGroupsView>
                 return TabBarView(
                   controller: _tabController,
                   children: <Widget>[
-                    _ownedGroups.isEmpty
-                        ? _emptyState()
-                        : ListView(children: _ownedGroups),
-                    _joinedGroups.isEmpty
-                        ? _emptyState()
-                        : ListView(children: _joinedGroups),
+                    RefreshIndicator(
+                      color: CVTheme.primaryColor,
+                      onRefresh: () => _model.refreshOwnedGroups(),
+                      child:
+                          _ownedGroups.isEmpty
+                              ? ListView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                children: [
+                                  SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height *
+                                        0.7,
+                                    child: _emptyState(),
+                                  ),
+                                ],
+                              )
+                              : ListView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                children: _ownedGroups,
+                              ),
+                    ),
+                    RefreshIndicator(
+                      color: CVTheme.primaryColor,
+                      onRefresh: () => _model.refreshMemberGroups(),
+                      child:
+                          _joinedGroups.isEmpty
+                              ? ListView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                children: [
+                                  SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height *
+                                        0.7,
+                                    child: _emptyState(),
+                                  ),
+                                ],
+                              )
+                              : ListView(
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                children: _joinedGroups,
+                              ),
+                    ),
                   ],
                 );
               },
