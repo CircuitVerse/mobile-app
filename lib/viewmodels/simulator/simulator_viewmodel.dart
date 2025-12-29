@@ -9,6 +9,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
+import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
@@ -287,41 +288,36 @@ class SimulatorViewModel extends BaseModel {
     }
   }
 
-  void clearCookies() async {
+  Future<void> clearCookies() async {
     await cookieManager.deleteAllCookies();
   }
 
-  bool findMatchInString(String url) {
+  Future<String?> handleNavigation(
+    String url,
+    InAppWebViewController? controller,
+  ) async {
     if (url.contains('learn.circuitverse.org')) {
       Get.offNamed(IbLandingView.id);
+      return 'cancel';
     } else if (url.contains('sign_in')) {
-      Get.offAndToNamed(LoginView.id);
+      if (_service.isLoggedIn && controller != null) {
+        await controller.loadUrl(
+          urlRequest: URLRequest(
+            url: WebUri.uri(Uri.parse(this.url)),
+            headers: {'Authorization': 'Token $token'},
+          ),
+        );
+        return 'cancel';
+      } else {
+        Get.offAndToNamed(LoginView.id);
+        return 'cancel';
+      }
     } else if (url.contains('sign_out')) {
-      clearCookies();
-      return true;
+      await clearCookies();
+      Get.offAndToNamed(CVLandingView.id);
+      return 'cancel';
     }
-
-    final components = url.split('/');
-    final length = components.length;
-
-    // Check for project edit URLs
-    if (components[length - 1] == 'edit' &&
-        components[length - 3] == 'projects') {
-      return true;
-    }
-
-    // Check for project save/update URLs
-    if (url.contains('projects') &&
-        (url.contains('saved') || url.contains('updated'))) {
-      return true;
-    }
-
-    // Check for groups or users URLs
-    if (url.contains('groups') || url.contains('users')) {
-      return true;
-    }
-
-    return false;
+    return null;
   }
 
   void onModelReady([Project? project]) {
