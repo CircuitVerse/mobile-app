@@ -295,7 +295,6 @@ class SimulatorViewModel extends BaseModel {
   Future<String?> handleNavigation(
     String url,
     InAppWebViewController? controller,
-    BuildContext context,
   ) async {
     if (url.contains('learn.circuitverse.org')) {
       Get.offNamed(IbLandingView.id);
@@ -315,7 +314,7 @@ class SimulatorViewModel extends BaseModel {
       }
     } else if (url.contains('sign_out')) {
       await clearCookies();
-      Navigator.of(context).pop();
+      Get.offAndToNamed(CVLandingView.id);
       return 'cancel';
     }
     return null;

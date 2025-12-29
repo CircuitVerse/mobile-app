@@ -87,7 +87,6 @@ class _SimulatorViewState extends State<SimulatorView> {
                       final action = await model.handleNavigation(
                         urlStr,
                         webViewController,
-                        context,
                       );
 
                       if (action == 'cancel') {
