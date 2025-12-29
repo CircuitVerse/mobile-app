@@ -81,6 +81,13 @@ class _SimulatorViewState extends State<SimulatorView> {
                       }
 
                       final urlStr = uri.toString();
+
+                      if (urlStr.contains('sign_out')) {
+                        model.clearCookies();
+                        Navigator.of(context).pop();
+                        return NavigationActionPolicy.CANCEL;
+                      }
+
                       final host = uri.host.toLowerCase();
                       final path = uri.path.toLowerCase();
                       final isLearn = host == 'learn.circuitverse.org';
