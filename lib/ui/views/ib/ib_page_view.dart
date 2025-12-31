@@ -453,7 +453,7 @@ const cleanPage = () => {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
                     child: _buildFloatingActionButtons(),
                   ),
                 ),
