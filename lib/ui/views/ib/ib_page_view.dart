@@ -29,9 +29,11 @@ class IbPageView extends StatefulWidget {
     required this.showCase,
     required this.setShowCase,
     required this.globalKeysMap,
+    this.enableWebView = true,
   }) : super(key: key);
 
   static const String id = 'ib_page_view';
+  final bool enableWebView;
   final TocCallback tocCallback;
   final SetPageCallback setPage;
   final IbChapter chapter;
@@ -54,6 +56,36 @@ class _IbPageViewState extends State<IbPageView> {
   String? _currentUrl;
   Timer? _hideTimer;
 
+  static const String _cssToHideElements = '''
+  a.btn.btn-info,
+  .prev-next-controls,
+  #disqus_thread, 
+  #disqus_recommendations,
+  #giscus, 
+  .giscus, 
+  .comments, 
+  #comments,
+  .site-title,
+  .navbar,
+  .side-bar,
+  #back-to-top,
+  #sidebarCollapse {
+    display: none !important;
+    visibility: hidden !important;
+  }
+''';
+
+  static const String _cleanPageJs = '''
+    const cleanPage = () => {
+      document.querySelectorAll('a.btn.btn-info, .prev-next-controls, .navbar, .site-title, .side-bar, #back-to-top, #sidebarCollapse')
+        .forEach(e => e.remove());
+
+      document.querySelectorAll(
+        '#disqus_thread, #disqus_recommendations, #giscus, .giscus, .comments, #comments'
+      ).forEach(e => e.remove());
+    };
+''';
+
   @override
   void initState() {
     _ibFloatingButtonState = IbFloatingButtonState();
@@ -61,126 +93,109 @@ class _IbPageViewState extends State<IbPageView> {
     _startHideTimer();
     _showCaseWidgetState = ShowCaseWidget.of(context);
 
-    _webViewController =
-        WebViewController()
-          ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..setBackgroundColor(const Color(0x00000000))
-          ..addJavaScriptChannel(
-            'IbInteractionChannel',
-            onMessageReceived: (JavaScriptMessage message) {
-              _onUserInteraction();
-            },
-          )
-          ..setNavigationDelegate(
-            NavigationDelegate(
-              onPageStarted: (String url) async {
-                if (mounted) {
-                  setState(() {
-                    _isLoading = true;
-                  });
-                }
-                await _webViewController.runJavaScript('''
-              (function() {
-                const notifyInteraction = () => {
-                  if (window.IbInteractionChannel) {
-                    window.IbInteractionChannel.postMessage('interaction');
+    if (widget.enableWebView) {
+      _webViewController =
+          WebViewController()
+            ..setJavaScriptMode(JavaScriptMode.unrestricted)
+            ..setBackgroundColor(const Color(0x00000000))
+            ..addJavaScriptChannel(
+              'IbInteractionChannel',
+              onMessageReceived: (JavaScriptMessage message) {
+                _onUserInteraction();
+              },
+            )
+            ..setNavigationDelegate(
+              NavigationDelegate(
+                onPageStarted: (String url) async {
+                  if (mounted) {
+                    setState(() {
+                      _isLoading = true;
+                    });
                   }
-                };
-                document.addEventListener('click', notifyInteraction);
-                document.addEventListener('touchstart', notifyInteraction);
-                document.addEventListener('scroll', notifyInteraction);
-
-                const style = document.createElement('style');
-                style.id = 'hide-nav-buttons';
-                style.textContent = `
-  a.btn.btn-info,
-  .prev-next-controls,
-  #disqus_thread, 
-  #disqus_recommendations,
-  #giscus, 
-  .giscus, 
-  .comments, 
-  #comments,
-  .site-title,
-  .navbar,
-  .side-bar,
-  #back-to-top,
-  #sidebarCollapse {
-    display: none !important;
-    visibility: hidden !important;
+                  await _webViewController.runJavaScript('''
+(function () {
+  // ---- Cleanup old observer if any ----
+  if (window.__ibMutationObserver) {
+    try {
+      window.__ibMutationObserver.disconnect();
+    } catch (e) {}
+    window.__ibMutationObserver = null;
   }
-`;
-                if (document.head) {
-                  document.head.appendChild(style);
-                } else {
-                  document.addEventListener('DOMContentLoaded', function() {
-                    document.head.appendChild(style);
+
+  const cleanPage = () => {
+    document.querySelectorAll(
+      'a.btn.btn-info, .prev-next-controls, .navbar, .site-title, .side-bar, #back-to-top, #sidebarCollapse'
+    ).forEach(e => e.remove());
+
+    document.querySelectorAll(
+      '#disqus_thread, #disqus_recommendations, #giscus, .giscus, .comments, #comments'
+    ).forEach(e => e.remove());
+  };
+
+  // Initial cleanup passes
+  cleanPage();
+  setTimeout(cleanPage, 50);
+  setTimeout(cleanPage, 200);
+  setTimeout(cleanPage, 500);
+
+  // ---- Create observer ----
+  const observer = new MutationObserver(() => {
+    cleanPage();
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+
+  window.__ibMutationObserver = observer;
+
+  // ---- Auto-disconnect after stabilization ----
+  setTimeout(() => {
+    if (window.__ibMutationObserver) {
+      window.__ibMutationObserver.disconnect();
+      window.__ibMutationObserver = null;
+    }
+  }, 2000); // adjust if needed
+})();
+''');
+                },
+                onPageFinished: (String url) async {
+                  if (!mounted) return;
+
+                  await _webViewController.runJavaScript('''
+(function() {
+  const style = document.createElement('style');
+  style.textContent = `$_cssToHideElements`;
+  document.head.insertBefore(style, document.head.firstChild);
+
+  $_cleanPageJs
+
+  cleanPage();
+  setTimeout(cleanPage, 50);
+  setTimeout(cleanPage, 200);
+  setTimeout(cleanPage, 500);
+})();
+''');
+
+                  setState(() {
+                    _isLoading = false;
                   });
-                }
-              })();
-            ''');
-              },
-              onPageFinished: (String url) async {
-                if (!mounted) return;
-                await _webViewController.runJavaScript('''
-    (function() {
-      const style = document.createElement('style');
-style.textContent = `
-  a.btn.btn-info,
-  .prev-next-controls,
-  #disqus_thread, 
-  #disqus_recommendations,
-  #giscus, 
-  .giscus, 
-  .comments, 
-  #comments,
-  .site-title,
-  .navbar,
-  .side-bar,
-  #back-to-top,
-  #sidebarCollapse {
-    display: none !important;
-    visibility: hidden !important;
-  }
-`;
-document.head.insertBefore(style, document.head.firstChild);
+                },
 
-const cleanPage = () => {
-  document.querySelectorAll('a.btn.btn-info, .prev-next-controls, .navbar, .site-title, .side-bar, #back-to-top, #sidebarCollapse')
-    .forEach(e => e.remove());
-
-  document.querySelectorAll(
-    '#disqus_thread, #disqus_recommendations, #giscus, .giscus, .comments, #comments'
-  ).forEach(e => e.remove());
-};
-
-      cleanPage();
-      setTimeout(cleanPage, 50);
-      setTimeout(cleanPage, 200);
-      setTimeout(cleanPage, 500);
-
-      const observer = new MutationObserver(cleanPage);
-      observer.observe(document.body, { childList: true, subtree: true });
-    })();
-  ''');
-
-                setState(() {
-                  _isLoading = false;
-                });
-              },
-
-              onWebResourceError: (WebResourceError error) {
-                debugPrint('WebView Error: ${error.description}');
-              },
-              onNavigationRequest: (NavigationRequest request) {
-                if (request.url.startsWith(EnvironmentConfig.IB_BASE_URL)) {
-                  return NavigationDecision.navigate;
-                }
-                launchURL(request.url);
-                return NavigationDecision.prevent;
-              },
-            ),
-          );
+                onWebResourceError: (WebResourceError error) {
+                  debugPrint('WebView Error: ${error.description}');
+                },
+                onNavigationRequest: (NavigationRequest request) {
+                  if (request.url.startsWith(EnvironmentConfig.IB_BASE_URL)) {
+                    return NavigationDecision.navigate;
+                  }
+                  launchURL(request.url);
+                  return NavigationDecision.prevent;
+                },
+              ),
+            );
+    }
   }
 
   @override
@@ -197,7 +212,7 @@ const cleanPage = () => {
 
   void _startHideTimer() {
     _hideTimer?.cancel();
-    _hideTimer = Timer(const Duration(seconds: 5), () {
+    _hideTimer = Timer(const Duration(seconds: 10), () {
       _ibFloatingButtonState.makeInvisible();
     });
   }
@@ -205,6 +220,14 @@ const cleanPage = () => {
   void _onUserInteraction() {
     _ibFloatingButtonState.makeVisible();
     _startHideTimer();
+  }
+
+  void _loadPageIfNeeded(IbPageViewModel model) {
+    final newUrl = model.pageData?.pageUrl;
+    if (newUrl == null || newUrl == _currentUrl) return;
+
+    _currentUrl = newUrl;
+    _webViewController.loadRequest(Uri.parse(newUrl));
   }
 
   Future _scrollToWidget(String slug) async {
@@ -420,13 +443,21 @@ const cleanPage = () => {
     return BaseView<IbPageViewModel>(
       onModelReady: (model) {
         _model = model;
+
         model.fetchPageData(id: widget.chapter.id);
+
+        model.addListener(() {
+          if (!mounted) return;
+          _loadPageIfNeeded(model);
+        });
+
         model.showCase(
           _showCaseWidgetState,
           widget.showCase,
           widget.globalKeysMap,
         );
       },
+
       builder: (context, model, child) {
         if (_model.isSuccess(_model.IB_FETCH_PAGE_DATA) &&
             (model.pageData?.tableOfContents?.isNotEmpty ?? false)) {
@@ -435,18 +466,16 @@ const cleanPage = () => {
           widget.tocCallback(null);
         }
 
-        if (model.pageData != null && _currentUrl != model.pageData!.pageUrl) {
-          _currentUrl = model.pageData!.pageUrl;
-          _webViewController.loadRequest(Uri.parse(_currentUrl!));
-        }
-
         return Listener(
           onPointerDown: (_) => _onUserInteraction(),
           onPointerMove: (_) => _onUserInteraction(),
           child: Stack(
             children: [
               if (model.pageData != null && !_isLoading)
-                WebViewWidget(controller: _webViewController),
+                widget.enableWebView
+                    ? WebViewWidget(controller: _webViewController)
+                    : const SizedBox.shrink(),
+
               if (model.pageData == null || _isLoading)
                 const Center(child: CircularProgressIndicator(strokeWidth: 3)),
               if (widget.chapter.prev != null || widget.chapter.next != null)
