@@ -197,7 +197,7 @@ const cleanPage = () => {
 
   void _startHideTimer() {
     _hideTimer?.cancel();
-    _hideTimer = Timer(const Duration(seconds: 3), () {
+    _hideTimer = Timer(const Duration(seconds: 5), () {
       _ibFloatingButtonState.makeInvisible();
     });
   }
