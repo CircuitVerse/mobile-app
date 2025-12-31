@@ -29,11 +29,9 @@ class IbPageView extends StatefulWidget {
     required this.showCase,
     required this.setShowCase,
     required this.globalKeysMap,
-    this.enableWebView = true,
   }) : super(key: key);
 
   static const String id = 'ib_page_view';
-  final bool enableWebView;
   final TocCallback tocCallback;
   final SetPageCallback setPage;
   final IbChapter chapter;
@@ -54,7 +52,9 @@ class _IbPageViewState extends State<IbPageView> {
   late final WebViewController _webViewController;
   bool _isLoading = true;
   String? _currentUrl;
+  String? _webViewError;
   Timer? _hideTimer;
+  VoidCallback? _modelListener;
 
   static const String _cssToHideElements = '''
   a.btn.btn-info,
@@ -93,26 +93,25 @@ class _IbPageViewState extends State<IbPageView> {
     _startHideTimer();
     _showCaseWidgetState = ShowCaseWidget.of(context);
 
-    if (widget.enableWebView) {
-      _webViewController =
-          WebViewController()
-            ..setJavaScriptMode(JavaScriptMode.unrestricted)
-            ..setBackgroundColor(const Color(0x00000000))
-            ..addJavaScriptChannel(
-              'IbInteractionChannel',
-              onMessageReceived: (JavaScriptMessage message) {
-                _onUserInteraction();
-              },
-            )
-            ..setNavigationDelegate(
-              NavigationDelegate(
-                onPageStarted: (String url) async {
-                  if (mounted) {
-                    setState(() {
-                      _isLoading = true;
-                    });
-                  }
-                  await _webViewController.runJavaScript('''
+    _webViewController =
+        WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..setBackgroundColor(const Color(0x00000000))
+          ..addJavaScriptChannel(
+            'IbInteractionChannel',
+            onMessageReceived: (JavaScriptMessage message) {
+              _onUserInteraction();
+            },
+          )
+          ..setNavigationDelegate(
+            NavigationDelegate(
+              onPageStarted: (String url) async {
+                if (mounted) {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                }
+                await _webViewController.runJavaScript('''
 (function () {
   // ---- Cleanup old observer if any ----
   if (window.__ibMutationObserver) {
@@ -159,11 +158,11 @@ class _IbPageViewState extends State<IbPageView> {
   }, 2000); // adjust if needed
 })();
 ''');
-                },
-                onPageFinished: (String url) async {
-                  if (!mounted) return;
+              },
+              onPageFinished: (String url) async {
+                if (!mounted) return;
 
-                  await _webViewController.runJavaScript('''
+                await _webViewController.runJavaScript('''
 (function() {
   const style = document.createElement('style');
   style.textContent = `$_cssToHideElements`;
@@ -178,24 +177,29 @@ class _IbPageViewState extends State<IbPageView> {
 })();
 ''');
 
+                setState(() {
+                  _isLoading = false;
+                });
+              },
+
+              onWebResourceError: (WebResourceError error) {
+                debugPrint('WebView Error: ${error.description}');
+                if (mounted) {
                   setState(() {
                     _isLoading = false;
+                    _webViewError = error.description;
                   });
-                },
-
-                onWebResourceError: (WebResourceError error) {
-                  debugPrint('WebView Error: ${error.description}');
-                },
-                onNavigationRequest: (NavigationRequest request) {
-                  if (request.url.startsWith(EnvironmentConfig.IB_BASE_URL)) {
-                    return NavigationDecision.navigate;
-                  }
-                  launchURL(request.url);
-                  return NavigationDecision.prevent;
-                },
-              ),
-            );
-    }
+                }
+              },
+              onNavigationRequest: (NavigationRequest request) {
+                if (request.url.startsWith(EnvironmentConfig.IB_BASE_URL)) {
+                  return NavigationDecision.navigate;
+                }
+                launchURL(request.url);
+                return NavigationDecision.prevent;
+              },
+            ),
+          );
   }
 
   @override
@@ -206,6 +210,10 @@ class _IbPageViewState extends State<IbPageView> {
 
   @override
   void dispose() {
+    if (_modelListener != null) {
+      _model.removeListener(_modelListener!);
+      _modelListener = null;
+    }
     _hideTimer?.cancel();
     super.dispose();
   }
@@ -446,10 +454,11 @@ class _IbPageViewState extends State<IbPageView> {
 
         model.fetchPageData(id: widget.chapter.id);
 
-        model.addListener(() {
+        _modelListener = () {
           if (!mounted) return;
           _loadPageIfNeeded(model);
-        });
+        };
+        model.addListener(_modelListener!);
 
         model.showCase(
           _showCaseWidgetState,
@@ -471,13 +480,48 @@ class _IbPageViewState extends State<IbPageView> {
           onPointerMove: (_) => _onUserInteraction(),
           child: Stack(
             children: [
-              if (model.pageData != null && !_isLoading)
-                widget.enableWebView
-                    ? WebViewWidget(controller: _webViewController)
-                    : const SizedBox.shrink(),
+              if (model.pageData != null &&
+                  !_isLoading &&
+                  _webViewError == null)
+                WebViewWidget(controller: _webViewController),
 
-              if (model.pageData == null || _isLoading)
+              if ((model.pageData == null || _isLoading) &&
+                  _webViewError == null)
                 const Center(child: CircularProgressIndicator(strokeWidth: 3)),
+
+              if (_webViewError != null)
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          _webViewError!,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _webViewError = null;
+                            _isLoading = true;
+                          });
+                          // If current url is available, load it, else reload
+                          if (_currentUrl != null) {
+                            _webViewController.loadRequest(
+                              Uri.parse(_currentUrl!),
+                            );
+                          } else {
+                            _webViewController.reload();
+                          }
+                        },
+                        child: const Text('Retry'),
+                      ),
+                    ],
+                  ),
+                ),
               if (widget.chapter.prev != null || widget.chapter.next != null)
                 Align(
                   alignment: Alignment.bottomCenter,
