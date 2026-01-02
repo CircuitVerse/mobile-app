@@ -107,6 +107,8 @@ jobs:
             build-type: ios
           - platform: windows-latest
             build-type: windows
+          - platform: ubuntu-latest
+            build-type: web
     runs-on: ${{ matrix.platform }}
     timeout-minutes: 45
     steps:
@@ -214,6 +216,25 @@ jobs:
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
           GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
         run: flutter build windows --debug --dart-define=GITHUB_OAUTH_CLIENT_ID=$env:GH_OAUTH_CLIENT_ID --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$env:GH_OAUTH_CLIENT_SECRET
+
+      # Web Build Validation
+      - name: Build Web Release
+        if: matrix.build-type == 'web'
+        env:
+          GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
+          GH_OAUTH_CLIENT_SECRET: ${{ secrets.GH_OAUTH_CLIENT_SECRET }}
+        run: |
+          flutter build web --debug \
+            --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
+            --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
+
+      - name: Upload Web Build
+        if: matrix.build-type == 'web'
+        uses: actions/upload-artifact@v6
+        with:
+          name: web-build
+          path: build/web/
+          retention-days: 7
 
   coverage-finish:
     name: Finalize Coverage
