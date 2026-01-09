@@ -6,6 +6,7 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
+import 'package:mobile_app/ui/components/cv_theme_toggle_button.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
 import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
@@ -239,16 +240,24 @@ class CVDrawer extends StatelessWidget {
                 ),
             ],
           ),
+          // Positioned(
+          //   right: 5,
+          //   top: 35,
+          //   child: IconButton(
+          //     icon:
+          //         Theme.of(context).brightness == Brightness.dark
+          //             ? const Icon(Icons.brightness_low)
+          //             : const Icon(Icons.brightness_high),
+          //     iconSize: 28.0,
+          //     onPressed: () => ThemeProvider.controllerOf(context).nextTheme(),
+          //   ),
+          // ),
           Positioned(
             right: 5,
             top: 35,
-            child: IconButton(
-              icon:
-                  Theme.of(context).brightness == Brightness.dark
-                      ? const Icon(Icons.brightness_low)
-                      : const Icon(Icons.brightness_high),
-              iconSize: 28.0,
-              onPressed: () => ThemeProvider.controllerOf(context).nextTheme(),
+            child: ThemeToggleButton(
+              isDark: Theme.of(context).brightness == Brightness.dark,
+              onToggle: () => ThemeProvider.controllerOf(context).nextTheme(),
             ),
           ),
         ],
