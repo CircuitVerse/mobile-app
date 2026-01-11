@@ -74,19 +74,29 @@ class _SimulatorViewState extends State<SimulatorView> {
                       useShouldOverrideUrlLoading: true,
                       useOnDownloadStart: true,
                     ),
-                    shouldOverrideUrlLoading: (controller, action) async {
-                      final uri = action.request.url;
+                    shouldOverrideUrlLoading: (
+                      controller,
+                      navigationAction,
+                    ) async {
+                      final uri = navigationAction.request.url;
                       if (uri == null) {
                         return NavigationActionPolicy.ALLOW;
                       }
 
                       final urlStr = uri.toString();
-                      final host = uri.host.toLowerCase();
+                      final action = await model.handleNavigation(
+                        urlStr,
+                        webViewController,
+                      );
+
+                      if (action == 'cancel') {
+                        return NavigationActionPolicy.CANCEL;
+                      }
+
                       final path = uri.path.toLowerCase();
-                      final isLearn = host == 'learn.circuitverse.org';
                       final isPdf = path.endsWith('.pdf');
 
-                      if (isLearn || isPdf) {
+                      if (isPdf) {
                         final ok = await launchUrl(
                           Uri.parse(urlStr),
                           mode: LaunchMode.externalApplication,
