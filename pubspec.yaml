@@ -31,7 +31,7 @@ dependencies:
     sdk: flutter
   flutter_markdown: ^0.7.7+1
   flutter_math_fork: ^0.7.3
-  flutter_svg: ^2.2.0
+  flutter_svg: ^2.2.3
   flutter_typeahead: ^5.2.0
   fluttericon: ^2.0.0
   get: ^4.6.1
