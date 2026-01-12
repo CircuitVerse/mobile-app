@@ -51,7 +51,7 @@ dependencies:
   provider: ^6.1.5
   scroll_to_index: ^3.0.1
   share_plus: ^11.1.0
-  shared_preferences: ^2.0.12
+  shared_preferences: ^2.5.4
   showcaseview: ^4.0.1
   simple_chips_input: ^1.2.2
   theme_provider: ^0.6.0
