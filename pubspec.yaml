@@ -61,7 +61,7 @@ dependencies:
 
   http: any
   markdown: any
-  webview_flutter: 4.13.0
+  webview_flutter: 4.13.1
   flutter_quill: ^11.4.2
 dev_dependencies:
   mockito: ^5.4.4
