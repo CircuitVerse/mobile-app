@@ -27,7 +27,7 @@ A detailed guide for multiple platforms setup can be found [in the Flutter insta
 - `flutter pub get` to get all the dependencies.
 - Generate files using Builder Runner (**required**) 
 ```
-flutter pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build --delete-conflicting-outputs
 ```
 - Switch to mobile-app's git hooks (**optional but recommended**)
 ```
