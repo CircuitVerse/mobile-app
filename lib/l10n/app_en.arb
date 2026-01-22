@@ -531,5 +531,7 @@
   "google_analytics": "Google Analytics",
   "privacy_section3_text4_string2": ". The third party analytics companies we work with may combine the information collected with other information they have independently collected from other websites and/or other online products and services. Their collection and use of information is subject to their own privacy policies.\n\n",
   "contact_us": "Contact Us",
-  "contact_us_text": "If you have any questions about our practices or this Privacy Policy, please contact us at "
+  "contact_us_text": "If you have any questions about our practices or this Privacy Policy, please contact us at ",
+  "light_mode":"Light Mode",
+  "dark_mode":"Dark Mode"
 }
