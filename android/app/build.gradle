@@ -51,7 +51,7 @@ if (releaseKeystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdk 35
+    compileSdk 36
     namespace 'org.circuitverse.mobile_app'
 
     compileOptions {
@@ -73,7 +73,7 @@ android {
 
     defaultConfig {
         applicationId "org.circuitverse.mobile_app"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
