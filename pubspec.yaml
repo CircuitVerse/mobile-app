@@ -59,7 +59,7 @@ dependencies:
   transparent_image: ^2.0.0
   url_launcher: ^6.3.2
 
-  http: any
+  http: 1.6.0
   markdown: any
   webview_flutter: 4.13.1
   flutter_quill: ^11.4.2
