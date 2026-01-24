@@ -21,13 +21,22 @@ class _SimulatorViewState extends State<SimulatorView> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the project argument if passed
-    final Project? project = Get.arguments as Project?;
+    // Get arguments which can be Project or Map (from deep link)
+    final args = Get.arguments;
+    Project? project;
+    bool isEmbed = false;
+
+    if (args is Project) {
+      project = args;
+    } else if (args is Map) {
+      project = args['project'] as Project?;
+      isEmbed = args['isEmbed'] as bool? ?? false;
+    }
 
     return Scaffold(
       body: SafeArea(
         child: BaseView<SimulatorViewModel>(
-          onModelReady: (model) => model.onModelReady(project),
+          onModelReady: (model) => model.onModelReady(project, isEmbed: isEmbed),
           onModelDestroy: (model) => model.onModelDestroy(),
           builder: (context, model, child) {
             return PopScope(
