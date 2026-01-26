@@ -15,6 +15,7 @@ import 'package:mobile_app/ui/views/groups/group_details_view.dart';
 import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
 import 'package:mobile_app/ui/views/groups/new_group_view.dart';
 import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
+import 'package:mobile_app/services/deep_link_manager.dart';
 import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
 import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
@@ -28,68 +29,73 @@ import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 
 class CVRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    final deepLinkRoute = DeepLinkManager.generateRoute(settings);
+    if (deepLinkRoute != null) {
+      return deepLinkRoute;
+    }
+
     switch (settings.name) {
       case SignupView.id:
-        return _buildRoute(const SignupView());
+        return buildRoute(const SignupView());
       case LoginView.id:
-        return _buildRoute(const LoginView());
+        return buildRoute(const LoginView());
       case ForgotPasswordView.id:
-        return _buildRoute(const ForgotPasswordView());
+        return buildRoute(const ForgotPasswordView());
       case CVLandingView.id:
-        return _buildRoute(const CVLandingView());
+        return buildRoute(const CVLandingView());
       case SimulatorView.id:
-        final project = settings.arguments as Project?;
-        return _buildRoute(
+        final args = settings.arguments;
+        return buildRoute(
           const SimulatorView(),
-          settings: RouteSettings(name: SimulatorView.id, arguments: project),
+          settings: RouteSettings(name: SimulatorView.id, arguments: args),
         );
       case TeachersView.id:
-        return _buildRoute(const TeachersView());
+        return buildRoute(const TeachersView());
       case ContributorsView.id:
-        return _buildRoute(const ContributorsView());
+        return buildRoute(const ContributorsView());
       case AboutTosView.id:
-        return _buildRoute(const AboutTosView());
+        return buildRoute(const AboutTosView());
       case AboutPrivacyPolicyView.id:
-        return _buildRoute(const AboutPrivacyPolicyView());
+        return buildRoute(const AboutPrivacyPolicyView());
       case FeaturedProjectsView.id:
-        return _buildRoute(const FeaturedProjectsView());
+        return buildRoute(const FeaturedProjectsView());
       case ProfileView.id:
         var _userId = settings.arguments as String;
-        return _buildRoute(ProfileView(userId: _userId));
+        return buildRoute(ProfileView(userId: _userId));
       case EditProfileView.id:
-        return _buildRoute(const EditProfileView());
+        return buildRoute(const EditProfileView());
       case ProjectDetailsView.id:
         var _project = settings.arguments as Project;
-        return _buildRoute(ProjectDetailsView(project: _project));
+        return buildRoute(ProjectDetailsView(project: _project));
       case EditProjectView.id:
         var _project = settings.arguments as Project;
-        return _buildRoute(EditProjectView(project: _project));
+        return buildRoute(EditProjectView(project: _project));
       case MyGroupsView.id:
-        return _buildRoute(const MyGroupsView());
+        return buildRoute(const MyGroupsView());
       case GroupDetailsView.id:
         var group = settings.arguments as Group;
-        return _buildRoute(GroupDetailsView(group: group));
+        return buildRoute(GroupDetailsView(group: group));
       case NewGroupView.id:
-        return _buildRoute(const NewGroupView());
+        return buildRoute(const NewGroupView());
       case EditGroupView.id:
         var group = settings.arguments as Group;
-        return _buildRoute(EditGroupView(group: group));
+        return buildRoute(EditGroupView(group: group));
       case AssignmentDetailsView.id:
         var _assignment = settings.arguments as Assignment;
-        return _buildRoute(AssignmentDetailsView(assignment: _assignment));
+        return buildRoute(AssignmentDetailsView(assignment: _assignment));
       case AddAssignmentView.id:
         var _groupId = settings.arguments as String;
-        return _buildRoute(AddAssignmentView(groupId: _groupId));
+        return buildRoute(AddAssignmentView(groupId: _groupId));
       case UpdateAssignmentView.id:
         var _assignment = settings.arguments as Assignment;
-        return _buildRoute(UpdateAssignmentView(assignment: _assignment));
+        return buildRoute(UpdateAssignmentView(assignment: _assignment));
       case IbLandingView.id:
-        return _buildRoute(const IbLandingView());
+        return buildRoute(const IbLandingView());
       case ProjectPreviewFullScreen.id:
         var _project = settings.arguments as Project;
-        return _buildRoute(ProjectPreviewFullScreen(project: _project));
+        return buildRoute(ProjectPreviewFullScreen(project: _project));
       default:
-        return _buildRoute(
+        return buildRoute(
           Scaffold(
             body: Center(child: Text('No route defined for ${settings.name}')),
           ),
@@ -98,7 +104,7 @@ class CVRouter {
   }
 
   /// Premium fade + scale transition for optimal user experience
-  static PageRouteBuilder _buildRoute(Widget page, {RouteSettings? settings}) {
+  static PageRouteBuilder buildRoute(Widget page, {RouteSettings? settings}) {
     return PageRouteBuilder(
       settings: settings,
       transitionDuration: const Duration(milliseconds: 350),

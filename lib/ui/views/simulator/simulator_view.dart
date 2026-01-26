@@ -21,7 +21,6 @@ class _SimulatorViewState extends State<SimulatorView> {
 
   @override
   Widget build(BuildContext context) {
-    // Get arguments which can be Project or Map (from deep link)
     final args = Get.arguments;
     Project? project;
     bool isEmbed = false;

@@ -61,7 +61,6 @@ Future<void> setupLocator() async {
     () => NotificationsServiceImpl(),
   );
   
-  // Deep Link Manager
   locator.registerLazySingleton<DeepLinkManager>(() => DeepLinkManager());
 
   // API Services
