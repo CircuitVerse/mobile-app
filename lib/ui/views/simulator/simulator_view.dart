@@ -35,7 +35,8 @@ class _SimulatorViewState extends State<SimulatorView> {
     return Scaffold(
       body: SafeArea(
         child: BaseView<SimulatorViewModel>(
-          onModelReady: (model) => model.onModelReady(project, isEmbed: isEmbed),
+          onModelReady:
+              (model) => model.onModelReady(project, isEmbed: isEmbed),
           onModelDestroy: (model) => model.onModelDestroy(),
           builder: (context, model, child) {
             return PopScope(

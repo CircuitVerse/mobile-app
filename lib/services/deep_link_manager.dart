@@ -29,8 +29,7 @@ class DeepLinkManager {
       if (uri != null) {
         _handleLink(uri);
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   void dispose() {
@@ -53,10 +52,10 @@ class DeepLinkManager {
       if (mode == 'edit' || mode == 'embed') {
         final dummyProject = Project.idOnly(projectId);
         final isEmbed = mode == 'embed';
-        Get.toNamed(SimulatorView.id, arguments: {
-          'project': dummyProject,
-          'isEmbed': isEmbed,
-        });
+        Get.toNamed(
+          SimulatorView.id,
+          arguments: {'project': dummyProject, 'isEmbed': isEmbed},
+        );
         return;
       }
     }
@@ -72,7 +71,6 @@ class DeepLinkManager {
   }
 
   Future<void> _fetchAndNavigateToProject(String projectId) async {
-
     try {
       final project = await locator<ProjectsApi>().getProjectDetails(projectId);
 
@@ -112,11 +110,7 @@ class DeepLinkManager {
           segments[0] == 'users' &&
           segments[2] == 'projects') {
         return CVRouter.buildRoute(
-          const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          ),
+          const Scaffold(body: Center(child: CircularProgressIndicator())),
           settings: settings,
         );
       }

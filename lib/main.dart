@@ -21,9 +21,9 @@ Future<void> main() async {
 
   // Init Hive
   await locator<DatabaseService>().init();
-  
+
   locator<DeepLinkManager>().init();
-  
+
   Get.put(LanguageController());
 
   runApp(const CircuitVerseMobile());
