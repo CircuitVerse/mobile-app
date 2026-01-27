@@ -45,7 +45,7 @@ class DeepLinkManager {
     final pathSegments = uri.pathSegments;
     if (pathSegments.isEmpty) return;
 
-    // Pattern: /simulator/edit/:projectId OR /simulator/embed/:projectId
+    // /simulator/edit/:projectId OR /simulator/embed/:projectId
     if (pathSegments.length >= 3 && pathSegments[0] == 'simulator') {
       final mode = pathSegments[1]; // 'edit' or 'embed'
       final projectId = pathSegments[2];
@@ -61,7 +61,7 @@ class DeepLinkManager {
       }
     }
 
-    // Pattern: /users/:userId/projects/:projectId
+    // /users/:userId/projects/:projectId
     if (pathSegments.length >= 4 &&
         pathSegments[0] == 'users' &&
         pathSegments[2] == 'projects') {
@@ -73,19 +73,13 @@ class DeepLinkManager {
 
   Future<void> _fetchAndNavigateToProject(String projectId) async {
 
-    
-    final dialogService = locator<DialogService>();
-    dialogService.showCustomProgressDialog(title: 'Loading Project...');
-
     try {
       final project = await locator<ProjectsApi>().getProjectDetails(projectId);
-      dialogService.popDialog();
 
       if (project != null) {
-        Get.toNamed(ProjectDetailsView.id, arguments: project);
+        Get.offNamed(ProjectDetailsView.id, arguments: project);
       }
     } catch (e) {
-      dialogService.popDialog();
       SnackBarUtils.showDark('Error', 'Could not load project details.');
     }
   }
@@ -93,9 +87,10 @@ class DeepLinkManager {
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     final name = settings.name;
     if (name != null) {
+      final uri = Uri.parse(name);
+      final segments = uri.pathSegments;
       if (name.startsWith('/simulator/edit/') ||
           name.startsWith('/simulator/embed/')) {
-        final segments = Uri.parse(name).pathSegments;
         if (segments.length >= 3) {
           final mode = segments[1];
           final projectId = segments[2];
@@ -110,6 +105,20 @@ class DeepLinkManager {
             ),
           );
         }
+      }
+
+      // Pattern: /users/:userId/projects/:projectId
+      if (segments.length >= 4 &&
+          segments[0] == 'users' &&
+          segments[2] == 'projects') {
+        return CVRouter.buildRoute(
+          const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          ),
+          settings: settings,
+        );
       }
     }
     return null;
