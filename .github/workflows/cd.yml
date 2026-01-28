@@ -52,7 +52,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: 3.32
+          flutter-version: 3.35.2
 
           
       - name: Install semantic-release and plugins
@@ -155,7 +155,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: 3.32
+          flutter-version: 3.35.2
           
       - name: Set up Java
         uses: actions/setup-java@v4
