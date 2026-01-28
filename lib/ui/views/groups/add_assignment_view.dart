@@ -145,7 +145,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
         decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: localizations.assignment_grading_scale,
         ),
-        value: _gradingScale,
+        initialValue: _gradingScale,
         onChanged: (String? value) {
           if (value == null) return;
           setState(() {

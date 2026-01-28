@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/API/projects_api.dart';
-import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
 import 'package:mobile_app/utils/router.dart';
@@ -29,7 +28,9 @@ class DeepLinkManager {
       if (uri != null) {
         _handleLink(uri);
       }
-    } catch (e) {}
+    } catch (e) {
+      // ignore
+    }
   }
 
   void dispose() {
