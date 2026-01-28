@@ -22,7 +22,7 @@ Future<void> main() async {
   // Init Hive
   await locator<DatabaseService>().init();
 
-  locator<DeepLinkManager>().init();
+  await locator<DeepLinkManager>().init();
 
   Get.put(LanguageController());
 

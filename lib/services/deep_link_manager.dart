@@ -14,8 +14,8 @@ class DeepLinkManager {
   final _appLinks = AppLinks();
   StreamSubscription<Uri>? _linkSubscription;
 
-  void init() {
-    _checkInitialLink();
+  Future<void> init() async {
+    await _checkInitialLink();
 
     _linkSubscription = _appLinks.uriLinkStream.listen((uri) {
       _handleLink(uri);
@@ -77,6 +77,8 @@ class DeepLinkManager {
 
       if (project != null) {
         Get.offNamed(ProjectDetailsView.id, arguments: project);
+      } else {
+        SnackBarUtils.showDark('Error', 'Could not load project details.');
       }
     } catch (e) {
       SnackBarUtils.showDark('Error', 'Could not load project details.');
@@ -87,11 +89,19 @@ class DeepLinkManager {
     final name = settings.name;
     if (name != null) {
       final uri = Uri.parse(name);
+
+      if (uri.hasScheme &&
+          uri.host != 'circuitverse.org' &&
+          uri.host != 'www.circuitverse.org') {
+        return null;
+      }
+
       final segments = uri.pathSegments;
-      if (name.startsWith('/simulator/edit/') ||
-          name.startsWith('/simulator/embed/')) {
-        if (segments.length >= 3) {
-          final mode = segments[1];
+
+      // /simulator/edit/:projectId OR /simulator/embed/:projectId
+      if (segments.length >= 3 && segments[0] == 'simulator') {
+        final mode = segments[1];
+        if (mode == 'edit' || mode == 'embed') {
           final projectId = segments[2];
           final dummyProject = Project.idOnly(projectId);
           final isEmbed = mode == 'embed';
@@ -106,7 +116,7 @@ class DeepLinkManager {
         }
       }
 
-      // Pattern: /users/:userId/projects/:projectId
+      // /users/:userId/projects/:projectId
       if (segments.length >= 4 &&
           segments[0] == 'users' &&
           segments[2] == 'projects') {
