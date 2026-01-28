@@ -33,9 +33,13 @@ class SimulatorViewModel extends BaseModel {
 
   // Project to edit
   Project? _projectToEdit;
+  bool _isEmbed = false;
 
   String get url {
     if (_projectToEdit != null) {
+      if (_isEmbed) {
+        return '${EnvironmentConfig.CV_BASE_URL}/simulator/embed/${_projectToEdit!.id}';
+      }
       return '${EnvironmentConfig.CV_BASE_URL}/simulator/edit/${_projectToEdit!.id}';
     }
     return '${EnvironmentConfig.CV_BASE_URL}/simulator';
@@ -324,7 +328,8 @@ class SimulatorViewModel extends BaseModel {
     return false;
   }
 
-  void onModelReady([Project? project]) {
+  void onModelReady(Project? project, {bool isEmbed = false}) {
+    _isEmbed = isEmbed;
     if (project != null) {
       setProjectToEdit(project);
     }
