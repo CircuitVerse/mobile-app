@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/database_service.dart';
+import 'package:mobile_app/services/deep_link_manager.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:mobile_app/ui/views/startup_view.dart';
@@ -20,6 +21,9 @@ Future<void> main() async {
 
   // Init Hive
   await locator<DatabaseService>().init();
+
+  await locator<DeepLinkManager>().init();
+
   Get.put(LanguageController());
 
   runApp(const CircuitVerseMobile());

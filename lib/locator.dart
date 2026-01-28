@@ -15,6 +15,7 @@ import 'package:mobile_app/services/API/contributors_api.dart';
 import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/services/notifications_service.dart';
+import 'package:mobile_app/services/deep_link_manager.dart';
 import 'package:mobile_app/viewmodels/authentication/auth_options_viewmodel.dart';
 import 'package:mobile_app/viewmodels/authentication/forgot_password_viewmodel.dart';
 import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
@@ -59,6 +60,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<NotificationsService>(
     () => NotificationsServiceImpl(),
   );
+
+  locator.registerLazySingleton<DeepLinkManager>(() => DeepLinkManager());
 
   // API Services
   locator.registerLazySingleton<ContributorsApi>(() => HttpContributorsApi());

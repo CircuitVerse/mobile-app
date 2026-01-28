@@ -142,7 +142,7 @@ class _EditProjectViewState extends State<EditProjectView> {
         decoration: CVTheme.textFieldDecoration.copyWith(
           labelText: AppLocalizations.of(context)!.edit_project_access_type,
         ),
-        value: getCurrentValue(),
+        initialValue: getCurrentValue(),
         onChanged: (String? value) {
           if (value == null) return;
           setState(() {

@@ -33,6 +33,26 @@ class Project {
             )
             : null,
   );
+
+  factory Project.idOnly(String id) => Project(
+    id: id,
+    type: 'project',
+    attributes: ProjectAttributes(
+      name: '',
+      projectAccessType: '',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      imagePreview: ImagePreview(url: ''),
+      view: 0,
+      tags: [],
+      isStarred: false,
+      authorName: '',
+      starsCount: 0,
+    ),
+    relationships: ProjectRelationships(
+      author: Author(data: AuthorData(id: '', type: 'user')),
+    ),
+  );
   Project({
     required this.id,
     required this.type,
