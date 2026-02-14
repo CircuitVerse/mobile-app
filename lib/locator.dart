@@ -50,6 +50,7 @@ Future<void> setupLocator() async {
 
   // Local Storage Service
   var localStorageService = await LocalStorageService.getInstance();
+  await localStorageService.initializeSecureData();
   locator.registerSingleton<LocalStorageService>(localStorageService);
 
   // Database Service

@@ -39,6 +39,8 @@ abstract class UsersApi {
   );
 
   Future<bool>? sendResetPasswordInstructions(String email);
+
+  Future<void> logout();
 }
 
 class HttpUsersApi implements UsersApi {
@@ -217,5 +219,9 @@ class HttpUsersApi implements UsersApi {
     } on Exception {
       throw Failure(Constants.GENERIC_FAILURE);
     }
+  }
+
+  @override
+  Future<void> logout() async {
   }
 }

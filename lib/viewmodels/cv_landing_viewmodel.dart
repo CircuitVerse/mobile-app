@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobile_app/enums/auth_type.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
+import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
@@ -13,6 +14,7 @@ import 'package:mobile_app/viewmodels/notifications/notifications_viewmodel.dart
 class CVLandingViewModel extends BaseModel {
   final LocalStorageService _storage = locator<LocalStorageService>();
   final DialogService _dialogService = locator<DialogService>();
+  final UsersApi _usersApi = locator<UsersApi>();
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   final NotificationsViewModel _viewModel = locator<NotificationsViewModel>();
 
@@ -38,11 +40,13 @@ class CVLandingViewModel extends BaseModel {
   }
 
   void onLogout() async {
+    await _usersApi.logout();
+
     _storage.isLoggedIn = false;
     _storage.currentUser = null;
     _storage.token = null;
+    await _storage.clearSecureData();
 
-    // Perform google signout if auth type is google..
     if (_storage.authType == AuthType.GOOGLE) {
       await _googleSignIn.signOut();
     }
