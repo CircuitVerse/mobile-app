@@ -19,46 +19,106 @@ class AuthOptionsViewModel extends BaseModel {
   final UsersApi _userApi = locator<UsersApi>();
   final LocalStorageService _storage = locator<LocalStorageService>();
 
+  // Future googleAuth({bool isSignUp = false}) async {
+  //   var _googleSignIn = GoogleSignIn(scopes: ['email']);
+
+  //   try {
+  //     await _googleSignIn.signIn();
+  //     var _googleSignInAuthentication =
+  //         await _googleSignIn.currentUser!.authentication;
+
+  //     setStateFor(GOOGLE_OAUTH, ViewState.Busy);
+
+  //     // save token & current user to local storage..
+  //     if (isSignUp) {
+  //       _storage.token = await _userApi.oauthSignup(
+  //         accessToken: _googleSignInAuthentication.accessToken!,
+  //         provider: 'google',
+  //       );
+  //     } else {
+  //       _storage.token = await _userApi.oauthLogin(
+  //         accessToken: _googleSignInAuthentication.accessToken!,
+  //         provider: 'google',
+  //       );
+  //     }
+
+  //     _storage.currentUser = await _userApi.fetchCurrentUser();
+
+  //     // update authentication status..
+  //     _storage.isLoggedIn = true;
+
+  //     // save authentication type to local storage..
+  //     _storage.authType = AuthType.GOOGLE;
+
+  //     setStateFor(GOOGLE_OAUTH, ViewState.Success);
+  //   } on Failure catch (f) {
+  //     setStateFor(GOOGLE_OAUTH, ViewState.Error);
+  //     setErrorMessageFor(GOOGLE_OAUTH, f.message);
+  //   } catch (e) {
+  //     setStateFor(GOOGLE_OAUTH, ViewState.Error);
+  //     setErrorMessageFor(GOOGLE_OAUTH, 'Unable to authenticate!');
+  //   }
+  // }
+
   Future googleAuth({bool isSignUp = false}) async {
-    var _googleSignIn = GoogleSignIn(scopes: ['email']);
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+  scopes: ['email'],
+  );
 
-    try {
-      await _googleSignIn.signIn();
-      var _googleSignInAuthentication =
-          await _googleSignIn.currentUser!.authentication;
+  try {
+    setStateFor(GOOGLE_OAUTH, ViewState.Busy);
 
-      setStateFor(GOOGLE_OAUTH, ViewState.Busy);
+    // Force fresh sign-in
+    await _googleSignIn.signOut();
 
-      // save token & current user to local storage..
-      if (isSignUp) {
-        _storage.token = await _userApi.oauthSignup(
-          accessToken: _googleSignInAuthentication.accessToken!,
-          provider: 'google',
-        );
-      } else {
-        _storage.token = await _userApi.oauthLogin(
-          accessToken: _googleSignInAuthentication.accessToken!,
-          provider: 'google',
-        );
-      }
+    final GoogleSignInAccount? user = await _googleSignIn.signIn();
 
-      _storage.currentUser = await _userApi.fetchCurrentUser();
-
-      // update authentication status..
-      _storage.isLoggedIn = true;
-
-      // save authentication type to local storage..
-      _storage.authType = AuthType.GOOGLE;
-
-      setStateFor(GOOGLE_OAUTH, ViewState.Success);
-    } on Failure catch (f) {
+    // USER CANCELLED LOGIN
+    if (user == null) {
       setStateFor(GOOGLE_OAUTH, ViewState.Error);
-      setErrorMessageFor(GOOGLE_OAUTH, f.message);
-    } catch (e) {
-      setStateFor(GOOGLE_OAUTH, ViewState.Error);
-      setErrorMessageFor(GOOGLE_OAUTH, 'Unable to authenticate!');
+      setErrorMessageFor(GOOGLE_OAUTH, 'Login cancelled by user');
+      return;
     }
+
+    final GoogleSignInAuthentication auth = await user.authentication;
+
+    if (auth.accessToken == null) {
+      setStateFor(GOOGLE_OAUTH, ViewState.Error);
+      setErrorMessageFor(GOOGLE_OAUTH, 'Google access token is null');
+      return;
+    }
+
+    // save token & current user to local storage..
+    if (isSignUp) {
+      _storage.token = await _userApi.oauthSignup(
+        accessToken: auth.accessToken!,
+        provider: 'google',
+      );
+    } else {
+      _storage.token = await _userApi.oauthLogin(
+        accessToken: auth.accessToken!,
+        provider: 'google',
+      );
+    }
+
+    _storage.currentUser = await _userApi.fetchCurrentUser();
+
+    // update authentication status..
+    _storage.isLoggedIn = true;
+
+    // save authentication type to local storage..
+    _storage.authType = AuthType.GOOGLE;
+
+    setStateFor(GOOGLE_OAUTH, ViewState.Success);
+
+  } on Failure catch (f) {
+    setStateFor(GOOGLE_OAUTH, ViewState.Error);
+    setErrorMessageFor(GOOGLE_OAUTH, f.message);
+  } catch (e) {
+    setStateFor(GOOGLE_OAUTH, ViewState.Error);
+    setErrorMessageFor(GOOGLE_OAUTH, e.toString());
   }
+}
 
   Future githubAuth({bool isSignUp = false}) async {
     OAuth2Client _client = GitHubOAuth2Client(

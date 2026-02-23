@@ -203,15 +203,35 @@ class HttpUsersApi implements UsersApi {
   }
 
   @override
-  Future<bool>? sendResetPasswordInstructions(String email) async {
+  // Future<bool>? sendResetPasswordInstructions(String email) async {
+  //   var endpoint = '/password/forgot';
+  //   var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+  //   var json = {'email': email};
+    
+    @override
+    Future<bool> sendResetPasswordInstructions(String email) async {
     var endpoint = '/password/forgot';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'email': email};
+
     try {
-      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-      return jsonResponse['message'] is String;
+      final jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
+
+      // Expected secure backend structure
+      if (jsonResponse['success'] == true) {
+        return true;
+      }
+
+      if (jsonResponse['error'] != null) {
+        throw Failure(jsonResponse['error']);
+      }
+
+      throw Failure(Constants.GENERIC_FAILURE);
+
     } on NotFoundException {
-      throw Failure(Constants.USER_NOT_FOUND);
+      throw Failure("No account found with this email");
+    } on UnauthorizedException {
+      throw Failure("Unauthorized request");
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on Exception {
@@ -219,3 +239,16 @@ class HttpUsersApi implements UsersApi {
     }
   }
 }
+
+//     try {
+//       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
+//       return jsonResponse['message'] is String;
+//     } on NotFoundException {
+//       throw Failure(Constants.USER_NOT_FOUND);
+//     } on FormatException {
+//       throw Failure(Constants.BAD_RESPONSE_FORMAT);
+//     } on Exception {
+//       throw Failure(Constants.GENERIC_FAILURE);
+//     }
+//   }
+// }

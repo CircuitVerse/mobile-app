@@ -14,6 +14,10 @@ class EnvironmentConfig {
     defaultValue: 'https://learn.circuitverse.org',
   );
 
+  // Google OAUTH ENV VARIABLES
+  static const String GOOGLE_OAUTH_CLIENT_ID =
+      "30473033321-4v4ap4b3r16e8vq9c100d8bi0edbnbbs.apps.googleusercontent.com";
+
   // GITHUB OAUTH ENV VARIABLES
   static const String GITHUB_OAUTH_CLIENT_ID = String.fromEnvironment(
     'GITHUB_OAUTH_CLIENT_ID',
