@@ -22,13 +22,16 @@ class EnvironmentConfig {
   static const String GITHUB_OAUTH_CLIENT_ID = String.fromEnvironment(
     'GITHUB_OAUTH_CLIENT_ID',
   );
-  static const String GITHUB_OAUTH_CLIENT_SECRET = String.fromEnvironment(
-    'GITHUB_OAUTH_CLIENT_SECRET',
-  );
-  static const String GITHUB_OAUTH_REDIRECT_URI = String.fromEnvironment(
-    'GITHUB_OAUTH_REDIRECT_URI',
-    defaultValue: 'circuitverse://auth/callback/github',
-  );
+  // static const String GITHUB_OAUTH_CLIENT_SECRET = String.fromEnvironment(
+  //   'GITHUB_OAUTH_CLIENT_SECRET',
+  // );
+  // static const String GITHUB_OAUTH_REDIRECT_URI = String.fromEnvironment(
+  //   'GITHUB_OAUTH_REDIRECT_URI',
+  //   defaultValue: 'circuitverse://auth/callback/github',
+  // );
+
+  static const String GITHUB_OAUTH_REDIRECT_URI =
+    'circuitverse://auth/callback/github';
 
   static String CV_BASE_URL = CV_API_BASE_URL.replaceAll('/api/v1', '');
 }

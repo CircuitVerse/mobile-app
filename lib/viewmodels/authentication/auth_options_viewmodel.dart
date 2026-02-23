@@ -129,7 +129,7 @@ class AuthOptionsViewModel extends BaseModel {
     var _oauthHelper = OAuth2Helper(
       _client,
       clientId: EnvironmentConfig.GITHUB_OAUTH_CLIENT_ID,
-      clientSecret: EnvironmentConfig.GITHUB_OAUTH_CLIENT_SECRET,
+      // clientSecret: EnvironmentConfig.GITHUB_OAUTH_CLIENT_SECRET,
       scopes: ['read:user'],
     );
 
