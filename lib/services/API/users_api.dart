@@ -11,9 +11,9 @@ import 'package:mobile_app/utils/api_utils.dart';
 import 'package:mobile_app/utils/app_exceptions.dart';
 
 abstract class UsersApi {
-  Future<String>? login(String email, String password);
+  Future<String> login(String email, String password);
 
-  Future<String>? signup(String name, String email, String password);
+  Future<void> signup(String name, String email, String password);
 
   Future<String> oauthLogin({
     required String accessToken,
@@ -47,14 +47,19 @@ class HttpUsersApi implements UsersApi {
   final LocalStorageService _storage = locator<LocalStorageService>();
 
   @override
-  Future<String>? login(String email, String password) async {
+  Future<String> login(String email, String password) async {
     var endpoint = '/auth/login';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'email': email, 'password': password};
     try {
       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
+      if (jsonResponse['user'] != null &&
+        jsonResponse['user']['is_verified'] == false) {
+      throw Failure("Please verify your email before logging in.");
+    }
       String token = jsonResponse['token'];
       return token;
+      
     } on UnauthorizedException {
       throw Failure(Constants.USER_AUTH_WRONG_CREDENTIALS);
     } on NotFoundException {
@@ -66,22 +71,40 @@ class HttpUsersApi implements UsersApi {
     }
   }
 
+  // @override
+  // Future<String>? signup(String name, String email, String password) async {
+  //   var endpoint = '/auth/signup';
+  //   var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+  //   var json = {'name': name, 'email': email, 'password': password};
+  //   try {
+  //     var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
+  //     return jsonResponse['token'];
+  //   } on ConflictException {
+  //     throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
+  //   } on FormatException {
+  //     throw Failure(Constants.BAD_RESPONSE_FORMAT);
+  //   } on Exception {
+  //     throw Failure(Constants.GENERIC_FAILURE);
+  //   }
+  // }
   @override
-  Future<String>? signup(String name, String email, String password) async {
-    var endpoint = '/auth/signup';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
-    var json = {'name': name, 'email': email, 'password': password};
-    try {
-      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-      return jsonResponse['token'];
-    } on ConflictException {
-      throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
-    } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
-    }
+Future<void> signup(String name, String email, String password) async {
+  var endpoint = '/auth/signup';
+  var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+  var json = {'name': name, 'email': email, 'password': password};
+
+  try {
+    // await ApiUtils.post(uri, headers: headers, body: json);
+    var response = await ApiUtils.post(uri, headers: headers, body: json);
+print(response);
+  } on ConflictException {
+    throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
+  } on FormatException {
+    throw Failure(Constants.BAD_RESPONSE_FORMAT);
+  } on Exception {
+    throw Failure(Constants.GENERIC_FAILURE);
   }
+}
 
   @override
   Future<String> oauthLogin({
