@@ -45,6 +45,8 @@ class ApiUtils {
         headers: headers,
         body: jsonEncode(body),
       );
+    //   print("STATUS CODE: ${response.statusCode}");
+    // print("RAW BODY: ${response.body}");
       return ApiUtils.jsonResponse(response);
     } on SocketException {
       throw Failure(Constants.NO_INTERNET_CONNECTION);
