@@ -12,24 +12,38 @@ class SignupViewModel extends BaseModel {
   final UsersApi _userApi = locator<UsersApi>();
   final LocalStorageService _storage = locator<LocalStorageService>();
 
-  Future<void> signup(String name, String email, String password) async {
-    setStateFor(SIGNUP, ViewState.Busy);
-    try {
-      var token = await _userApi.signup(name, email, password);
+//   Future<void> signup(String name, String email, String password) async {
+//     setStateFor(SIGNUP, ViewState.Busy);
+//     try {
+//       var token = await _userApi.signup(name, email, password);
 
-      // store token in local storage..
-      _storage.token = token;
+//       // store token in local storage..
+//       // _storage.token = token;
 
-      // update is_logged_in status..
-      _storage.isLoggedIn = true;
+//       // // update is_logged_in status..
+//       // _storage.isLoggedIn = true;
 
-      // save current user to local storage..
-      _storage.currentUser = await _userApi.fetchCurrentUser();
+//       // // save current user to local storage..
+//       // _storage.currentUser = await _userApi.fetchCurrentUser();
 
-      setStateFor(SIGNUP, ViewState.Success);
-    } on Failure catch (f) {
-      setStateFor(SIGNUP, ViewState.Error);
-      setErrorMessageFor(SIGNUP, f.message);
-    }
+//       setStateFor(SIGNUP, ViewState.Success);
+//     } on Failure catch (f) {
+//       setStateFor(SIGNUP, ViewState.Error);
+//       setErrorMessageFor(SIGNUP, f.message);
+//     }
+//   }
+// }
+
+
+Future<void> signup(String name, String email, String password) async {
+  setStateFor(SIGNUP, ViewState.Busy);
+  try {
+    await _userApi.signup(name, email, password);
+
+    setStateFor(SIGNUP, ViewState.Success);
+  } on Failure catch (f) {
+    setStateFor(SIGNUP, ViewState.Error);
+    setErrorMessageFor(SIGNUP, f.message);
   }
+}
 }
