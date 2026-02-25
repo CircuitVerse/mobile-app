@@ -94,7 +94,7 @@ class _SignupViewState extends State<SignupView> {
           return AppLocalizations.of(context)!.signup_password_length_error;
         }
         return null;
-      },
+      }, 
       onSaved: (value) => _password = value!.trim(),
     );
   }
@@ -163,14 +163,34 @@ class _SignupViewState extends State<SignupView> {
   },
 );
       } else if (_signUpModel.isError(_signUpModel.SIGNUP)) {
-        SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.signup_error,
-          _signUpModel.errorMessageFor(_signUpModel.SIGNUP),
-        );
-        _formKey.currentState?.reset();
-      }
+        final error = _signUpModel.errorMessageFor(_signUpModel.SIGNUP);
+
+      // safely close any snackbar first
+      if (Get.isSnackbarOpen) Get.closeAllSnackbars();
+      // error dialog
+      Get.defaultDialog(
+        title: "Signup Failed",
+        middleText: error,
+        textConfirm: "OK",
+        barrierDismissible: false,
+        onConfirm: () {
+          Get.back();
+          if (!error.toLowerCase().contains("already registered")) {
+            _formKey.currentState?.reset();
+          }
+        },
+      );
     }
   }
+  }
+  //       SnackBarUtils.showDark(
+  //         AppLocalizations.of(context)!.signup_error,
+  //         _signUpModel.errorMessageFor(_signUpModel.SIGNUP),
+  //       );
+  //       _formKey.currentState?.reset();
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
