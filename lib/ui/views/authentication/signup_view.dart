@@ -142,13 +142,26 @@ class _SignupViewState extends State<SignupView> {
       await _signUpModel.signup(_name, _email, _password);
 
       if (_signUpModel.isSuccess(_signUpModel.SIGNUP)) {
-        SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.signup_success_title,
-          AppLocalizations.of(context)!.signup_success_message,
-        );
+        // SnackBarUtils.showDark(
+        //   AppLocalizations.of(context)!.signup_success_title,
+        //   AppLocalizations.of(context)!.signup_success_message,
+        // );
 
-        await Future.delayed(const Duration(seconds: 1));
-        await Get.offAllNamed(CVLandingView.id);
+        // await Future.delayed(const Duration(seconds: 1));
+        // // await Get.offAllNamed(CVLandingView.id);
+        // await Get.offAllNamed(LoginView.id);
+
+        Get.defaultDialog(
+  title: "Verify Email",
+  middleText:
+      "A verification link has been sent to your email.\n\nPlease verify your email before logging in.",
+  textConfirm: "OK",
+  barrierDismissible: false,
+  onConfirm: () {
+    Get.back(); // close dialog
+    Get.offAllNamed(LoginView.id); // go to login
+  },
+);
       } else if (_signUpModel.isError(_signUpModel.SIGNUP)) {
         SnackBarUtils.showDark(
           AppLocalizations.of(context)!.signup_error,

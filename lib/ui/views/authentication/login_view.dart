@@ -130,21 +130,50 @@ class _LoginViewState extends State<LoginView> {
   Future<void> _validateAndSubmit() async {
     if (Validators.validateAndSaveForm(_formKey) &&
         !_model.isBusy(_model.LOGIN)) {
-      FocusScope.of(context).requestFocus(FocusNode());
+      // FocusScope.of(context).requestFocus(FocusNode());
+
+      // dismiss keyboard
+      FocusScope.of(context).unfocus();
       await _model.login(_email, _password);
+      if (!mounted) return;
       if (_model.isSuccess(_model.LOGIN)) {
-        SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.login_success_title,
+        ScaffoldMessenger.of(context).showSnackBar(
+           SnackBar(
+            content: Text(
+        // SnackBarUtils.showDark(
+          // AppLocalizations.of(context)!.login_success_title,
           AppLocalizations.of(context)!.login_success_message,
+          style: const TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.green,
+            duration: const Duration(seconds: 2),
+          ),
         );
         await Future.delayed(const Duration(seconds: 1));
         await Get.offAllNamed(CVLandingView.id);
       } else if (_model.isError(_model.LOGIN)) {
-        SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.login_error,
-          _model.errorMessageFor(_model.LOGIN),
+        // if (!Get.isSnackbarOpen) {
+        // SnackBarUtils.showDark(
+        //   // AppLocalizations.of(context)!.login_error,
+        //   "Login Failed",
+        //   _model.errorMessageFor(_model.LOGIN),
+        // );
+        // }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              _model.errorMessageFor(_model.LOGIN),
+              style: const TextStyle(color: Colors.white),
+            ),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 3),
+          ),
         );
-        _formKey.currentState?.reset();
+        // Reset form only for wrong credentials (optional)
+        if (_model.errorMessageFor(_model.LOGIN) =="Incorrect email or password.") {
+          _formKey.currentState?.reset();
+        }
       }
     }
   }

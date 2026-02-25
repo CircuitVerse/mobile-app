@@ -27,9 +27,18 @@ class LoginViewModel extends BaseModel {
       _storage.currentUser = await _userApi.fetchCurrentUser();
 
       setStateFor(LOGIN, ViewState.Success);
+    // } on Failure catch (f) {
+    //   setStateFor(LOGIN, ViewState.Error);
+    //   setErrorMessageFor(LOGIN, f.message);
+    // }
     } on Failure catch (f) {
-      setStateFor(LOGIN, ViewState.Error);
-      setErrorMessageFor(LOGIN, f.message);
-    }
+  setStateFor(LOGIN, ViewState.Error);
+
+  if (f.message.toLowerCase().contains("not verified")) {
+    setErrorMessageFor(LOGIN, "Please verify your email before logging in.");
+  } else {
+    setErrorMessageFor(LOGIN, "Incorrect email or password.");
+  }
+}
   }
 }

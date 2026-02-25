@@ -11,9 +11,9 @@ import 'package:mobile_app/utils/api_utils.dart';
 import 'package:mobile_app/utils/app_exceptions.dart';
 
 abstract class UsersApi {
-  Future<String>? login(String email, String password);
+  Future<String> login(String email, String password);
 
-  Future<String>? signup(String name, String email, String password);
+  Future<void> signup(String name, String email, String password);
 
   Future<String> oauthLogin({
     required String accessToken,
@@ -47,41 +47,69 @@ class HttpUsersApi implements UsersApi {
   final LocalStorageService _storage = locator<LocalStorageService>();
 
   @override
-  Future<String>? login(String email, String password) async {
+  Future<String> login(String email, String password) async {
     var endpoint = '/auth/login';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'email': email, 'password': password};
     try {
       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
+      if (jsonResponse['user'] != null &&
+        jsonResponse['user']['is_verified'] == false) {
+      throw Failure("Please verify your email before logging in.");
+    }
       String token = jsonResponse['token'];
       return token;
-    } on UnauthorizedException {
-      throw Failure(Constants.USER_AUTH_WRONG_CREDENTIALS);
+      
+    // } on UnauthorizedException {
+    //   throw Failure(Constants.USER_AUTH_WRONG_CREDENTIALS);
+    // } on NotFoundException {
+    //   throw Failure(Constants.USER_AUTH_USER_NOT_FOUND);
+    // } on FormatException {
+    //   throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    }on UnauthorizedException {
+      throw Failure("Incorrect email or password"); // <--- unified
     } on NotFoundException {
-      throw Failure(Constants.USER_AUTH_USER_NOT_FOUND);
-    } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+      throw Failure("Incorrect email or password"); // <--- unified 
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      // throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure("Incorrect email or password");
     }
   }
 
+  // @override
+  // Future<String>? signup(String name, String email, String password) async {
+  //   var endpoint = '/auth/signup';
+  //   var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+  //   var json = {'name': name, 'email': email, 'password': password};
+  //   try {
+  //     var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
+  //     return jsonResponse['token'];
+  //   } on ConflictException {
+  //     throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
+  //   } on FormatException {
+  //     throw Failure(Constants.BAD_RESPONSE_FORMAT);
+  //   } on Exception {
+  //     throw Failure(Constants.GENERIC_FAILURE);
+  //   }
+  // }
   @override
-  Future<String>? signup(String name, String email, String password) async {
-    var endpoint = '/auth/signup';
-    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
-    var json = {'name': name, 'email': email, 'password': password};
-    try {
-      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-      return jsonResponse['token'];
-    } on ConflictException {
-      throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
-    } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
-    } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
-    }
+Future<void> signup(String name, String email, String password) async {
+  var endpoint = '/auth/signup';
+  var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+  var json = {'name': name, 'email': email, 'password': password};
+
+  try {
+    // await ApiUtils.post(uri, headers: headers, body: json);
+    var response = await ApiUtils.post(uri, headers: headers, body: json);
+print(response);
+  } on ConflictException {
+    throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
+  } on FormatException {
+    throw Failure(Constants.BAD_RESPONSE_FORMAT);
+  } on Exception {
+    throw Failure(Constants.GENERIC_FAILURE);
   }
+}
 
   @override
   Future<String> oauthLogin({
@@ -203,15 +231,35 @@ class HttpUsersApi implements UsersApi {
   }
 
   @override
-  Future<bool>? sendResetPasswordInstructions(String email) async {
+  // Future<bool>? sendResetPasswordInstructions(String email) async {
+  //   var endpoint = '/password/forgot';
+  //   var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+  //   var json = {'email': email};
+    
+    @override
+    Future<bool> sendResetPasswordInstructions(String email) async {
     var endpoint = '/password/forgot';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'email': email};
+
     try {
-      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-      return jsonResponse['message'] is String;
+      final jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
+
+      // Expected secure backend structure
+      if (jsonResponse['success'] == true) {
+        return true;
+      }
+
+      if (jsonResponse['error'] != null) {
+        throw Failure(jsonResponse['error']);
+      }
+
+      throw Failure(Constants.GENERIC_FAILURE);
+
     } on NotFoundException {
-      throw Failure(Constants.USER_NOT_FOUND);
+      throw Failure("No account found with this email");
+    } on UnauthorizedException {
+      throw Failure("Unauthorized request");
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on Exception {
@@ -219,3 +267,16 @@ class HttpUsersApi implements UsersApi {
     }
   }
 }
+
+//     try {
+//       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
+//       return jsonResponse['message'] is String;
+//     } on NotFoundException {
+//       throw Failure(Constants.USER_NOT_FOUND);
+//     } on FormatException {
+//       throw Failure(Constants.BAD_RESPONSE_FORMAT);
+//     } on Exception {
+//       throw Failure(Constants.GENERIC_FAILURE);
+//     }
+//   }
+// }
