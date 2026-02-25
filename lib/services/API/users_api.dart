@@ -60,14 +60,19 @@ class HttpUsersApi implements UsersApi {
       String token = jsonResponse['token'];
       return token;
       
-    } on UnauthorizedException {
-      throw Failure(Constants.USER_AUTH_WRONG_CREDENTIALS);
+    // } on UnauthorizedException {
+    //   throw Failure(Constants.USER_AUTH_WRONG_CREDENTIALS);
+    // } on NotFoundException {
+    //   throw Failure(Constants.USER_AUTH_USER_NOT_FOUND);
+    // } on FormatException {
+    //   throw Failure(Constants.BAD_RESPONSE_FORMAT);
+    }on UnauthorizedException {
+      throw Failure("Incorrect email or password"); // <--- unified
     } on NotFoundException {
-      throw Failure(Constants.USER_AUTH_USER_NOT_FOUND);
-    } on FormatException {
-      throw Failure(Constants.BAD_RESPONSE_FORMAT);
+      throw Failure("Incorrect email or password"); // <--- unified 
     } on Exception {
-      throw Failure(Constants.GENERIC_FAILURE);
+      // throw Failure(Constants.GENERIC_FAILURE);
+      throw Failure("Incorrect email or password");
     }
   }
 
