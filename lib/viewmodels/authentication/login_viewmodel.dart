@@ -37,7 +37,7 @@ class LoginViewModel extends BaseModel {
   if (f.message.toLowerCase().contains("not verified")) {
     setErrorMessageFor(LOGIN, "Please verify your email before logging in.");
   } else {
-    setErrorMessageFor(LOGIN, f.message);
+    setErrorMessageFor(LOGIN, "Incorrect email or password.");
   }
 }
   }
