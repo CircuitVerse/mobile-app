@@ -1,0 +1,633 @@
+import 'package:flutter/material.dart';
+import 'package:mobile_app/ib_theme.dart';
+import 'package:mobile_app/locator.dart';
+import 'package:mobile_app/models/ib/ib_chapter.dart';
+import 'package:mobile_app/models/ib/ib_content.dart';
+import 'package:mobile_app/models/ib/ib_page_data.dart';
+import 'package:mobile_app/models/ib/ib_recommendation.dart';
+import 'package:mobile_app/services/API/disqus_api.dart';
+import 'package:mobile_app/ui/views/base_view.dart';
+import 'package:mobile_app/ui/views/new_ib/components/new_ib_markdown_parser.dart';
+import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
+
+class NewIbChapterPage extends StatefulWidget {
+  final IbChapter chapter;
+  final Function(IbChapter?) onNavigate;
+
+  const NewIbChapterPage({
+    super.key,
+    required this.chapter,
+    required this.onNavigate,
+  });
+
+  @override
+  State<NewIbChapterPage> createState() => _NewIbChapterPageState();
+}
+
+class _NewIbChapterPageState extends State<NewIbChapterPage> {
+  final ScrollController _scrollController = ScrollController();
+  final DisqusApi _disqusApi = locator<DisqusApi>();
+  bool _showFloatingButtons = true;
+  List<IbRecommendation> _recommendations = [];
+  bool _loadingRecommendations = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_handleScroll);
+    _loadRecommendations();
+  }
+
+  Future<void> _loadRecommendations() async {
+    try {
+      // Build the URL from the chapter ID
+      final baseUrl = 'https://learn.circuitverse.org';
+      final chapterId = widget.chapter.id.replaceAll('.md', '');
+      final chapterPath = chapterId.replaceAll('docs/', '/docs/');
+      final fullUrl = '$baseUrl$chapterPath/';
+      
+      final recommendations = await _disqusApi.fetchRecommendations(fullUrl);
+      if (mounted) {
+        setState(() {
+          _recommendations = recommendations;
+          _loadingRecommendations = false;
+        });
+      }
+    } catch (e) {
+      print('Error loading recommendations: $e');
+      if (mounted) {
+        setState(() {
+          _loadingRecommendations = false;
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_handleScroll);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _handleScroll() {
+    // Hide buttons when scrolling down, show when scrolling up
+    if (_scrollController.position.userScrollDirection ==
+        AxisDirection.down) {
+      if (_showFloatingButtons) {
+        setState(() => _showFloatingButtons = false);
+      }
+    } else if (_scrollController.position.userScrollDirection ==
+        AxisDirection.up) {
+      if (!_showFloatingButtons) {
+        setState(() => _showFloatingButtons = true);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BaseView<IbPageViewModel>(
+      onModelReady: (model) {
+        model.fetchPageData(id: widget.chapter.id);
+      },
+      builder: (context, model, child) {
+        if (!model.isSuccess(model.IB_FETCH_PAGE_DATA)) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (model.pageData == null) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.error_outline_rounded,
+                  size: 64,
+                  color: IbTheme.textColor(context).withAlpha(128),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Failed to load content',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: IbTheme.textColor(context).withAlpha(179),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        return Stack(
+          children: [
+            SingleChildScrollView(
+              controller: _scrollController,
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildContent(context, model.pageData!),
+                  const SizedBox(height: 32),
+                  _buildAlsoOnInteractiveBook(context),
+                  const SizedBox(height: 32),
+                  _buildCommentsSection(context),
+                  const SizedBox(height: 80), // Space for floating buttons
+                ],
+              ),
+            ),
+            _buildFloatingButtons(context),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildContent(BuildContext context, IbPageData pageData) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Chapter Title
+        Text(
+          widget.chapter.value,
+          style: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: IbTheme.primaryHeadingColor(context),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Divider(
+          thickness: 2,
+          color: IbTheme.getPrimaryColor(context),
+        ),
+        const SizedBox(height: 24),
+
+        // Content from API
+        if (pageData.content != null && pageData.content!.isNotEmpty)
+          ...pageData.content!.map((content) {
+            if (content is IbMd) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: NewIbMarkdownParser.parse(context, content.content),
+              );
+            }
+            return const SizedBox.shrink();
+          }),
+      ],
+    );
+  }
+
+  Widget _buildAlsoOnInteractiveBook(BuildContext context) {
+    if (_loadingRecommendations) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.auto_stories_rounded,
+                color: IbTheme.getPrimaryColor(context),
+                size: 28,
+              ),
+              const SizedBox(width: 12),
+              Text(
+                'Also on Interactive Book',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: IbTheme.primaryHeadingColor(context),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          const Center(child: CircularProgressIndicator()),
+        ],
+      );
+    }
+
+    if (_recommendations.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.auto_stories_rounded,
+              color: IbTheme.getPrimaryColor(context),
+              size: 28,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              'Also on Interactive Book',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: IbTheme.primaryHeadingColor(context),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        ..._recommendations.take(3).map((recommendation) => _buildSuggestionCard(
+              context,
+              recommendation.title,
+              recommendation.url,
+            )),
+      ],
+    );
+  }
+
+  Widget _buildSuggestionCard(
+    BuildContext context,
+    String title,
+    String url,
+  ) {
+    // Extract a simple description from the URL
+    final description = url.replaceAll('https://learn.circuitverse.org/docs/', '')
+        .replaceAll('/', ' › ')
+        .replaceAll('-', ' ');
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: IbTheme.textColor(context).withAlpha(13),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: IbTheme.textColor(context).withAlpha(26),
+        ),
+      ),
+      child: InkWell(
+        onTap: () {
+          // TODO: Navigate to suggested chapter by URL
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: IbTheme.getPrimaryColor(context).withAlpha(26),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.article_rounded,
+                  color: IbTheme.getPrimaryColor(context),
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: IbTheme.primaryHeadingColor(context),
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      description,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: IbTheme.textColor(context).withAlpha(179),
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 16,
+                color: IbTheme.textColor(context).withAlpha(128),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCommentsSection(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              Icons.comment_rounded,
+              color: IbTheme.getPrimaryColor(context),
+              size: 28,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              'Comments',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: IbTheme.primaryHeadingColor(context),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        _buildCommentInput(context),
+        const SizedBox(height: 24),
+        _buildCommentsList(context),
+      ],
+    );
+  }
+
+  Widget _buildCommentInput(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: IbTheme.textColor(context).withAlpha(13),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: IbTheme.textColor(context).withAlpha(26),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextField(
+            maxLines: 4,
+            decoration: InputDecoration(
+              hintText: 'Share your thoughts or ask a question...',
+              hintStyle: TextStyle(
+                color: IbTheme.textColor(context).withAlpha(128),
+              ),
+              border: InputBorder.none,
+            ),
+            style: TextStyle(
+              color: IbTheme.textColor(context),
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                // TODO: Submit comment
+              },
+              icon: const Icon(Icons.send_rounded, size: 18),
+              label: const Text('Post Comment'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: IbTheme.getPrimaryColor(context),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 12,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCommentsList(BuildContext context) {
+    // Mock comments data
+    final comments = [
+      {
+        'author': 'John Doe',
+        'time': '2 hours ago',
+        'text': 'Great explanation! This really helped me understand binary representation.',
+        'likes': 12,
+      },
+      {
+        'author': 'Jane Smith',
+        'time': '5 hours ago',
+        'text': 'Can someone explain the difference between signed and unsigned numbers?',
+        'likes': 5,
+      },
+      {
+        'author': 'Mike Johnson',
+        'time': '1 day ago',
+        'text': 'The examples are very clear. Thanks for this resource!',
+        'likes': 8,
+      },
+    ];
+
+    return Column(
+      children: comments
+          .map((comment) => _buildCommentCard(
+                context,
+                comment['author'] as String,
+                comment['time'] as String,
+                comment['text'] as String,
+                comment['likes'] as int,
+              ))
+          .toList(),
+    );
+  }
+
+  Widget _buildCommentCard(
+    BuildContext context,
+    String author,
+    String time,
+    String text,
+    int likes,
+  ) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: IbTheme.textColor(context).withAlpha(13),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: IbTheme.textColor(context).withAlpha(26),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: IbTheme.getPrimaryColor(context).withAlpha(51),
+                child: Text(
+                  author[0].toUpperCase(),
+                  style: TextStyle(
+                    color: IbTheme.getPrimaryColor(context),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      author,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: IbTheme.primaryHeadingColor(context),
+                      ),
+                    ),
+                    Text(
+                      time,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: IbTheme.textColor(context).withAlpha(128),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 15,
+              color: IbTheme.textColor(context),
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              InkWell(
+                onTap: () {
+                  // TODO: Like comment
+                },
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: IbTheme.textColor(context).withAlpha(26),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.thumb_up_outlined,
+                        size: 16,
+                        color: IbTheme.textColor(context).withAlpha(179),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        '$likes',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: IbTheme.textColor(context).withAlpha(179),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              InkWell(
+                onTap: () {
+                  // TODO: Reply to comment
+                },
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: IbTheme.textColor(context).withAlpha(26),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.reply_rounded,
+                        size: 16,
+                        color: IbTheme.textColor(context).withAlpha(179),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Reply',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: IbTheme.textColor(context).withAlpha(179),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFloatingButtons(BuildContext context) {
+    return Positioned(
+      bottom: 16,
+      left: 16,
+      right: 16,
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 300),
+        opacity: _showFloatingButtons ? 1.0 : 0.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            if (widget.chapter.prev != null)
+              FloatingActionButton(
+                heroTag: 'prev_button',
+                onPressed: () => widget.onNavigate(widget.chapter.prev),
+                backgroundColor: IbTheme.getPrimaryColor(context),
+                child: const Icon(
+                  Icons.arrow_back_rounded,
+                  color: Colors.white,
+                ),
+              )
+            else
+              const SizedBox(width: 56),
+            if (widget.chapter.next != null)
+              FloatingActionButton(
+                heroTag: 'next_button',
+                onPressed: () => widget.onNavigate(widget.chapter.next),
+                backgroundColor: IbTheme.getPrimaryColor(context),
+                child: const Icon(
+                  Icons.arrow_forward_rounded,
+                  color: Colors.white,
+                ),
+              )
+            else
+              const SizedBox(width: 56),
+          ],
+        ),
+      ),
+    );
+  }
+}
