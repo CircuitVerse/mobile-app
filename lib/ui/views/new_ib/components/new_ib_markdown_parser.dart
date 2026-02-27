@@ -429,6 +429,12 @@ class NewIbMarkdownParser {
         .where((cell) => cell.isNotEmpty)
         .toList();
 
+    if (headers.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    final columnCount = headers.length;
+
     // Skip separator line (second line with dashes)
     // Parse data rows
     final dataRows = <List<String>>[];
@@ -436,11 +442,20 @@ class NewIbMarkdownParser {
       final line = tableLines[i].trim();
       if (line.isEmpty) continue;
 
-      final cells = line
+      var cells = line
           .split('|')
           .map((cell) => cell.trim())
           .where((cell) => cell.isNotEmpty)
           .toList();
+
+      // Ensure row has same number of cells as headers
+      if (cells.length < columnCount) {
+        // Pad with empty cells
+        cells = [...cells, ...List.filled(columnCount - cells.length, '')];
+      } else if (cells.length > columnCount) {
+        // Trim extra cells
+        cells = cells.sublist(0, columnCount);
+      }
 
       if (cells.isNotEmpty) {
         dataRows.add(cells);
