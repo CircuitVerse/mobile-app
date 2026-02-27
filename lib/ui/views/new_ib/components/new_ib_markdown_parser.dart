@@ -192,13 +192,123 @@ class NewIbMarkdownParser {
   static Widget _buildParagraph(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
-      child: Text(
-        _parseInlineStyles(text),
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: IbTheme.textColor(context),
-              height: 1.6,
+      child: _buildRichText(context, text),
+    );
+  }
+
+  static Widget _buildRichText(BuildContext context, String text) {
+    final spans = <InlineSpan>[];
+    var currentIndex = 0;
+
+    // Pattern to match bold, italic, inline code, and links
+    final pattern = RegExp(
+      r'\*\*([^*]+)\*\*|'  // Bold **text**
+      r'__([^_]+)__|'       // Bold __text__
+      r'\*([^*]+)\*|'       // Italic *text*
+      r'_([^_]+)_|'         // Italic _text_
+      r'`([^`]+)`|'         // Inline code `text`
+      r'\[([^\]]+)\]\(([^)]+)\)'  // Links [text](url)
+    );
+
+    final matches = pattern.allMatches(text);
+
+    for (final match in matches) {
+      // Add text before the match
+      if (match.start > currentIndex) {
+        spans.add(TextSpan(
+          text: text.substring(currentIndex, match.start),
+          style: TextStyle(
+            color: IbTheme.textColor(context),
+            fontSize: 16,
+            height: 1.6,
+          ),
+        ));
+      }
+
+      // Add styled text based on match type
+      if (match.group(1) != null || match.group(2) != null) {
+        // Bold text
+        spans.add(TextSpan(
+          text: match.group(1) ?? match.group(2),
+          style: TextStyle(
+            color: IbTheme.textColor(context),
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            height: 1.6,
+          ),
+        ));
+      } else if (match.group(3) != null || match.group(4) != null) {
+        // Italic text
+        spans.add(TextSpan(
+          text: match.group(3) ?? match.group(4),
+          style: TextStyle(
+            color: IbTheme.textColor(context),
+            fontSize: 16,
+            fontStyle: FontStyle.italic,
+            height: 1.6,
+          ),
+        ));
+      } else if (match.group(5) != null) {
+        // Inline code
+        spans.add(WidgetSpan(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            decoration: BoxDecoration(
+              color: IbTheme.textColor(context).withAlpha(26),
+              borderRadius: BorderRadius.circular(4),
             ),
-      ),
+            child: Text(
+              match.group(5)!,
+              style: TextStyle(
+                fontFamily: 'monospace',
+                color: IbTheme.getPrimaryColor(context),
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ));
+      } else if (match.group(6) != null) {
+        // Link text
+        spans.add(TextSpan(
+          text: match.group(6),
+          style: TextStyle(
+            color: IbTheme.getPrimaryColor(context),
+            fontSize: 16,
+            decoration: TextDecoration.underline,
+            height: 1.6,
+          ),
+        ));
+      }
+
+      currentIndex = match.end;
+    }
+
+    // Add remaining text
+    if (currentIndex < text.length) {
+      spans.add(TextSpan(
+        text: text.substring(currentIndex),
+        style: TextStyle(
+          color: IbTheme.textColor(context),
+          fontSize: 16,
+          height: 1.6,
+        ),
+      ));
+    }
+
+    // If no matches, return simple text
+    if (spans.isEmpty) {
+      return Text(
+        text,
+        style: TextStyle(
+          color: IbTheme.textColor(context),
+          fontSize: 16,
+          height: 1.6,
+        ),
+      );
+    }
+
+    return RichText(
+      text: TextSpan(children: spans),
     );
   }
 
@@ -222,13 +332,7 @@ class NewIbMarkdownParser {
             ),
           ),
           Expanded(
-            child: Text(
-              _parseInlineStyles(text),
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: IbTheme.textColor(context),
-                    height: 1.6,
-                  ),
-            ),
+            child: _buildRichText(context, text),
           ),
         ],
       ),
@@ -249,13 +353,14 @@ class NewIbMarkdownParser {
           ),
         ),
       ),
-      child: Text(
-        _parseInlineStyles(text),
-        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: IbTheme.textColor(context).withAlpha(179),
-              fontStyle: FontStyle.italic,
-              height: 1.6,
-            ),
+      child: DefaultTextStyle(
+        style: TextStyle(
+          color: IbTheme.textColor(context).withAlpha(179),
+          fontStyle: FontStyle.italic,
+          fontSize: 16,
+          height: 1.6,
+        ),
+        child: _buildRichText(context, text),
       ),
     );
   }
