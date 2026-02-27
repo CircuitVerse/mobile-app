@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/ib_theme.dart';
+import 'package:mobile_app/ui/views/new_ib/components/binary_simulator_widget.dart';
 
 class NewIbMarkdownParser {
   static final Map<String, GlobalKey> _headingKeys = {};
+  static bool _skipFirstH1 = true;
 
   static Map<String, GlobalKey> get headingKeys => _headingKeys;
 
   static void clearKeys() {
     _headingKeys.clear();
+    _skipFirstH1 = true;
   }
 
   static List<Widget> parse(BuildContext context, String markdown) {
@@ -17,7 +20,7 @@ class NewIbMarkdownParser {
     var codeBlockContent = '';
     var inTable = false;
     var tableLines = <String>[];
-    var skipToc = false;
+    var skipTocSection = false;
 
     for (var i = 0; i < lines.length; i++) {
       final line = lines[i];
@@ -32,41 +35,43 @@ class NewIbMarkdownParser {
         continue;
       }
 
-      // Detect and skip "Table of contents" section
-      if (lowerTrimmed == 'table of contents' ||
-          lowerTrimmed.startsWith('# table of contents') ||
-          lowerTrimmed.startsWith('## table of contents') ||
+      // Detect "Table of contents" heading and start skipping
+      if (lowerTrimmed.startsWith('## table of contents') ||
           lowerTrimmed.startsWith('### table of contents')) {
-        skipToc = true;
+        skipTocSection = true;
         continue;
       }
 
-      // Skip TOC-related content
-      if (skipToc) {
-        // Check if this is a TOC list item
-        final isTocItem = trimmed == '- TOC' || 
-                         trimmed == '* TOC' || 
-                         lowerTrimmed == 'toc' ||
-                         trimmed == '- toc' ||
-                         trimmed == '* toc';
-        
-        if (isTocItem) {
-          // Skip TOC items
-          continue;
-        } else if (trimmed.startsWith('#')) {
-          // Found a new heading, stop skipping and process this line
-          skipToc = false;
-          // Fall through to process this heading
-        } else if (!trimmed.startsWith('-') && 
-                   !trimmed.startsWith('*') &&
-                   !RegExp(r'^\d+\.').hasMatch(trimmed)) {
-          // Found non-list content, stop skipping and process this line
-          skipToc = false;
-          // Fall through to process this line
-        } else {
-          // Still in TOC section (other list items), skip
+      // Skip TOC section content
+      if (skipTocSection) {
+        // Check if this is Jekyll TOC directive or related
+        if (trimmed.startsWith('1. TOC') || 
+            trimmed.startsWith('{:toc}') ||
+            trimmed.startsWith('{: toc}')) {
           continue;
         }
+        // Check if we've reached a new section (## heading)
+        if (trimmed.startsWith('##') && !lowerTrimmed.contains('table of contents')) {
+          skipTocSection = false;
+          // Fall through to process this heading
+        } else if (trimmed.startsWith('{:')) {
+          // Skip Jekyll attributes
+          continue;
+        } else {
+          // Still in TOC section
+          continue;
+        }
+      }
+
+      // Skip Jekyll attributes like {: .no_toc}
+      if (trimmed.startsWith('{:')) {
+        continue;
+      }
+
+      // Handle Jekyll includes (like binary simulator)
+      if (trimmed.startsWith('{%') && trimmed.contains('include binary.html')) {
+        widgets.add(const BinarySimulatorWidget());
+        continue;
       }
 
       // Handle code blocks
@@ -131,6 +136,11 @@ class NewIbMarkdownParser {
 
     // Headings
     if (trimmed.startsWith('# ')) {
+      // Skip the first H1 heading (it's the page title, already shown)
+      if (_skipFirstH1) {
+        _skipFirstH1 = false;
+        return null;
+      }
       return _buildHeading(context, trimmed.substring(2), 1);
     } else if (trimmed.startsWith('## ')) {
       return _buildHeading(context, trimmed.substring(3), 2);
