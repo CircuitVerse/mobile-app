@@ -15,6 +15,10 @@ class NewIbMarkdownParser {
   }
 
   static List<Widget> parse(BuildContext context, String markdown) {
+    // Reset state for new content
+    _skipFirstH1 = true;
+    _headingKeys.clear();
+    
     final lines = markdown.split('\n');
     final widgets = <Widget>[];
     var inCodeBlock = false;
