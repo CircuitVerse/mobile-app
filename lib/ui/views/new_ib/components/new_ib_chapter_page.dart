@@ -36,6 +36,8 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
     super.initState();
     _scrollController.addListener(_handleScroll);
     _loadRecommendations();
+    // Clear previous heading keys
+    NewIbMarkdownParser.clearKeys();
   }
 
   Future<void> _loadRecommendations() async {
@@ -165,6 +167,11 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
         ),
         const SizedBox(height: 24),
 
+        // Table of Contents
+        if (pageData.tableOfContents != null &&
+            pageData.tableOfContents!.isNotEmpty)
+          _buildTableOfContents(context, pageData.tableOfContents!),
+
         // Content from API
         if (pageData.content != null && pageData.content!.isNotEmpty)
           ...pageData.content!.map((content) {
@@ -178,6 +185,101 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
           }),
       ],
     );
+  }
+
+  Widget _buildTableOfContents(BuildContext context, List<IbTocItem> items) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 24),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: IbTheme.textColor(context).withAlpha(13),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: IbTheme.textColor(context).withAlpha(26),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Table of contents',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: IbTheme.primaryHeadingColor(context),
+            ),
+          ),
+          const SizedBox(height: 12),
+          ...items.map((item) => _buildTocItem(context, item, 0)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTocItem(BuildContext context, IbTocItem item, int level) {
+    final keyName = item.content
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^a-z0-9]+'), '-')
+        .replaceAll(RegExp(r'^-+|-+$'), '');
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InkWell(
+          onTap: () => _scrollToSection(keyName),
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: level * 16.0,
+              top: 8,
+              bottom: 8,
+              right: 8,
+            ),
+            child: Row(
+              children: [
+                if (item.leading.isNotEmpty)
+                  Text(
+                    '${item.leading} ',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: IbTheme.getPrimaryColor(context),
+                    ),
+                  ),
+                Expanded(
+                  child: Text(
+                    item.content,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: IbTheme.textColor(context),
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 14,
+                  color: IbTheme.textColor(context).withAlpha(128),
+                ),
+              ],
+            ),
+          ),
+        ),
+        if (item.items != null && item.items!.isNotEmpty)
+          ...item.items!.map((subItem) => _buildTocItem(context, subItem, level + 1)),
+      ],
+    );
+  }
+
+  void _scrollToSection(String keyName) {
+    final key = NewIbMarkdownParser.headingKeys[keyName];
+    if (key != null && key.currentContext != null) {
+      Scrollable.ensureVisible(
+        key.currentContext!,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+        alignment: 0.1,
+      );
+    }
   }
 
   Widget _buildAlsoOnInteractiveBook(BuildContext context) {

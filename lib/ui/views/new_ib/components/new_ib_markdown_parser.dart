@@ -2,6 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/ib_theme.dart';
 
 class NewIbMarkdownParser {
+  static final Map<String, GlobalKey> _headingKeys = {};
+
+  static Map<String, GlobalKey> get headingKeys => _headingKeys;
+
+  static void clearKeys() {
+    _headingKeys.clear();
+  }
+
   static List<Widget> parse(BuildContext context, String markdown) {
     final lines = markdown.split('\n');
     final widgets = <Widget>[];
@@ -9,12 +17,60 @@ class NewIbMarkdownParser {
     var codeBlockContent = '';
     var inTable = false;
     var tableLines = <String>[];
+    var skipToc = false;
 
     for (var i = 0; i < lines.length; i++) {
       final line = lines[i];
+      final trimmed = line.trim();
+      final lowerTrimmed = trimmed.toLowerCase();
+
+      // Skip empty lines first
+      if (trimmed.isEmpty) {
+        if (!inCodeBlock && !inTable) {
+          widgets.add(const SizedBox(height: 8));
+        }
+        continue;
+      }
+
+      // Detect and skip "Table of contents" section
+      if (lowerTrimmed == 'table of contents' ||
+          lowerTrimmed.startsWith('# table of contents') ||
+          lowerTrimmed.startsWith('## table of contents') ||
+          lowerTrimmed.startsWith('### table of contents')) {
+        skipToc = true;
+        continue;
+      }
+
+      // Skip TOC-related content
+      if (skipToc) {
+        // Check if this is a TOC list item
+        final isTocItem = trimmed == '- TOC' || 
+                         trimmed == '* TOC' || 
+                         lowerTrimmed == 'toc' ||
+                         trimmed == '- toc' ||
+                         trimmed == '* toc';
+        
+        if (isTocItem) {
+          // Skip TOC items
+          continue;
+        } else if (trimmed.startsWith('#')) {
+          // Found a new heading, stop skipping and process this line
+          skipToc = false;
+          // Fall through to process this heading
+        } else if (!trimmed.startsWith('-') && 
+                   !trimmed.startsWith('*') &&
+                   !RegExp(r'^\d+\.').hasMatch(trimmed)) {
+          // Found non-list content, stop skipping and process this line
+          skipToc = false;
+          // Fall through to process this line
+        } else {
+          // Still in TOC section (other list items), skip
+          continue;
+        }
+      }
 
       // Handle code blocks
-      if (line.trim().startsWith('```')) {
+      if (trimmed.startsWith('```')) {
         if (inCodeBlock) {
           // End of code block
           widgets.add(_buildCodeBlock(context, codeBlockContent.trim()));
@@ -33,7 +89,7 @@ class NewIbMarkdownParser {
       }
 
       // Handle tables
-      if (line.trim().contains('|')) {
+      if (trimmed.contains('|')) {
         if (!inTable) {
           inTable = true;
           tableLines = [];
@@ -45,12 +101,6 @@ class NewIbMarkdownParser {
         widgets.add(_buildTable(context, tableLines));
         tableLines = [];
         inTable = false;
-      }
-
-      // Skip empty lines
-      if (line.trim().isEmpty) {
-        widgets.add(const SizedBox(height: 8));
-        continue;
       }
 
       // Parse line
@@ -180,7 +230,18 @@ class NewIbMarkdownParser {
         bottomPadding = 6;
     }
 
+    // Create a key for this heading based on its text
+    final keyName = _parseInlineStyles(text)
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^a-z0-9]+'), '-')
+        .replaceAll(RegExp(r'^-+|-+$'), '');
+    
+    if (!_headingKeys.containsKey(keyName)) {
+      _headingKeys[keyName] = GlobalKey();
+    }
+
     return Padding(
+      key: _headingKeys[keyName],
       padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
       child: Text(
         _parseInlineStyles(text),
