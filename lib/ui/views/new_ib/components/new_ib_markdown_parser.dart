@@ -481,13 +481,19 @@ class NewIbMarkdownParser {
               color: IbTheme.textColor(context).withAlpha(51),
             ),
           ),
+          columnSpacing: 24,
+          dataRowMinHeight: 48,
+          dataRowMaxHeight: double.infinity,
           columns: headers
               .map((header) => DataColumn(
-                    label: Text(
-                      _parseInlineStyles(header),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: IbTheme.primaryHeadingColor(context),
+                    label: Expanded(
+                      child: Text(
+                        _parseInlineStyles(header),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: IbTheme.primaryHeadingColor(context),
+                        ),
+                        softWrap: true,
                       ),
                     ),
                   ))
@@ -496,10 +502,17 @@ class NewIbMarkdownParser {
               .map((row) => DataRow(
                     cells: row
                         .map((cell) => DataCell(
-                              Text(
-                                _parseInlineStyles(cell),
-                                style: TextStyle(
-                                  color: IbTheme.textColor(context),
+                              ConstrainedBox(
+                                constraints: const BoxConstraints(
+                                  minWidth: 100,
+                                  maxWidth: 250,
+                                ),
+                                child: Text(
+                                  _parseInlineStyles(cell),
+                                  style: TextStyle(
+                                    color: IbTheme.textColor(context),
+                                  ),
+                                  softWrap: true,
                                 ),
                               ),
                             ))
