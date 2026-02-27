@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/ui/views/new_ib/components/binary_simulator_widget.dart';
+import 'package:mobile_app/ui/views/new_ib/components/quiz_widget.dart';
 
 class NewIbMarkdownParser {
   static final Map<String, GlobalKey> _headingKeys = {};
@@ -21,6 +22,8 @@ class NewIbMarkdownParser {
     var inTable = false;
     var tableLines = <String>[];
     var skipTocSection = false;
+    var inQuiz = false;
+    var quizLines = <String>[];
 
     for (var i = 0; i < lines.length; i++) {
       final line = lines[i];
@@ -29,10 +32,39 @@ class NewIbMarkdownParser {
 
       // Skip empty lines first
       if (trimmed.isEmpty) {
-        if (!inCodeBlock && !inTable) {
+        if (!inCodeBlock && !inTable && !inQuiz) {
           widgets.add(const SizedBox(height: 8));
+        } else if (inQuiz) {
+          quizLines.add(line);
         }
         continue;
+      }
+
+      // Detect quiz section (can be in blockquote)
+      if (trimmed == '{:.quiz}' || trimmed == '{: .quiz}' ||
+          trimmed == '> {:.quiz}' || trimmed == '> {: .quiz}') {
+        inQuiz = true;
+        quizLines = [];
+        continue;
+      }
+
+      // Collect quiz lines
+      if (inQuiz) {
+        // Check if quiz section ends (next heading, Jekyll directive, or end of content)
+        if (trimmed.startsWith('#') || 
+            trimmed.startsWith('{%') ||
+            (trimmed.startsWith('{') && !trimmed.startsWith('{:.'))) {
+          // End of quiz, parse and add widget
+          if (quizLines.isNotEmpty) {
+            widgets.add(_buildQuiz(context, quizLines));
+          }
+          quizLines = [];
+          inQuiz = false;
+          // Fall through to process this line
+        } else {
+          quizLines.add(line);
+          continue;
+        }
       }
 
       // Detect "Table of contents" heading and start skipping
@@ -113,6 +145,11 @@ class NewIbMarkdownParser {
       if (widget != null) {
         widgets.add(widget);
       }
+    }
+
+    // Handle any remaining quiz
+    if (inQuiz && quizLines.isNotEmpty) {
+      widgets.add(_buildQuiz(context, quizLines));
     }
 
     // Handle any remaining table
@@ -470,19 +507,19 @@ class NewIbMarkdownParser {
     // Remove Jekyll/Kramdown attributes
     text = text.replaceAll(RegExp(r'\{:.*?\}'), '');
 
-    // Remove inline code backticks
-    text = text.replaceAll(RegExp(r'`([^`]+)`'), r'\1');
+    // Remove inline code backticks - keep the content
+    text = text.replaceAllMapped(RegExp(r'`([^`]+)`'), (match) => match.group(1)!);
 
     // Remove bold markers
-    text = text.replaceAll(RegExp(r'\*\*([^*]+)\*\*'), r'\1');
-    text = text.replaceAll(RegExp(r'__([^_]+)__'), r'\1');
+    text = text.replaceAllMapped(RegExp(r'\*\*([^*]+)\*\*'), (match) => match.group(1)!);
+    text = text.replaceAllMapped(RegExp(r'__([^_]+)__'), (match) => match.group(1)!);
 
     // Remove italic markers
-    text = text.replaceAll(RegExp(r'\*([^*]+)\*'), r'\1');
-    text = text.replaceAll(RegExp(r'_([^_]+)_'), r'\1');
+    text = text.replaceAllMapped(RegExp(r'\*([^*]+)\*'), (match) => match.group(1)!);
+    text = text.replaceAllMapped(RegExp(r'_([^_]+)_'), (match) => match.group(1)!);
 
     // Remove link markers [text](url)
-    text = text.replaceAll(RegExp(r'\[([^\]]+)\]\([^)]+\)'), r'\1');
+    text = text.replaceAllMapped(RegExp(r'\[([^\]]+)\]\([^)]+\)'), (match) => match.group(1)!);
 
     return text.trim();
   }
@@ -593,5 +630,79 @@ class NewIbMarkdownParser {
         ),
       ),
     );
+  }
+
+  static Widget _buildQuiz(BuildContext context, List<String> quizLines) {
+    final questions = <QuizQuestion>[];
+    String? currentQuestion;
+    final currentAnswers = <QuizAnswer>[];
+
+    for (var i = 0; i < quizLines.length; i++) {
+      var line = quizLines[i];
+      
+      // Remove blockquote prefix if present
+      if (line.trim().startsWith('> ')) {
+        line = line.trim().substring(2);
+      }
+
+      // Count leading spaces to determine nesting level
+      final leadingSpaces = line.length - line.trimLeft().length;
+      final trimmed = line.trim();
+      
+      if (trimmed.isEmpty) continue;
+
+      // Question: 2 spaces indentation, starts with number
+      if (leadingSpaces <= 2 && RegExp(r'^\d+\.\s+').hasMatch(trimmed)) {
+        // Save previous question if exists
+        if (currentQuestion != null && currentAnswers.isNotEmpty) {
+          questions.add(QuizQuestion(
+            question: currentQuestion,
+            answers: List.from(currentAnswers),
+          ));
+          currentAnswers.clear();
+        }
+        currentQuestion = _parseInlineStyles(trimmed.replaceFirst(RegExp(r'^\d+\.\s+'), ''));
+        continue;
+      }
+
+      // Answers: more than 2 spaces indentation
+      if (leadingSpaces > 2) {
+        // Correct answer (ordered list)
+        if (RegExp(r'^\d+\.\s+').hasMatch(trimmed)) {
+          currentAnswers.add(QuizAnswer(
+            text: _parseInlineStyles(trimmed.replaceFirst(RegExp(r'^\d+\.\s+'), '')),
+            isCorrect: true,
+          ));
+          continue;
+        }
+        // Incorrect answer (unordered list)
+        if (trimmed.startsWith('* ')) {
+          currentAnswers.add(QuizAnswer(
+            text: _parseInlineStyles(trimmed.substring(2)),
+            isCorrect: false,
+          ));
+          continue;
+        }
+      }
+    }
+
+    // Add last question
+    if (currentQuestion != null && currentAnswers.isNotEmpty) {
+      questions.add(QuizQuestion(
+        question: currentQuestion,
+        answers: List.from(currentAnswers),
+      ));
+    }
+
+    if (questions.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    // Shuffle answers for each question
+    for (var question in questions) {
+      question.answers.shuffle();
+    }
+
+    return QuizWidget(questions: questions);
   }
 }
