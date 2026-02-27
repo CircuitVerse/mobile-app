@@ -7,6 +7,8 @@ class NewIbMarkdownParser {
     final widgets = <Widget>[];
     var inCodeBlock = false;
     var codeBlockContent = '';
+    var inTable = false;
+    var tableLines = <String>[];
 
     for (var i = 0; i < lines.length; i++) {
       final line = lines[i];
@@ -26,8 +28,23 @@ class NewIbMarkdownParser {
       }
 
       if (inCodeBlock) {
-        codeBlockContent += line + '\n';
+        codeBlockContent += '$line\n';
         continue;
+      }
+
+      // Handle tables
+      if (line.trim().contains('|')) {
+        if (!inTable) {
+          inTable = true;
+          tableLines = [];
+        }
+        tableLines.add(line);
+        continue;
+      } else if (inTable) {
+        // End of table
+        widgets.add(_buildTable(context, tableLines));
+        tableLines = [];
+        inTable = false;
       }
 
       // Skip empty lines
@@ -41,6 +58,11 @@ class NewIbMarkdownParser {
       if (widget != null) {
         widgets.add(widget);
       }
+    }
+
+    // Handle any remaining table
+    if (inTable && tableLines.isNotEmpty) {
+      widgets.add(_buildTable(context, tableLines));
     }
 
     return widgets;
@@ -287,5 +309,85 @@ class NewIbMarkdownParser {
     text = text.replaceAll(RegExp(r'\[([^\]]+)\]\([^)]+\)'), r'\1');
 
     return text.trim();
+  }
+
+  static Widget _buildTable(BuildContext context, List<String> tableLines) {
+    if (tableLines.length < 2) {
+      return const SizedBox.shrink();
+    }
+
+    // Parse header row
+    final headerLine = tableLines[0].trim();
+    final headers = headerLine
+        .split('|')
+        .map((cell) => cell.trim())
+        .where((cell) => cell.isNotEmpty)
+        .toList();
+
+    // Skip separator line (second line with dashes)
+    // Parse data rows
+    final dataRows = <List<String>>[];
+    for (var i = 2; i < tableLines.length; i++) {
+      final line = tableLines[i].trim();
+      if (line.isEmpty) continue;
+
+      final cells = line
+          .split('|')
+          .map((cell) => cell.trim())
+          .where((cell) => cell.isNotEmpty)
+          .toList();
+
+      if (cells.isNotEmpty) {
+        dataRows.add(cells);
+      }
+    }
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: IbTheme.textColor(context).withAlpha(51),
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: DataTable(
+          headingRowColor: WidgetStateProperty.all(
+            IbTheme.getPrimaryColor(context).withAlpha(26),
+          ),
+          border: TableBorder(
+            horizontalInside: BorderSide(
+              color: IbTheme.textColor(context).withAlpha(51),
+            ),
+          ),
+          columns: headers
+              .map((header) => DataColumn(
+                    label: Text(
+                      _parseInlineStyles(header),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: IbTheme.primaryHeadingColor(context),
+                      ),
+                    ),
+                  ))
+              .toList(),
+          rows: dataRows
+              .map((row) => DataRow(
+                    cells: row
+                        .map((cell) => DataCell(
+                              Text(
+                                _parseInlineStyles(cell),
+                                style: TextStyle(
+                                  color: IbTheme.textColor(context),
+                                ),
+                              ),
+                            ))
+                        .toList(),
+                  ))
+              .toList(),
+        ),
+      ),
+    );
   }
 }
