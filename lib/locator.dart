@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:mobile_app/services/API/assignments_api.dart';
 import 'package:mobile_app/services/API/collaborators_api.dart';
+import 'package:mobile_app/services/API/disqus_api.dart';
 import 'package:mobile_app/services/API/fcm_api.dart';
 import 'package:mobile_app/services/API/grades_api.dart';
 import 'package:mobile_app/services/API/group_members_api.dart';
@@ -74,6 +75,7 @@ Future<void> setupLocator() async {
     () => HttpCountryInstituteAPI(),
   );
   locator.registerLazySingleton<IbApi>(() => HttpIbApi());
+  locator.registerLazySingleton<DisqusApi>(() => DisqusApiImpl());
 
   // Interactive Book Engine Service
   locator.registerLazySingleton<IbEngineService>(() => IbEngineServiceImpl());
