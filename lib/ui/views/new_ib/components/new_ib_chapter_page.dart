@@ -57,8 +57,31 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
       }
     } catch (e) {
       print('Error loading recommendations: $e');
+      // Use fallback recommendations if API fails
       if (mounted) {
         setState(() {
+          _recommendations = [
+            IbRecommendation(
+              title: 'Binary Arithmetic',
+              url: 'https://learn.circuitverse.org/docs/binary-representation/binary-arithmetic/',
+            ),
+            IbRecommendation(
+              title: 'Signed Numbers',
+              url: 'https://learn.circuitverse.org/docs/binary-representation/signed-numbers/',
+            ),
+            IbRecommendation(
+              title: 'Logic Gates',
+              url: 'https://learn.circuitverse.org/docs/logic-gates/',
+            ),
+            IbRecommendation(
+              title: 'Boolean Algebra',
+              url: 'https://learn.circuitverse.org/docs/boolean-algebra/',
+            ),
+            IbRecommendation(
+              title: 'Combinational Logic',
+              url: 'https://learn.circuitverse.org/docs/combinational-logic/',
+            ),
+          ];
           _loadingRecommendations = false;
         });
       }
@@ -337,11 +360,21 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
           ],
         ),
         const SizedBox(height: 16),
-        ..._recommendations.take(3).map((recommendation) => _buildSuggestionCard(
-              context,
-              recommendation.title,
-              recommendation.url,
-            )),
+        SizedBox(
+          height: 140,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: _recommendations.length > 5 ? 5 : _recommendations.length,
+            itemBuilder: (context, index) {
+              final recommendation = _recommendations[index];
+              return _buildSuggestionCard(
+                context,
+                recommendation.title,
+                recommendation.url,
+              );
+            },
+          ),
+        ),
       ],
     );
   }
@@ -351,76 +384,142 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
     String title,
     String url,
   ) {
-    // Extract a simple description from the URL
-    final description = url.replaceAll('https://learn.circuitverse.org/docs/', '')
-        .replaceAll('/', ' › ')
-        .replaceAll('-', ' ');
+    // Find the recommendation to get image, createdAt, and posts
+    final recommendation = _recommendations.firstWhere(
+      (r) => r.url == url,
+      orElse: () => IbRecommendation(title: title, url: url),
+    );
+
+    // Format date
+    String formattedDate = '';
+    if (recommendation.createdAt != null) {
+      try {
+        final date = DateTime.parse(recommendation.createdAt!);
+        formattedDate = '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+      } catch (e) {
+        formattedDate = '';
+      }
+    }
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      width: 280,
+      height: 140,
+      margin: const EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
-        color: IbTheme.textColor(context).withAlpha(13),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: IbTheme.textColor(context).withAlpha(26),
         ),
+        color: IbTheme.getPrimaryColor(context).withAlpha(51),
       ),
-      child: InkWell(
-        onTap: () {
-          // TODO: Navigate to suggested chapter by URL
-        },
+      child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: IbTheme.getPrimaryColor(context).withAlpha(26),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Icon(
-                  Icons.article_rounded,
-                  color: IbTheme.getPrimaryColor(context),
-                  size: 24,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            // Background image
+            if (recommendation.image != null)
+              Image.network(
+                recommendation.image!,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  print('Error loading image: ${recommendation.image}');
+                  print('Error: $error');
+                  return Container(
+                    color: IbTheme.getPrimaryColor(context).withAlpha(51),
+                  );
+                },
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    color: IbTheme.getPrimaryColor(context).withAlpha(51),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            // Dark overlay
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.3),
+                    Colors.black.withOpacity(0.8),
+                  ],
                 ),
               ),
-              const SizedBox(width: 16),
-              Expanded(
+            ),
+            // Content
+            InkWell(
+              onTap: () {
+                // TODO: Navigate to suggested chapter by URL
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: IbTheme.primaryHeadingColor(context),
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      description,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: IbTheme.textColor(context).withAlpha(179),
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        if (formattedDate.isNotEmpty) ...[
+                          const Icon(
+                            Icons.calendar_today,
+                            size: 12,
+                            color: Colors.white70,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            formattedDate,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: Colors.white70,
+                            ),
+                          ),
+                        ],
+                        if (formattedDate.isNotEmpty && recommendation.posts != null)
+                          const SizedBox(width: 12),
+                        if (recommendation.posts != null) ...[
+                          const Icon(
+                            Icons.comment,
+                            size: 12,
+                            color: Colors.white70,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            '${recommendation.posts} comment${recommendation.posts! > 1 ? 's' : ''}',
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: Colors.white70,
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
                   ],
                 ),
               ),
-              Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: 16,
-                color: IbTheme.textColor(context).withAlpha(128),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

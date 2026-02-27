@@ -23,14 +23,39 @@ class DisqusApiImpl implements DisqusApi {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        final items = data['response']['items'] as List? ?? [];
         
-        return items
-            .map((item) => IbRecommendation.fromJson(item))
-            .toList();
-      } else {
-        return [];
+        // Check if response is successful
+        if (data['code'] == 0) {
+          final items = data['response'] as List? ?? [];
+          
+          return items
+              .map((item) {
+                // Extract image URL from images array
+                String? imageUrl;
+                if (item['images'] != null && (item['images'] as List).isNotEmpty) {
+                  final rawUrl = item['images'][0]['url'] as String;
+                  // Handle protocol-relative URLs
+                  if (rawUrl.startsWith('//')) {
+                    imageUrl = 'https:$rawUrl';
+                  } else if (!rawUrl.startsWith('http')) {
+                    imageUrl = 'https://$rawUrl';
+                  } else {
+                    imageUrl = rawUrl;
+                  }
+                }
+                
+                return IbRecommendation(
+                  title: item['title'] ?? '',
+                  url: item['url'] ?? '',
+                  image: imageUrl,
+                  createdAt: item['createdAt'],
+                  posts: item['posts'],
+                );
+              })
+              .toList();
+        }
       }
+      return [];
     } catch (e) {
       print('Error fetching recommendations: $e');
       return [];
