@@ -296,7 +296,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: release-artifacts-v${{ env.VERSION }}
           path: |
