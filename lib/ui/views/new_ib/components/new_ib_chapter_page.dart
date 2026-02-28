@@ -47,7 +47,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
       final chapterId = widget.chapter.id.replaceAll('.md', '');
       final chapterPath = chapterId.replaceAll('docs/', '/docs/');
       final fullUrl = '$baseUrl$chapterPath/';
-      
+
       final recommendations = await _disqusApi.fetchRecommendations(fullUrl);
       if (mounted) {
         setState(() {
@@ -63,11 +63,13 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
           _recommendations = [
             IbRecommendation(
               title: 'Binary Arithmetic',
-              url: 'https://learn.circuitverse.org/docs/binary-representation/binary-arithmetic/',
+              url:
+                  'https://learn.circuitverse.org/docs/binary-representation/binary-arithmetic/',
             ),
             IbRecommendation(
               title: 'Signed Numbers',
-              url: 'https://learn.circuitverse.org/docs/binary-representation/signed-numbers/',
+              url:
+                  'https://learn.circuitverse.org/docs/binary-representation/signed-numbers/',
             ),
             IbRecommendation(
               title: 'Logic Gates',
@@ -97,8 +99,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
 
   void _handleScroll() {
     // Hide buttons when scrolling down, show when scrolling up
-    if (_scrollController.position.userScrollDirection ==
-        AxisDirection.down) {
+    if (_scrollController.position.userScrollDirection == AxisDirection.down) {
       if (_showFloatingButtons) {
         setState(() => _showFloatingButtons = false);
       }
@@ -118,9 +119,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
       },
       builder: (context, model, child) {
         if (!model.isSuccess(model.IB_FETCH_PAGE_DATA)) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (model.pageData == null) {
@@ -174,8 +173,13 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
   }
 
   Widget _buildContent(BuildContext context, IbPageData pageData) {
-    // Show "Coming Soon" for all pages except Binary Numbers
-    if (!widget.chapter.id.contains('binary-numbers')) {
+    // Show "Coming Soon" for all pages except Binary Numbers and Binary Representation main page
+    final isBinaryNumbers = widget.chapter.id.contains('binary-numbers');
+    final isBinaryRepresentation = widget.chapter.id.contains(
+      'binary-representation/index',
+    );
+
+    if (!isBinaryNumbers && !isBinaryRepresentation) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -220,10 +224,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
           ),
         ),
         const SizedBox(height: 8),
-        Divider(
-          thickness: 2,
-          color: IbTheme.getPrimaryColor(context),
-        ),
+        Divider(thickness: 2, color: IbTheme.getPrimaryColor(context)),
         const SizedBox(height: 24),
 
         // Table of Contents
@@ -242,6 +243,11 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
             }
             return const SizedBox.shrink();
           }),
+
+        // Chapter Contents (for parent pages like Binary Representation index)
+        if (pageData.chapterOfContents != null &&
+            pageData.chapterOfContents!.isNotEmpty)
+          _buildChapterContents(context, pageData.chapterOfContents!),
       ],
     );
   }
@@ -253,9 +259,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
       decoration: BoxDecoration(
         color: IbTheme.textColor(context).withAlpha(13),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: IbTheme.textColor(context).withAlpha(26),
-        ),
+        border: Border.all(color: IbTheme.textColor(context).withAlpha(26)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -324,7 +328,9 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
           ),
         ),
         if (item.items != null && item.items!.isNotEmpty)
-          ...item.items!.map((subItem) => _buildTocItem(context, subItem, level + 1)),
+          ...item.items!.map(
+            (subItem) => _buildTocItem(context, subItem, level + 1),
+          ),
       ],
     );
   }
@@ -339,6 +345,85 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
         alignment: 0.1,
       );
     }
+  }
+
+  Widget _buildChapterContents(BuildContext context, List<IbTocItem> items) {
+    return Container(
+      margin: const EdgeInsets.only(top: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:
+            items
+                .map((item) => _buildChapterContentCard(context, item))
+                .toList(),
+      ),
+    );
+  }
+
+  Widget _buildChapterContentCard(BuildContext context, IbTocItem item) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: IbTheme.textColor(context).withAlpha(13),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: IbTheme.textColor(context).withAlpha(26)),
+      ),
+      child: InkWell(
+        onTap: () {
+          // TODO: Navigate to chapter
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: IbTheme.getPrimaryColor(context).withAlpha(51),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  Icons.article_rounded,
+                  color: IbTheme.getPrimaryColor(context),
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.content,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: IbTheme.primaryHeadingColor(context),
+                      ),
+                    ),
+                    if (item.leading.isNotEmpty)
+                      Text(
+                        'Chapter ${item.leading}',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: IbTheme.textColor(context).withAlpha(128),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 18,
+                color: IbTheme.textColor(context).withAlpha(128),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildAlsoOnInteractiveBook(BuildContext context) {
@@ -400,7 +485,8 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
           height: 140,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: _recommendations.length > 5 ? 5 : _recommendations.length,
+            itemCount:
+                _recommendations.length > 5 ? 5 : _recommendations.length,
             itemBuilder: (context, index) {
               final recommendation = _recommendations[index];
               return _buildSuggestionCard(
@@ -415,11 +501,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
     );
   }
 
-  Widget _buildSuggestionCard(
-    BuildContext context,
-    String title,
-    String url,
-  ) {
+  Widget _buildSuggestionCard(BuildContext context, String title, String url) {
     // Find the recommendation to get image, createdAt, and posts
     final recommendation = _recommendations.firstWhere(
       (r) => r.url == url,
@@ -431,7 +513,8 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
     if (recommendation.createdAt != null) {
       try {
         final date = DateTime.parse(recommendation.createdAt!);
-        formattedDate = '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+        formattedDate =
+            '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
       } catch (e) {
         formattedDate = '';
       }
@@ -443,9 +526,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
       margin: const EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: IbTheme.textColor(context).withAlpha(26),
-        ),
+        border: Border.all(color: IbTheme.textColor(context).withAlpha(26)),
         color: IbTheme.getPrimaryColor(context).withAlpha(51),
       ),
       child: ClipRRect(
@@ -471,10 +552,11 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
                     color: IbTheme.getPrimaryColor(context).withAlpha(51),
                     child: Center(
                       child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                            : null,
+                        value:
+                            loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                : null,
                       ),
                     ),
                   );
@@ -532,7 +614,8 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
                             ),
                           ),
                         ],
-                        if (formattedDate.isNotEmpty && recommendation.posts != null)
+                        if (formattedDate.isNotEmpty &&
+                            recommendation.posts != null)
                           const SizedBox(width: 12),
                         if (recommendation.posts != null) ...[
                           const Icon(
@@ -597,9 +680,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
       decoration: BoxDecoration(
         color: IbTheme.textColor(context).withAlpha(13),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: IbTheme.textColor(context).withAlpha(26),
-        ),
+        border: Border.all(color: IbTheme.textColor(context).withAlpha(26)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -613,10 +694,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
               ),
               border: InputBorder.none,
             ),
-            style: TextStyle(
-              color: IbTheme.textColor(context),
-              fontSize: 16,
-            ),
+            style: TextStyle(color: IbTheme.textColor(context), fontSize: 16),
           ),
           const SizedBox(height: 12),
           Align(
@@ -651,13 +729,15 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
       {
         'author': 'Santam',
         'time': '2 hours ago',
-        'text': 'Great explanation! This really helped me understand binary representation.',
+        'text':
+            'Great explanation! This really helped me understand binary representation.',
         'likes': 12,
       },
       {
         'author': 'Roy',
         'time': '5 hours ago',
-        'text': 'Can someone explain the difference between signed and unsigned numbers?',
+        'text':
+            'Can someone explain the difference between signed and unsigned numbers?',
         'likes': 5,
       },
       {
@@ -669,15 +749,18 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
     ];
 
     return Column(
-      children: comments
-          .map((comment) => _buildCommentCard(
-                context,
-                comment['author'] as String,
-                comment['time'] as String,
-                comment['text'] as String,
-                comment['likes'] as int,
-              ))
-          .toList(),
+      children:
+          comments
+              .map(
+                (comment) => _buildCommentCard(
+                  context,
+                  comment['author'] as String,
+                  comment['time'] as String,
+                  comment['text'] as String,
+                  comment['likes'] as int,
+                ),
+              )
+              .toList(),
     );
   }
 
@@ -694,9 +777,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
       decoration: BoxDecoration(
         color: IbTheme.textColor(context).withAlpha(13),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: IbTheme.textColor(context).withAlpha(26),
-        ),
+        border: Border.all(color: IbTheme.textColor(context).withAlpha(26)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
