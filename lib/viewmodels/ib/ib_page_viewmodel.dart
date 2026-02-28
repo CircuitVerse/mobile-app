@@ -31,8 +31,17 @@ class IbPageViewModel extends BaseModel {
   IbPageData? _pageData;
   IbPageData? get pageData => _pageData;
 
+  void clearPageData() {
+    _pageData = null;
+    notifyListeners();
+  }
+
   Future? fetchPageData({String id = 'index.md'}) async {
     try {
+      // Clear previous page data before fetching new one
+      _pageData = null;
+      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Busy);
+
       _pageData = await _ibEngineService.getPageData(id: id);
 
       setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);

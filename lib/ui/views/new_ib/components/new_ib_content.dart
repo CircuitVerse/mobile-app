@@ -26,6 +26,7 @@ class NewIbContent extends StatelessWidget {
     // Show chapter page for other chapters
     if (selectedChapter != null) {
       return NewIbChapterPage(
+        key: ValueKey(selectedChapter!.id), // Unique key per chapter
         chapter: selectedChapter!,
         onNavigate: onNavigate,
       );
@@ -36,7 +37,8 @@ class NewIbContent extends StatelessWidget {
       context: context,
       icon: Icons.auto_stories_rounded,
       title: 'Welcome to Interactive Book',
-      description: 'Select a chapter from the menu to begin your learning journey.',
+      description:
+          'Select a chapter from the menu to begin your learning journey.',
     );
   }
 
