@@ -18,7 +18,7 @@ class NewIbMarkdownParser {
     // Reset state for new content
     _skipFirstH1 = true;
     _headingKeys.clear();
-    
+
     final lines = markdown.split('\n');
     final widgets = <Widget>[];
     var inCodeBlock = false;
@@ -45,8 +45,10 @@ class NewIbMarkdownParser {
       }
 
       // Detect quiz section (can be in blockquote)
-      if (trimmed == '{:.quiz}' || trimmed == '{: .quiz}' ||
-          trimmed == '> {:.quiz}' || trimmed == '> {: .quiz}') {
+      if (trimmed == '{:.quiz}' ||
+          trimmed == '{: .quiz}' ||
+          trimmed == '> {:.quiz}' ||
+          trimmed == '> {: .quiz}') {
         inQuiz = true;
         quizLines = [];
         continue;
@@ -55,7 +57,7 @@ class NewIbMarkdownParser {
       // Collect quiz lines
       if (inQuiz) {
         // Check if quiz section ends (next heading, Jekyll directive, or end of content)
-        if (trimmed.startsWith('#') || 
+        if (trimmed.startsWith('#') ||
             trimmed.startsWith('{%') ||
             (trimmed.startsWith('{') && !trimmed.startsWith('{:.'))) {
           // End of quiz, parse and add widget
@@ -81,13 +83,14 @@ class NewIbMarkdownParser {
       // Skip TOC section content
       if (skipTocSection) {
         // Check if this is Jekyll TOC directive or related
-        if (trimmed.startsWith('1. TOC') || 
+        if (trimmed.startsWith('1. TOC') ||
             trimmed.startsWith('{:toc}') ||
             trimmed.startsWith('{: toc}')) {
           continue;
         }
         // Check if we've reached a new section (## heading)
-        if (trimmed.startsWith('##') && !lowerTrimmed.contains('table of contents')) {
+        if (trimmed.startsWith('##') &&
+            !lowerTrimmed.contains('table of contents')) {
           skipTocSection = false;
           // Fall through to process this heading
         } else if (trimmed.startsWith('{:')) {
@@ -107,6 +110,11 @@ class NewIbMarkdownParser {
       // Handle Jekyll includes (like binary simulator)
       if (trimmed.startsWith('{%') && trimmed.contains('include binary.html')) {
         widgets.add(const BinarySimulatorWidget());
+        continue;
+      }
+
+      // Skip other Jekyll include directives (like chapter_toc.html)
+      if (trimmed.startsWith('{%') && trimmed.contains('include')) {
         continue;
       }
 
@@ -234,49 +242,49 @@ class NewIbMarkdownParser {
     switch (level) {
       case 1:
         style = Theme.of(context).textTheme.headlineLarge?.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.bold,
-            );
+          color: IbTheme.primaryHeadingColor(context),
+          fontWeight: FontWeight.bold,
+        );
         topPadding = 24;
         bottomPadding = 16;
         break;
       case 2:
         style = Theme.of(context).textTheme.headlineMedium?.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w600,
-            );
+          color: IbTheme.primaryHeadingColor(context),
+          fontWeight: FontWeight.w600,
+        );
         topPadding = 20;
         bottomPadding = 12;
         break;
       case 3:
         style = Theme.of(context).textTheme.headlineSmall?.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w600,
-            );
+          color: IbTheme.primaryHeadingColor(context),
+          fontWeight: FontWeight.w600,
+        );
         topPadding = 16;
         bottomPadding = 10;
         break;
       case 4:
         style = Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w600,
-            );
+          color: IbTheme.primaryHeadingColor(context),
+          fontWeight: FontWeight.w600,
+        );
         topPadding = 14;
         bottomPadding = 8;
         break;
       case 5:
         style = Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w500,
-            );
+          color: IbTheme.primaryHeadingColor(context),
+          fontWeight: FontWeight.w500,
+        );
         topPadding = 12;
         bottomPadding = 6;
         break;
       default:
         style = Theme.of(context).textTheme.titleSmall?.copyWith(
-              color: IbTheme.primaryHeadingColor(context),
-              fontWeight: FontWeight.w500,
-            );
+          color: IbTheme.primaryHeadingColor(context),
+          fontWeight: FontWeight.w500,
+        );
         topPadding = 10;
         bottomPadding = 6;
     }
@@ -286,7 +294,7 @@ class NewIbMarkdownParser {
         .toLowerCase()
         .replaceAll(RegExp(r'[^a-z0-9]+'), '-')
         .replaceAll(RegExp(r'^-+|-+$'), '');
-    
+
     if (!_headingKeys.containsKey(keyName)) {
       _headingKeys[keyName] = GlobalKey();
     }
@@ -294,10 +302,7 @@ class NewIbMarkdownParser {
     return Padding(
       key: _headingKeys[keyName],
       padding: EdgeInsets.only(top: topPadding, bottom: bottomPadding),
-      child: Text(
-        _parseInlineStyles(text),
-        style: style,
-      ),
+      child: Text(_parseInlineStyles(text), style: style),
     );
   }
 
@@ -314,12 +319,12 @@ class NewIbMarkdownParser {
 
     // Pattern to match bold, italic, inline code, and links
     final pattern = RegExp(
-      r'\*\*([^*]+)\*\*|'  // Bold **text**
-      r'__([^_]+)__|'       // Bold __text__
-      r'\*([^*]+)\*|'       // Italic *text*
-      r'_([^_]+)_|'         // Italic _text_
-      r'`([^`]+)`|'         // Inline code `text`
-      r'\[([^\]]+)\]\(([^)]+)\)'  // Links [text](url)
+      r'\*\*([^*]+)\*\*|' // Bold **text**
+      r'__([^_]+)__|' // Bold __text__
+      r'\*([^*]+)\*|' // Italic *text*
+      r'_([^_]+)_|' // Italic _text_
+      r'`([^`]+)`|' // Inline code `text`
+      r'\[([^\]]+)\]\(([^)]+)\)', // Links [text](url)
     );
 
     final matches = pattern.allMatches(text);
@@ -327,69 +332,79 @@ class NewIbMarkdownParser {
     for (final match in matches) {
       // Add text before the match
       if (match.start > currentIndex) {
-        spans.add(TextSpan(
-          text: text.substring(currentIndex, match.start),
-          style: TextStyle(
-            color: IbTheme.textColor(context),
-            fontSize: 16,
-            height: 1.6,
+        spans.add(
+          TextSpan(
+            text: text.substring(currentIndex, match.start),
+            style: TextStyle(
+              color: IbTheme.textColor(context),
+              fontSize: 16,
+              height: 1.6,
+            ),
           ),
-        ));
+        );
       }
 
       // Add styled text based on match type
       if (match.group(1) != null || match.group(2) != null) {
         // Bold text
-        spans.add(TextSpan(
-          text: match.group(1) ?? match.group(2),
-          style: TextStyle(
-            color: IbTheme.textColor(context),
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            height: 1.6,
+        spans.add(
+          TextSpan(
+            text: match.group(1) ?? match.group(2),
+            style: TextStyle(
+              color: IbTheme.textColor(context),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              height: 1.6,
+            ),
           ),
-        ));
+        );
       } else if (match.group(3) != null || match.group(4) != null) {
         // Italic text
-        spans.add(TextSpan(
-          text: match.group(3) ?? match.group(4),
-          style: TextStyle(
-            color: IbTheme.textColor(context),
-            fontSize: 16,
-            fontStyle: FontStyle.italic,
-            height: 1.6,
+        spans.add(
+          TextSpan(
+            text: match.group(3) ?? match.group(4),
+            style: TextStyle(
+              color: IbTheme.textColor(context),
+              fontSize: 16,
+              fontStyle: FontStyle.italic,
+              height: 1.6,
+            ),
           ),
-        ));
+        );
       } else if (match.group(5) != null) {
         // Inline code
-        spans.add(WidgetSpan(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-            decoration: BoxDecoration(
-              color: IbTheme.textColor(context).withAlpha(26),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text(
-              match.group(5)!,
-              style: TextStyle(
-                fontFamily: 'monospace',
-                color: IbTheme.getPrimaryColor(context),
-                fontSize: 15,
+        spans.add(
+          WidgetSpan(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: IbTheme.textColor(context).withAlpha(26),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                match.group(5)!,
+                style: TextStyle(
+                  fontFamily: 'monospace',
+                  color: IbTheme.getPrimaryColor(context),
+                  fontSize: 15,
+                ),
               ),
             ),
           ),
-        ));
+        );
       } else if (match.group(6) != null) {
         // Link text
-        spans.add(TextSpan(
-          text: match.group(6),
-          style: TextStyle(
-            color: IbTheme.getPrimaryColor(context),
-            fontSize: 16,
-            decoration: TextDecoration.underline,
-            height: 1.6,
+        spans.add(
+          TextSpan(
+            text: match.group(6),
+            style: TextStyle(
+              color: IbTheme.getPrimaryColor(context),
+              fontSize: 16,
+              decoration: TextDecoration.underline,
+              height: 1.6,
+            ),
           ),
-        ));
+        );
       }
 
       currentIndex = match.end;
@@ -397,14 +412,16 @@ class NewIbMarkdownParser {
 
     // Add remaining text
     if (currentIndex < text.length) {
-      spans.add(TextSpan(
-        text: text.substring(currentIndex),
-        style: TextStyle(
-          color: IbTheme.textColor(context),
-          fontSize: 16,
-          height: 1.6,
+      spans.add(
+        TextSpan(
+          text: text.substring(currentIndex),
+          style: TextStyle(
+            color: IbTheme.textColor(context),
+            fontSize: 16,
+            height: 1.6,
+          ),
         ),
-      ));
+      );
     }
 
     // If no matches, return simple text
@@ -419,9 +436,7 @@ class NewIbMarkdownParser {
       );
     }
 
-    return RichText(
-      text: TextSpan(children: spans),
-    );
+    return RichText(text: TextSpan(children: spans));
   }
 
   static Widget _buildListItem(
@@ -443,9 +458,7 @@ class NewIbMarkdownParser {
               shape: BoxShape.circle,
             ),
           ),
-          Expanded(
-            child: _buildRichText(context, text),
-          ),
+          Expanded(child: _buildRichText(context, text)),
         ],
       ),
     );
@@ -459,10 +472,7 @@ class NewIbMarkdownParser {
         color: IbTheme.getPrimaryColor(context).withAlpha(26),
         borderRadius: BorderRadius.circular(8),
         border: Border(
-          left: BorderSide(
-            color: IbTheme.getPrimaryColor(context),
-            width: 4,
-          ),
+          left: BorderSide(color: IbTheme.getPrimaryColor(context), width: 4),
         ),
       ),
       child: DefaultTextStyle(
@@ -490,10 +500,10 @@ class NewIbMarkdownParser {
         child: Text(
           code,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontFamily: 'monospace',
-                color: IbTheme.textColor(context),
-                height: 1.5,
-              ),
+            fontFamily: 'monospace',
+            color: IbTheme.textColor(context),
+            height: 1.5,
+          ),
         ),
       ),
     );
@@ -512,18 +522,36 @@ class NewIbMarkdownParser {
     text = text.replaceAll(RegExp(r'\{:.*?\}'), '');
 
     // Remove inline code backticks - keep the content
-    text = text.replaceAllMapped(RegExp(r'`([^`]+)`'), (match) => match.group(1)!);
+    text = text.replaceAllMapped(
+      RegExp(r'`([^`]+)`'),
+      (match) => match.group(1)!,
+    );
 
     // Remove bold markers
-    text = text.replaceAllMapped(RegExp(r'\*\*([^*]+)\*\*'), (match) => match.group(1)!);
-    text = text.replaceAllMapped(RegExp(r'__([^_]+)__'), (match) => match.group(1)!);
+    text = text.replaceAllMapped(
+      RegExp(r'\*\*([^*]+)\*\*'),
+      (match) => match.group(1)!,
+    );
+    text = text.replaceAllMapped(
+      RegExp(r'__([^_]+)__'),
+      (match) => match.group(1)!,
+    );
 
     // Remove italic markers
-    text = text.replaceAllMapped(RegExp(r'\*([^*]+)\*'), (match) => match.group(1)!);
-    text = text.replaceAllMapped(RegExp(r'_([^_]+)_'), (match) => match.group(1)!);
+    text = text.replaceAllMapped(
+      RegExp(r'\*([^*]+)\*'),
+      (match) => match.group(1)!,
+    );
+    text = text.replaceAllMapped(
+      RegExp(r'_([^_]+)_'),
+      (match) => match.group(1)!,
+    );
 
     // Remove link markers [text](url)
-    text = text.replaceAllMapped(RegExp(r'\[([^\]]+)\]\([^)]+\)'), (match) => match.group(1)!);
+    text = text.replaceAllMapped(
+      RegExp(r'\[([^\]]+)\]\([^)]+\)'),
+      (match) => match.group(1)!,
+    );
 
     return text.trim();
   }
@@ -535,11 +563,12 @@ class NewIbMarkdownParser {
 
     // Parse header row
     final headerLine = tableLines[0].trim();
-    final headers = headerLine
-        .split('|')
-        .map((cell) => cell.trim())
-        .where((cell) => cell.isNotEmpty)
-        .toList();
+    final headers =
+        headerLine
+            .split('|')
+            .map((cell) => cell.trim())
+            .where((cell) => cell.isNotEmpty)
+            .toList();
 
     if (headers.isEmpty) {
       return const SizedBox.shrink();
@@ -554,11 +583,12 @@ class NewIbMarkdownParser {
       final line = tableLines[i].trim();
       if (line.isEmpty) continue;
 
-      var cells = line
-          .split('|')
-          .map((cell) => cell.trim())
-          .where((cell) => cell.isNotEmpty)
-          .toList();
+      var cells =
+          line
+              .split('|')
+              .map((cell) => cell.trim())
+              .where((cell) => cell.isNotEmpty)
+              .toList();
 
       // Ensure row has same number of cells as headers
       if (cells.length < columnCount) {
@@ -577,9 +607,7 @@ class NewIbMarkdownParser {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        border: Border.all(
-          color: IbTheme.textColor(context).withAlpha(51),
-        ),
+        border: Border.all(color: IbTheme.textColor(context).withAlpha(51)),
         borderRadius: BorderRadius.circular(8),
       ),
       child: SingleChildScrollView(
@@ -596,41 +624,50 @@ class NewIbMarkdownParser {
           columnSpacing: 24,
           dataRowMinHeight: 48,
           dataRowMaxHeight: double.infinity,
-          columns: headers
-              .map((header) => DataColumn(
-                    label: Expanded(
-                      child: Text(
-                        _parseInlineStyles(header),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: IbTheme.primaryHeadingColor(context),
+          columns:
+              headers
+                  .map(
+                    (header) => DataColumn(
+                      label: Expanded(
+                        child: Text(
+                          _parseInlineStyles(header),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: IbTheme.primaryHeadingColor(context),
+                          ),
+                          softWrap: true,
                         ),
-                        softWrap: true,
                       ),
                     ),
-                  ))
-              .toList(),
-          rows: dataRows
-              .map((row) => DataRow(
-                    cells: row
-                        .map((cell) => DataCell(
-                              ConstrainedBox(
-                                constraints: const BoxConstraints(
-                                  minWidth: 100,
-                                  maxWidth: 250,
-                                ),
-                                child: Text(
-                                  _parseInlineStyles(cell),
-                                  style: TextStyle(
-                                    color: IbTheme.textColor(context),
+                  )
+                  .toList(),
+          rows:
+              dataRows
+                  .map(
+                    (row) => DataRow(
+                      cells:
+                          row
+                              .map(
+                                (cell) => DataCell(
+                                  ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      minWidth: 100,
+                                      maxWidth: 250,
+                                    ),
+                                    child: Text(
+                                      _parseInlineStyles(cell),
+                                      style: TextStyle(
+                                        color: IbTheme.textColor(context),
+                                      ),
+                                      softWrap: true,
+                                    ),
                                   ),
-                                  softWrap: true,
                                 ),
-                              ),
-                            ))
-                        .toList(),
-                  ))
-              .toList(),
+                              )
+                              .toList(),
+                    ),
+                  )
+                  .toList(),
         ),
       ),
     );
@@ -643,7 +680,7 @@ class NewIbMarkdownParser {
 
     for (var i = 0; i < quizLines.length; i++) {
       var line = quizLines[i];
-      
+
       // Remove blockquote prefix if present
       if (line.trim().startsWith('> ')) {
         line = line.trim().substring(2);
@@ -652,20 +689,24 @@ class NewIbMarkdownParser {
       // Count leading spaces to determine nesting level
       final leadingSpaces = line.length - line.trimLeft().length;
       final trimmed = line.trim();
-      
+
       if (trimmed.isEmpty) continue;
 
       // Question: 2 spaces indentation, starts with number
       if (leadingSpaces <= 2 && RegExp(r'^\d+\.\s+').hasMatch(trimmed)) {
         // Save previous question if exists
         if (currentQuestion != null && currentAnswers.isNotEmpty) {
-          questions.add(QuizQuestion(
-            question: currentQuestion,
-            answers: List.from(currentAnswers),
-          ));
+          questions.add(
+            QuizQuestion(
+              question: currentQuestion,
+              answers: List.from(currentAnswers),
+            ),
+          );
           currentAnswers.clear();
         }
-        currentQuestion = _parseInlineStyles(trimmed.replaceFirst(RegExp(r'^\d+\.\s+'), ''));
+        currentQuestion = _parseInlineStyles(
+          trimmed.replaceFirst(RegExp(r'^\d+\.\s+'), ''),
+        );
         continue;
       }
 
@@ -673,18 +714,24 @@ class NewIbMarkdownParser {
       if (leadingSpaces > 2) {
         // Correct answer (ordered list)
         if (RegExp(r'^\d+\.\s+').hasMatch(trimmed)) {
-          currentAnswers.add(QuizAnswer(
-            text: _parseInlineStyles(trimmed.replaceFirst(RegExp(r'^\d+\.\s+'), '')),
-            isCorrect: true,
-          ));
+          currentAnswers.add(
+            QuizAnswer(
+              text: _parseInlineStyles(
+                trimmed.replaceFirst(RegExp(r'^\d+\.\s+'), ''),
+              ),
+              isCorrect: true,
+            ),
+          );
           continue;
         }
         // Incorrect answer (unordered list)
         if (trimmed.startsWith('* ')) {
-          currentAnswers.add(QuizAnswer(
-            text: _parseInlineStyles(trimmed.substring(2)),
-            isCorrect: false,
-          ));
+          currentAnswers.add(
+            QuizAnswer(
+              text: _parseInlineStyles(trimmed.substring(2)),
+              isCorrect: false,
+            ),
+          );
           continue;
         }
       }
@@ -692,10 +739,12 @@ class NewIbMarkdownParser {
 
     // Add last question
     if (currentQuestion != null && currentAnswers.isNotEmpty) {
-      questions.add(QuizQuestion(
-        question: currentQuestion,
-        answers: List.from(currentAnswers),
-      ));
+      questions.add(
+        QuizQuestion(
+          question: currentQuestion,
+          answers: List.from(currentAnswers),
+        ),
+      );
     }
 
     if (questions.isEmpty) {
