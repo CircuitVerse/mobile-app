@@ -155,10 +155,13 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildContent(context, model.pageData!),
-                  const SizedBox(height: 32),
-                  _buildAlsoOnInteractiveBook(context),
-                  const SizedBox(height: 32),
-                  _buildCommentsSection(context),
+                  // Only show recommendations and comments for Binary Numbers page
+                  if (widget.chapter.id.contains('binary-numbers')) ...[
+                    const SizedBox(height: 32),
+                    _buildAlsoOnInteractiveBook(context),
+                    const SizedBox(height: 32),
+                    _buildCommentsSection(context),
+                  ],
                   const SizedBox(height: 80), // Space for floating buttons
                 ],
               ),
