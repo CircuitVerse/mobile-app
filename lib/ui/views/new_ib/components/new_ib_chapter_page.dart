@@ -171,6 +171,39 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
   }
 
   Widget _buildContent(BuildContext context, IbPageData pageData) {
+    // Show "Coming Soon" for all pages except Binary Numbers
+    if (!widget.chapter.id.contains('binary-numbers')) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.construction_rounded,
+              size: 80,
+              color: IbTheme.getPrimaryColor(context).withAlpha(128),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'Coming Soon',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: IbTheme.primaryHeadingColor(context),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'This page is under development',
+              style: TextStyle(
+                fontSize: 16,
+                color: IbTheme.textColor(context).withAlpha(179),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -613,19 +646,19 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
     // Mock comments data
     final comments = [
       {
-        'author': 'John Doe',
+        'author': 'Santam',
         'time': '2 hours ago',
         'text': 'Great explanation! This really helped me understand binary representation.',
         'likes': 12,
       },
       {
-        'author': 'Jane Smith',
+        'author': 'Roy',
         'time': '5 hours ago',
         'text': 'Can someone explain the difference between signed and unsigned numbers?',
         'likes': 5,
       },
       {
-        'author': 'Mike Johnson',
+        'author': 'Choudhury',
         'time': '1 day ago',
         'text': 'The examples are very clear. Thanks for this resource!',
         'likes': 8,
