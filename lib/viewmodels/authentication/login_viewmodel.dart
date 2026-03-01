@@ -15,19 +15,29 @@ class LoginViewModel extends BaseModel {
   Future<void> login(String email, String password) async {
     setStateFor(LOGIN, ViewState.Busy);
     try {
+      // Step 1: Authenticate and get token
       var token = await _userApi.login(email, password);
 
-      // store token in local storage..
+      // Step 2: Store token immediately
       _storage.token = token;
-
-      // update is_logged_in status..
       _storage.isLoggedIn = true;
 
-      // save current user to local storage..
-      _storage.currentUser = await _userApi.fetchCurrentUser();
+      // Step 3: Fetch current user (non-blocking)
+      // If this fails, user is still logged in with token
+      try {
+        _storage.currentUser = await _userApi.fetchCurrentUser();
+        print("_storage.currentUser: ${_storage.currentUser}");
+      } on Failure catch (e) {
+        // Log the error but don't fail the login
+        print('Warning: Failed to fetch current user: ${e.message}');
+        // User will be fetched later when accessing profile or landing screen
+        _storage.currentUser = null;
+      }
 
+      // Step 4: Mark login as successful
       setStateFor(LOGIN, ViewState.Success);
     } on Failure catch (f) {
+      // Only reach here if login() itself fails
       setStateFor(LOGIN, ViewState.Error);
       setErrorMessageFor(LOGIN, f.message);
     }
