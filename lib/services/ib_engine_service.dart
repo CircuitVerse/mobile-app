@@ -168,14 +168,13 @@ class IbEngineServiceImpl implements IbEngineService {
 
     for (var li in element.children) {
       var eff_index = num ? index.toString() : String.fromCharCode(index);
-      if (li.getElementsByTagName('ol').isNotEmpty) {
+      final nestedOl = li.getElementsByTagName('ol');
+      if (nestedOl.isNotEmpty) {
         toc.add(
           IbTocItem(
             leading: '$eff_index.',
             content: li.firstChild?.text?.trim() ?? li.text,
-            items: li.children.length > 1
-                ? _parseToc(li.children[1], num: !num)
-                : [],
+            items: _parseToc(nestedOl.first, num: !num),
           ),
         );
       } else {

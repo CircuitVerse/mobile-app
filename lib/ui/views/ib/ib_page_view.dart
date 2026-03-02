@@ -108,8 +108,8 @@ class _IbPageViewState extends State<IbPageView> {
     if (href == null) return;
     if (href.startsWith(EnvironmentConfig.IB_BASE_URL)) {
       final pageUrl = _model.pageData?.pageUrl;
-      if (pageUrl != null && pageUrl.startsWith(href)) {
-        return _scrollToWidget(href.substring(1));
+      if (pageUrl != null && href.startsWith(pageUrl) && href.contains('#')) {
+        return _scrollToWidget(href.split('#').last);
       } else {
         launchURL(href);
       }

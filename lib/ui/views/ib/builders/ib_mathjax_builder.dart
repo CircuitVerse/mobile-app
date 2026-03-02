@@ -30,7 +30,7 @@ TextStyle _safeMathStyle(BuildContext context, TextStyle? preferredStyle) {
 String _cleanTex(String content) {
   content = content.replaceAll('\\begin{equation}', ' ');
   content = content.replaceAll('\\end{equation}', ' ');
-  content = content.replaceAll(RegExp(r'\\tag{.+}'), ' ');
+  content = content.replaceAll(RegExp(r'\\tag\{.+?\}'), ' ');
   content = content.replaceAll(RegExp(r'\\{3,}'), '\\\\');
   content = content.replaceAll(r'\_', '_');
   content = content.replaceAll(r'\*', '*');
