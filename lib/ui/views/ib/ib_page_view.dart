@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
@@ -81,16 +80,6 @@ class _IbPageViewState extends State<IbPageView> {
     super.initState();
     _landingModel = context.read<IbLandingViewModel>();
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
-    _hideButtonController.addListener(() {
-      if (_hideButtonController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        _ibFloatingButtonState.makeInvisible();
-      }
-      if (_hideButtonController.position.userScrollDirection ==
-          ScrollDirection.forward) {
-        _ibFloatingButtonState.makeVisible();
-      }
-    });
   }
 
   @override
