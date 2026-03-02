@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/ib_pop_quiz_question.dart';
 import 'package:mobile_app/ui/views/ib/components/ib_pop_quiz_button.dart';

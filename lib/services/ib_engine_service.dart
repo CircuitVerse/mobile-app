@@ -172,8 +172,10 @@ class IbEngineServiceImpl implements IbEngineService {
         toc.add(
           IbTocItem(
             leading: '$eff_index.',
-            content: li.firstChild!.text!,
-            items: _parseToc(li.children[1], num: !num),
+            content: li.firstChild?.text?.trim() ?? li.text,
+            items: li.children.length > 1
+                ? _parseToc(li.children[1], num: !num)
+                : [],
           ),
         );
       } else {
@@ -208,7 +210,11 @@ class IbEngineServiceImpl implements IbEngineService {
       toc.add(
         IbTocItem(
           leading: '$eff_index.',
-          content: root ? li.nodes[0].text!.trim() : li.text.trim(),
+          content: root
+              ? (li.nodes.isNotEmpty
+                  ? li.nodes[0].text?.trim() ?? li.text.trim()
+                  : li.text.trim())
+              : li.text.trim(),
           items: sublist.isNotEmpty ? sublist : null,
         ),
       );
@@ -250,19 +256,71 @@ class IbEngineServiceImpl implements IbEngineService {
 
     if (_ibRawPageData == null) return null;
 
+    var rawContent = HtmlUnescape().convert(_ibRawPageData.rawContent);
+    rawContent = rawContent.replaceAllMapped(
+      RegExp(r'<code>(.*?)</code>', dotAll: true),
+      (m) => '`${m[1]}`',
+    );
+    rawContent = rawContent.replaceAllMapped(
+      RegExp(r'<em>(.*?)</em>', dotAll: true),
+      (m) => '*${m[1]}*',
+    );
+    rawContent = rawContent.replaceAllMapped(
+      RegExp(r'<strong>(.*?)</strong>', dotAll: true),
+      (m) => '**${m[1]}**',
+    );
+    rawContent = rawContent.replaceAllMapped(
+      RegExp(r'<u>(.*?)</u>', dotAll: true),
+      (m) => m[1]!,
+    );
+    rawContent = rawContent.replaceAllMapped(
+      RegExp(r'<sup>(.*?)</sup>', dotAll: true),
+      (m) => '\u27E8sup\u27E9${m[1]}\u27E8/sup\u27E9',
+    );
+    rawContent = rawContent.replaceAllMapped(
+      RegExp(r'<sub>(.*?)</sub>', dotAll: true),
+      (m) => '\u27E8sub\u27E9${m[1]}\u27E8/sub\u27E9',
+    );
+    rawContent = rawContent.replaceAllMapped(
+      RegExp(r'<mark>(.*?)</mark>', dotAll: true),
+      (m) => '\u27E8mark\u27E9${m[1]}\u27E8/mark\u27E9',
+    );
+    rawContent = rawContent.replaceAll(
+      RegExp(r'{%\s*(?:cite|bibliography)[^%]*%}'),
+      '',
+    );
+    // Convert Jekyll {% link path/to/file.md %} tags to actual URLs
+    rawContent = rawContent.replaceAllMapped(
+      RegExp(r'{%\s*link\s+(\S+)\s*%}'),
+      (m) {
+        var path = m[1]!;
+        if (path.endsWith('.md')) {
+          path = '${path.substring(0, path.length - 3)}.html';
+        }
+        return '${EnvironmentConfig.IB_BASE_URL}/$path';
+      },
+    );
+    // Convert kramdown table caption syntax to a bold paragraph.
+    // |: Caption text {: .tblcap } :||||| → **Caption text**
+    rawContent = rawContent.replaceAllMapped(
+      RegExp(r'^\|:\s*(.+?)\s*\{:\s*\.tblcap\s*\}\s*:\|+\s*$',
+          multiLine: true),
+      (m) => '**${m[1]!.trim()}**',
+    );
+
     return IbPageData(
       id: _ibRawPageData.id,
       pageUrl: _ibRawPageData.httpUrl,
       title: _ibRawPageData.title,
       content: [
-        IbMd(content: '${HtmlUnescape().convert(_ibRawPageData.rawContent)}\n'),
+        IbMd(content: '$rawContent\n'),
       ],
       tableOfContents:
-          _ibRawPageData.hasToc
+          _ibRawPageData.hasToc && _ibRawPageData.content != null
               ? _getTableOfContents(_ibRawPageData.content!)
               : [],
       chapterOfContents:
-          _ibRawPageData.hasChildren
+          _ibRawPageData.hasChildren && _ibRawPageData.content != null
               ? _getChapterOfContents(_ibRawPageData.content!)
               : [],
     );
@@ -284,10 +342,24 @@ class IbEngineServiceImpl implements IbEngineService {
     var result = '$js\n$html';
 
     // Replace local URLs with absolute
-    return result = result.replaceAll(
+    result = result.replaceAll(
       RegExp(r'(\.\.(\/\.\.)?)?(?<!org)\/assets'),
       '${EnvironmentConfig.IB_BASE_URL}/assets',
     );
+
+    result = result.replaceAll(
+      'display: none',
+      'display: inherit',
+    );
+    result = result.replaceAll(
+      RegExp(r'#too_small\s*\{[^}]*display:\s*block[^}]*\}'),
+      '#too_small { display: none !important; }',
+    );
+
+    result =
+        '<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body>$result</body></html>';
+
+    return result;
   }
 
   @override

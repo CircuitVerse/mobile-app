@@ -8,7 +8,10 @@ class IbMdTagSyntax extends md.BlockSyntax {
   @override
   md.Node? parse(md.BlockParser parser) {
     var match = pattern.firstMatch(parser.current.content);
-    if (match == null) return null;
+    if (match == null) {
+      parser.advance();
+      return md.Element.empty('p');
+    }
     _tagsStack.addAll(match[1]!.split(' '));
 
     // Subtitle Syntax
@@ -16,7 +19,15 @@ class IbMdTagSyntax extends md.BlockSyntax {
     // Since Markdown tags after text is not supported
     if (_tagsStack.contains('.fs-9')) {
       parser.advance();
+      if (parser.isDone) {
+        _tagsStack.remove('.fs-9');
+        return md.Element.empty('p');
+      }
       parser.advance();
+      if (parser.isDone) {
+        _tagsStack.remove('.fs-9');
+        return md.Element.empty('p');
+      }
       var text = parser.current;
 
       _tagsStack.remove('.fs-9');
@@ -28,11 +39,16 @@ class IbMdTagSyntax extends md.BlockSyntax {
     if (_tagsStack.contains('.quiz')) {
       var quizContent = '';
 
-      // Eat all quiz content
-      do {
-        quizContent += '\n${parser.current}';
+      parser.advance();
+
+      while (!parser.isDone) {
+        var line = parser.current.content;
+        if (pattern.hasMatch(line) || line.startsWith('#')) {
+          break;
+        }
+        quizContent += '\n$line';
         parser.advance();
-      } while (parser.next != null || !parser.isDone);
+      }
 
       _tagsStack.remove('.quiz');
       return md.Element.text('quiz', quizContent);
@@ -40,7 +56,7 @@ class IbMdTagSyntax extends md.BlockSyntax {
 
     parser.advance();
 
-    return null;
+    return md.Element.empty('p');
   }
 
   @override

@@ -34,11 +34,13 @@ class IbPageViewModel extends BaseModel {
   Future? fetchPageData({String id = 'index.md'}) async {
     try {
       _pageData = await _ibEngineService.getPageData(id: id);
-
       setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
     } on Failure catch (f) {
       setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
       setErrorMessageFor(IB_FETCH_PAGE_DATA, f.message);
+    } catch (e) {
+      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
+      setErrorMessageFor(IB_FETCH_PAGE_DATA, e.toString());
     }
   }
 

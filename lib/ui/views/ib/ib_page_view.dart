@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
@@ -25,6 +25,7 @@ import 'package:mobile_app/ui/views/ib/syntaxes/ib_filter_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_highlight_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_inline_html_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_liquid_syntax.dart';
+import 'package:mobile_app/ui/views/ib/syntaxes/ib_mathjax_block_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_mathjax_syntax.dart';
 import 'package:mobile_app/ui/views/ib/syntaxes/ib_md_tag_syntax.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
@@ -78,7 +79,6 @@ class _IbPageViewState extends State<IbPageView> {
   void initState() {
     _ibFloatingButtonState = IbFloatingButtonState();
     super.initState();
-    _showCaseWidgetState = ShowCaseWidget.of(context);
     _landingModel = context.read<IbLandingViewModel>();
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
     _hideButtonController.addListener(() {
@@ -112,15 +112,14 @@ class _IbPageViewState extends State<IbPageView> {
         _slugMap[slug]!,
         preferPosition: AutoScrollPosition.begin,
       );
-    } else {
-      debugPrint('[IB]: $slug not present in map');
     }
   }
 
   void _onTapLink(String text, String? href, String title) async {
     if (href == null) return;
     if (href.startsWith(EnvironmentConfig.IB_BASE_URL)) {
-      if (_model.pageData!.pageUrl.startsWith(href)) {
+      final pageUrl = _model.pageData?.pageUrl;
+      if (pageUrl != null && pageUrl.startsWith(href)) {
         return _scrollToWidget(href.substring(1));
       } else {
         launchURL(href);
@@ -147,7 +146,6 @@ class _IbPageViewState extends State<IbPageView> {
     final _inlineBuilders = {
       'sup': IbSuperscriptBuilder(selectable: _selectable),
       'sub': IbSubscriptBuilder(selectable: _selectable),
-      'mathjax': IbMathjaxBuilder(),
       'mark': HighlightBuilder(selectable: _selectable),
     };
 
@@ -159,8 +157,8 @@ class _IbPageViewState extends State<IbPageView> {
       imageDirectory: EnvironmentConfig.IB_BASE_URL,
       onTapLink: _onTapLink,
       builders: {
+        ..._inlineBuilders,
         'img': CustomImageBuilder(
-          onTapImage: (src) => debugPrint('Image tapped: $src'),
           wrapImages: true,
           noImageSourceText:
               AppLocalizations.of(context)!.ib_page_no_image_source,
@@ -184,12 +182,15 @@ class _IbPageViewState extends State<IbPageView> {
                   )
                   : Container(),
         ),
+        'mathjax': IbMathjaxBuilder(),
+        'mathjax_block': IbMathjaxBlockBuilder(),
         'iframe': IbWebViewBuilder(),
         'interaction': IbInteractionBuilder(model: _model),
         'quiz': IbPopQuizBuilder(context: context, model: _model),
       },
       extensionSet: md.ExtensionSet(
         [
+          IbMathjaxBlockSyntax(),
           IbEmbedSyntax(),
           IbFilterSyntax(),
           IbMdTagSyntax(),
@@ -317,6 +318,9 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   void _showBottomSheet() {
+    final toc = _model.pageData?.tableOfContents;
+    if (toc == null || toc.isEmpty) return;
+
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -333,7 +337,7 @@ class _IbPageViewState extends State<IbPageView> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: _buildTOC(_model.pageData!.tableOfContents!),
+                child: _buildTOC(toc),
               ),
             ),
           ],
@@ -361,7 +365,7 @@ class _IbPageViewState extends State<IbPageView> {
                 duration: const Duration(milliseconds: 500),
                 opacity: _ibFloatingButtonState.isVisible ? 1.0 : 0.0,
                 child: FloatingActionButton(
-                  heroTag: 'previousPage',
+                  heroTag: 'previousPage_${widget.chapter.id}',
                   mini: true,
                   backgroundColor: Theme.of(context).primaryIconTheme.color,
                   onPressed:
@@ -404,7 +408,7 @@ class _IbPageViewState extends State<IbPageView> {
                 duration: const Duration(milliseconds: 500),
                 opacity: _ibFloatingButtonState.isVisible ? 1.0 : 0.0,
                 child: FloatingActionButton(
-                  heroTag: 'nextPage',
+                  heroTag: 'nextPage_${widget.chapter.id}',
                   mini: true,
                   backgroundColor: Theme.of(context).primaryIconTheme.color,
                   onPressed:
@@ -441,6 +445,34 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   List<Widget> _buildPageContent(IbPageData? pageData) {
+    if (_model.isError(_model.IB_FETCH_PAGE_DATA)) {
+      return [
+        Column(
+          children: [
+            const SizedBox(height: 120),
+            Center(
+              child: Column(
+                children: [
+                  const Icon(Icons.error_outline, size: 48, color: Colors.red),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Failed to load page',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8),
+                  TextButton(
+                    onPressed: () =>
+                        _model.fetchPageData(id: widget.chapter.id),
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ];
+    }
+
     if (pageData == null) {
       return [
         const Column(
@@ -496,14 +528,29 @@ class _IbPageViewState extends State<IbPageView> {
 
         return Stack(
           children: [
-            Scrollbar(
-              controller: _hideButtonController,
-              child: SingleChildScrollView(
+            GestureDetector(
+              onDoubleTapDown: (details) {
+                final screenWidth = MediaQuery.of(context).size.width;
+                final tapX = details.globalPosition.dx;
+                if (tapX < screenWidth / 2) {
+                  if (widget.chapter.prev != null) {
+                    widget.setPage(widget.chapter.prev);
+                  }
+                } else {
+                  if (widget.chapter.next != null) {
+                    widget.setPage(widget.chapter.next);
+                  }
+                }
+              },
+              child: Scrollbar(
                 controller: _hideButtonController,
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _buildPageContent(model.pageData),
+                child: SingleChildScrollView(
+                  controller: _hideButtonController,
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _buildPageContent(model.pageData),
+                  ),
                 ),
               ),
             ),
@@ -523,14 +570,12 @@ class _IbPageViewState extends State<IbPageView> {
 }
 
 class CustomImageBuilder extends MarkdownElementBuilder {
-  final void Function(String)? onTapImage;
   final bool wrapImages;
   final String noImageSourceText;
   final String imageLoadErrorText;
   final String loadingImageText;
 
   CustomImageBuilder({
-    this.onTapImage,
     this.wrapImages = true,
     this.noImageSourceText = 'No image source provided',
     this.imageLoadErrorText = 'Failed to load image',
@@ -578,9 +623,7 @@ class CustomImageBuilder extends MarkdownElementBuilder {
       );
     }
 
-    return onTapImage != null
-        ? GestureDetector(onTap: () => onTapImage!(src), child: image)
-        : image;
+    return image;
   }
 
   Widget _buildLoadingIndicator() {

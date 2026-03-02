@@ -8,8 +8,9 @@ class HighlightSyntax extends md.InlineSyntax {
   bool onMatch(md.InlineParser parser, Match match) {
     if (match[0] != null) {
       parser.addNode(md.Element.text('mark', match[0]!.trim()));
+      return true;
     }
 
-    return true;
+    return false;
   }
 }
