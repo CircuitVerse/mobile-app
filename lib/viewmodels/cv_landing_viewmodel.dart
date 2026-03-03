@@ -41,7 +41,7 @@ class CVLandingViewModel extends BaseModel {
     _storage.isLoggedIn = false;
     _storage.currentUser = null;
     _storage.token = null;
-
+    _currentUser = null; 
     // Perform google signout if auth type is google..
     if (_storage.authType == AuthType.GOOGLE) {
       await _googleSignIn.signOut();
@@ -92,7 +92,12 @@ class CVLandingViewModel extends BaseModel {
 
     if (_dialogResponse?.confirmed ?? false) {
       onLogout();
+      // Close any open drawer/dialog
+      if (Get.isOverlaysOpen) {
+        Get.back();
+      }
       selectedIndex = 0;
+      Get.offAllNamed('/');
       SnackBarUtils.showDark(
         AppLocalizations.of(Get.context!)!.cv_logout_success,
         AppLocalizations.of(Get.context!)!.cv_logout_success_acknowledgement,
