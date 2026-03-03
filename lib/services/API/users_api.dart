@@ -59,13 +59,6 @@ class HttpUsersApi implements UsersApi {
     }
       String token = jsonResponse['token'];
       return token;
-      
-    // } on UnauthorizedException {
-    //   throw Failure(Constants.USER_AUTH_WRONG_CREDENTIALS);
-    // } on NotFoundException {
-    //   throw Failure(Constants.USER_AUTH_USER_NOT_FOUND);
-    // } on FormatException {
-    //   throw Failure(Constants.BAD_RESPONSE_FORMAT);
     }on UnauthorizedException {
       throw Failure("Incorrect email or password"); // <--- unified
     } on NotFoundException {
@@ -76,32 +69,16 @@ class HttpUsersApi implements UsersApi {
     }
   }
 
-  // @override
-  // Future<String>? signup(String name, String email, String password) async {
-  //   var endpoint = '/auth/signup';
-  //   var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
-  //   var json = {'name': name, 'email': email, 'password': password};
-  //   try {
-  //     var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-  //     return jsonResponse['token'];
-  //   } on ConflictException {
-  //     throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
-  //   } on FormatException {
-  //     throw Failure(Constants.BAD_RESPONSE_FORMAT);
-  //   } on Exception {
-  //     throw Failure(Constants.GENERIC_FAILURE);
-  //   }
-  // }
   @override
-Future<void> signup(String name, String email, String password) async {
-  var endpoint = '/auth/signup';
-  var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
-  var json = {'name': name, 'email': email, 'password': password};
+  Future<void> signup(String name, String email, String password) async {
+    var endpoint = '/auth/signup';
+    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    var json = {'name': name, 'email': email, 'password': password};
 
-  try {
+    try {
     // await ApiUtils.post(uri, headers: headers, body: json);
-    var response = await ApiUtils.post(uri, headers: headers, body: json);
-print(response);
+      var response = await ApiUtils.post(uri, headers: headers, body: json);
+  print(response);
   } on ConflictException {
     throw Failure(Constants.USER_AUTH_USER_ALREADY_EXISTS);
   } on FormatException {
@@ -230,12 +207,6 @@ print(response);
     }
   }
 
-  @override
-  // Future<bool>? sendResetPasswordInstructions(String email) async {
-  //   var endpoint = '/password/forgot';
-  //   var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
-  //   var json = {'email': email};
-    
     @override
     Future<bool> sendResetPasswordInstructions(String email) async {
     var endpoint = '/password/forgot';
@@ -267,16 +238,3 @@ print(response);
     }
   }
 }
-
-//     try {
-//       var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-//       return jsonResponse['message'] is String;
-//     } on NotFoundException {
-//       throw Failure(Constants.USER_NOT_FOUND);
-//     } on FormatException {
-//       throw Failure(Constants.BAD_RESPONSE_FORMAT);
-//     } on Exception {
-//       throw Failure(Constants.GENERIC_FAILURE);
-//     }
-//   }
-// }
