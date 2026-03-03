@@ -187,6 +187,7 @@ class _IbPageViewState extends State<IbPageView> {
         'iframe': IbWebViewBuilder(),
         'interaction': IbInteractionBuilder(model: _model),
         'quiz': IbPopQuizBuilder(context: context, model: _model),
+        'empty': IbEmptyBuilder(),
       },
       extensionSet: md.ExtensionSet(
         [
@@ -614,5 +615,12 @@ class CustomImageBuilder extends MarkdownElementBuilder {
         ),
       ),
     );
+  }
+}
+
+class IbEmptyBuilder extends MarkdownElementBuilder {
+  @override
+  Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
+    return const SizedBox.shrink();
   }
 }

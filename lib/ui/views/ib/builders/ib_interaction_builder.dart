@@ -14,7 +14,7 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
 
   @override
   Widget? visitElementAfter(md.Element element, TextStyle? preferredStyle) {
-    var id = element.textContent;
+    var id = element.attributes['id'] ?? '';
 
     return FutureBuilder<dynamic>(
       future: model.fetchHtmlInteraction(id),
