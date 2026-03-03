@@ -15,7 +15,7 @@ class IbLiquidSyntax extends md.BlockSyntax {
     if (tags[0] == 'include') {
       // chapter_toc include
       if (tags[1] == 'chapter_toc.html') {
-        node = md.Element.text('chapter_contents', '');
+        node = md.Element('p', [md.Element.withTag('chapter_contents')]);
       } else if (tags[1] == 'image.html' && tags.length >= 3) {
         // Images
         var url =
@@ -25,17 +25,22 @@ class IbLiquidSyntax extends md.BlockSyntax {
               r'''description=("|')([^"'\n\r]*)("|')''',
             ).firstMatch(match[1]!)![2];
 
-        node = md.Element.withTag('img');
-        node.attributes['src'] = '${EnvironmentConfig.IB_BASE_URL}$url';
-        node.attributes['alt'] = alt!;
+        var img = md.Element.withTag('img');
+        img.attributes['src'] = '${EnvironmentConfig.IB_BASE_URL}$url';
+        img.attributes['alt'] = alt!;
+        node = md.Element('p', [img]);
       } else {
         // Interactions using html
-        node = md.Element.text('interaction', tags[1]);
+        // Use attribute 'id' for data-via-attributes fix
+        var intNode = md.Element.withTag('interaction');
+        intNode.attributes['id'] = tags[1];
+        node = md.Element('p', [intNode]);
       }
     }
 
     parser.advance();
-    return node;
+    // Ensure all results are wrapped in p for paragraph protection
+    return node ?? md.Element('p', [md.Element.withTag('empty')]);
   }
 
   @override

@@ -6,7 +6,8 @@ class IbFilterSyntax extends md.BlockSyntax {
   @override
   md.Node? parse(md.BlockParser parser) {
     parser.advance();
-    return null;
+    // Return a block placeholder instead of null for stack safety
+    return md.Element('p', [md.Element.withTag('empty')]);
   }
 
   @override

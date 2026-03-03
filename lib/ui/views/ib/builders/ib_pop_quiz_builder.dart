@@ -12,7 +12,7 @@ class IbPopQuizBuilder extends MarkdownElementBuilder {
 
   @override
   Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
-    var _rawContent = element.textContent;
+    var _rawContent = element.attributes['content'] ?? '';
     var _popQuizQuestions = model.fetchPopQuiz(_rawContent);
 
     if (_popQuizQuestions == null) return Container();

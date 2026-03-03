@@ -35,12 +35,17 @@ class IbMdTagSyntax extends md.BlockSyntax {
       } while (parser.next != null || !parser.isDone);
 
       _tagsStack.remove('.quiz');
-      return md.Element.text('quiz', quizContent);
+      // Wrap in p for paragraph protection and use attributes for data
+      return md.Element('p', [
+        md.Element.withTag('quiz')..attributes['content'] = quizContent,
+      ]);
     }
 
     parser.advance();
 
-    return null;
+    // Never return null after advancing the parser to keep it in sync
+    // Ensure placeholder is wrapped in p for block-level protection
+    return md.Element('p', [md.Element.withTag('empty')]);
   }
 
   @override
