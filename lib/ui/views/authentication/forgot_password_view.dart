@@ -26,7 +26,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   late ForgotPasswordViewModel _model;
   final _formKey = GlobalKey<FormState>();
   late String _email;
-
+  String? _serverError;
   Widget _buildForgotPasswordImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -38,19 +38,52 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     );
   }
 
+  // Widget _buildEmailInput() {
+  //   return CVTextField(
+  //     label: AppLocalizations.of(context)!.forgot_password_email,
+  //     type: TextInputType.emailAddress,
+  //     validator:
+  //         (value) =>
+  //             Validators.isEmailValid(value)
+  //                 ? null
+  //                 : AppLocalizations.of(
+  //                   context,
+  //                 )!.forgot_password_email_validation_error,
+  //     onSaved: (value) => _email = value!.trim(),
+  //     action: TextInputAction.done,
+  //   );
+  // }
+
   Widget _buildEmailInput() {
-    return CVTextField(
-      label: AppLocalizations.of(context)!.forgot_password_email,
-      type: TextInputType.emailAddress,
-      validator:
-          (value) =>
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CVTextField(
+          label: AppLocalizations.of(context)!.forgot_password_email,
+          type: TextInputType.emailAddress,
+          validator: (value) =>
               Validators.isEmailValid(value)
                   ? null
-                  : AppLocalizations.of(
-                    context,
-                  )!.forgot_password_email_validation_error,
-      onSaved: (value) => _email = value!.trim(),
-      action: TextInputAction.done,
+                  : AppLocalizations.of(context)!
+                      .forgot_password_email_validation_error,
+          onSaved: (value) => _email = value!.trim(),
+          action: TextInputAction.done,
+        ),
+
+        if (_serverError != null) ...[
+          const SizedBox(height: 6),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Text(
+              _serverError!,
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 13,
+              ),
+            ),
+          ),
+        ],
+      ],
     );
   }
 
@@ -89,37 +122,29 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   }
 
   Future<void> _validateAndSubmit() async {
-    var _dialogService = locator<DialogService>();
+    // var _dialogService = locator<DialogService>();
+    setState(() {_serverError = null;});
+    if (Validators.validateAndSaveForm(_formKey)){
+      FocusScope.of(context).unfocus();
+      final bool isSent =await _model.onForgotPassword(_email);
+      if (!mounted) return;
+      if (!isSent) {
+        setState(() {
+        _serverError = "This email is not registered.";
+      });
+      return;
+    }
 
-    if (Validators.validateAndSaveForm(_formKey) &&
-        !_model.isBusy(_model.SEND_RESET_INSTRUCTIONS)) {
-      FocusScope.of(context).requestFocus(FocusNode());
+    setState(() {
+      _serverError = null;
+    });
 
-      _dialogService.showCustomProgressDialog(
-        title:
-            AppLocalizations.of(context)!.forgot_password_sending_instructions,
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Reset instructions sent successfully."),
+        backgroundColor: Colors.green,
+        ),
       );
-
-      await _model.onForgotPassword(_email);
-
-      _dialogService.popDialog();
-
-      if (_model.isSuccess(_model.SEND_RESET_INSTRUCTIONS)) {
-        SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.forgot_password_instructions_sent_title,
-          AppLocalizations.of(
-            context,
-          )!.forgot_password_instructions_sent_message,
-        );
-        await Future.delayed(const Duration(seconds: 1));
-        Get.back();
-      } else if (_model.isError(_model.SEND_RESET_INSTRUCTIONS)) {
-        SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.forgot_password_error,
-          _model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS),
-        );
-        _formKey.currentState?.reset();
-      }
     }
   }
 
