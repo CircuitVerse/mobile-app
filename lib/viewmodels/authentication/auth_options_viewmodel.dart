@@ -61,6 +61,16 @@ class AuthOptionsViewModel extends BaseModel {
   }
 
   Future githubAuth({bool isSignUp = false}) async {
+    if (EnvironmentConfig.GITHUB_OAUTH_CLIENT_ID.isEmpty ||
+        EnvironmentConfig.GITHUB_OAUTH_CLIENT_SECRET.isEmpty) {
+      setStateFor(GITHUB_OAUTH, ViewState.Error);
+      setErrorMessageFor(
+        GITHUB_OAUTH,
+        'GitHub OAuth is not configured. Please set GITHUB_OAUTH_CLIENT_ID and GITHUB_OAUTH_CLIENT_SECRET.',
+      );
+      return;
+    }
+
     OAuth2Client _client = GitHubOAuth2Client(
       redirectUri: EnvironmentConfig.GITHUB_OAUTH_REDIRECT_URI,
       customUriScheme: 'circuitverse',
