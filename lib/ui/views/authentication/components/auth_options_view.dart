@@ -37,9 +37,12 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
     if (_model.isSuccess(_model.GITHUB_OAUTH)) {
       await Get.offAllNamed(CVLandingView.id);
     } else if (_model.isError(_model.GITHUB_OAUTH)) {
-      SnackBarUtils.showDark(
-        'GitHub Authentication Error',
-        _model.errorMessageFor(_model.GITHUB_OAUTH),
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(_model.errorMessageFor(_model.GITHUB_OAUTH)),
+          backgroundColor: Colors.black.withValues(alpha: 0.8),
+        ),
       );
     }
   }
