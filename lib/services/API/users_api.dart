@@ -38,7 +38,7 @@ abstract class UsersApi {
     bool removePicture,
   );
 
-  Future<bool>? sendResetPasswordInstructions(String email);
+  Future<bool> sendResetPasswordInstructions(String email);
 }
 
 class HttpUsersApi implements UsersApi {
@@ -203,13 +203,15 @@ class HttpUsersApi implements UsersApi {
   }
 
   @override
-  Future<bool>? sendResetPasswordInstructions(String email) async {
+  Future<bool> sendResetPasswordInstructions(String email) async {
     var endpoint = '/password/forgot';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     var json = {'email': email};
     try {
-      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
-      return jsonResponse['message'] is String;
+      // var jsonResponse = await ApiUtils.post(uri, headers: headers, body: json);
+      // return jsonResponse['message'] is String;
+      await ApiUtils.post(uri, headers: headers, body: json);
+      return true;
     } on NotFoundException {
       throw Failure(Constants.USER_NOT_FOUND);
     } on FormatException {
