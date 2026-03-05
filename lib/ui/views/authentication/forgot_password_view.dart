@@ -87,6 +87,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     );
   }
 
+
   Widget _buildSendInstructionsButton() {
     return Container(
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
@@ -123,26 +124,22 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
   Future<void> _validateAndSubmit() async {
     // var _dialogService = locator<DialogService>();
-    setState(() {_serverError = null;});
+    setState(() => _serverError = null);
     if (Validators.validateAndSaveForm(_formKey)){
       FocusScope.of(context).unfocus();
-      final bool isSent =await _model.onForgotPassword(_email);
+      final bool isSent = await _model.onForgotPassword(_email);
+
       if (!mounted) return;
       if (!isSent) {
         setState(() {
-        _serverError = "This email is not registered.";
-      });
-      return;
-    }
-
-    setState(() {
-      _serverError = null;
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Reset instructions sent successfully."),
-        backgroundColor: Colors.green,
+          _serverError = _model.errorMessageFor(_model.SEND_RESET_INSTRUCTIONS);
+        });
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.forgot_password_success,),
+          backgroundColor: Colors.green,
         ),
       );
     }

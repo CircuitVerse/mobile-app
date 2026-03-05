@@ -23,7 +23,7 @@ class ForgotPasswordViewModel extends BaseModel {
         setStateFor(SEND_RESET_INSTRUCTIONS, ViewState.Error);
         setErrorMessageFor(
           SEND_RESET_INSTRUCTIONS,
-          "Instructions couldn't be sent! Tnvalid Email",
+          "Instructions couldn't be sent! Invalid Email",
         );
       }
       return isSent;
