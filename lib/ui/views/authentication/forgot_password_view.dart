@@ -124,7 +124,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
   Future<void> _validateAndSubmit() async {
     // var _dialogService = locator<DialogService>();
-    setState(() => _serverError = null);
+    setState((){ _serverError = null;});
     if (Validators.validateAndSaveForm(_formKey)){
       FocusScope.of(context).unfocus();
       final bool isSent = await _model.onForgotPassword(_email);
