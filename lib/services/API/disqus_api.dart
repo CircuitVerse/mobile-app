@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mobile_app/config/environment_config.dart';
@@ -11,6 +12,7 @@ class DisqusApiImpl implements DisqusApi {
   static const String _apiKey = EnvironmentConfig.DISQUS_API_KEY;
   static const String _forum = 'interactive-book';
   static const String _baseUrl = 'https://disqus.com/api/3.0';
+  static const Duration _timeout = Duration(seconds: 10);
 
   @override
   Future<List<IbRecommendation>> fetchRecommendations(String threadUrl) async {
@@ -20,7 +22,7 @@ class DisqusApiImpl implements DisqusApi {
         '$_baseUrl/discovery/listRecommendations.json?forum=$_forum&thread=url:$encodedUrl&limit=8&api_key=$_apiKey',
       );
 
-      final response = await http.get(url);
+      final response = await http.get(url).timeout(_timeout);
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -54,6 +56,9 @@ class DisqusApiImpl implements DisqusApi {
           }).toList();
         }
       }
+      return [];
+    } on TimeoutException catch (e) {
+      print('Timeout fetching recommendations: $e');
       return [];
     } catch (e) {
       print('Error fetching recommendations: $e');
