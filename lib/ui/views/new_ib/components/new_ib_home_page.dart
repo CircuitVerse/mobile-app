@@ -10,10 +10,7 @@ import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 class NewIbHomePage extends StatelessWidget {
   final IbChapter chapter;
 
-  const NewIbHomePage({
-    super.key,
-    required this.chapter,
-  });
+  const NewIbHomePage({super.key, required this.chapter});
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +19,13 @@ class NewIbHomePage extends StatelessWidget {
         model.fetchPageData(id: chapter.id);
       },
       builder: (context, model, child) {
-        if (!model.isSuccess(model.IB_FETCH_PAGE_DATA)) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+        // Show loading spinner while fetching
+        if (model.isBusy(model.IB_FETCH_PAGE_DATA)) {
+          return const Center(child: CircularProgressIndicator());
         }
 
-        if (model.pageData == null) {
+        // Show error message if fetch failed
+        if (model.isError(model.IB_FETCH_PAGE_DATA) || model.pageData == null) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -46,6 +43,18 @@ class NewIbHomePage extends StatelessWidget {
                     color: IbTheme.textColor(context).withAlpha(179),
                   ),
                 ),
+                if (model.isError(model.IB_FETCH_PAGE_DATA)) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    model.errorMessageFor(model.IB_FETCH_PAGE_DATA) ??
+                        'Unknown error',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: IbTheme.textColor(context).withAlpha(128),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ],
             ),
           );
@@ -216,9 +225,7 @@ class NewIbHomePage extends StatelessWidget {
           decoration: BoxDecoration(
             color: IbTheme.textColor(context).withAlpha(13),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: IbTheme.textColor(context).withAlpha(26),
-            ),
+            border: Border.all(color: IbTheme.textColor(context).withAlpha(26)),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
