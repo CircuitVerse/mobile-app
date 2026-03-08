@@ -34,9 +34,7 @@ class _BinarySimulatorWidgetState extends State<BinarySimulatorWidget> {
       margin: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: IbTheme.textColor(context).withAlpha(51),
-        ),
+        border: Border.all(color: IbTheme.textColor(context).withAlpha(51)),
       ),
       child: Column(
         children: [
@@ -44,7 +42,9 @@ class _BinarySimulatorWidgetState extends State<BinarySimulatorWidget> {
           Row(
             children: [
               _buildSideLabel(context, 'Binary'),
-              ..._bitValues.map((value) => _buildColumnHeader(context, value.toString())),
+              ..._bitValues.map(
+                (value) => _buildColumnHeader(context, value.toString()),
+              ),
               _buildColumnHeader(context, 'Decimal', isResult: true),
             ],
           ),
@@ -52,8 +52,7 @@ class _BinarySimulatorWidgetState extends State<BinarySimulatorWidget> {
           Row(
             children: [
               _buildSideLabel(context, ''),
-              for (int i = 0; i < 8; i++)
-                _buildBitCell(context, i),
+              for (int i = 0; i < 8; i++) _buildBitCell(context, i),
               _buildResultCell(context),
             ],
           ),
@@ -67,11 +66,9 @@ class _BinarySimulatorWidgetState extends State<BinarySimulatorWidget> {
       width: 50,
       height: 80,
       decoration: BoxDecoration(
-        color: const Color(0xFF302d36),
+        color: IbTheme.boxBg(context),
         border: Border(
-          right: BorderSide(
-            color: IbTheme.textColor(context).withAlpha(51),
-          ),
+          right: BorderSide(color: IbTheme.textColor(context).withAlpha(51)),
         ),
       ),
       child: Center(
@@ -79,8 +76,8 @@ class _BinarySimulatorWidgetState extends State<BinarySimulatorWidget> {
           quarterTurns: 3,
           child: Text(
             text,
-            style: const TextStyle(
-              color: Color(0xFF00e8b3),
+            style: TextStyle(
+              color: IbTheme.getPrimaryColor(context),
               fontSize: 14,
               fontWeight: FontWeight.w600,
             ),
@@ -90,24 +87,26 @@ class _BinarySimulatorWidgetState extends State<BinarySimulatorWidget> {
     );
   }
 
-  Widget _buildColumnHeader(BuildContext context, String value, {bool isResult = false}) {
+  Widget _buildColumnHeader(
+    BuildContext context,
+    String value, {
+    bool isResult = false,
+  }) {
     return Expanded(
       flex: isResult ? 2 : 1,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
-          color: const Color(0xFF302d36),
+          color: IbTheme.boxBg(context),
           border: Border(
-            right: BorderSide(
-              color: IbTheme.textColor(context).withAlpha(51),
-            ),
+            right: BorderSide(color: IbTheme.textColor(context).withAlpha(51)),
           ),
         ),
         child: Text(
           value,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Color(0xFF00e8b3),
+          style: TextStyle(
+            color: IbTheme.getPrimaryColor(context),
             fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
@@ -123,7 +122,10 @@ class _BinarySimulatorWidgetState extends State<BinarySimulatorWidget> {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 16),
           decoration: BoxDecoration(
-            color: const Color(0xFFf1f1f1),
+            color:
+                Theme.of(context).brightness == Brightness.dark
+                    ? IbTheme.textColor(context).withAlpha(26)
+                    : const Color(0xFFf1f1f1),
             border: Border(
               right: BorderSide(
                 color: IbTheme.textColor(context).withAlpha(51),
@@ -133,8 +135,8 @@ class _BinarySimulatorWidgetState extends State<BinarySimulatorWidget> {
           child: Text(
             _bits[index] ? '1' : '0',
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Color(0xFF111111),
+            style: TextStyle(
+              color: IbTheme.textColor(context),
               fontSize: 24,
               fontWeight: FontWeight.w600,
             ),
@@ -149,14 +151,17 @@ class _BinarySimulatorWidgetState extends State<BinarySimulatorWidget> {
       flex: 2,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
-        decoration: const BoxDecoration(
-          color: Color(0xFF5AEF9E),
+        decoration: BoxDecoration(
+          color: IbTheme.getPrimaryColor(context).withAlpha(128),
         ),
         child: Text(
           _decimalValue.toString(),
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Color(0xFF111111),
+          style: TextStyle(
+            color:
+                Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : const Color(0xFF111111),
             fontSize: 24,
             fontWeight: FontWeight.w600,
           ),
