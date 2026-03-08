@@ -1187,6 +1187,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get cv_interactive_book => 'इंटरएक्टिव बुक';
 
   @override
+  String get cv_new_interactive_book => 'नई इंटरएक्टिव बुक';
+
+  @override
   String get cv_about => 'सर्किटवर्स के बारे में';
 
   @override

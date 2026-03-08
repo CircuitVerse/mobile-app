@@ -15,7 +15,6 @@ import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';
 
-
 class CVDrawer extends StatelessWidget {
   const CVDrawer({super.key});
 
@@ -139,7 +138,7 @@ class CVDrawer extends StatelessWidget {
               InkWell(
                 onTap: () => Get.toNamed(NewInteractiveBookView.id),
                 child: CVDrawerTile(
-                  title: 'New Interactive Book',
+                  title: AppLocalizations.of(context)!.cv_new_interactive_book,
                   iconData: Icons.auto_stories,
                 ),
               ),
