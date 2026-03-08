@@ -27,23 +27,27 @@ class NewIbDrawer extends StatelessWidget {
 
     for (var chapter in model.chapters) {
       if (chapter.items != null && chapter.items!.isNotEmpty) {
-        widgets.add(NewIbExpandableChapterTile(
-          chapter: chapter,
-          selectedChapter: selectedChapter,
-          onChapterSelected: (chapter) {
-            onChapterSelected(chapter);
-            Get.back();
-          },
-        ));
+        widgets.add(
+          NewIbExpandableChapterTile(
+            chapter: chapter,
+            selectedChapter: selectedChapter,
+            onChapterSelected: (chapter) {
+              onChapterSelected(chapter);
+              Get.back();
+            },
+          ),
+        );
       } else {
-        widgets.add(NewIbSimpleChapterTile(
-          chapter: chapter,
-          selectedChapter: selectedChapter,
-          onTap: () {
-            onChapterSelected(chapter);
-            Get.back();
-          },
-        ));
+        widgets.add(
+          NewIbSimpleChapterTile(
+            chapter: chapter,
+            selectedChapter: selectedChapter,
+            onTap: () {
+              onChapterSelected(chapter);
+              Get.back();
+            },
+          ),
+        );
       }
     }
 
@@ -80,8 +84,10 @@ class NewIbDrawer extends StatelessWidget {
                     selectedChapter: selectedChapter,
                     isReturnHome: true,
                     onTap: () {
-                      Get.back();
-                      Get.back();
+                      Get.back(); // Close drawer
+                      if (Get.canPop()) {
+                        Get.back(); // Navigate back if possible
+                      }
                     },
                   ),
                   NewIbDrawerTile(
@@ -97,7 +103,7 @@ class NewIbDrawer extends StatelessWidget {
                   ),
                   const Divider(height: 24, indent: 16, endIndent: 16),
                   const NewIbDrawerSection(title: 'Chapters'),
-                  if (!model.isSuccess(model.IB_FETCH_CHAPTERS))
+                  if (model.isBusy(model.IB_FETCH_CHAPTERS))
                     const Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Row(
@@ -109,6 +115,30 @@ class NewIbDrawer extends StatelessWidget {
                           ),
                           SizedBox(width: 12),
                           Text('Loading chapters...'),
+                        ],
+                      ),
+                    )
+                  else if (model.isError(model.IB_FETCH_CHAPTERS))
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.error_outline_rounded,
+                            size: 20,
+                            color: IbTheme.textColor(context).withAlpha(128),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'Failed to load chapters',
+                              style: TextStyle(
+                                color: IbTheme.textColor(
+                                  context,
+                                ).withAlpha(179),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     )
