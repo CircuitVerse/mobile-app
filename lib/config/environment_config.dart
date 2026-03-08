@@ -26,5 +26,8 @@ class EnvironmentConfig {
     defaultValue: 'circuitverse://auth/callback/github',
   );
 
+  // DISQUS API ENV VARIABLES
+  static const String DISQUS_API_KEY = String.fromEnvironment('DISQUS_API_KEY');
+
   static String CV_BASE_URL = CV_API_BASE_URL.replaceAll('/api/v1', '');
 }
