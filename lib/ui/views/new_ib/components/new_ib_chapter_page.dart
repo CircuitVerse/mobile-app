@@ -146,8 +146,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
                 if (model.isError(model.IB_FETCH_PAGE_DATA)) ...[
                   const SizedBox(height: 8),
                   Text(
-                    model.errorMessageFor(model.IB_FETCH_PAGE_DATA) ??
-                        'Unknown error',
+                    model.errorMessageFor(model.IB_FETCH_PAGE_DATA) ?? '',
                     style: TextStyle(
                       fontSize: 14,
                       color: IbTheme.textColor(context).withAlpha(128),
