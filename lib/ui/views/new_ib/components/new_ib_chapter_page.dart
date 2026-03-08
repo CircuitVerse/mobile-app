@@ -118,11 +118,13 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
         model.fetchPageData(id: widget.chapter.id);
       },
       builder: (context, model, child) {
-        if (!model.isSuccess(model.IB_FETCH_PAGE_DATA)) {
+        // Show loading spinner while fetching
+        if (model.isBusy(model.IB_FETCH_PAGE_DATA)) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (model.pageData == null) {
+        // Show error message if fetch failed
+        if (model.isError(model.IB_FETCH_PAGE_DATA) || model.pageData == null) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -140,6 +142,18 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
                     color: IbTheme.textColor(context).withAlpha(179),
                   ),
                 ),
+                if (model.isError(model.IB_FETCH_PAGE_DATA)) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    model.errorMessageFor(model.IB_FETCH_PAGE_DATA) ??
+                        'Unknown error',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: IbTheme.textColor(context).withAlpha(128),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ],
             ),
           );
@@ -916,37 +930,40 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
       bottom: 16,
       left: 16,
       right: 16,
-      child: AnimatedOpacity(
-        duration: const Duration(milliseconds: 300),
-        opacity: _showFloatingButtons ? 1.0 : 0.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            if (widget.chapter.prev != null)
-              FloatingActionButton(
-                heroTag: 'prev_button',
-                onPressed: () => widget.onNavigate(widget.chapter.prev),
-                backgroundColor: IbTheme.getPrimaryColor(context),
-                child: const Icon(
-                  Icons.arrow_back_rounded,
-                  color: Colors.white,
-                ),
-              )
-            else
-              const SizedBox(width: 56),
-            if (widget.chapter.next != null)
-              FloatingActionButton(
-                heroTag: 'next_button',
-                onPressed: () => widget.onNavigate(widget.chapter.next),
-                backgroundColor: IbTheme.getPrimaryColor(context),
-                child: const Icon(
-                  Icons.arrow_forward_rounded,
-                  color: Colors.white,
-                ),
-              )
-            else
-              const SizedBox(width: 56),
-          ],
+      child: IgnorePointer(
+        ignoring: !_showFloatingButtons,
+        child: AnimatedOpacity(
+          duration: const Duration(milliseconds: 300),
+          opacity: _showFloatingButtons ? 1.0 : 0.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (widget.chapter.prev != null)
+                FloatingActionButton(
+                  heroTag: 'prev_button',
+                  onPressed: () => widget.onNavigate(widget.chapter.prev),
+                  backgroundColor: IbTheme.getPrimaryColor(context),
+                  child: const Icon(
+                    Icons.arrow_back_rounded,
+                    color: Colors.white,
+                  ),
+                )
+              else
+                const SizedBox(width: 56),
+              if (widget.chapter.next != null)
+                FloatingActionButton(
+                  heroTag: 'next_button',
+                  onPressed: () => widget.onNavigate(widget.chapter.next),
+                  backgroundColor: IbTheme.getPrimaryColor(context),
+                  child: const Icon(
+                    Icons.arrow_forward_rounded,
+                    color: Colors.white,
+                  ),
+                )
+              else
+                const SizedBox(width: 56),
+            ],
+          ),
         ),
       ),
     );
