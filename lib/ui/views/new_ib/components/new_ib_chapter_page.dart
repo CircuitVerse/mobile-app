@@ -8,6 +8,7 @@ import 'package:mobile_app/models/ib/ib_recommendation.dart';
 import 'package:mobile_app/services/API/disqus_api.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/new_ib/components/new_ib_markdown_parser.dart';
+import 'package:mobile_app/ui/views/new_ib/components/structured_content_renderer.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 
 class NewIbChapterPage extends StatefulWidget {
@@ -253,10 +254,22 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
         if (pageData.content != null && pageData.content!.isNotEmpty)
           ...pageData.content!.map((content) {
             if (content is IbMd) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: NewIbMarkdownParser.parse(context, content.content),
-              );
+              // Check if we have structured content from the raw page data
+              final rawPageData = pageData.rawPageData;
+              if (rawPageData?.structuredContent != null &&
+                  rawPageData!.structuredContent!.isNotEmpty) {
+                // Use structured content renderer
+                return StructuredContentRenderer(
+                  content: rawPageData.structuredContent!,
+                  headingKeys: NewIbMarkdownParser.headingKeys,
+                );
+              } else {
+                // Fallback to markdown parser
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: NewIbMarkdownParser.parse(context, content.content),
+                );
+              }
             }
             return const SizedBox.shrink();
           }),

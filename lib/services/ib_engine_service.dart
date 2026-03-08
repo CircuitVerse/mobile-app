@@ -265,6 +265,7 @@ class IbEngineServiceImpl implements IbEngineService {
           _ibRawPageData.hasChildren
               ? _getChapterOfContents(_ibRawPageData.content!)
               : [],
+      rawPageData: _ibRawPageData,
     );
   }
 

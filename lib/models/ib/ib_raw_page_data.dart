@@ -1,26 +1,44 @@
 import 'package:hive/hive.dart';
+import 'package:mobile_app/models/ib/ib_structured_content.dart';
 
 part 'ib_raw_page_data.g.dart';
 
 @HiveType(typeId: 0)
 class IbRawPageData {
-  factory IbRawPageData.fromJson(Map<String, dynamic> json) => IbRawPageData(
-    id: json['path'] ?? json['relative_path'],
-    name: json['name'],
-    title: json['title'],
-    content: json['content'],
-    rawContent: json['raw_content'],
-    navOrder: json['nav_order'].toString(),
-    cvibLevel: json['cvib_level'],
-    parent: json['parent'],
-    hasChildren: json['has_children'] ?? false,
-    hasToc: json['has_toc'] ?? (json['name'] == 'index.md' ? false : true),
-    disableComments:
-        json['disable_comments'] ?? (json['name'] == 'index.md' ? true : false),
-    frontMatter: json['front_matter'] ?? {},
-    httpUrl: json['http_url'],
-    apiUrl: json['api_url'],
-  );
+  factory IbRawPageData.fromJson(Map<String, dynamic> json) {
+    List<IbStructuredContent>? structuredContent;
+    if (json['structured_content'] != null) {
+      try {
+        final contentList = json['structured_content'] as List<dynamic>;
+        structuredContent =
+            contentList
+                .map((item) => IbStructuredContent.fromJson(item))
+                .toList();
+      } catch (e) {
+        print('Error parsing structured content: $e');
+      }
+    }
+
+    return IbRawPageData(
+      id: json['path'] ?? json['relative_path'],
+      name: json['name'],
+      title: json['title'],
+      content: json['content'],
+      rawContent: json['raw_content'],
+      structuredContent: structuredContent,
+      navOrder: json['nav_order'].toString(),
+      cvibLevel: json['cvib_level'],
+      parent: json['parent'],
+      hasChildren: json['has_children'] ?? false,
+      hasToc: json['has_toc'] ?? (json['name'] == 'index.md' ? false : true),
+      disableComments:
+          json['disable_comments'] ??
+          (json['name'] == 'index.md' ? true : false),
+      frontMatter: json['front_matter'] ?? {},
+      httpUrl: json['http_url'],
+      apiUrl: json['api_url'],
+    );
+  }
 
   IbRawPageData({
     required this.id,
@@ -28,6 +46,7 @@ class IbRawPageData {
     this.name,
     this.content,
     required this.rawContent,
+    this.structuredContent,
     this.navOrder,
     this.cvibLevel,
     this.parent,
@@ -53,6 +72,9 @@ class IbRawPageData {
 
   @HiveField(4)
   String rawContent;
+
+  @HiveField(14)
+  List<IbStructuredContent>? structuredContent;
 
   @HiveField(5)
   String? navOrder;

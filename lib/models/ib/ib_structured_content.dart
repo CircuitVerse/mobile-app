@@ -13,6 +13,8 @@ abstract class IbStructuredContent {
         return IbParagraphContent.fromJson(json);
       case 'list':
         return IbListContent.fromJson(json);
+      case 'list_item':
+        return IbListItemBlockContent.fromJson(json);
       case 'code_block':
         return IbCodeBlockContent.fromJson(json);
       case 'blockquote':
@@ -265,4 +267,21 @@ class IbBinarySimulatorContent extends IbStructuredContent {
 
 class IbHorizontalRuleContent extends IbStructuredContent {
   IbHorizontalRuleContent() : super(type: 'horizontal_rule');
+}
+
+// List item as a block (for API compatibility)
+class IbListItemBlockContent extends IbStructuredContent {
+  IbListItemBlockContent({required this.ordered, required this.content})
+    : super(type: 'list_item');
+  final bool ordered;
+  final List<IbInlineContent> content;
+
+  factory IbListItemBlockContent.fromJson(Map<String, dynamic> json) {
+    final contentList = json['content'] as List<dynamic>? ?? [];
+    return IbListItemBlockContent(
+      ordered: json['ordered'] ?? false,
+      content:
+          contentList.map((item) => IbInlineContent.fromJson(item)).toList(),
+    );
+  }
 }
