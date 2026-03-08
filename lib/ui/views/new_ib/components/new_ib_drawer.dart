@@ -85,7 +85,7 @@ class NewIbDrawer extends StatelessWidget {
                     isReturnHome: true,
                     onTap: () {
                       Get.back(); // Close drawer
-                      if (Get.canPop()) {
+                      if (Get.key.currentState?.canPop() ?? false) {
                         Get.back(); // Navigate back if possible
                       }
                     },
