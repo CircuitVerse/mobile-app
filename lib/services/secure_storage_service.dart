@@ -7,6 +7,8 @@ class SecureStorageService {
   static SecureStorageService? _instance;
   static FlutterSecureStorage? _secureStorage;
 
+  SecureStorageService._();
+
   static const String _tokenKey = 'auth_token';
   static const String _userKey = 'current_user';
 
@@ -18,11 +20,16 @@ class SecureStorageService {
     _secureStorage ??= const FlutterSecureStorage(
       iOptions: _iosOptions,
     );
-    return _instance ??= SecureStorageService();
+    return _instance ??= SecureStorageService._();
   }
 
   Future<String?> get token async {
-    return await _secureStorage!.read(key: _tokenKey);
+    try {
+      return await _secureStorage!.read(key: _tokenKey);
+    } catch (_) {
+      await _secureStorage!.delete(key: _tokenKey);
+      return null;
+    }
   }
 
   Future<void> setToken(String? token) async {
@@ -34,11 +41,16 @@ class SecureStorageService {
   }
 
   Future<User?> get currentUser async {
-    final userJson = await _secureStorage!.read(key: _userKey);
-    if (userJson == null || userJson == 'null') {
+    try {
+      final userJson = await _secureStorage!.read(key: _userKey);
+      if (userJson == null || userJson == 'null') {
+        return null;
+      }
+      return User.fromJson(json.decode(userJson));
+    } catch (_) {
+      await _secureStorage!.delete(key: _userKey);
       return null;
     }
-    return User.fromJson(json.decode(userJson));
   }
 
   Future<void> setCurrentUser(User? user) async {
@@ -50,6 +62,7 @@ class SecureStorageService {
   }
 
   Future<void> deleteAll() async {
-    await _secureStorage!.deleteAll();
+    await _secureStorage!.delete(key: _tokenKey);
+    await _secureStorage!.delete(key: _userKey);
   }
 }
