@@ -112,6 +112,7 @@ class _IbPageViewState extends State<IbPageView> {
         return _scrollToWidget(href.split('#').last);
       } else {
         launchURL(href);
+        return;
       }
     }
 
@@ -445,14 +446,14 @@ class _IbPageViewState extends State<IbPageView> {
                   const Icon(Icons.error_outline, size: 48, color: Colors.red),
                   const SizedBox(height: 16),
                   Text(
-                    'Failed to load page',
+                    AppLocalizations.of(context)!.ib_page_failed_to_load,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 8),
                   TextButton(
                     onPressed: () =>
                         _model.fetchPageData(id: widget.chapter.id),
-                    child: const Text('Retry'),
+                    child: Text(AppLocalizations.of(context)!.ib_page_retry),
                   ),
                 ],
               ),

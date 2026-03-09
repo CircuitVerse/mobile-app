@@ -19,7 +19,7 @@ class IbEmbedSyntax extends md.BlockSyntax {
       final line = parser.current.content;
       buffer.write('\n$line');
       parser.advance();
-      if (line.contains('</iframe>')) break;
+      if (RegExp(r'</iframe>', caseSensitive: false).hasMatch(line)) break;
     }
 
     return md.Element.text('iframe', buffer.toString());

@@ -342,7 +342,7 @@ class IbEngineServiceImpl implements IbEngineService {
 
     // Replace local URLs with absolute
     result = result.replaceAll(
-      RegExp(r'(\.\.(\/\.\.)?)?(?<!org)\/assets'),
+      RegExp(r'(\.\.(\/\.\.)?)?(?<![a-zA-Z0-9])\/assets'),
       '${EnvironmentConfig.IB_BASE_URL}/assets',
     );
 
@@ -355,8 +355,10 @@ class IbEngineServiceImpl implements IbEngineService {
       '#too_small { display: none !important; }',
     );
 
-    result =
-        '<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body>$result</body></html>';
+    if (!RegExp(r'<\s*html[\s>]', caseSensitive: false).hasMatch(result)) {
+      result =
+          '<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body>$result</body></html>';
+    }
 
     return result;
   }

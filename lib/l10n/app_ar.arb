@@ -302,6 +302,8 @@
   "ib_page_loading_image": "جاري تحميل الصورة...",
   "ib_page_image_load_error": "فشل تحميل الصورة",
   "ib_page_no_image_source": "لم يتم توفير مصدر للصورة",
+  "ib_page_failed_to_load": "فشل تحميل الصفحة",
+  "ib_page_retry": "إعادة المحاولة",
 
   "@notifications_view": {},
   "notifications_no_notifications": "لا توجد إشعارات حتى الآن",

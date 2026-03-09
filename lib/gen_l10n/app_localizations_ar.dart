@@ -845,6 +845,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ib_page_no_image_source => 'لم يتم توفير مصدر للصورة';
 
   @override
+  String get ib_page_failed_to_load => 'فشل تحميل الصفحة';
+
+  @override
+  String get ib_page_retry => 'إعادة المحاولة';
+
+  @override
   String get notifications_no_notifications => 'لا توجد إشعارات حتى الآن';
 
   @override

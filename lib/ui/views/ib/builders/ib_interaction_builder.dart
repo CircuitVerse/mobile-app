@@ -54,25 +54,25 @@ class _IbInteractionWidgetState extends State<_IbInteractionWidget> {
     _webController =
         WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..setNavigationDelegate(
+            NavigationDelegate(
+              onPageFinished: (String url) async {
+                if (!mounted) return;
+                try {
+                  final result = await _webController!
+                      .runJavaScriptReturningResult(
+                        'document.documentElement.scrollHeight;',
+                      );
+                  if (!mounted) return;
+                  final height = double.tryParse(result.toString()) ?? 400;
+                  _streamController?.add(height);
+                } catch (_) {
+                  if (mounted) _streamController?.add(400);
+                }
+              },
+            ),
+          )
           ..loadHtmlString(htmlContent);
-
-    _webController!.setNavigationDelegate(
-      NavigationDelegate(
-        onPageFinished: (String url) async {
-          if (!mounted) return;
-          try {
-            final result = await _webController!.runJavaScriptReturningResult(
-              'document.documentElement.scrollHeight;',
-            );
-            if (!mounted) return;
-            final height = double.tryParse(result.toString()) ?? 400;
-            _streamController?.add(height);
-          } catch (_) {
-            if (mounted) _streamController?.add(400);
-          }
-        },
-      ),
-    );
   }
 
   @override
@@ -117,9 +117,21 @@ class _IbInteractionWidgetState extends State<_IbInteractionWidget> {
     return FutureBuilder<dynamic>(
       future: _future,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.data is Failure) {
-          return const Text('Error Loading Interaction');
-        } else if (!snapshot.hasData) {
+        if (snapshot.hasError ||
+            snapshot.data is Failure ||
+            (snapshot.connectionState == ConnectionState.done &&
+                !snapshot.hasData)) {
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('Error Loading Interaction'),
+              TextButton(
+                onPressed: _loadInteraction,
+                child: const Text('Retry'),
+              ),
+            ],
+          );
+        } else if (snapshot.connectionState != ConnectionState.done) {
           return const Center(child: CircularProgressIndicator());
         }
 
