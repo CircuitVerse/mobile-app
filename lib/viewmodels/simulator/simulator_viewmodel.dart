@@ -31,11 +31,15 @@ class SimulatorViewModel extends BaseModel {
     'com.example.mobile_app/media_store',
   );
 
-  // Project to edit
+
   Project? _projectToEdit;
+  bool _viewOnly = false;
 
   String get url {
     if (_projectToEdit != null) {
+      if (_viewOnly) {
+        return '${EnvironmentConfig.CV_BASE_URL}/simulator/embed/${_projectToEdit!.id}';
+      }
       return '${EnvironmentConfig.CV_BASE_URL}/simulator/edit/${_projectToEdit!.id}';
     }
     return '${EnvironmentConfig.CV_BASE_URL}/simulator';
@@ -324,7 +328,8 @@ class SimulatorViewModel extends BaseModel {
     return false;
   }
 
-  void onModelReady([Project? project]) {
+  void onModelReady({Project? project, bool viewOnly = false}) {
+    _viewOnly = viewOnly;
     if (project != null) {
       setProjectToEdit(project);
     }
@@ -337,6 +342,7 @@ class SimulatorViewModel extends BaseModel {
 
   void onModelDestroy() {
     _projectToEdit = null;
+    _viewOnly = false;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,

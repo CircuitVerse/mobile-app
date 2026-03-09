@@ -21,13 +21,21 @@ class _SimulatorViewState extends State<SimulatorView> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the project argument if passed
-    final Project? project = Get.arguments as Project?;
+    Project? project;
+    bool viewOnly = false;
+    if (Get.arguments is Map) {
+      final args = Get.arguments as Map;
+      project = args['project'] as Project?;
+      viewOnly = args['viewOnly'] as bool? ?? false;
+    } else if (Get.arguments is Project) {
+      project = Get.arguments as Project;
+    }
 
     return Scaffold(
       body: SafeArea(
         child: BaseView<SimulatorViewModel>(
-          onModelReady: (model) => model.onModelReady(project),
+          onModelReady: (model) =>
+              model.onModelReady(project: project, viewOnly: viewOnly),
           onModelDestroy: (model) => model.onModelDestroy(),
           builder: (context, model, child) {
             return PopScope(

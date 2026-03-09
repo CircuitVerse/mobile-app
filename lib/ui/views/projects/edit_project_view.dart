@@ -225,7 +225,7 @@ class _EditProjectViewState extends State<EditProjectView> {
     try {
       final result = await Get.toNamed(
         SimulatorView.id,
-        arguments: widget.project,
+        arguments: {'project': widget.project, 'viewOnly': false},
       );
 
       if (result != null) {
