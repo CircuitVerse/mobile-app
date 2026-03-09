@@ -1,16 +1,16 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mobile_app/enums/auth_type.dart';
 import 'package:mobile_app/models/user.dart';
+import 'package:mobile_app/services/secure_storage_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
   static LocalStorageService? _instance;
   static SharedPreferences? _preferences;
+  static SecureStorageService? _secureStorage;
 
-  static const String USER = 'logged_in_user';
-  static const String TOKEN = 'token';
   static const String IS_LOGGED_IN = 'is_logged_in';
   static const String IS_FIRST_TIME_LOGIN = 'is_first_time_login';
   static const String AUTH_TYPE = 'auth_type';
@@ -18,19 +18,16 @@ class LocalStorageService {
 
   static Future<LocalStorageService> getInstance() async {
     _preferences ??= await SharedPreferences.getInstance();
+    _secureStorage ??= await SecureStorageService.getInstance();
 
     return _instance ??= LocalStorageService();
   }
 
   dynamic _getFromDisk(String key) {
-    var value = _preferences!.get(key);
-    debugPrint('LocalStorageService:_getFromDisk. key: $key value: $value');
-    return value;
+    return _preferences!.get(key);
   }
 
   void _saveToDisk<T>(String key, T content) {
-    debugPrint('LocalStorageService:_saveToDisk. key: $key value: $content');
-
     if (content is String) {
       _preferences!.setString(key, content);
     }
@@ -48,10 +45,25 @@ class LocalStorageService {
     }
   }
 
-  String? get token => _getFromDisk(TOKEN);
+  bool _initialized = false;
+  String? _cachedToken;
+  User? _cachedUser;
+
+  Future<String?> getToken() async {
+    _cachedToken ??= await _secureStorage!.token;
+    return _cachedToken;
+  }
+
+  String? get token {
+    assert(_initialized, 'LocalStorageService.token accessed before initializeSecureData() was called.');
+    return _cachedToken;
+  }
 
   set token(String? _token) {
-    _saveToDisk(TOKEN, _token);
+    _cachedToken = _token;
+    _secureStorage!.setToken(_token).catchError((e) {
+      debugPrint('Failed to persist token to secure storage: $e');
+    });
   }
 
   bool get isLoggedIn => _getFromDisk(IS_LOGGED_IN) ?? false;
@@ -66,17 +78,21 @@ class LocalStorageService {
     _saveToDisk(IS_FIRST_TIME_LOGIN, isLoggedIn);
   }
 
-  User? get currentUser {
-    var userJson = _getFromDisk(USER);
-    if (userJson == null || userJson == 'null') {
-      return null;
-    }
+  Future<User?> getCurrentUser() async {
+    _cachedUser ??= await _secureStorage!.currentUser;
+    return _cachedUser;
+  }
 
-    return User.fromJson(json.decode(userJson));
+  User? get currentUser {
+    assert(_initialized, 'LocalStorageService.currentUser accessed before initializeSecureData() was called.');
+    return _cachedUser;
   }
 
   set currentUser(User? userToSave) {
-    _saveToDisk(USER, json.encode(userToSave?.toJson()));
+    _cachedUser = userToSave;
+    _secureStorage!.setCurrentUser(userToSave).catchError((e) {
+      debugPrint('Failed to persist currentUser to secure storage: $e');
+    });
   }
 
   AuthType? get authType {
@@ -99,5 +115,25 @@ class LocalStorageService {
 
   set setShowcaseState(String state) {
     _saveToDisk(IB_SHOWCASE_STATE, state);
+  }
+
+  Future<void> initializeSecureData() async {
+    _cachedToken = await _secureStorage!.token;
+    _cachedUser = await _secureStorage!.currentUser;
+    final hasToken = _cachedToken?.isNotEmpty == true;
+    final hasUser = _cachedUser != null;
+    if (hasToken != hasUser) {
+      await _secureStorage!.deleteAll();
+      _cachedToken = null;
+      _cachedUser = null;
+      isLoggedIn = false;
+    }
+    _initialized = true;
+  }
+
+  Future<void> clearSecureData() async {
+    _cachedToken = null;
+    _cachedUser = null;
+    await _secureStorage!.deleteAll();
   }
 }

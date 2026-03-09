@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/constants.dart';
@@ -39,6 +41,8 @@ abstract class UsersApi {
   );
 
   Future<bool>? sendResetPasswordInstructions(String email);
+
+  Future<void> logout();
 }
 
 class HttpUsersApi implements UsersApi {
@@ -216,6 +220,18 @@ class HttpUsersApi implements UsersApi {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on Exception {
       throw Failure(Constants.GENERIC_FAILURE);
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    var endpoint = '/auth/logout';
+    var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
+    try {
+      ApiUtils.addTokenToHeaders(headers);
+      await ApiUtils.delete(uri, headers: headers);
+    } catch (e) {
+      debugPrint('Token revocation failed: $e');
     }
   }
 }

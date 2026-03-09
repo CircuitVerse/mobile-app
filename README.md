@@ -44,7 +44,7 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 
 `flutter run`
 
-### Android OAuth Config
+### OAuth Configuration
 
 This project uses Flutter 3.32.2 and hence the support for compile-time variables. To use compile-time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
 
@@ -81,6 +81,7 @@ mobile-app/lib/
 |   ├── API/                        # API implementations
 |   └── dialog_service.dart         # handles dialog
 |   └── local_storage_service.dart  # handles local storage (shared prefs)
+|   └── secure_storage_service.dart # handles encrypted storage (auth tokens, user data)
 ├── ui/                             # UI layer
 |  ├── views/                       # views
 |  |  └── base_view.dart

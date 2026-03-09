@@ -23,13 +23,24 @@ class AuthOptionsViewModel extends BaseModel {
     var _googleSignIn = GoogleSignIn(scopes: ['email']);
 
     try {
-      await _googleSignIn.signIn();
-      var _googleSignInAuthentication =
-          await _googleSignIn.currentUser!.authentication;
+      final account = await _googleSignIn.signIn();
+
+      if (account == null) {
+        setStateFor(GOOGLE_OAUTH, ViewState.Error);
+        setErrorMessageFor(GOOGLE_OAUTH, 'Sign in cancelled');
+        return;
+      }
+
+      var _googleSignInAuthentication = await account.authentication;
 
       setStateFor(GOOGLE_OAUTH, ViewState.Busy);
 
-      // save token & current user to local storage..
+      if (_googleSignInAuthentication.accessToken == null) {
+        setStateFor(GOOGLE_OAUTH, ViewState.Error);
+        setErrorMessageFor(GOOGLE_OAUTH, 'Failed to get access token');
+        return;
+      }
+
       if (isSignUp) {
         _storage.token = await _userApi.oauthSignup(
           accessToken: _googleSignInAuthentication.accessToken!,
@@ -44,10 +55,7 @@ class AuthOptionsViewModel extends BaseModel {
 
       _storage.currentUser = await _userApi.fetchCurrentUser();
 
-      // update authentication status..
       _storage.isLoggedIn = true;
-
-      // save authentication type to local storage..
       _storage.authType = AuthType.GOOGLE;
 
       setStateFor(GOOGLE_OAUTH, ViewState.Success);
