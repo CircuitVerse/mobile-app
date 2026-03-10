@@ -1678,6 +1678,18 @@ abstract class AppLocalizations {
   /// **'No image source provided'**
   String get ib_page_no_image_source;
 
+  /// No description provided for @ib_page_failed_to_load.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load page'**
+  String get ib_page_failed_to_load;
+
+  /// No description provided for @ib_page_retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get ib_page_retry;
+
   /// No description provided for @notifications_no_notifications.
   ///
   /// In en, this message translates to:

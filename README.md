@@ -123,6 +123,13 @@ mobile-app/lib/
 
 - View/Edit Profile
 
+### Interactive Book
+
+- Browse chapters and navigate pages with previous/next buttons.
+- Double-tap the left half of the screen to go to the previous page.
+- Double-tap the right half of the screen to go to the next page.
+- Tap to load embedded circuit interactions inline.
+
 ### Multi-language Support
 
 - English

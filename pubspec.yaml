@@ -29,7 +29,7 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
   flutter_localizations:
     sdk: flutter
-  flutter_markdown: ^0.7.7+1
+  flutter_markdown_plus: ^1.0.7
   flutter_math_fork: ^0.7.3
   flutter_svg: ^2.2.3
   flutter_typeahead: ^5.2.0
@@ -51,7 +51,7 @@ dependencies:
   provider: ^6.1.5
   scroll_to_index: ^3.0.1
   share_plus: ^11.1.0
-  shared_preferences: ^2.5.4
+  shared_preferences: 2.5.3
   showcaseview: ^4.0.1
   simple_chips_input: ^1.2.2
   theme_provider: ^0.6.0
@@ -77,8 +77,6 @@ dev_dependencies:
 dependency_overrides:
   mime: ^1.0.1
   plugin_platform_interface: ^2.1.2
-  markdown:
-    git: https://github.com/dart-lang/markdown.git
 
 flutter_icons:
   android: "launcher_icon"

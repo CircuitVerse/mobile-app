@@ -301,6 +301,8 @@
   "ib_page_loading_image": "Loading image...",
   "ib_page_image_load_error": "Failed to load image",
   "ib_page_no_image_source": "No image source provided",
+  "ib_page_failed_to_load": "Failed to load page",
+  "ib_page_retry": "Retry",
 
   "@notifications_view": {},
   "notifications_no_notifications": "No notifications yet",

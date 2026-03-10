@@ -854,6 +854,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ib_page_no_image_source => 'No image source provided';
 
   @override
+  String get ib_page_failed_to_load => 'Failed to load page';
+
+  @override
+  String get ib_page_retry => 'Retry';
+
+  @override
   String get notifications_no_notifications => 'No notifications yet';
 
   @override

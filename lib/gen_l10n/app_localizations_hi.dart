@@ -858,6 +858,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get ib_page_no_image_source => 'कोई छवि स्रोत प्रदान नहीं किया गया';
 
   @override
+  String get ib_page_failed_to_load => 'पृष्ठ लोड करने में विफल';
+
+  @override
+  String get ib_page_retry => 'पुनः प्रयास करें';
+
+  @override
   String get notifications_no_notifications => 'अभी तक कोई सूचनाएं नहीं हैं';
 
   @override

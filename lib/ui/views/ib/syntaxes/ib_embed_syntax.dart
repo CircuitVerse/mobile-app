@@ -5,12 +5,29 @@ class IbEmbedSyntax extends md.BlockSyntax {
 
   @override
   md.Node parse(md.BlockParser parser) {
-    var text = parser.current;
+    final firstLine = parser.current.content;
+
+    if (_singleLinePattern.hasMatch(firstLine)) {
+      parser.advance();
+      return md.Element.text('iframe', firstLine);
+    }
+
+    final buffer = StringBuffer(firstLine);
     parser.advance();
 
-    return md.Element.text('iframe', text.content);
+    while (!parser.isDone) {
+      final line = parser.current.content;
+      buffer.write('\n$line');
+      parser.advance();
+      if (RegExp(r'</iframe>', caseSensitive: false).hasMatch(line)) break;
+    }
+
+    return md.Element.text('iframe', buffer.toString());
   }
 
+  static final _singleLinePattern =
+      RegExp(r'^<iframe[^>]*>.*<\/iframe>', caseSensitive: false);
+
   @override
-  RegExp get pattern => RegExp(r'^<iframe[^>]+>((?<!<\/iframe)[^])*<\/iframe>');
+  RegExp get pattern => RegExp(r'^<iframe', caseSensitive: false);
 }

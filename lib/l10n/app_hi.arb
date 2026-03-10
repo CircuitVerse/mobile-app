@@ -299,6 +299,8 @@
   "ib_page_loading_image": "छवि लोड हो रही है...",
   "ib_page_image_load_error": "छवि लोड करने में विफल",
   "ib_page_no_image_source": "कोई छवि स्रोत प्रदान नहीं किया गया",
+  "ib_page_failed_to_load": "पृष्ठ लोड करने में विफल",
+  "ib_page_retry": "पुनः प्रयास करें",
 
   "@notifications_view": {},
   "notifications_no_notifications": "अभी तक कोई सूचनाएं नहीं हैं",
