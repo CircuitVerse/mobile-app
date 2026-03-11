@@ -69,17 +69,16 @@ class IbPageViewModel extends BaseModel {
       }
     }
 
+    
     if (markdown.isNotEmpty) {
-      await _offlineService.saveChapter(id, markdown);
-      if (markdown.isNotEmpty) {
-        try {
-          await _offlineService.saveChapter(id, markdown);
-          isOfflineAvailable = true;
-        } catch (_) {
-          isOfflineAvailable = false;
-        }
+      try {
+        await _offlineService.saveChapter(id, markdown);
+        isOfflineAvailable = true;
+      } catch (_) {
+        isOfflineAvailable = false;
       }
     }
+    
 
     // setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
     if (!disposed) {
