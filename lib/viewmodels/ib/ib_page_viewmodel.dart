@@ -95,6 +95,8 @@ class IbPageViewModel extends BaseModel {
         pageUrl: "",
         title: "Offline Chapter",
         content: [IbMd(content: cachedMarkdown)],
+        tableOfContents: _pageData?.tableOfContents,
+        chapterOfContents: _pageData?.chapterOfContents,
       );
 
       isOfflineAvailable = true;
