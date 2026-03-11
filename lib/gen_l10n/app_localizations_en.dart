@@ -890,6 +890,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profile_view_joined => 'Joined';
 
   @override
+  String get profile_view_member_since => 'Member since';
+
+  @override
   String get profile_view_country => 'Country';
 
   @override

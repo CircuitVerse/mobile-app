@@ -1750,6 +1750,12 @@ abstract class AppLocalizations {
   /// **'Joined'**
   String get profile_view_joined;
 
+  /// No description provided for @profile_view_member_since.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since'**
+  String get profile_view_member_since;
+
   /// No description provided for @profile_view_country.
   ///
   /// In en, this message translates to:

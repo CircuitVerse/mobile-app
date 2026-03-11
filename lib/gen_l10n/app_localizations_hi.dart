@@ -895,6 +895,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get profile_view_joined => 'जुड़े';
 
   @override
+  String get profile_view_member_since => 'सदस्य बने';
+
+  @override
   String get profile_view_country => 'देश';
 
   @override

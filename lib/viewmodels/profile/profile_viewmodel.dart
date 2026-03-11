@@ -38,6 +38,9 @@ class ProfileViewModel extends BaseModel {
   bool get isPersonalProfile =>
       _localStorageService.currentUser?.data.id == _userId;
 
+  String get subscribed =>
+      (_user?.data.attributes.subscribed ?? false) ? 'yes' : 'no';
+
   Project? _updatedProject;
 
   Project? get updatedProject => _updatedProject;
