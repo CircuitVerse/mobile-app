@@ -55,10 +55,10 @@ class IbPageViewModel extends BaseModel {
 
   Future fetchPageData({String id = 'index.md'}) async {
 
-  setStateFor(IB_FETCH_PAGE_DATA, ViewState.Busy);
-
+  if (!disposed) {
+    setStateFor(IB_FETCH_PAGE_DATA, ViewState.Busy);
+  }
   try {
-    final cachedMarkdown = await _offlineService.loadChapter(id);
 
     _pageData = await _ibEngineService.getPageData(id: id);
 
@@ -74,7 +74,10 @@ class IbPageViewModel extends BaseModel {
       isOfflineAvailable = true;
     }
 
-    setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+    // setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+    if (!disposed) {
+      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+    }
 
   } on Failure catch (_) {
 
@@ -89,9 +92,15 @@ class IbPageViewModel extends BaseModel {
       );
 
       isOfflineAvailable = true;
-      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+      // setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+      if (!disposed) {
+        setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+      }
     } else {
-      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
+      // setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
+      if (!disposed) {
+        setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
+      }
     }
   }
 

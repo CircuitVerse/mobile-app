@@ -534,8 +534,8 @@ class _IbPageViewState extends State<IbPageView> {
                         color: Colors.green,
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: const Text(
-                        "Offline Available",
+                      child:Text(
+                        AppLocalizations.of(context)!.ib_page_offline_available,
                         style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     ),
