@@ -6,6 +6,7 @@ import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
+import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 import 'package:mobile_app/viewmodels/notifications/notifications_viewmodel.dart';
@@ -41,7 +42,7 @@ class CVLandingViewModel extends BaseModel {
     _storage.isLoggedIn = false;
     _storage.currentUser = null;
     _storage.token = null;
-
+    _currentUser = null; 
     // Perform google signout if auth type is google..
     if (_storage.authType == AuthType.GOOGLE) {
       await _googleSignIn.signOut();
@@ -92,7 +93,12 @@ class CVLandingViewModel extends BaseModel {
 
     if (_dialogResponse?.confirmed ?? false) {
       onLogout();
+      // Close any open drawer/dialog
+      if (Get.isDialogOpen ?? false) {
+        Get.back();
+      }
       selectedIndex = 0;
+      Get.offAllNamed(CVLandingView.id);
       SnackBarUtils.showDark(
         AppLocalizations.of(Get.context!)!.cv_logout_success,
         AppLocalizations.of(Get.context!)!.cv_logout_success_acknowledgement,
