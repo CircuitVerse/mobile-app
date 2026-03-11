@@ -23,7 +23,7 @@ dependencies:
   datetime_picker_formfield: ^2.0.0
   flutter:
     sdk: flutter
-  
+  connectivity_plus: ^7.0.0
   flutter_inappwebview: ^6.1.5
   flutter_html: ^3.0.0-alpha.6
   flutter_keyboard_visibility: ^6.0.0

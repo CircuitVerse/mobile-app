@@ -8,12 +8,23 @@ import 'package:mobile_app/models/ib/ib_showcase.dart';
 import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 import 'package:showcaseview/showcaseview.dart';
-
+import 'package:mobile_app/services/ib_offline_service.dart';
+import 'package:mobile_app/models/ib/ib_content.dart';
 class IbPageViewModel extends BaseModel {
   // ViewState Keys
   final String IB_FETCH_PAGE_DATA = 'ib_fetch_page_data';
   final String IB_FETCH_INTERACTION_DATA = 'ib_fetch_interaction_data';
   final String IB_FETCH_POP_QUIZ = 'ib_fetch_pop_quiz';
+
+  bool disposed = false;
+
+  @override
+  void dispose() {
+    disposed = true;
+    super.dispose();
+  }  
+  final IbOfflineService _offlineService = IbOfflineService();
+  bool isOfflineAvailable = false;
 
   // List of Global Keys to be Showcase
   late List<GlobalKey> _list;
@@ -31,17 +42,61 @@ class IbPageViewModel extends BaseModel {
   IbPageData? _pageData;
   IbPageData? get pageData => _pageData;
 
-  Future? fetchPageData({String id = 'index.md'}) async {
-    try {
-      _pageData = await _ibEngineService.getPageData(id: id);
+  // Future? fetchPageData({String id = 'index.md'}) async {
+  //   try {
+  //     _pageData = await _ibEngineService.getPageData(id: id);
 
+  //     setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+  //   } on Failure catch (f) {
+  //     setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
+  //     setErrorMessageFor(IB_FETCH_PAGE_DATA, f.message);
+  //   }
+  // }
+
+  Future fetchPageData({String id = 'index.md'}) async {
+
+  setStateFor(IB_FETCH_PAGE_DATA, ViewState.Busy);
+
+  try {
+    final cachedMarkdown = await _offlineService.loadChapter(id);
+
+    _pageData = await _ibEngineService.getPageData(id: id);
+
+    String markdown = "";
+    for (var c in _pageData!.content ?? []) {
+      if (c is IbMd) {
+        markdown += c.content;
+      }
+    }
+
+    if (markdown.isNotEmpty) {
+      await _offlineService.saveChapter(id, markdown);
+      isOfflineAvailable = true;
+    }
+
+    setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+
+  } on Failure catch (_) {
+
+    final cachedMarkdown = await _offlineService.loadChapter(id);
+
+    if (cachedMarkdown != null) {
+      _pageData = IbPageData(
+        id: id,
+        pageUrl: "",
+        title: "Offline Chapter",
+        content: [IbMd(content: cachedMarkdown)],
+      );
+
+      isOfflineAvailable = true;
       setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
-    } on Failure catch (f) {
+    } else {
       setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
-      setErrorMessageFor(IB_FETCH_PAGE_DATA, f.message);
     }
   }
 
+  
+}
   Future fetchHtmlInteraction(String id) async {
     try {
       var result = await _ibEngineService.getHtmlInteraction(id);
@@ -62,14 +117,30 @@ class IbPageViewModel extends BaseModel {
     if (!state.prevButton) _list.add(_prevPage);
     if (!state.drawerButton) _list.add(keysMap['drawer']);
     if (!state.tocButton) _list.add(keysMap['toc']);
+    if (_list.isEmpty) return;
+    
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (!showCaseWidgetState.mounted) return;
+          final validKeys = _list.where((key) {
+            final ctx = key.currentContext;
+            if (ctx == null) return false;
 
-    if (_list.isNotEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Future.delayed(const Duration(milliseconds: 800), () {
-          showCaseWidgetState.startShowCase(_list);
-        });
+            final renderObject = ctx.findRenderObject();
+            if (renderObject == null) return false;
+            if (!renderObject.attached) return false;
+
+            return true;
+          }).toList();
+          if (validKeys.isEmpty) return;
+          try {
+            showCaseWidgetState.startShowCase(validKeys);
+          }
+          catch (e) {
+            debugPrint("Showcase skipped: $e");
+        }
       });
-    }
+    });
   }
 
   List<IbPopQuizQuestion>? fetchPopQuiz(String rawContent) {

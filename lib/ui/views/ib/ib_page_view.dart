@@ -35,7 +35,6 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
-
 import '../../../viewmodels/ib/ib_floating_button_state.dart';
 
 typedef TocCallback = void Function(Function?);
@@ -75,10 +74,18 @@ class _IbPageViewState extends State<IbPageView> {
   final Map<String, int> _slugMap = {};
 
   @override
+  void dispose() {
+    _slugMap.clear();
+    _hideButtonController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
-    _ibFloatingButtonState = IbFloatingButtonState();
     super.initState();
-    _showCaseWidgetState = ShowCaseWidget.of(context);
+    _ibFloatingButtonState = IbFloatingButtonState();
+    // super.initState();
+    // _showCaseWidgetState = ShowCaseWidget.of(context);
     _landingModel = context.read<IbLandingViewModel>();
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
     _hideButtonController.addListener(() {
@@ -107,13 +114,20 @@ class _IbPageViewState extends State<IbPageView> {
   }
 
   Future _scrollToWidget(String slug) async {
+    if(!mounted) return;
+    if (!_hideButtonController.hasClients) return;
     if (_slugMap.containsKey(slug)) {
-      await _hideButtonController.scrollToIndex(
-        _slugMap[slug]!,
-        preferPosition: AutoScrollPosition.begin,
-      );
-    } else {
-      debugPrint('[IB]: $slug not present in map');
+      try{
+        await Future.delayed(const Duration(milliseconds: 50));
+        if (!mounted) return;
+        await _hideButtonController.scrollToIndex(
+          _slugMap[slug]!,
+          preferPosition: AutoScrollPosition.begin,
+        );
+      }
+      catch(e){
+        debugPrint("Scroll Skipped: $e");
+      }
     }
   }
 
@@ -361,7 +375,7 @@ class _IbPageViewState extends State<IbPageView> {
                 duration: const Duration(milliseconds: 500),
                 opacity: _ibFloatingButtonState.isVisible ? 1.0 : 0.0,
                 child: FloatingActionButton(
-                  heroTag: 'previousPage',
+                  heroTag: 'previousPage_${widget.chapter.id}',
                   mini: true,
                   backgroundColor: Theme.of(context).primaryIconTheme.color,
                   onPressed:
@@ -404,7 +418,7 @@ class _IbPageViewState extends State<IbPageView> {
                 duration: const Duration(milliseconds: 500),
                 opacity: _ibFloatingButtonState.isVisible ? 1.0 : 0.0,
                 child: FloatingActionButton(
-                  heroTag: 'nextPage',
+                  heroTag: 'nextPage_${widget.chapter.id}',
                   mini: true,
                   backgroundColor: Theme.of(context).primaryIconTheme.color,
                   onPressed:
@@ -468,23 +482,30 @@ class _IbPageViewState extends State<IbPageView> {
     return contents;
   }
 
-  @override
-  void dispose() {
-    _hideButtonController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _hideButtonController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     return BaseView<IbPageViewModel>(
       onModelReady: (model) {
         _model = model;
+        // model.fetchPageData(id: widget.chapter.id);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
         model.fetchPageData(id: widget.chapter.id);
-        model.showCase(
-          _showCaseWidgetState,
-          widget.showCase,
-          widget.globalKeysMap,
-        );
+        Future.delayed(const Duration(milliseconds: 300), () {
+          if (!mounted) return;
+          model.showCase(
+            _showCaseWidgetState,
+            widget.showCase,
+            widget.globalKeysMap,
+          );
+        });
+      });
       },
       builder: (context, model, child) {
         if (_model.isSuccess(_model.IB_FETCH_PAGE_DATA) &&
@@ -503,7 +524,24 @@ class _IbPageViewState extends State<IbPageView> {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _buildPageContent(model.pageData),
+                  // children: _buildPageContent(model.pageData),
+                  children: [
+                  if(model.isOfflineAvailable)
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const Text(
+                        "Offline Available",
+                        style: TextStyle(color: Colors.white, fontSize: 12),
+                      ),
+                    ),
+
+                    ..._buildPageContent(model.pageData),
+                  ],
                 ),
               ),
             ),
