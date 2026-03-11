@@ -167,7 +167,7 @@ class _ProfileViewState extends State<ProfileView> {
                 const SizedBox(width: 6),
                 Text(
                   _attrs?.createdAt != null
-                      ? '${AppLocalizations.of(context)!.profile_view_joined} ${timeago.format(_attrs!.createdAt!)}'
+                      ? '${AppLocalizations.of(context)!.profile_view_member_since} ${timeago.format(_attrs!.createdAt!)}'
                       : AppLocalizations.of(
                         context,
                       )!.profile_view_not_available,

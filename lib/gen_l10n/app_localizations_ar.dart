@@ -881,6 +881,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profile_view_joined => 'انضم في';
 
   @override
+  String get profile_view_member_since => 'عضو منذ';
+
+  @override
   String get profile_view_country => 'البلد';
 
   @override
