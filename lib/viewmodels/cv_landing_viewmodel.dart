@@ -94,7 +94,7 @@ class CVLandingViewModel extends BaseModel {
     if (_dialogResponse?.confirmed ?? false) {
       onLogout();
       // Close any open drawer/dialog
-      if (Get.isOverlaysOpen) {
+      if (Get.isDialogOpen ?? false) {
         Get.back();
       }
       selectedIndex = 0;

@@ -494,17 +494,16 @@ class _IbPageViewState extends State<IbPageView> {
       onModelReady: (model) {
         _model = model;
         // model.fetchPageData(id: widget.chapter.id);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
+        WidgetsBinding.instance.addPostFrameCallback((_) async{
         if (!mounted) return;
-        model.fetchPageData(id: widget.chapter.id);
-        Future.delayed(const Duration(milliseconds: 300), () {
-          if (!mounted) return;
-          model.showCase(
-            _showCaseWidgetState,
-            widget.showCase,
-            widget.globalKeysMap,
-          );
-        });
+        await model.fetchPageData(id: widget.chapter.id);
+        // Future.delayed(const Duration(milliseconds: 300), () {
+        if (!mounted) return;
+        model.showCase(
+          _showCaseWidgetState,
+          widget.showCase,
+          widget.globalKeysMap,
+        );
       });
       },
       builder: (context, model, child) {
