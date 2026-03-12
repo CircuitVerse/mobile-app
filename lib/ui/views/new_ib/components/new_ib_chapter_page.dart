@@ -157,7 +157,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  model.errorMessageFor(model.IB_FETCH_PAGE_DATA) ?? '',
+                  model.errorMessageFor(model.IB_FETCH_PAGE_DATA),
                   style: TextStyle(
                     fontSize: 14,
                     color: IbTheme.textColor(context).withAlpha(128),
