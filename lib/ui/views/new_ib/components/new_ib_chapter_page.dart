@@ -289,10 +289,10 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
                 // Use structured content renderer
                 return StructuredContentRenderer(
                   content: rawPageData.structuredContent!,
-                  headingKeys: NewIbMarkdownParser.headingKeys,
+                  headingKeys: _headingKeys,
                 );
               } else {
-                // Fallback to markdown parser
+                // Fallback to markdown parser for non-binary-representation pages
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: NewIbMarkdownParser.parse(context, content.content),
