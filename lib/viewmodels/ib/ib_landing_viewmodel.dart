@@ -96,6 +96,11 @@ class IbLandingViewModel extends BaseModel {
   }
 
   void setUpIsolate() async {
+    // Don't set up isolate if chapters failed to load
+    if (chapters.isEmpty) {
+      return;
+    }
+
     receivePort = ReceivePort();
 
     _isolate = await Isolate.spawn<List<dynamic>>(fetchCallback, [
@@ -227,15 +232,20 @@ class IbLandingViewModel extends BaseModel {
     _showCaseState = IBShowCase.fromJson(_localStorageService.getShowcaseState);
     _selectedChapter = homeChapter;
     await fetchChapters();
-    setUpIsolate();
+    // Only set up isolate if chapters loaded successfully
+    if (chapters.isNotEmpty) {
+      setUpIsolate();
+    }
   }
 
   Future? fetchChapters() async {
     try {
       _chapters = await _ibEngineService.getChapters()!;
       setStateFor(IB_FETCH_CHAPTERS, ViewState.Success);
-      homeChapter.nextPage = chapters[0];
-      chapters[0].prev = homeChapter;
+      if (chapters.isNotEmpty) {
+        homeChapter.nextPage = chapters[0];
+        chapters[0].prev = homeChapter;
+      }
     } on Failure catch (f) {
       setStateFor(IB_FETCH_CHAPTERS, ViewState.Error);
       setErrorMessageFor(IB_FETCH_CHAPTERS, f.message);
