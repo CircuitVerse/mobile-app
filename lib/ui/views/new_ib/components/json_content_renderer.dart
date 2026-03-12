@@ -33,6 +33,8 @@ class JsonContentRenderer extends StatelessWidget {
         return _buildParagraph(context, data);
       case 'section':
         return _buildSection(context, data);
+      case 'subsection':
+        return _buildSubsection(context, data);
       case 'example':
         return _buildExample(context, data);
       case 'widget':
@@ -322,4 +324,118 @@ class JsonContentRenderer extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildSubsection(BuildContext context, Map<String, dynamic> data) {
+  final heading = data['heading'] as String?;
+  final tables = data['tables'] as List<dynamic>?;
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      if (heading != null)
+        Padding(
+          padding: const EdgeInsets.only(top: 16, bottom: 12),
+          child: Text(
+            heading,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: IbTheme.primaryHeadingColor(context),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      if (tables != null)
+        ...tables.map((table) {
+          final tableData = table as Map<String, dynamic>;
+          return _buildTable(context, tableData);
+        }),
+    ],
+  );
+}
+
+Widget _buildTable(BuildContext context, Map<String, dynamic> data) {
+  final title = data['title'] as String?;
+  final headers = data['headers'] as List<dynamic>?;
+  final rows = data['rows'] as List<dynamic>?;
+
+  if (headers == null || rows == null) {
+    return const SizedBox.shrink();
+  }
+
+  return Container(
+    margin: const EdgeInsets.symmetric(vertical: 12),
+    decoration: BoxDecoration(
+      border: Border.all(color: IbTheme.textColor(context).withAlpha(51)),
+      borderRadius: BorderRadius.circular(8),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (title != null)
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: IbTheme.getPrimaryColor(context).withAlpha(26),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(8),
+                topRight: Radius.circular(8),
+              ),
+            ),
+            child: Text(
+              title,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                color: IbTheme.primaryHeadingColor(context),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        Table(
+          border: TableBorder(
+            horizontalInside: BorderSide(
+              color: IbTheme.textColor(context).withAlpha(51),
+            ),
+            verticalInside: BorderSide(
+              color: IbTheme.textColor(context).withAlpha(51),
+            ),
+          ),
+          children: [
+            TableRow(
+              decoration: BoxDecoration(
+                color: IbTheme.textColor(context).withAlpha(13),
+              ),
+              children:
+                  headers.map((header) {
+                    return Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Text(
+                        header.toString(),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: IbTheme.primaryHeadingColor(context),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+            ),
+            ...rows.map((row) {
+              final rowData = row as List<dynamic>;
+              return TableRow(
+                children:
+                    rowData.map((cell) {
+                      return Padding(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          cell.toString(),
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(color: IbTheme.textColor(context)),
+                        ),
+                      );
+                    }).toList(),
+              );
+            }),
+          ],
+        ),
+      ],
+    ),
+  );
 }
