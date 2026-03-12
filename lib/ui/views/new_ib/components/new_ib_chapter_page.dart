@@ -3,10 +3,12 @@ import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
+import 'package:mobile_app/models/ib/ib_json_page_data.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/models/ib/ib_recommendation.dart';
 import 'package:mobile_app/services/API/disqus_api.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
+import 'package:mobile_app/ui/views/new_ib/components/json_content_renderer.dart';
 import 'package:mobile_app/ui/views/new_ib/components/new_ib_markdown_parser.dart';
 import 'package:mobile_app/ui/views/new_ib/components/structured_content_renderer.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
@@ -28,6 +30,7 @@ class NewIbChapterPage extends StatefulWidget {
 class _NewIbChapterPageState extends State<NewIbChapterPage> {
   final ScrollController _scrollController = ScrollController();
   final DisqusApi _disqusApi = locator<DisqusApi>();
+  final Map<String, GlobalKey> _headingKeys = {};
   bool _showFloatingButtons = true;
   List<IbRecommendation> _recommendations = [];
   bool _loadingRecommendations = true;
@@ -37,8 +40,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
     super.initState();
     _scrollController.addListener(_handleScroll);
     _loadRecommendations();
-    // Clear previous heading keys
-    NewIbMarkdownParser.clearKeys();
+    _headingKeys.clear();
   }
 
   Future<void> _loadRecommendations() async {
@@ -116,7 +118,17 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
   Widget build(BuildContext context) {
     return BaseView<IbPageViewModel>(
       onModelReady: (model) {
-        model.fetchPageData(id: widget.chapter.id);
+        // Use JSON API for binary-representation pages
+        final isBinaryRepresentation = widget.chapter.id.contains(
+          'binary-representation',
+        );
+        if (isBinaryRepresentation) {
+          // Convert chapter ID to path format
+          String path = widget.chapter.id.replaceAll('.md', '');
+          model.fetchJsonPageData(path: path);
+        } else {
+          model.fetchPageData(id: widget.chapter.id);
+        }
       },
       builder: (context, model, child) {
         // Show loading spinner while fetching
@@ -125,7 +137,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
         }
 
         // Show error message if fetch failed
-        if (model.isError(model.IB_FETCH_PAGE_DATA) || model.pageData == null) {
+        if (model.isError(model.IB_FETCH_PAGE_DATA)) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -143,18 +155,32 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
                     color: IbTheme.textColor(context).withAlpha(179),
                   ),
                 ),
-                if (model.isError(model.IB_FETCH_PAGE_DATA)) ...[
-                  const SizedBox(height: 8),
-                  Text(
-                    model.errorMessageFor(model.IB_FETCH_PAGE_DATA) ?? '',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: IbTheme.textColor(context).withAlpha(128),
-                    ),
-                    textAlign: TextAlign.center,
+                const SizedBox(height: 8),
+                Text(
+                  model.errorMessageFor(model.IB_FETCH_PAGE_DATA) ?? '',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: IbTheme.textColor(context).withAlpha(128),
                   ),
-                ],
+                  textAlign: TextAlign.center,
+                ),
               ],
+            ),
+          );
+        }
+
+        // Check if we have JSON data or regular page data
+        final hasJsonData = model.jsonPageData != null;
+        final hasPageData = model.pageData != null;
+
+        if (!hasJsonData && !hasPageData) {
+          return Center(
+            child: Text(
+              'No content available',
+              style: TextStyle(
+                fontSize: 16,
+                color: IbTheme.textColor(context).withAlpha(179),
+              ),
             ),
           );
         }
@@ -167,7 +193,10 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildContent(context, model.pageData!),
+                  if (hasJsonData)
+                    _buildJsonContent(context, model.jsonPageData!)
+                  else if (hasPageData)
+                    _buildContent(context, model.pageData!),
                   // Show recommendations and comments for Binary Numbers and Binary Representation index page
                   if (widget.chapter.id.contains('binary-numbers') ||
                       widget.chapter.id.contains(
@@ -281,6 +310,133 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
     );
   }
 
+  Widget _buildJsonContent(BuildContext context, IbJsonPageData jsonPageData) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Chapter Title
+        Text(
+          jsonPageData.title,
+          style: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+            color: IbTheme.primaryHeadingColor(context),
+          ),
+        ),
+        if (jsonPageData.description != null) ...[
+          const SizedBox(height: 8),
+          Text(
+            jsonPageData.description!,
+            style: TextStyle(
+              fontSize: 16,
+              color: IbTheme.textColor(context).withAlpha(179),
+            ),
+          ),
+        ],
+        const SizedBox(height: 8),
+        Divider(thickness: 2, color: IbTheme.getPrimaryColor(context)),
+        const SizedBox(height: 24),
+
+        // JSON Content
+        if (jsonPageData.content != null &&
+            jsonPageData.content!.sections.isNotEmpty)
+          JsonContentRenderer(
+            sections: jsonPageData.content!.sections,
+            headingKeys: _headingKeys,
+          ),
+
+        // Children (for parent pages like Binary Representation index)
+        if (jsonPageData.children != null && jsonPageData.children!.isNotEmpty)
+          _buildJsonChildren(context, jsonPageData.children!),
+      ],
+    );
+  }
+
+  Widget _buildJsonChildren(BuildContext context, List<IbJsonChild> children) {
+    return Container(
+      margin: const EdgeInsets.only(top: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:
+            children
+                .map((child) => _buildJsonChildCard(context, child))
+                .toList(),
+      ),
+    );
+  }
+
+  Widget _buildJsonChildCard(BuildContext context, IbJsonChild child) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: IbTheme.textColor(context).withAlpha(13),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: IbTheme.textColor(context).withAlpha(26)),
+      ),
+      child: InkWell(
+        onTap: () {
+          // Navigate to child page
+          final childChapter = IbChapter(
+            id: '${child.path}.md',
+            value: child.title,
+            navOrder: child.navOrder ?? '',
+          );
+          widget.onNavigate(childChapter);
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: IbTheme.getPrimaryColor(context).withAlpha(51),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  Icons.article_rounded,
+                  color: IbTheme.getPrimaryColor(context),
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      child.title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: IbTheme.primaryHeadingColor(context),
+                      ),
+                    ),
+                    if (child.level != null)
+                      Text(
+                        'Level: ${child.level}',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: IbTheme.textColor(context).withAlpha(128),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 18,
+                color: IbTheme.textColor(context).withAlpha(128),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildTableOfContents(BuildContext context, List<IbTocItem> items) {
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
@@ -365,7 +521,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
   }
 
   void _scrollToSection(String keyName) {
-    final key = NewIbMarkdownParser.headingKeys[keyName];
+    final key = _headingKeys[keyName];
     if (key != null && key.currentContext != null) {
       Scrollable.ensureVisible(
         key.currentContext!,

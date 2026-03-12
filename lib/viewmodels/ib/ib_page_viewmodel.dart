@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/failure_model.dart';
+import 'package:mobile_app/models/ib/ib_json_page_data.dart';
 import 'package:mobile_app/models/ib/ib_page_data.dart';
 import 'package:mobile_app/models/ib/ib_pop_quiz_question.dart';
 import 'package:mobile_app/models/ib/ib_showcase.dart';
+import 'package:mobile_app/services/API/ib_api.dart';
 import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 import 'package:showcaseview/showcaseview.dart';
@@ -27,12 +29,17 @@ class IbPageViewModel extends BaseModel {
   GlobalKey get prevPage => _prevPage;
 
   final IbEngineService _ibEngineService = locator<IbEngineService>();
+  final IbApi _ibApi = locator<IbApi>();
 
   IbPageData? _pageData;
   IbPageData? get pageData => _pageData;
 
+  IbJsonPageData? _jsonPageData;
+  IbJsonPageData? get jsonPageData => _jsonPageData;
+
   void clearPageData() {
     _pageData = null;
+    _jsonPageData = null;
     notifyListeners();
   }
 
@@ -43,6 +50,22 @@ class IbPageViewModel extends BaseModel {
       setStateFor(IB_FETCH_PAGE_DATA, ViewState.Busy);
 
       _pageData = await _ibEngineService.getPageData(id: id);
+
+      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+    } on Failure catch (f) {
+      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
+      setErrorMessageFor(IB_FETCH_PAGE_DATA, f.message);
+    }
+  }
+
+  Future? fetchJsonPageData({
+    String path = 'docs/binary-representation/index',
+  }) async {
+    try {
+      _jsonPageData = null;
+      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Busy);
+
+      _jsonPageData = await _ibApi.fetchJsonPageData(path: path);
 
       setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
     } on Failure catch (f) {
