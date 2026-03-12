@@ -9,6 +9,11 @@ class EnvironmentConfig {
     defaultValue: 'https://learn.circuitverse.org/_api/pages',
   );
 
+  static const String IB_JSON_API_BASE_URL = String.fromEnvironment(
+    'IB_JSON_API_BASE_URL',
+    defaultValue: 'http://localhost:4000/api-mobile/pages',
+  );
+
   static const String IB_BASE_URL = String.fromEnvironment(
     'IB_BASE_URL',
     defaultValue: 'https://learn.circuitverse.org',

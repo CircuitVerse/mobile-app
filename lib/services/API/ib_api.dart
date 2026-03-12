@@ -64,12 +64,7 @@ class HttpIbApi implements IbApi {
   Future<IbJsonPageData>? fetchJsonPageData({
     String path = 'docs/binary-representation/index',
   }) async {
-    // Use localhost for development, production URL otherwise
-    const baseUrl = String.fromEnvironment(
-      'IB_JSON_API_BASE_URL',
-      defaultValue: 'http://localhost:4000/api-mobile/pages',
-    );
-    final url = '$baseUrl/$path.json';
+    final url = '${EnvironmentConfig.IB_JSON_API_BASE_URL}/$path.json';
 
     try {
       if (await _db.isExpired(url)) {
