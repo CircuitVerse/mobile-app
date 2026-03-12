@@ -21,8 +21,8 @@ class HttpIbApi implements IbApi {
   Future<List<Map<String, dynamic>>>? fetchApiPage({String id = ''}) async {
     var _url =
         id == ''
-            ? EnvironmentConfig.IB_API_BASE_URL
-            : '${EnvironmentConfig.IB_API_BASE_URL}/$id';
+            ? '${EnvironmentConfig.IB_API_BASE_URL}.json'
+            : '${EnvironmentConfig.IB_API_BASE_URL}/$id.json';
 
     try {
       if (await _db.isExpired(_url)) {
