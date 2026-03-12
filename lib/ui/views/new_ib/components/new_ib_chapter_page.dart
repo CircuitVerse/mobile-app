@@ -118,17 +118,9 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
   Widget build(BuildContext context) {
     return BaseView<IbPageViewModel>(
       onModelReady: (model) {
-        // Use JSON API for binary-representation pages
-        final isBinaryRepresentation = widget.chapter.id.contains(
-          'binary-representation',
-        );
-        if (isBinaryRepresentation) {
-          // Convert chapter ID to path format
-          String path = widget.chapter.id.replaceAll('.md', '');
-          model.fetchJsonPageData(path: path);
-        } else {
-          model.fetchPageData(id: widget.chapter.id);
-        }
+        // Always use the regular markdown API for now
+        // JSON API will be used when backend is ready
+        model.fetchPageData(id: widget.chapter.id);
       },
       builder: (context, model, child) {
         // Show loading spinner while fetching
@@ -137,7 +129,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
         }
 
         // Show error message if fetch failed
-        if (model.isError(model.IB_FETCH_PAGE_DATA)) {
+        if (model.isError(model.IB_FETCH_PAGE_DATA) || model.pageData == null) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -155,32 +147,18 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
                     color: IbTheme.textColor(context).withAlpha(179),
                   ),
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  model.errorMessageFor(model.IB_FETCH_PAGE_DATA),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: IbTheme.textColor(context).withAlpha(128),
+                if (model.isError(model.IB_FETCH_PAGE_DATA)) ...[
+                  const SizedBox(height: 8),
+                  Text(
+                    model.errorMessageFor(model.IB_FETCH_PAGE_DATA),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: IbTheme.textColor(context).withAlpha(128),
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
-                ),
+                ],
               ],
-            ),
-          );
-        }
-
-        // Check if we have JSON data or regular page data
-        final hasJsonData = model.jsonPageData != null;
-        final hasPageData = model.pageData != null;
-
-        if (!hasJsonData && !hasPageData) {
-          return Center(
-            child: Text(
-              'No content available',
-              style: TextStyle(
-                fontSize: 16,
-                color: IbTheme.textColor(context).withAlpha(179),
-              ),
             ),
           );
         }
@@ -193,10 +171,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (hasJsonData)
-                    _buildJsonContent(context, model.jsonPageData!)
-                  else if (hasPageData)
-                    _buildContent(context, model.pageData!),
+                  _buildContent(context, model.pageData!),
                   // Show recommendations and comments for Binary Numbers and Binary Representation index page
                   if (widget.chapter.id.contains('binary-numbers') ||
                       widget.chapter.id.contains(
