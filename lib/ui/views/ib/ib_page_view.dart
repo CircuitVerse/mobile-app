@@ -36,6 +36,9 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import '../../../viewmodels/ib/ib_floating_button_state.dart';
+import 'package:mobile_app/services/ib_progress_service.dart';
+import 'package:mobile_app/locator.dart';
+import 'dart:async';
 
 typedef TocCallback = void Function(Function?);
 typedef SetPageCallback = void Function(IbChapter?);
@@ -70,7 +73,7 @@ class _IbPageViewState extends State<IbPageView> {
   late AutoScrollController _hideButtonController;
   late IbFloatingButtonState _ibFloatingButtonState;
   late ShowCaseWidgetState _showCaseWidgetState;
-
+  Timer? _progressTimer;
   final Map<String, int> _slugMap = {};
 
   @override
@@ -88,17 +91,48 @@ class _IbPageViewState extends State<IbPageView> {
     // _showCaseWidgetState = ShowCaseWidget.of(context);
     _landingModel = context.read<IbLandingViewModel>();
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
+    // _hideButtonController.addListener(() {
+    //   if (_hideButtonController.position.userScrollDirection ==
+    //       ScrollDirection.reverse) {
+    //     _ibFloatingButtonState.makeInvisible();
+    //   }
+    //   if (_hideButtonController.position.userScrollDirection ==
+    //       ScrollDirection.forward) {
+    //     _ibFloatingButtonState.makeVisible();
+    //   }
+    // });
     _hideButtonController.addListener(() {
-      if (_hideButtonController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        _ibFloatingButtonState.makeInvisible();
-      }
-      if (_hideButtonController.position.userScrollDirection ==
-          ScrollDirection.forward) {
-        _ibFloatingButtonState.makeVisible();
-      }
+
+    if (!_hideButtonController.hasClients) return;
+
+    final position = _hideButtonController.position;
+
+    if (_progressTimer?.isActive ?? false) return;
+
+    _progressTimer = Timer(const Duration(seconds: 1), () async {
+
+      final scroll = position.pixels;
+      final maxScroll = position.maxScrollExtent;
+
+      await locator<IbProgressService>().saveProgress(
+        bookId: "interactive_book",
+        chapterId: widget.chapter.id,
+        progress: maxScroll == 0 ? 0 : (scroll / maxScroll) * 100,
+        scrollPosition: scroll,
+      );
+
     });
-  }
+
+    if (position.userScrollDirection == ScrollDirection.reverse) {
+      _ibFloatingButtonState.makeInvisible();
+    }
+
+    if (position.userScrollDirection == ScrollDirection.forward) {
+      _ibFloatingButtonState.makeVisible();
+    }
+
+  });
+    }
 
   @override
   void didChangeDependencies() {
@@ -112,6 +146,7 @@ class _IbPageViewState extends State<IbPageView> {
       child: Divider(thickness: 1.5),
     );
   }
+
 
   Future _scrollToWidget(String slug) async {
     if(!mounted) return;
@@ -488,6 +523,7 @@ class _IbPageViewState extends State<IbPageView> {
   //   super.dispose();
   // }
 
+
   @override
   Widget build(BuildContext context) {
     return BaseView<IbPageViewModel>(
@@ -497,6 +533,15 @@ class _IbPageViewState extends State<IbPageView> {
         WidgetsBinding.instance.addPostFrameCallback((_) async{
         if (!mounted) return;
         await model.fetchPageData(id: widget.chapter.id);
+        final progressService = locator<IbProgressService>();
+        final savedScroll =
+            await progressService.getScrollPosition(widget.chapter.id);
+
+        if (savedScroll != null) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _hideButtonController.jumpTo(savedScroll);
+          });
+        }
         // Future.delayed(const Duration(milliseconds: 300), () {
         if (!mounted) return;
         model.showCase(
@@ -538,7 +583,21 @@ class _IbPageViewState extends State<IbPageView> {
                         style: TextStyle(color: Colors.white, fontSize: 12),
                       ),
                     ),
+                    FutureBuilder<double?>(
+                      future: locator<IbProgressService>().getProgress(widget.chapter.id),
+                      builder: (context, snapshot) {
 
+                        if (!snapshot.hasData) return SizedBox();
+
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            "Reading progress: ${snapshot.data!.toStringAsFixed(0)}%",
+                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                          ),
+                        );
+                      },
+                    ),
                     ..._buildPageContent(model.pageData),
                   ],
                 ),

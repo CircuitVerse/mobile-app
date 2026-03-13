@@ -41,6 +41,7 @@ import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:mobile_app/viewmodels/simulator/simulator_viewmodel.dart';
 import 'package:mobile_app/viewmodels/startup/startup_viewmodel.dart';
 import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
+import 'package:mobile_app/services/ib_progress_service.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -59,6 +60,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton<NotificationsService>(
     () => NotificationsServiceImpl(),
   );
+
+  locator.registerLazySingleton(() => IbProgressService());
 
   // API Services
   locator.registerLazySingleton<ContributorsApi>(() => HttpContributorsApi());

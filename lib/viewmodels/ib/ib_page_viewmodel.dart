@@ -10,12 +10,13 @@ import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:mobile_app/services/ib_offline_service.dart';
 import 'package:mobile_app/models/ib/ib_content.dart';
+import 'package:mobile_app/services/ib_progress_service.dart';
 class IbPageViewModel extends BaseModel {
   // ViewState Keys
   final String IB_FETCH_PAGE_DATA = 'ib_fetch_page_data';
   final String IB_FETCH_INTERACTION_DATA = 'ib_fetch_interaction_data';
   final String IB_FETCH_POP_QUIZ = 'ib_fetch_pop_quiz';
-
+  final IbProgressService _progressService = locator<IbProgressService>();
   bool disposed = false;
 
   @override
@@ -52,6 +53,27 @@ class IbPageViewModel extends BaseModel {
   //     setErrorMessageFor(IB_FETCH_PAGE_DATA, f.message);
   //   }
   // }
+
+  Future saveReadingProgress({
+    required String bookId,
+    required String chapterId,
+    required double scrollPosition,
+    required double maxScroll,
+  }) async {
+
+    double progress = 0;
+
+    if (maxScroll > 0) {
+      progress = (scrollPosition / maxScroll) * 100;
+    }
+
+    await _progressService.saveProgress(
+      bookId: bookId,
+      chapterId: chapterId,
+      progress: progress,
+      scrollPosition: scrollPosition,
+    );
+  }
 
   Future fetchPageData({String id = 'index.md'}) async {
 
