@@ -24,7 +24,7 @@ class IbPageViewModel extends BaseModel {
     disposed = true;
     super.dispose();
   }  
-  final IbOfflineService _offlineService = IbOfflineService();
+  final IbOfflineService _offlineService = locator<IbOfflineService>();
   bool isOfflineAvailable = false;
 
   // List of Global Keys to be Showcase
@@ -76,30 +76,30 @@ class IbPageViewModel extends BaseModel {
   }
 
   Future fetchPageData({String id = 'index.md'}) async {
-
-  if (!disposed) {
-    setStateFor(IB_FETCH_PAGE_DATA, ViewState.Busy);
-  }
-  try {
-
-    _pageData = await _ibEngineService.getPageData(id: id);
-
-    String markdown = "";
-    for (var c in _pageData!.content ?? []) {
-      if (c is IbMd) {
-        markdown += c.content;
-      }
+    isOfflineAvailable=false;
+    if (!disposed) {
+      setStateFor(IB_FETCH_PAGE_DATA, ViewState.Busy);
     }
+    try {
 
-    
-    if (markdown.isNotEmpty) {
-      try {
-        await _offlineService.saveChapter(id, markdown);
-        isOfflineAvailable = true;
-      } catch (_) {
-        isOfflineAvailable = false;
+      _pageData = await _ibEngineService.getPageData(id: id);
+
+      String markdown = "";
+      for (var c in _pageData!.content ?? []) {
+        if (c is IbMd) {
+          markdown += c.content;
+        }
       }
-    }
+
+      
+      if (markdown.isNotEmpty) {
+        try {
+          await _offlineService.saveChapter(id, markdown);
+          isOfflineAvailable = true;
+        } catch (_) {
+          isOfflineAvailable = false;
+        }
+      }
     
 
     // setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
@@ -107,34 +107,34 @@ class IbPageViewModel extends BaseModel {
       setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
     }
 
-  } on Failure catch (_) {
+    } on Failure catch (_) {
 
-    final cachedMarkdown = await _offlineService.loadChapter(id);
+      final cachedMarkdown = await _offlineService.loadChapter(id);
 
-    if (cachedMarkdown != null) {
-      _pageData = IbPageData(
-        id: id,
-        pageUrl: "",
-        title: "Offline Chapter",
-        content: [IbMd(content: cachedMarkdown)],
-        tableOfContents: _pageData?.tableOfContents,
-        chapterOfContents: _pageData?.chapterOfContents,
-        
-      );
+      if (cachedMarkdown != null) {
+        _pageData = IbPageData(
+          id: id,
+          pageUrl: "",
+          title: "Offline Chapter",
+          content: [IbMd(content: cachedMarkdown)],
+          tableOfContents: null,
+          chapterOfContents: null,
+          
+        );
 
-      isOfflineAvailable = true;
-      // setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
-      if (!disposed) {
-        setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
-      }
-    } else {
-      // setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
-      if (!disposed) {
-        setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
+        isOfflineAvailable = true;
+        // setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+        if (!disposed) {
+          setStateFor(IB_FETCH_PAGE_DATA, ViewState.Success);
+        }
+      } else {
+        // setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
+        if (!disposed) {
+          setStateFor(IB_FETCH_PAGE_DATA, ViewState.Error);
+        }
       }
     }
   }
-
   Future fetchHtmlInteraction(String id) async {
     try {
       var result = await _ibEngineService.getHtmlInteraction(id);
@@ -143,7 +143,7 @@ class IbPageViewModel extends BaseModel {
       return f;
     }
   }  
-}
+
 
   void showCase(
     ShowCaseWidgetState showCaseWidgetState,
