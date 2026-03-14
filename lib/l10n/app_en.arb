@@ -93,7 +93,7 @@
   "forgot_password_instructions_sent_message": "Password reset instructions have been sent to your email",
   "forgot_password_error": "Error",
   "forgot_password_link": "Forgot Password?",
-
+  "forgot_password_success": "Reset instructions sent successfully.",
   "@login_view": {},
   "login_email": "Email",
   "login_email_validation_error": "Please enter a valid email",
@@ -292,6 +292,7 @@
   "ib_home": "Interactive Book Home",
   "ib_loading_chapters": "Loading Chapters...",
   "ib_show_toc": "Show Table of Contents",
+  "ib_page_offline_available": "Offline Available",
 
   "@ib_page_view": {},
   "ib_page_copyright_notice": "Copyright © 2021 Contributors to CircuitVerse. Distributed under a [CC-by-sa] license.",

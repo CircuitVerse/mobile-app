@@ -42,7 +42,7 @@
   "slack_channel": "قناة Slack",
   "open_source_title": "ساهم في المصادر المفتوحة",
   "how_to_support": "كيفية الدعم؟",
-  
+  "forgot_password_success": "تم إرسال تعليمات إعادة تعيين كلمة المرور بنجاح",
   "student_role": "أنا طالب",
   "student_support1": "أنشئ دوائر رائعة وشاركها على المنصة",
   "student_support2": "ابحث عن الأخطاء وأبلغ عنها. كن صياد أخطاء",
@@ -284,6 +284,7 @@
   "update_assignment_update_success": "تم تحديث الواجب بنجاح",
   "update_assignment_error": "خطأ",
 
+
   "@ib_landing_view": {},
   "ib_search_circuitverse": "ابحث في CircuitVerse",
   "ib_navigate_chapters": "انتقل إلى فصول مختلفة",
@@ -293,7 +294,7 @@
   "ib_home": "الصفحة الرئيسية للكتاب التفاعلي",
   "ib_loading_chapters": "جاري تحميل الفصول...",
   "ib_show_toc": "عرض جدول المحتويات",
-
+  "ib_page_offline_available": "متاح بدون اتصال",
   "@ib_page_view": {},
   "ib_page_copyright_notice": "حقوق النشر © 2021 المساهمون في CircuitVerse. موزعة تحت رخصة [CC-by-sa].",
   "ib_page_table_of_contents": "جدول المحتويات",

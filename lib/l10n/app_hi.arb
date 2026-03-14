@@ -20,6 +20,7 @@
   "editor_picks_title": "एडिटर की पसंद",
   "editor_picks_subtitle": "ये सर्किट्स हमारे लेखकों द्वारा उनकी शानदारता के लिए चुने गए हैं",
   "explore_more_button": "और एक्सप्लोर करें",
+  "forgot_password_success": "पासवर्ड रीसेट निर्देश सफलतापूर्वक भेज दिए गए हैं",
   "@teachers_view": {},
   "teachers_title": "शिक्षक",
   "teachers_description": "CircuitVerse को कक्षा में उपयोग करने में बहुत आसान बनाया गया है। प्लेटफॉर्म में शिक्षकों की सहायता के लिए विशेषताएं हैं।",
@@ -290,7 +291,7 @@
   "ib_home": "इंटरएक्टिव बुक होम",
   "ib_loading_chapters": "अध्याय लोड हो रहे हैं...",
   "ib_show_toc": "विषय सूची दिखाएं",
-
+  "ib_page_offline_available": "ऑफ़लाइन उपलब्ध",
   "@ib_page_view": {},
   "ib_page_copyright_notice": "कॉपीराइट © 2021 सर्किटवर्स के योगदानकर्ता। [CC-by-sa] लाइसेंस के तहत वितरित।",
   "ib_page_table_of_contents": "विषय सूची",
