@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-
+import 'dart:convert';
 class IbOfflineService {
 
   Future<String> _getPath(String chapterId) async {
     final dir = await getApplicationDocumentsDirectory();
-    final safeId = chapterId.replaceAll("/", "_");
-    return "${dir.path}/ib_$safeId";
+    String fileName = base64Url.encode(utf8.encode(chapterId));
+    return "${dir.path}/ib_$fileName";
   }
 
   Future<void> saveChapter(String chapterId, String data) async {
@@ -34,9 +34,9 @@ class IbOfflineService {
     return null;
   }
 
-  // Future<bool> isDownloaded(String chapterId) async {
-  //   final path = await _getPath(chapterId);
-  //   return File(path).exists();
-  // }
+  Future<bool> isDownloaded(String chapterId) async {
+    final path = await _getPath(chapterId);
+    return File(path).exists();
+  }
   
 }

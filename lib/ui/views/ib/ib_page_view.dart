@@ -78,6 +78,7 @@ class _IbPageViewState extends State<IbPageView> {
 
   @override
   void dispose() {
+    _progressTimer?.cancel();
     _slugMap.clear();
     _hideButtonController.dispose();
     super.dispose();
@@ -110,7 +111,7 @@ class _IbPageViewState extends State<IbPageView> {
     if (_progressTimer?.isActive ?? false) return;
 
     _progressTimer = Timer(const Duration(seconds: 1), () async {
-
+      if(!mounted) return;
       final scroll = position.pixels;
       final maxScroll = position.maxScrollExtent;
 
@@ -539,7 +540,10 @@ class _IbPageViewState extends State<IbPageView> {
 
         if (savedScroll != null) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            _hideButtonController.jumpTo(savedScroll);
+            try{
+              _hideButtonController.jumpTo(savedScroll);
+            }
+            catch(_){}
           });
         }
         // Future.delayed(const Duration(milliseconds: 300), () {

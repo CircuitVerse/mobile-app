@@ -293,7 +293,7 @@
   "ib_home": "الصفحة الرئيسية للكتاب التفاعلي",
   "ib_loading_chapters": "جاري تحميل الفصول...",
   "ib_show_toc": "عرض جدول المحتويات",
-
+  "ib_page_offline_available": "متاح بدون اتصال",
   "@ib_page_view": {},
   "ib_page_copyright_notice": "حقوق النشر © 2021 المساهمون في CircuitVerse. موزعة تحت رخصة [CC-by-sa].",
   "ib_page_table_of_contents": "جدول المحتويات",

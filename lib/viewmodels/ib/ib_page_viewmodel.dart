@@ -135,8 +135,6 @@ class IbPageViewModel extends BaseModel {
     }
   }
 
-  
-}
   Future fetchHtmlInteraction(String id) async {
     try {
       var result = await _ibEngineService.getHtmlInteraction(id);
@@ -144,7 +142,8 @@ class IbPageViewModel extends BaseModel {
     } on Failure catch (f) {
       return f;
     }
-  }
+  }  
+}
 
   void showCase(
     ShowCaseWidgetState showCaseWidgetState,
