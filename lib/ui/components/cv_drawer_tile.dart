@@ -26,8 +26,8 @@ class CVDrawerTile extends StatelessWidget {
         isActive ? activeColor : (color ?? CVTheme.drawerIcon(context));
 
     return Container(
-      margin: EdgeInsetsDirectional.only(
-        start: isChild ? 8 : 8,
+      margin: const EdgeInsetsDirectional.only(
+        start: 8,
         end: 8,
         top: 2,
         bottom: 2,
