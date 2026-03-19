@@ -73,7 +73,7 @@ android {
 
     defaultConfig {
         applicationId "org.circuitverse.mobile_app"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 24
         targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

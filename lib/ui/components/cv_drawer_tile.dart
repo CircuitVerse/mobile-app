@@ -36,7 +36,7 @@ class CVDrawerTile extends StatelessWidget {
           bottom: 2,
         ),
         decoration: BoxDecoration(
-          color: isActive ? CVTheme.primaryColor.withOpacity(0.12) : null,
+          color: isActive ? CVTheme.primaryColor.withValues(alpha: 0.12) : null,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Theme(
@@ -93,7 +93,7 @@ class CVDrawerTile extends StatelessWidget {
                       color: CVTheme.red,
                       boxShadow: [
                         BoxShadow(
-                          color: CVTheme.red.withOpacity(0.5),
+                          color: CVTheme.red.withValues(alpha: 0.5),
                           blurRadius: 4,
                           spreadRadius: 1,
                         ),
