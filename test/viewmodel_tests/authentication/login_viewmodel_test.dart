@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/models/failure_model.dart';
+import 'package:mobile_app/locator.dart';
+import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/viewmodels/authentication/login_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 
@@ -41,6 +43,11 @@ void main() {
         // should call login with expected variables
         verify(_mockUsersApi.login('test@test.com', 'password'));
         expect(_model.stateFor(_model.LOGIN), ViewState.Error);
+
+        var _mockStorage = locator<LocalStorageService>();
+        verify(_mockStorage.token = null);
+        verify(_mockStorage.currentUser = null);
+        verify(_mockStorage.isLoggedIn = false);
       });
     });
   });
