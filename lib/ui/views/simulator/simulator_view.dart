@@ -71,12 +71,16 @@ class _SimulatorViewState extends State<SimulatorView> {
                       // Set auth cookie before loading the URL
                       await model.setAuthCookie();
                       final loadUrl = model.url;
+                      final headers = <String, String>{};
+                      if (model.token != null) {
+                        headers['Authorization'] = 'Token ${model.token}';
+                      }
                       debugPrint('[Simulator] Loading URL: $loadUrl');
                       debugPrint('[Simulator] Token present: ${model.token != null}');
                       await controller.loadUrl(
                         urlRequest: URLRequest(
                           url: WebUri.uri(Uri.parse(loadUrl)),
-                          headers: {'Authorization': 'Token ${model.token}'},
+                          headers: headers,
                         ),
                       );
                     },
@@ -89,7 +93,8 @@ class _SimulatorViewState extends State<SimulatorView> {
                     },
                     onReceivedHttpError: (controller, request, response) {
                       debugPrint('[Simulator] HTTP Error ${response.statusCode} for ${request.url}');
-                      if (response.statusCode == 401 || response.statusCode == 403) {
+                      if ((response.statusCode == 401 || response.statusCode == 403) &&
+                          request.isForMainFrame == true) {
                         SnackBarUtils.showDark(
                           'Access Denied',
                           'You don\'t have permission to edit this project.',

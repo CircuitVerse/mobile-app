@@ -115,7 +115,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                       );
                     },
                     icon: const Icon(Icons.play_arrow, color: Colors.white),
-                    tooltip: 'View Circuit',
+                    tooltip: AppLocalizations.of(context)!.project_view_circuit,
                   ),
                 ),
                 if (_recievedProject.hasAuthorAccess)
@@ -132,7 +132,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                         );
                       },
                       icon: const Icon(Icons.edit, color: Colors.white),
-                      tooltip: 'Edit Circuit',
+                      tooltip: AppLocalizations.of(context)!.project_edit_circuit,
                     ),
                   ),
                 Material(
@@ -145,6 +145,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                       );
                     },
                     icon: const Icon(Icons.fullscreen, color: Colors.white),
+                    tooltip: AppLocalizations.of(context)!.project_fullscreen,
                   ),
                 ),
               ],

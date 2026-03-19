@@ -1548,4 +1548,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get contact_us_text =>
       'If you have any questions about our practices or this Privacy Policy, please contact us at ';
+
+  @override
+  String get project_view_circuit => 'View Circuit';
+
+  @override
+  String get project_edit_circuit => 'Edit Circuit';
+
+  @override
+  String get project_fullscreen => 'Fullscreen';
 }

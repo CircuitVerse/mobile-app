@@ -345,16 +345,19 @@ class SimulatorViewModel extends BaseModel {
   Future<void> setAuthCookie() async {
     if (token == null) return;
 
+    final client = HttpClient();
     try {
+      client.connectionTimeout = const Duration(seconds: 10);
 
-      final client = HttpClient();
       final request = await client.getUrl(
         Uri.parse('${EnvironmentConfig.CV_BASE_URL}/simulator'),
       );
       request.headers.set('Authorization', 'Token $token');
       request.followRedirects = false;
 
-      final response = await request.close();
+      final response = await request.close().timeout(
+        const Duration(seconds: 15),
+      );
       debugPrint('[Simulator] Auth request status: ${response.statusCode}');
 
       // Extract all Set-Cookie headers and set them in the WebView
@@ -362,7 +365,7 @@ class SimulatorViewModel extends BaseModel {
       final cookieDomain = '.${Uri.parse(EnvironmentConfig.CV_BASE_URL).host}';
       final cookies = response.cookies;
       for (final cookie in cookies) {
-        debugPrint('[Simulator] Setting cookie: ${cookie.name}=${cookie.value.substring(0, cookie.value.length.clamp(0, 20))}...');
+        debugPrint('[Simulator] Setting cookie: ${cookie.name}');
         await cookieManager.setCookie(
           url: webUri,
           name: cookie.name,
@@ -381,20 +384,18 @@ class SimulatorViewModel extends BaseModel {
         path: '/',
       );
 
-      client.close();
       debugPrint('[Simulator] Auth cookies set');
     } catch (e) {
       debugPrint('[Simulator] Auth cookie error: $e');
+    } finally {
+      client.close();
     }
   }
 
   void onModelDestroy() {
     _projectToEdit = null;
     _viewOnly = false;
-    cookieManager.deleteCookie(
-      url: WebUri.uri(Uri.parse(EnvironmentConfig.CV_BASE_URL)),
-      name: 'cvt',
-    );
+    clearCookies();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,

@@ -1538,4 +1538,13 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get contact_us_text =>
       'إذا كان لديك أي أسئلة حول ممارساتنا أو سياسة الخصوصية هذه، يرجى الاتصال بنا على ';
+
+  @override
+  String get project_view_circuit => 'عرض الدائرة';
+
+  @override
+  String get project_edit_circuit => 'تعديل الدائرة';
+
+  @override
+  String get project_fullscreen => 'ملء الشاشة';
 }
