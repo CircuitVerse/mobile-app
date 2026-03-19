@@ -88,7 +88,6 @@ class CVDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          // Header
           Container(
             width: double.infinity,
             padding: const EdgeInsetsDirectional.fromSTEB(20, 48, 20, 20),
@@ -145,7 +144,6 @@ class CVDrawer extends StatelessWidget {
             ),
           ),
 
-          // Nav items
           Expanded(
             child: ListView(
               padding: const EdgeInsetsDirectional.symmetric(vertical: 12),
@@ -176,7 +174,6 @@ class CVDrawer extends StatelessWidget {
                   ],
                 ),
 
-                // Language Selection Tile
                 Obx(() {
                   final currentLocale = langController.currentLocale.value;
                   final localizations = AppLocalizations.of(context)!;

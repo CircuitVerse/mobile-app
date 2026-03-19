@@ -7,6 +7,7 @@ import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
+import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:showcaseview/showcaseview.dart';
@@ -253,7 +254,6 @@ class _IbLandingViewState extends State<IbLandingView> {
     return Drawer(
       child: Column(
         children: [
-          // Header
           Container(
             width: double.infinity,
             padding: const EdgeInsetsDirectional.fromSTEB(20, 48, 20, 20),
@@ -311,8 +311,7 @@ class _IbLandingViewState extends State<IbLandingView> {
               ],
             ),
           ),
-          
-          // Navigation items
+
           Expanded(
             child: ListView(
               padding: const EdgeInsetsDirectional.symmetric(vertical: 12),
@@ -320,7 +319,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                 InkWell(
                   onTap: () {
                     Get.back();
-                    Get.back();
+                    Get.offAllNamed(CVLandingView.id);
                   },
                   child: CVDrawerTile(
                     title: AppLocalizations.of(context)!.ib_return_home,
