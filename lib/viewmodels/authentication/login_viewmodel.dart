@@ -28,6 +28,11 @@ class LoginViewModel extends BaseModel {
 
       setStateFor(LOGIN, ViewState.Success);
     } on Failure catch (f) {
+      // rollback partial auth state
+      _storage.token = null;
+      _storage.currentUser = null;
+      _storage.isLoggedIn = false;
+
       setStateFor(LOGIN, ViewState.Error);
       setErrorMessageFor(LOGIN, f.message);
     }
