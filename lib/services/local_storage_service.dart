@@ -31,6 +31,10 @@ class LocalStorageService {
   void _saveToDisk<T>(String key, T content) {
     debugPrint('LocalStorageService:_saveToDisk. key: $key value: $content');
 
+    if (content == null) {
+      _preferences!.remove(key);
+      return;
+    }
     if (content is String) {
       _preferences!.setString(key, content);
     }
