@@ -37,10 +37,11 @@ class SimulatorViewModel extends BaseModel {
 
   String get url {
     if (_projectToEdit != null) {
+      final identifier = _projectToEdit!.attributes.slug ?? _projectToEdit!.id;
       if (_viewOnly) {
-        return '${EnvironmentConfig.CV_BASE_URL}/simulator/embed/${_projectToEdit!.id}';
+        return '${EnvironmentConfig.CV_BASE_URL}/simulator/embed/$identifier';
       }
-      return '${EnvironmentConfig.CV_BASE_URL}/simulator/edit/${_projectToEdit!.id}';
+      return '${EnvironmentConfig.CV_BASE_URL}/simulator/edit/$identifier';
     }
     return '${EnvironmentConfig.CV_BASE_URL}/simulator';
   }
@@ -340,9 +341,60 @@ class SimulatorViewModel extends BaseModel {
     ]);
   }
 
+
+  Future<void> setAuthCookie() async {
+    if (token == null) return;
+
+    try {
+
+      final client = HttpClient();
+      final request = await client.getUrl(
+        Uri.parse('${EnvironmentConfig.CV_BASE_URL}/simulator'),
+      );
+      request.headers.set('Authorization', 'Token $token');
+      request.followRedirects = false;
+
+      final response = await request.close();
+      debugPrint('[Simulator] Auth request status: ${response.statusCode}');
+
+      // Extract all Set-Cookie headers and set them in the WebView
+      final webUri = WebUri.uri(Uri.parse(EnvironmentConfig.CV_BASE_URL));
+      final cookieDomain = '.${Uri.parse(EnvironmentConfig.CV_BASE_URL).host}';
+      final cookies = response.cookies;
+      for (final cookie in cookies) {
+        debugPrint('[Simulator] Setting cookie: ${cookie.name}=${cookie.value.substring(0, cookie.value.length.clamp(0, 20))}...');
+        await cookieManager.setCookie(
+          url: webUri,
+          name: cookie.name,
+          value: cookie.value,
+          domain: cookieDomain,
+          path: cookie.path ?? '/',
+        );
+      }
+
+      // Also set the JWT as the cvt cookie
+      await cookieManager.setCookie(
+        url: webUri,
+        name: 'cvt',
+        value: token!,
+        domain: cookieDomain,
+        path: '/',
+      );
+
+      client.close();
+      debugPrint('[Simulator] Auth cookies set');
+    } catch (e) {
+      debugPrint('[Simulator] Auth cookie error: $e');
+    }
+  }
+
   void onModelDestroy() {
     _projectToEdit = null;
     _viewOnly = false;
+    cookieManager.deleteCookie(
+      url: WebUri.uri(Uri.parse(EnvironmentConfig.CV_BASE_URL)),
+      name: 'cvt',
+    );
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,

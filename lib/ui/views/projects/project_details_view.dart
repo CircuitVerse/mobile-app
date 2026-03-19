@@ -118,6 +118,23 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     tooltip: 'View Circuit',
                   ),
                 ),
+                if (_recievedProject.hasAuthorAccess)
+                  Material(
+                    color: CVTheme.primaryColor,
+                    child: IconButton(
+                      onPressed: () {
+                        Get.toNamed(
+                          SimulatorView.id,
+                          arguments: {
+                            'project': _recievedProject,
+                            'viewOnly': false,
+                          },
+                        );
+                      },
+                      icon: const Icon(Icons.edit, color: Colors.white),
+                      tooltip: 'Edit Circuit',
+                    ),
+                  ),
                 Material(
                   color: CVTheme.primaryColor,
                   child: IconButton(

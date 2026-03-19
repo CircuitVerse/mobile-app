@@ -87,6 +87,7 @@ class ProjectAttributes {
         isStarred: json['is_starred'] ?? false,
         authorName: json['author_name'],
         starsCount: json['stars_count'],
+        slug: json['slug'],
       );
   ProjectAttributes({
     required this.name,
@@ -100,6 +101,7 @@ class ProjectAttributes {
     required this.isStarred,
     required this.authorName,
     required this.starsCount,
+    this.slug,
   });
 
   String name;
@@ -108,6 +110,7 @@ class ProjectAttributes {
   DateTime updatedAt;
   ImagePreview imagePreview;
   String? description;
+  String? slug;
   int view;
   List<Tag> tags;
   bool isStarred;
@@ -121,6 +124,7 @@ class ProjectAttributes {
     DateTime? updatedAt,
     ImagePreview? imagePreview,
     String? description,
+    String? slug,
     int? view,
     List<Tag>? tags,
     bool? isStarred,
@@ -138,6 +142,7 @@ class ProjectAttributes {
       authorName: authorName ?? this.authorName,
       starsCount: starsCount ?? this.starsCount,
       description: description ?? this.description,
+      slug: slug ?? this.slug,
       isStarred: isStarred ?? this.isStarred,
     );
   }
