@@ -130,7 +130,6 @@ class CVDrawer extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: IconButton(
-                    tooltip: AppLocalizations.of(context)!.cv_toggle_theme,
                     icon: isDark
                         ? const Icon(Icons.light_mode_outlined)
                         : const Icon(Icons.dark_mode_outlined),
