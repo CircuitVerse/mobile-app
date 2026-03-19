@@ -13,6 +13,7 @@ import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
 import 'package:mobile_app/ui/views/projects/project_preview_fullscreen_view.dart';
+import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
@@ -98,17 +99,56 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     _recievedProject.attributes.imagePreview.url,
               ),
             ),
-            Material(
-              color: CVTheme.primaryColor,
-              child: IconButton(
-                onPressed: () {
-                  Get.toNamed(
-                    ProjectPreviewFullScreen.id,
-                    arguments: _recievedProject,
-                  );
-                },
-                icon: const Icon(Icons.fullscreen, color: Colors.white),
-              ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Material(
+                  color: CVTheme.primaryColor,
+                  child: IconButton(
+                    onPressed: () {
+                      Get.toNamed(
+                        SimulatorView.id,
+                        arguments: {
+                          'project': _recievedProject,
+                          'viewOnly': true,
+                        },
+                      );
+                    },
+                    icon: const Icon(Icons.play_arrow, color: Colors.white),
+                    tooltip: AppLocalizations.of(context)!.project_view_circuit,
+                  ),
+                ),
+                if (_recievedProject.hasAuthorAccess)
+                  Material(
+                    color: CVTheme.primaryColor,
+                    child: IconButton(
+                      onPressed: () {
+                        Get.toNamed(
+                          SimulatorView.id,
+                          arguments: {
+                            'project': _recievedProject,
+                            'viewOnly': false,
+                          },
+                        );
+                      },
+                      icon: const Icon(Icons.edit, color: Colors.white),
+                      tooltip: AppLocalizations.of(context)!.project_edit_circuit,
+                    ),
+                  ),
+                Material(
+                  color: CVTheme.primaryColor,
+                  child: IconButton(
+                    onPressed: () {
+                      Get.toNamed(
+                        ProjectPreviewFullScreen.id,
+                        arguments: _recievedProject,
+                      );
+                    },
+                    icon: const Icon(Icons.fullscreen, color: Colors.white),
+                    tooltip: AppLocalizations.of(context)!.project_fullscreen,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -692,7 +732,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               final bool isChanged =
                   model.receivedProject!.attributes.isStarred ^
                   _recievedProject.attributes.isStarred;
-              Get.back(result: isChanged ? model.receivedProject : null);
+              Navigator.of(context).pop(
+                isChanged ? model.receivedProject : null,
+              );
             },
             child: Scaffold(
               appBar: AppBar(

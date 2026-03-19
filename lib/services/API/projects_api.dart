@@ -269,7 +269,7 @@ class HttpProjectsApi implements ProjectsApi {
 
     try {
       ApiUtils.addTokenToHeaders(headers);
-      var jsonResponse = await ApiUtils.get(uri, headers: headers);
+      var jsonResponse = await ApiUtils.post(uri, headers: headers, body: {});
       return Project.fromJson(jsonResponse['data']);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);

@@ -1555,4 +1555,13 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get contact_us_text =>
       'यदि हमारे व्यवहार या इस गोपनीयता नीति के बारे में आपके कोई प्रश्न हैं, तो कृपया हमसे संपर्क करें - ';
+
+  @override
+  String get project_view_circuit => 'सर्किट देखें';
+
+  @override
+  String get project_edit_circuit => 'सर्किट संपादित करें';
+
+  @override
+  String get project_fullscreen => 'पूर्ण स्क्रीन';
 }

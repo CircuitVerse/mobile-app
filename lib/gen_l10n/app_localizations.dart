@@ -2925,6 +2925,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'If you have any questions about our practices or this Privacy Policy, please contact us at '**
   String get contact_us_text;
+
+  /// No description provided for @project_view_circuit.
+  ///
+  /// In en, this message translates to:
+  /// **'View Circuit'**
+  String get project_view_circuit;
+
+  /// No description provided for @project_edit_circuit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Circuit'**
+  String get project_edit_circuit;
+
+  /// No description provided for @project_fullscreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Fullscreen'**
+  String get project_fullscreen;
 }
 
 class _AppLocalizationsDelegate

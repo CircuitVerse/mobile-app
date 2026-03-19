@@ -38,10 +38,12 @@ class CVRouter {
       case CVLandingView.id:
         return _buildRoute(const CVLandingView());
       case SimulatorView.id:
-        final project = settings.arguments as Project?;
         return _buildRoute(
           const SimulatorView(),
-          settings: RouteSettings(name: SimulatorView.id, arguments: project),
+          settings: RouteSettings(
+            name: SimulatorView.id,
+            arguments: settings.arguments,
+          ),
         );
       case TeachersView.id:
         return _buildRoute(const TeachersView());

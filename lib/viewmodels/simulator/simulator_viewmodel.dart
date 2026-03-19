@@ -31,12 +31,17 @@ class SimulatorViewModel extends BaseModel {
     'com.example.mobile_app/media_store',
   );
 
-  // Project to edit
+
   Project? _projectToEdit;
+  bool _viewOnly = false;
 
   String get url {
     if (_projectToEdit != null) {
-      return '${EnvironmentConfig.CV_BASE_URL}/simulator/edit/${_projectToEdit!.id}';
+      final identifier = _projectToEdit!.attributes.slug ?? _projectToEdit!.id;
+      if (_viewOnly) {
+        return '${EnvironmentConfig.CV_BASE_URL}/simulator/embed/$identifier';
+      }
+      return '${EnvironmentConfig.CV_BASE_URL}/simulator/edit/$identifier';
     }
     return '${EnvironmentConfig.CV_BASE_URL}/simulator';
   }
@@ -324,7 +329,8 @@ class SimulatorViewModel extends BaseModel {
     return false;
   }
 
-  void onModelReady([Project? project]) {
+  void onModelReady({Project? project, bool viewOnly = false}) {
+    _viewOnly = viewOnly;
     if (project != null) {
       setProjectToEdit(project);
     }
@@ -335,8 +341,61 @@ class SimulatorViewModel extends BaseModel {
     ]);
   }
 
+
+  Future<void> setAuthCookie() async {
+    if (token == null) return;
+
+    final client = HttpClient();
+    try {
+      client.connectionTimeout = const Duration(seconds: 10);
+
+      final request = await client.getUrl(
+        Uri.parse('${EnvironmentConfig.CV_BASE_URL}/simulator'),
+      );
+      request.headers.set('Authorization', 'Token $token');
+      request.followRedirects = false;
+
+      final response = await request.close().timeout(
+        const Duration(seconds: 15),
+      );
+      debugPrint('[Simulator] Auth request status: ${response.statusCode}');
+
+      // Extract all Set-Cookie headers and set them in the WebView
+      final webUri = WebUri.uri(Uri.parse(EnvironmentConfig.CV_BASE_URL));
+      final cookieDomain = '.${Uri.parse(EnvironmentConfig.CV_BASE_URL).host}';
+      final cookies = response.cookies;
+      for (final cookie in cookies) {
+        debugPrint('[Simulator] Setting cookie: ${cookie.name}');
+        await cookieManager.setCookie(
+          url: webUri,
+          name: cookie.name,
+          value: cookie.value,
+          domain: cookieDomain,
+          path: cookie.path ?? '/',
+        );
+      }
+
+      // Also set the JWT as the cvt cookie
+      await cookieManager.setCookie(
+        url: webUri,
+        name: 'cvt',
+        value: token!,
+        domain: cookieDomain,
+        path: '/',
+      );
+
+      debugPrint('[Simulator] Auth cookies set');
+    } catch (e) {
+      debugPrint('[Simulator] Auth cookie error: $e');
+    } finally {
+      client.close();
+    }
+  }
+
   void onModelDestroy() {
     _projectToEdit = null;
+    _viewOnly = false;
+    clearCookies();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,

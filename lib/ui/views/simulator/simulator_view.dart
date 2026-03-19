@@ -5,6 +5,7 @@ import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/simulator/simulator_viewmodel.dart';
+import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SimulatorView extends StatefulWidget {
@@ -21,13 +22,21 @@ class _SimulatorViewState extends State<SimulatorView> {
 
   @override
   Widget build(BuildContext context) {
-    // Get the project argument if passed
-    final Project? project = Get.arguments as Project?;
+    Project? project;
+    bool viewOnly = false;
+    if (Get.arguments is Map) {
+      final args = Get.arguments as Map;
+      project = args['project'] as Project?;
+      viewOnly = args['viewOnly'] as bool? ?? false;
+    } else if (Get.arguments is Project) {
+      project = Get.arguments as Project;
+    }
 
     return Scaffold(
       body: SafeArea(
         child: BaseView<SimulatorViewModel>(
-          onModelReady: (model) => model.onModelReady(project),
+          onModelReady: (model) =>
+              model.onModelReady(project: project, viewOnly: viewOnly),
           onModelDestroy: (model) => model.onModelDestroy(),
           builder: (context, model, child) {
             return PopScope(
@@ -57,19 +66,42 @@ class _SimulatorViewState extends State<SimulatorView> {
                     ),
                   ),
                   InAppWebView(
-                    onWebViewCreated: (controller) {
+                    onWebViewCreated: (controller) async {
                       webViewController = controller;
+                      // Set auth cookie before loading the URL
+                      await model.setAuthCookie();
+                      final loadUrl = model.url;
+                      final headers = <String, String>{};
+                      if (model.token != null) {
+                        headers['Authorization'] = 'Token ${model.token}';
+                      }
+                      debugPrint('[Simulator] Loading URL: $loadUrl');
+                      debugPrint('[Simulator] Token present: ${model.token != null}');
+                      await controller.loadUrl(
+                        urlRequest: URLRequest(
+                          url: WebUri.uri(Uri.parse(loadUrl)),
+                          headers: headers,
+                        ),
+                      );
                     },
                     onLoadStop: (controller, uri) async {
+                      debugPrint('[Simulator] Loaded: $uri');
                       model.setStateFor(
                         SimulatorViewModel.SIMULATOR,
                         ViewState.Idle,
                       );
                     },
-                    initialUrlRequest: URLRequest(
-                      url: WebUri.uri(Uri.parse(model.url)),
-                      headers: {'Authorization': 'Token ${model.token}'},
-                    ),
+                    onReceivedHttpError: (controller, request, response) {
+                      debugPrint('[Simulator] HTTP Error ${response.statusCode} for ${request.url}');
+                      if ((response.statusCode == 401 || response.statusCode == 403) &&
+                          request.isForMainFrame == true) {
+                        SnackBarUtils.showDark(
+                          'Access Denied',
+                          'You don\'t have permission to edit this project.',
+                        );
+                        Navigator.of(context).pop();
+                      }
+                    },
                     initialSettings: InAppWebViewSettings(
                       useShouldOverrideUrlLoading: true,
                       useOnDownloadStart: true,
