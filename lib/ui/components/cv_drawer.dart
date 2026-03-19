@@ -135,7 +135,6 @@ class CVDrawer extends StatelessWidget {
                         : const Icon(Icons.dark_mode_outlined),
                     iconSize: 22.0,
                     color: CVTheme.primaryColor,
-                    tooltip: 'Toggle theme',
                     onPressed: () =>
                         ThemeProvider.controllerOf(context).nextTheme(),
                   ),
@@ -224,7 +223,10 @@ class CVDrawer extends StatelessWidget {
                 const SizedBox(height: 4),
 
                 InkWell(
-                  onTap: () => Get.toNamed(IbLandingView.id),
+                  onTap: () {
+                    Get.back();
+                    Get.toNamed(IbLandingView.id);
+                  },
                   child: CVDrawerTile(
                     title: AppLocalizations.of(context)!.cv_interactive_book,
                     iconData: Icons.menu_book_outlined,
@@ -232,16 +234,15 @@ class CVDrawer extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () async {
+                    Get.back();
                     final url = await Get.toNamed(SimulatorView.id);
-                    await Future.delayed(const Duration(seconds: 1));
                     if (url is String) {
                       if (url.contains('sign_out')) {
                         _model.onLogoutPressed();
                       } else if (url.contains('edit')) {
-                        Get.back();
                         SnackBarUtils.showDark(
-                          'New project created',
-                          'Please check your profile to edit..',
+                          AppLocalizations.of(context)!.group_details_project_created,
+                          AppLocalizations.of(context)!.group_details_project_created_success,
                         );
                       } else if (url.contains('groups')) {
                         _model.setSelectedIndexTo(6);
@@ -300,7 +301,8 @@ class CVDrawer extends StatelessWidget {
                   ),
                   _buildExpansionTile(
                     context: context,
-                    title: _model.currentUser?.data.attributes.name ?? '',
+                    title: _model.currentUser?.data.attributes.name ?? 
+                           AppLocalizations.of(context)!.cv_profile,
                     icon: Icons.account_circle_outlined,
                     isActive: selected == 5 || selected == 6,
                     children: <Widget>[
