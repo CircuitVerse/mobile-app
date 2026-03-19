@@ -731,7 +731,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               final bool isChanged =
                   model.receivedProject!.attributes.isStarred ^
                   _recievedProject.attributes.isStarred;
-              Get.back(result: isChanged ? model.receivedProject : null);
+              Navigator.of(context).pop(
+                isChanged ? model.receivedProject : null,
+              );
             },
             child: Scaffold(
               appBar: AppBar(
