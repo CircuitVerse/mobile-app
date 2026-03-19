@@ -20,11 +20,11 @@ class LoginViewModel extends BaseModel {
       // store token in local storage..
       _storage.token = token;
 
-      // update is_logged_in status..
-      _storage.isLoggedIn = true;
-
       // save current user to local storage..
       _storage.currentUser = await _userApi.fetchCurrentUser();
+
+      // update is_logged_in status..
+      _storage.isLoggedIn = true;
 
       setStateFor(LOGIN, ViewState.Success);
     } on Failure catch (f) {
