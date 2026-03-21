@@ -26,6 +26,9 @@ class CVLandingViewModel extends BaseModel {
   
   // Track last notification count to detect new ones
   int _lastNotificationCount = 0;
+  
+  // Navigation stream subscription
+  StreamSubscription<bool>? _navigationSubscription;
 
   bool get isLoggedIn => _storage.isLoggedIn;
 
@@ -87,6 +90,7 @@ class CVLandingViewModel extends BaseModel {
   @override
   void dispose() {
     _notificationPollingTimer?.cancel();
+    _navigationSubscription?.cancel();
     super.dispose();
   }
 
@@ -112,6 +116,10 @@ class CVLandingViewModel extends BaseModel {
     hasPendingNotif = await _viewModel.fetchNotifications();
     // Start polling for new notifications
     startNotificationPolling();
+    // Listen for navigation events from notifications
+    _navigationSubscription = NotificationsServiceImpl.navigateToNotificationsStream.listen((_) {
+      selectedIndex = 8;
+    });
   }
 
   void onProfileUpdated() {

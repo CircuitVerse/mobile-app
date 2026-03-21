@@ -15,6 +15,7 @@ import 'package:mobile_app/utils/router.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:mobile_app/ui/views/startup_view.dart';
 import 'package:mobile_app/controllers/language_controller.dart';
+import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -100,18 +101,26 @@ class _CircuitVerseMobileState extends State<CircuitVerseMobile> {
       // Handle notification tap when app is in background but not terminated
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
         print('A new onMessageOpenedApp event was published!');
-        // TODO: Navigate to specific screen based on message data
+        // Navigate to notifications page
+        _navigateToNotifications();
       });
 
       // Check if app was opened from a terminated state via notification
       RemoteMessage? initialMessage = await _messaging.getInitialMessage();
       if (initialMessage != null) {
         print('App opened from terminated state via notification');
-        // TODO: Navigate to specific screen based on message data
+        // Navigate to notifications page
+        _navigateToNotifications();
       }
     } else {
       print('User declined or has not accepted permission');
     }
+  }
+
+  // Navigate to notifications page
+  void _navigateToNotifications() {
+    // Trigger navigation event via stream
+    NotificationsServiceImpl.triggerNavigateToNotifications();
   }
 
 

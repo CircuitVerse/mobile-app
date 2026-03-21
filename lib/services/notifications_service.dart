@@ -6,6 +6,8 @@ import 'package:mobile_app/utils/api_utils.dart';
 import 'package:mobile_app/utils/app_exceptions.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:get/get.dart';
+import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'dart:async';
 
 abstract class NotificationsService {
@@ -26,9 +28,21 @@ class NotificationsServiceImpl implements NotificationsService {
   static Stream<bool> get notificationRefreshStream =>
       _notificationRefreshController.stream;
 
+  // Stream controller for navigation to notifications page
+  static final StreamController<bool> _navigateToNotificationsController =
+      StreamController<bool>.broadcast();
+
+  static Stream<bool> get navigateToNotificationsStream =>
+      _navigateToNotificationsController.stream;
+
   // Trigger refresh
   static void triggerRefresh() {
     _notificationRefreshController.add(true);
+  }
+
+  // Trigger navigation to notifications page
+  static void triggerNavigateToNotifications() {
+    _navigateToNotificationsController.add(true);
   }
 
   // Flutter Local Notifications Plugin
@@ -49,9 +63,9 @@ class NotificationsServiceImpl implements NotificationsService {
     await _flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
-        // Handle notification tap
+        // Handle notification tap - navigate to notifications page
         print('Notification tapped: ${response.payload}');
-        // TODO: Navigate to notifications page if needed
+        _navigateToNotifications();
       },
     );
 
@@ -67,6 +81,12 @@ class NotificationsServiceImpl implements NotificationsService {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
+  }
+
+  // Navigate to notifications page
+  static void _navigateToNotifications() {
+    // Trigger navigation event via stream
+    triggerNavigateToNotifications();
   }
 
   // Show notification in phone tray
