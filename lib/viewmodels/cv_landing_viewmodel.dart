@@ -5,6 +5,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
+import 'package:mobile_app/services/notifications_service.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
@@ -22,6 +23,9 @@ class CVLandingViewModel extends BaseModel {
   
   // Polling timer for notifications
   Timer? _notificationPollingTimer;
+  
+  // Track last notification count to detect new ones
+  int _lastNotificationCount = 0;
 
   bool get isLoggedIn => _storage.isLoggedIn;
 
@@ -46,10 +50,28 @@ class CVLandingViewModel extends BaseModel {
     _notificationPollingTimer?.cancel();
     
     if (_storage.isLoggedIn) {
+      // Initialize the count
+      _lastNotificationCount = _viewModel.notifications.length;
+      
       // Poll every 10 seconds
       _notificationPollingTimer = Timer.periodic(const Duration(seconds: 10), (timer) async {
         if (_storage.isLoggedIn) {
+          final previousCount = _viewModel.notifications.length;
           hasPendingNotif = await _viewModel.fetchNotifications(silent: true);
+          final currentCount = _viewModel.notifications.length;
+          
+          // Check if there are new notifications
+          if (currentCount > previousCount) {
+            final newNotificationsCount = currentCount - previousCount;
+            
+            // Show local notification for new notifications
+            NotificationsServiceImpl.showLocalNotification(
+              title: 'CircuitVerse',
+              body: newNotificationsCount == 1
+                  ? 'You have 1 new notification'
+                  : 'You have $newNotificationsCount new notifications',
+            );
+          }
         } else {
           timer.cancel();
         }

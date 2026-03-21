@@ -10,6 +10,7 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/database_service.dart';
 import 'package:mobile_app/services/notifications_service.dart';
+import 'package:mobile_app/services/API/fcm_api.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:mobile_app/ui/views/startup_view.dart';
@@ -74,7 +75,17 @@ class _CircuitVerseMobileState extends State<CircuitVerseMobile> {
       // Get FCM token
       String? token = await _messaging.getToken();
       print('FCM Token: $token');
-      // TODO: Send this token to your backend server
+      
+      // Send token to backend server
+      if (token != null) {
+        try {
+          final fcmApi = HttpFCMApi();
+          final response = await fcmApi.sendToken(token);
+          print('FCM token sent to backend: $response');
+        } catch (e) {
+          print('Failed to send FCM token to backend: $e');
+        }
+      }
       
       // Handle foreground messages - show notification in tray
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
