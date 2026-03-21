@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "328673734674",
+    "project_id": "circuitverse-7adfc",
+    "storage_bucket": "circuitverse-7adfc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328673734674:android:b5de1ff1c62ab1127528cb",
+        "android_client_info": {
+          "package_name": "org.circuitverse.mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328673734674-0ni62qmndi8rngelgro7dg41lcfirco0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.circuitverse.mobile_app",
+            "certificate_hash": "c5fc04a8770b314e9ea4326e4a9299ee03682deb"
+          }
+        },
+        {
+          "client_id": "328673734674-c8843huhnbhfki22no0bm2nkbkefmcgb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU0F53IxlurNfELTlGZ1eZ7YkGyNENFT0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328673734674-c8843huhnbhfki22no0bm2nkbkefmcgb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "328673734674-0atk5tc6nogef43i51l7k7cielul92p8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.circuitverse.mobileApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
