@@ -73,7 +73,10 @@ class NotificationsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseView<NotificationsViewModel>(
-      onModelReady: (model) => model.fetchNotifications(),
+      onModelReady: (model) {
+        model.initializeNotificationListener();
+        model.fetchNotifications();
+      },
       builder: (context, model, _) {
         Future.delayed(const Duration(seconds: 1), () {
           context.read<CVLandingViewModel>().hasPendingNotif = model.hasUnread;

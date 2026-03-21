@@ -5,6 +5,7 @@ import 'package:mobile_app/models/notification.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/services/notifications_service.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
+import 'dart:async';
 
 class NotificationsViewModel extends BaseModel {
   // State keys
@@ -15,6 +16,9 @@ class NotificationsViewModel extends BaseModel {
   // Service
   final _notificationService = locator<NotificationsService>();
   final _storageService = locator<LocalStorageService>();
+
+  // Stream subscription for FCM refresh events
+  StreamSubscription<bool>? _refreshSubscription;
 
   // Notifications
   List<Notification> _notifications = [];
@@ -38,6 +42,20 @@ class NotificationsViewModel extends BaseModel {
     notifyListeners();
   }
 
+  // Initialize listener for FCM notifications
+  void initializeNotificationListener() {
+    // Listen to FCM refresh events
+    _refreshSubscription = NotificationsServiceImpl.notificationRefreshStream.listen((_) {
+      fetchNotifications();
+    });
+  }
+
+  @override
+  void dispose() {
+    _refreshSubscription?.cancel();
+    super.dispose();
+  }
+
   void markAsRead(String id) async {
     try {
       setStateFor(MARK_AS_READ, ViewState.Busy);
@@ -50,19 +68,25 @@ class NotificationsViewModel extends BaseModel {
     }
   }
 
-  Future<bool> fetchNotifications() async {
+  Future<bool> fetchNotifications({bool silent = false}) async {
     if (!_storageService.isLoggedIn) return false;
 
     _notifications.clear();
     hasUnread = false;
 
     try {
-      setStateFor(FETCH_NOTIFICATIONS, ViewState.Busy);
+      if (!silent) {
+        setStateFor(FETCH_NOTIFICATIONS, ViewState.Busy);
+      }
       notifications = await _notificationService.fetchNotifications() ?? [];
-      setStateFor(FETCH_NOTIFICATIONS, ViewState.Success);
+      if (!silent) {
+        setStateFor(FETCH_NOTIFICATIONS, ViewState.Success);
+      }
     } on Failure catch (f) {
-      setStateFor(FETCH_NOTIFICATIONS, ViewState.Error);
-      setErrorMessageFor(FETCH_NOTIFICATIONS, f.message);
+      if (!silent) {
+        setStateFor(FETCH_NOTIFICATIONS, ViewState.Error);
+        setErrorMessageFor(FETCH_NOTIFICATIONS, f.message);
+      }
     }
 
     for (final notif in notifications) {

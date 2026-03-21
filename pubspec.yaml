@@ -65,6 +65,7 @@ dependencies:
   flutter_quill: ^11.4.2
   firebase_core: ^4.5.0
   firebase_messaging: ^16.1.2
+  flutter_local_notifications: ^18.0.1
 dev_dependencies:
   mockito: ^5.4.4
   build_runner: ^2.4.13

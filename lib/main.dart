@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/database_service.dart';
+import 'package:mobile_app/services/notifications_service.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:mobile_app/ui/views/startup_view.dart';
@@ -31,6 +32,9 @@ Future<void> main() async {
 
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  // Initialize local notifications
+  await NotificationsServiceImpl.initializeLocalNotifications();
 
   // Init Hive
   await locator<DatabaseService>().init();
@@ -72,15 +76,14 @@ class _CircuitVerseMobileState extends State<CircuitVerseMobile> {
       print('FCM Token: $token');
       // TODO: Send this token to your backend server
       
-      // Handle foreground messages
+      // Handle foreground messages - show notification in tray
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         print('Got a message whilst in the foreground!');
         print('Message data: ${message.data}');
-
-        if (message.notification != null) {
-          print('Message also contained a notification: ${message.notification}');
-          // TODO: Show local notification or update UI
-        }
+        print('Message notification: ${message.notification}');
+        
+        // Always show notification in phone tray when message arrives
+        NotificationsServiceImpl.showNotification(message);
       });
 
       // Handle notification tap when app is in background but not terminated
