@@ -39,7 +39,7 @@ class NotificationAttributes {
   DateTime? readAt;
   DateTime createdAt;
   DateTime updatedAt;
-  NotificationParams params;
+  NotificationParams? params;
 
   factory NotificationAttributes.fromJson(Map<String, dynamic> json) {
     return NotificationAttributes(
@@ -49,7 +49,7 @@ class NotificationAttributes {
       readAt: json['read_at'] != null ? DateTime.parse(json['read_at']) : null,
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
-      params: NotificationParams.fromJson(json['params']),
+      params: json['params'] != null ? NotificationParams.fromJson(json['params']) : null,
       unread: json['unread'],
     );
   }

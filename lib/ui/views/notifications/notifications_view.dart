@@ -205,10 +205,10 @@ class NotificationsView extends StatelessWidget {
                               ),
                             ),
                             title: Text(
-                              '${notification.attributes.params.user.data.attributes.name} '
+                              '${notification.attributes.params?.user.data.attributes.name ?? 'Unknown'} '
                               '${type == NotificationType.Fork ? AppLocalizations.of(context)!.notifications_forked : AppLocalizations.of(context)!.notifications_starred} '
                               '${AppLocalizations.of(context)!.notifications_your_project} '
-                              '${notification.attributes.params.project.name}',
+                              '${notification.attributes.params?.project.name ?? 'Unknown'}',
                               style: TextStyle(
                                 fontWeight:
                                     notification.attributes.unread
