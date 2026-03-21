@@ -14,6 +14,7 @@ import 'package:theme_provider/theme_provider.dart';
 import 'package:mobile_app/ui/views/startup_view.dart';
 import 'package:mobile_app/controllers/language_controller.dart';
 
+@pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
