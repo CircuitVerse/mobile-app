@@ -4,6 +4,9 @@ import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/models/notification.dart';
 import 'package:mobile_app/utils/api_utils.dart';
 import 'package:mobile_app/utils/app_exceptions.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'dart:async';
 
 abstract class NotificationsService {
   Future<List<Notification>?> fetchNotifications();
@@ -15,6 +18,153 @@ abstract class NotificationsService {
 
 class NotificationsServiceImpl implements NotificationsService {
   var headers = {'Content-Type': 'application/json'};
+
+  // Stream controller for notification refresh events
+  static final StreamController<bool> _notificationRefreshController =
+      StreamController<bool>.broadcast();
+
+  static Stream<bool> get notificationRefreshStream =>
+      _notificationRefreshController.stream;
+
+  // Stream controller for navigation to notifications page
+  static final StreamController<bool> _navigateToNotificationsController =
+      StreamController<bool>.broadcast();
+
+  static Stream<bool> get navigateToNotificationsStream =>
+      _navigateToNotificationsController.stream;
+
+  // Trigger refresh
+  static void triggerRefresh() {
+    _notificationRefreshController.add(true);
+  }
+
+  // Trigger navigation to notifications page
+  static void triggerNavigateToNotifications() {
+    _navigateToNotificationsController.add(true);
+  }
+
+  // Flutter Local Notifications Plugin
+  static final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  // Initialize local notifications
+  static Future<void> initializeLocalNotifications() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: DarwinInitializationSettings(),
+    );
+
+    await _flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+        // Handle notification tap - navigate to notifications page
+        print('Notification tapped: ${response.payload}');
+        _navigateToNotifications();
+      },
+    );
+
+    // Create notification channel for Android
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'high_importance_channel', // id
+      'High Importance Notifications', // name
+      description: 'This channel is used for important notifications.',
+      importance: Importance.high,
+    );
+
+    await _flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+  }
+
+  // Navigate to notifications page
+  static void _navigateToNotifications() {
+    // Trigger navigation event via stream
+    triggerNavigateToNotifications();
+  }
+
+  // Show notification in phone tray
+  static Future<void> showNotification(RemoteMessage message) async {
+    RemoteNotification? notification = message.notification;
+
+    // If there's a notification payload, use it
+    if (notification != null) {
+      await _flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'high_importance_channel',
+            'High Importance Notifications',
+            channelDescription:
+                'This channel is used for important notifications.',
+            importance: Importance.high,
+            priority: Priority.high,
+            icon: '@mipmap/ic_launcher',
+          ),
+          iOS: DarwinNotificationDetails(),
+        ),
+        payload: message.data.toString(),
+      );
+    } else if (message.data.isNotEmpty) {
+      // If only data payload exists (no notification field), create notification from data
+      final title = message.data['title'] ?? 'CircuitVerse';
+      final body = message.data['body'] ?? 'You have a new notification';
+      
+      await _flutterLocalNotificationsPlugin.show(
+        DateTime.now().millisecondsSinceEpoch ~/ 1000,
+        title,
+        body,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'high_importance_channel',
+            'High Importance Notifications',
+            channelDescription:
+                'This channel is used for important notifications.',
+            importance: Importance.high,
+            priority: Priority.high,
+            icon: '@mipmap/ic_launcher',
+          ),
+          iOS: DarwinNotificationDetails(),
+        ),
+        payload: message.data.toString(),
+      );
+    }
+    
+    // Trigger refresh of notifications list
+    triggerRefresh();
+  }
+
+  // Show local notification for new in-app notifications
+  static Future<void> showLocalNotification({
+    required String title,
+    required String body,
+    String? payload,
+  }) async {
+    await _flutterLocalNotificationsPlugin.show(
+      DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      title,
+      body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'high_importance_channel',
+          'High Importance Notifications',
+          channelDescription:
+              'This channel is used for important notifications.',
+          importance: Importance.high,
+          priority: Priority.high,
+          icon: '@mipmap/ic_launcher',
+        ),
+        iOS: DarwinNotificationDetails(),
+      ),
+      payload: payload,
+    );
+  }
 
   @override
   Future<List<Notification>?> fetchNotifications() async {
