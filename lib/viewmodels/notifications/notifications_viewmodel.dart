@@ -44,6 +44,8 @@ class NotificationsViewModel extends BaseModel {
 
   // Initialize listener for FCM notifications
   void initializeNotificationListener() {
+    // Cancel existing subscription to prevent duplicates
+    _refreshSubscription?.cancel();
     // Listen to FCM refresh events
     _refreshSubscription = NotificationsServiceImpl.notificationRefreshStream.listen((_) {
       fetchNotifications();
@@ -71,6 +73,10 @@ class NotificationsViewModel extends BaseModel {
   Future<bool> fetchNotifications({bool silent = false}) async {
     if (!_storageService.isLoggedIn) return false;
 
+    // Store previous state in case of failure
+    final previousNotifications = List<Notification>.from(_notifications);
+    final previousHasUnread = hasUnread;
+
     _notifications.clear();
     hasUnread = false;
 
@@ -83,10 +89,16 @@ class NotificationsViewModel extends BaseModel {
         setStateFor(FETCH_NOTIFICATIONS, ViewState.Success);
       }
     } on Failure catch (f) {
+      // Restore previous state on failure
+      _notifications = previousNotifications;
+      hasUnread = previousHasUnread;
+      notifyListeners();
+      
       if (!silent) {
         setStateFor(FETCH_NOTIFICATIONS, ViewState.Error);
         setErrorMessageFor(FETCH_NOTIFICATIONS, f.message);
       }
+      return previousHasUnread;
     }
 
     for (final notif in notifications) {
