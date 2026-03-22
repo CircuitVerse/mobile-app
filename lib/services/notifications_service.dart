@@ -6,8 +6,6 @@ import 'package:mobile_app/utils/api_utils.dart';
 import 'package:mobile_app/utils/app_exceptions.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:get/get.dart';
-import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'dart:async';
 
 abstract class NotificationsService {
