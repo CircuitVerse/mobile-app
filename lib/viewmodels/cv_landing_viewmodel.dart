@@ -57,24 +57,26 @@ class CVLandingViewModel extends BaseModel {
       _lastNotificationCount = _viewModel.notifications.length;
       
       // Poll every 10 seconds
-      _notificationPollingTimer = Timer.periodic(const Duration(seconds: 10), (timer) async {
+      _notificationPollingTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
         if (_storage.isLoggedIn) {
           final previousCount = _viewModel.notifications.length;
-          hasPendingNotif = await _viewModel.fetchNotifications(silent: true);
-          final currentCount = _viewModel.notifications.length;
-          
-          // Check if there are new notifications
-          if (currentCount > previousCount) {
-            final newNotificationsCount = currentCount - previousCount;
+          _viewModel.fetchNotifications(silent: true).then((value) async {
+            hasPendingNotif = value;
+            final currentCount = _viewModel.notifications.length;
             
-            // Show local notification for new notifications
-            NotificationsServiceImpl.showLocalNotification(
-              title: 'CircuitVerse',
-              body: newNotificationsCount == 1
-                  ? 'You have 1 new notification'
-                  : 'You have $newNotificationsCount new notifications',
-            );
-          }
+            // Check if there are new notifications
+            if (currentCount > previousCount) {
+              final newNotificationsCount = currentCount - previousCount;
+              
+              // Show local notification for new notifications
+              await NotificationsServiceImpl.showLocalNotification(
+                title: 'CircuitVerse',
+                body: newNotificationsCount == 1
+                    ? 'You have 1 new notification'
+                    : 'You have $newNotificationsCount new notifications',
+              );
+            }
+          });
         } else {
           timer.cancel();
         }
