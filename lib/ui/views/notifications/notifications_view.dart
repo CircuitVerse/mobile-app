@@ -77,6 +77,9 @@ class NotificationsView extends StatelessWidget {
         model.initializeNotificationListener();
         model.fetchNotifications();
       },
+      onModelDestroy: (model) {
+        model.dispose();
+      },
       builder: (context, model, _) {
         Future.delayed(const Duration(seconds: 1), () {
           context.read<CVLandingViewModel>().hasPendingNotif = model.hasUnread;
