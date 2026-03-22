@@ -13,6 +13,7 @@ class LoginViewModel extends BaseModel {
   final LocalStorageService _storage = locator<LocalStorageService>();
 
   Future<void> login(String email, String password) async {
+    if (isBusy(LOGIN)) return; // prevent double-tap race condition
     setStateFor(LOGIN, ViewState.Busy);
     try {
       var token = await _userApi.login(email, password);
