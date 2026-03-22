@@ -1,9 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/utils/api_utils.dart';
 import 'package:mobile_app/utils/app_exceptions.dart';
+
+// Top-level functions required by compute()
+Projects _parseProjects(dynamic json) =>
+    Projects.fromJson(json as Map<String, dynamic>);
+Project _parseProject(dynamic json) =>
+    Project.fromJson(json as Map<String, dynamic>);
 
 abstract class ProjectsApi {
   Future<Projects>? getPublicProjects({
@@ -68,7 +75,7 @@ class HttpProjectsApi implements ProjectsApi {
 
     try {
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      return Projects.fromJson(jsonResponse);
+      return await compute(_parseProjects, jsonResponse);
     } on Exception {
       throw Failure(Constants.GENERIC_FAILURE);
     }
@@ -89,7 +96,7 @@ class HttpProjectsApi implements ProjectsApi {
     try {
       ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      return Projects.fromJson(jsonResponse);
+      return await compute(_parseProjects, jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on NotFoundException {
@@ -114,7 +121,7 @@ class HttpProjectsApi implements ProjectsApi {
     try {
       ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      return Projects.fromJson(jsonResponse);
+      return await compute(_parseProjects, jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on Exception {
@@ -137,7 +144,7 @@ class HttpProjectsApi implements ProjectsApi {
     try {
       ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      return Projects.fromJson(jsonResponse);
+      return await compute(_parseProjects, jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on Exception {
@@ -153,7 +160,7 @@ class HttpProjectsApi implements ProjectsApi {
     try {
       ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      return Project.fromJson(jsonResponse);
+      return await compute(_parseProject, jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on ForbiddenException {
@@ -178,7 +185,7 @@ class HttpProjectsApi implements ProjectsApi {
     try {
       ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      return Projects.fromJson(jsonResponse);
+      return await compute(_parseProjects, jsonResponse);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on Exception {
@@ -210,7 +217,7 @@ class HttpProjectsApi implements ProjectsApi {
         headers: headers,
         body: json,
       );
-      return Project.fromJson(jsonResponse['data']);
+      return await compute(_parseProject, jsonResponse['data']);
     } on BadRequestException {
       throw Failure(Constants.INVALID_PARAMETERS);
     } on UnauthorizedException {
@@ -270,7 +277,7 @@ class HttpProjectsApi implements ProjectsApi {
     try {
       ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      return Project.fromJson(jsonResponse['data']);
+      return await compute(_parseProject, jsonResponse['data']);
     } on UnauthorizedException {
       throw Failure(Constants.UNAUTHENTICATED);
     } on NotFoundException {
