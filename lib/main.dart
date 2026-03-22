@@ -11,20 +11,17 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/database_service.dart';
 import 'package:mobile_app/services/notifications_service.dart';
 import 'package:mobile_app/services/API/fcm_api.dart';
+import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:theme_provider/theme_provider.dart';
 import 'package:mobile_app/ui/views/startup_view.dart';
 import 'package:mobile_app/controllers/language_controller.dart';
-import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // If you're going to use other Firebase services in the background, such as Firestore,
-  // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
   print("Handling a background message: ${message.messageId}");
 }
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,13 +69,15 @@ class _CircuitVerseMobileState extends State<CircuitVerseMobile> {
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('User granted permission');
-      
+
       // Get FCM token
       String? token = await _messaging.getToken();
       print('FCM Token: $token');
-      
+
+      final isSignedIn = locator<LocalStorageService>().isLoggedIn;
+
       // Send token to backend server
-      if (token != null) {
+      if (token != null && isSignedIn) {
         try {
           final fcmApi = HttpFCMApi();
           final response = await fcmApi.sendToken(token);
@@ -86,14 +85,16 @@ class _CircuitVerseMobileState extends State<CircuitVerseMobile> {
         } catch (e) {
           print('Failed to send FCM token to backend: $e');
         }
+      } else if (!isSignedIn) {
+        print('Skipping FCM token upload because user is not signed in');
       }
-      
+
       // Handle foreground messages - show notification in tray
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         print('Got a message whilst in the foreground!');
         print('Message data: ${message.data}');
         print('Message notification: ${message.notification}');
-        
+
         // Always show notification in phone tray when message arrives
         NotificationsServiceImpl.showNotification(message);
       });
@@ -110,7 +111,9 @@ class _CircuitVerseMobileState extends State<CircuitVerseMobile> {
       if (initialMessage != null) {
         print('App opened from terminated state via notification');
         // Navigate to notifications page
-        _navigateToNotifications();
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _navigateToNotifications();
+        });
       }
     } else {
       print('User declined or has not accepted permission');
@@ -122,8 +125,6 @@ class _CircuitVerseMobileState extends State<CircuitVerseMobile> {
     // Trigger navigation event via stream
     NotificationsServiceImpl.triggerNavigateToNotifications();
   }
-
-
 
   // This widget is the root of CircuitVerse Mobile.
   @override
