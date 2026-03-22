@@ -47,3 +47,4 @@ app.*.map.json
 ## Google Services (e.g. APIs or Firebase)
 /android/app/google-services.json
 firebase.json
+/lib/firebase_options.dart
