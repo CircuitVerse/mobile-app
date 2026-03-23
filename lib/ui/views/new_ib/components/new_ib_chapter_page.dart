@@ -172,12 +172,11 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildContent(context, model.pageData!),
-                  // Debug: Always show recommendations section for now
                   const SizedBox(height: 32),
                   _buildAlsoOnInteractiveBook(context),
                   const SizedBox(height: 32),
                   _buildCommentsSection(context),
-                  const SizedBox(height: 80), // Space for floating buttons
+                  const SizedBox(height: 80),
                 ],
               ),
             ),
@@ -189,7 +188,6 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
   }
 
   Widget _buildContent(BuildContext context, IbPageData pageData) {
-    // Show "Coming Soon" for all pages except Binary Numbers and Binary Representation pages
     final isBinaryNumbers = widget.chapter.id.contains('binary-numbers');
     final isBinaryRepresentation = widget.chapter.id.contains('binary-representation');
 
@@ -228,7 +226,6 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Chapter Title
         Text(
           widget.chapter.value,
           style: TextStyle(
@@ -241,12 +238,10 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
         Divider(thickness: 2, color: IbTheme.getPrimaryColor(context)),
         const SizedBox(height: 24),
 
-        // Table of Contents
         if (pageData.tableOfContents != null &&
             pageData.tableOfContents!.isNotEmpty)
           _buildTableOfContents(context, pageData.tableOfContents!),
 
-        // Content from API
         if (pageData.content != null && pageData.content!.isNotEmpty)
           ...pageData.content!.map((content) {
             if (content is IbMd) {
@@ -522,9 +517,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
         border: Border.all(color: IbTheme.textColor(context).withAlpha(26)),
       ),
       child: InkWell(
-        onTap: () {
-          // TODO: Navigate to chapter
-        },
+        onTap: () {},
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -740,9 +733,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
             ),
             // Content
             InkWell(
-              onTap: () {
-                // TODO: Navigate to suggested chapter by URL
-              },
+              onTap: () {},
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -863,9 +854,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
           Align(
             alignment: Alignment.centerRight,
             child: ElevatedButton.icon(
-              onPressed: () {
-                // TODO: Submit comment
-              },
+              onPressed: () {},
               icon: const Icon(Icons.send_rounded, size: 18),
               label: const Text('Post Comment'),
               style: ElevatedButton.styleFrom(
@@ -996,9 +985,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
           Row(
             children: [
               InkWell(
-                onTap: () {
-                  // TODO: Like comment
-                },
+                onTap: () {},
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
@@ -1031,9 +1018,7 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
               ),
               const SizedBox(width: 12),
               InkWell(
-                onTap: () {
-                  // TODO: Reply to comment
-                },
+                onTap: () {},
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
                   padding: const EdgeInsets.symmetric(
