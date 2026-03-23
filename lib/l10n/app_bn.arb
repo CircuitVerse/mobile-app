@@ -21,6 +21,7 @@
   "editor_picks_title": "এডিটরের পছন্দ",
   "editor_picks_subtitle": "এই সার্কিটগুলি আমাদের লেখকদের দ্বারা তাদের অসাধারণত্বের জন্য বাছাই করা হয়েছে",
   "explore_more_button": "আরও অন্বেষণ করুন",
+ 
   "@teachers_view": {},
   "teachers_title": "শিক্ষকগণ",
   "teachers_description": "CircuitVerse ক্লাসে ব্যবহার করা খুব সহজ হওয়ার জন্য ডিজাইন করা হয়েছে। প্ল্যাটফর্মে ক্লাস এবং অ্যাসাইনমেন্টে শিক্ষকদের সহায়তা করার বৈশিষ্ট্য রয়েছে।",
@@ -33,6 +34,7 @@
   "teachers_feature3_description": "ইন-বিল্ড প্রিভিউ সহ অ্যাসাইনমেন্ট খুব সহজে গ্রেড করুন। শুধু শিক্ষার্থী নির্বাচন করুন, তার অ্যাসাইনমেন্ট কাজে।",
   "teachers_feature4_title": "আপনার ব্লগ, স্টাডি ম্যাটেরিয়াল বা PowerPoint প্রেজেন্টেশনে ইন্টারেক্টিভ সার্কিট ব্যবহার করুন",
   "teachers_feature4_description": "নিশ্চিত করুন যে প্রজেক্টটি পাবলিক। এম্বেড HTML5 কোড পেতে এম্বেডে ক্লিক করুন, তারপর সার্কিটটি এম্বেড করুন। লাইভ সার্কিট এম্বেড করতে আপনাকে Live Slides-এর মতো PowerPoint প্লাগইন ব্যবহার করতে হতে পারে।",
+  
   "@contributors_view": {},
   "contribute_title": "অবদান করুন",
   "contribute_description": "CircuitVerse সর্বদা বিনামূল্যে থাকার লক্ষ্য রাখে এবং আমরা প্রতিশ্রুতি দিচ্ছি যে আমরা কোনো বিজ্ঞাপন চালাব না! প্রজেক্টটি ওপেন সোর্স এবং এর অব্যাহত উন্নয়ন ও রক্ষণাবেক্ষণ নিশ্চিত করতে আমাদের আপনার সমর্থন প্রয়োজন।",
@@ -55,6 +57,7 @@
   "developer_support3": "CircuitVerse প্রজেক্টে বাগ খুঁজুন এবং ঠিক করুন",
   "become_patreon": "Patreon হন",
   "donate_paypal": "PayPal-এর মাধ্যমে দান করুন",
+  
   "@edit_profile_view": {},
   "profile_update_title": "প্রোফাইল আপডেট করুন",
   "profile_picture": "প্রোফাইল ছবি",
@@ -68,13 +71,15 @@
   "profile_updated": "প্রোফাইল আপডেট হয়েছে",
   "profile_update_success": "আপনার প্রোফাইল সফলভাবে আপডেট হয়েছে।",
   "profile_update_error": "আপনার প্রোফাইল আপডেট করার সময় একটি ত্রুটি ঘটেছে।",
+  
   "@user_favourites_view": {},
   "no_favorites_title": "এখনও কোনো পছন্দের নেই!",
   "no_favorites_subtitle": "প্রজেক্ট অন্বেষণ করুন এবং আপনার পছন্দের তালিকায় যোগ করুন",
+  
   "@user_projects_view": {},
   "no_projects_title": "এখনও কোনো প্রজেক্ট নেই!",
-  "no_projects_subtitle": "নতুন ডিজাইন দিয়ে শুরু করুন বা বিদ্যমান টেমপ্লেট ফর্ক করুন"
-,
+  "no_projects_subtitle": "নতুন ডিজাইন দিয়ে শুরু করুন বা বিদ্যমান টেমপ্লেট ফর্ক করুন",
+  
   "@forgot_password_view": {},
   "forgot_password_email": "ইমেইল",
   "forgot_password_email_validation_error": "একটি বৈধ ইমেইল লিখুন",
@@ -87,6 +92,7 @@
   "forgot_password_instructions_sent_message": "পাসওয়ার্ড রিসেট নির্দেশনা আপনার ইমেইলে পাঠানো হয়েছে",
   "forgot_password_error": "ত্রুটি",
   "forgot_password_link": "পাসওয়ার্ড ভুলে গেছেন?",
+  
   "@login_view": {},
   "login_email": "ইমেইল",
   "login_email_validation_error": "একটি বৈধ ইমেইল লিখুন",
@@ -99,6 +105,7 @@
   "login_success_title": "লগইন সফল",
   "login_success_message": "স্বাগতম ফিরে!",
   "login_error": "ত্রুটি",
+  
   "@signup_view": {},
   "signup_name": "নাম",
   "signup_name_validation_error": "নাম খালি রাখা যাবে না",
@@ -113,6 +120,7 @@
   "signup_success_title": "সাইনআপ সফল",
   "signup_success_message": "CircuitVerse-এ আপনাকে স্বাগতম!",
   "signup_error": "ত্রুটি",
+  
   "@add_assignment_view": {},
   "assignment_letter_grade": "লেটার গ্রেড",
   "assignment_percent": "শতাংশ",
@@ -130,6 +138,7 @@
   "assignment_add_error": "ত্রুটি",
   "assignment_add_title": "অ্যাসাইনমেন্ট যোগ করুন",
   "assignment_no_scale": "কোনো স্কেল নেই",
+  
   "@assignment_details_view": {},
   "assignment_details_edit": "সম্পাদনা",
   "assignment_details_name": "নাম",
@@ -174,6 +183,7 @@
   "edit_group_name": "গ্রুপের নাম",
   "edit_group_name_validation_error": "একটি গ্রুপের নাম লিখুন",
   "edit_group_save": "সংরক্ষণ করুন",
+  
   "@group_details_view": {},
   "group_details_edit": "সম্পাদনা",
   "group_details_primary_mentor": "প্রাথমিক মেন্টর",
@@ -231,6 +241,7 @@
   "group_details_demoted": "পদাবনতি দেওয়া হয়েছে",
   "group_details_member_updated_success": "গ্রুপ সদস্য সফলভাবে আপডেট হয়েছে",
   "group_details_title": "গ্রুপের বিবরণ",
+  
   "@my_groups_view": {},
   "my_groups_explore_message": "আপনার স্কুল এবং বন্ধুদের গ্রুপ অন্বেষণ করুন এবং যোগ দিন!",
   "my_groups_delete_group": "গ্রুপ মুছুন",
@@ -244,6 +255,7 @@
   "my_groups_view": "দেখুন",
   "my_groups_joined": "যোগ দেওয়া হয়েছে",
   "my_groups_edit": "সম্পাদনা",
+  
   "@new_group_view": {},
   "new_group_creating": "তৈরি করা হচ্ছে...",
   "new_group_created": "গ্রুপ তৈরি হয়েছে",
@@ -253,8 +265,8 @@
   "new_group_description": "মেন্টররা শিক্ষার্থীদের জন্য প্রজেক্ট নির্ধারণ এবং গ্রেড দিতে গ্রুপ ব্যবহার করতে পারেন",
   "new_group_name": "গ্রুপের নাম",
   "new_group_name_validation_error": "একটি গ্রুপের নাম লিখুন",
-  "new_group_save": "সংরক্ষণ করুন"
-,
+  "new_group_save": "সংরক্ষণ করুন",
+  
   "@update_assignment_view": {},
   "update_assignment_name": "নাম",
   "update_assignment_name_validation_error": "একটি বৈধ নাম লিখুন",
@@ -268,6 +280,7 @@
   "update_assignment_updated": "অ্যাসাইনমেন্ট আপডেট হয়েছে",
   "update_assignment_update_success": "অ্যাসাইনমেন্ট সফলভাবে আপডেট হয়েছে",
   "update_assignment_error": "ত্রুটি",
+  
   "@ib_landing_view": {},
   "ib_search_circuitverse": "CircuitVerse অনুসন্ধান করুন",
   "ib_navigate_chapters": "বিভিন্ন অধ্যায়ে নেভিগেট করুন",
@@ -277,6 +290,7 @@
   "ib_home": "ইন্টারেক্টিভ বই হোম",
   "ib_loading_chapters": "অধ্যায় লোড হচ্ছে...",
   "ib_show_toc": "বিষয়সূচি দেখান",
+  
   "@ib_page_view": {},
   "ib_page_copyright_notice": "কপিরাইট © ২০২১ CircuitVerse-এর অবদানকারীগণ। [CC-by-sa] লাইসেন্সের অধীনে বিতরণ করা হয়েছে।",
   "ib_page_table_of_contents": "বিষয়সূচি",
@@ -285,6 +299,7 @@
   "ib_page_loading_image": "ছবি লোড হচ্ছে...",
   "ib_page_image_load_error": "ছবি লোড করতে ব্যর্থ",
   "ib_page_no_image_source": "কোনো ছবির উৎস প্রদান করা হয়নি",
+  
   "@notifications_view": {},
   "notifications_no_notifications": "এখনও কোনো বিজ্ঞপ্তি নেই",
   "notifications_will_appear": "আপনার বিজ্ঞপ্তিগুলি এখানে দেখাবে",
@@ -295,6 +310,7 @@
   "notifications_starred": "তারকাচিহ্নিত",
   "notifications_forked": "ফর্ক করা হয়েছে",
   "notifications_your_project": "আপনার প্রজেক্ট",
+  
   "@profile_view": {},
   "profile_view_not_available": "উপলব্ধ নয়",
   "profile_view_edit": "প্রোফাইল সম্পাদনা করুন",
@@ -307,6 +323,7 @@
   "profile_view_title": "প্রোফাইল",
   "profile_view_circuits": "সার্কিট",
   "profile_view_favourites": "পছন্দের",
+  
   "@edit_project_view": {},
   "edit_project_name": "নাম",
   "edit_project_name_validation_error": "নাম খালি রাখা যাবে না",
@@ -357,22 +374,27 @@
   "edit_add": "যোগ করুন",
   "edit_open_in_simulator": "সিমুলেটরে খুলুন",
   "edit_project_tag_hint": "আপনার প্রজেক্ট ট্যাগগুলি কমা[,] দিয়ে আলাদা করে লিখুন",
+  
   "@featured_projects_card": {},
   "featured_projects_card_view": "দেখুন",
+  
   "@featured_projects_view": {},
   "featured_no_result_found": "কোনো ফলাফল পাওয়া যায়নি",
   "featured_editor_picks": "এডিটরের পছন্দ",
   "featured_editor_picks_description": "সেরা প্রজেক্টের বাছাই করা তালিকা",
   "featured_search_for_circuits": "সার্কিট অনুসন্ধান করুন",
   "featured_circuits": "ফিচার্ড সার্কিট",
+  
   "@group_member_card_view": {},
   "group_member_count": "মোট সদস্য",
   "group_member_card_view": "দেখুন",
+  
   "@group_mentor_card_view": {},
   "group_mentor_card_view": "দেখুন",
   "group_mentor_card_edit": "সম্পাদনা",
   "group_mentor_card_delete": "মুছুন",
   "group_mentor_count": "সংখ্যা",
+  
   "@assignment_card_view": {},
   "assignment_card_view": "দেখান",
   "assignment_card_edit": "সম্পাদনা",
@@ -384,8 +406,8 @@
   "assignment_card_not_submitted": "জমা দেওয়া হয়নি!",
   "assignment_card_no_name": "কোনো নাম নেই",
   "assignment_card_grading": "গ্রেডিং",
-  "assignment_card_deadline": "সময়সীমা"
-,
+  "assignment_card_deadline": "সময়সীমা",
+  
   "@cv_landing_view": {},
   "cv_title": "CircuitVerse",
   "cv_groups": "গ্রুপ",
@@ -411,9 +433,11 @@
   "cv_exit_app_message": "আপনি কি সত্যিই অ্যাপ্লিকেশনটি বন্ধ করতে চান?",
   "cv_exit_app": "বন্ধ করুন",
   "cv_cancel": "বাতিল",
+  
   "@about": {},
   "terms_of_service": "সেবার শর্তাবলী",
   "privacy_policy": "গোপনীয়তা নীতি",
+  
   "@about_view": {},
   "loading_contributors": "অবদানকারীরা লোড হচ্ছে ...",
   "about_title": "সম্পর্কে",
@@ -423,8 +447,8 @@
   "join_slack": "আমাদের সাথে যোগ দিন এবং চ্যাট করুন",
   "about_slack_channel": "Slack চ্যানেল",
   "contributors": "অবদানকারীগণ",
-  "contributors_subtitle": "CircuitVerse সম্প্রদায়ের অবদানকারীদের সাথে পরিচিত হন যারা এই প্ল্যাটফর্মকে এখন যা আছে তা করেছেন।"
-,
+  "contributors_subtitle": "CircuitVerse সম্প্রদায়ের অবদানকারীদের সাথে পরিচিত হন যারা এই প্ল্যাটফর্মকে এখন যা আছে তা করেছেন।",
+  
   "@about_tos_view": {},
   "tos_section1_title": "১. ব্যবহারকারী চুক্তি",
   "tos_section1_text1_string1": "১.১ এই ব্যবহারের শর্তাবলী আপনার এবং CircuitVerse টিমের মধ্যে একটি চুক্তি গঠন করে যা আপনার ",
@@ -454,8 +478,7 @@
   "tos_section4_text3_link": "ক্রিয়েটিভ কমন্স অ্যাট্রিবিউশন-শেয়ারঅ্যালাইক ২.০ লাইসেন্স",
   "tos_section4_text3_string2": " এর অধীনে CircuitVerse-এর মাধ্যমে লাইসেন্সপ্রাপ্ত। এটি অন্যদের আপনার কন্টেন্ট দেখতে এবং ফর্ক করতে দেয়। এই লাইসেন্স CircuitVerse টিমকে CircuitVerse ওয়েবসাইটে, সোশ্যাল মিডিয়া চ্যানেলে এবং অন্যত্র আপনার কন্টেন্ট প্রদর্শন, বিতরণ এবং পুনরুৎপাদন করার অনুমতি দেয়। যদি আপনি এই লাইসেন্সের অধীনে আপনার কন্টেন্ট লাইসেন্স করতে না চান, তাহলে CircuitVerse-এ শেয়ার করবেন না।\n\n",
   "tos_section4_text4": "৪.৪ রিপোর্ট করা ব্যবহারকারী-উৎপাদিত কন্টেন্ট পর্যালোচনা করার পাশাপাশি, CircuitVerse টিম CircuitVerse পরিষেবার সমস্ত ব্যবহার পর্যবেক্ষণ করার অধিকার সংরক্ষণ করে, কিন্তু বাধ্য নয়। CircuitVerse টিম বিনা নোটিশে ব্যবহারের শর্তাবলী বা সম্প্রদায় নির্দেশিকা লঙ্ঘন করে এমন যেকোনো কন্টেন্ট সম্পাদনা, সরানো বা মুছে ফেলতে পারে।\n\n",
-  "tos_section4_text5": "৪.৫ সমস্ত ব্যবহারকারী-উৎপাদিত কন্টেন্ট যেমন আছে তেমনভাবে প্রদান করা হয়। CircuitVerse টিম CircuitVerse-এর মাধ্যমে উপলব্ধ যেকোনো ব্যবহারকারী-উৎপাদিত কন্টেন্টের নির্ভুলতা বা নির্ভরযোগ্যতা সম্পর্কে কোনো ওয়ারেন্টি দেয় না এবং CircuitVerse Day ইভেন্টগুলি সমর্থন করে না বা উক্ত ইভেন্টগুলির সাথে সম্পর্কিত পোস্ট করা তথ্য যাচাই করে না। CircuitVerse টিম ব্যবহারকারী-উৎপাদিত কন্টেন্টে প্রকাশিত কোনো মতামত, দৃষ্টিভঙ্গি বা পরামর্শ সমর্থন করে না। আপনি আপনার ব্যবহারকারী-উৎপাদিত কন্টেন্ট থেকে উদ্ভূত যেকোনো এবং সমস্ত দায় থেকে CircuitVerse টিমকে মুক্তি দিতে সম্মত হন।\n\n"
-,
+  "tos_section4_text5": "৪.৫ সমস্ত ব্যবহারকারী-উৎপাদিত কন্টেন্ট যেমন আছে তেমনভাবে প্রদান করা হয়। CircuitVerse টিম CircuitVerse-এর মাধ্যমে উপলব্ধ যেকোনো ব্যবহারকারী-উৎপাদিত কন্টেন্টের নির্ভুলতা বা নির্ভরযোগ্যতা সম্পর্কে কোনো ওয়ারেন্টি দেয় না এবং CircuitVerse Day ইভেন্টগুলি সমর্থন করে না বা উক্ত ইভেন্টগুলির সাথে সম্পর্কিত পোস্ট করা তথ্য যাচাই করে না। CircuitVerse টিম ব্যবহারকারী-উৎপাদিত কন্টেন্টে প্রকাশিত কোনো মতামত, দৃষ্টিভঙ্গি বা পরামর্শ সমর্থন করে না। আপনি আপনার ব্যবহারকারী-উৎপাদিত কন্টেন্ট থেকে উদ্ভূত যেকোনো এবং সমস্ত দায় থেকে CircuitVerse টিমকে মুক্তি দিতে সম্মত হন।\n\n",
   "tos_section5_title": "৫. CircuitVerse কন্টেন্ট এবং লাইসেন্সিং",
   "tos_section5_text1": "৫.১ যেকোনো ব্যবহারকারী-উৎপাদিত কন্টেন্ট ব্যতীত, CircuitVerse টিম CircuitVerse কোড, ডিজাইন, কার্যকারিতা এবং আর্কিটেকচার এবং CircuitVerse-এর মাধ্যমে প্রদত্ত যেকোনো সফটওয়্যার বা কন্টেন্টে (সম্মিলিতভাবে \"CircuitVerse IP\") সমস্ত অধিকার মালিক এবং ধরে রাখে। যদি আপনি এই ব্যবহারের শর্তাবলী দ্বারা অনুমোদিত নয় এমনভাবে CircuitVerse ব্যবহার করতে চান, তাহলে আপনাকে প্রথমে CircuitVerse টিমের সাথে যোগাযোগ করতে হবে। এই ব্যবহারের শর্তাবলীর অধীনে স্পষ্টভাবে প্রদত্ত অধিকার ব্যতীত, আপনাকে কোনো CircuitVerse IP-তে কোনো অধিকার দেওয়া হয়নি।\n\n",
   "tos_section6_title": "৬. ডিজিটাল মিলেনিয়াম কপিরাইট অ্যাক্ট (DMCA)",
@@ -479,8 +502,8 @@
   "tos_section12_title": "১২. ভাষার পছন্দ",
   "tos_section12_text1": "যদি CircuitVerse টিম আপনাকে এই ব্যবহারের শর্তাবলী, গোপনীয়তা নীতি বা অন্য কোনো নীতির ইংরেজি ভাষার সংস্করণের অনুবাদ প্রদান করে, তাহলে আপনি সম্মত হন যে অনুবাদটি শুধুমাত্র তথ্যমূলক উদ্দেশ্যে প্রদান করা হয়েছে এবং ইংরেজি ভাষার সংস্করণ পরিবর্তন করে না। অনুবাদ এবং ইংরেজি সংস্করণের মধ্যে দ্বন্দ্বের ক্ষেত্রে, ইংরেজি সংস্করণ প্রাধান্য পাবে।\n\n",
   "tos_section13_title": "১৩. কোনো ছাড় নেই",
-  "tos_section13_text1": "এই ব্যবহারের শর্তাবলীর কোনো শর্তের কোনো ছাড়কে এই ধরনের শর্ত বা অন্য কোনো শর্তের আরও বা অব্যাহত ছাড় হিসেবে গণ্য করা হবে না, এবং এই ব্যবহারের শর্তাবলীর অধীনে কোনো অধিকার বা বিধান দাবি করতে CircuitVerse টিমের ব্যর্থতা এই ধরনের অধিকার বা বিধানের ছাড় গঠন করবে না।\n\n"
-,
+  "tos_section13_text1": "এই ব্যবহারের শর্তাবলীর কোনো শর্তের কোনো ছাড়কে এই ধরনের শর্ত বা অন্য কোনো শর্তের আরও বা অব্যাহত ছাড় হিসেবে গণ্য করা হবে না, এবং এই ব্যবহারের শর্তাবলীর অধীনে কোনো অধিকার বা বিধান দাবি করতে CircuitVerse টিমের ব্যর্থতা এই ধরনের অধিকার বা বিধানের ছাড় গঠন করবে না।\n\n",
+
   "@about_privacy_policy_view": {},
   "privacy_section1_text": "\nআমরা স্বীকার করি যে আপনার গোপনীয়তা অত্যন্ত গুরুত্বপূর্ণ এবং আমরা এটিকে গুরুত্বের সাথে নিই। আমাদের CircuitVerse গোপনীয়তা নীতি (\"গোপনীয়তা নীতি\") আমাদের প্ল্যাটফর্ম ব্যবহার করার সময় আপনার তথ্য সংগ্রহ, ব্যবহার, প্রকাশ এবং ভাগ করার বিষয়ে আমাদের নীতি ও পদ্ধতি বর্ণনা করে। আমরা এই গোপনীয়তা নীতিতে বর্ণিত ব্যতীত আপনার তথ্য ব্যবহার করব না বা কারো সাথে ভাগ করব না। এই গোপনীয়তা নীতিতে সংজ্ঞায়িত নয় এমন বড় হাতের শব্দগুলির অর্থ আমাদের ",
   "privacy_section_2_title": "আমরা যে তথ্য সংগ্রহ করি",
