@@ -31,6 +31,7 @@ import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:mobile_app/viewmodels/notifications/notifications_viewmodel.dart';
+import 'package:mobile_app/viewmodels/onboarding/onboarding_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
@@ -80,6 +81,9 @@ Future<void> setupLocator() async {
 
   // Startup ViewModel
   locator.registerFactory(() => StartUpViewModel());
+
+  // Onboarding ViewModel
+  locator.registerFactory(() => OnboardingViewModel());
 
   // Authentication ViewModels
   locator.registerFactory(() => SignupViewModel());
