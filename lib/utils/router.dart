@@ -17,6 +17,7 @@ import 'package:mobile_app/ui/views/groups/new_group_view.dart';
 import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
 import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
+import 'package:mobile_app/ui/views/onboarding/onboarding_view.dart';
 import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
@@ -29,6 +30,8 @@ import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 class CVRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case OnboardingView.id:
+        return _buildRoute(const OnboardingView());
       case SignupView.id:
         return _buildRoute(const SignupView());
       case LoginView.id:
