@@ -13,6 +13,7 @@ class LocalStorageService {
   static const String TOKEN = 'token';
   static const String IS_LOGGED_IN = 'is_logged_in';
   static const String IS_FIRST_TIME_LOGIN = 'is_first_time_login';
+  static const String IS_FIRST_TIME_LAUNCH = 'is_first_time_launch';
   static const String AUTH_TYPE = 'auth_type';
   static const String IB_SHOWCASE_STATE = 'ib_showcase_state';
 
@@ -64,6 +65,12 @@ class LocalStorageService {
 
   set isFirstTimeLogin(bool isLoggedIn) {
     _saveToDisk(IS_FIRST_TIME_LOGIN, isLoggedIn);
+  }
+
+  bool get isFirstTimeLaunch => _getFromDisk(IS_FIRST_TIME_LAUNCH) ?? true;
+
+  set isFirstTimeLaunch(bool isFirstTime) {
+    _saveToDisk(IS_FIRST_TIME_LAUNCH, isFirstTime);
   }
 
   User? get currentUser {
