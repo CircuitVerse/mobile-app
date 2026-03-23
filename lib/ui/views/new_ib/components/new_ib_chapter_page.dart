@@ -50,8 +50,9 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
       final chapterId = widget.chapter.id.replaceAll('.md', '');
       final chapterPath = chapterId.replaceAll('docs/', '/docs/');
       final fullUrl = '$baseUrl$chapterPath/';
-
+      
       final recommendations = await _disqusApi.fetchRecommendations(fullUrl);
+      
       if (mounted) {
         setState(() {
           _recommendations = recommendations;
@@ -59,7 +60,6 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
         });
       }
     } catch (e) {
-      print('Error loading recommendations: $e');
       // Use fallback recommendations if API fails
       if (mounted) {
         setState(() {
@@ -172,16 +172,11 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildContent(context, model.pageData!),
-                  // Show recommendations and comments for Binary Numbers and Binary Representation index page
-                  if (widget.chapter.id.contains('binary-numbers') ||
-                      widget.chapter.id.contains(
-                        'binary-representation/index',
-                      )) ...[
-                    const SizedBox(height: 32),
-                    _buildAlsoOnInteractiveBook(context),
-                    const SizedBox(height: 32),
-                    _buildCommentsSection(context),
-                  ],
+                  // Debug: Always show recommendations section for now
+                  const SizedBox(height: 32),
+                  _buildAlsoOnInteractiveBook(context),
+                  const SizedBox(height: 32),
+                  _buildCommentsSection(context),
                   const SizedBox(height: 80), // Space for floating buttons
                 ],
               ),
@@ -194,11 +189,9 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
   }
 
   Widget _buildContent(BuildContext context, IbPageData pageData) {
-    // Show "Coming Soon" for all pages except Binary Numbers and Binary Representation main page
+    // Show "Coming Soon" for all pages except Binary Numbers and Binary Representation pages
     final isBinaryNumbers = widget.chapter.id.contains('binary-numbers');
-    final isBinaryRepresentation = widget.chapter.id.contains(
-      'binary-representation/index',
-    );
+    final isBinaryRepresentation = widget.chapter.id.contains('binary-representation');
 
     if (!isBinaryNumbers && !isBinaryRepresentation) {
       return Center(
@@ -615,10 +608,6 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
       );
     }
 
-    if (_recommendations.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -641,22 +630,36 @@ class _NewIbChapterPageState extends State<NewIbChapterPage> {
           ],
         ),
         const SizedBox(height: 16),
-        SizedBox(
-          height: 140,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount:
-                _recommendations.length > 5 ? 5 : _recommendations.length,
-            itemBuilder: (context, index) {
-              final recommendation = _recommendations[index];
-              return _buildSuggestionCard(
-                context,
-                recommendation.title,
-                recommendation.url,
-              );
-            },
+        if (_recommendations.isEmpty)
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Text(
+                'No recommendations available',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: IbTheme.textColor(context).withAlpha(128),
+                ),
+              ),
+            ),
+          )
+        else
+          SizedBox(
+            height: 140,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount:
+                  _recommendations.length > 5 ? 5 : _recommendations.length,
+              itemBuilder: (context, index) {
+                final recommendation = _recommendations[index];
+                return _buildSuggestionCard(
+                  context,
+                  recommendation.title,
+                  recommendation.url,
+                );
+              },
+            ),
           ),
-        ),
       ],
     );
   }

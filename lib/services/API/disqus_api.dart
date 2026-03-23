@@ -9,7 +9,7 @@ abstract class DisqusApi {
 }
 
 class DisqusApiImpl implements DisqusApi {
-  static const String _apiKey = EnvironmentConfig.DISQUS_API_KEY;
+  static const String _apiKey = 'E8Uh5l5fHZ6gD8U3KycjAIAk46f68Zw7C6eW8WSjZvCLXebZ7p0r1yrYDrLilk2F';
   static const String _forum = 'interactive-book';
   static const String _baseUrl = 'https://disqus.com/api/3.0';
   static const Duration _timeout = Duration(seconds: 10);
@@ -58,10 +58,8 @@ class DisqusApiImpl implements DisqusApi {
       }
       return [];
     } on TimeoutException catch (e) {
-      print('Timeout fetching recommendations: $e');
       return [];
     } catch (e) {
-      print('Error fetching recommendations: $e');
       return [];
     }
   }

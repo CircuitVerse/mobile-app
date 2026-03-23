@@ -42,9 +42,7 @@ class _NewInteractiveBookViewState extends State<NewInteractiveBookView> {
               actions: [
                 IconButton(
                   icon: const Icon(Icons.search_rounded),
-                  onPressed: () {
-                    // TODO: Implement search functionality
-                  },
+                  onPressed: () {},
                   tooltip: 'Search',
                 ),
               ],

@@ -10,7 +10,10 @@ import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 class NewIbHomePage extends StatelessWidget {
   final IbChapter chapter;
 
-  const NewIbHomePage({super.key, required this.chapter});
+  const NewIbHomePage({
+    super.key,
+    required this.chapter,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -229,13 +232,14 @@ class NewIbHomePage extends StatelessWidget {
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 feature['icon'] as IconData,
                 size: 40,
                 color: IbTheme.getPrimaryColor(context),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 8),
               Text(
                 feature['title'] as String,
                 style: TextStyle(
@@ -246,13 +250,17 @@ class NewIbHomePage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 4),
-              Text(
-                feature['description'] as String,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: IbTheme.textColor(context).withAlpha(179),
+              Flexible(
+                child: Text(
+                  feature['description'] as String,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: IbTheme.textColor(context).withAlpha(179),
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                textAlign: TextAlign.center,
               ),
             ],
           ),
