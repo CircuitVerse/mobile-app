@@ -20,6 +20,36 @@ class SnackBarUtils {
     );
   }
 
+  static void showDarkWithContext(
+    BuildContext context,
+    String title,
+    String message,
+  ) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(message, style: const TextStyle(color: Colors.white)),
+          ],
+        ),
+        backgroundColor: Colors.black.withValues(alpha: 0.85),
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.all(12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
   static void _show({
     required String title,
     required String message,
