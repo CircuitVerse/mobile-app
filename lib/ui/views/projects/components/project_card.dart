@@ -112,14 +112,14 @@ class _ProjectCardState extends State<ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.all(8.0),
-      child: Card(
-        elevation: 5,
-        shadowColor: CVTheme.primaryColorLight,
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: widget.onPressed,
+    return InkWell(
+      onTap: widget.onPressed,
+      child: Padding(
+        padding: const EdgeInsetsDirectional.all(8.0),
+        child: Card(
+          elevation: 5,
+          shadowColor: CVTheme.primaryColorLight,
+          clipBehavior: Clip.antiAlias,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[_buildHeader(), _buildPreview()],
