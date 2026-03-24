@@ -120,8 +120,11 @@ class _IbPageViewState extends State<IbPageView> {
   void _onTapLink(String text, String? href, String title) async {
     if (href == null) return;
     if (href.startsWith(EnvironmentConfig.IB_BASE_URL)) {
-      if (_model.pageData!.pageUrl.startsWith(href)) {
-        return _scrollToWidget(href.substring(1));
+      if (href.startsWith(_model.pageData!.pageUrl) && href.contains('#')) {
+        final anchor = href.split('#').last;
+        return _scrollToWidget(anchor);
+      } else if (href == _model.pageData!.pageUrl) {
+        return;
       } else {
         launchURL(href);
       }
