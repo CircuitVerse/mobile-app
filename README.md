@@ -44,6 +44,56 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 
 `flutter run`
 
+### Running Tests
+
+The project includes unit tests, widget tests, and integration tests to ensure code quality.
+
+#### Setup for Testing
+
+Before running tests for the first time, you need to generate mock files:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+This command generates:
+- Mock classes for testing (`.mocks.dart` files)
+- Hive type adapters (`.g.dart` files)
+
+#### Run All Tests
+
+```bash
+flutter test
+```
+
+#### Run Specific Test File
+
+```bash
+flutter test test/path/to/test_file.dart
+```
+
+#### Run Tests with Coverage
+
+```bash
+flutter test --coverage
+```
+
+#### Test Structure
+
+```bash
+mobile-app/test/
+├── model_tests/           # Model serialization tests
+├── service_tests/         # API and service layer tests
+├── ui_tests/              # Widget/UI tests
+├── utils_tests/           # Utility function tests
+├── viewmodel_tests/       # ViewModel logic tests
+└── setup/                 # Test helpers and mocks
+    ├── test_helpers.dart
+    └── test_helpers.mocks.dart  # Generated mock classes
+```
+
+**Note:** Mock files (`.mocks.dart`) are auto-generated and should not be edited manually. If you add new classes to mock, update the `@GenerateNiceMocks` annotation in `test/setup/test_helpers.dart` and regenerate mocks using build_runner.
+
 ### Android OAuth Config
 
 This project uses Flutter 3.32.2 and hence the support for compile-time variables. To use compile-time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
