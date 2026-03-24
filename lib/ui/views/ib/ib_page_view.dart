@@ -139,10 +139,11 @@ class _IbPageViewState extends State<IbPageView> {
       if (isSameDocument && target.fragment.isNotEmpty) {
         final anchor = Uri.decodeComponent(target.fragment);
         return _scrollToWidget(anchor);
-      } else if (href == _model.pageData!.pageUrl) {
+      } else if (isSameDocument || href == _model.pageData!.pageUrl) {
         return;
       } else {
         launchURL(href);
+        return;
       }
     }
 
