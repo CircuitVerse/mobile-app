@@ -120,10 +120,30 @@ class _IbPageViewState extends State<IbPageView> {
   void _onTapLink(String text, String? href, String title) async {
     if (href == null) return;
     if (href.startsWith(EnvironmentConfig.IB_BASE_URL)) {
-      if (_model.pageData!.pageUrl.startsWith(href)) {
-        return _scrollToWidget(href.substring(1));
+      final current = Uri.tryParse(_model.pageData!.pageUrl);
+      final target = Uri.tryParse(href);
+      
+      String _normalizePath(String path) {
+        if (path.endsWith('/') && path.length > 1) {
+          return path.substring(0, path.length - 1);
+        }
+        return path;
+      }
+
+      final isSameDocument = current != null &&
+          target != null &&
+          current.scheme == target.scheme &&
+          current.host == target.host &&
+          _normalizePath(current.path) == _normalizePath(target.path);
+
+      if (isSameDocument && target.fragment.isNotEmpty) {
+        final anchor = Uri.decodeComponent(target.fragment);
+        return _scrollToWidget(anchor);
+      } else if (isSameDocument || href == _model.pageData!.pageUrl) {
+        return;
       } else {
         launchURL(href);
+        return;
       }
     }
 
