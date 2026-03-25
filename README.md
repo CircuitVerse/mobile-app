@@ -44,6 +44,20 @@ Make sure you have a connected Android/iOS device/simulator and run the followin
 
 `flutter run`
 
+#### Running on Chrome (Web)
+
+To run the app on Chrome, use:
+
+`flutter run -d chrome`
+
+> **Note:** When running on Chrome locally, all API calls to `circuitverse.org` will be blocked by the browser's **CORS policy**. This causes Login, Register, and all data loading to fail. To bypass this during local development, launch Chrome with the `--disable-web-security` flag:
+
+```bash
+flutter run -d chrome --web-browser-flag "--disable-web-security"
+```
+
+> ⚠️ Only use `--disable-web-security` for **local development**. Never use it in production.
+
 ### Android OAuth Config
 
 This project uses Flutter 3.32.2 and hence the support for compile-time variables. To use compile-time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
