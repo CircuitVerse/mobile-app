@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
@@ -34,7 +33,7 @@ abstract class UsersApi {
     String? educationalInstitute,
     String? country,
     bool subscribed,
-    File? image,
+    XFile? image,
     bool removePicture,
   );
 
@@ -163,7 +162,7 @@ class HttpUsersApi implements UsersApi {
     String? educationalInstitute,
     String? country,
     bool isSubscribed,
-    File? image,
+    XFile? image,
     bool removePicture,
   ) async {
     var endpoint = '/users/${_storage.currentUser!.data.id}';
@@ -181,8 +180,13 @@ class HttpUsersApi implements UsersApi {
 
     var files = <http.MultipartFile>[];
     if (image != null) {
+      var _bytes = await image.readAsBytes();
       files.add(
-        await http.MultipartFile.fromPath('profile_picture', image.path),
+        http.MultipartFile.fromBytes(
+          'profile_picture',
+          _bytes,
+          filename: image.name,
+        ),
       );
     }
 

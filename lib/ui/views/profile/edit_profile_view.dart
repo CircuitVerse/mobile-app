@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
@@ -119,7 +122,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                   children: List.generate(2, (index) {
                     return GestureDetector(
                       onTap: () {
-                        _model.pickProfileImage(index);
+                        _model.pickProfileImage(context, index);
                         Get.back();
                       },
                       child: Padding(
@@ -157,12 +160,14 @@ class _EditProfileViewState extends State<EditProfileView> {
                 image: DecorationImage(
                   image:
                       _model.imageUpdated
-                          ? FileImage(_model.updatedImage!)
+                          ? (kIsWeb
+                              ? NetworkImage(_model.updatedImage!.path)
+                              : FileImage(File(_model.updatedImage!.path)))
                           : imageURL.toLowerCase().contains('default') ||
                               _model.removeImage
                           ? const AssetImage(
                             'assets/images/profile/default_icon.jpg',
-                          )
+                          ) as ImageProvider
                           : NetworkImage(imageURL) as ImageProvider,
                 ),
               ),

@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_app/enums/view_state.dart';
@@ -20,7 +19,7 @@ class EditProfileViewModel extends BaseModel {
   final ImageCropper _cropper = ImageCropper();
 
   bool imageUpdated = false, removeImage = false;
-  File? updatedImage;
+  CroppedFile? updatedImage;
 
   User? _updatedUser;
 
@@ -31,7 +30,7 @@ class EditProfileViewModel extends BaseModel {
     notifyListeners();
   }
 
-  void pickProfileImage(int index) async {
+  void pickProfileImage(BuildContext context, int index) async {
     removeImage = false;
     final _image = await _picker.pickImage(
       source: index == 0 ? ImageSource.camera : ImageSource.gallery,
@@ -45,12 +44,17 @@ class EditProfileViewModel extends BaseModel {
       compressQuality: 100,
       maxHeight: 1000,
       maxWidth: 1000,
+      uiSettings: [
+        WebUiSettings(
+          context: context,
+        ),
+      ],
     );
 
     if (_croppedImage == null) return;
 
     imageUpdated = true;
-    updatedImage = File(_croppedImage.path);
+    updatedImage = _croppedImage;
     notifyListeners();
   }
 
@@ -74,7 +78,7 @@ class EditProfileViewModel extends BaseModel {
         educationalInstitute,
         country,
         subscribed,
-        updatedImage,
+        updatedImage != null ? XFile(updatedImage!.path) : null,
         removeImage,
       );
       _storage.currentUser = _updatedUser;
