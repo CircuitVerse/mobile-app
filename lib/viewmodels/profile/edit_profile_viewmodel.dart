@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,7 +19,7 @@ class EditProfileViewModel extends BaseModel {
   final ImageCropper _cropper = ImageCropper();
 
   bool imageUpdated = false, removeImage = false;
-  File? updatedImage;
+  CroppedFile? updatedImage;
 
   User? _updatedUser;
 
@@ -55,7 +54,7 @@ class EditProfileViewModel extends BaseModel {
     if (_croppedImage == null) return;
 
     imageUpdated = true;
-    updatedImage = File(_croppedImage.path);
+    updatedImage = _croppedImage;
     notifyListeners();
   }
 
@@ -79,7 +78,7 @@ class EditProfileViewModel extends BaseModel {
         educationalInstitute,
         country,
         subscribed,
-        updatedImage,
+        updatedImage != null ? XFile(updatedImage!.path) : null,
         removeImage,
       );
       _storage.currentUser = _updatedUser;
