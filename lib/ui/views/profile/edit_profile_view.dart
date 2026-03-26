@@ -119,7 +119,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                   children: List.generate(2, (index) {
                     return GestureDetector(
                       onTap: () {
-                        _model.pickProfileImage(index);
+                        _model.pickProfileImage(context, index);
                         Get.back();
                       },
                       child: Padding(
