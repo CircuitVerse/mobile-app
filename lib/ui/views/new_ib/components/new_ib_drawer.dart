@@ -39,7 +39,8 @@ class NewIbDrawer extends StatelessWidget {
           onSubChapterSelected: (parentChapter, subChapter) {
             model.selectSubChapter(parentChapter, subChapter);
             model.setHome(false);
-            // You can handle sub-chapter navigation here
+            // Fetch topic data for the selected sub-chapter
+            model.fetchTopicData(subChapter.path);
             Get.back();
           },
         );

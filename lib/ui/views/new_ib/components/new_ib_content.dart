@@ -667,46 +667,32 @@ class _NewIbContentState extends State<NewIbContent> {
       );
     }
 
-    // Show error state
+    // Show error state - display "Coming Soon" instead
     if (widget.model.isError(widget.model.NEW_IB_FETCH_CHAPTER_INDEX)) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.error_outline_rounded,
-              size: 64,
-              color: IbTheme.textColor(context).withAlpha(128),
+              Icons.construction_rounded,
+              size: 80,
+              color: IbTheme.getPrimaryColor(context).withAlpha(128),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             Text(
-              'Failed to load chapter',
+              'Coming Soon',
               style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
                 color: IbTheme.primaryHeadingColor(context),
               ),
             ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Text(
-                widget.model.errorMessageFor(widget.model.NEW_IB_FETCH_CHAPTER_INDEX) ?? 'Unknown error',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: IbTheme.textColor(context).withAlpha(179),
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton.icon(
-              onPressed: () => widget.model.fetchChapterIndexData(chapter.path),
-              icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Retry'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: IbTheme.getPrimaryColor(context),
-                foregroundColor: Colors.white,
+            const SizedBox(height: 12),
+            Text(
+              'This page is under development',
+              style: TextStyle(
+                fontSize: 16,
+                color: IbTheme.textColor(context).withAlpha(179),
               ),
             ),
           ],
@@ -1186,46 +1172,32 @@ class _NewIbContentState extends State<NewIbContent> {
       );
     }
 
-    // Show error state
+    // Show error state - display "Coming Soon" instead
     if (widget.model.isError(widget.model.NEW_IB_FETCH_TOPIC)) {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.error_outline_rounded,
-              size: 64,
-              color: IbTheme.textColor(context).withAlpha(128),
+              Icons.construction_rounded,
+              size: 80,
+              color: IbTheme.getPrimaryColor(context).withAlpha(128),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             Text(
-              'Failed to load topic',
+              'Coming Soon',
               style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
                 color: IbTheme.primaryHeadingColor(context),
               ),
             ),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Text(
-                widget.model.errorMessageFor(widget.model.NEW_IB_FETCH_TOPIC) ?? 'Unknown error',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: IbTheme.textColor(context).withAlpha(179),
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton.icon(
-              onPressed: () => widget.model.fetchTopicData(topicData.path),
-              icon: const Icon(Icons.refresh_rounded),
-              label: const Text('Retry'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: IbTheme.getPrimaryColor(context),
-                foregroundColor: Colors.white,
+            const SizedBox(height: 12),
+            Text(
+              'This page is under development',
+              style: TextStyle(
+                fontSize: 16,
+                color: IbTheme.textColor(context).withAlpha(179),
               ),
             ),
           ],
