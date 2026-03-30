@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/ib_theme.dart';
-import 'package:mobile_app/models/ib/ib_chapter.dart';
+import 'package:mobile_app/models/ib/new_ib_drawer_data.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/new_ib/components/new_ib_content.dart';
 import 'package:mobile_app/ui/views/new_ib/components/new_ib_drawer.dart';
-import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
+import 'package:mobile_app/viewmodels/ib/new_ib_landing_viewmodel.dart';
 
 class NewInteractiveBookView extends StatefulWidget {
   const NewInteractiveBookView({super.key});
@@ -16,20 +16,19 @@ class NewInteractiveBookView extends StatefulWidget {
 }
 
 class _NewInteractiveBookViewState extends State<NewInteractiveBookView> {
-  IbChapter? _selectedChapter;
+  void _onChapterSelected(NewIbChapter? chapter) {
+    // Will be implemented when we handle chapter navigation
+  }
 
-  void _onChapterSelected(IbChapter? chapter) {
-    setState(() {
-      _selectedChapter = chapter;
-    });
+  void _onHomeSelected() {
+    // Will be implemented when we handle home navigation
   }
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<IbLandingViewModel>(
+    return BaseView<NewIbLandingViewModel>(
       onModelReady: (model) {
         model.init();
-        _selectedChapter = model.homeChapter;
       },
       builder: (context, model, child) {
         return Theme(
@@ -49,12 +48,11 @@ class _NewInteractiveBookViewState extends State<NewInteractiveBookView> {
             ),
             drawer: NewIbDrawer(
               model: model,
-              selectedChapter: _selectedChapter,
               onChapterSelected: _onChapterSelected,
+              onHomeSelected: _onHomeSelected,
             ),
             body: NewIbContent(
-              selectedChapter: _selectedChapter,
-              homeChapter: model.homeChapter,
+              model: model,
               onNavigate: _onChapterSelected,
             ),
           ),

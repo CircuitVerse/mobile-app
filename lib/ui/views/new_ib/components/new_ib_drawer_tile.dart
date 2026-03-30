@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/ib_theme.dart';
-import 'package:mobile_app/models/ib/ib_chapter.dart';
 
 class NewIbDrawerTile extends StatelessWidget {
   final IconData icon;
   final String title;
   final String subtitle;
-  final IbChapter? chapter;
-  final IbChapter? selectedChapter;
+  final bool isSelected;
   final bool isReturnHome;
   final VoidCallback onTap;
 
@@ -16,16 +14,13 @@ class NewIbDrawerTile extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.subtitle,
-    required this.chapter,
-    required this.selectedChapter,
+    required this.isSelected,
     this.isReturnHome = false,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isSelected = !isReturnHome && selectedChapter?.id == chapter?.id;
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(

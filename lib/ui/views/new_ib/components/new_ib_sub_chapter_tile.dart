@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/ib_theme.dart';
-import 'package:mobile_app/models/ib/ib_chapter.dart';
+import 'package:mobile_app/models/ib/new_ib_drawer_data.dart';
 
 class NewIbSubChapterTile extends StatelessWidget {
-  final IbChapter chapter;
-  final IbChapter? selectedChapter;
+  final NewIbSubChapter subChapter;
+  final bool isSelected;
   final VoidCallback onTap;
 
   const NewIbSubChapterTile({
     super.key,
-    required this.chapter,
-    required this.selectedChapter,
+    required this.subChapter,
+    required this.isSelected,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isSelected = selectedChapter?.id == chapter.id;
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
       child: ListTile(
@@ -28,19 +26,19 @@ class NewIbSubChapterTile extends StatelessWidget {
         title: Row(
           children: [
             Container(
-              width: 4,
-              height: 4,
+              width: 6,
+              height: 6,
               margin: const EdgeInsets.only(right: 12),
               decoration: BoxDecoration(
                 color: isSelected
                     ? IbTheme.getPrimaryColor(context)
-                    : IbTheme.textColor(context).withAlpha(102),
+                    : IbTheme.textColor(context).withAlpha(128),
                 shape: BoxShape.circle,
               ),
             ),
             Expanded(
               child: Text(
-                chapter.value,
+                subChapter.title,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,

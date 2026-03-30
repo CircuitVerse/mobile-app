@@ -1,44 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/ib_theme.dart';
-import 'package:mobile_app/models/ib/ib_chapter.dart';
+import 'package:mobile_app/models/ib/new_ib_drawer_data.dart';
 import 'package:mobile_app/ui/views/new_ib/components/new_ib_sub_chapter_tile.dart';
 
 class NewIbExpandableChapterTile extends StatelessWidget {
-  final IbChapter chapter;
-  final IbChapter? selectedChapter;
-  final Function(IbChapter) onChapterSelected;
+  final NewIbChapter chapter;
+  final NewIbChapter? selectedChapter;
+  final NewIbSubChapter? selectedSubChapter;
+  final Function(NewIbChapter) onChapterSelected;
+  final Function(NewIbChapter, NewIbSubChapter) onSubChapterSelected;
 
   const NewIbExpandableChapterTile({
     super.key,
     required this.chapter,
     required this.selectedChapter,
+    required this.selectedSubChapter,
     required this.onChapterSelected,
+    required this.onSubChapterSelected,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isSelected = selectedChapter?.id.startsWith(chapter.id) ?? false;
-    final hasSelectedChild =
-        chapter.items?.any((item) => item.id == selectedChapter?.id) ?? false;
+    final isParentSelected = selectedChapter?.id == chapter.id && selectedSubChapter == null;
+    final hasSelectedChild = selectedChapter?.id == chapter.id && selectedSubChapter != null;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: isSelected || hasSelectedChild
+        color: isParentSelected || hasSelectedChild
             ? IbTheme.getPrimaryColor(context).withAlpha(13)
             : Colors.transparent,
       ),
       child: Theme(
         data: IbTheme.getThemeData(context),
         child: ExpansionTile(
-          initiallyExpanded: isSelected || hasSelectedChild,
+          initiallyExpanded: isParentSelected || hasSelectedChild,
           tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           childrenPadding: const EdgeInsets.only(left: 8),
           leading: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: isSelected || hasSelectedChild
+              color: isParentSelected || hasSelectedChild
                   ? IbTheme.getPrimaryColor(context).withAlpha(51)
                   : IbTheme.textColor(context).withAlpha(13),
               borderRadius: BorderRadius.circular(10),
@@ -46,7 +49,7 @@ class NewIbExpandableChapterTile extends StatelessWidget {
             child: Icon(
               Icons.folder_rounded,
               size: 24,
-              color: isSelected || hasSelectedChild
+              color: isParentSelected || hasSelectedChild
                   ? IbTheme.getPrimaryColor(context)
                   : IbTheme.textColor(context).withAlpha(179),
             ),
@@ -54,12 +57,12 @@ class NewIbExpandableChapterTile extends StatelessWidget {
           title: GestureDetector(
             onTap: () => onChapterSelected(chapter),
             child: Text(
-              chapter.value,
+              chapter.title,
               style: TextStyle(
                 fontSize: 15,
                 fontWeight:
-                    isSelected || hasSelectedChild ? FontWeight.w600 : FontWeight.w500,
-                color: isSelected || hasSelectedChild
+                    isParentSelected || hasSelectedChild ? FontWeight.w600 : FontWeight.w500,
+                color: isParentSelected || hasSelectedChild
                     ? IbTheme.getPrimaryColor(context)
                     : IbTheme.textColor(context),
               ),
@@ -67,11 +70,11 @@ class NewIbExpandableChapterTile extends StatelessWidget {
           ),
           iconColor: IbTheme.textColor(context),
           collapsedIconColor: IbTheme.textColor(context).withAlpha(179),
-          children: chapter.items
+          children: chapter.children
                   ?.map((subChapter) => NewIbSubChapterTile(
-                        chapter: subChapter,
-                        selectedChapter: selectedChapter,
-                        onTap: () => onChapterSelected(subChapter),
+                        subChapter: subChapter,
+                        isSelected: selectedSubChapter?.id == subChapter.id,
+                        onTap: () => onSubChapterSelected(chapter, subChapter),
                       ))
                   .toList() ??
               [],

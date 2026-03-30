@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+import 'package:mobile_app/enums/view_state.dart';
+import 'package:mobile_app/locator.dart';
+import 'package:mobile_app/models/failure_model.dart';
+import 'package:mobile_app/models/ib/new_ib_drawer_data.dart';
+import 'package:mobile_app/models/ib/new_ib_home_data.dart';
+import 'package:mobile_app/services/API/new_ib_api.dart';
+import 'package:mobile_app/viewmodels/base_viewmodel.dart';
+
+class NewIbLandingViewModel extends BaseModel {
+  // ViewState Keys
+  final String NEW_IB_FETCH_DRAWER = 'new_ib_fetch_drawer';
+  final String NEW_IB_FETCH_HOME = 'new_ib_fetch_home';
+
+  final NewIbApi _newIbApi = locator<NewIbApi>();
+
+  NewIbDrawerData? _drawerData;
+  NewIbDrawerData? get drawerData => _drawerData;
+
+  NewIbHomeData? _homeData;
+  NewIbHomeData? get homeData => _homeData;
+
+  List<NewIbChapter> get chapters => _drawerData?.chapters ?? [];
+  
+  NewIbDrawerMetadata? get metadata => _drawerData?.metadata;
+  
+  List<NewIbFooterLink> get footerLinks => _drawerData?.footerLinks ?? [];
+
+  // Selected chapter
+  NewIbChapter? _selectedChapter;
+  NewIbChapter? get selectedChapter => _selectedChapter;
+  
+  // Selected sub-chapter
+  NewIbSubChapter? _selectedSubChapter;
+  NewIbSubChapter? get selectedSubChapter => _selectedSubChapter;
+  
+  void selectChapter(NewIbChapter? chapter) {
+    _selectedChapter = chapter;
+    _selectedSubChapter = null; // Clear sub-chapter when selecting parent
+    notifyListeners();
+  }
+  
+  void selectSubChapter(NewIbChapter parentChapter, NewIbSubChapter subChapter) {
+    _selectedChapter = parentChapter;
+    _selectedSubChapter = subChapter;
+    notifyListeners();
+  }
+
+  // Home state
+  bool _isHome = true;
+  bool get isHome => _isHome;
+  
+  void setHome(bool value) {
+    _isHome = value;
+    notifyListeners();
+  }
+
+  Future<void> init() async {
+    await Future.wait([
+      fetchDrawerData(),
+      fetchHomeData(),
+    ]);
+  }
+
+  Future<void> fetchDrawerData() async {
+    try {
+      setStateFor(NEW_IB_FETCH_DRAWER, ViewState.Busy);
+      _drawerData = await _newIbApi.fetchDrawerData();
+      setStateFor(NEW_IB_FETCH_DRAWER, ViewState.Success);
+    } on Failure catch (f) {
+      setStateFor(NEW_IB_FETCH_DRAWER, ViewState.Error);
+      setErrorMessageFor(NEW_IB_FETCH_DRAWER, f.message);
+    } catch (e) {
+      setStateFor(NEW_IB_FETCH_DRAWER, ViewState.Error);
+      setErrorMessageFor(NEW_IB_FETCH_DRAWER, 'Unexpected error: ${e.toString()}');
+    }
+  }
+
+  Future<void> fetchHomeData() async {
+    try {
+      setStateFor(NEW_IB_FETCH_HOME, ViewState.Busy);
+      _homeData = await _newIbApi.fetchHomeData();
+      setStateFor(NEW_IB_FETCH_HOME, ViewState.Success);
+    } on Failure catch (f) {
+      setStateFor(NEW_IB_FETCH_HOME, ViewState.Error);
+      setErrorMessageFor(NEW_IB_FETCH_HOME, f.message);
+    } catch (e) {
+      setStateFor(NEW_IB_FETCH_HOME, ViewState.Error);
+      setErrorMessageFor(NEW_IB_FETCH_HOME, 'Unexpected error: ${e.toString()}');
+    }
+  }
+}

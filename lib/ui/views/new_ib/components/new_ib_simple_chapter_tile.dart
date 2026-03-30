@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/ib_theme.dart';
-import 'package:mobile_app/models/ib/ib_chapter.dart';
+import 'package:mobile_app/models/ib/new_ib_drawer_data.dart';
 
 class NewIbSimpleChapterTile extends StatelessWidget {
-  final IbChapter chapter;
-  final IbChapter? selectedChapter;
+  final NewIbChapter chapter;
+  final bool isSelected;
   final VoidCallback onTap;
 
   const NewIbSimpleChapterTile({
     super.key,
     required this.chapter,
-    required this.selectedChapter,
+    required this.isSelected,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isSelected = selectedChapter?.id == chapter.id;
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
@@ -46,7 +44,7 @@ class NewIbSimpleChapterTile extends StatelessWidget {
           ),
         ),
         title: Text(
-          chapter.value,
+          chapter.title,
           style: TextStyle(
             fontSize: 15,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
@@ -55,6 +53,17 @@ class NewIbSimpleChapterTile extends StatelessWidget {
                 : IbTheme.textColor(context),
           ),
         ),
+        subtitle: chapter.description != null && chapter.description!.isNotEmpty
+            ? Text(
+                chapter.description!,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: IbTheme.textColor(context).withAlpha(128),
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              )
+            : null,
         trailing: isSelected
             ? Icon(
                 Icons.chevron_right_rounded,
