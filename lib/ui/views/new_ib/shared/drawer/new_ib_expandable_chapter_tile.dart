@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/new_ib_drawer_data.dart';
-import 'package:mobile_app/ui/views/new_ib/components/new_ib_sub_chapter_tile.dart';
+import 'package:mobile_app/ui/views/new_ib/shared/drawer/new_ib_sub_chapter_tile.dart';
 
 class NewIbExpandableChapterTile extends StatelessWidget {
   final NewIbChapter chapter;

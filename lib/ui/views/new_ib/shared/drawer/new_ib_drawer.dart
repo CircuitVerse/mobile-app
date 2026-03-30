@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/new_ib_drawer_data.dart';
-import 'package:mobile_app/ui/views/new_ib/components/new_ib_drawer_footer.dart';
-import 'package:mobile_app/ui/views/new_ib/components/new_ib_drawer_header.dart';
-import 'package:mobile_app/ui/views/new_ib/components/new_ib_drawer_section.dart';
-import 'package:mobile_app/ui/views/new_ib/components/new_ib_drawer_tile.dart';
-import 'package:mobile_app/ui/views/new_ib/components/new_ib_simple_chapter_tile.dart';
-import 'package:mobile_app/ui/views/new_ib/components/new_ib_expandable_chapter_tile.dart';
+import 'package:mobile_app/ui/views/new_ib/shared/drawer/new_ib_drawer_footer.dart';
+import 'package:mobile_app/ui/views/new_ib/shared/drawer/new_ib_drawer_header.dart';
+import 'package:mobile_app/ui/views/new_ib/shared/drawer/new_ib_drawer_section.dart';
+import 'package:mobile_app/ui/views/new_ib/shared/drawer/new_ib_drawer_tile.dart';
+import 'package:mobile_app/ui/views/new_ib/shared/drawer/new_ib_simple_chapter_tile.dart';
+import 'package:mobile_app/ui/views/new_ib/shared/drawer/new_ib_expandable_chapter_tile.dart';
 import 'package:mobile_app/viewmodels/ib/new_ib_landing_viewmodel.dart';
 
 class NewIbDrawer extends StatelessWidget {
