@@ -4,6 +4,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/models/ib/new_ib_drawer_data.dart';
 import 'package:mobile_app/models/ib/new_ib_home_data.dart';
+import 'package:mobile_app/models/ib/new_ib_chapter_index_data.dart';
 import 'package:mobile_app/services/API/new_ib_api.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
@@ -11,6 +12,7 @@ class NewIbLandingViewModel extends BaseModel {
   // ViewState Keys
   final String NEW_IB_FETCH_DRAWER = 'new_ib_fetch_drawer';
   final String NEW_IB_FETCH_HOME = 'new_ib_fetch_home';
+  final String NEW_IB_FETCH_CHAPTER_INDEX = 'new_ib_fetch_chapter_index';
 
   final NewIbApi _newIbApi = locator<NewIbApi>();
 
@@ -19,6 +21,9 @@ class NewIbLandingViewModel extends BaseModel {
 
   NewIbHomeData? _homeData;
   NewIbHomeData? get homeData => _homeData;
+
+  NewIbChapterIndexData? _chapterIndexData;
+  NewIbChapterIndexData? get chapterIndexData => _chapterIndexData;
 
   List<NewIbChapter> get chapters => _drawerData?.chapters ?? [];
   
@@ -37,6 +42,13 @@ class NewIbLandingViewModel extends BaseModel {
   void selectChapter(NewIbChapter? chapter) {
     _selectedChapter = chapter;
     _selectedSubChapter = null; // Clear sub-chapter when selecting parent
+    _chapterIndexData = null; // Clear chapter index data
+    
+    // Fetch chapter index data if chapter has children
+    if (chapter != null && chapter.children != null && chapter.children!.isNotEmpty) {
+      fetchChapterIndexData(chapter.path);
+    }
+    
     notifyListeners();
   }
   
@@ -87,6 +99,20 @@ class NewIbLandingViewModel extends BaseModel {
     } catch (e) {
       setStateFor(NEW_IB_FETCH_HOME, ViewState.Error);
       setErrorMessageFor(NEW_IB_FETCH_HOME, 'Unexpected error: ${e.toString()}');
+    }
+  }
+
+  Future<void> fetchChapterIndexData(String path) async {
+    try {
+      setStateFor(NEW_IB_FETCH_CHAPTER_INDEX, ViewState.Busy);
+      _chapterIndexData = await _newIbApi.fetchChapterIndexData(path);
+      setStateFor(NEW_IB_FETCH_CHAPTER_INDEX, ViewState.Success);
+    } on Failure catch (f) {
+      setStateFor(NEW_IB_FETCH_CHAPTER_INDEX, ViewState.Error);
+      setErrorMessageFor(NEW_IB_FETCH_CHAPTER_INDEX, f.message);
+    } catch (e) {
+      setStateFor(NEW_IB_FETCH_CHAPTER_INDEX, ViewState.Error);
+      setErrorMessageFor(NEW_IB_FETCH_CHAPTER_INDEX, 'Unexpected error: ${e.toString()}');
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/new_ib_drawer_data.dart';
 import 'package:mobile_app/models/ib/new_ib_home_data.dart';
+import 'package:mobile_app/models/ib/new_ib_chapter_index_data.dart';
 import 'package:mobile_app/viewmodels/ib/new_ib_landing_viewmodel.dart';
 
 class NewIbContent extends StatelessWidget {
@@ -537,46 +538,250 @@ class NewIbContent extends StatelessWidget {
   }
 
   Widget _buildChapterPage(BuildContext context, NewIbChapter chapter) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.construction_rounded,
-            size: 80,
-            color: IbTheme.getPrimaryColor(context).withAlpha(128),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            'Coming Soon',
-            style: TextStyle(
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              color: IbTheme.primaryHeadingColor(context),
+    // Show loading state
+    if (model.isBusy(model.NEW_IB_FETCH_CHAPTER_INDEX)) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    // Show error state
+    if (model.isError(model.NEW_IB_FETCH_CHAPTER_INDEX)) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline_rounded,
+              size: 64,
+              color: IbTheme.textColor(context).withAlpha(128),
             ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'Chapter content will be loaded here',
-            style: TextStyle(
-              fontSize: 16,
-              color: IbTheme.textColor(context).withAlpha(179),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: Text(
-              'API: ${chapter.apiUrl}',
+            const SizedBox(height: 16),
+            Text(
+              'Failed to load chapter',
               style: TextStyle(
-                fontSize: 12,
-                color: IbTheme.textColor(context).withAlpha(128),
-                fontFamily: 'monospace',
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: IbTheme.primaryHeadingColor(context),
               ),
-              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Text(
+                model.errorMessageFor(model.NEW_IB_FETCH_CHAPTER_INDEX) ?? 'Unknown error',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: IbTheme.textColor(context).withAlpha(179),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: () => model.fetchChapterIndexData(chapter.path),
+              icon: const Icon(Icons.refresh_rounded),
+              label: const Text('Retry'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: IbTheme.getPrimaryColor(context),
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    // Get chapter index data
+    final chapterData = model.chapterIndexData;
+    if (chapterData == null) {
+      return const Center(child: Text('No chapter data available'));
+    }
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Chapter Title and Description Box
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: IbTheme.getPrimaryColor(context).withAlpha(26),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  chapterData.title,
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: IbTheme.primaryHeadingColor(context),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  chapterData.description,
+                  style: TextStyle(
+                    fontSize: 16,
+                    height: 1.5,
+                    color: IbTheme.textColor(context).withAlpha(204),
+                  ),
+                ),
+              ],
             ),
           ),
+
+          const SizedBox(height: 24),
+
+          // Content sections
+          if (chapterData.content.sections.isNotEmpty)
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: IbTheme.textColor(context).withAlpha(13),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: chapterData.content.sections.map((section) {
+                  return _buildChapterSection(context, section);
+                }).toList(),
+              ),
+            ),
+
+          const SizedBox(height: 24),
+
+          // Children/Sub-chapters list
+          if (chapterData.children.isNotEmpty) ...[
+            Text(
+              'Topics in this chapter',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: IbTheme.primaryHeadingColor(context),
+              ),
+            ),
+            const SizedBox(height: 16),
+            ...chapterData.children.map((child) => _buildChildTile(context, child)),
+          ],
         ],
+      ),
+    );
+  }
+
+  Widget _buildChapterSection(BuildContext context, NewIbChapterSection section) {
+    switch (section.type) {
+      case 'heading':
+        if (section.level == 1) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Text(
+              section.text ?? '',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: IbTheme.primaryHeadingColor(context),
+              ),
+            ),
+          );
+        } else if (section.level == 2) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 16, bottom: 12),
+            child: Text(
+              section.text ?? '',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: IbTheme.primaryHeadingColor(context),
+              ),
+            ),
+          );
+        } else if (section.level == 3) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 12, bottom: 8),
+            child: Text(
+              section.text ?? '',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: IbTheme.primaryHeadingColor(context),
+              ),
+            ),
+          );
+        }
+        return const SizedBox.shrink();
+
+      case 'paragraph':
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Text(
+            section.text ?? '',
+            style: TextStyle(
+              fontSize: 15,
+              height: 1.6,
+              color: IbTheme.textColor(context).withAlpha(204),
+            ),
+          ),
+        );
+
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
+  Widget _buildChildTile(BuildContext context, NewIbChapterChild child) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: IbTheme.textColor(context).withAlpha(13),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: IbTheme.textColor(context).withAlpha(26),
+        ),
+      ),
+      child: InkWell(
+        onTap: () {
+          // TODO: Navigate to child page
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: IbTheme.getPrimaryColor(context).withAlpha(26),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(
+                  Icons.article_rounded,
+                  size: 24,
+                  color: IbTheme.getPrimaryColor(context),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  child.title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: IbTheme.primaryHeadingColor(context),
+                  ),
+                ),
+              ),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 16,
+                color: IbTheme.textColor(context).withAlpha(128),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
