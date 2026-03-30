@@ -1,11 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:mobile_app/services/API/assignments_api.dart';
 import 'package:mobile_app/services/API/collaborators_api.dart';
+import 'package:mobile_app/services/API/disqus_api.dart';
 import 'package:mobile_app/services/API/fcm_api.dart';
 import 'package:mobile_app/services/API/grades_api.dart';
 import 'package:mobile_app/services/API/group_members_api.dart';
 import 'package:mobile_app/services/API/groups_api.dart';
 import 'package:mobile_app/services/API/ib_api.dart';
+import 'package:mobile_app/services/API/new_ib_api.dart';
 import 'package:mobile_app/services/API/projects_api.dart';
 import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/services/API/country_institute_api.dart';
@@ -30,6 +32,7 @@ import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
 import 'package:mobile_app/viewmodels/home/home_viewmodel.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
+import 'package:mobile_app/viewmodels/ib/new_ib_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/notifications/notifications_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
@@ -74,6 +77,8 @@ Future<void> setupLocator() async {
     () => HttpCountryInstituteAPI(),
   );
   locator.registerLazySingleton<IbApi>(() => HttpIbApi());
+  locator.registerLazySingleton<NewIbApi>(() => HttpNewIbApi());
+  locator.registerLazySingleton<DisqusApi>(() => DisqusApiImpl());
 
   // Interactive Book Engine Service
   locator.registerLazySingleton<IbEngineService>(() => IbEngineServiceImpl());
@@ -117,6 +122,7 @@ Future<void> setupLocator() async {
   // Interactive Book ViewModels
   locator.registerFactory(() => IbLandingViewModel());
   locator.registerFactory(() => IbPageViewModel());
+  locator.registerFactory(() => NewIbLandingViewModel());
 
   // Simulator ViewModel
   locator.registerFactory(() => SimulatorViewModel());

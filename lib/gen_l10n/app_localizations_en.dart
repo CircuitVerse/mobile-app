@@ -1178,6 +1178,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cv_interactive_book => 'Interactive Book';
 
   @override
+  String get cv_new_interactive_book => 'New Interactive Book';
+
+  @override
   String get cv_about => 'About';
 
   @override

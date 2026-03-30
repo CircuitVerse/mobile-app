@@ -2308,6 +2308,12 @@ abstract class AppLocalizations {
   /// **'Interactive Book'**
   String get cv_interactive_book;
 
+  /// No description provided for @cv_new_interactive_book.
+  ///
+  /// In en, this message translates to:
+  /// **'New Interactive Book'**
+  String get cv_new_interactive_book;
+
   /// No description provided for @cv_about.
   ///
   /// In en, this message translates to:

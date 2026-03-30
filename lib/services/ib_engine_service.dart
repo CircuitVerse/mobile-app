@@ -55,8 +55,15 @@ class IbEngineServiceImpl implements IbEngineService {
     /// Fetch response from API for the given id
     List<Map<String, dynamic>>? _apiResponse;
     try {
+      final url =
+          id == ''
+              ? EnvironmentConfig.IB_API_BASE_URL
+              : '${EnvironmentConfig.IB_API_BASE_URL}/$id';
+      print('IbEngineService: Fetching from $url');
       _apiResponse = await _ibApi.fetchApiPage(id: id);
+      print('IbEngineService: Got ${_apiResponse?.length ?? 0} items from API');
     } catch (err) {
+      print('IbEngineService: API error - $err');
       throw Failure('IbApi: ${err.toString()}');
     }
 
@@ -145,9 +152,17 @@ class IbEngineServiceImpl implements IbEngineService {
 
     List<IbChapter> _chapters;
     try {
+      print('IbEngineService: Fetching chapters from API...');
       _chapters = await _fetchPagesInDir(ignoreIndex: true);
+      print(
+        'IbEngineService: Successfully fetched ${_chapters.length} chapters',
+      );
     } on Failure catch (e) {
+      print('IbEngineService: Failed to fetch chapters - ${e.message}');
       throw Failure(e.toString());
+    } catch (e) {
+      print('IbEngineService: Unexpected error fetching chapters - $e');
+      throw Failure('Failed to load chapters: ${e.toString()}');
     }
 
     // Sort root pages
@@ -265,6 +280,7 @@ class IbEngineServiceImpl implements IbEngineService {
           _ibRawPageData.hasChildren
               ? _getChapterOfContents(_ibRawPageData.content!)
               : [],
+      rawPageData: _ibRawPageData,
     );
   }
 

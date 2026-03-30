@@ -1169,6 +1169,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cv_interactive_book => 'الكتاب التفاعلي';
 
   @override
+  String get cv_new_interactive_book => 'الكتاب التفاعلي الجديد';
+
+  @override
   String get cv_about => 'حول';
 
   @override

@@ -8,6 +8,7 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
+import 'package:mobile_app/ui/views/new_ib/new_ib_landing_view.dart';
 import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
@@ -132,6 +133,13 @@ class CVDrawer extends StatelessWidget {
                 child: CVDrawerTile(
                   title: AppLocalizations.of(context)!.cv_interactive_book,
                   iconData: Icons.chrome_reader_mode,
+                ),
+              ),
+              InkWell(
+                onTap: () => Get.toNamed(NewInteractiveBookView.id),
+                child: CVDrawerTile(
+                  title: AppLocalizations.of(context)!.cv_new_interactive_book,
+                  iconData: Icons.auto_stories,
                 ),
               ),
               InkWell(
