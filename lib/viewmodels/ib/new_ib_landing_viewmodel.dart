@@ -5,6 +5,7 @@ import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/models/ib/new_ib_drawer_data.dart';
 import 'package:mobile_app/models/ib/new_ib_home_data.dart';
 import 'package:mobile_app/models/ib/new_ib_chapter_index_data.dart';
+import 'package:mobile_app/models/ib/new_ib_topic_data.dart';
 import 'package:mobile_app/services/API/new_ib_api.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 
@@ -13,6 +14,7 @@ class NewIbLandingViewModel extends BaseModel {
   final String NEW_IB_FETCH_DRAWER = 'new_ib_fetch_drawer';
   final String NEW_IB_FETCH_HOME = 'new_ib_fetch_home';
   final String NEW_IB_FETCH_CHAPTER_INDEX = 'new_ib_fetch_chapter_index';
+  final String NEW_IB_FETCH_TOPIC = 'new_ib_fetch_topic';
 
   final NewIbApi _newIbApi = locator<NewIbApi>();
 
@@ -24,6 +26,9 @@ class NewIbLandingViewModel extends BaseModel {
 
   NewIbChapterIndexData? _chapterIndexData;
   NewIbChapterIndexData? get chapterIndexData => _chapterIndexData;
+
+  NewIbTopicData? _topicData;
+  NewIbTopicData? get topicData => _topicData;
 
   List<NewIbChapter> get chapters => _drawerData?.chapters ?? [];
   
@@ -43,6 +48,7 @@ class NewIbLandingViewModel extends BaseModel {
     _selectedChapter = chapter;
     _selectedSubChapter = null; // Clear sub-chapter when selecting parent
     _chapterIndexData = null; // Clear chapter index data
+    _topicData = null; // Clear topic data
     
     // Fetch chapter index data if chapter has children
     if (chapter != null && chapter.children != null && chapter.children!.isNotEmpty) {
@@ -113,6 +119,20 @@ class NewIbLandingViewModel extends BaseModel {
     } catch (e) {
       setStateFor(NEW_IB_FETCH_CHAPTER_INDEX, ViewState.Error);
       setErrorMessageFor(NEW_IB_FETCH_CHAPTER_INDEX, 'Unexpected error: ${e.toString()}');
+    }
+  }
+
+  Future<void> fetchTopicData(String path) async {
+    try {
+      setStateFor(NEW_IB_FETCH_TOPIC, ViewState.Busy);
+      _topicData = await _newIbApi.fetchTopicData(path);
+      setStateFor(NEW_IB_FETCH_TOPIC, ViewState.Success);
+    } on Failure catch (f) {
+      setStateFor(NEW_IB_FETCH_TOPIC, ViewState.Error);
+      setErrorMessageFor(NEW_IB_FETCH_TOPIC, f.message);
+    } catch (e) {
+      setStateFor(NEW_IB_FETCH_TOPIC, ViewState.Error);
+      setErrorMessageFor(NEW_IB_FETCH_TOPIC, 'Unexpected error: ${e.toString()}');
     }
   }
 }

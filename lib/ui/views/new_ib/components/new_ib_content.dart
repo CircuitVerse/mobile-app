@@ -5,8 +5,11 @@ import 'package:mobile_app/models/ib/ib_recommendation.dart';
 import 'package:mobile_app/models/ib/new_ib_drawer_data.dart';
 import 'package:mobile_app/models/ib/new_ib_home_data.dart';
 import 'package:mobile_app/models/ib/new_ib_chapter_index_data.dart';
+import 'package:mobile_app/models/ib/new_ib_topic_data.dart';
 import 'package:mobile_app/services/API/disqus_api.dart';
 import 'package:mobile_app/viewmodels/ib/new_ib_landing_viewmodel.dart';
+import 'package:mobile_app/ui/views/new_ib/components/binary_simulator_widget.dart';
+import 'package:mobile_app/ui/views/new_ib/components/quiz_widget.dart';
 
 class NewIbContent extends StatefulWidget {
   final NewIbLandingViewModel model;
@@ -123,6 +126,11 @@ class _NewIbContentState extends State<NewIbContent> {
     // Show home page if no chapter selected or home is selected
     if (widget.model.isHome || widget.model.selectedChapter == null) {
       return _buildHomePage(context);
+    }
+
+    // Show topic page if topic data is available
+    if (widget.model.topicData != null) {
+      return _buildTopicPage(context, widget.model.topicData!);
     }
 
     // Show chapter page
@@ -870,7 +878,8 @@ class _NewIbContentState extends State<NewIbContent> {
       ),
       child: InkWell(
         onTap: () {
-          // TODO: Navigate to child page
+          // Navigate to topic page by fetching topic data
+          widget.model.fetchTopicData(child.path);
         },
         borderRadius: BorderRadius.circular(12),
         child: Padding(
@@ -1156,6 +1165,682 @@ class _NewIbContentState extends State<NewIbContent> {
         const SizedBox(height: 24),
         _buildCommentsList(context),
       ],
+    );
+  }
+
+  Widget _buildTopicPage(BuildContext context, NewIbTopicData topicData) {
+    // Load recommendations if not already loaded or loading
+    if (!_loadingRecommendations && _recommendations.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && !_loadingRecommendations && _recommendations.isEmpty) {
+          print('NewIbContent: Calling _loadRecommendations from _buildTopicPage');
+          _loadRecommendations();
+        }
+      });
+    }
+
+    // Show loading state
+    if (widget.model.isBusy(widget.model.NEW_IB_FETCH_TOPIC)) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    // Show error state
+    if (widget.model.isError(widget.model.NEW_IB_FETCH_TOPIC)) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error_outline_rounded,
+              size: 64,
+              color: IbTheme.textColor(context).withAlpha(128),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Failed to load topic',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: IbTheme.primaryHeadingColor(context),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Text(
+                widget.model.errorMessageFor(widget.model.NEW_IB_FETCH_TOPIC) ?? 'Unknown error',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: IbTheme.textColor(context).withAlpha(179),
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: () => widget.model.fetchTopicData(topicData.path),
+              icon: const Icon(Icons.refresh_rounded),
+              label: const Text('Retry'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: IbTheme.getPrimaryColor(context),
+                foregroundColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Topic Title Box
+          Container(
+            padding: const EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: IbTheme.getPrimaryColor(context).withAlpha(26),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  topicData.title,
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: IbTheme.primaryHeadingColor(context),
+                  ),
+                ),
+                if (topicData.metadata.author != null) ...[
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.person_outline_rounded,
+                        size: 16,
+                        color: IbTheme.textColor(context).withAlpha(179),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        topicData.metadata.author!,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: IbTheme.textColor(context).withAlpha(179),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Content sections
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: IbTheme.textColor(context).withAlpha(13),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: topicData.content.sections.map((section) {
+                return _buildTopicSection(context, section);
+              }).toList(),
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Key Concepts
+          if (topicData.keyConcepts.isNotEmpty) ...[
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: IbTheme.getPrimaryColor(context).withAlpha(26),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.lightbulb_outline_rounded,
+                        color: IbTheme.getPrimaryColor(context),
+                        size: 24,
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        'Key Concepts',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: IbTheme.primaryHeadingColor(context),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  ...topicData.keyConcepts.map((concept) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 6),
+                            width: 6,
+                            height: 6,
+                            decoration: BoxDecoration(
+                              color: IbTheme.getPrimaryColor(context),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  concept.concept,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: IbTheme.primaryHeadingColor(context),
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  concept.description,
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: IbTheme.textColor(context).withAlpha(204),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
+
+          // Related Topics
+          if (topicData.relatedTopics.isNotEmpty) ...[
+            Text(
+              'Related Topics',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: IbTheme.primaryHeadingColor(context),
+              ),
+            ),
+            const SizedBox(height: 16),
+            ...topicData.relatedTopics.map((relatedTopic) {
+              return Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                decoration: BoxDecoration(
+                  color: IbTheme.textColor(context).withAlpha(13),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: IbTheme.textColor(context).withAlpha(26),
+                  ),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    widget.model.fetchTopicData(relatedTopic.path);
+                  },
+                  borderRadius: BorderRadius.circular(12),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: IbTheme.getPrimaryColor(context).withAlpha(26),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(
+                            Icons.article_rounded,
+                            size: 24,
+                            color: IbTheme.getPrimaryColor(context),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Text(
+                            relatedTopic.title,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: IbTheme.primaryHeadingColor(context),
+                            ),
+                          ),
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: 16,
+                          color: IbTheme.textColor(context).withAlpha(128),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+            const SizedBox(height: 32),
+          ],
+
+          // Recommendations
+          _buildRecommendationsSection(context),
+
+          const SizedBox(height: 32),
+
+          // Comments
+          _buildCommentsSection(context),
+
+          const SizedBox(height: 80),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTopicSection(BuildContext context, dynamic section) {
+    final sectionType = section['type'] as String?;
+
+    switch (sectionType) {
+      case 'heading':
+        final level = section['level'] as int? ?? 1;
+        final text = section['text'] as String? ?? '';
+        
+        if (level == 1) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: IbTheme.primaryHeadingColor(context),
+              ),
+            ),
+          );
+        } else if (level == 2) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 16, bottom: 12),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: IbTheme.primaryHeadingColor(context),
+              ),
+            ),
+          );
+        } else if (level == 3) {
+          return Padding(
+            padding: const EdgeInsets.only(top: 12, bottom: 8),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: IbTheme.primaryHeadingColor(context),
+              ),
+            ),
+          );
+        }
+        return const SizedBox.shrink();
+
+      case 'section':
+        final heading = section['heading'];
+        final headingMap = heading != null 
+            ? (heading is Map<String, dynamic> 
+                ? heading 
+                : Map<String, dynamic>.from(heading as Map))
+            : null;
+        final content = section['content'] as List<dynamic>? ?? [];
+        
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (headingMap != null) _buildTopicSection(context, headingMap),
+            ...content.map((item) => _buildTopicContentItem(context, item)).toList(),
+          ],
+        );
+
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
+  Widget _buildTopicContentItem(BuildContext context, dynamic item) {
+    final itemType = item['type'] as String?;
+
+    switch (itemType) {
+      case 'paragraph':
+        final text = item['text'] as String? ?? '';
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: 15,
+              height: 1.6,
+              color: IbTheme.textColor(context).withAlpha(204),
+            ),
+          ),
+        );
+
+      case 'example':
+        final title = item['title'] as String? ?? 'Example';
+        final dataRaw = item['data'];
+        final data = dataRaw != null
+            ? (dataRaw is Map<String, dynamic>
+                ? dataRaw
+                : Map<String, dynamic>.from(dataRaw as Map))
+            : <String, dynamic>{};
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: IbTheme.getPrimaryColor(context).withAlpha(26),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: IbTheme.getPrimaryColor(context).withAlpha(51),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.lightbulb_outline_rounded,
+                    size: 20,
+                    color: IbTheme.getPrimaryColor(context),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: IbTheme.primaryHeadingColor(context),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              ...data.entries.map((entry) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Text(
+                    '${entry.key}: ${entry.value}',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: IbTheme.textColor(context).withAlpha(204),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ],
+          ),
+        );
+
+      case 'subsection':
+        final heading = item['heading'] as String? ?? '';
+        final tables = item['tables'] as List<dynamic>? ?? [];
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (heading.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 12, bottom: 8),
+                child: Text(
+                  heading,
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    color: IbTheme.primaryHeadingColor(context),
+                  ),
+                ),
+              ),
+            ...tables.map((table) => _buildTable(context, table)).toList(),
+          ],
+        );
+
+      case 'steps':
+        final title = item['title'] as String? ?? 'Steps';
+        final steps = item['steps'] as List<dynamic>? ?? [];
+        final note = item['note'] as String?;
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: IbTheme.textColor(context).withAlpha(13),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: IbTheme.textColor(context).withAlpha(26),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: IbTheme.primaryHeadingColor(context),
+                ),
+              ),
+              const SizedBox(height: 12),
+              ...steps.map((step) {
+                final stepNum = step['step'] as int? ?? 0;
+                final description = step['description'] as String? ?? '';
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 28,
+                        height: 28,
+                        decoration: BoxDecoration(
+                          color: IbTheme.getPrimaryColor(context),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: Text(
+                            '$stepNum',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          description,
+                          style: TextStyle(
+                            fontSize: 14,
+                            height: 1.5,
+                            color: IbTheme.textColor(context).withAlpha(204),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+              if (note != null) ...[
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: IbTheme.getPrimaryColor(context).withAlpha(26),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(
+                        Icons.info_outline_rounded,
+                        size: 18,
+                        color: IbTheme.getPrimaryColor(context),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          note,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: IbTheme.textColor(context).withAlpha(204),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ],
+          ),
+        );
+
+      case 'widget':
+        final widgetType = item['widget_type'] as String?;
+        
+        if (widgetType == 'binary_simulator') {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: BinarySimulatorWidget(),
+          );
+        }
+        return const SizedBox.shrink();
+
+      case 'quiz':
+        final questionsRaw = item['questions'] as List<dynamic>? ?? [];
+        // Convert Map<dynamic, dynamic> to Map<String, dynamic>
+        final questions = questionsRaw.map((q) {
+          if (q is Map<String, dynamic>) {
+            return q;
+          } else {
+            return Map<String, dynamic>.from(q as Map);
+          }
+        }).toList();
+        return QuizWidget(questions: questions);
+
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
+  Widget _buildTable(BuildContext context, dynamic table) {
+    final title = table['title'] as String?;
+    final headers = table['headers'] as List<dynamic>?;
+    final rows = table['rows'] as List<dynamic>?;
+
+    if (headers == null || rows == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(
+        border: Border.all(color: IbTheme.textColor(context).withAlpha(51)),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (title != null)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: IbTheme.getPrimaryColor(context).withAlpha(26),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  topRight: Radius.circular(8),
+                ),
+              ),
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: IbTheme.primaryHeadingColor(context),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          Table(
+            border: TableBorder(
+              horizontalInside: BorderSide(
+                color: IbTheme.textColor(context).withAlpha(51),
+              ),
+              verticalInside: BorderSide(
+                color: IbTheme.textColor(context).withAlpha(51),
+              ),
+            ),
+            children: [
+              TableRow(
+                decoration: BoxDecoration(
+                  color: IbTheme.textColor(context).withAlpha(51),
+                ),
+                children:
+                    headers.map((header) {
+                      return Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(12),
+                        child: Text(
+                          header.toString(),
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: IbTheme.primaryHeadingColor(context),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+              ),
+              ...rows.map((row) {
+                final rowData = row as List<dynamic>;
+                return TableRow(
+                  children:
+                      rowData.map((cell) {
+                        return Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Text(
+                            cell.toString(),
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: IbTheme.textColor(context)),
+                          ),
+                        );
+                      }).toList(),
+                );
+              }),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

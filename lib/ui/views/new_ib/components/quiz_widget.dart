@@ -16,7 +16,9 @@ class QuizQuestion {
     final options = json['options'] as List<dynamic>?;
     final answers =
         options?.map((opt) {
-          final optMap = opt as Map<String, dynamic>;
+          final optMap = opt is Map<String, dynamic>
+              ? opt
+              : Map<String, dynamic>.from(opt as Map);
           return QuizAnswer(
             text: optMap['text'] as String,
             isCorrect: optMap['correct'] as bool? ?? false,
