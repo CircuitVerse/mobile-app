@@ -152,7 +152,6 @@ class _IbPageViewState extends State<IbPageView> {
     };
 
     return MarkdownBody(
-      key: UniqueKey(),
       shrinkWrap: false,
       data: data.content,
       selectable: _selectable,
