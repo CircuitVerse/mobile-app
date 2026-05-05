@@ -7,6 +7,7 @@ import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
+import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
 import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:showcaseview/showcaseview.dart';
@@ -183,14 +184,15 @@ class _IbLandingViewState extends State<IbLandingView> {
   }
 
   Widget _buildChapter(IbChapter chapter) {
+    final isActive = _model.selectedChapter.id == chapter.id;
     return InkWell(
       onTap: () => setSelectedChapter(chapter),
       child: CVDrawerTile(
         title: chapter.value,
-        color:
-            (_model.selectedChapter.id == chapter.id)
-                ? IbTheme.getPrimaryColor(context)
-                : IbTheme.textColor(context),
+        isActive: isActive,
+        color: isActive
+            ? IbTheme.getPrimaryColor(context)
+            : IbTheme.textColor(context),
       ),
     );
   }
@@ -247,59 +249,123 @@ class _IbLandingViewState extends State<IbLandingView> {
   }
 
   Widget _buildDrawer() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Drawer(
-      child: Stack(
+      child: Column(
         children: [
-          ListView(
-            children: <Widget>[
-              InkWell(
-                onTap: () {
-                  Get.back();
-                  Get.back();
-                },
-                child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.ib_return_home,
-                  color: IbTheme.textColor(context),
-                ),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsetsDirectional.fromSTEB(20, 48, 20, 20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: AlignmentDirectional.topStart,
+                end: AlignmentDirectional.bottomEnd,
+                colors: isDark
+                    ? [
+                        IbTheme.bgCardDark,
+                        IbTheme.bgCardDark.withOpacity(0.95),
+                      ]
+                    : [
+                        IbTheme.primaryColor.withOpacity(0.08),
+                        IbTheme.primaryColor.withOpacity(0.04),
+                      ],
               ),
-              const Divider(thickness: 1),
-              InkWell(
-                onTap: () => setSelectedChapter(_model.homeChapter),
-                child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.ib_home,
-                  color:
-                      (_model.selectedChapter.id == _model.homeChapter.id)
-                          ? IbTheme.getPrimaryColor(context)
-                          : IbTheme.textColor(context),
+              boxShadow: [
+                BoxShadow(
+                  color: IbTheme.getPrimaryColor(context).withOpacity(0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
                 ),
-              ),
-              if (!_model.isSuccess(_model.IB_FETCH_CHAPTERS))
-                ListTile(
-                  leading: const SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(strokeWidth: 2),
+              ],
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Text(
+                    AppLocalizations.of(context)!.ib_interactive_book,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: IbTheme.getPrimaryColor(context),
+                    ),
                   ),
-                  title: Text(
-                    AppLocalizations.of(context)!.ib_loading_chapters,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: IbTheme.getPrimaryColor(context).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                )
-              else
-                _buildChapters(_model.chapters),
-            ],
+                  child: IconButton(
+                    icon: isDark
+                        ? const Icon(Icons.light_mode_outlined)
+                        : const Icon(Icons.dark_mode_outlined),
+                    iconSize: 22.0,
+                    color: IbTheme.getPrimaryColor(context),
+                    tooltip: 'Toggle theme',
+                    onPressed: () {
+                      ThemeProvider.controllerOf(context).nextTheme();
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
-          Positioned(
-            right: 5,
-            top: 27,
-            child: IconButton(
-              icon:
-                  Theme.of(context).brightness == Brightness.dark
-                      ? const Icon(Icons.brightness_low)
-                      : const Icon(Icons.brightness_high),
-              iconSize: 28.0,
-              onPressed: () {
-                ThemeProvider.controllerOf(context).nextTheme();
-              },
+
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsetsDirectional.symmetric(vertical: 12),
+              children: <Widget>[
+                InkWell(
+                  onTap: () {
+                    Get.back();
+                    Get.offAllNamed(CVLandingView.id);
+                  },
+                  child: CVDrawerTile(
+                    title: AppLocalizations.of(context)!.ib_return_home,
+                    iconData: Icons.arrow_back_outlined,
+                    color: IbTheme.textColor(context),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.symmetric(horizontal: 20),
+                  child: Divider(
+                    color: IbTheme.textColor(context).withOpacity(0.1),
+                    height: 24,
+                  ),
+                ),
+                InkWell(
+                  onTap: () => setSelectedChapter(_model.homeChapter),
+                  child: CVDrawerTile(
+                    title: AppLocalizations.of(context)!.ib_home,
+                    iconData: Icons.home_outlined,
+                    isActive: _model.selectedChapter.id == _model.homeChapter.id,
+                    color: (_model.selectedChapter.id == _model.homeChapter.id)
+                        ? IbTheme.getPrimaryColor(context)
+                        : IbTheme.textColor(context),
+                  ),
+                ),
+                if (!_model.isSuccess(_model.IB_FETCH_CHAPTERS))
+                  Padding(
+                    padding: const EdgeInsetsDirectional.all(16),
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          AppLocalizations.of(context)!.ib_loading_chapters,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                  )
+                else
+                  _buildChapters(_model.chapters),
+              ],
             ),
           ),
         ],
