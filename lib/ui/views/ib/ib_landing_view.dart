@@ -325,7 +325,7 @@ class _IbLandingViewState extends State<IbLandingView> {
             textDirection: TextDirection.ltr, // Force LTR layout
             child: Theme(
               data: IbTheme.getThemeData(context),
-              child: ShowcaseView.register(
+              child: ShowCaseWidget(
                 onComplete: (index, globalKey) {
                   final String key = globalKey
                       .toString()

@@ -66,7 +66,7 @@ class IbPageViewModel extends BaseModel {
     if (_list.isNotEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 800), () {
-          ShowcaseView.get(showCaseWidgetState.context).startShowCase(_list);
+          showCaseWidgetState.startShowCase(_list);
         });
       });
     }
