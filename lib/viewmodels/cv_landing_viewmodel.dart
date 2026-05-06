@@ -13,7 +13,7 @@ import 'package:mobile_app/viewmodels/notifications/notifications_viewmodel.dart
 class CVLandingViewModel extends BaseModel {
   final LocalStorageService _storage = locator<LocalStorageService>();
   final DialogService _dialogService = locator<DialogService>();
-  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
   final NotificationsViewModel _viewModel = locator<NotificationsViewModel>();
 
   User? _currentUser;

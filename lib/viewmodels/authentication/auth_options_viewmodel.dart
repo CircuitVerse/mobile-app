@@ -20,24 +20,34 @@ class AuthOptionsViewModel extends BaseModel {
   final LocalStorageService _storage = locator<LocalStorageService>();
 
   Future googleAuth({bool isSignUp = false}) async {
-    var _googleSignIn = GoogleSignIn(scopes: ['email']);
+    var _googleSignIn = GoogleSignIn.instance;
 
     try {
-      await _googleSignIn.signIn();
-      var _googleSignInAuthentication =
-          await _googleSignIn.currentUser!.authentication;
+      // Initialize GoogleSignIn if needed
+      await _googleSignIn.initialize();
+      
+      // Authenticate with Google
+      await _googleSignIn.authenticate(scopeHint: ['email']);
+      
+      // Get access token using authorizationClient
+      final authClient = _googleSignIn.authorizationClient;
+      final authorization = await authClient.authorizationForScopes(['email']);
+      
+      if (authorization?.accessToken == null) {
+        throw Exception('Failed to get access token');
+      }
 
       setStateFor(GOOGLE_OAUTH, ViewState.Busy);
 
       // save token & current user to local storage..
       if (isSignUp) {
         _storage.token = await _userApi.oauthSignup(
-          accessToken: _googleSignInAuthentication.accessToken!,
+          accessToken: authorization!.accessToken,
           provider: 'google',
         );
       } else {
         _storage.token = await _userApi.oauthLogin(
-          accessToken: _googleSignInAuthentication.accessToken!,
+          accessToken: authorization!.accessToken,
           provider: 'google',
         );
       }
