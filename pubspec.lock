@@ -1378,10 +1378,10 @@ packages:
     dependency: "direct main"
     description:
       name: showcaseview
-      sha256: "82e013ac2de1ae92cc6e652badf676606057c8e17aa3afd91e78866c4b4e85b1"
+      sha256: c92a9ea98c3a13191a88f93c1d75cbc3ba419f16e385ada89b1ee10f22f1bd96
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.1"
+    version: "5.0.2"
   simple_chips_input:
     dependency: "direct main"
     description:
