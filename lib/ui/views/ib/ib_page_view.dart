@@ -78,7 +78,6 @@ class _IbPageViewState extends State<IbPageView> {
   void initState() {
     _ibFloatingButtonState = IbFloatingButtonState();
     super.initState();
-    _showCaseWidgetState = ShowCaseWidget.of(context);
     _landingModel = context.read<IbLandingViewModel>();
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
     _hideButtonController.addListener(() {
