@@ -24,14 +24,13 @@ class Project {
     relationships: ProjectRelationships.fromJson(
       json['relationships'] ?? json['data']['relationships'],
     ),
-    collaborators:
-        json['included'] != null
-            ? List<Collaborator>.from(
-              json['included']
-                  ?.where((e) => e['type'] == 'user')
-                  ?.map((e) => Collaborator.fromJson(e)),
-            )
-            : null,
+    collaborators: json['included'] != null
+        ? List<Collaborator>.from(
+            json['included']
+                ?.where((e) => e['type'] == 'user')
+                ?.map((e) => Collaborator.fromJson(e)),
+          )
+        : null,
   );
   Project({
     required this.id,

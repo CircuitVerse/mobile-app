@@ -71,10 +71,12 @@ class _MyGroupsViewState extends State<MyGroupsView>
   Future<void> onDeleteGroupPressed(String groupId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title: AppLocalizations.of(context)!.my_groups_delete_group,
-      description:
-          AppLocalizations.of(context)!.my_groups_delete_group_confirmation,
-      confirmationTitle:
-          AppLocalizations.of(context)!.my_groups_delete.toUpperCase(),
+      description: AppLocalizations.of(
+        context,
+      )!.my_groups_delete_group_confirmation,
+      confirmationTitle: AppLocalizations.of(
+        context,
+      )!.my_groups_delete.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
@@ -109,107 +111,100 @@ class _MyGroupsViewState extends State<MyGroupsView>
         _model.fetchMemberGroups();
         _tabController = TabController(length: 2, vsync: this);
       },
-      builder:
-          (context, model, child) => Scaffold(
-            floatingActionButton: FloatingActionButton(
-              onPressed: onCreateGroupPressed,
-              backgroundColor: CVTheme.primaryColor,
-              child: const Icon(Icons.add),
-            ),
-            appBar: AppBar(
-              title: TabBar(
-                controller: _tabController,
-                labelColor: CVTheme.textColor(context),
-                indicatorColor: CVTheme.primaryColor,
-                tabs: [
-                  Tab(text: AppLocalizations.of(context)!.my_groups_owned),
-                  Tab(text: AppLocalizations.of(context)!.my_groups_joined),
-                ],
-              ),
-            ),
-            body: Builder(
-              builder: (context) {
-                var _ownedGroups = <Widget>[];
-                var _joinedGroups = <Widget>[];
-
-                if (_model.isSuccess(_model.FETCH_OWNED_GROUPS)) {
-                  for (var group in _model.ownedGroups) {
-                    _ownedGroups.add(
-                      GroupMentorCard(
-                        group: group,
-                        onEdit: () => onEditGroupPressed(group),
-                        onDelete: () => onDeleteGroupPressed(group.id),
-                      ),
-                    );
-                  }
-                  if (_model.previousMentoredGroupsBatch?.links.next != null) {
-                    _ownedGroups.add(
-                      CVAddIconButton(onPressed: _model.fetchMentoredGroups),
-                    );
-                  }
-                }
-                if (_model.isSuccess(_model.FETCH_MEMBER_GROUPS)) {
-                  for (var group in _model.memberGroups) {
-                    _joinedGroups.add(GroupMemberCard(group: group));
-                  }
-
-                  if (_model.previousMemberGroupsBatch?.links.next != null) {
-                    _joinedGroups.add(
-                      CVAddIconButton(onPressed: _model.fetchMemberGroups),
-                    );
-                  }
-                }
-
-                return TabBarView(
-                  controller: _tabController,
-                  children: <Widget>[
-                    RefreshIndicator(
-                      color: CVTheme.primaryColor,
-                      onRefresh: () => _model.refreshOwnedGroups(),
-                      child:
-                          _ownedGroups.isEmpty
-                              ? ListView(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                children: [
-                                  SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height *
-                                        0.7,
-                                    child: _emptyState(),
-                                  ),
-                                ],
-                              )
-                              : ListView(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                children: _ownedGroups,
-                              ),
-                    ),
-                    RefreshIndicator(
-                      color: CVTheme.primaryColor,
-                      onRefresh: () => _model.refreshMemberGroups(),
-                      child:
-                          _joinedGroups.isEmpty
-                              ? ListView(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                children: [
-                                  SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.height *
-                                        0.7,
-                                    child: _emptyState(),
-                                  ),
-                                ],
-                              )
-                              : ListView(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                children: _joinedGroups,
-                              ),
-                    ),
-                  ],
-                );
-              },
-            ),
+      builder: (context, model, child) => Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: onCreateGroupPressed,
+          backgroundColor: CVTheme.primaryColor,
+          child: const Icon(Icons.add),
+        ),
+        appBar: AppBar(
+          title: TabBar(
+            controller: _tabController,
+            labelColor: CVTheme.textColor(context),
+            indicatorColor: CVTheme.primaryColor,
+            tabs: [
+              Tab(text: AppLocalizations.of(context)!.my_groups_owned),
+              Tab(text: AppLocalizations.of(context)!.my_groups_joined),
+            ],
           ),
+        ),
+        body: Builder(
+          builder: (context) {
+            var _ownedGroups = <Widget>[];
+            var _joinedGroups = <Widget>[];
+
+            if (_model.isSuccess(_model.FETCH_OWNED_GROUPS)) {
+              for (var group in _model.ownedGroups) {
+                _ownedGroups.add(
+                  GroupMentorCard(
+                    group: group,
+                    onEdit: () => onEditGroupPressed(group),
+                    onDelete: () => onDeleteGroupPressed(group.id),
+                  ),
+                );
+              }
+              if (_model.previousMentoredGroupsBatch?.links.next != null) {
+                _ownedGroups.add(
+                  CVAddIconButton(onPressed: _model.fetchMentoredGroups),
+                );
+              }
+            }
+            if (_model.isSuccess(_model.FETCH_MEMBER_GROUPS)) {
+              for (var group in _model.memberGroups) {
+                _joinedGroups.add(GroupMemberCard(group: group));
+              }
+
+              if (_model.previousMemberGroupsBatch?.links.next != null) {
+                _joinedGroups.add(
+                  CVAddIconButton(onPressed: _model.fetchMemberGroups),
+                );
+              }
+            }
+
+            return TabBarView(
+              controller: _tabController,
+              children: <Widget>[
+                RefreshIndicator(
+                  color: CVTheme.primaryColor,
+                  onRefresh: () => _model.refreshOwnedGroups(),
+                  child: _ownedGroups.isEmpty
+                      ? ListView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.7,
+                              child: _emptyState(),
+                            ),
+                          ],
+                        )
+                      : ListView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          children: _ownedGroups,
+                        ),
+                ),
+                RefreshIndicator(
+                  color: CVTheme.primaryColor,
+                  onRefresh: () => _model.refreshMemberGroups(),
+                  child: _joinedGroups.isEmpty
+                      ? ListView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          children: [
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.7,
+                              child: _emptyState(),
+                            ),
+                          ],
+                        )
+                      : ListView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          children: _joinedGroups,
+                        ),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }

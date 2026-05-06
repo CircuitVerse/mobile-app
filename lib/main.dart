@@ -76,27 +76,26 @@ class CircuitVerseMobile extends StatelessWidget {
         ],
         child: ThemeConsumer(
           child: Builder(
-            builder:
-                (themeContext) => GetBuilder<LanguageController>(
-                  builder: (languageController) {
-                    final locale = languageController.currentLocale.value;
+            builder: (themeContext) => GetBuilder<LanguageController>(
+              builder: (languageController) {
+                final locale = languageController.currentLocale.value;
 
-                    return GetMaterialApp(
-                      title: 'CircuitVerse Mobile',
-                      debugShowCheckedModeBanner: false,
-                      locale: locale,
-                      localizationsDelegates: delegates,
-                      supportedLocales: AppLocalizations.supportedLocales,
-                      onGenerateTitle:
-                          (context) => AppLocalizations.of(context)!.cv_title,
-                      theme: ThemeProvider.themeOf(
-                        themeContext,
-                      ).data.copyWith(platform: TargetPlatform.android),
-                      onGenerateRoute: CVRouter.generateRoute,
-                      home: const StartUpView(),
-                    );
-                  },
-                ),
+                return GetMaterialApp(
+                  title: 'CircuitVerse Mobile',
+                  debugShowCheckedModeBanner: false,
+                  locale: locale,
+                  localizationsDelegates: delegates,
+                  supportedLocales: AppLocalizations.supportedLocales,
+                  onGenerateTitle: (context) =>
+                      AppLocalizations.of(context)!.cv_title,
+                  theme: ThemeProvider.themeOf(
+                    themeContext,
+                  ).data.copyWith(platform: TargetPlatform.android),
+                  onGenerateRoute: CVRouter.generateRoute,
+                  home: const StartUpView(),
+                );
+              },
+            ),
           ),
         ),
       ),

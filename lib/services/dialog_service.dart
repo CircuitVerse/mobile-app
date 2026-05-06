@@ -17,8 +17,9 @@ class DialogService {
           request.title,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        content:
-            request.description != null ? Text(request.description!) : null,
+        content: request.description != null
+            ? Text(request.description!)
+            : null,
         actions: <Widget>[
           TextButton(
             onPressed: () {
@@ -42,8 +43,9 @@ class DialogService {
           request.title,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        content:
-            request.description != null ? Text(request.description!) : null,
+        content: request.description != null
+            ? Text(request.description!)
+            : null,
         actions: <Widget>[
           TextButton(
             onPressed: () {

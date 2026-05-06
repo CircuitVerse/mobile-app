@@ -92,24 +92,23 @@ void main() {
           ],
           supportedLocales: const [Locale('en', '')],
           home: ShowCaseWidget(
-            builder:
-                (context) => Builder(
-                  builder: (_) {
-                    return BaseView<IbLandingViewModel>(
-                      builder: (context, model, _) {
-                        return IbPageView(
-                          key: UniqueKey(),
-                          chapter: _chapter,
-                          tocCallback: (val) {},
-                          setPage: (e) {},
-                          showCase: showCase,
-                          setShowCase: (e) {},
-                          globalKeysMap: globalKeyMap,
-                        );
-                      },
+            builder: (context) => Builder(
+              builder: (_) {
+                return BaseView<IbLandingViewModel>(
+                  builder: (context, model, _) {
+                    return IbPageView(
+                      key: UniqueKey(),
+                      chapter: _chapter,
+                      tocCallback: (val) {},
+                      setPage: (e) {},
+                      showCase: showCase,
+                      setShowCase: (e) {},
+                      globalKeysMap: globalKeyMap,
                     );
                   },
-                ),
+                );
+              },
+            ),
           ),
         ),
       );

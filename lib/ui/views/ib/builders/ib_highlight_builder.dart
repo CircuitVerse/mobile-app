@@ -21,10 +21,9 @@ class HighlightBuilder extends MarkdownElementBuilder {
       style: style,
       children: [WidgetSpan(child: Text(text, style: style))],
     );
-    var widget =
-        selectable
-            ? SelectableText.rich(textSpan, style: style)
-            : RichText(text: textSpan);
+    var widget = selectable
+        ? SelectableText.rich(textSpan, style: style)
+        : RichText(text: textSpan);
 
     return widget;
   }

@@ -63,11 +63,10 @@ class _AssignmentCardState extends State<AssignmentCard> {
       Flexible(
         child: CardButton(
           title: AppLocalizations.of(context)!.assignment_card_view,
-          onPressed:
-              () => Get.toNamed(
-                AssignmentDetailsView.id,
-                arguments: widget.assignment,
-              ),
+          onPressed: () => Get.toNamed(
+            AssignmentDetailsView.id,
+            arguments: widget.assignment,
+          ),
           color: CVTheme.primaryColor,
         ),
       ),
@@ -115,10 +114,9 @@ class _AssignmentCardState extends State<AssignmentCard> {
           _items.add(
             Flexible(
               child: CardButton(
-                title:
-                    AppLocalizations.of(
-                      context,
-                    )!.assignment_card_view_submission,
+                title: AppLocalizations.of(
+                  context,
+                )!.assignment_card_view_submission,
                 onPressed: () {},
                 color: CVTheme.blue,
               ),
@@ -136,10 +134,9 @@ class _AssignmentCardState extends State<AssignmentCard> {
           _items.add(
             Flexible(
               child: CardButton(
-                title:
-                    AppLocalizations.of(
-                      context,
-                    )!.assignment_card_view_your_work,
+                title: AppLocalizations.of(
+                  context,
+                )!.assignment_card_view_your_work,
                 onPressed: () {},
                 color: CVTheme.blue,
               ),
@@ -150,8 +147,9 @@ class _AssignmentCardState extends State<AssignmentCard> {
           _items.add(
             Flexible(
               child: CardButton(
-                title:
-                    AppLocalizations.of(context)!.assignment_card_start_working,
+                title: AppLocalizations.of(
+                  context,
+                )!.assignment_card_start_working,
                 onPressed: widget.onStartPressed,
                 color: CVTheme.blue,
               ),

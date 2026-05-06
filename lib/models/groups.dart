@@ -21,22 +21,20 @@ class Group {
     attributes: GroupAttributes.fromJson(
       json['attributes'] ?? json['data']['attributes'],
     ),
-    groupMembers:
-        json['included'] != null
-            ? List<GroupMember>.from(
-              json['included']
-                  ?.where((e) => e['type'] == 'group_member')
-                  ?.map((e) => GroupMember.fromJson(e)),
-            )
-            : null,
-    assignments:
-        json['included'] != null
-            ? List<Assignment>.from(
-              json['included']
-                  ?.where((e) => e['type'] == 'assignment')
-                  ?.map((e) => Assignment.fromJson(e)),
-            )
-            : null,
+    groupMembers: json['included'] != null
+        ? List<GroupMember>.from(
+            json['included']
+                ?.where((e) => e['type'] == 'group_member')
+                ?.map((e) => GroupMember.fromJson(e)),
+          )
+        : null,
+    assignments: json['included'] != null
+        ? List<Assignment>.from(
+            json['included']
+                ?.where((e) => e['type'] == 'assignment')
+                ?.map((e) => Assignment.fromJson(e)),
+          )
+        : null,
   );
   Group({
     required this.id,
@@ -54,9 +52,9 @@ class Group {
   // returns true if the logged in user is mentor for this group
   bool get isPrimaryMentor =>
       locator<LocalStorageService>().currentUser!.data.id ==
-              attributes.primaryMentorId.toString()
-          ? true
-          : false;
+          attributes.primaryMentorId.toString()
+      ? true
+      : false;
 }
 
 class GroupAttributes {

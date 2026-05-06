@@ -20,18 +20,12 @@ class NotificationsView extends StatelessWidget {
           const SizedBox(height: 100),
           _buildSubHeader(
             context,
-            title:
-                hasNoNotifications
-                    ? AppLocalizations.of(
-                      context,
-                    )!.notifications_no_notifications
-                    : AppLocalizations.of(context)!.notifications_no_unread,
-            subtitle:
-                hasNoNotifications
-                    ? AppLocalizations.of(context)!.notifications_will_appear
-                    : AppLocalizations.of(
-                      context,
-                    )!.notifications_no_unread_desc,
+            title: hasNoNotifications
+                ? AppLocalizations.of(context)!.notifications_no_notifications
+                : AppLocalizations.of(context)!.notifications_no_unread,
+            subtitle: hasNoNotifications
+                ? AppLocalizations.of(context)!.notifications_will_appear
+                : AppLocalizations.of(context)!.notifications_no_unread_desc,
           ),
         ],
       ),
@@ -103,10 +97,12 @@ class NotificationsView extends StatelessWidget {
         final String allValue = 'all';
         final String unreadValue = 'unread';
 
-        final String allDisplayText =
-            AppLocalizations.of(context)!.notifications_all;
-        final String unreadDisplayText =
-            AppLocalizations.of(context)!.notifications_unread;
+        final String allDisplayText = AppLocalizations.of(
+          context,
+        )!.notifications_all;
+        final String unreadDisplayText = AppLocalizations.of(
+          context,
+        )!.notifications_unread;
 
         return Scaffold(
           body: SingleChildScrollView(
@@ -135,10 +131,9 @@ class NotificationsView extends StatelessWidget {
                             ),
                           ),
                           // Fix: Use model.value but map it properly
-                          value:
-                              model.value == allDisplayText
-                                  ? allValue
-                                  : unreadValue,
+                          value: model.value == allDisplayText
+                              ? allValue
+                              : unreadValue,
                           items: [
                             DropdownMenuItem(
                               value: allValue,
@@ -152,10 +147,9 @@ class NotificationsView extends StatelessWidget {
                           onChanged: (value) {
                             if (value == null) return;
                             // Fix: Map back to localized string for model
-                            model.value =
-                                value == allValue
-                                    ? allDisplayText
-                                    : unreadDisplayText;
+                            model.value = value == allValue
+                                ? allDisplayText
+                                : unreadDisplayText;
                           },
                         ),
                       ),
@@ -175,10 +169,10 @@ class NotificationsView extends StatelessWidget {
                       .map((notification) {
                         NotificationType type =
                             notification.attributes.type.toLowerCase().contains(
-                                  'star',
-                                )
-                                ? NotificationType.Star
-                                : NotificationType.Fork;
+                              'star',
+                            )
+                            ? NotificationType.Star
+                            : NotificationType.Fork;
 
                         return Card(
                           margin: const EdgeInsetsDirectional.symmetric(
@@ -210,10 +204,9 @@ class NotificationsView extends StatelessWidget {
                               '${AppLocalizations.of(context)!.notifications_your_project} '
                               '${notification.attributes.params.project.name}',
                               style: TextStyle(
-                                fontWeight:
-                                    notification.attributes.unread
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
+                                fontWeight: notification.attributes.unread
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
                               ),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
@@ -223,10 +216,9 @@ class NotificationsView extends StatelessWidget {
                                 notification.attributes.updatedAt,
                               ),
                               style: TextStyle(
-                                fontWeight:
-                                    notification.attributes.unread
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
+                                fontWeight: notification.attributes.unread
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),

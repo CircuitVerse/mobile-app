@@ -91,8 +91,9 @@ class IbLandingViewModel extends BaseModel {
 
   void _updateSearch() {
     _setChapter();
-    searchNotifier.value =
-        ibChapters.isEmpty ? '0/0' : '${currentIndex + 1}/${ibChapters.length}';
+    searchNotifier.value = ibChapters.isEmpty
+        ? '0/0'
+        : '${currentIndex + 1}/${ibChapters.length}';
   }
 
   void setUpIsolate() async {

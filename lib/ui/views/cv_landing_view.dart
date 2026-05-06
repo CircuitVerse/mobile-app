@@ -119,29 +119,29 @@ class _CVLandingViewState extends State<CVLandingView> {
   Widget build(BuildContext context) {
     return BaseView<CVLandingViewModel>(
       onModelReady: (model) => model.setUser(),
-      builder:
-          (context, model, child) => PopScope(
-            canPop: false,
-            onPopInvokedWithResult: (didPop, result) async {
-              if (didPop) return;
+      builder: (context, model, child) => PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) return;
 
-              if (model.selectedIndex != 0) {
-                // If not on home screen, navigate to home
-                model.selectedIndex = 0;
-              } else {
-                // If on home screen, show exit confirmation
-                final shouldExit = await _showExitConfirmationDialog();
-                if (shouldExit) {
-                  SystemNavigator.pop();
-                }
-              }
-            },
-            child: Scaffold(
-              key: _scaffoldKey,
-              appBar: _buildAppBar(model.selectedIndex, model),
-              drawer: const CVDrawer(),
-              body: PageTransitionSwitcher(
-                transitionBuilder: (
+          if (model.selectedIndex != 0) {
+            // If not on home screen, navigate to home
+            model.selectedIndex = 0;
+          } else {
+            // If on home screen, show exit confirmation
+            final shouldExit = await _showExitConfirmationDialog();
+            if (shouldExit) {
+              SystemNavigator.pop();
+            }
+          }
+        },
+        child: Scaffold(
+          key: _scaffoldKey,
+          appBar: _buildAppBar(model.selectedIndex, model),
+          drawer: const CVDrawer(),
+          body: PageTransitionSwitcher(
+            transitionBuilder:
+                (
                   Widget child,
                   Animation<double> animation,
                   Animation<double> secondaryAnimation,
@@ -152,10 +152,10 @@ class _CVLandingViewState extends State<CVLandingView> {
                     child: child,
                   );
                 },
-                child: _items.elementAt(model.selectedIndex),
-              ),
-            ),
+            child: _items.elementAt(model.selectedIndex),
           ),
+        ),
+      ),
     );
   }
 }

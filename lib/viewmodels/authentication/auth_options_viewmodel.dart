@@ -25,14 +25,14 @@ class AuthOptionsViewModel extends BaseModel {
     try {
       // Initialize GoogleSignIn if needed
       await _googleSignIn.initialize();
-      
+
       // Authenticate with Google
       await _googleSignIn.authenticate(scopeHint: ['email']);
-      
+
       // Get access token using authorizationClient
       final authClient = _googleSignIn.authorizationClient;
       final authorization = await authClient.authorizationForScopes(['email']);
-      
+
       if (authorization?.accessToken == null) {
         throw Exception('Failed to get access token');
       }

@@ -18,12 +18,12 @@ class IbLiquidSyntax extends md.BlockSyntax {
         node = md.Element.text('chapter_contents', '');
       } else if (tags[1] == 'image.html' && tags.length >= 3) {
         // Images
-        var url =
-            RegExp(r'''url=("|')([^"'\n\r]+)("|')''').firstMatch(match[1]!)![2];
-        var alt =
-            RegExp(
-              r'''description=("|')([^"'\n\r]*)("|')''',
-            ).firstMatch(match[1]!)![2];
+        var url = RegExp(
+          r'''url=("|')([^"'\n\r]+)("|')''',
+        ).firstMatch(match[1]!)![2];
+        var alt = RegExp(
+          r'''description=("|')([^"'\n\r]*)("|')''',
+        ).firstMatch(match[1]!)![2];
 
         node = md.Element.withTag('img');
         node.attributes['src'] = '${EnvironmentConfig.IB_BASE_URL}$url';

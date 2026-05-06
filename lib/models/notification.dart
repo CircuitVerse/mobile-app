@@ -104,14 +104,12 @@ class Project {
       slug: json['slug'],
       view: json['view'],
       imagePreview: json['image_preview'],
-      createdAt:
-          json['created_at'] != null
-              ? DateTime.parse(json['created_at'])
-              : null,
-      updatedAt:
-          json['updated_at'] != null
-              ? DateTime.parse(json['updated_at'])
-              : null,
+      createdAt: json['created_at'] != null
+          ? DateTime.parse(json['created_at'])
+          : null,
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'])
+          : null,
     );
   }
 }

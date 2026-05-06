@@ -86,8 +86,9 @@ class CVLandingViewModel extends BaseModel {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title: AppLocalizations.of(Get.context!)!.cv_logout,
       description: AppLocalizations.of(Get.context!)!.cv_logout_confirmation,
-      confirmationTitle:
-          AppLocalizations.of(Get.context!)!.cv_logout_confirmation_button,
+      confirmationTitle: AppLocalizations.of(
+        Get.context!,
+      )!.cv_logout_confirmation_button,
     );
 
     if (_dialogResponse?.confirmed ?? false) {

@@ -18,8 +18,9 @@ class IbWebViewBuilder extends MarkdownElementBuilder {
           tagsToExtend: {'iframe'},
           builder: (extensionContext) {
             if (extensionContext.buildContext == null) return const SizedBox();
-            final width =
-                MediaQuery.of(extensionContext.buildContext!).size.width;
+            final width = MediaQuery.of(
+              extensionContext.buildContext!,
+            ).size.width;
             final height = (width * 9) / 16;
             final controller = WebViewController();
             controller

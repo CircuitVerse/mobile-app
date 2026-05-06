@@ -102,12 +102,11 @@ void main() {
           ],
           supportedLocales: AppLocalizations.supportedLocales,
           home: ShowCaseWidget(
-            builder:
-                (context) => Builder(
-                  builder: (context) {
-                    return const IbLandingView();
-                  },
-                ),
+            builder: (context) => Builder(
+              builder: (context) {
+                return const IbLandingView();
+              },
+            ),
           ),
         ),
       );

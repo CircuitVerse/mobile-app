@@ -32,10 +32,9 @@ class FeaturedProjectsViewModel extends BaseModel {
     notifyListeners();
   }
 
-  Projects? get previousProjectsBatch =>
-      _showSearchedResult
-          ? _previousSearchedProjectsBatch
-          : _previousFeaturedProjectsBatch;
+  Projects? get previousProjectsBatch => _showSearchedResult
+      ? _previousSearchedProjectsBatch
+      : _previousFeaturedProjectsBatch;
 
   bool _showSearchBar = false;
 
