@@ -192,7 +192,7 @@ jobs:
         if: matrix.build-type == 'ios'
         run: |
           cd ios
-          pod install
+          pod install --repo-update
           cd ..
 
       - name: List iOS Simulators
