@@ -42,12 +42,12 @@ class AuthOptionsViewModel extends BaseModel {
       // save token & current user to local storage..
       if (isSignUp) {
         _storage.token = await _userApi.oauthSignup(
-          accessToken: authorization!.accessToken,
+          accessToken: authorization.accessToken,
           provider: 'google',
         );
       } else {
         _storage.token = await _userApi.oauthLogin(
-          accessToken: authorization!.accessToken,
+          accessToken: authorization.accessToken,
           provider: 'google',
         );
       }
@@ -91,12 +91,12 @@ class AuthOptionsViewModel extends BaseModel {
       // save token & current user to local storage..
       if (isSignUp) {
         _storage.token = await _userApi.oauthSignup(
-          accessToken: _accessTokenResponse!.accessToken!,
+          accessToken: _accessTokenResponse.accessToken!,
           provider: 'github',
         );
       } else {
         _storage.token = await _userApi.oauthLogin(
-          accessToken: _accessTokenResponse!.accessToken!,
+          accessToken: _accessTokenResponse.accessToken!,
           provider: 'github',
         );
       }
