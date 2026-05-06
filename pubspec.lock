@@ -572,18 +572,18 @@ packages:
     dependency: transitive
     description:
       name: flutter_web_auth_2
-      sha256: fb584c8a285722eb98363240f0aac608cc546f8d28080cdf05edfad27ace2af0
+      sha256: d354998934ddc338e69b999b2abaeb33c6fd09999d3a5f92ead1a6b49b49712e
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0-alpha.7"
+    version: "5.0.2"
   flutter_web_auth_2_platform_interface:
     dependency: transitive
     description:
       name: flutter_web_auth_2_platform_interface
-      sha256: "45927587ebb2364cd273675ec95f6f67b81725754b416cef2b65cdc63fd3e853"
+      sha256: ba0fbba55bffb47242025f96852ad1ffba34bc451568f56ef36e613612baffab
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0-alpha.0"
+    version: "5.0.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -978,10 +978,10 @@ packages:
     dependency: "direct main"
     description:
       name: oauth2_client
-      sha256: "51d5d6a76fd2f043411e322a441b6e7b6e260ba9891c528b47df939c948fcc7b"
+      sha256: "10c1f9d749eb6d28323a9c715f3dac650c5aaef6a791db1005d497a6a20eee64"
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.2"
+    version: "4.3.1"
   package_config:
     dependency: transitive
     description:
