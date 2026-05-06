@@ -101,7 +101,7 @@ void main() {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: AppLocalizations.supportedLocales,
-          home: ShowCaseWidget(
+          home: ShowcaseView.register(
             builder: (context) => Builder(
               builder: (context) {
                 return const IbLandingView();

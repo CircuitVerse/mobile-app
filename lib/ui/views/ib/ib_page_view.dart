@@ -94,7 +94,7 @@ class _IbPageViewState extends State<IbPageView> {
 
   @override
   void didChangeDependencies() {
-    _showCaseWidgetState = ShowCaseWidget.of(context);
+    _showCaseWidgetState = ShowcaseView.get(context);
     super.didChangeDependencies();
   }
 

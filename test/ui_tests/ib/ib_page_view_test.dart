@@ -91,7 +91,7 @@ void main() {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: const [Locale('en', '')],
-          home: ShowCaseWidget(
+          home: ShowcaseView.register(
             builder: (context) => Builder(
               builder: (_) {
                 return BaseView<IbLandingViewModel>(
