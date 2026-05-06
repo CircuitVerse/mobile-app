@@ -18,7 +18,7 @@ environment:
   sdk: ">=3.7.2 <4.0.0"
 
 dependencies:
-  animations: ^2.0.2
+  animations: ^2.2.0
   cupertino_icons: ^1.0.9
   datetime_picker_formfield: ^2.0.0
   flutter:
