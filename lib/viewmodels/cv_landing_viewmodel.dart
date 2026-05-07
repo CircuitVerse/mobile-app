@@ -80,23 +80,22 @@ class CVLandingViewModel extends BaseModel {
     }
   }
 
-  Future<void> onLogoutPressed() async {
+  Future<bool> onLogoutPressed() async {
     Get.back();
 
-    var _dialogResponse = await _dialogService.showConfirmationDialog(
+    var response = await _dialogService.showConfirmationDialog(
       title: AppLocalizations.of(Get.context!)!.cv_logout,
       description: AppLocalizations.of(Get.context!)!.cv_logout_confirmation,
       confirmationTitle:
           AppLocalizations.of(Get.context!)!.cv_logout_confirmation_button,
     );
 
-    if (_dialogResponse?.confirmed ?? false) {
+    if (response?.confirmed ?? false) {
       onLogout();
       selectedIndex = 0;
-      SnackBarUtils.showDark(
-        AppLocalizations.of(Get.context!)!.cv_logout_success,
-        AppLocalizations.of(Get.context!)!.cv_logout_success_acknowledgement,
-      );
+      return true; 
     }
+
+    return false;
   }
 }
