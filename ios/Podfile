@@ -32,9 +32,6 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-  
-  # Fix for TOCropViewController compatibility with newer Xcode versions
-  pod 'TOCropViewController', '~> 2.7.4'
 end
 
 post_install do |installer|
