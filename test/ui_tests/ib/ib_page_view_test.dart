@@ -35,7 +35,7 @@ void main() {
     Future<void> _pumpIbPageView(WidgetTester tester) async {
       // Register ShowcaseView before building widgets
       ShowcaseView.register();
-      
+
       // Mock LandingViewModel
       var landingViewModel = MockIbLandingViewModel();
       locator.registerSingleton<IbLandingViewModel>(landingViewModel);
