@@ -43,4 +43,25 @@ post_install do |installer|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
     end
   end
+
+  crop_vc_file = File.join(
+    installer.sandbox.root,
+    'TOCropViewController/Objective-C/TOCropViewController/TOCropViewController.m'
+  )
+  if File.exist?(crop_vc_file)
+    content = File.read(crop_vc_file)
+    unless content.include?('__IPHONE_OS_VERSION_MAX_ALLOWED < 180000')
+      patched = content
+        .gsub(
+          '        UIViewLayoutRegion *layoutRegion = [UIViewLayoutRegion safeAreaLayoutRegionWithCornerAdaptation: UIViewLayoutRegionAdaptivityAxisVertical];',
+          "#if __IPHONE_OS_VERSION_MAX_ALLOWED < 180000\n        UIViewLayoutRegion *layoutRegion = [UIViewLayoutRegion safeAreaLayoutRegionWithCornerAdaptation: UIViewLayoutRegionAdaptivityAxisVertical];"
+        )
+        .gsub(
+          '        insets.bottom = edgeInsets.bottom;',
+          "        insets.bottom = edgeInsets.bottom;\n#endif"
+        )
+      File.write(crop_vc_file, patched)
+      puts "Patched TOCropViewController.m for Xcode 16+ SDK compatibility"
+    end
+  end
 end
