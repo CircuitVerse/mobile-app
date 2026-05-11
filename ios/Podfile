@@ -32,6 +32,12 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+
+  # Override TOCropViewController to use the main branch which contains the fix
+  # for UIViewLayoutRegion APIs removed in the iOS 18 SDK (Xcode 16+).
+  # The 3.1.2 tag does not include this fix yet.
+  # See: https://github.com/TimOliver/TOCropViewController
+  pod 'TOCropViewController', :git => 'https://github.com/TimOliver/TOCropViewController.git', :branch => 'main'
 end
 
 post_install do |installer|
@@ -43,10 +49,4 @@ post_install do |installer|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
     end
   end
-
-  # TOCropViewController 3.1.2 uses UIViewLayoutRegion / edgeInsetsForLayoutRegion: which
-  # were removed from the iOS 16+ SDK (Xcode 16+). The upstream fix wraps the block in
-  # #if __IPHONE_OS_VERSION_MAX_ALLOWED < 180000 but is not yet published to CocoaPods.
-  # We patch the source file here so it compiles on any Xcode version.
-  system("bash #{__dir__}/scripts/patch_tocrop.sh '#{installer.sandbox.root}'")
 end

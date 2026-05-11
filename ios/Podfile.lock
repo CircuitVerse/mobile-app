@@ -90,6 +90,7 @@ DEPENDENCIES:
   - quill_native_bridge_ios (from `.symlinks/plugins/quill_native_bridge_ios/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - TOCropViewController (from `https://github.com/TimOliver/TOCropViewController.git`, branch `main`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/darwin`)
 
@@ -103,7 +104,6 @@ SPEC REPOS:
     - GTMSessionFetcher
     - OrderedSet
     - PromisesObjC
-    - TOCropViewController
 
 EXTERNAL SOURCES:
   Flutter:
@@ -132,10 +132,18 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  TOCropViewController:
+    :branch: main
+    :git: https://github.com/TimOliver/TOCropViewController.git
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   webview_flutter_wkwebview:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
+
+CHECKOUT OPTIONS:
+  TOCropViewController:
+    :commit: 98527150c27eef8b695482c9b4ad5bdab1b1cb2b
+    :git: https://github.com/TimOliver/TOCropViewController.git
 
 SPEC CHECKSUMS:
   AppAuth: 1c1a8afa7e12f2ec3a294d9882dfa5ab7d3cb063
@@ -163,6 +171,6 @@ SPEC CHECKSUMS:
   url_launcher_ios: 7a95fa5b60cc718a708b8f2966718e93db0cef1b
   webview_flutter_wkwebview: 8ebf4fded22593026f7dbff1fbff31ea98573c8d
 
-PODFILE CHECKSUM: a35980fe73df848613cc562eac545c3702a8b2f6
+PODFILE CHECKSUM: 5d10e92bd05599f267d880227d79bba76fbb7848
 
 COCOAPODS: 1.16.2
