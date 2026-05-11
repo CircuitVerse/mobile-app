@@ -51,10 +51,7 @@ class IbPageViewModel extends BaseModel {
     }
   }
 
-  void showCase(
-    IBShowCase state,
-    Map<String, dynamic> keysMap,
-  ) {
+  void showCase(IBShowCase state, Map<String, dynamic> keysMap) {
     _list = <GlobalKey>[];
 
     if (!state.nextButton) _list.add(_nextPage);

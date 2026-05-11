@@ -477,10 +477,7 @@ class _IbPageViewState extends State<IbPageView> {
       onModelReady: (model) {
         _model = model;
         model.fetchPageData(id: widget.chapter.id);
-        model.showCase(
-          widget.showCase,
-          widget.globalKeysMap,
-        );
+        model.showCase(widget.showCase, widget.globalKeysMap);
       },
       builder: (context, model, child) {
         if (_model.isSuccess(_model.IB_FETCH_PAGE_DATA) &&

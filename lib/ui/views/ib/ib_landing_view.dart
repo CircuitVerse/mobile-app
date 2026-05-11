@@ -34,7 +34,7 @@ class _IbLandingViewState extends State<IbLandingView> {
     _controller = TextEditingController();
     _tocNotifier = ValueNotifier(null);
     super.initState();
-    
+
     ShowcaseView.register(
       onComplete: (index, globalKey) {
         final String key =
@@ -344,45 +344,45 @@ class _IbLandingViewState extends State<IbLandingView> {
               child: Builder(
                 builder: (context) {
                   return Scaffold(
-                          key: _key,
-                          appBar: _buildAppBar(),
-                          drawer: _buildDrawer(),
-                          body: PageTransitionSwitcher(
-                            transitionBuilder: (
-                              Widget child,
-                              Animation<double> animation,
-                              Animation<double> secondaryAnimation,
-                            ) {
-                              return FadeThroughTransition(
-                                animation: animation,
-                                secondaryAnimation: secondaryAnimation,
-                                child: child,
-                              );
-                            },
-                            child: IbPageView(
-                              key: Key(_model.selectedChapter.toString()),
-                              tocCallback: (val) {
-                                Future.delayed(Duration.zero, () async {
-                                  if (mounted) {
-                                    _tocNotifier.value = val;
-                                  }
-                                });
-                              },
-                              setPage: (chapter) {
-                                if (chapter == null) return;
-                                model.selectedChapter = chapter;
-                              },
-                              chapter: model.selectedChapter,
-                              setShowCase: (updatedState) {
-                                model.showCaseState = updatedState;
-                              },
-                              showCase: model.showCaseState,
-                              globalKeysMap: model.keyMap,
-                            ),
-                          ),
+                    key: _key,
+                    appBar: _buildAppBar(),
+                    drawer: _buildDrawer(),
+                    body: PageTransitionSwitcher(
+                      transitionBuilder: (
+                        Widget child,
+                        Animation<double> animation,
+                        Animation<double> secondaryAnimation,
+                      ) {
+                        return FadeThroughTransition(
+                          animation: animation,
+                          secondaryAnimation: secondaryAnimation,
+                          child: child,
                         );
                       },
-                ),
+                      child: IbPageView(
+                        key: Key(_model.selectedChapter.toString()),
+                        tocCallback: (val) {
+                          Future.delayed(Duration.zero, () async {
+                            if (mounted) {
+                              _tocNotifier.value = val;
+                            }
+                          });
+                        },
+                        setPage: (chapter) {
+                          if (chapter == null) return;
+                          model.selectedChapter = chapter;
+                        },
+                        chapter: model.selectedChapter,
+                        setShowCase: (updatedState) {
+                          model.showCaseState = updatedState;
+                        },
+                        showCase: model.showCaseState,
+                        globalKeysMap: model.keyMap,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         );
