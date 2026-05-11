@@ -22,26 +22,18 @@ class AuthOptionsViewModel extends BaseModel {
 
   Future googleAuth({bool isSignUp = false}) async {
     try {
-      // Authenticate with Google and get the account
-      final account = await _googleSignIn.authenticate(scopeHint: ['email']);
+      // Request sign-in with Google (this will show the account picker)
+      final GoogleSignInAccount? account = await _googleSignIn.signIn();
 
       if (account == null) {
         throw Exception('Google sign-in was cancelled');
       }
 
-      // Use the account-scoped authorization client
-      final authClient = await account.authenticationClient;
+      // Get authentication tokens
+      final GoogleSignInAuthentication authentication =
+          await account.authentication;
 
-      // Try to get authorization for email scope
-      // If not previously granted, this returns null without prompting
-      var authorization = await authClient.authorizationForScopes(['email']);
-
-      // Fallback: if authorization is null, explicitly request the scope
-      if (authorization == null) {
-        authorization = await authClient.authorizeScopes(['email']);
-      }
-
-      if (authorization?.accessToken == null) {
+      if (authentication.accessToken == null) {
         throw Exception('Failed to get access token');
       }
 
@@ -50,12 +42,12 @@ class AuthOptionsViewModel extends BaseModel {
       // save token & current user to local storage..
       if (isSignUp) {
         _storage.token = await _userApi.oauthSignup(
-          accessToken: authorization!.accessToken,
+          accessToken: authentication.accessToken!,
           provider: 'google',
         );
       } else {
         _storage.token = await _userApi.oauthLogin(
-          accessToken: authorization!.accessToken,
+          accessToken: authentication.accessToken!,
           provider: 'google',
         );
       }
