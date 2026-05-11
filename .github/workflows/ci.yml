@@ -195,6 +195,10 @@ jobs:
           pod install --repo-update
           cd ..
 
+      - name: Patch TOCropViewController for Xcode 16+ (iOS)
+        if: matrix.build-type == 'ios'
+        run: bash ios/scripts/patch_tocrop.sh ios/Pods
+
       - name: List iOS Simulators
         if: matrix.build-type == 'ios'
         run: xcrun simctl list devices

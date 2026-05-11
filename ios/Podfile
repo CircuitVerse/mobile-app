@@ -44,24 +44,9 @@ post_install do |installer|
     end
   end
 
-  crop_vc_file = File.join(
-    installer.sandbox.root,
-    'TOCropViewController/Objective-C/TOCropViewController/TOCropViewController.m'
-  )
-  if File.exist?(crop_vc_file)
-    content = File.read(crop_vc_file)
-    unless content.include?('__IPHONE_OS_VERSION_MAX_ALLOWED < 180000')
-      patched = content
-        .gsub(
-          '        UIViewLayoutRegion *layoutRegion = [UIViewLayoutRegion safeAreaLayoutRegionWithCornerAdaptation: UIViewLayoutRegionAdaptivityAxisVertical];',
-          "#if __IPHONE_OS_VERSION_MAX_ALLOWED < 180000\n        UIViewLayoutRegion *layoutRegion = [UIViewLayoutRegion safeAreaLayoutRegionWithCornerAdaptation: UIViewLayoutRegionAdaptivityAxisVertical];"
-        )
-        .gsub(
-          '        insets.bottom = edgeInsets.bottom;',
-          "        insets.bottom = edgeInsets.bottom;\n#endif"
-        )
-      File.write(crop_vc_file, patched)
-      puts "Patched TOCropViewController.m for Xcode 16+ SDK compatibility"
-    end
-  end
+  # TOCropViewController 3.1.2 uses UIViewLayoutRegion / edgeInsetsForLayoutRegion: which
+  # were removed from the iOS 16+ SDK (Xcode 16+). The upstream fix wraps the block in
+  # #if __IPHONE_OS_VERSION_MAX_ALLOWED < 180000 but is not yet published to CocoaPods.
+  # We patch the source file here so it compiles on any Xcode version.
+  system("bash #{__dir__}/scripts/patch_tocrop.sh '#{installer.sandbox.root}'")
 end
