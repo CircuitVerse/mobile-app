@@ -13,6 +13,7 @@ import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -32,6 +33,9 @@ void main() {
     setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpIbPageView(WidgetTester tester) async {
+      // Register ShowcaseView before building widgets
+      ShowcaseView.register();
+      
       // Mock LandingViewModel
       var landingViewModel = MockIbLandingViewModel();
       locator.registerSingleton<IbLandingViewModel>(landingViewModel);
