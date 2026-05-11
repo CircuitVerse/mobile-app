@@ -4,6 +4,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/database_service.dart';
@@ -21,6 +22,10 @@ Future<void> main() async {
   // Init Hive
   await locator<DatabaseService>().init();
   Get.put(LanguageController());
+
+  // Initialize GoogleSignIn at app startup to prevent StateError
+  // when signOut() is called without signing in first
+  await GoogleSignIn.instance.initialize();
 
   runApp(const CircuitVerseMobile());
 }

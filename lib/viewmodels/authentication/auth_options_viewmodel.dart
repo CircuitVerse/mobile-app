@@ -18,20 +18,28 @@ class AuthOptionsViewModel extends BaseModel {
 
   final UsersApi _userApi = locator<UsersApi>();
   final LocalStorageService _storage = locator<LocalStorageService>();
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
   Future googleAuth({bool isSignUp = false}) async {
-    var _googleSignIn = GoogleSignIn.instance;
-
     try {
-      // Initialize GoogleSignIn if needed
-      await _googleSignIn.initialize();
+      // Authenticate with Google and get the account
+      final account = await _googleSignIn.authenticate(scopeHint: ['email']);
+      
+      if (account == null) {
+        throw Exception('Google sign-in was cancelled');
+      }
 
-      // Authenticate with Google
-      await _googleSignIn.authenticate(scopeHint: ['email']);
-
-      // Get access token using authorizationClient
-      final authClient = _googleSignIn.authorizationClient;
-      final authorization = await authClient.authorizationForScopes(['email']);
+      // Use the account-scoped authorization client
+      final authClient = await account.authenticationClient;
+      
+      // Try to get authorization for email scope
+      // If not previously granted, this returns null without prompting
+      var authorization = await authClient.authorizationForScopes(['email']);
+      
+      // Fallback: if authorization is null, explicitly request the scope
+      if (authorization == null) {
+        authorization = await authClient.authorizeScopes(['email']);
+      }
 
       if (authorization?.accessToken == null) {
         throw Exception('Failed to get access token');
@@ -85,6 +93,10 @@ class AuthOptionsViewModel extends BaseModel {
 
     try {
       var _accessTokenResponse = await _oauthHelper.getToken();
+
+      if (_accessTokenResponse.accessToken == null) {
+        throw Exception('Failed to get access token');
+      }
 
       setStateFor(GITHUB_OAUTH, ViewState.Busy);
 

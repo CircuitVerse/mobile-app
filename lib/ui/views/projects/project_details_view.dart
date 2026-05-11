@@ -684,10 +684,16 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         canPop: false,
         onPopInvokedWithResult: (didPop, result) async {
           if (didPop) return;
+          // Use null-safe access to prevent crash during hot-restart or widget re-insertion
+          final receivedProject = model.receivedProject;
+          if (receivedProject == null) {
+            Get.back(result: null);
+            return;
+          }
           final bool isChanged =
-              model.receivedProject!.attributes.isStarred ^
+              receivedProject.attributes.isStarred ^
               _recievedProject.attributes.isStarred;
-          Get.back(result: isChanged ? model.receivedProject : null);
+          Get.back(result: isChanged ? receivedProject : null);
         },
         child: Scaffold(
           appBar: AppBar(

@@ -161,6 +161,7 @@ class _CVTypeAheadFieldState extends State<CVTypeAheadField> {
                       _removeOverlay();
 
                       Future.delayed(const Duration(milliseconds: 100), () {
+                        if (!mounted) return;
                         widget.controller?.addListener(_onTextChanged);
                         widget.focusNode?.unfocus();
                       });

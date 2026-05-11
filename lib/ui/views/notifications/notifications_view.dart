@@ -104,6 +104,14 @@ class NotificationsView extends StatelessWidget {
           context,
         )!.notifications_unread;
 
+        // Map model.value to dropdown value with explicit default
+        String getDropdownValue() {
+          if (model.value == allDisplayText) return allValue;
+          if (model.value == unreadDisplayText) return unreadValue;
+          // Explicit default: if model.value is unexpected, default to 'all'
+          return allValue;
+        }
+
         return Scaffold(
           body: SingleChildScrollView(
             child: Padding(
@@ -130,10 +138,7 @@ class NotificationsView extends StatelessWidget {
                               ),
                             ),
                           ),
-                          // Fix: Use model.value but map it properly
-                          value: model.value == allDisplayText
-                              ? allValue
-                              : unreadValue,
+                          value: getDropdownValue(),
                           items: [
                             DropdownMenuItem(
                               value: allValue,
@@ -146,7 +151,7 @@ class NotificationsView extends StatelessWidget {
                           ],
                           onChanged: (value) {
                             if (value == null) return;
-                            // Fix: Map back to localized string for model
+                            // Map back to localized string for model
                             model.value = value == allValue
                                 ? allDisplayText
                                 : unreadDisplayText;

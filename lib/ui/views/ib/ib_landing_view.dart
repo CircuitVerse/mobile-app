@@ -327,12 +327,17 @@ class _IbLandingViewState extends State<IbLandingView> {
               data: IbTheme.getThemeData(context),
               child: ShowCaseWidget(
                 onComplete: (index, globalKey) {
-                  final String key = globalKey
-                      .toString()
-                      .substring(1, globalKey.toString().length - 1)
-                      .split(" ")
-                      .last;
-                  model.onShowCased(key);
+                  // Find the key ID by comparing object references instead of parsing toString()
+                  String? keyId;
+                  for (final entry in model.keyMap.entries) {
+                    if (identical(entry.value, globalKey)) {
+                      keyId = entry.key;
+                      break;
+                    }
+                  }
+                  if (keyId != null) {
+                    model.onShowCased(keyId);
+                  }
                 },
                 builder: (context) => Builder(
                   builder: (context) {
