@@ -70,7 +70,6 @@ class _IbPageViewState extends State<IbPageView> {
   late IbLandingViewModel _landingModel;
   late AutoScrollController _hideButtonController;
   late IbFloatingButtonState _ibFloatingButtonState;
-  late ShowCaseWidgetState _showCaseWidgetState;
 
   final Map<String, int> _slugMap = {};
 
@@ -78,7 +77,6 @@ class _IbPageViewState extends State<IbPageView> {
   void initState() {
     _ibFloatingButtonState = IbFloatingButtonState();
     super.initState();
-    _showCaseWidgetState = ShowCaseWidget.of(context);
     _landingModel = context.read<IbLandingViewModel>();
     _hideButtonController = AutoScrollController(axis: Axis.vertical);
     _hideButtonController.addListener(() {
@@ -95,7 +93,6 @@ class _IbPageViewState extends State<IbPageView> {
 
   @override
   void didChangeDependencies() {
-    _showCaseWidgetState = ShowCaseWidget.of(context);
     super.didChangeDependencies();
   }
 
@@ -481,7 +478,6 @@ class _IbPageViewState extends State<IbPageView> {
         _model = model;
         model.fetchPageData(id: widget.chapter.id);
         model.showCase(
-          _showCaseWidgetState,
           widget.showCase,
           widget.globalKeysMap,
         );

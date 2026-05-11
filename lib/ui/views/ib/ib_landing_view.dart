@@ -34,6 +34,18 @@ class _IbLandingViewState extends State<IbLandingView> {
     _controller = TextEditingController();
     _tocNotifier = ValueNotifier(null);
     super.initState();
+    
+    ShowcaseView.register(
+      onComplete: (index, globalKey) {
+        final String key =
+            globalKey
+                .toString()
+                .substring(1, globalKey.toString().length - 1)
+                .split(" ")
+                .last;
+        _model.onShowCased(key);
+      },
+    );
   }
 
   @override
@@ -329,20 +341,9 @@ class _IbLandingViewState extends State<IbLandingView> {
             textDirection: TextDirection.ltr, // Force LTR layout
             child: Theme(
               data: IbTheme.getThemeData(context),
-              child: ShowCaseWidget(
-                onComplete: (index, globalKey) {
-                  final String key =
-                      globalKey
-                          .toString()
-                          .substring(1, globalKey.toString().length - 1)
-                          .split(" ")
-                          .last;
-                  model.onShowCased(key);
-                },
-                builder:
-                    (context) => Builder(
-                      builder: (context) {
-                        return Scaffold(
+              child: Builder(
+                builder: (context) {
+                  return Scaffold(
                           key: _key,
                           appBar: _buildAppBar(),
                           drawer: _buildDrawer(),
@@ -381,8 +382,7 @@ class _IbLandingViewState extends State<IbLandingView> {
                           ),
                         );
                       },
-                    ),
-              ),
+                ),
             ),
           ),
         );

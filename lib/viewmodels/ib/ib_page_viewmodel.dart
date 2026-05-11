@@ -52,7 +52,6 @@ class IbPageViewModel extends BaseModel {
   }
 
   void showCase(
-    ShowCaseWidgetState showCaseWidgetState,
     IBShowCase state,
     Map<String, dynamic> keysMap,
   ) {
@@ -66,7 +65,7 @@ class IbPageViewModel extends BaseModel {
     if (_list.isNotEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 800), () {
-          showCaseWidgetState.startShowCase(_list);
+          ShowcaseView.get().startShowCase(_list);
         });
       });
     }
