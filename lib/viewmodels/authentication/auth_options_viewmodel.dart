@@ -24,18 +24,18 @@ class AuthOptionsViewModel extends BaseModel {
     try {
       // Authenticate with Google and get the account
       final account = await _googleSignIn.authenticate(scopeHint: ['email']);
-      
+
       if (account == null) {
         throw Exception('Google sign-in was cancelled');
       }
 
       // Use the account-scoped authorization client
       final authClient = await account.authenticationClient;
-      
+
       // Try to get authorization for email scope
       // If not previously granted, this returns null without prompting
       var authorization = await authClient.authorizationForScopes(['email']);
-      
+
       // Fallback: if authorization is null, explicitly request the scope
       if (authorization == null) {
         authorization = await authClient.authorizeScopes(['email']);
