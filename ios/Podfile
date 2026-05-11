@@ -33,9 +33,10 @@ target 'Runner' do
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 
-  # Override TOCropViewController to use the main branch which contains the fix
-  # for UIViewLayoutRegion APIs removed in the iOS 18 SDK (Xcode 16+).
-  # The 3.1.2 tag does not include this fix yet.
+  # Override TOCropViewController to use the main branch
+  # Note: The main branch still contains deprecated UIViewLayoutRegion APIs
+  # that were removed in iOS 18 SDK (Xcode 16+). These are patched out
+  # automatically in the post_install hook below.
   # See: https://github.com/TimOliver/TOCropViewController
   pod 'TOCropViewController', :git => 'https://github.com/TimOliver/TOCropViewController.git', :branch => 'main'
 end
@@ -47,6 +48,22 @@ post_install do |installer|
     # Set minimum deployment target to iOS 14.0 for all pods
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+    end
+  end
+  
+  # Patch TOCropViewController to remove deprecated UIViewLayoutRegion APIs
+  # These APIs were removed in iOS 18 SDK (Xcode 16+)
+  tocrop_file = 'Pods/TOCropViewController/Objective-C/TOCropViewController/TOCropViewController.m'
+  if File.exist?(tocrop_file)
+    text = File.read(tocrop_file)
+    # Comment out the problematic UIViewLayoutRegion code
+    new_text = text.gsub(
+      /    \/\/ fix: On iOS 26, overlay with iPadOS windowingControl area\.\n    if \(@available\(iOS 26\.0, \*\)\) \{\n      if \(!verticalLayout\) \{\n#if __IPHONE_OS_VERSION_MAX_ALLOWED < 180000\n        UIViewLayoutRegion \*layoutRegion = \[UIViewLayoutRegion safeAreaLayoutRegionWithCornerAdaptation: UIViewLayoutRegionAdaptivityAxisVertical\];\n        UIEdgeInsets edgeInsets = \[self\.view edgeInsetsForLayoutRegion:layoutRegion\];\n        insets\.top = edgeInsets\.top;\n        insets\.left = edgeInsets\.left;\n        insets\.bottom = edgeInsets\.bottom;\n#endif\n      \}\n    \}/,
+      "    // fix: On iOS 26, overlay with iPadOS windowingControl area.\n    // Note: UIViewLayoutRegion APIs were removed in iOS 18 SDK (Xcode 16+)\n    // Commenting out this code as it uses deprecated APIs\n    // if (@available(iOS 26.0, *)) {\n    //   if (!verticalLayout) {\n    // #if __IPHONE_OS_VERSION_MAX_ALLOWED < 180000\n    //     UIViewLayoutRegion *layoutRegion = [UIViewLayoutRegion safeAreaLayoutRegionWithCornerAdaptation: UIViewLayoutRegionAdaptivityAxisVertical];\n    //     UIEdgeInsets edgeInsets = [self.view edgeInsetsForLayoutRegion:layoutRegion];\n    //     insets.top = edgeInsets.top;\n    //     insets.left = edgeInsets.left;\n    //     insets.bottom = edgeInsets.bottom;\n    // #endif\n    //   }\n    // }"
+    )
+    if text != new_text
+      File.open(tocrop_file, 'w') { |file| file.write(new_text) }
+      puts "✓ Patched TOCropViewController to remove deprecated UIViewLayoutRegion APIs"
     end
   end
 end
