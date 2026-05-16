@@ -103,7 +103,7 @@ jobs:
         include:
           - platform: ubuntu-latest
             build-type: android
-          - platform: macos-14
+          - platform: macos-15
             build-type: ios
           - platform: windows-latest
             build-type: windows
