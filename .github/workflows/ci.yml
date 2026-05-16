@@ -41,7 +41,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: 3.32
+          flutter-version: 3.41.9
           
       - name: Cache pub dependencies
         uses: actions/cache@v5
@@ -103,7 +103,7 @@ jobs:
         include:
           - platform: ubuntu-latest
             build-type: android
-          - platform: macos-14
+          - platform: macos-15
             build-type: ios
           - platform: windows-latest
             build-type: windows
@@ -126,7 +126,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: 3.32
+          flutter-version: 3.41.9
 
           
       - name: Cache Gradle (Android)
@@ -305,7 +305,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: 3.32
+          flutter-version: 3.41.9
 
           
       - name: Cache Gradle
