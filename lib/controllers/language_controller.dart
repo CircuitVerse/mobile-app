@@ -10,6 +10,7 @@ class LanguageController extends GetxController {
     const Locale('en'): {'name': 'English', 'isRTL': false},
     const Locale('hi'): {'name': 'हिन्दी', 'isRTL': false},
     const Locale('ar'): {'name': 'العربية', 'isRTL': true},
+    const Locale('bn'): {'name': 'বাংলা', 'isRTL': false},
   };
 
   @override

@@ -82,6 +82,7 @@ class CVDrawer extends StatelessWidget {
                   const Locale('en'): 'English',
                   const Locale('hi'): 'हिंदी',
                   const Locale('ar'): 'العربية',
+                  const Locale('bn'): 'বাংলা',
                 };
 
                 return Theme(
