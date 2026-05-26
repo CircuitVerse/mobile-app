@@ -17,7 +17,7 @@ class HttpContributorsApi implements ContributorsApi {
 
   @override
   Future<List<CircuitVerseContributor>>? fetchContributors() async {
-    // ── Cache hit ────────────────────────────────────────────────────────────
+    //  Cache hit
     // The About screen can be visited multiple times from the drawer.
     // Without this cache the app hits GitHub's rate-limited API on every visit.
     final cached = _cache.get<List<CircuitVerseContributor>>(
@@ -25,7 +25,7 @@ class HttpContributorsApi implements ContributorsApi {
     );
     if (cached != null) return cached;
 
-    // ── Cache miss: fetch from network ───────────────────────────────────────
+    //  Cache miss: fetch from network
     var _url =
         'https://api.github.com/repos/CircuitVerse/CircuitVerse/contributors';
 

@@ -130,7 +130,7 @@ class HttpUsersApi implements UsersApi {
 
   @override
   Future<User>? fetchUser(String userId) async {
-    // ── Cache hit ─────────────────────────────────────────────────────────
+    // Cache hit
     // ProfileView calls fetchUser every time the screen mounts, even on
     // back-navigation.  Five-minute TTL means the screen feels instant while
     // still staying fresh.
@@ -138,7 +138,7 @@ class HttpUsersApi implements UsersApi {
     final cached = _cache.get<User>(cacheKey);
     if (cached != null) return cached;
 
-    // ── Cache miss: network fetch ─────────────────────────────────────────
+    // Cache miss: network fetch
     var endpoint = '/users/$userId';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     try {
@@ -180,7 +180,12 @@ class HttpUsersApi implements UsersApi {
     File? image,
     bool removePicture,
   ) async {
-    var endpoint = '/users/${_storage.currentUser!.data.id}';
+    // Capture userId before any await — if logout happens mid-flight,
+    // _storage.currentUser could become null and invalidate the wrong entry.
+    final currentUserId = _storage.currentUser?.data.id;
+    if (currentUserId == null) throw Failure(Constants.GENERIC_FAILURE);
+
+    var endpoint = '/users/$currentUserId';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 
     var header = {'Content-Type': 'multipart/form-data'};
@@ -211,7 +216,7 @@ class HttpUsersApi implements UsersApi {
       final updatedUser = User.fromJson(jsonResponse);
       // Invalidate the cached profile so the next fetchUser call gets
       // fresh data after the user edits their profile.
-      _cache.invalidate(CacheKeys.userProfile(_storage.currentUser!.data.id));
+      _cache.invalidate(CacheKeys.userProfile(currentUserId));
       return updatedUser;
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
