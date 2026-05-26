@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mobile_app/cache/cache_service.dart';
 import 'package:mobile_app/enums/auth_type.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
@@ -46,6 +47,10 @@ class CVLandingViewModel extends BaseModel {
     if (_storage.authType == AuthType.GOOGLE) {
       await _googleSignIn.signOut();
     }
+
+    // Clear all in-memory cached data so it never leaks to the next session
+    // or a different logged-in user on the same device.
+    CacheService.instance.clear();
 
     notifyListeners();
   }
