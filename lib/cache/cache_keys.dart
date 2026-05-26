@@ -4,11 +4,11 @@
 ///   - Keys never diverge between setter and getter.
 ///   - Prefixes make prefix-based invalidation safe.
 abstract class CacheKeys {
-  // ── Contributors ────────────────────────────────────────────────
+  //  Contributors
   /// GitHub contributors list.  Cached for [contributorsTtl].
   static const String contributors = 'contributors';
 
-  // ── User profile ────────────────────────────────────────────────
+  //  User profile
   /// Prefix for per-user profile responses from /users/:id.
   /// Full key: 'user_profile:<userId>'
   static const String userProfilePrefix = 'user_profile:';
@@ -16,7 +16,7 @@ abstract class CacheKeys {
   /// Build the full profile cache key for a given user ID.
   static String userProfile(String userId) => '$userProfilePrefix$userId';
 
-  // ── Interactive Book page data ───────────────────────────────────
+  //  Interactive Book page data
   /// Prefix for parsed IbPageData objects (after HTML processing).
   /// Full key: 'ib_page:<pageId>'
   static const String ibPagePrefix = 'ib_page:';
@@ -24,12 +24,12 @@ abstract class CacheKeys {
   /// Build the full IB page cache key for a given page ID.
   static String ibPage(String pageId) => '$ibPagePrefix$pageId';
 
-  // ── Notifications ────────────────────────────────────────────────
+  //  Notifications
   /// Cached notification list so the dot badge and the full list
   /// share one network call per session open.
   static const String notifications = 'notifications';
 
-  // ─── TTL constants ──────────────────────────────────────────────
+  //  TTL constants
   /// Contributors list refreshes once per session (GitHub data is stable).
   static const Duration contributorsTtl = Duration(hours: 12);
 
