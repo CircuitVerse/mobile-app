@@ -248,7 +248,7 @@ class IbEngineServiceImpl implements IbEngineService {
   /// Fetches "Rich" Page Content
   @override
   Future<IbPageData?>? getPageData({String id = 'index.md'}) async {
-    // ── Cache hit ──────────────────────────────────────────────────────────
+    //  Cache hit
     // Two separate callers invoke this method per-page:
     //   1. IbPageViewModel.fetchPageData — every time the user opens a chapter.
     //   2. The search isolate (IbLandingViewModel.fetchCallback) — which calls
@@ -258,7 +258,7 @@ class IbEngineServiceImpl implements IbEngineService {
     final cached = _cache.get<IbPageData>(cacheKey);
     if (cached != null) return cached;
 
-    // ── Cache miss: fetch + parse ──────────────────────────────────────────
+    //  Cache miss: fetch + parse
     IbRawPageData? _ibRawPageData;
     try {
       _ibRawPageData = await _ibApi.fetchRawPageData(id: id);
