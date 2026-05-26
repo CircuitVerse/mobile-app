@@ -43,16 +43,16 @@ class CVLandingViewModel extends BaseModel {
     _storage.currentUser = null;
     _storage.token = null;
 
-    // Perform google signout if auth type is google..
-    if (_storage.authType == AuthType.GOOGLE) {
-      await _googleSignIn.signOut();
+    try {
+      if (_storage.authType == AuthType.GOOGLE) {
+        await _googleSignIn.signOut();
+      }
+    } finally {
+      // Always clear cache and notify — even if Google sign-out throws.
+      // Without finally, a sign-out error would leave stale data in memory.
+      CacheService.instance.clear();
+      notifyListeners();
     }
-
-    // Clear all in-memory cached data so it never leaks to the next session
-    // or a different logged-in user on the same device.
-    CacheService.instance.clear();
-
-    notifyListeners();
   }
 
   void setUser() async {
