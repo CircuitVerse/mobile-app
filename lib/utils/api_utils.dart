@@ -1,12 +1,18 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/failure_model.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/utils/app_exceptions.dart';
+
+// Top-level functions required by compute()
+dynamic _decodeJson(String body) => json.decode(body);
+dynamic _decodeUtf8Json(Uint8List bodyBytes) =>
+    json.decode(utf8.decode(bodyBytes));
 
 class ApiUtils {
   static http.Client client = http.Client();
@@ -140,20 +146,19 @@ class ApiUtils {
     }
   }
 
-  static dynamic jsonResponse(
+  static Future<dynamic> jsonResponse(
     http.Response response, {
     bool utfDecoder = false,
-  }) {
+  }) async {
     switch (response.statusCode) {
       case 200:
       case 201:
       case 202:
       case 204:
-        return response.body == ''
-            ? {}
-            : json.decode(
-              utfDecoder ? utf8.decode(response.bodyBytes) : response.body,
-            );
+        if (response.body == '') return {};
+        return utfDecoder
+            ? await compute(_decodeUtf8Json, response.bodyBytes)
+            : await compute(_decodeJson, response.body);
       case 400:
         throw BadRequestException(response.body);
       case 401:
