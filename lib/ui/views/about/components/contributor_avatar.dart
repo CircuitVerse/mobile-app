@@ -1,8 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/cv_contributors.dart';
 import 'package:mobile_app/utils/url_launcher.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class ContributorAvatar extends StatelessWidget {
   const ContributorAvatar({required this.contributor, super.key});
@@ -24,9 +24,13 @@ class ContributorAvatar extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(24),
-            child: FadeInImage.memoryNetwork(
-              placeholder: kTransparentImage,
-              image: contributor.avatarUrl,
+            child: CachedNetworkImage(
+              imageUrl: contributor.avatarUrl,
+              placeholder: (context, url) => Container(
+                color: Colors.grey[300],
+              ),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              fit: BoxFit.cover,
             ),
           ),
         ),
