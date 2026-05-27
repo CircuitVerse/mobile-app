@@ -220,7 +220,37 @@ class CVDrawer extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                        onTap: _model.onLogoutPressed,
+                        onTap: () async {
+                          final messenger = ScaffoldMessenger.of(context);
+                          final logoutSuccess = AppLocalizations.of(context)!.cv_logout_success;
+                          final logoutAck = AppLocalizations.of(context)!.cv_logout_success_acknowledgement;
+                          final confirmed = await _model.onLogoutPressed();
+                          if (confirmed) {
+                            messenger.showSnackBar(
+                              SnackBar(
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      logoutSuccess,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(logoutAck, style: const TextStyle(color: Colors.white)),
+                                  ],
+                                ),
+                                backgroundColor: Colors.black.withValues(alpha: 0.85),
+                                behavior: SnackBarBehavior.floating,
+                                margin: const EdgeInsets.all(12),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                duration: const Duration(seconds: 2),
+                              ),
+                            );
+                          }
+                        },
                         child: CVDrawerTile(
                           title: AppLocalizations.of(context)!.cv_logout,
                           iconData: FontAwesome.logout,

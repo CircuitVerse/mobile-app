@@ -128,24 +128,36 @@ class _LoginViewState extends State<LoginView> {
   }
 
   Future<void> _validateAndSubmit() async {
-    if (Validators.validateAndSaveForm(_formKey) &&
-        !_model.isBusy(_model.LOGIN)) {
-      FocusScope.of(context).requestFocus(FocusNode());
-      await _model.login(_email, _password);
-      if (_model.isSuccess(_model.LOGIN)) {
-        SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.login_success_title,
-          AppLocalizations.of(context)!.login_success_message,
-        );
-        await Future.delayed(const Duration(seconds: 1));
-        await Get.offAllNamed(CVLandingView.id);
-      } else if (_model.isError(_model.LOGIN)) {
-        SnackBarUtils.showDark(
-          AppLocalizations.of(context)!.login_error,
-          _model.errorMessageFor(_model.LOGIN),
-        );
-        _formKey.currentState?.reset();
-      }
+    if (!Validators.validateAndSaveForm(_formKey) ||
+        _model.isBusy(_model.LOGIN)) {
+      return;
+    }
+
+    // Dismiss keyboard
+    FocusScope.of(context).unfocus();
+
+    await _model.login(_email, _password);
+
+    // Capture strings BEFORE any async navigation (important)
+    final successTitle = AppLocalizations.of(context)!.login_success_title;
+    final successMessage = AppLocalizations.of(context)!.login_success_message;
+
+    final errorTitle = AppLocalizations.of(context)!.login_error;
+    final errorMessage = _model.errorMessageFor(_model.LOGIN);
+
+    if (_model.isSuccess(_model.LOGIN)) {
+      // Navigate first (ensures overlay exists)
+      await Get.offAllNamed(CVLandingView.id);
+
+      // Small delay ensures new screen is mounted
+      Future.delayed(const Duration(milliseconds: 100), () {
+        SnackBarUtils.showDark(successTitle, successMessage);
+      });
+    } else if (_model.isError(_model.LOGIN)) {
+      // Snackbar is safe here (no navigation happening)
+      SnackBarUtils.showDark(errorTitle, errorMessage);
+
+      _formKey.currentState?.reset();
     }
   }
 
