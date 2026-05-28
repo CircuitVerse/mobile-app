@@ -108,8 +108,11 @@ void main() {
 
         expect(find.widgetWithText(TextButton, 'VIEW'), findsOneWidget);
 
-        Widget button =
-            find.widgetWithText(TextButton, 'VIEW').evaluate().first.widget;
+        Widget button = find
+            .widgetWithText(TextButton, 'VIEW')
+            .evaluate()
+            .first
+            .widget;
         (button as TextButton).onPressed!();
         await tester.pumpAndSettle();
 

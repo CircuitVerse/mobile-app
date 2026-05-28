@@ -28,14 +28,14 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
 
     return (hasImage && !isDefaultServerImage)
         ? FadeInImage.memoryNetwork(
-          height: 160,
-          width: double.infinity,
-          fit: BoxFit.cover,
-          placeholder: kTransparentImage,
-          image: _getImageUrl(),
-          imageErrorBuilder:
-              (context, error, stackTrace) => _buildDefaultImage(),
-        )
+            height: 160,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            placeholder: kTransparentImage,
+            image: _getImageUrl(),
+            imageErrorBuilder: (context, error, stackTrace) =>
+                _buildDefaultImage(),
+          )
         : _buildDefaultImage();
   }
 
@@ -128,10 +128,9 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         elevation: 5,
-        shadowColor:
-            Theme.of(context).brightness == Brightness.dark
-                ? Colors.white.withValues(alpha: 0.1)
-                : CVTheme.boxShadow(context),
+        shadowColor: Theme.of(context).brightness == Brightness.dark
+            ? Colors.white.withValues(alpha: 0.1)
+            : CVTheme.boxShadow(context),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -145,10 +144,9 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
                     widget.project.attributes.name,
                     style: TextStyle(
                       fontSize: 20,
-                      color:
-                          Theme.of(context).brightness == Brightness.dark
-                              ? Colors.white
-                              : CVTheme.primaryHeading(context),
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : CVTheme.primaryHeading(context),
                       fontWeight: FontWeight.w600,
                     ),
                     maxLines: 2,

@@ -276,9 +276,12 @@ void main() {
           (_) => Future.value(
             _group
               ..assignments
-                  ?.firstWhere((assignment) => assignment.id == _assignment.id)
-                  .attributes
-                  .currentUserProjectId = 1,
+                      ?.firstWhere(
+                        (assignment) => assignment.id == _assignment.id,
+                      )
+                      .attributes
+                      .currentUserProjectId =
+                  1,
           ),
         );
 

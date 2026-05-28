@@ -56,13 +56,11 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     return CVTextField(
       initialValue: widget.assignment.attributes.name,
       label: AppLocalizations.of(context)!.update_assignment_name,
-      validator:
-          (name) =>
-              name?.isEmpty ?? true
-                  ? AppLocalizations.of(
-                    context,
-                  )!.update_assignment_name_validation_error
-                  : null,
+      validator: (name) => name?.isEmpty ?? true
+          ? AppLocalizations.of(
+              context,
+            )!.update_assignment_name_validation_error
+          : null,
       onSaved: (name) => _name = name!.trim(),
     );
   }
@@ -196,11 +194,10 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
     return Padding(
       padding: const EdgeInsetsDirectional.all(8),
       child: Column(
-        children:
-            restrictionElements.entries
-                .toList()
-                .map<Widget>((e) => _buildRestrictionComponent(e.key, e.value))
-                .toList(),
+        children: restrictionElements.entries
+            .toList()
+            .map<Widget>((e) => _buildRestrictionComponent(e.key, e.value))
+            .toList(),
       ),
     );
   }
@@ -264,34 +261,31 @@ class _UpdateAssignmentViewState extends State<UpdateAssignmentView> {
   Widget build(BuildContext context) {
     return BaseView<UpdateAssignmentViewModel>(
       onModelReady: (model) => _model = model,
-      builder:
-          (context, model, child) => Scaffold(
-            appBar: AppBar(
-              title: Text(
-                AppLocalizations.of(context)!.update_assignment_title,
-              ),
-            ),
-            body: SingleChildScrollView(
-              padding: const EdgeInsetsDirectional.symmetric(vertical: 16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    _buildNameInput(),
-                    _buildDescriptionInput(),
-                    _buildDeadlineInput(),
-                    _buildRestrictionsHeader(),
-                    if (_isRestrictionEnabled)
-                      _buildRestrictions()
-                    else
-                      Container(),
-                    _buildUpdateButton(),
-                  ],
-                ),
-              ),
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context)!.update_assignment_title),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsetsDirectional.symmetric(vertical: 16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                _buildNameInput(),
+                _buildDescriptionInput(),
+                _buildDeadlineInput(),
+                _buildRestrictionsHeader(),
+                if (_isRestrictionEnabled)
+                  _buildRestrictions()
+                else
+                  Container(),
+                _buildUpdateButton(),
+              ],
             ),
           ),
+        ),
+      ),
     );
   }
 }

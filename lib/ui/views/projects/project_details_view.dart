@@ -202,14 +202,11 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              recognizer:
-                  TapGestureRecognizer()
-                    ..onTap =
-                        () => Get.toNamed(
-                          ProfileView.id,
-                          arguments:
-                              _recievedProject.relationships.author.data.id,
-                        ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => Get.toNamed(
+                  ProfileView.id,
+                  arguments: _recievedProject.relationships.author.data.id,
+                ),
               text: _recievedProject.attributes.authorName,
               style: const TextStyle(
                 fontSize: 18,
@@ -226,24 +223,24 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Widget _buildProjectDescription() {
     return (_recievedProject.attributes.description ?? '') != ''
         ? Padding(
-          padding: const EdgeInsetsDirectional.symmetric(vertical: 4.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${AppLocalizations.of(context)!.edit_project_description} :',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
+            padding: const EdgeInsetsDirectional.symmetric(vertical: 4.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${AppLocalizations.of(context)!.edit_project_description} :',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              Html(
-                data: _recievedProject.attributes.description ?? '',
-                style: {'body': Style(fontSize: FontSize(16))},
-              ),
-            ],
-          ),
-        )
+                Html(
+                  data: _recievedProject.attributes.description ?? '',
+                  style: {'body': Style(fontSize: FontSize(16))},
+                ),
+              ],
+            ),
+          )
         : Container();
   }
 
@@ -387,20 +384,19 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
           color: CVTheme.primaryColor,
           borderRadius: BorderRadius.circular(4),
         ),
-        child:
-            _model.isBusy(_model.TOGGLE_STAR)
-                ? const SizedBox(
-                  width: 24,
-                  height: 24,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    strokeWidth: 3,
-                  ),
-                )
-                : Icon(
-                  _model.isProjectStarred ? Icons.star : Icons.star_border,
-                  color: Colors.white,
+        child: _model.isBusy(_model.TOGGLE_STAR)
+            ? const SizedBox(
+                width: 24,
+                height: 24,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  strokeWidth: 3,
                 ),
+              )
+            : Icon(
+                _model.isProjectStarred ? Icons.star : Icons.star_border,
+                color: Colors.white,
+              ),
       ),
     );
   }
@@ -465,11 +461,9 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
               decoration: CVTheme.textFieldDecoration.copyWith(
                 hintText: AppLocalizations.of(context)!.edit_project_email_ids,
               ),
-              validator:
-                  (emails) =>
-                      Validators.areEmailsValid(emails)
-                          ? null
-                          : 'Enter emails in valid format.',
+              validator: (emails) => Validators.areEmailsValid(emails)
+                  ? null
+                  : 'Enter emails in valid format.',
               onSaved: (emails) => _emails = emails!.replaceAll(' ', '').trim(),
             ),
           ),
@@ -547,10 +541,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Future<void> onDeleteProjectPressed() async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title: AppLocalizations.of(context)!.edit_project_delete_project,
-      description:
-          AppLocalizations.of(context)!.edit_project_delete_confirmation,
-      confirmationTitle:
-          AppLocalizations.of(context)!.edit_project_delete.toUpperCase(),
+      description: AppLocalizations.of(
+        context,
+      )!.edit_project_delete_confirmation,
+      confirmationTitle: AppLocalizations.of(
+        context,
+      )!.edit_project_delete.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
@@ -607,12 +603,12 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   Future<void> onDeleteCollaboratorPressed(Collaborator collaborator) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title: AppLocalizations.of(context)!.edit_project_delete_collaborator,
-      description:
-          AppLocalizations.of(
-            context,
-          )!.edit_project_delete_collaborator_confirmation,
-      confirmationTitle:
-          AppLocalizations.of(context)!.edit_project_delete.toUpperCase(),
+      description: AppLocalizations.of(
+        context,
+      )!.edit_project_delete_collaborator_confirmation,
+      confirmationTitle: AppLocalizations.of(
+        context,
+      )!.edit_project_delete.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
@@ -648,8 +644,8 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
         children: <Widget>[
           Expanded(
             child: GestureDetector(
-              onTap:
-                  () => Get.toNamed(ProfileView.id, arguments: collaborator.id),
+              onTap: () =>
+                  Get.toNamed(ProfileView.id, arguments: collaborator.id),
               child: Text(
                 collaborator.attributes.name,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -684,99 +680,94 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
 
         _model.fetchProjectDetails(_recievedProject.id);
       },
-      builder:
-          (context, model, child) => PopScope(
-            canPop: false,
-            onPopInvokedWithResult: (didPop, result) async {
-              if (didPop) return;
-              final bool isChanged =
-                  model.receivedProject!.attributes.isStarred ^
-                  _recievedProject.attributes.isStarred;
-              Get.back(result: isChanged ? model.receivedProject : null);
-            },
-            child: Scaffold(
-              appBar: AppBar(
-                title: Text(AppLocalizations.of(context)!.edit_project_details),
-                actions: [_buildShareActionButton()],
-              ),
-              body: Builder(
-                builder: (context) {
-                  var _projectAttrs = _recievedProject.attributes;
-                  var _items = <Widget>[];
+      builder: (context, model, child) => PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) return;
+          final bool isChanged =
+              model.receivedProject!.attributes.isStarred ^
+              _recievedProject.attributes.isStarred;
+          Get.back(result: isChanged ? model.receivedProject : null);
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(AppLocalizations.of(context)!.edit_project_details),
+            actions: [_buildShareActionButton()],
+          ),
+          body: Builder(
+            builder: (context) {
+              var _projectAttrs = _recievedProject.attributes;
+              var _items = <Widget>[];
 
-                  _items.add(_buildProjectPreview());
-                  _items.add(const SizedBox(height: 16));
-                  _items.add(_buildProjectNameHeader());
+              _items.add(_buildProjectPreview());
+              _items.add(const SizedBox(height: 16));
+              _items.add(_buildProjectNameHeader());
 
-                  _items.add(
-                    Container(
-                      padding: const EdgeInsetsDirectional.symmetric(
-                        vertical: 16,
-                        horizontal: 8,
+              _items.add(
+                Container(
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    vertical: 16,
+                    horizontal: 8,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      _buildProjectAuthor(),
+                      _buildProjectDetailComponent(
+                        AppLocalizations.of(context)!.edit_project_access_type,
+                        _projectAttrs.projectAccessType,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      _buildProjectDescription(),
+                      _buildProjectTags(),
+                      const Divider(height: 32),
+                      Wrap(
+                        spacing: 8,
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: <Widget>[
-                          _buildProjectAuthor(),
-                          _buildProjectDetailComponent(
-                            AppLocalizations.of(
-                              context,
-                            )!.edit_project_access_type,
-                            _projectAttrs.projectAccessType,
-                          ),
-                          _buildProjectDescription(),
-                          _buildProjectTags(),
-                          const Divider(height: 32),
-                          Wrap(
-                            spacing: 8,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: <Widget>[
-                              if (!_recievedProject.hasAuthorAccess &&
-                                  model.isLoggedIn)
-                                _buildForkProjectButton(),
-                              if (model.isLoggedIn) _buildStarProjectButton(),
-                              if (_recievedProject.hasAuthorAccess)
-                                _buildAddCollaboratorsButton(),
-                            ],
-                          ),
-                          const Divider(height: 32),
+                          if (!_recievedProject.hasAuthorAccess &&
+                              model.isLoggedIn)
+                            _buildForkProjectButton(),
+                          if (model.isLoggedIn) _buildStarProjectButton(),
                           if (_recievedProject.hasAuthorAccess)
-                            Wrap(
-                              spacing: 8,
-                              children: <Widget>[
-                                _buildEditButton(),
-                                _buildDeleteButton(),
-                              ],
-                            ),
+                            _buildAddCollaboratorsButton(),
                         ],
                       ),
-                    ),
-                  );
+                      const Divider(height: 32),
+                      if (_recievedProject.hasAuthorAccess)
+                        Wrap(
+                          spacing: 8,
+                          children: <Widget>[
+                            _buildEditButton(),
+                            _buildDeleteButton(),
+                          ],
+                        ),
+                    ],
+                  ),
+                ),
+              );
 
-                  if (_model.isSuccess(_model.FETCH_PROJECT_DETAILS) &&
-                      _model.collaborators.isNotEmpty) {
-                    _items.add(const Divider());
-                    _items.add(
-                      _buildProjectHeader(
-                        AppLocalizations.of(
-                          context,
-                        )!.edit_project_collaborators,
-                      ),
-                    );
+              if (_model.isSuccess(_model.FETCH_PROJECT_DETAILS) &&
+                  _model.collaborators.isNotEmpty) {
+                _items.add(const Divider());
+                _items.add(
+                  _buildProjectHeader(
+                    AppLocalizations.of(context)!.edit_project_collaborators,
+                  ),
+                );
 
-                    for (var collaborator in _model.collaborators) {
-                      _items.add(_buildCollaborator(collaborator));
-                    }
-                  }
-                  return ListView(
-                    shrinkWrap: true,
-                    padding: const EdgeInsetsDirectional.all(16),
-                    children: _items,
-                  );
-                },
-              ),
-            ),
+                for (var collaborator in _model.collaborators) {
+                  _items.add(_buildCollaborator(collaborator));
+                }
+              }
+              return ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsetsDirectional.all(16),
+                children: _items,
+              );
+            },
           ),
+        ),
+      ),
     );
   }
 }

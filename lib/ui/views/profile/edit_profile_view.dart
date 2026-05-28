@@ -155,15 +155,14 @@ class _EditProfileViewState extends State<EditProfileView> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image:
-                      _model.imageUpdated
-                          ? FileImage(_model.updatedImage!)
-                          : imageURL.toLowerCase().contains('default') ||
-                              _model.removeImage
-                          ? const AssetImage(
-                            'assets/images/profile/default_icon.jpg',
-                          )
-                          : NetworkImage(imageURL) as ImageProvider,
+                  image: _model.imageUpdated
+                      ? FileImage(_model.updatedImage!)
+                      : imageURL.toLowerCase().contains('default') ||
+                            _model.removeImage
+                      ? const AssetImage(
+                          'assets/images/profile/default_icon.jpg',
+                        )
+                      : NetworkImage(imageURL) as ImageProvider,
                 ),
               ),
             ),
@@ -189,11 +188,9 @@ class _EditProfileViewState extends State<EditProfileView> {
     return CVTextField(
       label: AppLocalizations.of(context)!.profile_name,
       initialValue: _name,
-      validator:
-          (value) =>
-              value?.isEmpty ?? true
-                  ? AppLocalizations.of(context)!.profile_name_empty_error
-                  : null,
+      validator: (value) => value?.isEmpty ?? true
+          ? AppLocalizations.of(context)!.profile_name_empty_error
+          : null,
       onSaved: (value) {
         _name = value!.trim();
       },

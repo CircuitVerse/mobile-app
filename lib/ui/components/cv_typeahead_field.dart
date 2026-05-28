@@ -119,62 +119,59 @@ class _CVTypeAheadFieldState extends State<CVTypeAheadField> {
     _removeOverlay();
 
     _overlayEntry = OverlayEntry(
-      builder:
-          (context) => Positioned(
-            width: MediaQuery.of(context).size.width - 32,
-            child: CompositedTransformFollower(
-              link: _layerLink,
-              showWhenUnlinked: false,
-              offset: const Offset(0, 52),
-              child: Material(
-                elevation: 4,
+      builder: (context) => Positioned(
+        width: MediaQuery.of(context).size.width - 32,
+        child: CompositedTransformFollower(
+          link: _layerLink,
+          showWhenUnlinked: false,
+          offset: const Offset(0, 52),
+          child: Material(
+            elevation: 4,
+            borderRadius: BorderRadius.circular(8),
+            child: Container(
+              constraints: const BoxConstraints(maxHeight: 200),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(8),
-                child: Container(
-                  constraints: const BoxConstraints(maxHeight: 200),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Theme.of(context).dividerColor),
-                  ),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    padding: EdgeInsetsDirectional.zero,
-                    itemCount: _suggestions.length,
-                    itemBuilder: (context, index) {
-                      final suggestion = _suggestions[index];
-                      return ListTile(
-                        dense: true,
-                        title: Text(suggestion),
-                        onTap: () {
-                          widget.controller?.removeListener(_onTextChanged);
+                border: Border.all(color: Theme.of(context).dividerColor),
+              ),
+              child: ListView.builder(
+                shrinkWrap: true,
+                padding: EdgeInsetsDirectional.zero,
+                itemCount: _suggestions.length,
+                itemBuilder: (context, index) {
+                  final suggestion = _suggestions[index];
+                  return ListTile(
+                    dense: true,
+                    title: Text(suggestion),
+                    onTap: () {
+                      widget.controller?.removeListener(_onTextChanged);
 
-                          widget.controller?.text = suggestion;
-                          widget
-                              .controller
-                              ?.selection = TextSelection.fromPosition(
-                            TextPosition(
-                              offset: widget.controller?.text.length ?? 0,
-                            ),
-                          );
-
-                          setState(() {
-                            _showSuggestions = false;
-                            _suggestions = [];
-                          });
-                          _removeOverlay();
-
-                          Future.delayed(const Duration(milliseconds: 100), () {
-                            widget.controller?.addListener(_onTextChanged);
-                            widget.focusNode?.unfocus();
-                          });
-                        },
+                      widget.controller?.text = suggestion;
+                      widget.controller?.selection = TextSelection.fromPosition(
+                        TextPosition(
+                          offset: widget.controller?.text.length ?? 0,
+                        ),
                       );
+
+                      setState(() {
+                        _showSuggestions = false;
+                        _suggestions = [];
+                      });
+                      _removeOverlay();
+
+                      Future.delayed(const Duration(milliseconds: 100), () {
+                        widget.controller?.addListener(_onTextChanged);
+                        widget.focusNode?.unfocus();
+                      });
                     },
-                  ),
-                ),
+                  );
+                },
               ),
             ),
           ),
+        ),
+      ),
     );
 
     Overlay.of(context).insert(_overlayEntry!);
@@ -219,25 +216,24 @@ class _CVTypeAheadFieldState extends State<CVTypeAheadField> {
           decoration: InputDecoration(
             labelText: widget.label,
             border: const OutlineInputBorder(),
-            suffixIcon:
-                _isLoading
-                    ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.all(12.0),
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                    )
-                    : (widget.controller?.text.isNotEmpty ?? false)
-                    ? IconButton(
-                      icon: const Icon(Icons.clear),
-                      onPressed: () {
-                        widget.controller?.clear();
-                        _hideSuggestions();
-                      },
-                    )
-                    : null,
+            suffixIcon: _isLoading
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.all(12.0),
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  )
+                : (widget.controller?.text.isNotEmpty ?? false)
+                ? IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      widget.controller?.clear();
+                      _hideSuggestions();
+                    },
+                  )
+                : null,
           ),
         ),
       ),

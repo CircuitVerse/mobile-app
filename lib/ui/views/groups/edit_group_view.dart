@@ -61,54 +61,51 @@ class _EditGroupViewState extends State<EditGroupView> {
   Widget build(BuildContext context) {
     return BaseView<EditGroupViewModel>(
       onModelReady: (model) => _model = model,
-      builder:
-          (context, model, child) => Scaffold(
-            appBar: AppBar(),
-            body: SingleChildScrollView(
-              padding: const EdgeInsetsDirectional.all(16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    CVSubheader(
-                      title:
-                          AppLocalizations.of(
-                            context,
-                          )!.edit_group_title.toUpperCase(),
-                      subtitle:
-                          AppLocalizations.of(context)!.edit_group_description,
-                    ),
-                    const SizedBox(height: 16),
-                    SvgPicture.asset(
-                      'assets/images/group/edit_group.svg',
-                      height: 200,
-                    ),
-                    const SizedBox(height: 16),
-                    CVTextField(
-                      padding: EdgeInsetsDirectional.zero,
-                      label: AppLocalizations.of(context)!.edit_group_name,
-                      initialValue: widget.group.attributes.name,
-                      validator:
-                          (value) =>
-                              value?.isEmpty ?? true
-                                  ? AppLocalizations.of(
-                                    context,
-                                  )!.edit_group_name_validation_error
-                                  : null,
-                      onSaved: (value) => _name = value!.trim(),
-                      action: TextInputAction.done,
-                    ),
-                    const SizedBox(height: 16),
-                    CVPrimaryButton(
-                      title: AppLocalizations.of(context)!.edit_group_save,
-                      onPressed: _validateAndSubmit,
-                    ),
-                  ],
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(),
+        body: SingleChildScrollView(
+          padding: const EdgeInsetsDirectional.all(16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                CVSubheader(
+                  title: AppLocalizations.of(
+                    context,
+                  )!.edit_group_title.toUpperCase(),
+                  subtitle: AppLocalizations.of(
+                    context,
+                  )!.edit_group_description,
                 ),
-              ),
+                const SizedBox(height: 16),
+                SvgPicture.asset(
+                  'assets/images/group/edit_group.svg',
+                  height: 200,
+                ),
+                const SizedBox(height: 16),
+                CVTextField(
+                  padding: EdgeInsetsDirectional.zero,
+                  label: AppLocalizations.of(context)!.edit_group_name,
+                  initialValue: widget.group.attributes.name,
+                  validator: (value) => value?.isEmpty ?? true
+                      ? AppLocalizations.of(
+                          context,
+                        )!.edit_group_name_validation_error
+                      : null,
+                  onSaved: (value) => _name = value!.trim(),
+                  action: TextInputAction.done,
+                ),
+                const SizedBox(height: 16),
+                CVPrimaryButton(
+                  title: AppLocalizations.of(context)!.edit_group_save,
+                  onPressed: _validateAndSubmit,
+                ),
+              ],
             ),
           ),
+        ),
+      ),
     );
   }
 }

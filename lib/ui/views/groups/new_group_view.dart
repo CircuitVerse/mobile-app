@@ -59,56 +59,50 @@ class _NewGroupViewState extends State<NewGroupView> {
   Widget build(BuildContext context) {
     return BaseView<NewGroupViewModel>(
       onModelReady: (model) => _model = model,
-      builder:
-          (context, model, child) => Scaffold(
-            appBar: AppBar(),
-            body: SingleChildScrollView(
-              padding: const EdgeInsetsDirectional.all(16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    CVSubheader(
-                      title:
-                          AppLocalizations.of(
-                            context,
-                          )!.new_group_title.toUpperCase(),
-                      subtitle:
-                          AppLocalizations.of(context)!.new_group_description,
-                    ),
-                    const SizedBox(height: 16),
-                    SvgPicture.asset(
-                      'assets/images/group/new_group.svg',
-                      height: 200,
-                    ),
-                    const SizedBox(height: 16),
-                    CVTextField(
-                      padding: const EdgeInsetsDirectional.all(0),
-                      label: AppLocalizations.of(context)!.new_group_name,
-                      validator:
-                          (value) =>
-                              value?.isEmpty ?? true
-                                  ? AppLocalizations.of(
-                                    context,
-                                  )!.new_group_name_validation_error
-                                  : null,
-                      onSaved: (value) => _name = value!.trim(),
-                      action: TextInputAction.done,
-                    ),
-                    const SizedBox(height: 16),
-                    CVPrimaryButton(
-                      title:
-                          AppLocalizations.of(
-                            context,
-                          )!.new_group_save.toUpperCase(),
-                      onPressed: _validateAndSubmit,
-                    ),
-                  ],
+      builder: (context, model, child) => Scaffold(
+        appBar: AppBar(),
+        body: SingleChildScrollView(
+          padding: const EdgeInsetsDirectional.all(16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                CVSubheader(
+                  title: AppLocalizations.of(
+                    context,
+                  )!.new_group_title.toUpperCase(),
+                  subtitle: AppLocalizations.of(context)!.new_group_description,
                 ),
-              ),
+                const SizedBox(height: 16),
+                SvgPicture.asset(
+                  'assets/images/group/new_group.svg',
+                  height: 200,
+                ),
+                const SizedBox(height: 16),
+                CVTextField(
+                  padding: const EdgeInsetsDirectional.all(0),
+                  label: AppLocalizations.of(context)!.new_group_name,
+                  validator: (value) => value?.isEmpty ?? true
+                      ? AppLocalizations.of(
+                          context,
+                        )!.new_group_name_validation_error
+                      : null,
+                  onSaved: (value) => _name = value!.trim(),
+                  action: TextInputAction.done,
+                ),
+                const SizedBox(height: 16),
+                CVPrimaryButton(
+                  title: AppLocalizations.of(
+                    context,
+                  )!.new_group_save.toUpperCase(),
+                  onPressed: _validateAndSubmit,
+                ),
+              ],
             ),
           ),
+        ),
+      ),
     );
   }
 }

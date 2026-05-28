@@ -35,12 +35,13 @@ class CVFlatButtonState extends State<CVFlatButton>
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
-    _colorAnimation = ColorTween(
-      begin: Colors.grey,
-      end: Colors.grey.withAlpha(179),
-    ).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
-    );
+    _colorAnimation =
+        ColorTween(begin: Colors.grey, end: Colors.grey.withAlpha(179)).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        );
   }
 
   @override
@@ -55,15 +56,18 @@ class CVFlatButtonState extends State<CVFlatButton>
       isButtonActive = isActive;
 
       // Update color animation based on active state
-      _colorAnimation = ColorTween(
-        begin: isActive ? CVTheme.primaryColor : Colors.grey,
-        end:
-            isActive
+      _colorAnimation =
+          ColorTween(
+            begin: isActive ? CVTheme.primaryColor : Colors.grey,
+            end: isActive
                 ? CVTheme.primaryColor.withAlpha(179)
                 : Colors.grey.withAlpha(179),
-      ).animate(
-        CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
-      );
+          ).animate(
+            CurvedAnimation(
+              parent: _animationController,
+              curve: Curves.easeInOut,
+            ),
+          );
     });
   }
 
@@ -106,10 +110,9 @@ class CVFlatButtonState extends State<CVFlatButton>
                   ),
                   overlayColor: WidgetStateProperty.all(null),
                 ),
-                onPressed:
-                    dynamicFunction == null
-                        ? null
-                        : () => dynamicFunction!.call(widget.context),
+                onPressed: dynamicFunction == null
+                    ? null
+                    : () => dynamicFunction!.call(widget.context),
                 child: Text(widget.buttonText),
               ),
             ),

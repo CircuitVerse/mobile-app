@@ -34,39 +34,38 @@ class ContributeSupportCard extends StatelessWidget {
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children:
-                  cardDescriptionList
-                      .map(
-                        (item) => Padding(
-                          padding: const EdgeInsetsDirectional.symmetric(
-                            vertical: 6,
+              children: cardDescriptionList
+                  .map(
+                    (item) => Padding(
+                      padding: const EdgeInsetsDirectional.symmetric(
+                        vertical: 6,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                              top: 3,
+                              start: 8,
+                            ),
+                            child: Text(
+                              '•',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.only(
-                                  top: 3,
-                                  start: 8,
-                                ),
-                                child: Text(
-                                  '•',
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  item,
-                                  style: Theme.of(context).textTheme.titleMedium
-                                      ?.copyWith(height: 1.4),
-                                ),
-                              ),
-                            ],
+                          Expanded(
+                            child: Text(
+                              item,
+                              style: Theme.of(
+                                context,
+                              ).textTheme.titleMedium?.copyWith(height: 1.4),
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList(),
             ),
           ],
         ),

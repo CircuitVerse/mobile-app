@@ -38,18 +38,18 @@ class _ProjectCardState extends State<ProjectCard> {
         horizontal: 12,
       ),
       decoration: BoxDecoration(
-        color:
-            widget.isHeaderFilled ? CVTheme.primaryColor : Colors.transparent,
+        color: widget.isHeaderFilled
+            ? CVTheme.primaryColor
+            : Colors.transparent,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(4),
           topRight: Radius.circular(4),
         ),
-        border:
-            widget.isHeaderFilled
-                ? null
-                : const Border.fromBorderSide(
-                  BorderSide(color: CVTheme.primaryColor),
-                ),
+        border: widget.isHeaderFilled
+            ? null
+            : const Border.fromBorderSide(
+                BorderSide(color: CVTheme.primaryColor),
+              ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -61,14 +61,13 @@ class _ProjectCardState extends State<ProjectCard> {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color:
-                    Theme.of(context).brightness == Brightness.dark
-                        ? widget.isHeaderFilled
-                            ? Colors.black
-                            : Colors.white
-                        : widget.isHeaderFilled
-                        ? Colors.white
-                        : Colors.black,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? widget.isHeaderFilled
+                          ? Colors.black
+                          : Colors.white
+                    : widget.isHeaderFilled
+                    ? Colors.white
+                    : Colors.black,
               ),
             ),
           ),

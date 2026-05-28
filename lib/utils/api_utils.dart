@@ -152,8 +152,8 @@ class ApiUtils {
         return response.body == ''
             ? {}
             : json.decode(
-              utfDecoder ? utf8.decode(response.bodyBytes) : response.body,
-            );
+                utfDecoder ? utf8.decode(response.bodyBytes) : response.body,
+              );
       case 400:
         throw BadRequestException(response.body);
       case 401:

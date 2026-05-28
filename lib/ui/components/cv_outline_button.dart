@@ -55,22 +55,31 @@ class CVOutlineButtonState extends State<CVOutlineButton>
   }
 
   void _updateColorAnimations() {
-    final primaryColor =
-        widget.isPrimaryDark ? CVTheme.primaryColorDark : CVTheme.primaryColor;
+    final primaryColor = widget.isPrimaryDark
+        ? CVTheme.primaryColorDark
+        : CVTheme.primaryColor;
 
-    _borderColorAnimation = ColorTween(
-      begin: primaryColor,
-      end: primaryColor.withAlpha(153), // ~60% opacity
-    ).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
-    );
+    _borderColorAnimation =
+        ColorTween(
+          begin: primaryColor,
+          end: primaryColor.withAlpha(153), // ~60% opacity
+        ).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        );
 
-    _textColorAnimation = ColorTween(
-      begin: primaryColor,
-      end: primaryColor.withAlpha(179), // ~70% opacity
-    ).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
-    );
+    _textColorAnimation =
+        ColorTween(
+          begin: primaryColor,
+          end: primaryColor.withAlpha(179), // ~70% opacity
+        ).animate(
+          CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        );
   }
 
   @override
@@ -153,10 +162,11 @@ class CVOutlineButtonState extends State<CVOutlineButton>
                       child: Text(
                         widget.title,
                         overflow: TextOverflow.ellipsis,
-                        style: (widget.isBodyText
-                                ? Theme.of(context).textTheme.bodyLarge
-                                : Theme.of(context).textTheme.titleLarge)
-                            ?.copyWith(fontSize: widget.fontSize),
+                        style:
+                            (widget.isBodyText
+                                    ? Theme.of(context).textTheme.bodyLarge
+                                    : Theme.of(context).textTheme.titleLarge)
+                                ?.copyWith(fontSize: widget.fontSize),
                       ),
                     ),
                   ],
