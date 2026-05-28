@@ -51,11 +51,7 @@ class IbPageViewModel extends BaseModel {
     }
   }
 
-  void showCase(
-    ShowCaseWidgetState showCaseWidgetState,
-    IBShowCase state,
-    Map<String, dynamic> keysMap,
-  ) {
+  void showCase(IBShowCase state, Map<String, dynamic> keysMap) {
     _list = <GlobalKey>[];
 
     if (!state.nextButton) _list.add(_nextPage);
@@ -66,7 +62,7 @@ class IbPageViewModel extends BaseModel {
     if (_list.isNotEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Future.delayed(const Duration(milliseconds: 800), () {
-          showCaseWidgetState.startShowCase(_list);
+          ShowcaseView.get().startShowCase(_list);
         });
       });
     }

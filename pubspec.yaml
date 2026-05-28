@@ -32,16 +32,16 @@ dependencies:
   flutter_markdown: ^0.7.7+1
   flutter_math_fork: ^0.7.3
   flutter_svg: ^2.2.4
-  flutter_typeahead: ^5.2.0
+  flutter_typeahead: ^6.0.0
   fluttericon: ^2.0.0
   get: ^4.7.3
-  get_it: ^8.0.3
-  google_sign_in: ^6.3.0
+  get_it: ^9.2.1
+  google_sign_in: ^6.2.1
   hive: ^2.0.4
   hive_flutter: ^1.1.0
   html: ^0.15.6
   html_unescape: ^2.0.0
-  image_cropper: ^9.1.0
+  image_cropper: ^12.2.1
   image_picker: ^1.1.2
   intl: 0.20.2
   path_provider: ^2.0.11
@@ -50,9 +50,9 @@ dependencies:
   oauth2_client: ^4.2.2
   provider: ^6.1.5
   scroll_to_index: ^3.0.1
-  share_plus: ^11.1.0
+  share_plus: ^12.0.2
   shared_preferences: ^2.5.3
-  showcaseview: ^4.0.1
+  showcaseview: ^5.0.2
   simple_chips_input: ^1.2.2
   theme_provider: ^0.6.0
   timeago: ^3.7.1
@@ -71,8 +71,8 @@ dev_dependencies:
     sdk: flutter
   hive_generator: ^2.0.1
 
-  webview_flutter_platform_interface: 2.14.0
-  webview_flutter_android: 4.8.2
+  webview_flutter_platform_interface: ^2.15.1
+  webview_flutter_android: ^4.12.0
   collection: any
 dependency_overrides:
   mime: ^1.0.1

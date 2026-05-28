@@ -33,6 +33,9 @@ void main() {
     setUp(() => mockObserver = MockNavigatorObserver());
 
     Future<void> _pumpIbPageView(WidgetTester tester) async {
+      // Register ShowcaseView before building widgets
+      ShowcaseView.register();
+
       // Mock LandingViewModel
       var landingViewModel = MockIbLandingViewModel();
       locator.registerSingleton<IbLandingViewModel>(landingViewModel);
@@ -91,25 +94,18 @@ void main() {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: const [Locale('en', '')],
-          home: ShowCaseWidget(
-            builder:
-                (context) => Builder(
-                  builder: (_) {
-                    return BaseView<IbLandingViewModel>(
-                      builder: (context, model, _) {
-                        return IbPageView(
-                          key: UniqueKey(),
-                          chapter: _chapter,
-                          tocCallback: (val) {},
-                          setPage: (e) {},
-                          showCase: showCase,
-                          setShowCase: (e) {},
-                          globalKeysMap: globalKeyMap,
-                        );
-                      },
-                    );
-                  },
-                ),
+          home: BaseView<IbLandingViewModel>(
+            builder: (context, model, _) {
+              return IbPageView(
+                key: UniqueKey(),
+                chapter: _chapter,
+                tocCallback: (val) {},
+                setPage: (e) {},
+                showCase: showCase,
+                setShowCase: (e) {},
+                globalKeysMap: globalKeyMap,
+              );
+            },
           ),
         ),
       );

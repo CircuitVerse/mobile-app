@@ -13,7 +13,6 @@ import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:showcaseview/showcaseview.dart';
 
 import '../../setup/test_helpers.mocks.dart';
 
@@ -101,14 +100,7 @@ void main() {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: AppLocalizations.supportedLocales,
-          home: ShowCaseWidget(
-            builder:
-                (context) => Builder(
-                  builder: (context) {
-                    return const IbLandingView();
-                  },
-                ),
-          ),
+          home: const IbLandingView(),
         ),
       );
 
