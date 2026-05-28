@@ -196,11 +196,13 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
               createCharacter: ',',
               autoFocus: true,
               validateInput: true,
-              validateInputMethod: (emails) => Validators.areEmailsValid(emails)
-                  ? null
-                  : AppLocalizations.of(
-                      context,
-                    )!.group_details_email_validation_error,
+              validateInputMethod:
+                  (emails) =>
+                      Validators.areEmailsValid(emails)
+                          ? null
+                          : AppLocalizations.of(
+                            context,
+                          )!.group_details_email_validation_error,
               onChanged: (emails) {
                 addButtonGlobalKey.currentState?.setDynamicFunction(
                   emails.isNotEmpty,
@@ -220,12 +222,11 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
             ),
             CVFlatButton(
               key: addButtonGlobalKey,
-              triggerFunction: (context) =>
-                  onAddMemberPressed(context, !member),
+              triggerFunction:
+                  (context) => onAddMemberPressed(context, !member),
               context: context,
-              buttonText: AppLocalizations.of(
-                context,
-              )!.group_details_add.toUpperCase(),
+              buttonText:
+                  AppLocalizations.of(context)!.group_details_add.toUpperCase(),
             ),
           ],
         );
@@ -235,19 +236,20 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
 
   Future<void> onDeleteGroupMemberPressed(String memberId, bool member) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
-      title: member
-          ? AppLocalizations.of(context)!.group_details_remove_member
-          : AppLocalizations.of(context)!.group_details_remove_mentor,
-      description: member
-          ? AppLocalizations.of(
-              context,
-            )!.group_details_remove_member_confirmation
-          : AppLocalizations.of(
-              context,
-            )!.group_details_remove_mentor_confirmation,
-      confirmationTitle: AppLocalizations.of(
-        context,
-      )!.group_details_remove.toUpperCase(),
+      title:
+          member
+              ? AppLocalizations.of(context)!.group_details_remove_member
+              : AppLocalizations.of(context)!.group_details_remove_mentor,
+      description:
+          member
+              ? AppLocalizations.of(
+                context,
+              )!.group_details_remove_member_confirmation
+              : AppLocalizations.of(
+                context,
+              )!.group_details_remove_mentor_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.group_details_remove.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
@@ -284,9 +286,8 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         {
           'mentors': AppLocalizations.of(context)!.group_details_mentors,
           'members': AppLocalizations.of(context)!.group_details_members,
-          'assignments': AppLocalizations.of(
-            context,
-          )!.group_details_assignments,
+          'assignments':
+              AppLocalizations.of(context)!.group_details_assignments,
         }[titleKey] ??
         titleKey;
 
@@ -324,12 +325,12 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   Future<void> onDeleteAssignmentPressed(String assignmentId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title: AppLocalizations.of(context)!.group_details_delete_assignment,
-      description: AppLocalizations.of(
-        context,
-      )!.group_details_delete_assignment_confirmation,
-      confirmationTitle: AppLocalizations.of(
-        context,
-      )!.group_details_delete.toUpperCase(),
+      description:
+          AppLocalizations.of(
+            context,
+          )!.group_details_delete_assignment_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.group_details_delete.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
@@ -369,12 +370,12 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   Future<void> onReopenAssignmentPressed(String assignmentId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title: AppLocalizations.of(context)!.group_details_reopen_assignment,
-      description: AppLocalizations.of(
-        context,
-      )!.group_details_reopen_assignment_confirmation,
-      confirmationTitle: AppLocalizations.of(
-        context,
-      )!.group_details_reopen.toUpperCase(),
+      description:
+          AppLocalizations.of(
+            context,
+          )!.group_details_reopen_assignment_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.group_details_reopen.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
@@ -405,12 +406,12 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
   Future<void> onStartAssignmentPressed(String assignmentId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title: AppLocalizations.of(context)!.group_details_start_assignment,
-      description: AppLocalizations.of(
-        context,
-      )!.group_details_start_assignment_confirmation,
-      confirmationTitle: AppLocalizations.of(
-        context,
-      )!.group_details_start.toUpperCase(),
+      description:
+          AppLocalizations.of(
+            context,
+          )!.group_details_start_assignment_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.group_details_start.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
@@ -451,16 +452,16 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
           '${member ? AppLocalizations.of(context)!.group_details_promote : AppLocalizations.of(context)!.group_details_demote} '
           '${AppLocalizations.of(context)!.group_details_this_group} ${role(member)} '
           '${AppLocalizations.of(context)!.group_details_to_a} ${role(!member)}?',
-      confirmationTitle: AppLocalizations.of(
-        context,
-      )!.group_details_yes.toUpperCase(),
+      confirmationTitle:
+          AppLocalizations.of(context)!.group_details_yes.toUpperCase(),
     );
 
     if (_dialogResponse?.confirmed ?? false) {
       _dialogService.showCustomProgressDialog(
-        title: member
-            ? AppLocalizations.of(context)!.group_details_promoting
-            : AppLocalizations.of(context)!.group_details_demoting,
+        title:
+            member
+                ? AppLocalizations.of(context)!.group_details_promoting
+                : AppLocalizations.of(context)!.group_details_demoting,
       );
 
       await _model.updateMemberRole(id, member, _recievedGroup.id);
@@ -490,96 +491,98 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
         _model = model;
         _model.fetchGroupDetails(_recievedGroup.id);
       },
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.group_details_title),
-        ),
-        body: Builder(
-          builder: (context) {
-            var _items = <Widget>[];
+      builder:
+          (context, model, child) => Scaffold(
+            appBar: AppBar(
+              title: Text(AppLocalizations.of(context)!.group_details_title),
+            ),
+            body: Builder(
+              builder: (context) {
+                var _items = <Widget>[];
 
-            _items.add(_buildHeader());
-            _items.add(const SizedBox(height: 36));
+                _items.add(_buildHeader());
+                _items.add(const SizedBox(height: 36));
 
-            _items.add(
-              _buildSubHeader(
-                titleKey: 'mentors',
-                onAddPressed: () => showAddMemberDialog(member: false),
-              ),
-            );
-
-            if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
-              for (var mentor in _model.mentors) {
                 _items.add(
-                  MemberCard(
-                    member: mentor,
-                    hasMentorAccess: _model.group.isPrimaryMentor,
-                    onEditPressed: () =>
-                        onEditGroupRole(mentor.id, member: false),
-                    onDeletePressed: () =>
-                        onDeleteGroupMemberPressed(mentor.id, false),
+                  _buildSubHeader(
+                    titleKey: 'mentors',
+                    onAddPressed: () => showAddMemberDialog(member: false),
                   ),
                 );
-              }
-            }
 
-            _items.add(const SizedBox(height: 36));
+                if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
+                  for (var mentor in _model.mentors) {
+                    _items.add(
+                      MemberCard(
+                        member: mentor,
+                        hasMentorAccess: _model.group.isPrimaryMentor,
+                        onEditPressed:
+                            () => onEditGroupRole(mentor.id, member: false),
+                        onDeletePressed:
+                            () => onDeleteGroupMemberPressed(mentor.id, false),
+                      ),
+                    );
+                  }
+                }
 
-            _items.add(
-              _buildSubHeader(
-                titleKey: 'members',
-                onAddPressed: showAddMemberDialog,
-              ),
-            );
+                _items.add(const SizedBox(height: 36));
 
-            if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
-              for (var member in _model.members) {
                 _items.add(
-                  MemberCard(
-                    member: member,
-                    hasMentorAccess: _model.group.isPrimaryMentor,
-                    onEditPressed: () => onEditGroupRole(member.id),
-                    onDeletePressed: () =>
-                        onDeleteGroupMemberPressed(member.id, true),
+                  _buildSubHeader(
+                    titleKey: 'members',
+                    onAddPressed: showAddMemberDialog,
                   ),
                 );
-              }
-            }
 
-            _items.add(const SizedBox(height: 36));
+                if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
+                  for (var member in _model.members) {
+                    _items.add(
+                      MemberCard(
+                        member: member,
+                        hasMentorAccess: _model.group.isPrimaryMentor,
+                        onEditPressed: () => onEditGroupRole(member.id),
+                        onDeletePressed:
+                            () => onDeleteGroupMemberPressed(member.id, true),
+                      ),
+                    );
+                  }
+                }
 
-            _items.add(
-              _buildSubHeader(
-                titleKey: 'assignments',
-                onAddPressed: onAddAssignmentPressed,
-                extraCondition: _model.isMentor,
-              ),
-            );
+                _items.add(const SizedBox(height: 36));
 
-            if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
-              for (var assignment in _model.assignments) {
                 _items.add(
-                  AssignmentCard(
-                    assignment: assignment,
-                    onDeletePressed: () =>
-                        onDeleteAssignmentPressed(assignment.id),
-                    onEditPressed: () => onEditAssignmentPressed(assignment),
-                    onReopenPressed: () =>
-                        onReopenAssignmentPressed(assignment.id),
-                    onStartPressed: () =>
-                        onStartAssignmentPressed(assignment.id),
+                  _buildSubHeader(
+                    titleKey: 'assignments',
+                    onAddPressed: onAddAssignmentPressed,
+                    extraCondition: _model.isMentor,
                   ),
                 );
-              }
-            }
 
-            return ListView(
-              padding: const EdgeInsetsDirectional.all(8),
-              children: _items,
-            );
-          },
-        ),
-      ),
+                if (_model.isSuccess(_model.FETCH_GROUP_DETAILS)) {
+                  for (var assignment in _model.assignments) {
+                    _items.add(
+                      AssignmentCard(
+                        assignment: assignment,
+                        onDeletePressed:
+                            () => onDeleteAssignmentPressed(assignment.id),
+                        onEditPressed:
+                            () => onEditAssignmentPressed(assignment),
+                        onReopenPressed:
+                            () => onReopenAssignmentPressed(assignment.id),
+                        onStartPressed:
+                            () => onStartAssignmentPressed(assignment.id),
+                      ),
+                    );
+                  }
+                }
+
+                return ListView(
+                  padding: const EdgeInsetsDirectional.all(8),
+                  children: _items,
+                );
+              },
+            ),
+          ),
     );
   }
 }

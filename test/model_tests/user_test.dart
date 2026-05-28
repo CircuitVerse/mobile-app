@@ -27,22 +27,23 @@ void main() {
     });
 
     test('toJson', () {
-      var _user = User(
-        data: Data(
-          id: '1',
-          type: 'user',
-          attributes: UserAttributes(
-            name: 'Test User',
-            email: 'test@test.com',
-            subscribed: true,
-            createdAt: DateTime(2020, 8, 15),
-            updatedAt: DateTime(2020, 8, 15),
-            admin: false,
-            country: 'India',
-            educationalInstitute: 'Gurukul',
-          ),
-        ),
-      ).toJson();
+      var _user =
+          User(
+            data: Data(
+              id: '1',
+              type: 'user',
+              attributes: UserAttributes(
+                name: 'Test User',
+                email: 'test@test.com',
+                subscribed: true,
+                createdAt: DateTime(2020, 8, 15),
+                updatedAt: DateTime(2020, 8, 15),
+                admin: false,
+                country: 'India',
+                educationalInstitute: 'Gurukul',
+              ),
+            ),
+          ).toJson();
 
       expect(_user['data']['id'], '1');
       expect(_user['data']['type'], 'user');

@@ -29,9 +29,10 @@ class IbInteractionBuilder extends MarkdownElementBuilder {
         var streamController = StreamController<double>();
 
         // Create and configure WebViewController
-        final controller = WebViewController()
-          ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadHtmlString(textContent);
+        final controller =
+            WebViewController()
+              ..setJavaScriptMode(JavaScriptMode.unrestricted)
+              ..loadHtmlString(textContent);
 
         controller.setNavigationDelegate(
           NavigationDelegate(

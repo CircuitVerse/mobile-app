@@ -37,11 +37,12 @@ class _IbLandingViewState extends State<IbLandingView> {
 
     ShowcaseView.register(
       onComplete: (index, globalKey) {
-        final String key = globalKey
-            .toString()
-            .substring(1, globalKey.toString().length - 1)
-            .split(" ")
-            .last;
+        final String key =
+            globalKey
+                .toString()
+                .substring(1, globalKey.toString().length - 1)
+                .split(" ")
+                .last;
         _model.onShowCased(key);
       },
     );
@@ -122,8 +123,8 @@ class _IbLandingViewState extends State<IbLandingView> {
                         Icons.arrow_forward_ios,
                         color:
                             _model.currentIndex >= _model.ibChapters.length - 1
-                            ? Colors.white24
-                            : null,
+                                ? Colors.white24
+                                : null,
                       ),
                     ),
                   ],
@@ -172,19 +173,19 @@ class _IbLandingViewState extends State<IbLandingView> {
           builder: (context, value, child) {
             return value != null
                 ? Showcase(
-                    key: _model.toc,
-                    description: AppLocalizations.of(context)!.ib_show_toc,
-                    onTargetClick: () {
-                      _model.onShowCased('toc');
-                      if (_key.currentState!.isDrawerOpen) Get.back();
-                      Future.delayed(const Duration(milliseconds: 200), value);
-                    },
-                    disposeOnTap: true,
-                    child: IconButton(
-                      icon: const Icon(Icons.menu_book_rounded),
-                      onPressed: value as VoidCallback,
-                    ),
-                  )
+                  key: _model.toc,
+                  description: AppLocalizations.of(context)!.ib_show_toc,
+                  onTargetClick: () {
+                    _model.onShowCased('toc');
+                    if (_key.currentState!.isDrawerOpen) Get.back();
+                    Future.delayed(const Duration(milliseconds: 200), value);
+                  },
+                  disposeOnTap: true,
+                  child: IconButton(
+                    icon: const Icon(Icons.menu_book_rounded),
+                    onPressed: value as VoidCallback,
+                  ),
+                )
                 : Container();
           },
         ),
@@ -198,9 +199,10 @@ class _IbLandingViewState extends State<IbLandingView> {
       onTap: () => setSelectedChapter(chapter),
       child: CVDrawerTile(
         title: chapter.value,
-        color: (_model.selectedChapter.id == chapter.id)
-            ? IbTheme.getPrimaryColor(context)
-            : IbTheme.textColor(context),
+        color:
+            (_model.selectedChapter.id == chapter.id)
+                ? IbTheme.getPrimaryColor(context)
+                : IbTheme.textColor(context),
       ),
     );
   }
@@ -221,7 +223,7 @@ class _IbLandingViewState extends State<IbLandingView> {
       maintainState: true,
       initiallyExpanded:
           (_model.selectedChapter.id.startsWith(chapter.id) ||
-          hasSelectedChapter),
+              hasSelectedChapter),
       title: ListTile(
         contentPadding: const EdgeInsets.all(0),
         title: GestureDetector(
@@ -230,9 +232,10 @@ class _IbLandingViewState extends State<IbLandingView> {
             chapter.value,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontFamily: 'Poppins',
-              color: (_model.selectedChapter.id.startsWith(chapter.id))
-                  ? IbTheme.getPrimaryColor(context)
-                  : IbTheme.textColor(context),
+              color:
+                  (_model.selectedChapter.id.startsWith(chapter.id))
+                      ? IbTheme.getPrimaryColor(context)
+                      : IbTheme.textColor(context),
             ),
           ),
         ),
@@ -276,9 +279,10 @@ class _IbLandingViewState extends State<IbLandingView> {
                 onTap: () => setSelectedChapter(_model.homeChapter),
                 child: CVDrawerTile(
                   title: AppLocalizations.of(context)!.ib_home,
-                  color: (_model.selectedChapter.id == _model.homeChapter.id)
-                      ? IbTheme.getPrimaryColor(context)
-                      : IbTheme.textColor(context),
+                  color:
+                      (_model.selectedChapter.id == _model.homeChapter.id)
+                          ? IbTheme.getPrimaryColor(context)
+                          : IbTheme.textColor(context),
                 ),
               ),
               if (!_model.isSuccess(_model.IB_FETCH_CHAPTERS))
@@ -300,9 +304,10 @@ class _IbLandingViewState extends State<IbLandingView> {
             right: 5,
             top: 27,
             child: IconButton(
-              icon: Theme.of(context).brightness == Brightness.dark
-                  ? const Icon(Icons.brightness_low)
-                  : const Icon(Icons.brightness_high),
+              icon:
+                  Theme.of(context).brightness == Brightness.dark
+                      ? const Icon(Icons.brightness_low)
+                      : const Icon(Icons.brightness_high),
               iconSize: 28.0,
               onPressed: () {
                 ThemeProvider.controllerOf(context).nextTheme();
@@ -343,18 +348,17 @@ class _IbLandingViewState extends State<IbLandingView> {
                     appBar: _buildAppBar(),
                     drawer: _buildDrawer(),
                     body: PageTransitionSwitcher(
-                      transitionBuilder:
-                          (
-                            Widget child,
-                            Animation<double> animation,
-                            Animation<double> secondaryAnimation,
-                          ) {
-                            return FadeThroughTransition(
-                              animation: animation,
-                              secondaryAnimation: secondaryAnimation,
-                              child: child,
-                            );
-                          },
+                      transitionBuilder: (
+                        Widget child,
+                        Animation<double> animation,
+                        Animation<double> secondaryAnimation,
+                      ) {
+                        return FadeThroughTransition(
+                          animation: animation,
+                          secondaryAnimation: secondaryAnimation,
+                          child: child,
+                        );
+                      },
                       child: IbPageView(
                         key: Key(_model.selectedChapter.toString()),
                         tocCallback: (val) {

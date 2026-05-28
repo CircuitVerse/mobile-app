@@ -35,39 +35,31 @@ class TeachersView extends StatelessWidget {
             CVSubheader(title: AppLocalizations.of(context)!.benefits_title),
             TeachersCard(
               assetPath: _getLocalizedImagePath('groups', locale),
-              cardHeading: AppLocalizations.of(
-                context,
-              )!.teachers_feature1_title,
-              cardDescription: AppLocalizations.of(
-                context,
-              )!.teachers_feature1_description,
+              cardHeading:
+                  AppLocalizations.of(context)!.teachers_feature1_title,
+              cardDescription:
+                  AppLocalizations.of(context)!.teachers_feature1_description,
             ),
             TeachersCard(
               assetPath: _getLocalizedImagePath('assignment', locale),
-              cardHeading: AppLocalizations.of(
-                context,
-              )!.teachers_feature2_title,
-              cardDescription: AppLocalizations.of(
-                context,
-              )!.teachers_feature2_description,
+              cardHeading:
+                  AppLocalizations.of(context)!.teachers_feature2_title,
+              cardDescription:
+                  AppLocalizations.of(context)!.teachers_feature2_description,
             ),
             TeachersCard(
               assetPath: _getLocalizedImagePath('grading', locale),
-              cardHeading: AppLocalizations.of(
-                context,
-              )!.teachers_feature3_title,
-              cardDescription: AppLocalizations.of(
-                context,
-              )!.teachers_feature3_description,
+              cardHeading:
+                  AppLocalizations.of(context)!.teachers_feature3_title,
+              cardDescription:
+                  AppLocalizations.of(context)!.teachers_feature3_description,
             ),
             TeachersCard(
               assetPath: _getLocalizedImagePath('embed', locale),
-              cardHeading: AppLocalizations.of(
-                context,
-              )!.teachers_feature4_title,
-              cardDescription: AppLocalizations.of(
-                context,
-              )!.teachers_feature4_description,
+              cardHeading:
+                  AppLocalizations.of(context)!.teachers_feature4_title,
+              cardDescription:
+                  AppLocalizations.of(context)!.teachers_feature4_description,
             ),
           ],
         ),

@@ -206,10 +206,9 @@ class GroupDetailsViewModel extends BaseModel {
 
       // Reopen the assignment with id being assignmentId..
       assignments
-              .firstWhere((assignment) => assignment.id == assignmentId)
-              .attributes
-              .status =
-          'open';
+          .firstWhere((assignment) => assignment.id == assignmentId)
+          .attributes
+          .status = 'open';
       notifyListeners();
 
       setStateFor(REOPEN_ASSIGNMENT, ViewState.Success);

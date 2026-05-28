@@ -40,9 +40,10 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildSignUpImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height > 800
-          ? MediaQuery.of(context).size.height * 0.52
-          : MediaQuery.of(context).size.height * 0.43,
+      height:
+          MediaQuery.of(context).size.height > 800
+              ? MediaQuery.of(context).size.height * 0.52
+              : MediaQuery.of(context).size.height * 0.43,
       color: CVTheme.imageBackground,
       padding: const EdgeInsetsDirectional.all(16),
       child: SafeArea(
@@ -54,12 +55,14 @@ class _SignupViewState extends State<SignupView> {
   Widget _buildNameInput() {
     return CVTextField(
       label: AppLocalizations.of(context)!.signup_name,
-      validator: (value) => value?.isEmpty ?? true
-          ? AppLocalizations.of(context)!.signup_name_validation_error
-          : null,
+      validator:
+          (value) =>
+              value?.isEmpty ?? true
+                  ? AppLocalizations.of(context)!.signup_name_validation_error
+                  : null,
       onSaved: (value) => _name = value!.trim(),
-      onFieldSubmitted: (_) =>
-          FocusScope.of(context).requestFocus(_nameFocusNode),
+      onFieldSubmitted:
+          (_) => FocusScope.of(context).requestFocus(_nameFocusNode),
     );
   }
 
@@ -68,9 +71,11 @@ class _SignupViewState extends State<SignupView> {
       focusNode: _nameFocusNode,
       label: AppLocalizations.of(context)!.signup_email,
       type: TextInputType.emailAddress,
-      validator: (value) => Validators.isEmailValid(value)
-          ? null
-          : AppLocalizations.of(context)!.signup_email_validation_error,
+      validator:
+          (value) =>
+              Validators.isEmailValid(value)
+                  ? null
+                  : AppLocalizations.of(context)!.signup_email_validation_error,
       onSaved: (value) => _email = value!.trim(),
       onFieldSubmitted: (_) {
         _nameFocusNode.unfocus();
@@ -99,9 +104,10 @@ class _SignupViewState extends State<SignupView> {
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _signUpModel.isBusy(_signUpModel.SIGNUP)
-            ? AppLocalizations.of(context)!.signup_authenticating
-            : AppLocalizations.of(context)!.signup_register.toUpperCase(),
+        title:
+            _signUpModel.isBusy(_signUpModel.SIGNUP)
+                ? AppLocalizations.of(context)!.signup_authenticating
+                : AppLocalizations.of(context)!.signup_register.toUpperCase(),
         onPressed: _validateAndSubmit,
       ),
     );
@@ -157,28 +163,29 @@ class _SignupViewState extends State<SignupView> {
   Widget build(BuildContext context) {
     return BaseView<SignupViewModel>(
       onModelReady: (model) => _signUpModel = model,
-      builder: (context, model, child) => Scaffold(
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                _buildSignUpImage(),
-                const SizedBox(height: 8),
-                _buildNameInput(),
-                _buildEmailInput(),
-                _buildPasswordInput(),
-                const SizedBox(height: 14),
-                _buildRegisterButton(),
-                const SizedBox(height: 8),
-                _buildAlreadyRegisteredComponent(),
-                const SizedBox(height: 20),
-                const AuthOptionsView(isSignUp: true),
-              ],
+      builder:
+          (context, model, child) => Scaffold(
+            body: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    _buildSignUpImage(),
+                    const SizedBox(height: 8),
+                    _buildNameInput(),
+                    _buildEmailInput(),
+                    _buildPasswordInput(),
+                    const SizedBox(height: 14),
+                    _buildRegisterButton(),
+                    const SizedBox(height: 8),
+                    _buildAlreadyRegisteredComponent(),
+                    const SizedBox(height: 20),
+                    const AuthOptionsView(isSignUp: true),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

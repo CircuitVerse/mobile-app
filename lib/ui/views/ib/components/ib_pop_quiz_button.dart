@@ -44,9 +44,10 @@ class IbPopQuizButtonState extends State<IbPopQuizButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => setState(() {
-        _isPressed = !_isPressed;
-      }),
+      onTap:
+          () => setState(() {
+            _isPressed = !_isPressed;
+          }),
       child: Container(
         margin: const EdgeInsets.only(top: 5.0),
         padding: const EdgeInsets.all(10.0),

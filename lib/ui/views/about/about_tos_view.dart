@@ -27,15 +27,17 @@ class AboutTosView extends StatelessWidget {
     return TextSpan(
       style: const TextStyle(color: Colors.blue, fontFamily: 'Poppins'),
       text: text,
-      recognizer: TapGestureRecognizer()
-        ..onTap = !route
-            ? () async {
-                final url = link;
-                if (await canLaunchUrlString(url)) {
-                  await launchUrlString(url);
-                }
-              }
-            : () => Get.toNamed(link),
+      recognizer:
+          TapGestureRecognizer()
+            ..onTap =
+                !route
+                    ? () async {
+                      final url = link;
+                      if (await canLaunchUrlString(url)) {
+                        await launchUrlString(url);
+                      }
+                    }
+                    : () => Get.toNamed(link),
     );
   }
 
@@ -66,14 +68,15 @@ class AboutTosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: showAppBar
-          ? AppBar(
-              title: Text(
-                AppLocalizations.of(context)!.terms_of_service,
-                style: TextStyle(color: CVTheme.primaryHeading(context)),
-              ),
-            )
-          : null,
+      appBar:
+          showAppBar
+              ? AppBar(
+                title: Text(
+                  AppLocalizations.of(context)!.terms_of_service,
+                  style: TextStyle(color: CVTheme.primaryHeading(context)),
+                ),
+              )
+              : null,
       body: SingleChildScrollView(
         padding: const EdgeInsetsDirectional.all(16),
         child: Column(

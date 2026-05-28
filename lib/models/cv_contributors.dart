@@ -9,9 +9,10 @@ List<CircuitVerseContributor> circuitVerseContributorsFromJson(String str) =>
 
 List<CircuitVerseContributor> circuitVerseContributorsFromList(
   List<dynamic> data,
-) => data
-    .map((x) => CircuitVerseContributor.fromJson(x as Map<String, dynamic>))
-    .toList();
+) =>
+    data
+        .map((x) => CircuitVerseContributor.fromJson(x as Map<String, dynamic>))
+        .toList();
 
 class CircuitVerseContributor {
   factory CircuitVerseContributor.fromJson(Map<String, dynamic> json) =>

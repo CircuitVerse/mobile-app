@@ -45,9 +45,10 @@ class _ProfileViewState extends State<ProfileView> {
         shape: BoxShape.circle,
         border: Border.all(color: CVTheme.primaryColor.withAlpha(77), width: 3),
         image: DecorationImage(
-          image: imageURL.toLowerCase().contains('default')
-              ? const AssetImage('assets/images/profile/default_icon.jpg')
-              : NetworkImage(imageURL) as ImageProvider,
+          image:
+              imageURL.toLowerCase().contains('default')
+                  ? const AssetImage('assets/images/profile/default_icon.jpg')
+                  : NetworkImage(imageURL) as ImageProvider,
           fit: BoxFit.cover,
         ),
       ),
@@ -168,8 +169,8 @@ class _ProfileViewState extends State<ProfileView> {
                   _attrs?.createdAt != null
                       ? '${AppLocalizations.of(context)!.profile_view_joined} ${timeago.format(_attrs!.createdAt!)}'
                       : AppLocalizations.of(
-                          context,
-                        )!.profile_view_not_available,
+                        context,
+                      )!.profile_view_not_available,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(
@@ -266,27 +267,33 @@ class _ProfileViewState extends State<ProfileView> {
         _model.userId = widget.userId;
         _model.fetchUserProfile();
       },
-      builder: (context, model, child) => Scaffold(
-        appBar: widget.userId != null
-            ? AppBar(
-                title: Text(AppLocalizations.of(context)!.profile_view_title),
-                centerTitle: true,
-              )
-            : null,
-        body: _model.isSuccess(_model.FETCH_USER_PROFILE) || _model.user != null
-            ? SingleChildScrollView(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: <Widget>[
-                    _buildProfileCard(),
-                    const SizedBox(height: 8),
-                    _buildProjectsTabBar(),
-                    const SizedBox(height: 16),
-                  ],
-                ),
-              )
-            : const Center(child: CircularProgressIndicator()),
-      ),
+      builder:
+          (context, model, child) => Scaffold(
+            appBar:
+                widget.userId != null
+                    ? AppBar(
+                      title: Text(
+                        AppLocalizations.of(context)!.profile_view_title,
+                      ),
+                      centerTitle: true,
+                    )
+                    : null,
+            body:
+                _model.isSuccess(_model.FETCH_USER_PROFILE) ||
+                        _model.user != null
+                    ? SingleChildScrollView(
+                      padding: const EdgeInsets.all(8),
+                      child: Column(
+                        children: <Widget>[
+                          _buildProfileCard(),
+                          const SizedBox(height: 8),
+                          _buildProjectsTabBar(),
+                          const SizedBox(height: 16),
+                        ],
+                      ),
+                    )
+                    : const Center(child: CircularProgressIndicator()),
+          ),
     );
   }
 }

@@ -70,12 +70,16 @@ class _EditProjectViewState extends State<EditProjectView> {
     return CVTextField(
       label: AppLocalizations.of(context)!.edit_project_name,
       controller: _nameController,
-      validator: (value) => value?.isEmpty ?? true
-          ? AppLocalizations.of(context)!.edit_project_name_validation_error
-          : null,
+      validator:
+          (value) =>
+              value?.isEmpty ?? true
+                  ? AppLocalizations.of(
+                    context,
+                  )!.edit_project_name_validation_error
+                  : null,
       onSaved: (value) => _name = value!.trim(),
-      onFieldSubmitted: (_) =>
-          FocusScope.of(context).requestFocus(_nameFocusNode),
+      onFieldSubmitted:
+          (_) => FocusScope.of(context).requestFocus(_nameFocusNode),
     );
   }
 
@@ -87,8 +91,9 @@ class _EditProjectViewState extends State<EditProjectView> {
           label: AppLocalizations.of(context)!.edit_project_tags_list,
           focusNode: _nameFocusNode,
           controller: _tagsController,
-          onSaved: (value) =>
-              _tags = value!.split(',').map((tag) => tag.trim()).toList(),
+          onSaved:
+              (value) =>
+                  _tags = value!.split(',').map((tag) => tag.trim()).toList(),
           onFieldSubmitted: (_) {
             _nameFocusNode.unfocus();
             FocusScope.of(context).requestFocus(_tagsListFocusNode);
@@ -154,14 +159,17 @@ class _EditProjectViewState extends State<EditProjectView> {
             }
           });
         },
-        validator: (category) => category == null
-            ? AppLocalizations.of(
-                context,
-              )!.edit_project_access_type_validation_error
-            : null,
-        items: accessTypes.map<DropdownMenuItem<String>>((type) {
-          return DropdownMenuItem<String>(value: type, child: Text(type));
-        }).toList(),
+        validator:
+            (category) =>
+                category == null
+                    ? AppLocalizations.of(
+                      context,
+                    )!.edit_project_access_type_validation_error
+                    : null,
+        items:
+            accessTypes.map<DropdownMenuItem<String>>((type) {
+              return DropdownMenuItem<String>(value: type, child: Text(type));
+            }).toList(),
       ),
     );
   }
@@ -252,32 +260,33 @@ class _EditProjectViewState extends State<EditProjectView> {
   Widget build(BuildContext context) {
     return BaseView<EditProjectViewModel>(
       onModelReady: (model) => _model = model,
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          title: Text(
-            '${AppLocalizations.of(context)!.edit_project_edit} ${widget.project.attributes.name}',
-          ),
-        ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsetsDirectional.symmetric(vertical: 16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                _buildNameInput(),
-                _buildTagsInput(),
-                _buildProjectAccessTypeInput(),
-                _buildDescriptionInput(),
-                const SizedBox(height: 16),
-                _buildOpenInSimulatorButton(context),
-                const SizedBox(height: 12),
-                _buildUpdateProjectButton(),
-              ],
+      builder:
+          (context, model, child) => Scaffold(
+            appBar: AppBar(
+              title: Text(
+                '${AppLocalizations.of(context)!.edit_project_edit} ${widget.project.attributes.name}',
+              ),
+            ),
+            body: SingleChildScrollView(
+              padding: const EdgeInsetsDirectional.symmetric(vertical: 16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _buildNameInput(),
+                    _buildTagsInput(),
+                    _buildProjectAccessTypeInput(),
+                    _buildDescriptionInput(),
+                    const SizedBox(height: 16),
+                    _buildOpenInSimulatorButton(context),
+                    const SizedBox(height: 12),
+                    _buildUpdateProjectButton(),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

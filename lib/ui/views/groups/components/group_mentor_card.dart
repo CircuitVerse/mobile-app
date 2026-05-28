@@ -64,8 +64,11 @@ class _GroupMentorCardState extends State<GroupMentorCard> {
             children: <Widget>[
               Flexible(
                 child: CardButton(
-                  onPressed: () =>
-                      Get.toNamed(GroupDetailsView.id, arguments: widget.group),
+                  onPressed:
+                      () => Get.toNamed(
+                        GroupDetailsView.id,
+                        arguments: widget.group,
+                      ),
                   color: CVTheme.primaryColor,
                   title: AppLocalizations.of(context)!.group_mentor_card_view,
                 ),

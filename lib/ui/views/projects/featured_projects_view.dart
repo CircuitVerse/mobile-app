@@ -124,9 +124,10 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
             0,
             CVHeader(
               title: AppLocalizations.of(context)!.featured_editor_picks,
-              description: AppLocalizations.of(
-                context,
-              )!.featured_editor_picks_description,
+              description:
+                  AppLocalizations.of(
+                    context,
+                  )!.featured_editor_picks_description,
               subtitleToDescriptionSpace: 8,
             ),
           );
@@ -159,9 +160,10 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                     },
                     icon: const Icon(Icons.arrow_back),
                   ),
-                  hint: AppLocalizations.of(
-                    context,
-                  )!.featured_search_for_circuits,
+                  hint:
+                      AppLocalizations.of(
+                        context,
+                      )!.featured_search_for_circuits,
                   action: TextInputAction.search,
                   controller: _controller,
                   onFieldSubmitted: (value) {

@@ -37,9 +37,10 @@ class _LoginViewState extends State<LoginView> {
   Widget _buildLoginImage() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height > 800
-          ? MediaQuery.of(context).size.height * 0.56
-          : MediaQuery.of(context).size.height * 0.475,
+      height:
+          MediaQuery.of(context).size.height > 800
+              ? MediaQuery.of(context).size.height * 0.56
+              : MediaQuery.of(context).size.height * 0.475,
       color: CVTheme.imageBackground,
       padding: const EdgeInsetsDirectional.all(16),
       child: SafeArea(
@@ -52,21 +53,27 @@ class _LoginViewState extends State<LoginView> {
     return CVTextField(
       label: AppLocalizations.of(context)!.login_email,
       type: TextInputType.emailAddress,
-      validator: (value) => Validators.isEmailValid(value)
-          ? null
-          : AppLocalizations.of(context)!.login_email_validation_error,
+      validator:
+          (value) =>
+              Validators.isEmailValid(value)
+                  ? null
+                  : AppLocalizations.of(context)!.login_email_validation_error,
       onSaved: (value) => _email = value!.trim(),
-      onFieldSubmitted: (_) =>
-          FocusScope.of(context).requestFocus(_emailFocusNode),
+      onFieldSubmitted:
+          (_) => FocusScope.of(context).requestFocus(_emailFocusNode),
     );
   }
 
   Widget _buildPasswordInput() {
     return CVPasswordField(
       focusNode: _emailFocusNode,
-      validator: (value) => value?.isEmpty ?? true
-          ? AppLocalizations.of(context)!.login_password_validation_error
-          : null,
+      validator:
+          (value) =>
+              value?.isEmpty ?? true
+                  ? AppLocalizations.of(
+                    context,
+                  )!.login_password_validation_error
+                  : null,
       onSaved: (value) => _password = value!.trim(),
     );
   }
@@ -90,9 +97,10 @@ class _LoginViewState extends State<LoginView> {
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _model.isBusy(_model.LOGIN)
-            ? AppLocalizations.of(context)!.login_authenticating
-            : AppLocalizations.of(context)!.login_button.toUpperCase(),
+        title:
+            _model.isBusy(_model.LOGIN)
+                ? AppLocalizations.of(context)!.login_authenticating
+                : AppLocalizations.of(context)!.login_button.toUpperCase(),
         onPressed: _validateAndSubmit,
       ),
     );
@@ -145,28 +153,29 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     return BaseView<LoginViewModel>(
       onModelReady: (model) => _model = model,
-      builder: (context, model, child) => Scaffold(
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                _buildLoginImage(),
-                const SizedBox(height: 8),
-                _buildEmailInput(),
-                _buildPasswordInput(),
-                _buildForgotPasswordComponent(),
-                const SizedBox(height: 16),
-                _buildLoginButton(),
-                const SizedBox(height: 8),
-                _buildNewUserSignUpComponent(),
-                const SizedBox(height: 30),
-                const AuthOptionsView(isSignUp: false),
-              ],
+      builder:
+          (context, model, child) => Scaffold(
+            body: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    _buildLoginImage(),
+                    const SizedBox(height: 8),
+                    _buildEmailInput(),
+                    _buildPasswordInput(),
+                    _buildForgotPasswordComponent(),
+                    const SizedBox(height: 16),
+                    _buildLoginButton(),
+                    const SizedBox(height: 8),
+                    _buildNewUserSignUpComponent(),
+                    const SizedBox(height: 30),
+                    const AuthOptionsView(isSignUp: false),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

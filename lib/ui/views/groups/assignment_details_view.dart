@@ -112,12 +112,12 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
         {
           'name': AppLocalizations.of(context)!.assignment_details_name,
           'deadline': AppLocalizations.of(context)!.assignment_details_deadline,
-          'time_remaining': AppLocalizations.of(
-            context,
-          )!.assignment_details_time_remaining,
-          'restricted_elements': AppLocalizations.of(
-            context,
-          )!.assignment_details_restricted_elements,
+          'time_remaining':
+              AppLocalizations.of(context)!.assignment_details_time_remaining,
+          'restricted_elements':
+              AppLocalizations.of(
+                context,
+              )!.assignment_details_restricted_elements,
         }[titleKey] ??
         titleKey;
 
@@ -133,11 +133,12 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             TextSpan(
-              text: description == null || description.isEmpty
-                  ? AppLocalizations.of(
-                      context,
-                    )!.assignment_details_not_applicable
-                  : description,
+              text:
+                  description == null || description.isEmpty
+                      ? AppLocalizations.of(
+                        context,
+                      )!.assignment_details_not_applicable
+                      : description,
               style: const TextStyle(fontSize: 18),
             ),
           ],
@@ -170,41 +171,44 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
 
   Widget _buildSubmissionAuthors() {
     return Column(
-      children: _model.projects
-          .map(
-            (submission) => InkWell(
-              onTap: () {
-                _model.focussedProject = submission;
-                _gradesController.clear();
-                _remarksController.clear();
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: _model.focussedProject == submission
-                      ? CVTheme.primaryColor
-                      : Colors.transparent,
-                  border: Border.all(
-                    color: CVTheme.grey.withValues(alpha: 0.5),
-                    width: 0.5,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.all(8.0),
-                  child: Text(
-                    submission.attributes.authorName,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: _model.focussedProject == submission
-                          ? Colors.white
-                          : CVTheme.textColor(context),
+      children:
+          _model.projects
+              .map(
+                (submission) => InkWell(
+                  onTap: () {
+                    _model.focussedProject = submission;
+                    _gradesController.clear();
+                    _remarksController.clear();
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color:
+                          _model.focussedProject == submission
+                              ? CVTheme.primaryColor
+                              : Colors.transparent,
+                      border: Border.all(
+                        color: CVTheme.grey.withValues(alpha: 0.5),
+                        width: 0.5,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.all(8.0),
+                      child: Text(
+                        submission.attributes.authorName,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color:
+                              _model.focussedProject == submission
+                                  ? Colors.white
+                                  : CVTheme.textColor(context),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          )
-          .toList(),
+              )
+              .toList(),
     );
   }
 
@@ -227,17 +231,18 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
             decoration: BoxDecoration(
               border: Border.all(color: CVTheme.primaryColorDark),
             ),
-            child: _model.projects.isEmpty
-                ? Padding(
-                    padding: const EdgeInsetsDirectional.all(8.0),
-                    child: Text(
-                      AppLocalizations.of(
-                        context,
-                      )!.assignment_details_no_submissions_yet,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                  )
-                : _buildSubmissionAuthors(),
+            child:
+                _model.projects.isEmpty
+                    ? Padding(
+                      padding: const EdgeInsetsDirectional.all(8.0),
+                      child: Text(
+                        AppLocalizations.of(
+                          context,
+                        )!.assignment_details_no_submissions_yet,
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                    )
+                    : _buildSubmissionAuthors(),
           ),
           const SizedBox(height: 4),
           if (_model.focussedProject != null)
@@ -325,12 +330,12 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   Future<void> deleteGrade(String gradeId) async {
     var _dialogResponse = await _dialogService.showConfirmationDialog(
       title: AppLocalizations.of(context)!.assignment_details_delete_grade,
-      description: AppLocalizations.of(
-        context,
-      )!.assignment_details_delete_grade_confirmation,
-      confirmationTitle: AppLocalizations.of(
-        context,
-      )!.assignment_details_delete,
+      description:
+          AppLocalizations.of(
+            context,
+          )!.assignment_details_delete_grade_confirmation,
+      confirmationTitle:
+          AppLocalizations.of(context)!.assignment_details_delete,
     );
 
     if (_dialogResponse?.confirmed ?? false) {
@@ -395,16 +400,19 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                 label: AppLocalizations.of(context)!.assignment_details_grade,
                 controller: _gradesController,
                 padding: const EdgeInsetsDirectional.all(0),
-                type: _recievedAssignment.attributes.gradingScale == 'percent'
-                    ? TextInputType.number
-                    : TextInputType.text,
-                validator: (value) => value?.isEmpty ?? true
-                    ? AppLocalizations.of(
-                        context,
-                      )!.assignment_details_grade_validation_error
-                    : null,
-                onFieldSubmitted: (_) =>
-                    FocusScope.of(context).requestFocus(_gradeFocusNode),
+                type:
+                    _recievedAssignment.attributes.gradingScale == 'percent'
+                        ? TextInputType.number
+                        : TextInputType.text,
+                validator:
+                    (value) =>
+                        value?.isEmpty ?? true
+                            ? AppLocalizations.of(
+                              context,
+                            )!.assignment_details_grade_validation_error
+                            : null,
+                onFieldSubmitted:
+                    (_) => FocusScope.of(context).requestFocus(_gradeFocusNode),
               ),
               const SizedBox(height: 4),
               CVTextField(
@@ -417,13 +425,14 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
               Row(
                 children: <Widget>[
                   CVPrimaryButton(
-                    title: _submittedGrade != null
-                        ? AppLocalizations.of(
-                            context,
-                          )!.assignment_details_update
-                        : AppLocalizations.of(
-                            context,
-                          )!.assignment_details_submit,
+                    title:
+                        _submittedGrade != null
+                            ? AppLocalizations.of(
+                              context,
+                            )!.assignment_details_update
+                            : AppLocalizations.of(
+                              context,
+                            )!.assignment_details_submit,
                     onPressed: () {
                       if (Validators.validateAndSaveForm(_formKey)) {
                         FocusScope.of(context).requestFocus(FocusNode());
@@ -472,51 +481,54 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
           _model.fetchAssignmentDetails(_recievedAssignment.id);
         }
       },
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.assignment_details_title),
-        ),
-        body: Builder(
-          builder: (context) {
-            var _attrs = _recievedAssignment.attributes;
-            var _remainingTime = _attrs.deadline.difference(DateTime.now());
+      builder:
+          (context, model, child) => Scaffold(
+            appBar: AppBar(
+              title: Text(
+                AppLocalizations.of(context)!.assignment_details_title,
+              ),
+            ),
+            body: Builder(
+              builder: (context) {
+                var _attrs = _recievedAssignment.attributes;
+                var _remainingTime = _attrs.deadline.difference(DateTime.now());
 
-            return ListView(
-              padding: const EdgeInsetsDirectional.all(16),
-              children: <Widget>[
-                _buildHeader(),
-                const SizedBox(height: 16),
-                _buildDetailComponent('name', _attrs.name),
-                _buildDetailComponent(
-                  'deadline',
-                  DateFormat.yMEd().add_jms().format(_attrs.deadline),
-                ),
-                if (!_remainingTime.isNegative)
-                  _buildDetailComponent(
-                    'time_remaining',
-                    '${_remainingTime.inDays} ${AppLocalizations.of(context)!.assignment_details_days} '
-                        '${_remainingTime.inHours.remainder(24)} ${AppLocalizations.of(context)!.assignment_details_hours} '
-                        '${_remainingTime.inMinutes.remainder(60)} ${AppLocalizations.of(context)!.assignment_details_minutes}',
-                  ),
-                _buildAssignmentDescription(),
-                _buildDetailComponent(
-                  'restricted_elements',
-                  json.decode(_attrs.restrictions).join(' , '),
-                ),
-                const Divider(height: 32),
-                if (_model.isSuccess(_model.FETCH_ASSIGNMENT_DETAILS))
-                  Column(
-                    children: <Widget>[
-                      _buildSubmissions(),
-                      const SizedBox(height: 16),
-                      _buildGrades(),
-                    ],
-                  ),
-              ],
-            );
-          },
-        ),
-      ),
+                return ListView(
+                  padding: const EdgeInsetsDirectional.all(16),
+                  children: <Widget>[
+                    _buildHeader(),
+                    const SizedBox(height: 16),
+                    _buildDetailComponent('name', _attrs.name),
+                    _buildDetailComponent(
+                      'deadline',
+                      DateFormat.yMEd().add_jms().format(_attrs.deadline),
+                    ),
+                    if (!_remainingTime.isNegative)
+                      _buildDetailComponent(
+                        'time_remaining',
+                        '${_remainingTime.inDays} ${AppLocalizations.of(context)!.assignment_details_days} '
+                            '${_remainingTime.inHours.remainder(24)} ${AppLocalizations.of(context)!.assignment_details_hours} '
+                            '${_remainingTime.inMinutes.remainder(60)} ${AppLocalizations.of(context)!.assignment_details_minutes}',
+                      ),
+                    _buildAssignmentDescription(),
+                    _buildDetailComponent(
+                      'restricted_elements',
+                      json.decode(_attrs.restrictions).join(' , '),
+                    ),
+                    const Divider(height: 32),
+                    if (_model.isSuccess(_model.FETCH_ASSIGNMENT_DETAILS))
+                      Column(
+                        children: <Widget>[
+                          _buildSubmissions(),
+                          const SizedBox(height: 16),
+                          _buildGrades(),
+                        ],
+                      ),
+                  ],
+                );
+              },
+            ),
+          ),
     );
   }
 }

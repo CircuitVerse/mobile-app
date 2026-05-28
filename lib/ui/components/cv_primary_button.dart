@@ -72,20 +72,15 @@ class CVPrimaryButtonState extends State<CVPrimaryButton>
   }
 
   void _updateColorAnimation() {
-    final primaryColor = widget.isPrimaryDark
-        ? CVTheme.primaryColorDark
-        : CVTheme.primaryColor;
+    final primaryColor =
+        widget.isPrimaryDark ? CVTheme.primaryColorDark : CVTheme.primaryColor;
 
-    _backgroundColorAnimation =
-        ColorTween(
-          begin: primaryColor,
-          end: primaryColor.withAlpha(204), // ~80% opacity for pressed state
-        ).animate(
-          CurvedAnimation(
-            parent: _animationController,
-            curve: Curves.easeInOut,
-          ),
-        );
+    _backgroundColorAnimation = ColorTween(
+      begin: primaryColor,
+      end: primaryColor.withAlpha(204), // ~80% opacity for pressed state
+    ).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
   }
 
   @override
@@ -149,11 +144,11 @@ class CVPrimaryButtonState extends State<CVPrimaryButton>
                     widget.textStyle ??
                     (widget.isBodyText
                         ? Theme.of(
-                            context,
-                          ).textTheme.bodyLarge?.copyWith(color: Colors.white)
-                        : Theme.of(context).textTheme.titleLarge?.copyWith(
-                            color: Colors.white,
-                          )),
+                          context,
+                        ).textTheme.bodyLarge?.copyWith(color: Colors.white)
+                        : Theme.of(
+                          context,
+                        ).textTheme.titleLarge?.copyWith(color: Colors.white)),
               ),
             ),
           );

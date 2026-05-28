@@ -159,12 +159,10 @@ class _IbPageViewState extends State<IbPageView> {
         'img': CustomImageBuilder(
           onTapImage: (src) => debugPrint('Image tapped: $src'),
           wrapImages: true,
-          noImageSourceText: AppLocalizations.of(
-            context,
-          )!.ib_page_no_image_source,
-          imageLoadErrorText: AppLocalizations.of(
-            context,
-          )!.ib_page_image_load_error,
+          noImageSourceText:
+              AppLocalizations.of(context)!.ib_page_no_image_source,
+          imageLoadErrorText:
+              AppLocalizations.of(context)!.ib_page_image_load_error,
           loadingImageText: AppLocalizations.of(context)!.ib_page_loading_image,
         ),
         'h1': _headingsBuilder,
@@ -176,12 +174,12 @@ class _IbPageViewState extends State<IbPageView> {
         'chapter_contents': IbChapterContentsBuilder(
           chapterContents:
               _model.pageData?.chapterOfContents?.isNotEmpty ?? false
-              ? _buildTOC(
-                  _model.pageData!.chapterOfContents!,
-                  padding: false,
-                  isEnabled: false,
-                )
-              : Container(),
+                  ? _buildTOC(
+                    _model.pageData!.chapterOfContents!,
+                    padding: false,
+                    isEnabled: false,
+                  )
+                  : Container(),
         ),
         'iframe': IbWebViewBuilder(),
         'interaction': IbInteractionBuilder(model: _model),
@@ -256,13 +254,14 @@ class _IbPageViewState extends State<IbPageView> {
       contentPadding: EdgeInsets.symmetric(horizontal: padding ? 16.0 : 0.0),
       minLeadingWidth: 20,
       title: Text('$leading $content'),
-      onTap: isEnabled
-          ? () async {
-              final slug = IbEngineService.getSlug(content);
-              if (Navigator.canPop(context)) Navigator.pop(context);
-              await _scrollToWidget(slug);
-            }
-          : null,
+      onTap:
+          isEnabled
+              ? () async {
+                final slug = IbEngineService.getSlug(content);
+                if (Navigator.canPop(context)) Navigator.pop(context);
+                await _scrollToWidget(slug);
+              }
+              : null,
     );
 
     return root
@@ -342,11 +341,12 @@ class _IbPageViewState extends State<IbPageView> {
 
   Widget _buildFloatingActionButtons() {
     final buttons = <Widget>[];
-    final alignment = widget.chapter.prev != null && widget.chapter.next != null
-        ? MainAxisAlignment.spaceBetween
-        : widget.chapter.prev != null
-        ? MainAxisAlignment.start
-        : MainAxisAlignment.end;
+    final alignment =
+        widget.chapter.prev != null && widget.chapter.next != null
+            ? MainAxisAlignment.spaceBetween
+            : widget.chapter.prev != null
+            ? MainAxisAlignment.start
+            : MainAxisAlignment.end;
 
     if (widget.chapter.prev != null) {
       buttons.add(
@@ -361,14 +361,14 @@ class _IbPageViewState extends State<IbPageView> {
                   heroTag: 'previousPage',
                   mini: true,
                   backgroundColor: Theme.of(context).primaryIconTheme.color,
-                  onPressed: _ibFloatingButtonState.isVisible
-                      ? () => widget.setPage(widget.chapter.prev)
-                      : null,
+                  onPressed:
+                      _ibFloatingButtonState.isVisible
+                          ? () => widget.setPage(widget.chapter.prev)
+                          : null,
                   child: Showcase(
                     key: _model.prevPage,
-                    description: AppLocalizations.of(
-                      context,
-                    )!.ib_page_navigate_previous,
+                    description:
+                        AppLocalizations.of(context)!.ib_page_navigate_previous,
                     targetPadding: const EdgeInsets.all(12.0),
                     targetShapeBorder: const CircleBorder(),
                     onTargetClick: () {
@@ -404,14 +404,14 @@ class _IbPageViewState extends State<IbPageView> {
                   heroTag: 'nextPage',
                   mini: true,
                   backgroundColor: Theme.of(context).primaryIconTheme.color,
-                  onPressed: _ibFloatingButtonState.isVisible
-                      ? () => widget.setPage(widget.chapter.next)
-                      : null,
+                  onPressed:
+                      _ibFloatingButtonState.isVisible
+                          ? () => widget.setPage(widget.chapter.next)
+                          : null,
                   child: Showcase(
                     key: _model.nextPage,
-                    description: AppLocalizations.of(
-                      context,
-                    )!.ib_page_navigate_next,
+                    description:
+                        AppLocalizations.of(context)!.ib_page_navigate_next,
                     targetPadding: const EdgeInsets.all(12.0),
                     targetShapeBorder: const CircleBorder(),
                     onTargetClick: () {
@@ -553,8 +553,9 @@ class CustomImageBuilder extends MarkdownElementBuilder {
         image = Image.network(
           src,
           semanticLabel: alt,
-          loadingBuilder: (_, child, progress) =>
-              progress == null ? child : _buildLoadingIndicator(),
+          loadingBuilder:
+              (_, child, progress) =>
+                  progress == null ? child : _buildLoadingIndicator(),
           errorBuilder: (_, _, _) => _buildErrorWidget(imageLoadErrorText),
           fit: BoxFit.contain,
         );

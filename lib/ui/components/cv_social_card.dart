@@ -31,9 +31,10 @@ class CircuitVerseSocialCard extends StatelessWidget {
         launchURL(url);
       },
       child: Card(
-        color: Theme.of(context).brightness == Brightness.dark
-            ? CVTheme.primaryColor
-            : CVTheme.primaryColorShadow,
+        color:
+            Theme.of(context).brightness == Brightness.dark
+                ? CVTheme.primaryColor
+                : CVTheme.primaryColorShadow,
         child: Padding(
           padding: EdgeInsetsDirectional.symmetric(
             vertical: dynamicPadding,
@@ -61,11 +62,12 @@ class CircuitVerseSocialCard extends StatelessWidget {
                         title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: CVTheme.textColor(context),
-                            ),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: CVTheme.textColor(context),
+                        ),
                       ),
                       Text(
                         description,

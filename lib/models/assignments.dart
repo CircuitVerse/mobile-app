@@ -22,20 +22,22 @@ class Assignment {
     attributes: AssignmentAttributes.fromJson(
       json['attributes'] ?? json['data']['attributes'],
     ),
-    projects: json['included'] != null
-        ? List<Project>.from(
-            json['included']
-                ?.where((e) => e['type'] == 'project')
-                ?.map((e) => Project.fromJson(e)),
-          )
-        : null,
-    grades: json['included'] != null
-        ? List<Grade>.from(
-            json['included']
-                ?.where((e) => e['type'] == 'grade')
-                ?.map((e) => Grade.fromJson(e)),
-          )
-        : null,
+    projects:
+        json['included'] != null
+            ? List<Project>.from(
+              json['included']
+                  ?.where((e) => e['type'] == 'project')
+                  ?.map((e) => Project.fromJson(e)),
+            )
+            : null,
+    grades:
+        json['included'] != null
+            ? List<Grade>.from(
+              json['included']
+                  ?.where((e) => e['type'] == 'grade')
+                  ?.map((e) => Grade.fromJson(e)),
+            )
+            : null,
   );
   Assignment({
     required this.id,

@@ -42,11 +42,13 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     return CVTextField(
       label: AppLocalizations.of(context)!.forgot_password_email,
       type: TextInputType.emailAddress,
-      validator: (value) => Validators.isEmailValid(value)
-          ? null
-          : AppLocalizations.of(
-              context,
-            )!.forgot_password_email_validation_error,
+      validator:
+          (value) =>
+              Validators.isEmailValid(value)
+                  ? null
+                  : AppLocalizations.of(
+                    context,
+                  )!.forgot_password_email_validation_error,
       onSaved: (value) => _email = value!.trim(),
       action: TextInputAction.done,
     );
@@ -57,9 +59,12 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
       width: double.infinity,
       child: CVPrimaryButton(
-        title: _model.isBusy(_model.SEND_RESET_INSTRUCTIONS)
-            ? AppLocalizations.of(context)!.forgot_password_sending
-            : AppLocalizations.of(context)!.forgot_password_send_instructions,
+        title:
+            _model.isBusy(_model.SEND_RESET_INSTRUCTIONS)
+                ? AppLocalizations.of(context)!.forgot_password_sending
+                : AppLocalizations.of(
+                  context,
+                )!.forgot_password_send_instructions,
         onPressed: _validateAndSubmit,
       ),
     );
@@ -91,9 +96,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
       FocusScope.of(context).requestFocus(FocusNode());
 
       _dialogService.showCustomProgressDialog(
-        title: AppLocalizations.of(
-          context,
-        )!.forgot_password_sending_instructions,
+        title:
+            AppLocalizations.of(context)!.forgot_password_sending_instructions,
       );
 
       await _model.onForgotPassword(_email);
@@ -123,26 +127,27 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   Widget build(BuildContext context) {
     return BaseView<ForgotPasswordViewModel>(
       onModelReady: (model) => _model = model,
-      builder: (context, model, child) => Scaffold(
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                _buildForgotPasswordImage(),
-                const SizedBox(height: 8),
-                _buildEmailInput(),
-                const SizedBox(height: 8),
-                _buildSendInstructionsButton(),
-                const SizedBox(height: 8),
-                _buildNewUserSignUpComponent(),
-                const SizedBox(height: 32),
-                const AuthOptionsView(isSignUp: false),
-              ],
+      builder:
+          (context, model, child) => Scaffold(
+            body: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    _buildForgotPasswordImage(),
+                    const SizedBox(height: 8),
+                    _buildEmailInput(),
+                    const SizedBox(height: 8),
+                    _buildSendInstructionsButton(),
+                    const SizedBox(height: 8),
+                    _buildNewUserSignUpComponent(),
+                    const SizedBox(height: 32),
+                    const AuthOptionsView(isSignUp: false),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

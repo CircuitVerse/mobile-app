@@ -95,77 +95,79 @@ class _HomeViewState extends State<HomeView> {
     }
 
     return BaseView<HomeViewModel>(
-      builder: (context, model, child) => SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsetsDirectional.all(16),
-          child: Column(
-            children: <Widget>[
-              _buildHeader(),
-              const SizedBox(height: 16),
-              _buildHomePageSketch(),
-              _buildTeachersAndContributorButtons(),
-              CVSubheader(
-                title: AppLocalizations.of(context)!.features_title,
-                subtitle: AppLocalizations.of(context)!.features_subtitle,
+      builder:
+          (context, model, child) => SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsetsDirectional.all(16),
+              child: Column(
+                children: <Widget>[
+                  _buildHeader(),
+                  const SizedBox(height: 16),
+                  _buildHomePageSketch(),
+                  _buildTeachersAndContributorButtons(),
+                  CVSubheader(
+                    title: AppLocalizations.of(context)!.features_title,
+                    subtitle: AppLocalizations.of(context)!.features_subtitle,
+                  ),
+                  FeatureCard(
+                    assetPath: 'assets/images/homepage/export-hd.png',
+                    cardHeading: AppLocalizations.of(context)!.feature1_title,
+                    cardDescription:
+                        AppLocalizations.of(context)!.feature1_description,
+                  ),
+                  FeatureCard(
+                    assetPath:
+                        'assets/images/homepage/combinational-analysis.png',
+                    cardHeading: AppLocalizations.of(context)!.feature2_title,
+                    cardDescription:
+                        AppLocalizations.of(context)!.feature2_description,
+                  ),
+                  FeatureCard(
+                    assetPath: 'assets/images/homepage/embed.png',
+                    cardHeading: AppLocalizations.of(context)!.feature3_title,
+                    cardDescription:
+                        AppLocalizations.of(context)!.feature3_description,
+                  ),
+                  FeatureCard(
+                    assetPath: 'assets/images/homepage/sub-circuit.png',
+                    cardHeading: AppLocalizations.of(context)!.feature4_title,
+                    cardDescription:
+                        AppLocalizations.of(context)!.feature4_description,
+                  ),
+                  FeatureCard(
+                    assetPath: 'assets/images/homepage/multi-bit-bus.png',
+                    cardHeading: AppLocalizations.of(context)!.feature5_title,
+                    cardDescription:
+                        AppLocalizations.of(context)!.feature5_description,
+                  ),
+                  const SizedBox(height: 16),
+                  CVSubheader(
+                    title: AppLocalizations.of(context)!.editor_picks_title,
+                    subtitle:
+                        AppLocalizations.of(context)!.editor_picks_subtitle,
+                  ),
+                  const FeaturedProjectsView(embed: true),
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.symmetric(
+                      horizontal: 16,
+                    ),
+                    child: CVOutlineButton(
+                      title: AppLocalizations.of(context)!.explore_more_button,
+                      isPrimaryDark: true,
+                      onPressed:
+                          () =>
+                              context.read<CVLandingViewModel>().selectedIndex =
+                                  1,
+                      minWidth: 180,
+                      maxWidth: 300,
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
               ),
-              FeatureCard(
-                assetPath: 'assets/images/homepage/export-hd.png',
-                cardHeading: AppLocalizations.of(context)!.feature1_title,
-                cardDescription: AppLocalizations.of(
-                  context,
-                )!.feature1_description,
-              ),
-              FeatureCard(
-                assetPath: 'assets/images/homepage/combinational-analysis.png',
-                cardHeading: AppLocalizations.of(context)!.feature2_title,
-                cardDescription: AppLocalizations.of(
-                  context,
-                )!.feature2_description,
-              ),
-              FeatureCard(
-                assetPath: 'assets/images/homepage/embed.png',
-                cardHeading: AppLocalizations.of(context)!.feature3_title,
-                cardDescription: AppLocalizations.of(
-                  context,
-                )!.feature3_description,
-              ),
-              FeatureCard(
-                assetPath: 'assets/images/homepage/sub-circuit.png',
-                cardHeading: AppLocalizations.of(context)!.feature4_title,
-                cardDescription: AppLocalizations.of(
-                  context,
-                )!.feature4_description,
-              ),
-              FeatureCard(
-                assetPath: 'assets/images/homepage/multi-bit-bus.png',
-                cardHeading: AppLocalizations.of(context)!.feature5_title,
-                cardDescription: AppLocalizations.of(
-                  context,
-                )!.feature5_description,
-              ),
-              const SizedBox(height: 16),
-              CVSubheader(
-                title: AppLocalizations.of(context)!.editor_picks_title,
-                subtitle: AppLocalizations.of(context)!.editor_picks_subtitle,
-              ),
-              const FeaturedProjectsView(embed: true),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsetsDirectional.symmetric(horizontal: 16),
-                child: CVOutlineButton(
-                  title: AppLocalizations.of(context)!.explore_more_button,
-                  isPrimaryDark: true,
-                  onPressed: () =>
-                      context.read<CVLandingViewModel>().selectedIndex = 1,
-                  minWidth: 180,
-                  maxWidth: 300,
-                  fontSize: 18,
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
     );
   }
 }

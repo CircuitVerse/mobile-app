@@ -106,21 +106,23 @@ class CVDrawer extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     iconColor: CVTheme.textColor(context),
-                    children: languages.entries.map((entry) {
-                      final isSelected = currentLocale == entry.key;
-                      return InkWell(
-                        onTap: () {
-                          langController.changeLanguage(entry.key);
-                          langController.isLanguageExpanded.value = false;
-                        },
-                        child: CVDrawerTile(
-                          title: entry.value,
-                          iconData: isSelected
-                              ? Icons.radio_button_checked
-                              : Icons.radio_button_off,
-                        ),
-                      );
-                    }).toList(),
+                    children:
+                        languages.entries.map((entry) {
+                          final isSelected = currentLocale == entry.key;
+                          return InkWell(
+                            onTap: () {
+                              langController.changeLanguage(entry.key);
+                              langController.isLanguageExpanded.value = false;
+                            },
+                            child: CVDrawerTile(
+                              title: entry.value,
+                              iconData:
+                                  isSelected
+                                      ? Icons.radio_button_checked
+                                      : Icons.radio_button_off,
+                            ),
+                          );
+                        }).toList(),
                   ),
                 );
               }),
@@ -241,9 +243,10 @@ class CVDrawer extends StatelessWidget {
             right: 5,
             top: 35,
             child: IconButton(
-              icon: Theme.of(context).brightness == Brightness.dark
-                  ? const Icon(Icons.brightness_low)
-                  : const Icon(Icons.brightness_high),
+              icon:
+                  Theme.of(context).brightness == Brightness.dark
+                      ? const Icon(Icons.brightness_low)
+                      : const Icon(Icons.brightness_high),
               iconSize: 28.0,
               onPressed: () => ThemeProvider.controllerOf(context).nextTheme(),
             ),

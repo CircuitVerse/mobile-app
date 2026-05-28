@@ -75,9 +75,11 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     final localizations = AppLocalizations.of(context)!;
     return CVTextField(
       label: localizations.assignment_name,
-      validator: (name) => name?.isEmpty ?? true
-          ? localizations.assignment_name_validation_error
-          : null,
+      validator:
+          (name) =>
+              name?.isEmpty ?? true
+                  ? localizations.assignment_name_validation_error
+                  : null,
       onSaved: (name) => _name = name!.trim(),
       action: TextInputAction.done,
     );
@@ -150,14 +152,15 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
             _gradingScale = value;
           });
         },
-        items: _gradingOptions.entries
-            .map<DropdownMenuItem<String>>(
-              (entry) => DropdownMenuItem<String>(
-                value: entry.key,
-                child: Text(entry.value),
-              ),
-            )
-            .toList(),
+        items:
+            _gradingOptions.entries
+                .map<DropdownMenuItem<String>>(
+                  (entry) => DropdownMenuItem<String>(
+                    value: entry.key,
+                    child: Text(entry.value),
+                  ),
+                )
+                .toList(),
       ),
     );
   }
@@ -229,10 +232,11 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
     return Padding(
       padding: const EdgeInsetsDirectional.all(8),
       child: Column(
-        children: restrictionElements.entries
-            .toList()
-            .map<Widget>((e) => _buildRestrictionComponent(e.key, e.value))
-            .toList(),
+        children:
+            restrictionElements.entries
+                .toList()
+                .map<Widget>((e) => _buildRestrictionComponent(e.key, e.value))
+                .toList(),
       ),
     );
   }
@@ -304,30 +308,31 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
 
     return BaseView<AddAssignmentViewModel>(
       onModelReady: (model) => _model = model,
-      builder: (context, model, child) => Scaffold(
-        appBar: AppBar(title: Text(localizations.assignment_add_title)),
-        body: SingleChildScrollView(
-          padding: const EdgeInsetsDirectional.symmetric(vertical: 16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                _buildNameInput(),
-                _buildDescriptionInput(),
-                _buildDeadlineInput(),
-                _buildGradingScaleDropdown(),
-                _buildRestrictionsHeader(),
-                if (_isRestrictionEnabled)
-                  _buildRestrictions()
-                else
-                  Container(),
-                _buildCreateButton(),
-              ],
+      builder:
+          (context, model, child) => Scaffold(
+            appBar: AppBar(title: Text(localizations.assignment_add_title)),
+            body: SingleChildScrollView(
+              padding: const EdgeInsetsDirectional.symmetric(vertical: 16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _buildNameInput(),
+                    _buildDescriptionInput(),
+                    _buildDeadlineInput(),
+                    _buildGradingScaleDropdown(),
+                    _buildRestrictionsHeader(),
+                    if (_isRestrictionEnabled)
+                      _buildRestrictions()
+                    else
+                      Container(),
+                    _buildCreateButton(),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     );
   }
 }

@@ -112,9 +112,10 @@ class IbEngineServiceImpl implements IbEngineService {
     // We have to flatten the nested chapters and assign prev and next to the objects
     // but return original list of chapters to keep the order intact
 
-    var _flatten = chapters
-        .expand((c) => c.items != null ? [c, ...c.items!] : [c])
-        .toList();
+    var _flatten =
+        chapters
+            .expand((c) => c.items != null ? [c, ...c.items!] : [c])
+            .toList();
 
     if (_flatten.length <= 1) {
       return chapters;
@@ -256,12 +257,14 @@ class IbEngineServiceImpl implements IbEngineService {
       content: [
         IbMd(content: '${HtmlUnescape().convert(_ibRawPageData.rawContent)}\n'),
       ],
-      tableOfContents: _ibRawPageData.hasToc
-          ? _getTableOfContents(_ibRawPageData.content!)
-          : [],
-      chapterOfContents: _ibRawPageData.hasChildren
-          ? _getChapterOfContents(_ibRawPageData.content!)
-          : [],
+      tableOfContents:
+          _ibRawPageData.hasToc
+              ? _getTableOfContents(_ibRawPageData.content!)
+              : [],
+      chapterOfContents:
+          _ibRawPageData.hasChildren
+              ? _getChapterOfContents(_ibRawPageData.content!)
+              : [],
     );
   }
 

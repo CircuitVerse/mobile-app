@@ -20,9 +20,10 @@ class CVDrawerTile extends StatelessWidget {
     return Theme(
       data: CVTheme.themeData(context),
       child: ListTile(
-        leading: iconData != null
-            ? Icon(iconData, color: color ?? CVTheme.drawerIcon(context))
-            : null,
+        leading:
+            iconData != null
+                ? Icon(iconData, color: color ?? CVTheme.drawerIcon(context))
+                : null,
         title: Text(
           title,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(

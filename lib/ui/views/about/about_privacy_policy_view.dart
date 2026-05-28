@@ -35,13 +35,14 @@ class AboutPrivacyPolicyView extends StatelessWidget {
         fontFamily: 'Poppins',
       ),
       text: text,
-      recognizer: TapGestureRecognizer()
-        ..onTap = () async {
-          final url = link;
-          if (await canLaunchUrlString(url)) {
-            await launchUrlString(url);
-          }
-        },
+      recognizer:
+          TapGestureRecognizer()
+            ..onTap = () async {
+              final url = link;
+              if (await canLaunchUrlString(url)) {
+                await launchUrlString(url);
+              }
+            },
     );
   }
 
@@ -51,9 +52,10 @@ class AboutPrivacyPolicyView extends StatelessWidget {
     String title = '',
     bool heading = false,
   }) {
-    var style = heading
-        ? Theme.of(context).textTheme.headlineSmall
-        : Theme.of(context).textTheme.titleLarge;
+    var style =
+        heading
+            ? Theme.of(context).textTheme.headlineSmall
+            : Theme.of(context).textTheme.titleLarge;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,14 +82,15 @@ class AboutPrivacyPolicyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: showAppBar
-          ? AppBar(
-              title: Text(
-                AppLocalizations.of(context)!.privacy_policy,
-                style: TextStyle(color: CVTheme.primaryHeading(context)),
-              ),
-            )
-          : null,
+      appBar:
+          showAppBar
+              ? AppBar(
+                title: Text(
+                  AppLocalizations.of(context)!.privacy_policy,
+                  style: TextStyle(color: CVTheme.primaryHeading(context)),
+                ),
+              )
+              : null,
       body: SingleChildScrollView(
         padding: const EdgeInsetsDirectional.all(16),
         child: Column(
