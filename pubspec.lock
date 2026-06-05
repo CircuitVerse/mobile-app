@@ -1679,10 +1679,10 @@ packages:
     dependency: "direct dev"
     description:
       name: webview_flutter_android
-      sha256: e37e565ed17605a4dbf3ad9c109afb06523e268963e8a9748137e6d8ecd9c955
+      sha256: a97db7a44f8e71af2f3971c45550a08cce1fb60059c1b8e534251e6cfb753490
       url: "https://pub.dev"
     source: hosted
-    version: "4.12.2"
+    version: "4.13.0"
   webview_flutter_platform_interface:
     dependency: "direct dev"
     description:
