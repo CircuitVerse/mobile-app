@@ -48,7 +48,10 @@ class CVOutlineButtonState extends State<CVOutlineButton>
     );
 
     _scaleAnimation = Tween<double>(begin: 1.0, end: 0.94).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCubicEmphasized),
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOutCubicEmphasized,
+      ),
     );
 
     _updateColorAnimations();

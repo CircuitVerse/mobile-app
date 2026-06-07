@@ -78,9 +78,7 @@ class CircuitVerseMobile extends StatelessWidget {
                 brightness: Brightness.dark,
                 dynamicSchemeVariant: DynamicSchemeVariant.expressive,
               ),
-              appBarTheme: const AppBarTheme(
-                centerTitle: true,
-              ),
+              appBarTheme: const AppBarTheme(centerTitle: true),
             ),
             description: 'DarkTheme',
           ),

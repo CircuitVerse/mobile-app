@@ -25,14 +25,15 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     Widget _buildHeader() {
       return Padding(
-        padding: const EdgeInsetsDirectional.symmetric(horizontal: 16, vertical: 32),
+        padding: const EdgeInsetsDirectional.symmetric(
+          horizontal: 16,
+          vertical: 32,
+        ),
         child: Column(
           children: <Widget>[
             Text(
               AppLocalizations.of(context)!.home_header_title,
-              style: Theme.of(
-                context,
-              ).textTheme.displaySmall?.copyWith(
+              style: Theme.of(context).textTheme.displaySmall?.copyWith(
                 fontWeight: FontWeight.w900,
                 letterSpacing: -1.5,
               ),

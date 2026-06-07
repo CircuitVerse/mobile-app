@@ -60,9 +60,7 @@ class _CVLandingViewState extends State<CVLandingView> {
   AppBar? _buildAppBar(int selectedIndex, CVLandingViewModel model) {
     if (selectedIndex == 1 || selectedIndex == 7) return null;
     return AppBar(
-      title: Text(
-        _appBarTitle(selectedIndex),
-      ),
+      title: Text(_appBarTitle(selectedIndex)),
       leading: IconButton(
         onPressed: () {
           _scaffoldKey.currentState?.openDrawer();

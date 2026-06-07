@@ -32,16 +32,14 @@ class CVDrawer extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset(
-                'assets/images/landing/cv_full_logo.png',
-                width: 90,
-              ),
+              Image.asset('assets/images/landing/cv_full_logo.png', width: 90),
               IconButton.filledTonal(
                 icon:
                     Theme.of(context).brightness == Brightness.dark
                         ? const Icon(Icons.brightness_low)
                         : const Icon(Icons.brightness_high),
-                onPressed: () => ThemeProvider.controllerOf(context).nextTheme(),
+                onPressed:
+                    () => ThemeProvider.controllerOf(context).nextTheme(),
               ),
             ],
           ),
@@ -55,10 +53,12 @@ class CVDrawer extends StatelessWidget {
           selectedIcon: const Icon(Icons.home),
           label: Text(AppLocalizations.of(context)!.cv_home),
         ),
-        
+
         ExpansionTile(
           maintainState: true,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(28))),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(28)),
+          ),
           leading: const Icon(Icons.explore),
           title: Text(AppLocalizations.of(context)!.cv_explore),
           children: <Widget>[
@@ -86,24 +86,38 @@ class CVDrawer extends StatelessWidget {
             onExpansionChanged: (expanded) {
               langController.isLanguageExpanded.value = expanded;
             },
-            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(28))),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(28)),
+            ),
             leading: const Icon(Icons.translate),
             title: Text(localizations.cv_language),
-            children: [
-              const Locale('en'), const Locale('hi'), const Locale('ar')
-            ].map((locale) {
-              final isSelected = currentLocale == locale;
-              final label = locale.languageCode == 'en' ? 'English' : locale.languageCode == 'hi' ? 'हिंदी' : 'العربية';
-              return ListTile(
-                contentPadding: const EdgeInsets.only(left: 72),
-                leading: Icon(isSelected ? Icons.radio_button_checked : Icons.radio_button_off),
-                title: Text(label),
-                onTap: () {
-                  langController.changeLanguage(locale);
-                  langController.isLanguageExpanded.value = false;
-                },
-              );
-            }).toList(),
+            children:
+                [
+                  const Locale('en'),
+                  const Locale('hi'),
+                  const Locale('ar'),
+                ].map((locale) {
+                  final isSelected = currentLocale == locale;
+                  final label =
+                      locale.languageCode == 'en'
+                          ? 'English'
+                          : locale.languageCode == 'hi'
+                          ? 'हिंदी'
+                          : 'العربية';
+                  return ListTile(
+                    contentPadding: const EdgeInsets.only(left: 72),
+                    leading: Icon(
+                      isSelected
+                          ? Icons.radio_button_checked
+                          : Icons.radio_button_off,
+                    ),
+                    title: Text(label),
+                    onTap: () {
+                      langController.changeLanguage(locale);
+                      langController.isLanguageExpanded.value = false;
+                    },
+                  );
+                }).toList(),
           );
         }),
 
@@ -150,7 +164,7 @@ class CVDrawer extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(28, 8, 28, 8),
           child: Divider(),
         ),
-        
+
         ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 28),
           leading: const Icon(FontAwesome5.address_card),
@@ -197,7 +211,9 @@ class CVDrawer extends StatelessWidget {
             },
           ),
           ExpansionTile(
-            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(28))),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(28)),
+            ),
             title: Text(_model.currentUser?.data.attributes.name ?? ''),
             leading: const Icon(FontAwesome5.user),
             children: [
@@ -224,7 +240,10 @@ class CVDrawer extends StatelessWidget {
               ListTile(
                 contentPadding: const EdgeInsets.only(left: 72),
                 leading: const Icon(FontAwesome.logout, color: Colors.red),
-                title: Text(AppLocalizations.of(context)!.cv_logout, style: const TextStyle(color: Colors.red)),
+                title: Text(
+                  AppLocalizations.of(context)!.cv_logout,
+                  style: const TextStyle(color: Colors.red),
+                ),
                 onTap: () {
                   Navigator.pop(context);
                   _model.onLogoutPressed();
@@ -242,7 +261,7 @@ class CVDrawer extends StatelessWidget {
               Get.offAndToNamed(LoginView.id);
             },
           ),
-        
+
         const SizedBox(height: 28),
       ],
     );
