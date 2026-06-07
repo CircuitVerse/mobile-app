@@ -4,24 +4,15 @@ class IbTheme {
   IbTheme._();
 
   static ThemeData getThemeData(BuildContext context) {
-    return Theme.of(context).copyWith(
+    return ThemeData(
+      useMaterial3: true,
       brightness: Theme.of(context).brightness,
-      primaryIconTheme: Theme.of(
-        context,
-      ).primaryIconTheme.copyWith(color: Colors.white),
-      appBarTheme: const AppBarTheme(
-        foregroundColor: Colors.white,
-        backgroundColor: IbTheme.primaryColor,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: IbTheme.primaryColor,
+        brightness: Theme.of(context).brightness,
+        dynamicSchemeVariant: DynamicSchemeVariant.expressive,
       ),
-      primaryColor: IbTheme.primaryColor,
-      textTheme: Theme.of(context).textTheme.apply(
-        fontFamily: IbTheme.fontFamily,
-        bodyColor: IbTheme.textColor(context),
-      ),
-      primaryTextTheme: Theme.of(context).primaryTextTheme.apply(
-        fontFamily: IbTheme.fontFamily,
-        bodyColor: Colors.white,
-      ),
+      fontFamily: IbTheme.fontFamily,
     );
   }
 

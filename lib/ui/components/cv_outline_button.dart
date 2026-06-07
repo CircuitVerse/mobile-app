@@ -47,8 +47,8 @@ class CVOutlineButtonState extends State<CVOutlineButton>
       vsync: this,
     );
 
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.96).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.94).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCubicEmphasized),
     );
 
     _updateColorAnimations();
@@ -124,20 +124,21 @@ class CVOutlineButtonState extends State<CVOutlineButton>
               child: OutlinedButton(
                 style: OutlinedButton.styleFrom(
                   padding: widget.padding,
+                  shape: const StadiumBorder(),
                   side: BorderSide(
                     color:
                         _borderColorAnimation.value ??
                         (widget.isPrimaryDark
                             ? CVTheme.primaryColorDark
                             : CVTheme.primaryColor),
-                    width: 2,
+                    width: 1.5,
                   ),
                   foregroundColor:
                       _textColorAnimation.value ??
                       (widget.isPrimaryDark
                           ? CVTheme.primaryColorDark
                           : CVTheme.primaryColor),
-                  overlayColor: null,
+                  overlayColor: Colors.transparent,
                 ),
                 onPressed: widget.onPressed ?? () {},
                 child: Row(

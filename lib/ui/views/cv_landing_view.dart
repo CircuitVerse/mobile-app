@@ -62,32 +62,17 @@ class _CVLandingViewState extends State<CVLandingView> {
     return AppBar(
       title: Text(
         _appBarTitle(selectedIndex),
-        style: TextStyle(color: CVTheme.appBarText(context)),
       ),
       leading: IconButton(
         onPressed: () {
           _scaffoldKey.currentState?.openDrawer();
         },
-        icon: Stack(
-          children: [
-            if (model.hasPendingNotif)
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  height: 8,
-                  width: 8,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: CVTheme.red,
-                  ),
-                ),
-              ),
-            const Center(child: Icon(Icons.menu)),
-          ],
+        icon: Badge(
+          isLabelVisible: model.hasPendingNotif,
+          child: const Icon(Icons.menu),
         ),
       ),
       centerTitle: true,
-      elevation: selectedIndex == 6 ? 0 : 4,
       actions: [
         Visibility(
           visible: selectedIndex == 0,

@@ -5,7 +5,6 @@ import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
-import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
 import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
@@ -22,237 +21,230 @@ class CVDrawer extends StatelessWidget {
     final _model = context.read<CVLandingViewModel>();
     final langController = Get.find<LanguageController>();
 
-    return Drawer(
-      child: Stack(
-        children: [
-          ListView(
-            children: <Widget>[
-              Container(
-                padding: const EdgeInsetsDirectional.symmetric(
-                  vertical: 32,
-                  horizontal: 10,
-                ),
-                child: Image.asset(
-                  'assets/images/landing/cv_full_logo.png',
-                  width: 90,
-                ),
+    return NavigationDrawer(
+      selectedIndex: _model.selectedIndex > 8 ? null : _model.selectedIndex,
+      onDestinationSelected: (index) {
+        // We handle selection manually via onTap to support non-sequential indices and ExpansionTiles
+      },
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.asset(
+                'assets/images/landing/cv_full_logo.png',
+                width: 90,
               ),
-              InkWell(
-                onTap: () => _model.setSelectedIndexTo(0),
-                child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.cv_home,
-                  iconData: Icons.home,
-                ),
+              IconButton.filledTonal(
+                icon:
+                    Theme.of(context).brightness == Brightness.dark
+                        ? const Icon(Icons.brightness_low)
+                        : const Icon(Icons.brightness_high),
+                onPressed: () => ThemeProvider.controllerOf(context).nextTheme(),
               ),
-              Theme(
-                data: CVTheme.themeData(context),
-                child: ExpansionTile(
-                  maintainState: true,
-                  tilePadding: const EdgeInsetsDirectional.symmetric(
-                    horizontal: 16.0,
-                  ),
-                  childrenPadding: EdgeInsetsDirectional.zero,
-                  leading: Icon(
-                    Icons.explore,
-                    color: CVTheme.drawerIcon(context),
-                  ),
-                  title: Text(
-                    AppLocalizations.of(context)!.cv_explore,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  iconColor: CVTheme.textColor(context),
-                  children: <Widget>[
-                    InkWell(
-                      onTap: () => _model.setSelectedIndexTo(1),
-                      child: CVDrawerTile(
-                        title: AppLocalizations.of(context)!.featured_circuits,
-                        iconData: Icons.star,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Language Selection Tile
-              Obx(() {
-                final currentLocale = langController.currentLocale.value;
-                final localizations = AppLocalizations.of(context)!;
-
-                final languages = {
-                  const Locale('en'): 'English',
-                  const Locale('hi'): 'हिंदी',
-                  const Locale('ar'): 'العربية',
-                };
-
-                return Theme(
-                  data: CVTheme.themeData(context),
-                  child: ExpansionTile(
-                    key: ValueKey(currentLocale),
-                    initiallyExpanded: langController.isLanguageExpanded.value,
-                    onExpansionChanged: (expanded) {
-                      langController.isLanguageExpanded.value = expanded;
-                    },
-                    maintainState: true,
-                    tilePadding: const EdgeInsetsDirectional.symmetric(
-                      horizontal: 16.0,
-                    ),
-                    childrenPadding: EdgeInsetsDirectional.zero,
-                    leading: Icon(
-                      Icons.translate,
-                      color: CVTheme.drawerIcon(context),
-                    ),
-                    title: Text(
-                      localizations.cv_language,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    iconColor: CVTheme.textColor(context),
-                    children:
-                        languages.entries.map((entry) {
-                          final isSelected = currentLocale == entry.key;
-                          return InkWell(
-                            onTap: () {
-                              langController.changeLanguage(entry.key);
-                              langController.isLanguageExpanded.value = false;
-                            },
-                            child: CVDrawerTile(
-                              title: entry.value,
-                              iconData:
-                                  isSelected
-                                      ? Icons.radio_button_checked
-                                      : Icons.radio_button_off,
-                            ),
-                          );
-                        }).toList(),
-                  ),
-                );
-              }),
-
-              InkWell(
-                onTap: () => Get.toNamed(IbLandingView.id),
-                child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.cv_interactive_book,
-                  iconData: Icons.chrome_reader_mode,
-                ),
-              ),
-              InkWell(
-                onTap: () async {
-                  final url = await Get.toNamed(SimulatorView.id);
-                  await Future.delayed(const Duration(seconds: 1));
-                  if (url is String) {
-                    if (url.contains('sign_out')) {
-                      _model.onLogoutPressed();
-                    } else if (url.contains('edit')) {
-                      Get.back();
-                      SnackBarUtils.showDark(
-                        'New project created',
-                        'Please check your profile to edit..',
-                      );
-                    } else if (url.contains('groups')) {
-                      _model.setSelectedIndexTo(6);
-                    } else if (url.contains('users')) {
-                      _model.setSelectedIndexTo(5);
-                    }
-                  }
-                },
-                child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.cv_simulator,
-                  iconData: FontAwesome5.atom,
-                ),
-              ),
-              InkWell(
-                onTap: () => _model.setSelectedIndexTo(2),
-                child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.cv_about,
-                  iconData: FontAwesome5.address_card,
-                ),
-              ),
-              InkWell(
-                onTap: () => _model.setSelectedIndexTo(3),
-                child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.cv_contribute,
-                  iconData: Icons.add,
-                ),
-              ),
-              InkWell(
-                onTap: () => _model.setSelectedIndexTo(4),
-                child: CVDrawerTile(
-                  title: AppLocalizations.of(context)!.cv_teachers,
-                  iconData: Icons.account_balance,
-                ),
-              ),
-              if (_model.isLoggedIn) ...[
-                InkWell(
-                  onTap: () => _model.setSelectedIndexTo(8),
-                  child: CVDrawerTile(
-                    title: AppLocalizations.of(context)!.cv_notifications,
-                    iconData: FontAwesome.bell,
-                    pending: _model.hasPendingNotif,
-                  ),
-                ),
-                Theme(
-                  data: CVTheme.themeData(context),
-                  child: ExpansionTile(
-                    maintainState: true,
-                    tilePadding: const EdgeInsetsDirectional.symmetric(
-                      horizontal: 16.0,
-                    ),
-                    childrenPadding: EdgeInsetsDirectional.zero,
-                    iconColor: CVTheme.textColor(context),
-                    title: Text(
-                      _model.currentUser?.data.attributes.name ?? '',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    children: <Widget>[
-                      InkWell(
-                        onTap: () => _model.setSelectedIndexTo(5),
-                        child: CVDrawerTile(
-                          title: AppLocalizations.of(context)!.cv_profile,
-                          iconData: FontAwesome5.user,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => _model.setSelectedIndexTo(6),
-                        child: CVDrawerTile(
-                          title: AppLocalizations.of(context)!.cv_my_groups,
-                          iconData: FontAwesome5.object_group,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: _model.onLogoutPressed,
-                        child: CVDrawerTile(
-                          title: AppLocalizations.of(context)!.cv_logout,
-                          iconData: FontAwesome.logout,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ] else
-                InkWell(
-                  onTap: () => Get.offAndToNamed(LoginView.id),
-                  child: CVDrawerTile(
-                    title: AppLocalizations.of(context)!.cv_login,
-                    iconData: FontAwesome.login,
-                  ),
-                ),
             ],
           ),
-          Positioned(
-            right: 5,
-            top: 35,
-            child: IconButton(
-              icon:
-                  Theme.of(context).brightness == Brightness.dark
-                      ? const Icon(Icons.brightness_low)
-                      : const Icon(Icons.brightness_high),
-              iconSize: 28.0,
-              onPressed: () => ThemeProvider.controllerOf(context).nextTheme(),
+        ),
+        const Padding(
+          padding: EdgeInsets.fromLTRB(28, 16, 28, 10),
+          child: Divider(),
+        ),
+        NavigationDrawerDestination(
+          icon: const Icon(Icons.home_outlined),
+          selectedIcon: const Icon(Icons.home),
+          label: Text(AppLocalizations.of(context)!.cv_home),
+        ),
+        
+        ExpansionTile(
+          maintainState: true,
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(28))),
+          leading: const Icon(Icons.explore),
+          title: Text(AppLocalizations.of(context)!.cv_explore),
+          children: <Widget>[
+            ListTile(
+              contentPadding: const EdgeInsets.only(left: 72),
+              leading: const Icon(Icons.star),
+              title: Text(AppLocalizations.of(context)!.featured_circuits),
+              selected: _model.selectedIndex == 1,
+              onTap: () {
+                _model.setSelectedIndexTo(1);
+                Navigator.pop(context);
+              },
             ),
+          ],
+        ),
+
+        // Language Selection
+        Obx(() {
+          final currentLocale = langController.currentLocale.value;
+          final localizations = AppLocalizations.of(context)!;
+
+          return ExpansionTile(
+            key: ValueKey(currentLocale),
+            initiallyExpanded: langController.isLanguageExpanded.value,
+            onExpansionChanged: (expanded) {
+              langController.isLanguageExpanded.value = expanded;
+            },
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(28))),
+            leading: const Icon(Icons.translate),
+            title: Text(localizations.cv_language),
+            children: [
+              const Locale('en'), const Locale('hi'), const Locale('ar')
+            ].map((locale) {
+              final isSelected = currentLocale == locale;
+              final label = locale.languageCode == 'en' ? 'English' : locale.languageCode == 'hi' ? 'हिंदी' : 'العربية';
+              return ListTile(
+                contentPadding: const EdgeInsets.only(left: 72),
+                leading: Icon(isSelected ? Icons.radio_button_checked : Icons.radio_button_off),
+                title: Text(label),
+                onTap: () {
+                  langController.changeLanguage(locale);
+                  langController.isLanguageExpanded.value = false;
+                },
+              );
+            }).toList(),
+          );
+        }),
+
+        const Padding(
+          padding: EdgeInsets.fromLTRB(28, 8, 28, 8),
+          child: Divider(),
+        ),
+
+        ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+          leading: const Icon(Icons.chrome_reader_mode),
+          title: Text(AppLocalizations.of(context)!.cv_interactive_book),
+          onTap: () {
+            Navigator.pop(context);
+            Get.toNamed(IbLandingView.id);
+          },
+        ),
+        ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+          leading: const Icon(FontAwesome5.atom),
+          title: Text(AppLocalizations.of(context)!.cv_simulator),
+          onTap: () async {
+            Navigator.pop(context);
+            final url = await Get.toNamed(SimulatorView.id);
+            await Future.delayed(const Duration(seconds: 1));
+            if (url is String) {
+              if (url.contains('sign_out')) {
+                _model.onLogoutPressed();
+              } else if (url.contains('edit')) {
+                SnackBarUtils.showDark(
+                  'New project created',
+                  'Please check your profile to edit..',
+                );
+              } else if (url.contains('groups')) {
+                _model.setSelectedIndexTo(6);
+              } else if (url.contains('users')) {
+                _model.setSelectedIndexTo(5);
+              }
+            }
+          },
+        ),
+
+        const Padding(
+          padding: EdgeInsets.fromLTRB(28, 8, 28, 8),
+          child: Divider(),
+        ),
+        
+        ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+          leading: const Icon(FontAwesome5.address_card),
+          title: Text(AppLocalizations.of(context)!.cv_about),
+          selected: _model.selectedIndex == 2,
+          onTap: () {
+            _model.setSelectedIndexTo(2);
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+          leading: const Icon(Icons.add),
+          title: Text(AppLocalizations.of(context)!.cv_contribute),
+          selected: _model.selectedIndex == 3,
+          onTap: () {
+            _model.setSelectedIndexTo(3);
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+          leading: const Icon(Icons.account_balance),
+          title: Text(AppLocalizations.of(context)!.cv_teachers),
+          selected: _model.selectedIndex == 4,
+          onTap: () {
+            _model.setSelectedIndexTo(4);
+            Navigator.pop(context);
+          },
+        ),
+
+        if (_model.isLoggedIn) ...[
+          ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+            leading: Badge(
+              isLabelVisible: _model.hasPendingNotif,
+              child: const Icon(FontAwesome.bell),
+            ),
+            title: Text(AppLocalizations.of(context)!.cv_notifications),
+            selected: _model.selectedIndex == 8,
+            onTap: () {
+              _model.setSelectedIndexTo(8);
+              Navigator.pop(context);
+            },
           ),
-        ],
-      ),
+          ExpansionTile(
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(28))),
+            title: Text(_model.currentUser?.data.attributes.name ?? ''),
+            leading: const Icon(FontAwesome5.user),
+            children: [
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 72),
+                leading: const Icon(FontAwesome5.user),
+                title: Text(AppLocalizations.of(context)!.cv_profile),
+                selected: _model.selectedIndex == 5,
+                onTap: () {
+                  _model.setSelectedIndexTo(5);
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 72),
+                leading: const Icon(FontAwesome5.object_group),
+                title: Text(AppLocalizations.of(context)!.cv_my_groups),
+                selected: _model.selectedIndex == 6,
+                onTap: () {
+                  _model.setSelectedIndexTo(6);
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                contentPadding: const EdgeInsets.only(left: 72),
+                leading: const Icon(FontAwesome.logout, color: Colors.red),
+                title: Text(AppLocalizations.of(context)!.cv_logout, style: const TextStyle(color: Colors.red)),
+                onTap: () {
+                  Navigator.pop(context);
+                  _model.onLogoutPressed();
+                },
+              ),
+            ],
+          ),
+        ] else
+          ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+            leading: const Icon(FontAwesome.login),
+            title: Text(AppLocalizations.of(context)!.cv_login),
+            onTap: () {
+              Navigator.pop(context);
+              Get.offAndToNamed(LoginView.id);
+            },
+          ),
+        
+        const SizedBox(height: 28),
+      ],
     );
   }
 }

@@ -47,17 +47,22 @@ class CircuitVerseMobile extends StatelessWidget {
           AppTheme(
             id: 'light',
             data: ThemeData(
+              useMaterial3: true,
               fontFamily: 'Poppins',
               brightness: Brightness.light,
-              textSelectionTheme: const TextSelectionThemeData(
-                cursorColor: CVTheme.primaryColor,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: CVTheme.primaryColor,
+                brightness: Brightness.light,
+                dynamicSchemeVariant: DynamicSchemeVariant.expressive,
               ),
               appBarTheme: AppBarTheme(
-                foregroundColor: CVTheme.drawerIcon(context),
+                centerTitle: true,
+                surfaceTintColor: Colors.transparent,
+                backgroundColor: CVTheme.primaryColor,
+                foregroundColor: Colors.white,
               ),
-              colorScheme: Theme.of(context).colorScheme.copyWith(
-                primary: CVTheme.primaryColor,
-                brightness: Brightness.light,
+              navigationBarTheme: NavigationBarThemeData(
+                labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
               ),
             ),
             description: 'LightTheme',
@@ -65,10 +70,16 @@ class CircuitVerseMobile extends StatelessWidget {
           AppTheme(
             id: 'dark',
             data: ThemeData(
+              useMaterial3: true,
               fontFamily: 'Poppins',
               brightness: Brightness.dark,
-              textSelectionTheme: const TextSelectionThemeData(
-                cursorColor: CVTheme.primaryColor,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: CVTheme.primaryColor,
+                brightness: Brightness.dark,
+                dynamicSchemeVariant: DynamicSchemeVariant.expressive,
+              ),
+              appBarTheme: const AppBarTheme(
+                centerTitle: true,
               ),
             ),
             description: 'DarkTheme',
