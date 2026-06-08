@@ -1,7 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_drawer.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/cv_theme.dart';
 
 class CVSubheader extends StatelessWidget {
   const CVSubheader({required this.title, this.subtitle, super.key});
