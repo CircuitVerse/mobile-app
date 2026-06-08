@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/cv_theme.dart';
 
 class CVDrawerTile extends StatelessWidget {
   const CVDrawerTile({
@@ -17,30 +16,20 @@ class CVDrawerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: CVTheme.themeData(context),
-      child: ListTile(
-        leading:
-            iconData != null
-                ? Icon(iconData, color: color ?? CVTheme.drawerIcon(context))
-                : null,
-        title: Text(
-          title,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontFamily: 'Poppins',
-            color: color ?? CVTheme.textColor(context),
-          ),
-        ),
-        trailing: Visibility(
-          visible: pending,
-          child: Container(
-            height: 8,
-            width: 8,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: CVTheme.red,
-            ),
-          ),
+    return ListTile(
+      leading:
+          iconData != null
+              ? Badge(
+                isLabelVisible: pending,
+                child: Icon(iconData, color: color),
+              )
+              : null,
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.w600,
+          color: color,
         ),
       ),
     );

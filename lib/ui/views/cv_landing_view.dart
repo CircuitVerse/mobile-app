@@ -1,7 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_drawer.dart';
@@ -60,34 +59,17 @@ class _CVLandingViewState extends State<CVLandingView> {
   AppBar? _buildAppBar(int selectedIndex, CVLandingViewModel model) {
     if (selectedIndex == 1 || selectedIndex == 7) return null;
     return AppBar(
-      title: Text(
-        _appBarTitle(selectedIndex),
-        style: TextStyle(color: CVTheme.appBarText(context)),
-      ),
+      title: Text(_appBarTitle(selectedIndex)),
       leading: IconButton(
         onPressed: () {
           _scaffoldKey.currentState?.openDrawer();
         },
-        icon: Stack(
-          children: [
-            if (model.hasPendingNotif)
-              Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  height: 8,
-                  width: 8,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: CVTheme.red,
-                  ),
-                ),
-              ),
-            const Center(child: Icon(Icons.menu)),
-          ],
+        icon: Badge(
+          isLabelVisible: model.hasPendingNotif,
+          child: const Icon(Icons.menu),
         ),
       ),
       centerTitle: true,
-      elevation: selectedIndex == 6 ? 0 : 4,
       actions: [
         Visibility(
           visible: selectedIndex == 0,

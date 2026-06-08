@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/cv_theme.dart';
 
 class CVSubheader extends StatelessWidget {
   const CVSubheader({required this.title, this.subtitle, super.key});
@@ -9,28 +8,30 @@ class CVSubheader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Text(
-          title,
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.w400,
-            color: CVTheme.textColor(context),
-          ),
-          textAlign: TextAlign.center,
-        ),
-        if (subtitle != null)
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 24.0),
+      child: Column(
+        children: <Widget>[
           Text(
-            subtitle!,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w400,
-              color: CVTheme.textColor(context),
+            title,
+            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+              fontWeight: FontWeight.w900,
+              letterSpacing: -1,
             ),
             textAlign: TextAlign.center,
-          )
-        else
-          Container(),
-      ],
+          ),
+          if (subtitle != null) ...[
+            const SizedBox(height: 8),
+            Text(
+              subtitle!,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Theme.of(context).colorScheme.outline,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ],
+      ),
     );
   }
 }

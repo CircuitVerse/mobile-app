@@ -53,11 +53,14 @@ class CVTheme {
 
   static ThemeData themeData(BuildContext context) {
     return ThemeData(
+      useMaterial3: true,
       brightness: Theme.of(context).brightness,
-      colorScheme: ThemeData().colorScheme.copyWith(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: CVTheme.primaryColor,
         brightness: Theme.of(context).brightness,
-        primary: CVTheme.secondaryColor,
+        dynamicSchemeVariant: DynamicSchemeVariant.expressive,
       ),
+      fontFamily: 'Poppins',
     );
   }
 
@@ -76,12 +79,12 @@ class CVTheme {
   static const Color htmlEditorBg = Color.fromRGBO(245, 245, 245, 1);
 
   static const OutlineInputBorder primaryDarkOutlineBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.zero,
+    borderRadius: BorderRadius.all(Radius.circular(12)),
     borderSide: BorderSide(color: CVTheme.primaryColorDark),
   );
 
   static const OutlineInputBorder redOutlineBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.zero,
+    borderRadius: BorderRadius.all(Radius.circular(12)),
     borderSide: BorderSide(color: CVTheme.red),
   );
 
