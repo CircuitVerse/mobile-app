@@ -52,7 +52,7 @@ dependencies:
   scroll_to_index: ^3.0.1
   share_plus: ^12.0.2
   shared_preferences: ^2.5.3
-  showcaseview: ^5.0.2
+  showcaseview: ^5.1.0
   simple_chips_input: ^1.2.2
   theme_provider: ^0.6.0
   timeago: ^3.7.1
