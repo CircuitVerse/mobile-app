@@ -127,10 +127,7 @@ class StepItem extends StatelessWidget {
 
               Text(
                 subtitle,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
+                style: TextStyle(color: Colors.white, fontSize: 18),
               ),
             ],
           ),

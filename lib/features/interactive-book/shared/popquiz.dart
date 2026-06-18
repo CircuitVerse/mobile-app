@@ -47,7 +47,10 @@ class PopQuiz extends StatelessWidget {
                   ),
                   backgroundColor: Color.fromARGB(255, 169, 10, 135),
                 ),
-                child: const Text("Berlin", style: TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
+                child: const Text(
+                  "Berlin",
+                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                ),
               ),
               ElevatedButton(
                 onPressed: () {},
@@ -57,7 +60,10 @@ class PopQuiz extends StatelessWidget {
                   ),
                   backgroundColor: Color.fromARGB(255, 120, 21, 41),
                 ),
-                child: const Text("Paris", style: TextStyle(color: Color.fromARGB(255, 255, 255, 255))),
+                child: const Text(
+                  "Paris",
+                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                ),
               ),
             ],
           ),

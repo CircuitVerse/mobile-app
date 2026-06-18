@@ -41,7 +41,11 @@ class InteractiveBook extends StatelessWidget {
                     CircleAvatar(
                       radius: 36,
                       backgroundColor: Colors.white24,
-                      child: const Icon(Icons.menu_book, size: 44, color: Colors.white),
+                      child: const Icon(
+                        Icons.menu_book,
+                        size: 44,
+                        color: Colors.white,
+                      ),
                     ),
                     const SizedBox(height: 12),
                     const Text(
@@ -56,7 +60,9 @@ class InteractiveBook extends StatelessWidget {
                     const SizedBox(height: 6),
                     Text(
                       'Learn · Explore · Thrive',
-                      style: theme.textTheme.bodyMedium?.copyWith(color: Colors.white70),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: Colors.white70,
+                      ),
                     ),
                   ],
                 ),
@@ -67,7 +73,9 @@ class InteractiveBook extends StatelessWidget {
 
             Card(
               elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -75,7 +83,9 @@ class InteractiveBook extends StatelessWidget {
                   children: [
                     Text(
                       'Overview',
-                      style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
@@ -84,7 +94,12 @@ class InteractiveBook extends StatelessWidget {
                       style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
                     ),
                     const Divider(height: 28),
-                    Text('Audience', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+                    Text(
+                      'Audience',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     const SizedBox(height: 6),
                     Text(
                       'Students interested in digital circuits and computer logical organization. Topics assume basic familiarity with digital electronics and binary logic.',
@@ -92,7 +107,12 @@ class InteractiveBook extends StatelessWidget {
                       style: theme.textTheme.bodyMedium?.copyWith(height: 1.4),
                     ),
                     const Divider(height: 28),
-                    Text('Prerequisites', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+                    Text(
+                      'Prerequisites',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                     const SizedBox(height: 6),
                     Text(
                       'A basic understanding of computers and initial digital electronics concepts is helpful before starting this book.',
@@ -121,4 +141,3 @@ class InteractiveBook extends StatelessWidget {
     );
   }
 }
-

@@ -142,9 +142,7 @@ class CVDrawer extends StatelessWidget {
           title: Text("New Interactive Book"),
           onTap: () {
             Navigator.pop(context);
-            Get.to(
-              () => const interactive_book_main.InteractiveBook(),
-            );
+            Get.to(() => const interactive_book_main.InteractiveBook());
           },
         ),
         ListTile(
