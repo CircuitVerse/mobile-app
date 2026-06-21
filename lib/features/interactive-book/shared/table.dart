@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
 
 class CustomTable extends StatelessWidget {
+  @Preview(name: "Custom Table")
   const CustomTable({super.key});
 
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'navbar.dart';
+import 'navbar/navbar.dart';
 import 'widgets/features-grid.dart';
 import 'widgets/getting-started.dart';
 
