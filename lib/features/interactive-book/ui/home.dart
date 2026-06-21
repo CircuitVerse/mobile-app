@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'navbar/navbar.dart';
-import 'widgets/features-grid.dart';
-import 'widgets/getting-started.dart';
+import 'widgets/features_grid.dart';
+import 'widgets/getting_started.dart';
 
 class InteractiveBook extends StatelessWidget {
   const InteractiveBook({super.key});
@@ -28,7 +28,7 @@ class InteractiveBook extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.12),
+                    color: Colors.black.withValues(alpha: 0.4),
                     blurRadius: 12,
                     offset: const Offset(0, 6),
                   ),
