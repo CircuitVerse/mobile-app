@@ -31,20 +31,23 @@ class _ChaptersScreenState extends State<Navbar> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
-      
+
             if (snapshot.hasError) {
               return Center(child: Text(snapshot.error.toString()));
             }
-      
+
             final chapters = snapshot.data!.chapters;
-      
+
             return ListView.builder(
               itemCount: chapters.length,
               itemBuilder: (context, index) {
                 final chapter = chapters[index];
-      
+
                 return Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   child: ExpansionTile(
                     title: Text(
                       chapter.name,
