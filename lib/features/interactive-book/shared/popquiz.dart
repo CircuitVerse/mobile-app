@@ -45,11 +45,11 @@ class PopQuiz extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40),
                   ),
-                  backgroundColor: Color.fromARGB(255, 169, 10, 135),
+                  backgroundColor: Color.fromARGB(255, 194, 193, 194),
                 ),
                 child: const Text(
                   "Berlin",
-                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                  style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
               ElevatedButton(
@@ -58,11 +58,11 @@ class PopQuiz extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40),
                   ),
-                  backgroundColor: Color.fromARGB(255, 120, 21, 41),
+                  backgroundColor: Color.fromARGB(255, 196, 195, 195),
                 ),
                 child: const Text(
                   "Paris",
-                  style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                  style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
                 ),
               ),
             ],
