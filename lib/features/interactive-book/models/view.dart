@@ -14,7 +14,9 @@ abstract class ViewModel {
 
   factory ViewModel.fromJson(Map<String, dynamic> json) {
     final String? rawSubType = json['sub_type'] ?? json['sub-type'];
-    debugPrint("Widget type: ${json['type']}, sub_type: $rawSubType, keys: ${json.keys.toList()}");
+    debugPrint(
+      "Widget type: ${json['type']}, sub_type: $rawSubType, keys: ${json.keys.toList()}",
+    );
     if (rawSubType != null) json['sub_type'] = rawSubType;
     switch (json['type']) {
       case 'text':
@@ -34,7 +36,10 @@ abstract class ViewModel {
             return BinarySimulatorModel.fromJson(json);
           default:
             debugPrint('Unhandled widget sub_type: $subType — skipping');
-            return _UnknownViewModel(type: json['type'] ?? '', subType: subType);
+            return _UnknownViewModel(
+              type: json['type'] ?? '',
+              subType: subType,
+            );
         }
       default:
         debugPrint('Unhandled view type: ${json['type']} — skipping');

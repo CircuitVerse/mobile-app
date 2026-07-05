@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/ui/navbar/navbar.dart';
 import 'package:mobile_app/features/interactive-book/ui/home/home.dart';
-import 'package:mobile_app/features/interactive-book/ui/renderer.dart';  
+import 'package:mobile_app/features/interactive-book/ui/renderer.dart';
 
 class Root extends StatefulWidget {
   const Root({super.key});
@@ -43,8 +43,11 @@ class _RootState extends State<Root> {
 
   Widget getCurrentPage() {
     if (isHomePage) {
-      return InteractiveBookHome(isHomePage: true, changeHomePage: changeHomePage);
-    }else {
+      return InteractiveBookHome(
+        isHomePage: true,
+        changeHomePage: changeHomePage,
+      );
+    } else {
       return Renderer(
         chapterNumber: chapterNumber,
         subChapterNumber: subChapterNumber,
@@ -52,15 +55,17 @@ class _RootState extends State<Root> {
         decrementChapter: decrementChapter,
       );
     }
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Interactive Book'),
+      appBar: AppBar(title: const Text('Interactive Book')),
+      drawer: Navbar(
+        isHomePage: isHomePage,
+        chapterNumber: chapterNumber,
+        subChapterNumber: subChapterNumber,
       ),
-      drawer: Navbar(isHomePage: isHomePage, chapterNumber: chapterNumber, subChapterNumber: subChapterNumber),
       body: getCurrentPage(),
     );
   }

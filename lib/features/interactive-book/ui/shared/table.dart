@@ -5,17 +5,15 @@ class CustomTable extends StatelessWidget {
   final data;
 
   @Preview(name: "Custom Table")
-  const CustomTable({
-    super.key,
-    required this.data,
-  });
+  const CustomTable({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final headerColor = theme.brightness == Brightness.dark
-        ? const Color(0xFF1E3A5F)
-        : const Color(0xFFE3F2FD);
+    final headerColor =
+        theme.brightness == Brightness.dark
+            ? const Color(0xFF1E3A5F)
+            : const Color(0xFFE3F2FD);
 
     final columnCount = data.heading.length;
     final columnWidths = {
@@ -36,16 +34,22 @@ class CustomTable extends StatelessWidget {
           // Header row
           TableRow(
             decoration: BoxDecoration(color: headerColor),
-            children: (data.heading as List)
-                .map<Widget>((h) => TableCellWidget(text: h as String, isHeader: true))
-                .toList(),
+            children:
+                (data.heading as List)
+                    .map<Widget>(
+                      (h) => TableCellWidget(text: h as String, isHeader: true),
+                    )
+                    .toList(),
           ),
           // Data rows
           ...(data.rows as List).map(
             (row) => TableRow(
-              children: (row as List)
-                  .map<Widget>((cell) => TableCellWidget(text: cell as String))
-                  .toList(),
+              children:
+                  (row as List)
+                      .map<Widget>(
+                        (cell) => TableCellWidget(text: cell as String),
+                      )
+                      .toList(),
             ),
           ),
         ],

@@ -6,10 +6,7 @@ class Clipboard extends StatelessWidget {
   final String content;
 
   @Preview(name: "Clipboard")
-  const Clipboard({
-    super.key,
-    this.content = '''```\nExample content\n```''',
-  });
+  const Clipboard({super.key, this.content = '''```\nExample content\n```'''});
 
   @override
   Widget build(BuildContext context) {

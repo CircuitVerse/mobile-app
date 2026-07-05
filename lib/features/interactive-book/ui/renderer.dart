@@ -90,7 +90,10 @@ class _RendererState extends State<Renderer> {
 
                       switch (view) {
                         case TextModel():
-                          return TextWidget(size: view.size, content: view.content);
+                          return TextWidget(
+                            size: view.size,
+                            content: view.content,
+                          );
                         case ChapterContentsModel():
                           return ChapterContentsWidget(items: view.items);
                         case ClipboardModel():

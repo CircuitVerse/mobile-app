@@ -17,9 +17,10 @@ class TableModel extends ViewModel {
       type: json['type'] ?? '',
       subType: json['sub_type'] ?? '',
       heading: List<String>.from(content['heading'] as List<dynamic>? ?? []),
-      rows: (content['rows'] as List<dynamic>? ?? [])
-          .map((row) => List<String>.from(row as List<dynamic>))
-          .toList(),
+      rows:
+          (content['rows'] as List<dynamic>? ?? [])
+              .map((row) => List<String>.from(row as List<dynamic>))
+              .toList(),
     );
   }
 }

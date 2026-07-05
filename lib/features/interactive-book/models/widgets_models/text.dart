@@ -4,11 +4,7 @@ class TextModel extends ViewModel {
   String size;
   String content;
 
-  TextModel({
-    required super.type,
-    required this.size,
-    required this.content,
-  });
+  TextModel({required super.type, required this.size, required this.content});
 
   factory TextModel.fromJson(Map<String, dynamic> json) {
     return TextModel(

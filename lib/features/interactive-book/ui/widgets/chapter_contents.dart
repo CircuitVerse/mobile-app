@@ -4,10 +4,7 @@ import 'package:mobile_app/features/interactive-book/models/models.dart';
 class ChapterContentsWidget extends StatelessWidget {
   final List<ChapterItemsModel> items;
 
-  const ChapterContentsWidget({
-    super.key,
-    required this.items,
-  });
+  const ChapterContentsWidget({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +55,7 @@ class ChapterContentsWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(
-                              top: 8,
-                              right: 12,
-                            ),
+                            padding: const EdgeInsets.only(top: 8, right: 12),
                             child: Icon(
                               Icons.circle,
                               size: 7,

@@ -16,9 +16,10 @@ class ChapterContentsModel extends ViewModel {
     return ChapterContentsModel(
       type: json['type'] ?? '',
       subType: json['sub_type'] ?? '',
-      items: (json['items'] as List<dynamic>? ?? [])
-          .map((e) => ChapterItemsModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      items:
+          (json['items'] as List<dynamic>? ?? [])
+              .map((e) => ChapterItemsModel.fromJson(e as Map<String, dynamic>))
+              .toList(),
     );
   }
 }

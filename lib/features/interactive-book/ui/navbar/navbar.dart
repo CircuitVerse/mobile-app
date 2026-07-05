@@ -4,12 +4,17 @@ import 'package:mobile_app/features/interactive-book/ui/navbar/model.dart';
 import 'package:mobile_app/features/interactive-book/ui/navbar/service.dart';
 
 class Navbar extends StatefulWidget {
-final bool isHomePage;
-final int chapterNumber;
-final int subChapterNumber;
+  final bool isHomePage;
+  final int chapterNumber;
+  final int subChapterNumber;
 
   @Preview(name: "Navbar")
-  const Navbar({super.key, required this.isHomePage, required this.chapterNumber, required this.subChapterNumber});
+  const Navbar({
+    super.key,
+    required this.isHomePage,
+    required this.chapterNumber,
+    required this.subChapterNumber,
+  });
 
   @override
   State<Navbar> createState() => _ChaptersScreenState();
@@ -46,8 +51,6 @@ class _ChaptersScreenState extends State<Navbar> {
               itemCount: chapters.length,
               itemBuilder: (context, index) {
                 final chapter = chapters[index];
-
-                
 
                 return Card(
                   margin: const EdgeInsets.symmetric(
