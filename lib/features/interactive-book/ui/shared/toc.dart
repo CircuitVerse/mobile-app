@@ -7,6 +7,7 @@ class TOC extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("Rendering TOC with chapters: $chapters");
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final linkColor =
