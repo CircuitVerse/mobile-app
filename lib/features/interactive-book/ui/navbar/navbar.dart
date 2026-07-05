@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widget_previews.dart';
 import 'package:mobile_app/features/interactive-book/ui/navbar/model.dart';
 import 'package:mobile_app/features/interactive-book/ui/navbar/service.dart';
 
@@ -8,7 +7,6 @@ class Navbar extends StatefulWidget {
   final int chapterNumber;
   final int subChapterNumber;
 
-  @Preview(name: "Navbar")
   const Navbar({
     super.key,
     required this.isHomePage,

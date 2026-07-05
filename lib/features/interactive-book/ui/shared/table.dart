@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
+import 'package:mobile_app/features/interactive-book/models/widgets_models/table/table.dart';
 
 class CustomTable extends StatelessWidget {
-  final data;
+  final TableModel data;
+
+  const CustomTable({super.key, required this.data});
 
   @Preview(name: "Custom Table")
-  const CustomTable({super.key, required this.data});
+  static Widget preview() => CustomTable(
+        data: TableModel(
+          type: 'widget',
+          subType: 'table',
+          heading: ['Column A', 'Column B'],
+          rows: [
+            ['Row 1A', 'Row 1B'],
+            ['Row 2A', 'Row 2B'],
+          ],
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +28,8 @@ class CustomTable extends StatelessWidget {
             ? const Color(0xFF1E3A5F)
             : const Color(0xFFE3F2FD);
 
-    final columnCount = data.heading.length;
     final columnWidths = {
-      for (var i = 0; i < columnCount; i++) i: const FlexColumnWidth(1),
+      for (var i = 0; i < data.heading.length; i++) i: const FlexColumnWidth(1),
     };
 
     return Padding(
@@ -34,22 +46,16 @@ class CustomTable extends StatelessWidget {
           // Header row
           TableRow(
             decoration: BoxDecoration(color: headerColor),
-            children:
-                (data.heading as List)
-                    .map<Widget>(
-                      (h) => TableCellWidget(text: h as String, isHeader: true),
-                    )
-                    .toList(),
+            children: data.heading
+                .map<Widget>((h) => TableCellWidget(text: h, isHeader: true))
+                .toList(),
           ),
           // Data rows
-          ...(data.rows as List).map(
+          ...data.rows.map(
             (row) => TableRow(
-              children:
-                  (row as List)
-                      .map<Widget>(
-                        (cell) => TableCellWidget(text: cell as String),
-                      )
-                      .toList(),
+              children: row
+                  .map<Widget>((cell) => TableCellWidget(text: cell))
+                  .toList(),
             ),
           ),
         ],
