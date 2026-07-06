@@ -82,7 +82,7 @@ class _RendererState extends State<Renderer> {
                   ],
                 ),
                 Text(
-                 chapter.name,
+                  chapter.name,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 Expanded(
@@ -94,7 +94,7 @@ class _RendererState extends State<Renderer> {
 
                       switch (view) {
                         case TocModel():
-                        debugPrint("Rendering TOC with items: ${view.items}");
+                          debugPrint("Rendering TOC with items: ${view.items}");
                           return TocWidget(chapters: view.items);
                         case TextModel():
                           return TextWidget(
