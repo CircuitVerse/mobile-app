@@ -9,9 +9,6 @@ abstract class ViewModel {
 
   factory ViewModel.fromJson(Map<String, dynamic> json) {
     final String? rawSubType = json['sub_type'];
-    debugPrint(
-      "Widget type: ${json['type']}, sub_type: $rawSubType, keys: ${json.keys.toList()}",
-    );
     if (rawSubType != null) json['sub_type'] = rawSubType;
     switch (json['type']) {
       case 'text':
@@ -28,7 +25,7 @@ abstract class ViewModel {
           case 'table':
             return TableModel.fromJson(json);
           case 'binary-simulator':
-            return BinarySimulatorModel.fromJson(json);
+            return GeneralModel.fromJson(json);
           case 'pop-quiz':
             return PopQuizModel.fromJson(json);
           default:

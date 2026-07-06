@@ -9,7 +9,7 @@ class TocModel extends ViewModel {
     return TocModel(
       type: json['type'] ?? '',
       subType: json['sub_type'] ?? '',
-      items: List<String>.from(json['Items'] ?? []),
+      items: List<String>.from(json['items'] ?? []),
     );
   }
 }

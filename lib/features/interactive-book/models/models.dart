@@ -4,7 +4,7 @@ export 'package:mobile_app/features/interactive-book/models/widgets_models/clipb
 export 'package:mobile_app/features/interactive-book/models/widgets_models/text.dart';
 export 'package:mobile_app/features/interactive-book/models/widgets_models/toc.dart';
 export 'package:mobile_app/features/interactive-book/models/widgets_models/table/table.dart';
-export 'package:mobile_app/features/interactive-book/models/widgets_models/binary_simulator.dart';
+export 'package:mobile_app/features/interactive-book/models/widgets_models/general.dart';
 export 'package:mobile_app/features/interactive-book/models/widgets_models/chapter_contents/cc.dart';
 export 'package:mobile_app/features/interactive-book/models/widgets_models/chapter_contents/items.dart';
 export 'package:mobile_app/features/interactive-book/models/widgets_models/pop_quiz/quiz.dart';

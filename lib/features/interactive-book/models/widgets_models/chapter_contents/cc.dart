@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:mobile_app/features/interactive-book/models/widgets_models/chapter_contents/items.dart';
 import 'package:mobile_app/features/interactive-book/models/view.dart';
 
@@ -12,7 +11,6 @@ class ChapterContentsModel extends ViewModel {
   });
 
   factory ChapterContentsModel.fromJson(Map<String, dynamic> json) {
-    debugPrint("Parsing ChapterContentsModel from JSON: $json");
     return ChapterContentsModel(
       type: json['type'] ?? '',
       subType: json['sub_type'] ?? '',

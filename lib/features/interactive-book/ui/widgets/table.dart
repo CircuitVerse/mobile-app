@@ -9,16 +9,16 @@ class CustomTable extends StatelessWidget {
 
   @Preview(name: "Custom Table")
   static Widget preview() => CustomTable(
-        data: TableModel(
-          type: 'widget',
-          subType: 'table',
-          heading: ['Column A', 'Column B'],
-          rows: [
-            ['Row 1A', 'Row 1B'],
-            ['Row 2A', 'Row 2B'],
-          ],
-        ),
-      );
+    data: TableModel(
+      type: 'widget',
+      subType: 'table',
+      heading: ['Column A', 'Column B'],
+      rows: [
+        ['Row 1A', 'Row 1B'],
+        ['Row 2A', 'Row 2B'],
+      ],
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -46,16 +46,20 @@ class CustomTable extends StatelessWidget {
           // Header row
           TableRow(
             decoration: BoxDecoration(color: headerColor),
-            children: data.heading
-                .map<Widget>((h) => TableCellWidget(text: h, isHeader: true))
-                .toList(),
+            children:
+                data.heading
+                    .map<Widget>(
+                      (h) => TableCellWidget(text: h, isHeader: true),
+                    )
+                    .toList(),
           ),
           // Data rows
           ...data.rows.map(
             (row) => TableRow(
-              children: row
-                  .map<Widget>((cell) => TableCellWidget(text: cell))
-                  .toList(),
+              children:
+                  row
+                      .map<Widget>((cell) => TableCellWidget(text: cell))
+                      .toList(),
             ),
           ),
         ],

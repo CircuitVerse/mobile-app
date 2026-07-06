@@ -105,13 +105,14 @@ class _PopQuizWidgetState extends State<PopQuizWidget> {
                       }
 
                       return ElevatedButton(
-                        onPressed: hasAnswered
-                            ? null
-                            : () {
-                                setState(() {
-                                  _selectedIndex[qIndex] = oIndex;
-                                });
-                              },
+                        onPressed:
+                            hasAnswered
+                                ? null
+                                : () {
+                                  setState(() {
+                                    _selectedIndex[qIndex] = oIndex;
+                                  });
+                                },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: bgColor,
                           foregroundColor: textColor,
@@ -127,9 +128,10 @@ class _PopQuizWidgetState extends State<PopQuizWidget> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: textColor,
-                            fontWeight: isSelected
-                                ? FontWeight.bold
-                                : FontWeight.normal,
+                            fontWeight:
+                                isSelected
+                                    ? FontWeight.bold
+                                    : FontWeight.normal,
                           ),
                         ),
                       );
@@ -142,9 +144,10 @@ class _PopQuizWidgetState extends State<PopQuizWidget> {
                           ? '✓ Correct!'
                           : '✗ Incorrect. The answer is: ${question.options.firstWhere((o) => o.isAnswer).option}',
                       style: TextStyle(
-                        color: question.options[selected].isAnswer
-                            ? Colors.green.shade700
-                            : Colors.red.shade700,
+                        color:
+                            question.options[selected].isAnswer
+                                ? Colors.green.shade700
+                                : Colors.red.shade700,
                         fontWeight: FontWeight.w600,
                       ),
                     ),

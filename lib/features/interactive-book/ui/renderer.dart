@@ -81,6 +81,10 @@ class _RendererState extends State<Renderer> {
                     ),
                   ],
                 ),
+                Text(
+                 chapter.name,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
                 Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 48),
@@ -89,6 +93,9 @@ class _RendererState extends State<Renderer> {
                       final view = chapter.views[index];
 
                       switch (view) {
+                        case TocModel():
+                        debugPrint("Rendering TOC with items: ${view.items}");
+                          return TocWidget(chapters: view.items);
                         case TextModel():
                           return TextWidget(
                             size: view.size,
@@ -103,14 +110,12 @@ class _RendererState extends State<Renderer> {
                           );
                         case TableModel():
                           return CustomTable(data: view);
-                        case PopQuizModel():
-                          return Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: PopQuizWidget(content: view.content),
-                          );
-                        case BinarySimulatorModel():
-                          return const BinaryConverterWidget();
-
+                        case GeneralModel():
+                          if (view.subType == 'binary-simulator') {
+                            return const BinaryConverterWidget();
+                          } else {
+                            return const SizedBox.shrink();
+                          }
                         case PopQuizModel():
                           return PopQuizWidget(content: view.content);
                         default:

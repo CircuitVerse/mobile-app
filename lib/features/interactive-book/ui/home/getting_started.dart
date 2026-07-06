@@ -57,17 +57,17 @@ class GettingStarted extends StatelessWidget {
             subtitle: "Browse chapters from the menu",
           ),
 
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
-          StepItem(
+          const StepItem(
             number: "2",
             title: "Learn Concepts",
             subtitle: "Read through interactive lessons",
           ),
 
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
 
-          StepItem(
+          const StepItem(
             number: "3",
             title: "Practice",
             subtitle: "Test your knowledge with quizzes",
