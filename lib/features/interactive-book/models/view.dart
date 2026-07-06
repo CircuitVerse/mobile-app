@@ -1,10 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:mobile_app/features/interactive-book/models/widgets_models/text.dart';
-import 'package:mobile_app/features/interactive-book/models/widgets_models/chapter_contents/cc.dart';
-import 'package:mobile_app/features/interactive-book/models/widgets_models/toc.dart';
-import 'package:mobile_app/features/interactive-book/models/widgets_models/clipboard.dart';
-import 'package:mobile_app/features/interactive-book/models/widgets_models/table/table.dart';
-import 'package:mobile_app/features/interactive-book/models/widgets_models/binary_simulator.dart';
+import 'package:mobile_app/features/interactive-book/models/models.dart';
 
 abstract class ViewModel {
   final String type;
@@ -13,7 +8,7 @@ abstract class ViewModel {
   const ViewModel({required this.type, this.subType});
 
   factory ViewModel.fromJson(Map<String, dynamic> json) {
-    final String? rawSubType = json['sub_type'] ?? json['sub-type'];
+    final String? rawSubType = json['sub_type'];
     debugPrint(
       "Widget type: ${json['type']}, sub_type: $rawSubType, keys: ${json.keys.toList()}",
     );
@@ -34,6 +29,8 @@ abstract class ViewModel {
             return TableModel.fromJson(json);
           case 'binary-simulator':
             return BinarySimulatorModel.fromJson(json);
+          case 'pop-quiz':
+            return PopQuizModel.fromJson(json);
           default:
             debugPrint('Unhandled widget sub_type: $subType — skipping');
             return _UnknownViewModel(

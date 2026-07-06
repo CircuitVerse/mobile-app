@@ -7,7 +7,7 @@ class BookService {
     final response = await http.get(
       // TODO: Replace with HOSTED BASE URL
       Uri.parse(
-        "https://2990a5ac-b345-4141-bd0a-99e9963fbf5f.mock.pstmn.io/interactive-book/chapters?chapter_id=1&sub_chapter_id=$subChapterId",
+        "http://127.0.0.1:8000?chapter_id=1&sub_chapter_id=$subChapterId",
       ),
     );
 

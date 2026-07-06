@@ -103,8 +103,16 @@ class _RendererState extends State<Renderer> {
                           );
                         case TableModel():
                           return CustomTable(data: view);
+                        case PopQuizModel():
+                          return Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: PopQuizWidget(content: view.content),
+                          );
                         case BinarySimulatorModel():
                           return const BinaryConverterWidget();
+
+                        case PopQuizModel():
+                          return PopQuizWidget(content: view.content);
                         default:
                           return const SizedBox.shrink();
                       }

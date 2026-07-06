@@ -7,3 +7,5 @@ export 'package:mobile_app/features/interactive-book/models/widgets_models/table
 export 'package:mobile_app/features/interactive-book/models/widgets_models/binary_simulator.dart';
 export 'package:mobile_app/features/interactive-book/models/widgets_models/chapter_contents/cc.dart';
 export 'package:mobile_app/features/interactive-book/models/widgets_models/chapter_contents/items.dart';
+export 'package:mobile_app/features/interactive-book/models/widgets_models/pop_quiz/quiz.dart';
+export 'package:mobile_app/features/interactive-book/models/widgets_models/pop_quiz/question.dart';
