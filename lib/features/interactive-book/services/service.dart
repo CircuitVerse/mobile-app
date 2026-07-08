@@ -4,11 +4,10 @@ import 'package:mobile_app/features/interactive-book/models/screen.dart';
 
 class BookService {
   Future<ScreenModel> getChapters({String subChapterId = '*'}) async {
+    String BASE_URL_DEV = "http://localhost:8000/";
+    String BASE_URL_PROD = "https://cv-mobile-backend.fastapicloud.com/";
     final response = await http.get(
-      // TODO: Replace with HOSTED BASE URL
-      Uri.parse(
-        "http://127.0.0.1:8000?chapter_id=1&sub_chapter_id=$subChapterId",
-      ),
+      Uri.parse("$BASE_URL_DEV?chapter_id=2&sub_chapter_id=$subChapterId"),
     );
 
     if (response.statusCode == 200) {

@@ -137,18 +137,21 @@ class InteractiveBookHome extends StatelessWidget {
 
         GettingStarted(),
         const SizedBox(height: 20),
-        TextButton(
-          onPressed: () {
-            changeHomePage(false);
-          },
-          style: TextButton.styleFrom(
+        FilledButton.icon(
+          onPressed: () => changeHomePage(false),
+          icon: const Icon(Icons.arrow_forward),
+          label: const Text(
+            'Get Started',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+          style: FilledButton.styleFrom(
             backgroundColor: Colors.green,
             foregroundColor: Colors.white,
+            minimumSize: const Size(double.infinity, 52),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          child: Text('Get Started'),
         ),
       ],
     );

@@ -9,3 +9,5 @@ export 'package:mobile_app/features/interactive-book/models/widgets_models/chapt
 export 'package:mobile_app/features/interactive-book/models/widgets_models/chapter_contents/items.dart';
 export 'package:mobile_app/features/interactive-book/models/widgets_models/pop_quiz/quiz.dart';
 export 'package:mobile_app/features/interactive-book/models/widgets_models/pop_quiz/question.dart';
+export 'package:mobile_app/features/interactive-book/models/widgets_models/bullets.dart';
+export 'package:mobile_app/features/interactive-book/models/widgets_models/number_points.dart';

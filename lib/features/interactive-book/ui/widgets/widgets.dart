@@ -5,3 +5,6 @@ export 'package:mobile_app/features/interactive-book/ui/widgets/binary_simulator
 export 'package:mobile_app/features/interactive-book/ui/widgets/clipboard.dart';
 export 'package:mobile_app/features/interactive-book/ui/widgets/toc.dart';
 export 'package:mobile_app/features/interactive-book/ui/widgets/popquiz.dart';
+export 'package:mobile_app/features/interactive-book/ui/widgets/bullet_points.dart';
+export 'package:mobile_app/features/interactive-book/ui/widgets/character_representation.dart';
+export 'package:mobile_app/features/interactive-book/ui/widgets/number_points.dart';

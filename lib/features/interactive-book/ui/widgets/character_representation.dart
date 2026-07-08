@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widget_previews.dart';
 
-class BinaryPixelGrid extends StatefulWidget {
+class CharacterRepresentationWidget extends StatefulWidget {
   @Preview(name: 'Character Representation')
-  const BinaryPixelGrid({super.key});
+  const CharacterRepresentationWidget({super.key});
 
   @override
-  State<BinaryPixelGrid> createState() => _BinaryPixelGridState();
+  State<CharacterRepresentationWidget> createState() =>
+      _CharacterRepresentationState();
 }
 
-class _BinaryPixelGridState extends State<BinaryPixelGrid> {
+class _CharacterRepresentationState
+    extends State<CharacterRepresentationWidget> {
   static int rows = 8;
   static int cols = 8;
   static double cellSize = 42;

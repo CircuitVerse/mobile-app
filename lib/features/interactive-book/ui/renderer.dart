@@ -87,14 +87,13 @@ class _RendererState extends State<Renderer> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 48),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     itemCount: chapter.views.length,
                     itemBuilder: (context, index) {
                       final view = chapter.views[index];
 
                       switch (view) {
                         case TocModel():
-                          debugPrint("Rendering TOC with items: ${view.items}");
                           return TocWidget(chapters: view.items);
                         case TextModel():
                           return TextWidget(
@@ -113,11 +112,18 @@ class _RendererState extends State<Renderer> {
                         case GeneralModel():
                           if (view.subType == 'binary-simulator') {
                             return const BinaryConverterWidget();
+                          } else if (view.subType ==
+                              'character_representation') {
+                            return const CharacterRepresentationWidget();
                           } else {
                             return const SizedBox.shrink();
                           }
                         case PopQuizModel():
                           return PopQuizWidget(content: view.content);
+                        case BulletPointsModel():
+                          return BulletPointsWidget(bulletPoints: view.items);
+                        case NumberPointsModel():
+                          return NumberPointsWidget(items: view.items);
                         default:
                           return const SizedBox.shrink();
                       }

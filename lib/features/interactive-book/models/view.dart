@@ -16,6 +16,8 @@ abstract class ViewModel {
       case 'widget':
         final String subType = rawSubType ?? '';
         switch (subType) {
+          case 'binary-simulator' || 'character_representation':
+            return GeneralModel.fromJson(json);
           case 'chapter_contents':
             return ChapterContentsModel.fromJson(json);
           case 'toc':
@@ -24,10 +26,12 @@ abstract class ViewModel {
             return ClipboardModel.fromJson(json);
           case 'table':
             return TableModel.fromJson(json);
-          case 'binary-simulator':
-            return GeneralModel.fromJson(json);
           case 'pop-quiz':
             return PopQuizModel.fromJson(json);
+          case 'bullet_list':
+            return BulletPointsModel.fromJson(json);
+          case 'numbered_list':
+            return NumberPointsModel.fromJson(json);
           default:
             debugPrint('Unhandled widget sub_type: $subType — skipping');
             return _UnknownViewModel(

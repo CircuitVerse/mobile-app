@@ -6,12 +6,14 @@ class Navbar extends StatefulWidget {
   final bool isHomePage;
   final int chapterNumber;
   final int subChapterNumber;
+  final VoidCallback? onHomePressed;
 
   const Navbar({
     super.key,
     required this.isHomePage,
     required this.chapterNumber,
     required this.subChapterNumber,
+    this.onHomePressed,
   });
 
   @override
@@ -46,9 +48,33 @@ class _ChaptersScreenState extends State<Navbar> {
             final chapters = snapshot.data!.chapters;
 
             return ListView.builder(
-              itemCount: chapters.length,
+              itemCount: chapters.length + 1,
               itemBuilder: (context, index) {
-                final chapter = chapters[index];
+                if (index == 0) {
+                  return Card(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    color:
+                        widget.isHomePage
+                            ? Theme.of(context).colorScheme.primaryContainer
+                            : null,
+                    child: ListTile(
+                      leading: const Icon(Icons.home),
+                      title: const Text(
+                        'Home',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      onTap: () {
+                        widget.onHomePressed?.call();
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  );
+                }
+
+                final chapter = chapters[index - 1];
 
                 return Card(
                   margin: const EdgeInsets.symmetric(
