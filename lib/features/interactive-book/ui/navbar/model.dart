@@ -1,18 +1,11 @@
-import 'dart:convert';
+class SubChapter {
+  final int id;
+  final String name;
 
-BookResponse bookResponseFromJson(String str) =>
-    BookResponse.fromJson(json.decode(str));
+  SubChapter({required this.id, required this.name});
 
-class BookResponse {
-  final List<Chapter> chapters;
-
-  BookResponse({required this.chapters});
-
-  factory BookResponse.fromJson(Map<String, dynamic> json) {
-    return BookResponse(
-      chapters:
-          (json["chapters"] as List).map((e) => Chapter.fromJson(e)).toList(),
-    );
+  factory SubChapter.fromJson(Map<String, dynamic> json) {
+    return SubChapter(id: json["id"], name: json["name"]);
   }
 }
 
@@ -35,13 +28,18 @@ class Chapter {
   }
 }
 
-class SubChapter {
-  final String id;
-  final String name;
+class InteractiveBookNavbarModel {
+  final List<Chapter> chapters;
 
-  SubChapter({required this.id, required this.name});
+  InteractiveBookNavbarModel({required this.chapters});
 
-  factory SubChapter.fromJson(Map<String, dynamic> json) {
-    return SubChapter(id: json["id"], name: json["name"]);
+  factory InteractiveBookNavbarModel.fromJson(Map<String, dynamic> json) {
+    return InteractiveBookNavbarModel(
+      chapters:
+          (json["chapters"] as List).map((e) => Chapter.fromJson(e)).toList(),
+    );
   }
 }
+
+
+

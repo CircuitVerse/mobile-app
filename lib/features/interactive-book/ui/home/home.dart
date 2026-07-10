@@ -3,13 +3,11 @@ import 'package:mobile_app/features/interactive-book/ui/home/getting_started.dar
 import 'package:mobile_app/features/interactive-book/ui/home/features_grid.dart';
 
 class InteractiveBookHome extends StatelessWidget {
-  final bool isHomePage;
-  final void Function(bool) changeHomePage;
+  final void Function() getStarted;
 
   const InteractiveBookHome({
     super.key,
-    required this.isHomePage,
-    required this.changeHomePage,
+    required this.getStarted,
   });
 
   @override
@@ -138,7 +136,7 @@ class InteractiveBookHome extends StatelessWidget {
         GettingStarted(),
         const SizedBox(height: 20),
         FilledButton.icon(
-          onPressed: () => changeHomePage(false),
+          onPressed: () => getStarted(),
           icon: const Icon(Icons.arrow_forward),
           label: const Text(
             'Get Started',

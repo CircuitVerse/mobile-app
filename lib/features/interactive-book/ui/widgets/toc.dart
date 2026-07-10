@@ -46,7 +46,6 @@ class TocWidget extends StatelessWidget {
                     style: theme.textTheme.titleMedium?.copyWith(
                       color: linkColor,
                       fontWeight: FontWeight.w500,
-                      decoration: TextDecoration.underline,
                       decorationColor: theme.colorScheme.onSurfaceVariant
                           .withValues(alpha: 0.7),
                     ),

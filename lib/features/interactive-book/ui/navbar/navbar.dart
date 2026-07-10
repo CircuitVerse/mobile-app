@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/ui/navbar/model.dart';
-import 'package:mobile_app/features/interactive-book/ui/navbar/service.dart';
 
 class Navbar extends StatefulWidget {
   final bool isHomePage;
   final int chapterNumber;
   final int subChapterNumber;
-  final VoidCallback? onHomePressed;
+  final void Function(bool) changeHomePage;
+  final void Function(int, int) navigateToChapter;
+  final Future<InteractiveBookNavbarModel> navbarData;
 
   const Navbar({
     super.key,
     required this.isHomePage,
     required this.chapterNumber,
     required this.subChapterNumber,
-    this.onHomePressed,
+    required this.changeHomePage,
+    required this.navigateToChapter,
+    required this.navbarData,
   });
 
   @override
@@ -21,21 +24,13 @@ class Navbar extends StatefulWidget {
 }
 
 class _ChaptersScreenState extends State<Navbar> {
-  late Future<BookResponse> future;
-
-  @override
-  void initState() {
-    super.initState();
-    future = BookService().getChapters();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Scaffold(
         appBar: AppBar(title: const Text("Interactive Book")),
-        body: FutureBuilder<BookResponse>(
-          future: future,
+        body: FutureBuilder<InteractiveBookNavbarModel>(
+          future: widget.navbarData,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -67,8 +62,8 @@ class _ChaptersScreenState extends State<Navbar> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       onTap: () {
-                        widget.onHomePressed?.call();
-                        Navigator.of(context).pop();
+                        widget.changeHomePage(true);
+                        Navigator.pop(context);
                       },
                     ),
                   );
@@ -82,6 +77,7 @@ class _ChaptersScreenState extends State<Navbar> {
                     vertical: 6,
                   ),
                   child: ExpansionTile(
+                    initiallyExpanded: widget.chapterNumber == chapter.id,
                     title: Text(
                       chapter.name,
                       style: const TextStyle(fontWeight: FontWeight.bold),
@@ -89,12 +85,19 @@ class _ChaptersScreenState extends State<Navbar> {
                     children:
                         chapter.subChapters.map((subChapter) {
                           return ListTile(
+                            tileColor:
+                                widget.chapterNumber == chapter.id &&
+                                        widget.subChapterNumber == subChapter.id
+                                    ? Colors.green[400]
+                                    : null,
                             leading: const Icon(Icons.menu_book),
                             title: Text(subChapter.name),
                             onTap: () {
-                              debugPrint(
-                                "Selected ${chapter.name} -> ${subChapter.name}",
+                              widget.navigateToChapter(
+                                chapter.id,
+                                subChapter.id,
                               );
+                              Navigator.pop(context);
                             },
                           );
                         }).toList(),

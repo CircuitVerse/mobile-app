@@ -6,6 +6,8 @@ import 'package:mobile_app/features/interactive-book/services/service.dart';
 class Renderer extends StatefulWidget {
   final int chapterNumber;
   final int subChapterNumber;
+  final bool showBackArrow;
+  final bool showForwardArrow;
   final VoidCallback incrementChapter;
   final VoidCallback decrementChapter;
 
@@ -13,6 +15,8 @@ class Renderer extends StatefulWidget {
     super.key,
     required this.chapterNumber,
     required this.subChapterNumber,
+    required this.showBackArrow,
+    required this.showForwardArrow,
     required this.incrementChapter,
     required this.decrementChapter,
   });
@@ -28,6 +32,7 @@ class _RendererState extends State<Renderer> {
   void initState() {
     super.initState();
     _future = BookService().getChapters(
+      chapterId: widget.chapterNumber.toString(),
       subChapterId: widget.subChapterNumber.toString(),
     );
   }
@@ -38,6 +43,7 @@ class _RendererState extends State<Renderer> {
     if (oldWidget.subChapterNumber != widget.subChapterNumber ||
         oldWidget.chapterNumber != widget.chapterNumber) {
       _future = BookService().getChapters(
+        chapterId: widget.chapterNumber.toString(),
         subChapterId: widget.subChapterNumber.toString(),
       );
     }
@@ -65,20 +71,23 @@ class _RendererState extends State<Renderer> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextButton.icon(
-                      onPressed: () {
-                        widget.decrementChapter();
-                      },
-                      icon: const Icon(Icons.arrow_back),
-                      label: const Text('Back'),
-                    ),
-                    TextButton.icon(
-                      onPressed: () {
-                        widget.incrementChapter();
-                      },
-                      icon: const Icon(Icons.arrow_forward),
-                      label: const Text('Forward'),
-                    ),
+                    if (widget.showBackArrow)
+                      TextButton.icon(
+                        onPressed: () {
+                          widget.decrementChapter();
+                        },
+                        icon: const Icon(Icons.arrow_back),
+                        label: const Text('Back'),
+                      ),
+                    Spacer(),
+                    if (widget.showForwardArrow)
+                      TextButton.icon(
+                        onPressed: () {
+                          widget.incrementChapter();
+                        },
+                        icon: const Icon(Icons.arrow_forward),
+                        label: const Text('Forward'),
+                      ),
                   ],
                 ),
                 Text(
@@ -115,6 +124,10 @@ class _RendererState extends State<Renderer> {
                           } else if (view.subType ==
                               'character_representation') {
                             return const CharacterRepresentationWidget();
+                          } else if (view.subType == 'click_gates') {
+                            return const SwitchLightWidget();
+                          } else if (view.subType == 'bitwise_operators') {
+                            return const BitwiseOperatorsWidget();
                           } else {
                             return const SizedBox.shrink();
                           }
