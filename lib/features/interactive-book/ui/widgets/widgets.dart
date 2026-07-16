@@ -8,3 +8,5 @@ export 'package:mobile_app/features/interactive-book/ui/widgets/popquiz.dart';
 export 'package:mobile_app/features/interactive-book/ui/widgets/bullet_points.dart';
 export 'package:mobile_app/features/interactive-book/ui/widgets/character_representation.dart';
 export 'package:mobile_app/features/interactive-book/ui/widgets/number_points.dart';
+export 'package:mobile_app/features/interactive-book/ui/widgets/switch_light.dart';
+export 'package:mobile_app/features/interactive-book/ui/widgets/bitwise_operators.dart';
