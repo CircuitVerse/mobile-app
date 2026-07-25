@@ -15,7 +15,12 @@ class _CharacterRepresentationState
     extends State<CharacterRepresentationWidget> {
   static int rows = 8;
   static int cols = 8;
-  static double cellSize = 42;
+
+  // Layout: 1 input column + an 8px gap + [cols] bit columns.
+  // Total intrinsic width = (cols + 1) * cellSize + gap.
+  static const double _gap = 8;
+  static const double _maxCellSize = 42;
+  static const double _minCellSize = 22;
 
   final List<TextEditingController> controllers = List.generate(
     rows,
@@ -74,77 +79,89 @@ class _CharacterRepresentationState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        // Column headers
-        Row(
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Fit the whole grid to the available width: (cols + 1) cells + gap.
+        final double available = constraints.maxWidth;
+        final double cellSize = ((available - _gap) / (cols + 1)).clamp(
+          _minCellSize,
+          _maxCellSize,
+        );
+
+        return Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(width: cellSize + 8),
-            ...List.generate(cols, (col) {
-              final value = 1 << (7 - col);
+            // Column headers
+            Row(
+              children: [
+                SizedBox(width: cellSize + _gap),
+                ...List.generate(cols, (col) {
+                  final value = 1 << (7 - col);
 
-              return SizedBox(
-                width: cellSize,
-                child: Center(
-                  child: Text(
-                    value.toString(),
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              );
-            }),
-          ],
-        ),
-
-        SizedBox(height: 8),
-
-        // Rows
-        Column(
-          children: List.generate(rows, (row) {
-            return Padding(
-              padding: EdgeInsets.only(bottom: 2),
-              child: Row(
-                children: [
-                  SizedBox(
+                  return SizedBox(
                     width: cellSize,
-                    height: cellSize,
-                    child: TextField(
-                      controller: controllers[row],
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(3),
-                      ],
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.zero,
+                    child: Center(
+                      child: Text(
+                        value.toString(),
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      onChanged: (value) => _onValueChanged(value, row),
                     ),
-                  ),
+                  );
+                }),
+              ],
+            ),
 
-                  SizedBox(width: 8),
+            SizedBox(height: 8),
 
-                  ...List.generate(cols, (col) {
-                    final bit = (values[row] >> (7 - col)) & 1;
-
-                    return Container(
-                      width: cellSize,
-                      height: cellSize,
-                      decoration: BoxDecoration(
-                        color: bit == 1 ? Colors.black : Colors.grey.shade300,
-                        border: Border.all(color: Colors.grey.shade500),
+            // Rows
+            Column(
+              children: List.generate(rows, (row) {
+                return Padding(
+                  padding: EdgeInsets.only(bottom: 2),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: cellSize,
+                        height: cellSize,
+                        child: TextField(
+                          controller: controllers[row],
+                          keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(3),
+                          ],
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                          onChanged: (value) => _onValueChanged(value, row),
+                        ),
                       ),
-                    );
-                  }),
-                ],
-              ),
-            );
-          }),
-        ),
-      ],
+
+                      SizedBox(width: 8),
+
+                      ...List.generate(cols, (col) {
+                        final bit = (values[row] >> (7 - col)) & 1;
+
+                        return Container(
+                          width: cellSize,
+                          height: cellSize,
+                          decoration: BoxDecoration(
+                            color:
+                                bit == 1 ? Colors.black : Colors.grey.shade300,
+                            border: Border.all(color: Colors.grey.shade500),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                );
+              }),
+            ),
+          ],
+        );
+      },
     );
   }
 }
