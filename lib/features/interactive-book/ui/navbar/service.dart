@@ -4,7 +4,7 @@ import 'model.dart';
 
 class BookService {
   Future<InteractiveBookNavbarModel> getChapters() async {
-     String BASE_URL_DEV = "http://localhost:8000";
+    String BASE_URL_DEV = "http://localhost:8000";
     String BASE_URL_PROD = "https://cv-mobile-backend.fastapicloud.dev";
 
     final response = await http.get(
