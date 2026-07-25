@@ -106,11 +106,22 @@ class _RootState extends State<Root> {
     });
   }
 
-  void navigateToChapter(int chapter, int subChapter) {
+  Future<void> navigateToChapter(int chapter, int subChapter) async {
+    final data = await navbarData;
     setState(() {
       isHomePage = false;
       chapterNumber = chapter;
       subChapterNumber = subChapter;
+      if(!(chapter == 1 && subChapter == 0)) {
+        showBackArrow = true;
+      } else {
+        showBackArrow = false;
+      }
+      if(chapter == data.chapters.length && subChapter == data.chapters[chapter - 1].subChapters.length - 1) {
+        showForwardArrow = false;
+      } else {
+        showForwardArrow = true;
+      }
     });
   }
 
@@ -125,6 +136,7 @@ class _RootState extends State<Root> {
         decrementChapter: decrementChapter,
         showBackArrow: showBackArrow,
         showForwardArrow: showForwardArrow,
+        navigateToChapter: navigateToChapter
       );
     }
   }
