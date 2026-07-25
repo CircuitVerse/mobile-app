@@ -38,12 +38,14 @@ class GettingStarted extends StatelessWidget {
 
               const SizedBox(width: 16),
 
-              const Text(
-                "Getting Started",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+              const Expanded(
+                child: Text(
+                  "Getting Started",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],

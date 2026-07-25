@@ -3,8 +3,10 @@ import 'package:mobile_app/features/interactive-book/models/models.dart';
 
 class ChapterContentsWidget extends StatelessWidget {
   final List<ChapterItemsModel> items;
+  final int chapterNumber;
+  final void Function(int, int) navigateToChapter;
 
-  const ChapterContentsWidget({super.key, required this.items});
+  const ChapterContentsWidget({super.key, required this.items, required this.chapterNumber, required this.navigateToChapter});
 
   @override
   Widget build(BuildContext context) {
@@ -63,16 +65,21 @@ class ChapterContentsWidget extends StatelessWidget {
                             ),
                           ),
                           Expanded(
-                            child: Text(
-                              item.name,
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                color: linkColor,
-                                fontWeight: FontWeight.w500,
-                                decoration: TextDecoration.underline,
-                                decorationColor: theme
-                                    .colorScheme
-                                    .onSurfaceVariant
-                                    .withValues(alpha: 0.7),
+                            child: InkWell(
+                              onTap: () {
+                                navigateToChapter(chapterNumber, item.id);
+                              },
+                              child: Text(
+                                item.name,
+                                style: theme.textTheme.titleMedium?.copyWith(
+                                  color: linkColor,
+                                  fontWeight: FontWeight.w500,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: theme
+                                      .colorScheme
+                                      .onSurfaceVariant
+                                      .withValues(alpha: 0.7),
+                                ),
                               ),
                             ),
                           ),
