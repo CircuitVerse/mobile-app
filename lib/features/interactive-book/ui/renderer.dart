@@ -10,6 +10,7 @@ class Renderer extends StatefulWidget {
   final bool showForwardArrow;
   final VoidCallback incrementChapter;
   final VoidCallback decrementChapter;
+  final void Function(int, int) navigateToChapter;
 
   const Renderer({
     super.key,
@@ -19,6 +20,7 @@ class Renderer extends StatefulWidget {
     required this.showForwardArrow,
     required this.incrementChapter,
     required this.decrementChapter,
+    required this.navigateToChapter,
   });
 
   @override
@@ -27,6 +29,72 @@ class Renderer extends StatefulWidget {
 
 class _RendererState extends State<Renderer> {
   late Future<ScreenModel> _future;
+  final ScrollController _scrollController = ScrollController();
+
+  final Map<int, GlobalKey> _sectionKeys = {};
+
+  void scrollToSection(int scrollToId) {
+    final key = _sectionKeys[scrollToId];
+
+    if (key?.currentContext != null) {
+      Scrollable.ensureVisible(
+        key!.currentContext!,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  Widget _buildView(ViewModel view) {
+    switch (view) {
+      case TocModel():
+        return TocWidget(chapters: view.items, onTap: scrollToSection);
+      case TextModel():
+        final textWidget = TextWidget(size: view.size, content: view.content);
+        // Register an anchor so the TOC can scroll to this section.
+        if (view.scrollToId != null) {
+          final key = _sectionKeys.putIfAbsent(
+            view.scrollToId!,
+            () => GlobalKey(),
+          );
+          return KeyedSubtree(key: key, child: textWidget);
+        }
+        return textWidget;
+      case ChapterContentsModel():
+        return ChapterContentsWidget(
+          items: view.items,
+          chapterNumber: widget.chapterNumber,
+          navigateToChapter: widget.navigateToChapter,
+        );
+      case ClipboardModel():
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Clipboard(content: view.content),
+        );
+      case TableModel():
+        return CustomTable(data: view);
+      case GeneralModel():
+        if (view.subType == 'binary-simulator') {
+          return const BinaryConverterWidget();
+        } else if (view.subType == 'character_representation') {
+          return const CharacterRepresentationWidget();
+        } else if (view.subType == 'click_gates') {
+          return const SwitchLightWidget();
+        } else if (view.subType == 'bitwise_operators') {
+          return const BitwiseOperatorsWidget();
+        } else {
+          return const SizedBox.shrink();
+        }
+      case PopQuizModel():
+        return PopQuizWidget(content: view.content);
+      case BulletPointsModel():
+        return BulletPointsWidget(bulletPoints: view.items);
+      case NumberPointsModel():
+        return NumberPointsWidget(items: view.items);
+      default:
+        return const SizedBox.shrink();
+    }
+  }
 
   @override
   void initState() {
@@ -42,6 +110,7 @@ class _RendererState extends State<Renderer> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.subChapterNumber != widget.subChapterNumber ||
         oldWidget.chapterNumber != widget.chapterNumber) {
+      _sectionKeys.clear();
       _future = BookService().getChapters(
         chapterId: widget.chapterNumber.toString(),
         subChapterId: widget.subChapterNumber.toString(),
@@ -95,52 +164,12 @@ class _RendererState extends State<Renderer> {
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 Expanded(
-                  child: ListView.builder(
+                  child: ListView(
+                    controller: _scrollController,
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: chapter.views.length,
-                    itemBuilder: (context, index) {
-                      final view = chapter.views[index];
-
-                      switch (view) {
-                        case TocModel():
-                          return TocWidget(chapters: view.items);
-                        case TextModel():
-                          return TextWidget(
-                            size: view.size,
-                            content: view.content,
-                          );
-                        case ChapterContentsModel():
-                          return ChapterContentsWidget(items: view.items);
-                        case ClipboardModel():
-                          return Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Clipboard(content: view.content),
-                          );
-                        case TableModel():
-                          return CustomTable(data: view);
-                        case GeneralModel():
-                          if (view.subType == 'binary-simulator') {
-                            return const BinaryConverterWidget();
-                          } else if (view.subType ==
-                              'character_representation') {
-                            return const CharacterRepresentationWidget();
-                          } else if (view.subType == 'click_gates') {
-                            return const SwitchLightWidget();
-                          } else if (view.subType == 'bitwise_operators') {
-                            return const BitwiseOperatorsWidget();
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        case PopQuizModel():
-                          return PopQuizWidget(content: view.content);
-                        case BulletPointsModel():
-                          return BulletPointsWidget(bulletPoints: view.items);
-                        case NumberPointsModel():
-                          return NumberPointsWidget(items: view.items);
-                        default:
-                          return const SizedBox.shrink();
-                      }
-                    },
+                    children: [
+                      for (final view in chapter.views) _buildView(view),
+                    ],
                   ),
                 ),
               ],

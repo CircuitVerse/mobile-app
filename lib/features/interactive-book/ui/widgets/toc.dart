@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class TocWidget extends StatelessWidget {
   final List<String> chapters;
+  final Function(int) onTap;
 
-  const TocWidget({super.key, required this.chapters});
+  const TocWidget({super.key, required this.chapters, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -28,30 +29,37 @@ class TocWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          ...chapters.map<Widget>(
-            (chapter) => Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 8, right: 12),
-                  child: Icon(
-                    Icons.circle,
-                    size: 7,
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    chapter,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: linkColor,
-                      fontWeight: FontWeight.w500,
-                      decorationColor: theme.colorScheme.onSurfaceVariant
-                          .withValues(alpha: 0.7),
+          ...chapters.asMap().entries.map<Widget>(
+            (entry) => InkWell(
+              onTap: () => onTap(entry.key),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8, right: 12),
+                      child: Icon(
+                        Icons.circle,
+                        size: 7,
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
                     ),
-                  ),
+                    Expanded(
+                      child: Text(
+                        entry.value,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          color: linkColor,
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.underline,
+                          decorationColor: theme.colorScheme.onSurfaceVariant
+                              .withValues(alpha: 0.7),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ],
