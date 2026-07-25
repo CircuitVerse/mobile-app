@@ -88,52 +88,55 @@ class _SwitchLightState extends State<SwitchLightWidget> {
               },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  if (gateType != 'NOT')
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Column(
+                  children: [
+                    if (gateType != 'NOT')
+                      Switch(
+                        value: light1On,
+                        onChanged: (value) {
+                          setState(() {
+                            light1On = value;
+                            updateBulbState();
+                          });
+                        },
+                        activeThumbColor: Colors.yellow[900],
+                        activeTrackColor: Colors.yellow,
+                      ),
                     Switch(
-                      value: light1On,
+                      value: light2On,
                       onChanged: (value) {
                         setState(() {
-                          light1On = value;
+                          light2On = value;
                           updateBulbState();
                         });
                       },
                       activeThumbColor: Colors.yellow[900],
                       activeTrackColor: Colors.yellow,
                     ),
-                  Switch(
-                    value: light2On,
-                    onChanged: (value) {
-                      setState(() {
-                        light2On = value;
-                        updateBulbState();
-                      });
-                    },
-                    activeThumbColor: Colors.yellow[900],
-                    activeTrackColor: Colors.yellow,
-                  ),
-                ],
-              ),
+                  ],
+                ),
 
-              SizedBox(width: 20),
-              // Inline SVG string so previews that don't load asset bundles can still show it.
-              SvgPicture.asset(
-                gateIcon,
-                width: 100,
-                height: 100,
-                colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
-              ),
+                SizedBox(width: 20),
+                // Inline SVG string so previews that don't load asset bundles can still show it.
+                SvgPicture.asset(
+                  gateIcon,
+                  width: 100,
+                  height: 100,
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                ),
 
-              Icon(
-                Icons.lightbulb,
-                size: 100,
-                color: isBulbOn ? Colors.yellow[500] : Colors.grey,
-              ),
-            ],
+                Icon(
+                  Icons.lightbulb,
+                  size: 100,
+                  color: isBulbOn ? Colors.yellow[500] : Colors.grey,
+                ),
+              ],
+            ),
           ),
         ],
       ),
