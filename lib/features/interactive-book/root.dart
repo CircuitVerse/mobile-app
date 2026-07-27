@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/ui/navbar/navbar.dart';
 import 'package:mobile_app/features/interactive-book/ui/home/home.dart';
 import 'package:mobile_app/features/interactive-book/ui/renderer.dart';
-import 'package:mobile_app/features/interactive-book/ui/navbar/model.dart';
+import 'package:mobile_app/features/interactive-book/models/navbar.dart';
 import 'package:mobile_app/features/interactive-book/ui/navbar/service.dart';
 
 class Root extends StatefulWidget {
