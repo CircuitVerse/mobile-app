@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/features/interactive-book/ui/navbar/model.dart';
+import 'package:mobile_app/features/interactive-book/models/navbar.dart';
 
 class Navbar extends StatefulWidget {
   final bool isHomePage;

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'model.dart';
+import 'package:mobile_app/features/interactive-book/models/navbar.dart';
 
 class BookService {
   Future<InteractiveBookNavbarModel> getChapters() async {
