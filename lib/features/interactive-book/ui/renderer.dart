@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/models/models.dart';
 import 'package:mobile_app/features/interactive-book/ui/widgets/widgets.dart';
-import 'package:mobile_app/features/interactive-book/services/service.dart';
+import 'package:mobile_app/features/interactive-book/services/chapters.dart';
 
 class Renderer extends StatefulWidget {
   final int chapterNumber;

@@ -3,7 +3,7 @@ import 'package:mobile_app/features/interactive-book/ui/navbar/navbar.dart';
 import 'package:mobile_app/features/interactive-book/ui/home/home.dart';
 import 'package:mobile_app/features/interactive-book/ui/renderer.dart';
 import 'package:mobile_app/features/interactive-book/models/navbar.dart';
-import 'package:mobile_app/features/interactive-book/ui/navbar/service.dart';
+import 'package:mobile_app/features/interactive-book/services/navbar.dart';
 
 class Root extends StatefulWidget {
   const Root({super.key});
