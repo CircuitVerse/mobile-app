@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Card-shaped row used for Home, About and Guidelines.
+/// Card-shaped row used for Home, About, Guidelines and Exit.
 class NavbarTile extends StatelessWidget {
   const NavbarTile({
     super.key,
@@ -8,6 +8,8 @@ class NavbarTile extends StatelessWidget {
     required this.label,
     required this.onTap,
     this.isSelected = false,
+    this.tint = const Color(0xFF12A150),
+    this.tintSurface = const Color(0xFFE7F6EE),
   });
 
   final IconData icon;
@@ -15,10 +17,15 @@ class NavbarTile extends StatelessWidget {
   final VoidCallback onTap;
   final bool isSelected;
 
+  /// Icon colour. Defaults to the book's green; the Exit row overrides it so
+  /// leaving the book does not look like another destination inside it.
+  final Color tint;
+  final Color tintSurface;
+
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: isSelected ? Color(0xFFE7F6EE) : Colors.white,
+      color: isSelected ? tintSurface : Colors.white,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         onTap: onTap,
@@ -31,10 +38,10 @@ class NavbarTile extends StatelessWidget {
                 width: 38,
                 height: 38,
                 decoration: BoxDecoration(
-                  color: Color(0xFFE7F6EE),
+                  color: tintSurface,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(icon, size: 20, color: Color(0xFF12A150)),
+                child: Icon(icon, size: 20, color: tint),
               ),
               const SizedBox(width: 14),
               Expanded(
