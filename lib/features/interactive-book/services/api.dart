@@ -10,6 +10,10 @@ class IbApi {
 
   static Uri navbar() => Uri.parse("$baseUrl/navbar");
 
+  static Uri about() => Uri.parse("$baseUrl/about");
+
+  static Uri guidelines() => Uri.parse("$baseUrl/guidelines");
+
   static Uri page(int chapterId, int subChapterId) =>
       Uri.parse("$baseUrl/?chapter_id=$chapterId&sub_chapter_id=$subChapterId");
 }
