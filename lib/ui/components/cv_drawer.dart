@@ -5,7 +5,6 @@ import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
-import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
 import 'package:mobile_app/features/interactive-book/root.dart' as ib_root;
 import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
