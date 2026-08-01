@@ -1,157 +1,143 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/features/interactive-book/ui/home/getting_started.dart';
+import 'package:mobile_app/features/interactive-book/models/navbar.dart';
+import 'package:mobile_app/features/interactive-book/services/progress.dart';
 import 'package:mobile_app/features/interactive-book/ui/home/features_grid.dart';
+import 'package:mobile_app/features/interactive-book/ui/home/getting_started.dart';
+import 'package:mobile_app/features/interactive-book/ui/home/hero.dart';
 
 class InteractiveBookHome extends StatelessWidget {
   final void Function() getStarted;
+  final void Function(int chapter, int subChapter) navigateToChapter;
+  final Future<InteractiveBookNavbarModel> navbarData;
+  final BookProgress progress;
 
   const InteractiveBookHome({
     super.key,
     required this.getStarted,
+    required this.navigateToChapter,
+    required this.navbarData,
+    required this.progress,
   });
+
+  static const List<(String, String)> _about = [
+    (
+      'Overview',
+      'Computer Logical Organization is the abstraction below the operating '
+          'system and above the digital logic level. This book covers computer '
+          'overview through advanced topics, helping you analyze and implement '
+          'combinational and sequential circuits for real applications.',
+    ),
+    (
+      'Audience',
+      'Students interested in digital circuits and computer logical '
+          'organization. Topics assume basic familiarity with digital '
+          'electronics and binary logic.',
+    ),
+    (
+      'Prerequisites',
+      'A basic understanding of computers and initial digital electronics '
+          'concepts is helpful before starting this book.',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      color: Color(0xFFF7F8F7),
+      child: ListView(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
+        children: [
+          FutureBuilder<InteractiveBookNavbarModel>(
+            future: navbarData,
+            builder: (context, snapshot) {
+              final chapters = snapshot.data?.chapters ?? const <Chapter>[];
+
+              return ListenableBuilder(
+                listenable: progress,
+                builder: (context, _) {
+                  return HomeHero(
+                    chapters: chapters,
+                    progress: progress,
+                    onStart: getStarted,
+                    onOpen: navigateToChapter,
+                  );
+                },
+              );
+            },
+          ),
+          const _SectionTitle('Why this book'),
+          const FeaturesGrid(),
+          const _SectionTitle('About this book'),
+          _aboutCard(context),
+          const _SectionTitle('How to use it'),
+          const GettingStarted(),
+        ],
+      ),
+    );
+  }
+
+  Widget _aboutCard(BuildContext context) {
     final theme = Theme.of(context);
 
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-      children: [
-        Container(
-          height: 220,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            gradient: const LinearGradient(
-              colors: [Color(0xFF13B881), Color(0xFF0EA57A)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.4),
-                blurRadius: 12,
-                offset: const Offset(0, 6),
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Color(0xFFDFE3E0)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (var i = 0; i < _about.length; i++) ...[
+            if (i > 0) const SizedBox(height: 16),
+            Text(
+              _about[i].$1,
+              style: theme.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF12A150),
               ),
-            ],
-          ),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircleAvatar(
-                  radius: 36,
-                  backgroundColor: Colors.white24,
-                  child: const Icon(
-                    Icons.menu_book,
-                    size: 44,
-                    color: Colors.white,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  'Interactive Book',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    shadows: [Shadow(blurRadius: 4, color: Colors.black26)],
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  'Learn · Explore · Thrive',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: Colors.white70,
-                  ),
-                ),
-              ],
+            ),
+            const SizedBox(height: 5),
+            Text(
+              _about[i].$2,
+              style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle(this.label);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(2, 26, 0, 12),
+      child: Row(
+        children: [
+          Container(
+            width: 3,
+            height: 16,
+            decoration: BoxDecoration(
+              color: Color(0xFF12A150),
+              borderRadius: BorderRadius.circular(2),
             ),
           ),
-        ),
-
-        const SizedBox(height: 14),
-
-        Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+          const SizedBox(width: 9),
+          Text(
+            label,
+            style: Theme.of(
+              context,
+            ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Overview',
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'The Computer Logical Organization is the abstraction below the operating system and above the digital logic level. This interactive book covers computer overview through advanced topics, helping you analyze and implement combinational and sequential circuits for real applications.',
-                  textAlign: TextAlign.justify,
-                  style: theme.textTheme.bodyMedium?.copyWith(height: 1.5),
-                ),
-                const Divider(height: 28),
-                Text(
-                  'Audience',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  'Students interested in digital circuits and computer logical organization. Topics assume basic familiarity with digital electronics and binary logic.',
-                  textAlign: TextAlign.justify,
-                  style: theme.textTheme.bodyMedium?.copyWith(height: 1.4),
-                ),
-                const Divider(height: 28),
-                Text(
-                  'Prerequisites',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 6),
-                Text(
-                  'A basic understanding of computers and initial digital electronics concepts is helpful before starting this book.',
-                  textAlign: TextAlign.justify,
-                  style: theme.textTheme.bodyMedium?.copyWith(height: 1.4),
-                ),
-              ],
-            ),
-          ),
-        ),
-
-        const SizedBox(height: 12),
-
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: FeaturesGrid(),
-        ),
-
-        const SizedBox(height: 8),
-
-        GettingStarted(),
-        const SizedBox(height: 20),
-        FilledButton.icon(
-          onPressed: () => getStarted(),
-          icon: const Icon(Icons.arrow_forward),
-          label: const Text(
-            'Get Started',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          style: FilledButton.styleFrom(
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.white,
-            minimumSize: const Size(double.infinity, 52),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

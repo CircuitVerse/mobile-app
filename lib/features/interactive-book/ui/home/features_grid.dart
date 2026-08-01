@@ -5,38 +5,35 @@ class FeaturesGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(12),
-      child: GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 0.85,
-        children: const [
-          FeatureCard(
-            icon: Icons.school,
-            title: "Learn",
-            subtitle: "Comprehensive digital\nlogic tutorials",
-          ),
-          FeatureCard(
-            icon: Icons.science,
-            title: "Experiment",
-            subtitle: "Interactive circuit\nsimulations",
-          ),
-          FeatureCard(
-            icon: Icons.quiz,
-            title: "Practice",
-            subtitle: "Quizzes and exercises",
-          ),
-          FeatureCard(
-            icon: Icons.emoji_events,
-            title: "Master",
-            subtitle: "Track your progress",
-          ),
-        ],
-      ),
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      crossAxisSpacing: 12,
+      mainAxisSpacing: 12,
+      childAspectRatio: 1.15,
+      children: const [
+        FeatureCard(
+          icon: Icons.school_outlined,
+          title: "Learn",
+          subtitle: "Comprehensive digital logic tutorials",
+        ),
+        FeatureCard(
+          icon: Icons.science_outlined,
+          title: "Experiment",
+          subtitle: "Interactive circuit simulations",
+        ),
+        FeatureCard(
+          icon: Icons.quiz_outlined,
+          title: "Practice",
+          subtitle: "Quizzes and exercises",
+        ),
+        FeatureCard(
+          icon: Icons.emoji_events_outlined,
+          title: "Master",
+          subtitle: "Track your progress",
+        ),
+      ],
     );
   }
 }
@@ -55,37 +52,47 @@ class FeatureCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFFF4F2F7),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey.shade200),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Color(0xFFDFE3E0)),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 34, color: Colors.teal),
-
-          const SizedBox(height: 10),
-
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Color(0xFFE7F6EE),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, size: 22, color: Color(0xFF12A150)),
+          ),
+          const SizedBox(height: 12),
           Text(
             title,
-            textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: theme.textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
-
-          const SizedBox(height: 6),
-
+          const SizedBox(height: 4),
           Flexible(
             child: Text(
               subtitle,
-              textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: Color(0xFF6B7280),
+                height: 1.3,
+              ),
             ),
           ),
         ],
