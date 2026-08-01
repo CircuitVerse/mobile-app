@@ -125,20 +125,10 @@ class CVDrawer extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(28, 8, 28, 8),
           child: Divider(),
         ),
-
         ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 28),
           leading: const Icon(Icons.chrome_reader_mode),
-          title: Text(AppLocalizations.of(context)!.cv_interactive_book),
-          onTap: () {
-            Navigator.pop(context);
-            Get.toNamed(IbLandingView.id);
-          },
-        ),
-        ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 28),
-          leading: const Icon(Icons.chrome_reader_mode),
-          title: Text("New Interactive Book"),
+          title: Text("Interactive Book"),
           onTap: () {
             Navigator.pop(context);
             Get.to(() => ib_root.Root());
