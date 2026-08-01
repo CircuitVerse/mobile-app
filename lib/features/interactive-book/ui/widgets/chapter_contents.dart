@@ -6,7 +6,12 @@ class ChapterContentsWidget extends StatelessWidget {
   final int chapterNumber;
   final void Function(int, int) navigateToChapter;
 
-  const ChapterContentsWidget({super.key, required this.items, required this.chapterNumber, required this.navigateToChapter});
+  const ChapterContentsWidget({
+    super.key,
+    required this.items,
+    required this.chapterNumber,
+    required this.navigateToChapter,
+  });
 
   @override
   Widget build(BuildContext context) {

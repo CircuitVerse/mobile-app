@@ -16,7 +16,10 @@ abstract class ViewModel {
       case 'widget':
         final String subType = rawSubType ?? '';
         switch (subType) {
-          case 'binary-simulator' || 'character_representation' || 'click_gates' || 'bitwise_operators':
+          case 'binary-simulator' ||
+              'character_representation' ||
+              'click_gates' ||
+              'bitwise_operators':
             return GeneralModel.fromJson(json);
           case 'chapter_contents':
             return ChapterContentsModel.fromJson(json);
