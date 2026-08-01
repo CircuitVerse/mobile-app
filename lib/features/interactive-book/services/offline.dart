@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_app/features/interactive-book/models/navbar.dart';
+import 'package:mobile_app/features/interactive-book/models/page.dart';
 import 'package:mobile_app/features/interactive-book/services/api.dart';
 
 enum DownloadState { idle, downloading, done, failed }
@@ -16,6 +17,12 @@ class OfflineLibrary extends ChangeNotifier {
 
   static String pageKey(int chapter, int subChapter) =>
       'page:$chapter:$subChapter';
+
+  /// Cache key for the About and Guidelines pages.
+  static String staticKey(IbPage page) => 'static:${page.name}';
+
+  /// Standalone pages that are downloaded alongside the chapters.
+  static const List<IbPage> staticPages = [IbPage.about, IbPage.guidelines];
 
   DownloadState _state = DownloadState.idle;
   int _done = 0;
@@ -90,44 +97,47 @@ class OfflineLibrary extends ChangeNotifier {
   Future<void> downloadAll(InteractiveBookNavbarModel navbar) async {
     if (isDownloading) return;
 
-    final pages = <({int chapter, int subChapter})>[];
+    // Everything the book needs offline: the chapter tree, every chapter and
+    // sub-chapter page, and the two standalone pages.
+    final requests = <({Uri uri, String key})>[
+      (uri: IbApi.navbar(), key: navbarKey),
+    ];
+
     for (final chapter in navbar.chapters) {
       // Sub-chapter 0 is the chapter intro page.
-      pages.add((chapter: chapter.id, subChapter: 0));
+      requests.add((
+        uri: IbApi.page(chapter.id, 0),
+        key: pageKey(chapter.id, 0),
+      ));
       for (final sub in chapter.subChapters) {
-        pages.add((chapter: chapter.id, subChapter: sub.id));
+        requests.add((
+          uri: IbApi.page(chapter.id, sub.id),
+          key: pageKey(chapter.id, sub.id),
+        ));
       }
+    }
+
+    for (final page in staticPages) {
+      requests.add((
+        uri: page == IbPage.about ? IbApi.about() : IbApi.guidelines(),
+        key: staticKey(page),
+      ));
     }
 
     _state = DownloadState.downloading;
     _error = null;
     _done = 0;
-    _total = pages.length + 1; // +1 for the chapter tree itself.
+    _total = requests.length;
     _notify();
 
     var failures = 0;
 
-    try {
-      final response = await http.get(IbApi.navbar());
-      if (response.statusCode == 200) {
-        await write(navbarKey, response.body);
-      } else {
-        failures++;
-      }
-    } catch (_) {
-      failures++;
-    }
-    _done++;
-    _notify();
-
-    for (final page in pages) {
+    for (final request in requests) {
       if (_disposed) return;
       try {
-        final response = await http.get(
-          IbApi.page(page.chapter, page.subChapter),
-        );
+        final response = await http.get(request.uri);
         if (response.statusCode == 200) {
-          await write(pageKey(page.chapter, page.subChapter), response.body);
+          await write(request.key, response.body);
         } else {
           failures++;
         }
