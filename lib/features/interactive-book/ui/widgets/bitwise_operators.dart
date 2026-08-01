@@ -25,13 +25,17 @@ class _LogicTableWidgetState extends State<BitwiseOperatorsWidget> {
 
   int get decimalA {
     int v = 0;
-    for (int i = 0; i < bitsA.length; i++) v += bitsA[i] * placeValues[i];
+    for (int i = 0; i < bitsA.length; i++) {
+      v += bitsA[i] * placeValues[i];
+    }
     return v;
   }
 
   int get decimalB {
     int v = 0;
-    for (int i = 0; i < bitsB.length; i++) v += bitsB[i] * placeValues[i];
+    for (int i = 0; i < bitsB.length; i++) {
+      v += bitsB[i] * placeValues[i];
+    }
     return v;
   }
 
