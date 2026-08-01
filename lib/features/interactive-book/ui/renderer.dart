@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/models/models.dart';
+import 'package:mobile_app/features/interactive-book/models/page.dart';
 import 'package:mobile_app/features/interactive-book/ui/widgets/widgets.dart';
 import 'package:mobile_app/features/interactive-book/services/chapters.dart';
 
 class Renderer extends StatefulWidget {
+  /// Which page to fetch. About and Guidelines come from their own endpoints
+  /// but return the same shape, so everything below this is shared.
+  final IbPage page;
   final int chapterNumber;
   final int subChapterNumber;
   final bool showBackArrow;
@@ -14,6 +18,7 @@ class Renderer extends StatefulWidget {
 
   const Renderer({
     super.key,
+    required this.page,
     required this.chapterNumber,
     required this.subChapterNumber,
     required this.showBackArrow,
@@ -96,25 +101,30 @@ class _RendererState extends State<Renderer> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _future = BookService().getChapters(
+  Future<ScreenModel> _fetch() {
+    if (widget.page == IbPage.about || widget.page == IbPage.guidelines) {
+      return BookService().getStaticPage(widget.page);
+    }
+    return BookService().getChapters(
       chapterId: widget.chapterNumber.toString(),
       subChapterId: widget.subChapterNumber.toString(),
     );
   }
 
   @override
+  void initState() {
+    super.initState();
+    _future = _fetch();
+  }
+
+  @override
   void didUpdateWidget(covariant Renderer oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.subChapterNumber != widget.subChapterNumber ||
+    if (oldWidget.page != widget.page ||
+        oldWidget.subChapterNumber != widget.subChapterNumber ||
         oldWidget.chapterNumber != widget.chapterNumber) {
       _sectionKeys.clear();
-      _future = BookService().getChapters(
-        chapterId: widget.chapterNumber.toString(),
-        subChapterId: widget.subChapterNumber.toString(),
-      );
+      _future = _fetch();
     }
   }
 
