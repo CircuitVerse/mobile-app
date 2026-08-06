@@ -105,9 +105,9 @@ class _RendererState extends State<Renderer> {
 
   Future<ScreenModel> _fetch() {
     if (widget.page == IbPage.about || widget.page == IbPage.guidelines) {
-      return BookService().getStaticPage(widget.page);
+      return BookChaptersService().getStaticPage(widget.page);
     }
-    return BookService().getChapters(
+    return BookChaptersService().getChapters(
       chapterId: widget.chapterNumber.toString(),
       subChapterId: widget.subChapterNumber.toString(),
     );

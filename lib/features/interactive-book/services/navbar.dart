@@ -4,7 +4,7 @@ import 'package:mobile_app/features/interactive-book/models/navbar.dart';
 import 'package:mobile_app/features/interactive-book/services/api.dart';
 import 'package:mobile_app/features/interactive-book/services/offline.dart';
 
-class BookService {
+class NavbarService {
   /// Fetches the chapter tree, preferring the network and falling back to the
   /// offline cache when the request fails.
   Future<InteractiveBookNavbarModel> getChapters() async {

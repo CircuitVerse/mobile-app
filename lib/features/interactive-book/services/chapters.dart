@@ -5,7 +5,7 @@ import 'package:mobile_app/features/interactive-book/models/screen.dart';
 import 'package:mobile_app/features/interactive-book/services/api.dart';
 import 'package:mobile_app/features/interactive-book/services/offline.dart';
 
-class BookService {
+class BookChaptersService {
   /// Fetches a chapter page, preferring the network so downloaded content
   /// stays fresh and falling back to the offline cache when the request fails.
   Future<ScreenModel> getChapters({

@@ -32,7 +32,7 @@ class _RootState extends State<Root> {
   @override
   void initState() {
     super.initState();
-    navbarData = BookService().getChapters();
+    navbarData = NavbarService().getChapters();
     progress.load();
     offline.refresh();
   }
@@ -127,13 +127,15 @@ class _RootState extends State<Root> {
     Get.back();
   }
 
-  void getStarted() {
+  Future<void> getStarted() async {
     setState(() {
       currentPage = IbPage.chapter;
       chapterNumber = 1;
       subChapterNumber = 0;
+      showBackArrow = false;
+      showForwardArrow = true;
     });
-    progress.visit(1, 0);
+    await progress.visit(1, 0);
   }
 
   Future<void> navigateToChapter(int chapter, int subChapter) async {
