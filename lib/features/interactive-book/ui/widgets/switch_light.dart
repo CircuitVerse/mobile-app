@@ -64,11 +64,9 @@ class _SwitchLightState extends State<SwitchLightWidget> {
                 final gate = Gates[index] as Map<String, String>;
                 return GestureDetector(
                   onTap: () {
-                    setState(() {
-                      gateType = gate['name']!;
-                      gateIcon = gate['icon']!;
-                      updateBulbState();
-                    });
+                    gateType = gate['name']!;
+                    gateIcon = gate['icon']!;
+                    updateBulbState();
                   },
                   child: Column(
                     children: [
@@ -95,29 +93,25 @@ class _SwitchLightState extends State<SwitchLightWidget> {
               children: [
                 Column(
                   children: [
-                    if (gateType != 'NOT')
-                      Switch(
-                        value: light1On,
-                        onChanged: (value) {
-                          setState(() {
-                            light1On = value;
-                            updateBulbState();
-                          });
-                        },
-                        activeThumbColor: Colors.yellow[900],
-                        activeTrackColor: Colors.yellow,
-                      ),
                     Switch(
-                      value: light2On,
+                      value: light1On,
                       onChanged: (value) {
-                        setState(() {
-                          light2On = value;
-                          updateBulbState();
-                        });
+                        light1On = value;
+                        updateBulbState();
                       },
                       activeThumbColor: Colors.yellow[900],
                       activeTrackColor: Colors.yellow,
                     ),
+                    if (gateType != 'NOT')
+                      Switch(
+                        value: light2On,
+                        onChanged: (value) {
+                          light2On = value;
+                          updateBulbState();
+                        },
+                        activeThumbColor: Colors.yellow[900],
+                        activeTrackColor: Colors.yellow,
+                      ),
                   ],
                 ),
 
