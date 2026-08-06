@@ -74,7 +74,7 @@ class _RendererState extends State<Renderer> {
       case ClipboardModel():
         return Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Clipboard(content: view.content),
+          child: ClipboardWidget(content: view.content),
         );
       case TableModel():
         return CustomTable(data: view);
@@ -117,6 +117,12 @@ class _RendererState extends State<Renderer> {
   void initState() {
     super.initState();
     _future = _fetch();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
