@@ -35,6 +35,8 @@ abstract class ViewModel {
             return BulletPointsModel.fromJson(json);
           case 'numbered_list':
             return NumberPointsModel.fromJson(json);
+          case 'image':
+            return ImageModel.fromJson(json);
           default:
             debugPrint('Unhandled widget sub_type: $subType — skipping');
             return _UnknownViewModel(

@@ -1,7 +1,7 @@
 import 'package:mobile_app/features/interactive-book/models/view.dart';
 
 class ClipboardModel extends ViewModel {
-  String content;
+  final String content;
 
   ClipboardModel({
     required super.type,

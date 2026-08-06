@@ -96,6 +96,8 @@ class _RendererState extends State<Renderer> {
         return BulletPointsWidget(bulletPoints: view.items);
       case NumberPointsModel():
         return NumberPointsWidget(items: view.items);
+      case ImageModel():
+        return ImageWidget(content: view.content);
       default:
         return const SizedBox.shrink();
     }

@@ -11,3 +11,4 @@ export 'package:mobile_app/features/interactive-book/models/widgets_models/pop_q
 export 'package:mobile_app/features/interactive-book/models/widgets_models/pop_quiz/question.dart';
 export 'package:mobile_app/features/interactive-book/models/widgets_models/bullets.dart';
 export 'package:mobile_app/features/interactive-book/models/widgets_models/number_points.dart';
+export 'package:mobile_app/features/interactive-book/models/widgets_models/image.dart';
