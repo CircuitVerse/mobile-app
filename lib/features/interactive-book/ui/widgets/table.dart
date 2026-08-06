@@ -53,13 +53,12 @@ class CustomTable extends StatelessWidget {
                     )
                     .toList(),
           ),
-          // Data rows
           ...data.rows.map(
             (row) => TableRow(
-              children:
-                  row
-                      .map<Widget>((cell) => TableCellWidget(text: cell))
-                      .toList(),
+              children: List<Widget>.generate(
+                data.heading.length,
+                (i) => TableCellWidget(text: i < row.length ? row[i] : ''),
+              ),
             ),
           ),
         ],
