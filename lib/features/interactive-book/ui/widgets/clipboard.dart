@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter/widget_previews.dart';
 
-class Clipboard extends StatelessWidget {
+class ClipboardWidget extends StatelessWidget {
   final String content;
 
   @Preview(name: "Clipboard")
-  const Clipboard({super.key, this.content = '''```\nExample content\n```'''});
+  const ClipboardWidget({super.key, this.content = 'Example content'});
 
   @override
   Widget build(BuildContext context) {
