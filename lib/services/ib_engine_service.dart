@@ -1,5 +1,7 @@
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
+import 'package:mobile_app/cache/cache_keys.dart';
+import 'package:mobile_app/cache/cache_service.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/failure_model.dart';
@@ -35,6 +37,12 @@ class IbEngineServiceImpl implements IbEngineService {
 
   /// Locally cache Chapters list for the session
   List<IbChapter> _ibChapters = [];
+
+  /// In-memory cache for parsed page data.
+  /// Parsing raw Markdown + HTML is CPU-intensive; caching avoids repeating
+  /// it both in the search isolate (which calls getPageData for every chapter)
+  /// and when the user navigates back to a previously visited page.
+  final _cache = CacheService.instance;
 
   /// module.js URL for interaction
   final _intModuleJsUrl =
@@ -240,7 +248,17 @@ class IbEngineServiceImpl implements IbEngineService {
   /// Fetches "Rich" Page Content
   @override
   Future<IbPageData?>? getPageData({String id = 'index.md'}) async {
-    /// Fetch Raw Page Data from API
+    //  Cache hit
+    // Two separate callers invoke this method per-page:
+    //   1. IbPageViewModel.fetchPageData — every time the user opens a chapter.
+    //   2. The search isolate (IbLandingViewModel.fetchCallback) — which calls
+    //      getPageData for *every* chapter to scan content.  Without caching
+    //      this is dozens of back-to-back network + parse cycles per search.
+    final cacheKey = CacheKeys.ibPage(id);
+    final cached = _cache.get<IbPageData>(cacheKey);
+    if (cached != null) return cached;
+
+    //  Cache miss: fetch + parse
     IbRawPageData? _ibRawPageData;
     try {
       _ibRawPageData = await _ibApi.fetchRawPageData(id: id);
@@ -250,7 +268,7 @@ class IbEngineServiceImpl implements IbEngineService {
 
     if (_ibRawPageData == null) return null;
 
-    return IbPageData(
+    final pageData = IbPageData(
       id: _ibRawPageData.id,
       pageUrl: _ibRawPageData.httpUrl,
       title: _ibRawPageData.title,
@@ -266,6 +284,9 @@ class IbEngineServiceImpl implements IbEngineService {
               ? _getChapterOfContents(_ibRawPageData.content!)
               : [],
     );
+
+    _cache.set(cacheKey, pageData, ttl: CacheKeys.ibPageTtl);
+    return pageData;
   }
 
   /// Fetches HTML Interaction from the given [id]

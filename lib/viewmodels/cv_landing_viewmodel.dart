@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:mobile_app/cache/cache_service.dart';
 import 'package:mobile_app/enums/auth_type.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/user.dart';
@@ -42,12 +43,16 @@ class CVLandingViewModel extends BaseModel {
     _storage.currentUser = null;
     _storage.token = null;
 
-    // Perform google signout if auth type is google..
-    if (_storage.authType == AuthType.GOOGLE) {
-      await _googleSignIn.signOut();
+    try {
+      if (_storage.authType == AuthType.GOOGLE) {
+        await _googleSignIn.signOut();
+      }
+    } finally {
+      // Always clear cache and notify — even if Google sign-out throws.
+      // Without finally, a sign-out error would leave stale data in memory.
+      CacheService.instance.clear();
+      notifyListeners();
     }
-
-    notifyListeners();
   }
 
   void setUser() async {

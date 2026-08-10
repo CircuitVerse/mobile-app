@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:mobile_app/cache/cache_keys.dart';
+import 'package:mobile_app/cache/cache_service.dart';
 import 'package:mobile_app/config/environment_config.dart';
 import 'package:mobile_app/constants.dart';
 import 'package:mobile_app/locator.dart';
@@ -45,6 +47,7 @@ class HttpUsersApi implements UsersApi {
   var headers = {'Content-Type': 'application/json'};
 
   final LocalStorageService _storage = locator<LocalStorageService>();
+  final _cache = CacheService.instance;
 
   @override
   Future<String>? login(String email, String password) async {
@@ -127,12 +130,23 @@ class HttpUsersApi implements UsersApi {
 
   @override
   Future<User>? fetchUser(String userId) async {
+    // Cache hit
+    // ProfileView calls fetchUser every time the screen mounts, even on
+    // back-navigation.  Five-minute TTL means the screen feels instant while
+    // still staying fresh.
+    final cacheKey = CacheKeys.userProfile(userId);
+    final cached = _cache.get<User>(cacheKey);
+    if (cached != null) return cached;
+
+    // Cache miss: network fetch
     var endpoint = '/users/$userId';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
     try {
       ApiUtils.addTokenToHeaders(headers);
       var jsonResponse = await ApiUtils.get(uri, headers: headers);
-      return User.fromJson(jsonResponse);
+      final user = User.fromJson(jsonResponse);
+      _cache.set(cacheKey, user, ttl: CacheKeys.userProfileTtl);
+      return user;
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on NotFoundException {
@@ -166,7 +180,12 @@ class HttpUsersApi implements UsersApi {
     File? image,
     bool removePicture,
   ) async {
-    var endpoint = '/users/${_storage.currentUser!.data.id}';
+    // Capture userId before any await — if logout happens mid-flight,
+    // _storage.currentUser could become null and invalidate the wrong entry.
+    final currentUserId = _storage.currentUser?.data.id;
+    if (currentUserId == null) throw Failure(Constants.GENERIC_FAILURE);
+
+    var endpoint = '/users/$currentUserId';
     var uri = EnvironmentConfig.CV_API_BASE_URL + endpoint;
 
     var header = {'Content-Type': 'multipart/form-data'};
@@ -194,7 +213,11 @@ class HttpUsersApi implements UsersApi {
         body: json,
         files: files,
       );
-      return User.fromJson(jsonResponse);
+      final updatedUser = User.fromJson(jsonResponse);
+      // Invalidate the cached profile so the next fetchUser call gets
+      // fresh data after the user edits their profile.
+      _cache.invalidate(CacheKeys.userProfile(currentUserId));
+      return updatedUser;
     } on FormatException {
       throw Failure(Constants.BAD_RESPONSE_FORMAT);
     } on Exception {
