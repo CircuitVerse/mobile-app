@@ -21,10 +21,10 @@ packages:
     dependency: "direct main"
     description:
       name: animations
-      sha256: "9cb469212ea51be27097f23b519d594c01171721347b55df9334fff653659e7f"
+      sha256: "5ec868ffa78851e6f3f32e9377b780c7ae2087a5523d8b5e6df59bd8287ac5dd"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.0"
+    version: "3.0.0"
   args:
     dependency: transitive
     description:
@@ -209,6 +209,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.9"
+  cupertino_ui:
+    dependency: transitive
+    description:
+      name: cupertino_ui
+      sha256: "7ed8ce4159d342eec4c65f4ea6eec57adaf9365404378541f38efc1da20a5b3d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   dart_quill_delta:
     dependency: transitive
     description:
@@ -974,6 +982,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.13.0"
+  material_ui:
+    dependency: transitive
+    description:
+      name: material_ui
+      sha256: "4f3f38b9953df0a87d6bf5f21880029f77c47048487d5339410c39936be4683b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   meta:
     dependency: transitive
     description:
