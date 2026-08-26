@@ -92,16 +92,17 @@ VueNavigation resolveVueNavigation(Uri uri, {required bool isLocal}) {
   if (segments.length >= 3 &&
       (segments[0] == 'simulator' || segments[0] == 'simulatorvue') &&
       segments[1] == 'edit') {
+    // We only bundle v1, so a request for another version is not ours to open.
+    final version = uri.queryParameters['simver'];
+    if (segments[0] != 'simulatorvue' || (version != null && version != 'v1')) {
+      return ReturnToApp(uri.path);
+    }
     // Project ids are numeric. Anything else is never injected as script.
     if (RegExp(r'^\d+$').hasMatch(segments[2])) return OpenProject(segments[2]);
 
     // After loading a project, setup.js redirects here using the project name.
     // The circuit is already on the canvas, so ignore it.
-    final version = uri.queryParameters['simver'];
-    if (segments[0] == 'simulatorvue' && (version == null || version == 'v1')) {
-      return const StayOnCurrentPage();
-    }
-    return ReturnToApp(uri.path);
+    return const StayOnCurrentPage();
   }
 
   if (segments.isNotEmpty && segments[0] == 'users') {

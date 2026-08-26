@@ -28,8 +28,9 @@ void main() {
       );
     });
 
-    test('the legacy simulator path', () {
-      expect(resolveLocal('/simulator/edit/42'), const OpenProject('42'));
+    test('leaves the v0 simulator path alone', () {
+      // /simulator/ is the old simulator, which this build does not carry.
+      expect(resolveLocal('/simulator/edit/42'), isA<ReturnToApp>());
     });
 
     test('carries a version query along', () {
@@ -46,6 +47,13 @@ void main() {
         isA<StayOnCurrentPage>(),
       );
       expect(resolveLocal('/simulatorvue/edit/test'), isA<StayOnCurrentPage>());
+    });
+
+    test('does not open a numeric id meant for another version', () {
+      expect(
+        resolveLocal('/simulatorvue/edit/42?simver=v2'),
+        isA<ReturnToApp>(),
+      );
     });
 
     test('returns to the app for a version this build cannot open', () {

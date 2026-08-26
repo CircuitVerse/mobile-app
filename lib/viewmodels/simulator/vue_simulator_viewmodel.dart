@@ -19,25 +19,24 @@ class VueSimulatorViewModel extends BaseModel {
   // ViewState Keys
   static const String SIMULATOR = 'vue_simulator';
 
-  static const int port = 8123;
-
   /// Built by tool/build_vue_simulator.dart, bundled via pubspec.yaml.
   static const String _documentRoot = 'vue/dist/simulatorvue/v1';
 
   final LocalStorageService _storage = locator<LocalStorageService>();
 
-  /// Static so re-entering the view reuses the server instead of racing a new
-  /// one against the port the old one is still releasing.
+  /// Static so re-entering the view reuses the same server.
   static VueSimulatorServer? _server;
 
   VueSimulatorServer get _serverInstance =>
       _server ??= VueSimulatorServer(
-        port: port,
         documentRoot: _documentRoot,
         tokenProvider: () => _storage.isLoggedIn ? _storage.token : null,
       );
 
   String get url => _serverInstance.url;
+
+  /// Port the server bound to. Valid once it has started.
+  int get port => _serverInstance.port;
 
   /// Downloads (circuit JSON, image exports) reuse the hosted simulator's flow.
   final SimulatorViewModel _downloads = locator<SimulatorViewModel>();
@@ -72,6 +71,12 @@ class VueSimulatorViewModel extends BaseModel {
       if (!_serverInstance.isRunning) {
         await _serverInstance.start();
       }
+      // The page proves it is ours by sending this back on API calls.
+      await CookieManager.instance().setCookie(
+        url: WebUri(_serverInstance.url),
+        name: VueSimulatorServer.secretCookie,
+        value: _serverInstance.secret,
+      );
       setStateFor(SIMULATOR, ViewState.Idle);
     } on FlutterError catch (_) {
       const message =

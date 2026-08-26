@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -11,11 +12,7 @@ import 'package:mobile_app/config/environment_config.dart';
 /// requests to CircuitVerse with the user's token. Serving both from one origin
 /// is what lets the Vue app save online without any changes to it.
 class VueSimulatorServer {
-  VueSimulatorServer({
-    required this.documentRoot,
-    required this.tokenProvider,
-    this.port = 8123,
-  });
+  VueSimulatorServer({required this.documentRoot, required this.tokenProvider});
 
   /// Asset directory holding the bundle, without a trailing slash.
   final String documentRoot;
@@ -23,21 +20,29 @@ class VueSimulatorServer {
   /// Current session token, read per request so a login is picked up.
   final String? Function() tokenProvider;
 
-  final int port;
-
   static const String _apiPrefix = '/api/v1';
+
+  /// Name of the cookie guarding the proxy.
+  static const String secretCookie = 'cv_sim_key';
+
+  /// Random per launch, so other apps on the device cannot guess it.
+  final String secret = _randomKey();
 
   HttpServer? _server;
   HttpClient? _client;
 
   bool get isRunning => _server != null;
 
+  /// Assigned by the OS on [start].
+  int get port => _server?.port ?? 0;
+
   String get url => 'http://localhost:$port/';
 
   Future<void> start() async {
     if (_server != null) return;
 
-    _server = await HttpServer.bind(InternetAddress.loopbackIPv4, port);
+    // Port 0: let the OS pick a free one, so we never collide with another app.
+    _server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
     _client = HttpClient();
 
     unawaited(
@@ -88,6 +93,19 @@ class VueSimulatorServer {
   }
 
   Future<void> _proxy(HttpRequest request) async {
+    // Any app on the device can reach a loopback port, and this endpoint
+    // carries the user's token, so require the cookie only our page has.
+    final hasKey = request.cookies.any(
+      (c) => c.name == secretCookie && c.value == secret,
+    );
+    if (!hasKey) {
+      debugPrint(
+        '[vue-sim] rejected an unkeyed request to ${request.uri.path}',
+      );
+      request.response.statusCode = HttpStatus.forbidden;
+      return;
+    }
+
     final target = Uri.parse(
       '${EnvironmentConfig.CV_BASE_URL}${request.uri.path}',
     ).replace(query: request.uri.query.isEmpty ? null : request.uri.query);
@@ -167,4 +185,12 @@ class VueSimulatorServer {
       _ => ContentType.binary,
     };
   }
+}
+
+String _randomKey() {
+  final random = Random.secure();
+  return List.generate(
+    24,
+    (_) => random.nextInt(256),
+  ).map((b) => b.toRadixString(16).padLeft(2, '0')).join();
 }

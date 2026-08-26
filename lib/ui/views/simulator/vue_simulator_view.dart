@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +38,10 @@ class _VueSimulatorViewState extends State<VueSimulatorView> {
   /// assignment. Making it read-only instead would throw, as the bundle is an
   /// ES module.
   static UserScript _projectIdScript(String projectId) => UserScript(
+    // jsonEncode gives a safely quoted and escaped JavaScript string.
     source: '''
 (function () {
-  var id = "$projectId";
+  var id = ${jsonEncode(projectId)};
   Object.defineProperty(window, 'logixProjectId', {
     configurable: true,
     get: function () { return id; },
@@ -190,8 +192,7 @@ class _VueSimulatorViewState extends State<VueSimulatorView> {
                     final destination = resolveVueNavigation(
                       uri,
                       isLocal:
-                          uri.host == 'localhost' &&
-                          uri.port == VueSimulatorViewModel.port,
+                          uri.host == 'localhost' && uri.port == model.port,
                     );
 
                     switch (destination) {

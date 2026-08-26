@@ -37,7 +37,6 @@ void main() {
     server = VueSimulatorServer(
       documentRoot: 'vue/dist/simulatorvue/v1',
       tokenProvider: () => token,
-      port: 8124,
     );
     await server.start();
     client = HttpClient();
@@ -57,8 +56,9 @@ void main() {
   }) async {
     final request = await client.openUrl(
       method,
-      Uri.parse('http://127.0.0.1:8124$path'),
+      Uri.parse('http://127.0.0.1:${server.port}$path'),
     );
+    request.cookies.add(Cookie(VueSimulatorServer.secretCookie, server.secret));
     if (body != null) {
       request.headers.contentType = ContentType.json;
       request.write(body);
@@ -108,8 +108,9 @@ void main() {
     // The page sends this because it looks for a cookie we never set.
     final request = await client.openUrl(
       'GET',
-      Uri.parse('http://127.0.0.1:8124/api/v1/me'),
+      Uri.parse('http://127.0.0.1:${server.port}/api/v1/me'),
     );
+    request.cookies.add(Cookie(VueSimulatorServer.secretCookie, server.secret));
     request.headers.set(HttpHeaders.authorizationHeader, 'Token undefined');
     await request.close();
 
@@ -131,14 +132,32 @@ void main() {
     // HttpClient only decodes gzip, so forwarding br/zstd breaks every response.
     final request = await client.openUrl(
       'GET',
-      Uri.parse('http://127.0.0.1:8124/api/v1/me'),
+      Uri.parse('http://127.0.0.1:${server.port}/api/v1/me'),
     );
+    request.cookies.add(Cookie(VueSimulatorServer.secretCookie, server.secret));
     request.headers.set('accept-encoding', 'gzip, deflate, br, zstd');
     await request.close();
 
     final forwarded = received.single.headers.value('accept-encoding') ?? '';
     expect(forwarded, isNot(contains('br')));
     expect(forwarded, isNot(contains('zstd')));
+  });
+
+  test('refuses proxy requests without the key', () async {
+    // Any app on the device can reach the port, so the token must not be
+    // handed to a caller that cannot prove it is our page.
+    final request = await client.openUrl(
+      'GET',
+      Uri.parse('http://127.0.0.1:${server.port}/api/v1/me'),
+    );
+    final response = await request.close();
+
+    expect(response.statusCode, HttpStatus.forbidden);
+    expect(received, isEmpty);
+  });
+
+  test('binds a port the OS chooses', () async {
+    expect(server.port, greaterThan(0));
   });
 
   test('serves a 404 rather than hanging when an asset is missing', () async {
