@@ -24,6 +24,7 @@ import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
 import 'package:mobile_app/ui/views/projects/project_details_view.dart';
 import 'package:mobile_app/ui/views/projects/project_preview_fullscreen_view.dart';
 import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
+import 'package:mobile_app/ui/views/simulator/vue_simulator_view.dart';
 import 'package:mobile_app/ui/views/teachers/teachers_view.dart';
 
 class CVRouter {
@@ -43,6 +44,10 @@ class CVRouter {
           const SimulatorView(),
           settings: RouteSettings(name: SimulatorView.id, arguments: project),
         );
+      case VueSimulatorView.id:
+        // Optional: a Project to open, otherwise a blank circuit.
+        final vueProject = settings.arguments as Project?;
+        return _buildRoute(VueSimulatorView(projectId: vueProject?.id));
       case TeachersView.id:
         return _buildRoute(const TeachersView());
       case ContributorsView.id:
