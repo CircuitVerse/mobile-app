@@ -22,9 +22,17 @@ A detailed guide for multiple platforms setup can be found [in the Flutter insta
 
 ### Setup Project
 
-- Clone this repository using `git clone https://github.com/CircuitVerse/mobile-app.git`.
+- Clone this repository **with its submodules**:
+```
+git clone --recurse-submodules https://github.com/CircuitVerse/mobile-app.git
+```
+> The [cv-frontend-vue](https://github.com/CircuitVerse/cv-frontend-vue) simulator is a submodule at `vue/`. If you already cloned without `--recurse-submodules`, run `git submodule update --init --recursive` to fetch it.
 - `cd` into `mobile_app`.
 - `flutter pub get` to get all the dependencies.
+- Build the bundled Vue simulator (**required** — the app's asset bundle points at its build output):
+```
+dart run tool/build_vue_simulator.dart
+```
 - Generate files using Builder Runner (**required**) 
 ```
 flutter pub run build_runner build --delete-conflicting-outputs
