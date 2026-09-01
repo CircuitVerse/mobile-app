@@ -5,6 +5,7 @@ import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/ib_theme.dart';
 import 'package:mobile_app/models/ib/ib_chapter.dart';
 import 'package:mobile_app/ui/components/cv_drawer_tile.dart';
+import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_page_view.dart';
@@ -285,7 +286,9 @@ class _IbLandingViewState extends State<IbLandingView> {
                           : IbTheme.textColor(context),
                 ),
               ),
-              if (!_model.isSuccess(_model.IB_FETCH_CHAPTERS))
+              if (_model.isError(_model.IB_FETCH_CHAPTERS))
+                CVException(_model.errorMessageFor(_model.IB_FETCH_CHAPTERS))
+              else if (!_model.isSuccess(_model.IB_FETCH_CHAPTERS))
                 ListTile(
                   leading: const SizedBox(
                     width: 24,

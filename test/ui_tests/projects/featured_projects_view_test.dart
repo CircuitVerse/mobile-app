@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
+import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/views/projects/components/featured_project_card.dart';
 import 'package:mobile_app/ui/views/projects/featured_projects_view.dart';
@@ -116,6 +117,41 @@ void main() {
         verify(mockObserver.didPush(any, any));
         expect(find.byType(ProjectDetailsView), findsOneWidget);
       });
+    });
+
+    testWidgets('shows error widget when featured projects fail to load', (
+      WidgetTester tester,
+    ) async {
+      var model = MockFeaturedProjectsViewModel();
+      locator.registerSingleton<FeaturedProjectsViewModel>(model);
+
+      when(
+        model.FETCH_FEATURED_PROJECTS,
+      ).thenAnswer((_) => 'fetch_featured_projects');
+      when(model.SEARCH_PROJECTS).thenAnswer((_) => 'search_projects');
+      when(model.isBusy(any)).thenAnswer((_) => false);
+      when(model.isSuccess(any)).thenAnswer((_) => false);
+      when(model.isError(any)).thenAnswer((_) => true);
+      when(
+        model.errorMessageFor(any),
+      ).thenAnswer((_) => 'Error During Communication');
+      when(model.fetchFeaturedProjects()).thenReturn(null);
+      when(model.projects).thenAnswer((_) => <Project>[]);
+      when(model.showSearchBar).thenAnswer((_) => false);
+      when(model.previousProjectsBatch).thenAnswer((_) => null);
+
+      await tester.pumpWidget(
+        GetMaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          locale: const Locale('en'),
+          onGenerateRoute: CVRouter.generateRoute,
+          home: const FeaturedProjectsView(),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.byType(CVException), findsOneWidget);
+      expect(find.text('Error During Communication'), findsOneWidget);
     });
   });
 }
