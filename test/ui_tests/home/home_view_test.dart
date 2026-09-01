@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/ui/components/cv_outline_button.dart';
 import 'package:mobile_app/ui/components/cv_subheader.dart';
-import 'package:mobile_app/ui/views/home/components/feature_card.dart';
+import 'package:mobile_app/ui/views/home/components/features.dart';
 import 'package:mobile_app/ui/views/home/home_view.dart';
 import 'package:mobile_app/utils/router.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
