@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/ib_theme.dart';
+import 'package:mobile_app/features/interactive-book/ui/theme.dart';
 
 class BulletPointsWidget extends StatelessWidget {
   final List<String> bulletPoints;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/models/widgets_models/number_points.dart';
 import 'package:mobile_app/features/interactive-book/ui/widgets/bullet_points.dart';
-import 'package:mobile_app/ib_theme.dart';
+import 'package:mobile_app/features/interactive-book/ui/theme.dart';
 
 class NumberPointsWidget extends StatelessWidget {
   final List<ItemModel> items;
