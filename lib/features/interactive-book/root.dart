@@ -19,7 +19,6 @@ class Root extends StatefulWidget {
 }
 
 class _RootState extends State<Root> {
-  bool isLoading = true;
   IbPage currentPage = IbPage.home;
   bool showBackArrow = false;
   bool showForwardArrow = true;
@@ -28,6 +27,11 @@ class _RootState extends State<Root> {
 
   late Future<InteractiveBookNavbarModel> navbarData;
 
+  /// Resolved copy of [navbarData]. The content API addresses chapter pages by
+  /// slug, and the navbar is the only thing that knows a chapter's slug.
+  InteractiveBookNavbarModel? _navbar;
+  Object? _navbarError;
+
   final BookProgress progress = BookProgress();
   final OfflineLibrary offline = OfflineLibrary();
 
@@ -35,8 +39,18 @@ class _RootState extends State<Root> {
   void initState() {
     super.initState();
     navbarData = NavbarService().getChapters();
+    _resolveNavbar();
     progress.load();
     offline.refresh();
+  }
+
+  Future<void> _resolveNavbar() async {
+    try {
+      final data = await navbarData;
+      if (mounted) setState(() => _navbar = data);
+    } catch (error) {
+      if (mounted) setState(() => _navbarError = error);
+    }
   }
 
   @override
@@ -169,18 +183,28 @@ class _RootState extends State<Root> {
         navbarData: navbarData,
         progress: progress,
       );
-    } else {
-      return Renderer(
-        page: currentPage,
-        chapterNumber: chapterNumber,
-        subChapterNumber: subChapterNumber,
-        incrementChapter: incrementChapter,
-        decrementChapter: decrementChapter,
-        showBackArrow: showBackArrow,
-        showForwardArrow: showForwardArrow,
-        navigateToChapter: navigateToChapter,
-      );
     }
+
+    // Chapter pages cannot be fetched until the navbar has supplied the
+    // chapter's slug. About and Guidelines have endpoints of their own.
+    if (currentPage == IbPage.chapter && _navbar == null) {
+      if (_navbarError != null) {
+        return Center(child: Text(_navbarError.toString()));
+      }
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return Renderer(
+      page: currentPage,
+      chapterNumber: chapterNumber,
+      subChapterNumber: subChapterNumber,
+      chapterPath: _navbar?.chapterById(chapterNumber)?.path ?? '',
+      incrementChapter: incrementChapter,
+      decrementChapter: decrementChapter,
+      showBackArrow: showBackArrow,
+      showForwardArrow: showForwardArrow,
+      navigateToChapter: navigateToChapter,
+    );
   }
 
   @override

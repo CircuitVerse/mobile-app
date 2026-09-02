@@ -10,12 +10,14 @@ class IbApi {
 
   static String get _baseUrl => EnvironmentConfig.IB_API_BASE_URL;
 
-  static Uri navbar() => Uri.parse('$_baseUrl/navbar');
+  static Uri navbar() => Uri.parse('$_baseUrl/navbar.json');
 
-  static Uri about() => Uri.parse('$_baseUrl/about');
+  static Uri about() => Uri.parse('$_baseUrl/about.json');
 
-  static Uri guidelines() => Uri.parse('$_baseUrl/guidelines');
+  static Uri guidelines() => Uri.parse('$_baseUrl/guidelines.json');
 
-  static Uri page(int chapterId, int subChapterId) =>
-      Uri.parse('$_baseUrl/?chapter_id=$chapterId&sub_chapter_id=$subChapterId');
+  /// A chapter page, addressed by the chapter's slug. Sub-chapter `0` is the
+  /// chapter's intro page.
+  static Uri page(String chapterPath, int subChapterId) =>
+      Uri.parse('$_baseUrl/$chapterPath/$subChapterId.json');
 }

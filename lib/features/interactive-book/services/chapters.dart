@@ -8,16 +8,17 @@ import 'package:mobile_app/features/interactive-book/services/offline.dart';
 class BookChaptersService {
   /// Fetches a chapter page, preferring the network so downloaded content
   /// stays fresh and falling back to the offline cache when the request fails.
-  Future<ScreenModel> getChapters({
-    String chapterId = '1',
-    String subChapterId = '0',
+  ///
+  /// The API addresses pages by the chapter's slug, while the cache is keyed by
+  /// id so navigation, progress and cache keys all speak the same language.
+  Future<ScreenModel> getChapter({
+    required String chapterPath,
+    required int chapterId,
+    required int subChapterId,
   }) {
-    final chapter = int.tryParse(chapterId) ?? 1;
-    final subChapter = int.tryParse(subChapterId) ?? 0;
-
     return _load(
-      IbApi.page(chapter, subChapter),
-      OfflineLibrary.pageKey(chapter, subChapter),
+      IbApi.page(chapterPath, subChapterId),
+      OfflineLibrary.pageKey(chapterId, subChapterId),
     );
   }
 

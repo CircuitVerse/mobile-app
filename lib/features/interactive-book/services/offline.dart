@@ -106,12 +106,12 @@ class OfflineLibrary extends ChangeNotifier {
     for (final chapter in navbar.chapters) {
       // Sub-chapter 0 is the chapter intro page.
       requests.add((
-        uri: IbApi.page(chapter.id, 0),
+        uri: IbApi.page(chapter.path, 0),
         key: pageKey(chapter.id, 0),
       ));
       for (final sub in chapter.subChapters) {
         requests.add((
-          uri: IbApi.page(chapter.id, sub.id),
+          uri: IbApi.page(chapter.path, sub.id),
           key: pageKey(chapter.id, sub.id),
         ));
       }

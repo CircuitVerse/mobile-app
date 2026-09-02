@@ -10,6 +10,10 @@ class Renderer extends StatefulWidget {
   final IbPage page;
   final int chapterNumber;
   final int subChapterNumber;
+
+  /// Slug of the chapter being shown. Unused by About and Guidelines, which
+  /// have endpoints of their own.
+  final String chapterPath;
   final bool showBackArrow;
   final bool showForwardArrow;
   final VoidCallback incrementChapter;
@@ -21,6 +25,7 @@ class Renderer extends StatefulWidget {
     required this.page,
     required this.chapterNumber,
     required this.subChapterNumber,
+    required this.chapterPath,
     required this.showBackArrow,
     required this.showForwardArrow,
     required this.incrementChapter,
@@ -107,9 +112,10 @@ class _RendererState extends State<Renderer> {
     if (widget.page == IbPage.about || widget.page == IbPage.guidelines) {
       return BookChaptersService().getStaticPage(widget.page);
     }
-    return BookChaptersService().getChapters(
-      chapterId: widget.chapterNumber.toString(),
-      subChapterId: widget.subChapterNumber.toString(),
+    return BookChaptersService().getChapter(
+      chapterPath: widget.chapterPath,
+      chapterId: widget.chapterNumber,
+      subChapterId: widget.subChapterNumber,
     );
   }
 
