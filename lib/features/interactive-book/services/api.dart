@@ -1,19 +1,21 @@
-/// Endpoints for the dedicated Interactive Book backend.
+import 'package:mobile_app/config/environment_config.dart';
+
+/// Endpoints for the Interactive Book content API.
+///
+/// The host is supplied by [EnvironmentConfig.IB_API_BASE_URL] so it can be
+/// pointed at a local backend at build time:
+/// `flutter run --dart-define=IB_API_BASE_URL=http://localhost:8000/api`
 class IbApi {
   IbApi._();
 
-  static const String baseUrlDev = "http://localhost:8000";
-  static const String baseUrlProd =
-      "https://cv-mobile-backend.fastapicloud.dev";
+  static String get _baseUrl => EnvironmentConfig.IB_API_BASE_URL;
 
-  static const String baseUrl = baseUrlProd;
+  static Uri navbar() => Uri.parse('$_baseUrl/navbar');
 
-  static Uri navbar() => Uri.parse("$baseUrl/navbar");
+  static Uri about() => Uri.parse('$_baseUrl/about');
 
-  static Uri about() => Uri.parse("$baseUrl/about");
-
-  static Uri guidelines() => Uri.parse("$baseUrl/guidelines");
+  static Uri guidelines() => Uri.parse('$_baseUrl/guidelines');
 
   static Uri page(int chapterId, int subChapterId) =>
-      Uri.parse("$baseUrl/?chapter_id=$chapterId&sub_chapter_id=$subChapterId");
+      Uri.parse('$_baseUrl/?chapter_id=$chapterId&sub_chapter_id=$subChapterId');
 }
