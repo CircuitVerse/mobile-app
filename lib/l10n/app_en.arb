@@ -257,7 +257,6 @@
   "my_groups_joined": "Joined",
   "my_groups_edit": "Edit",
 
-
   "@new_group_view": {},
   "new_group_creating": "Creating...",
   "new_group_created": "Group Created",
@@ -282,25 +281,6 @@
   "update_assignment_updated": "Assignment Updated",
   "update_assignment_update_success": "Assignment was updated successfully",
   "update_assignment_error": "Error",
-
-  "@ib_landing_view": {},
-  "ib_search_circuitverse": "Search CircuitVerse",
-  "ib_navigate_chapters": "Navigate to different chapters",
-  "ib_circuitverse": "CircuitVerse",
-  "ib_interactive_book": "Interactive Book",
-  "ib_return_home": "Return to Home",
-  "ib_home": "Interactive Book Home",
-  "ib_loading_chapters": "Loading Chapters...",
-  "ib_show_toc": "Show Table of Contents",
-
-  "@ib_page_view": {},
-  "ib_page_copyright_notice": "Copyright © 2021 Contributors to CircuitVerse. Distributed under a [CC-by-sa] license.",
-  "ib_page_table_of_contents": "Table of Contents",
-  "ib_page_navigate_previous": "Tap to navigate to previous page",
-  "ib_page_navigate_next": "Tap to navigate to next page",
-  "ib_page_loading_image": "Loading image...",
-  "ib_page_image_load_error": "Failed to load image",
-  "ib_page_no_image_source": "No image source provided",
 
   "@notifications_view": {},
   "notifications_no_notifications": "No notifications yet",
