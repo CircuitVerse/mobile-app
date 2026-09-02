@@ -9,7 +9,7 @@ import 'package:mobile_app/ui/components/cv_html_editor.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
-import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
+import 'package:mobile_app/ui/views/simulator/vue_simulator_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/projects/edit_project_viewmodel.dart';
@@ -224,7 +224,7 @@ class _EditProjectViewState extends State<EditProjectView> {
   Future<void> _openInSimulator() async {
     try {
       final result = await Get.toNamed(
-        SimulatorView.id,
+        VueSimulatorView.id,
         arguments: widget.project,
       );
 

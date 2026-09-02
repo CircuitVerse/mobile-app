@@ -1,0 +1,3 @@
+[submodule "vue"]
+	path = vue
+	url = https://github.com/CircuitVerse/cv-frontend-vue

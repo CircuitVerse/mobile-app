@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
 import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
+import 'package:mobile_app/ui/views/simulator/vue_simulator_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -156,6 +157,16 @@ class CVDrawer extends StatelessWidget {
                 _model.setSelectedIndexTo(5);
               }
             }
+          },
+        ),
+
+        ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+          leading: const Icon(FontAwesome5.microchip),
+          title: const Text('Vue Simulator'),
+          onTap: () {
+            Navigator.pop(context);
+            Get.toNamed(VueSimulatorView.id);
           },
         ),
 

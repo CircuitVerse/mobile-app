@@ -39,6 +39,7 @@ import 'package:mobile_app/viewmodels/projects/edit_project_viewmodel.dart';
 import 'package:mobile_app/viewmodels/projects/featured_projects_viewmodel.dart';
 import 'package:mobile_app/viewmodels/projects/project_details_viewmodel.dart';
 import 'package:mobile_app/viewmodels/simulator/simulator_viewmodel.dart';
+import 'package:mobile_app/viewmodels/simulator/vue_simulator_viewmodel.dart';
 import 'package:mobile_app/viewmodels/startup/startup_viewmodel.dart';
 import 'package:mobile_app/viewmodels/about/about_viewmodel.dart';
 
@@ -120,6 +121,7 @@ Future<void> setupLocator() async {
 
   // Simulator ViewModel
   locator.registerFactory(() => SimulatorViewModel());
+  locator.registerFactory(() => VueSimulatorViewModel());
 
   // Notification ViewModel
   locator.registerLazySingleton(() => NotificationsViewModel());
