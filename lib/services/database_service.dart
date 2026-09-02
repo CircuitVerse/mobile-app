@@ -1,10 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:mobile_app/models/ib/ib_raw_page_data.dart';
 
-enum DatabaseBox { Metadata, IB }
-
-List<TypeAdapter> DatabaseAdapters = <TypeAdapter>[IbRawPageDataAdapter()];
+enum DatabaseBox { Metadata, Cache }
 
 extension DatabaseBoxExt on DatabaseBox {
   String get inString => name;
@@ -33,11 +30,6 @@ class DatabaseServiceImpl implements DatabaseService {
       await Hive.initFlutter();
     } catch (e) {
       debugPrint('Hive Initialization Failed');
-    }
-
-    // Register Adapters for Hive
-    for (var adapter in DatabaseAdapters) {
-      Hive.registerAdapter(adapter);
     }
   }
 

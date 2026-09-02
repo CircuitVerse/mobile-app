@@ -5,7 +5,7 @@ import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
-import 'package:mobile_app/features/interactive-book/root.dart' as ib_root;
+import 'package:mobile_app/features/interactive-book/root.dart';
 import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
@@ -127,10 +127,10 @@ class CVDrawer extends StatelessWidget {
         ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 28),
           leading: const Icon(Icons.chrome_reader_mode),
-          title: Text("Interactive Book"),
+          title: Text(AppLocalizations.of(context)!.cv_interactive_book),
           onTap: () {
             Navigator.pop(context);
-            Get.to(() => ib_root.Root());
+            Get.toNamed(Root.id);
           },
         ),
         ListTile(

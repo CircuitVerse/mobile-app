@@ -10,6 +10,8 @@ import 'package:mobile_app/features/interactive-book/services/offline.dart';
 import 'package:mobile_app/features/interactive-book/services/progress.dart';
 
 class Root extends StatefulWidget {
+  static const String id = 'interactive_book_view';
+
   const Root({super.key});
 
   @override

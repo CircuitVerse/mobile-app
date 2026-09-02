@@ -23,8 +23,8 @@ void main() {
     test('Set and Get data from a box', () async {
       await Hive.deleteFromDisk();
 
-      await db.setData(DatabaseBox.IB, 'test', 'test value');
-      var expectedData = await db.getData(DatabaseBox.IB, 'test');
+      await db.setData(DatabaseBox.Cache, 'test', 'test value');
+      var expectedData = await db.getData(DatabaseBox.Cache, 'test');
 
       expect(expectedData, 'test value');
     });
@@ -32,7 +32,7 @@ void main() {
     test('Get non-existent data from a box', () async {
       await Hive.deleteFromDisk();
 
-      var expectedData = await db.getData(DatabaseBox.IB, 'test-2');
+      var expectedData = await db.getData(DatabaseBox.Cache, 'test-2');
       expect(expectedData, null);
     });
 
@@ -40,7 +40,7 @@ void main() {
       await Hive.deleteFromDisk();
 
       var expectedData = await db.getData(
-        DatabaseBox.IB,
+        DatabaseBox.Cache,
         'test-3',
         defaultValue: 'test',
       );
