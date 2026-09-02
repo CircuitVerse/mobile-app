@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -12,13 +13,20 @@ import 'package:mobile_app/config/environment_config.dart';
 /// requests to CircuitVerse with the user's token. Serving both from one origin
 /// is what lets the Vue app save online without any changes to it.
 class VueSimulatorServer {
-  VueSimulatorServer({required this.documentRoot, required this.tokenProvider});
+  VueSimulatorServer({
+    required this.documentRoot,
+    required this.tokenProvider,
+    this.projectId,
+  });
 
   /// Asset directory holding the bundle, without a trailing slash.
   final String documentRoot;
 
   /// Current session token, read per request so a login is picked up.
   final String? Function() tokenProvider;
+
+  /// Project the simulator should open. Null opens a blank circuit.
+  String? projectId;
 
   static const String _apiPrefix = '/api/v1';
 
@@ -88,8 +96,30 @@ class VueSimulatorServer {
       return;
     }
 
+    if (path.endsWith('index.html')) {
+      request.response.headers.contentType = ContentType.html;
+      request.response.write(
+        _withGlobals(utf8.decode(data.buffer.asUint8List())),
+      );
+      return;
+    }
+
     request.response.headers.contentType = _contentTypeFor(path);
     request.response.add(data.buffer.asUint8List());
+  }
+
+  /// Inlines the globals the simulator boots from, as circuitverse.org does in
+  /// its own template. v0 keeps whatever is already set
+  /// (`window.logixProjectId ?? undefined`), so this survives startup.
+  String _withGlobals(String html) {
+    final signedIn = tokenProvider() != null;
+    final script =
+        '<script>'
+        'window.logixProjectId = ${jsonEncode(projectId)};'
+        'window.isUserLoggedIn = $signedIn;'
+        'window.embed = false;'
+        '</script>';
+    return html.replaceFirst('<head>', '<head>\n    $script');
   }
 
   Future<void> _proxy(HttpRequest request) async {

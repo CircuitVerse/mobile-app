@@ -3,11 +3,10 @@
 // again after updating the submodule.
 //
 // Usage:  dart run tool/build_vue_simulator.dart [path-to-cv-frontend-vue]
-//         INCLUDE_YOSYS=1 ...   also ship Verilog synthesis (~47 MB)
 
 import 'dart:io';
 
-const simVersion = 'v1';
+const simVersion = 'v0';
 
 void main(List<String> args) async {
   final appRoot = File.fromUri(Platform.script).parent.parent.path;
@@ -39,16 +38,8 @@ void main(List<String> args) async {
 
   final buildOut = p(vueDir, 'dist/simulatorvue/$simVersion');
 
-  // An asset directory ships everything inside it and Flutter has no exclude
-  // option, so unwanted files have to go.
-  if (Platform.environment['INCLUDE_YOSYS'] != '1') {
-    stdout.writeln('==> dropping the Verilog synthesis payload (~47 MB)');
-    for (final f in Directory(p(buildOut, 'assets')).listSync()) {
-      if (f.path.split(Platform.pathSeparator).last.startsWith('yosys')) {
-        f.deleteSync();
-      }
-    }
-  }
+  // v0 has no bundled yosys: it synthesises Verilog through
+  // /api/v1/simulator/verilogcv, which the app's server proxies.
 
   // index.html loads jQuery from a CDN, which is no use offline. Dropping the
   // tag is not an option either: parts of the bundle read the global $ before

@@ -94,8 +94,8 @@ flutter:
     - assets/images/profile/
     - assets/images/projects/
     # Built by tool/build_vue_simulator.dart; not committed.
-    - vue/dist/simulatorvue/v1/
-    - vue/dist/simulatorvue/v1/assets/
+    - vue/dist/simulatorvue/v0/
+    - vue/dist/simulatorvue/v0/assets/
 
   fonts:
     - family: Poppins

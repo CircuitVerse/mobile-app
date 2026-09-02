@@ -11,7 +11,7 @@ import 'package:mobile_app/services/vue_simulator_server.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 import 'package:mobile_app/viewmodels/simulator/simulator_viewmodel.dart';
 
-/// Runs the bundled Vue simulator (cv-frontend-vue v1) on a local server.
+/// Runs the bundled Vue simulator (cv-frontend-vue v0) on a local server.
 ///
 /// The bundle cannot be loaded from `file://`: it is an ES module build that
 /// also spawns a worker and calls fetch, all blocked without a real origin.
@@ -20,7 +20,7 @@ class VueSimulatorViewModel extends BaseModel {
   static const String SIMULATOR = 'vue_simulator';
 
   /// Built by tool/build_vue_simulator.dart, bundled via pubspec.yaml.
-  static const String _documentRoot = 'vue/dist/simulatorvue/v1';
+  static const String _documentRoot = 'vue/dist/simulatorvue/v0';
 
   final LocalStorageService _storage = locator<LocalStorageService>();
 
@@ -34,6 +34,9 @@ class VueSimulatorViewModel extends BaseModel {
       );
 
   String get url => _serverInstance.url;
+
+  /// Project the simulator opens on load. Set before the webview is built.
+  set projectId(String? id) => _serverInstance.projectId = id;
 
   /// Port the server bound to. Valid once it has started.
   int get port => _serverInstance.port;
@@ -54,8 +57,9 @@ class VueSimulatorViewModel extends BaseModel {
     }
   }
 
-  Future<void> onModelReady() async {
+  Future<void> onModelReady([String? projectId]) async {
     setStateFor(SIMULATOR, ViewState.Busy);
+    _serverInstance.projectId = projectId;
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,

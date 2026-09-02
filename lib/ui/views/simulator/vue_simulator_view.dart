@@ -1,6 +1,3 @@
-import 'dart:collection';
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -31,37 +28,16 @@ class VueSimulatorView extends StatefulWidget {
 class _VueSimulatorViewState extends State<VueSimulatorView> {
   InAppWebViewController? _webViewController;
 
-  /// Script that puts a project id where the bundle looks for it.
-  ///
-  /// It has to run at document start, and has to be an accessor: the bundle
-  /// sets `logixProjectId = undefined` while booting, which would wipe a plain
-  /// assignment. Making it read-only instead would throw, as the bundle is an
-  /// ES module.
-  static UserScript _projectIdScript(String projectId) => UserScript(
-    // jsonEncode gives a safely quoted and escaped JavaScript string.
-    source: '''
-(function () {
-  var id = ${jsonEncode(projectId)};
-  Object.defineProperty(window, 'logixProjectId', {
-    configurable: true,
-    get: function () { return id; },
-    set: function (value) { if (value !== undefined && value !== null) id = value; }
-  });
-})();
-''',
-    injectionTime: UserScriptInjectionTime.AT_DOCUMENT_START,
-  );
-
-  /// Reopens a project by reloading the bundle with its id in place.
+  /// Reopens a project by pointing the server at it and reloading. The page
+  /// picks the id up from the globals the server inlines.
   Future<void> _openProject(
     InAppWebViewController controller,
+    VueSimulatorViewModel model,
     String projectId,
-    String url,
   ) async {
-    await controller.removeAllUserScripts();
-    await controller.addUserScript(userScript: _projectIdScript(projectId));
+    model.projectId = projectId;
     debugPrint('[vue-sim] reopening project $projectId');
-    await controller.loadUrl(urlRequest: URLRequest(url: WebUri(url)));
+    await controller.loadUrl(urlRequest: URLRequest(url: WebUri(model.url)));
   }
 
   /// Shows a project on the app's own screen instead of the website.
@@ -107,7 +83,7 @@ class _VueSimulatorViewState extends State<VueSimulatorView> {
     // No SafeArea: the simulator runs edge to edge, cutout included.
     return Scaffold(
       body: BaseView<VueSimulatorViewModel>(
-        onModelReady: (model) => model.onModelReady(),
+        onModelReady: (model) => model.onModelReady(widget.projectId),
         onModelDestroy: (model) => model.onModelDestroy(),
         builder: (context, model, child) {
           if (model.isError(VueSimulatorViewModel.SIMULATOR)) {
@@ -146,13 +122,6 @@ class _VueSimulatorViewState extends State<VueSimulatorView> {
                     allowsInlineMediaPlayback: true,
                     mediaPlaybackRequiresUserGesture: false,
                   ),
-                  // Registered up front: the bundle reads the id before mount.
-                  initialUserScripts:
-                      widget.projectId == null
-                          ? null
-                          : UnmodifiableListView([
-                            _projectIdScript(widget.projectId!),
-                          ]),
                   onWebViewCreated: (controller) {
                     _webViewController = controller;
                   },
@@ -201,7 +170,7 @@ class _VueSimulatorViewState extends State<VueSimulatorView> {
                       case StayOnCurrentPage():
                         debugPrint('[vue-sim] absorbed redirect ${uri.path}');
                       case OpenProject(:final projectId):
-                        await _openProject(controller, projectId, model.url);
+                        await _openProject(controller, model, projectId);
                       case OpenAppScreen():
                         await _openAppScreen(destination);
                       case OpenProjectPage(:final projectId):
