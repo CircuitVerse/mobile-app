@@ -83,21 +83,22 @@ class _RootState extends State<Root> {
 
   Future<void> incrementChapter() async {
     final data = await navbarData;
+    final index = data.indexOfChapter(chapterNumber);
+    if (index < 0) return;
+
     int newChapter = chapterNumber;
     int newSubChapter = subChapterNumber;
     bool newBackArrow = true;
     bool newForwardArrow = true;
-    if (data.chapters[chapterNumber - 1].subChapters.length >
-        subChapterNumber) {
-      newChapter = chapterNumber;
+    if (data.chapters[index].subChapters.length > subChapterNumber) {
       newSubChapter = subChapterNumber + 1;
-    } else if (data.chapters.length > chapterNumber) {
-      newChapter = chapterNumber + 1;
+    } else if (index + 1 < data.chapters.length) {
+      newChapter = data.chapters[index + 1].id;
       newSubChapter = 0;
     } else {
       newForwardArrow = false;
     }
-    if (newChapter == 1 && newSubChapter == 0) {
+    if (newChapter == data.chapters.first.id && newSubChapter == 0) {
       newBackArrow = false;
     }
     setState(() {
@@ -111,28 +112,27 @@ class _RootState extends State<Root> {
 
   Future<void> decrementChapter() async {
     final data = await navbarData;
+    final index = data.indexOfChapter(chapterNumber);
+    if (index < 0) return;
+
     int newChapter = chapterNumber;
     int newSubChapter = subChapterNumber;
     bool newBackArrow = true;
-    bool newForwardArrow = true;
     if (subChapterNumber > 0) {
-      newChapter = chapterNumber;
       newSubChapter = subChapterNumber - 1;
-    } else if (chapterNumber > 1) {
-      newChapter = chapterNumber - 1;
-      newSubChapter = data.chapters[newChapter - 1].subChapters.length - 1;
+    } else if (index > 0) {
+      final previous = data.chapters[index - 1];
+      newChapter = previous.id;
+      newSubChapter = previous.subChapters.length;
     } else {
       newBackArrow = false;
-    }
-    if (newChapter == data.chapters.length &&
-        newSubChapter == data.chapters[newChapter - 1].subChapters.length - 2) {
-      newForwardArrow = true;
     }
     setState(() {
       chapterNumber = newChapter;
       subChapterNumber = newSubChapter;
       showBackArrow = newBackArrow;
-      showForwardArrow = newForwardArrow;
+      // Stepping back always leaves a page ahead to return to.
+      showForwardArrow = true;
     });
     await progress.visit(newChapter, newSubChapter);
   }
@@ -156,21 +156,24 @@ class _RootState extends State<Root> {
 
   Future<void> navigateToChapter(int chapter, int subChapter) async {
     final data = await navbarData;
+    final index = data.indexOfChapter(chapter);
+
+    // The last page of the last chapter is the end of the book; the intro of
+    // the first chapter is the start.
+    final isLastChapter = index == data.chapters.length - 1;
+    final isLastPage =
+        index >= 0 && subChapter == data.chapters[index].subChapters.length;
+    final isFirstPage =
+        data.chapters.isNotEmpty &&
+        chapter == data.chapters.first.id &&
+        subChapter == 0;
+
     setState(() {
       currentPage = IbPage.chapter;
       chapterNumber = chapter;
       subChapterNumber = subChapter;
-      if (!(chapter == 1 && subChapter == 0)) {
-        showBackArrow = true;
-      } else {
-        showBackArrow = false;
-      }
-      if (chapter == data.chapters.length &&
-          subChapter == data.chapters[chapter - 1].subChapters.length - 1) {
-        showForwardArrow = false;
-      } else {
-        showForwardArrow = true;
-      }
+      showBackArrow = !isFirstPage;
+      showForwardArrow = !(isLastChapter && isLastPage);
     });
     await progress.visit(chapter, subChapter);
   }
@@ -187,18 +190,30 @@ class _RootState extends State<Root> {
 
     // Chapter pages cannot be fetched until the navbar has supplied the
     // chapter's slug. About and Guidelines have endpoints of their own.
-    if (currentPage == IbPage.chapter && _navbar == null) {
-      if (_navbarError != null) {
-        return Center(child: Text(_navbarError.toString()));
+    var chapterPath = '';
+    if (currentPage == IbPage.chapter) {
+      if (_navbar == null) {
+        if (_navbarError != null) {
+          return Center(child: Text(_navbarError.toString()));
+        }
+        return const Center(child: CircularProgressIndicator());
       }
-      return const Center(child: CircularProgressIndicator());
+
+      final chapter = _navbar!.chapterById(chapterNumber);
+      if (chapter == null) {
+        // Better to say so than to request a page under an empty slug.
+        return Center(
+          child: Text('Chapter $chapterNumber is not part of this book.'),
+        );
+      }
+      chapterPath = chapter.path;
     }
 
     return Renderer(
       page: currentPage,
       chapterNumber: chapterNumber,
       subChapterNumber: subChapterNumber,
-      chapterPath: _navbar?.chapterById(chapterNumber)?.path ?? '',
+      chapterPath: chapterPath,
       incrementChapter: incrementChapter,
       decrementChapter: decrementChapter,
       showBackArrow: showBackArrow,

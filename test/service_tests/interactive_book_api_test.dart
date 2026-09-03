@@ -39,5 +39,31 @@ void main() {
       expect(navbar.chapterById(1)?.subChapters.single.name, 'Binary numbers');
       expect(navbar.chapterById(99), isNull);
     });
+
+    test('skips chapters that cannot be addressed instead of throwing', () {
+      final navbar = InteractiveBookNavbarModel.fromJson({
+        'chapters': [
+          {'id': 1, 'name': 'No slug', 'sub-chapters': []},
+          {'id': 2, 'name': 'Empty slug', 'path': '', 'sub-chapters': []},
+          {'id': 3, 'name': 'Fine', 'path': 'comb-ssi', 'sub-chapters': []},
+        ],
+      });
+
+      expect(navbar.chapters.map((c) => c.id), [3]);
+    });
+
+    test('reading order comes from the list, not from the ids', () {
+      final navbar = InteractiveBookNavbarModel.fromJson({
+        'chapters': [
+          {'id': 4, 'name': 'First', 'path': 'first', 'sub-chapters': []},
+          {'id': 9, 'name': 'Second', 'path': 'second', 'sub-chapters': []},
+        ],
+      });
+
+      expect(navbar.indexOfChapter(4), 0);
+      expect(navbar.indexOfChapter(9), 1);
+      expect(navbar.indexOfChapter(2), -1);
+      expect(navbar.chapterById(9)?.path, 'second');
+    });
   });
 }
