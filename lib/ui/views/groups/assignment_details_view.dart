@@ -10,6 +10,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/assignments.dart';
 import 'package:mobile_app/models/grade.dart';
 import 'package:mobile_app/services/dialog_service.dart';
+import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -523,6 +524,10 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
                           const SizedBox(height: 16),
                           _buildGrades(),
                         ],
+                      ),
+                    if (_model.isError(_model.FETCH_ASSIGNMENT_DETAILS))
+                      CVException(
+                        _model.errorMessageFor(_model.FETCH_ASSIGNMENT_DETAILS),
                       ),
                   ],
                 );

@@ -8,6 +8,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/collaborators.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/dialog_service.dart';
+import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/ui/components/cv_flat_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
@@ -767,6 +768,13 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     for (var collaborator in _model.collaborators) {
                       _items.add(_buildCollaborator(collaborator));
                     }
+                  }
+                  if (_model.isError(_model.FETCH_PROJECT_DETAILS)) {
+                    _items.add(
+                      CVException(
+                        _model.errorMessageFor(_model.FETCH_PROJECT_DETAILS),
+                      ),
+                    );
                   }
                   return ListView(
                     shrinkWrap: true,

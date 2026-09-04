@@ -6,6 +6,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/services/dialog_service.dart';
 import 'package:mobile_app/ui/components/cv_add_icon_button.dart';
+import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/groups/components/group_member_card.dart';
 import 'package:mobile_app/ui/views/groups/components/group_mentor_card.dart';
@@ -175,7 +176,16 @@ class _MyGroupsViewState extends State<MyGroupsView>
                                     height:
                                         MediaQuery.of(context).size.height *
                                         0.7,
-                                    child: _emptyState(),
+                                    child:
+                                        _model.isError(
+                                              _model.FETCH_OWNED_GROUPS,
+                                            )
+                                            ? CVException(
+                                              _model.errorMessageFor(
+                                                _model.FETCH_OWNED_GROUPS,
+                                              ),
+                                            )
+                                            : _emptyState(),
                                   ),
                                 ],
                               )
@@ -196,7 +206,16 @@ class _MyGroupsViewState extends State<MyGroupsView>
                                     height:
                                         MediaQuery.of(context).size.height *
                                         0.7,
-                                    child: _emptyState(),
+                                    child:
+                                        _model.isError(
+                                              _model.FETCH_MEMBER_GROUPS,
+                                            )
+                                            ? CVException(
+                                              _model.errorMessageFor(
+                                                _model.FETCH_MEMBER_GROUPS,
+                                              ),
+                                            )
+                                            : _emptyState(),
                                   ),
                                 ],
                               )

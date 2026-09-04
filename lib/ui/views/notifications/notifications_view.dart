@@ -3,6 +3,7 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/enums/notification_type.dart';
+import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:mobile_app/viewmodels/notifications/notifications_viewmodel.dart';
@@ -92,6 +93,10 @@ class NotificationsView extends StatelessWidget {
               ),
             ],
           );
+        }
+
+        if (model.isError(model.FETCH_NOTIFICATIONS)) {
+          return CVException(model.errorMessageFor(model.FETCH_NOTIFICATIONS));
         }
 
         final hasNoNotifications = model.notifications.isEmpty;

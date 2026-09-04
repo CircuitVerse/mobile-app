@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_drawer.dart';
+import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -97,6 +98,18 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
             _items.add(const Center(child: CircularProgressIndicator()));
           }
 
+          _projects = _items;
+        }
+
+        if (model.isError(model.FETCH_FEATURED_PROJECTS)) {
+          _items.add(
+            CVException(model.errorMessageFor(model.FETCH_FEATURED_PROJECTS)),
+          );
+          _projects = _items;
+        }
+
+        if (model.isError(model.SEARCH_PROJECTS)) {
+          _items.add(CVException(model.errorMessageFor(model.SEARCH_PROJECTS)));
           _projects = _items;
         }
 

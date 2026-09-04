@@ -5,6 +5,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/assignments.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/services/dialog_service.dart';
+import 'package:mobile_app/ui/components/cv_exception.dart';
 import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/groups/add_assignment_view.dart';
@@ -574,6 +575,14 @@ class _GroupDetailsViewState extends State<GroupDetailsView> {
                       ),
                     );
                   }
+                }
+
+                if (_model.isError(_model.FETCH_GROUP_DETAILS)) {
+                  _items.add(
+                    CVException(
+                      _model.errorMessageFor(_model.FETCH_GROUP_DETAILS),
+                    ),
+                  );
                 }
 
                 return ListView(
