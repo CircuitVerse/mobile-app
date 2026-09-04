@@ -127,6 +127,9 @@ class _RootState extends State<Root> {
     } else {
       newBackArrow = false;
     }
+    if (newChapter == data.chapters.first.id && newSubChapter == 0) {
+      newBackArrow = false;
+    }
     setState(() {
       chapterNumber = newChapter;
       subChapterNumber = newSubChapter;
@@ -144,14 +147,21 @@ class _RootState extends State<Root> {
   }
 
   Future<void> getStarted() async {
+    final data = await navbarData;
+    if (data.chapters.isEmpty) return;
+
+    // Reading starts at the first chapter in the list, whose id is not
+    // necessarily 1 — ids are identifiers, not positions.
+    final first = data.chapters.first.id;
+
     setState(() {
       currentPage = IbPage.chapter;
-      chapterNumber = 1;
+      chapterNumber = first;
       subChapterNumber = 0;
       showBackArrow = false;
       showForwardArrow = true;
     });
-    await progress.visit(1, 0);
+    await progress.visit(first, 0);
   }
 
   Future<void> navigateToChapter(int chapter, int subChapter) async {
