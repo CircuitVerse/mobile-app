@@ -11,8 +11,8 @@ Follow these instructions to build and run the project
 
 ### Prerequisites
 
-- Flutter `3.32.2` (stable)
-- Dart `3.8.1`
+- Flutter `3.44.0` (stable) — the version CI builds against
+- Dart `3.12` (bundled with Flutter)
 
 > Tip: To ensure you’re always using the correct Flutter version, consider using [FVM (Flutter Version Manager)](https://fvm.app/) to manage versions.
 
@@ -58,9 +58,26 @@ flutter run -d chrome --web-browser-flag "--disable-web-security"
 
 > ⚠️ Only use `--disable-web-security` for **local development**. Never use it in production.
 
-### Android OAuth Config
+### Compile-time Configuration
 
-This project uses Flutter 3.32.2 and hence the support for compile-time variables. To use compile-time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
+This project uses Flutter 3.44.0 and hence the support for compile-time variables. To use compile-time variables pass them in `--dart-defines` as `flutter run --dart-define=VAR_NAME=VAR_VALUE`. Supported `dart-defines` include :
+
+#### API Configuration
+
+Both hosts default to production, so no configuration is needed to get started.
+
+| Variable | Default | Used for |
+| --- | --- | --- |
+| `CV_API_BASE_URL` | `https://circuitverse.org/api/v1` | CircuitVerse REST API |
+| `IB_API_BASE_URL` | `https://learn.circuitverse.org/api` | Interactive Book content API |
+
+To point the Interactive Book at a backend running locally:
+
+```bash
+flutter run --dart-define=IB_API_BASE_URL=http://localhost:8000/api
+```
+
+### Android OAuth Config
 
 #### GitHub Configuration
 
@@ -81,13 +98,20 @@ Note: The OAuth Configuration section is not mandatory to get started. To get ho
 ```bash
 mobile-app/lib/
 ├── config/                         # configuration files like environment_config
+├── controllers/                    # GetX controllers
+|   └── language_controller.dart    # active locale
+├── data/                           # static data tables
 ├── enums/                          # enum files
 |   └── view_state.dart             # defines view states i.e Idle, Busy, Error
 |   └── auth_state.dart             # defines auth states i.e logged in using Google/Github/Email
-├── l10n/                           # localization files like intl_en.arb
-├── locale/                         # AppLocalization & AppLocalizationDelegate
-├── managers/
-|   └── dialog_manager.dart         # show dialogs using dialog navigation key
+├── features/                       # self-contained features
+|   └── interactive-book/           # Interactive Book (see Features below)
+|      ├── models/                  # content API models, one per widget type
+|      ├── services/                # API, chapters, navbar, offline cache, progress
+|      ├── ui/                      # home, navbar, renderer and content widgets
+|      └── root.dart                # entry point and navigation state
+├── gen_l10n/                       # generated localizations (flutter gen-l10n)
+├── l10n/                           # localization files like app_en.arb
 ├── models/                         # model classes
 |   └── dialog_models.dart          # dialog request and response models
         ...
@@ -103,7 +127,7 @@ mobile-app/lib/
 |  └── components/                  # shared components
 ├── utils/                          # utilities such as api_utils routes.dart and styles.dart
 ├── viewmodels/                     # Viewmodels layer
-├── app_theme.dart                  # Shared App Colors/border decorations etc.
+├── cv_theme.dart                   # Shared App Colors/border decorations etc.
 ├── constants.dart                  # App constants
 ├── locator.dart                    # dependency injection using get_it
 ├── main.dart                       # <3 of the app
@@ -132,6 +156,19 @@ mobile-app/lib/
 - Add/Delete Collaborators.
 - Star Project to favourites.
 - View Projects you created/starred.
+
+### Interactive Book
+
+A guided digital logic course, rendered from a structured content API rather than
+bundled with the app.
+
+- Browse chapters and topics from a drawer that tracks reading progress.
+- Progress is stored on the device, so the home screen can resume at the next unread topic.
+- Download the whole book for offline reading, and clear it again from the same card.
+- Work through interactive widgets: a binary simulator, bitwise operators, logic gate
+  switches, character encoding, and inline pop quizzes.
+- Content is served from `IB_API_BASE_URL`, with chapter pages addressed by slug.
+  Requests prefer the network and fall back to the offline cache.
 
 ### Profile
 
