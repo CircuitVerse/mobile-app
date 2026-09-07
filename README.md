@@ -77,21 +77,20 @@ To point the Interactive Book at a backend running locally:
 flutter run --dart-define=IB_API_BASE_URL=http://localhost:8000/api
 ```
 
-### Android OAuth Config
+### Google Sign-In
 
-#### GitHub Configuration
+For Google OAuth we use [google_sign_in](https://pub.dev/packages/google_sign_in). **No setup is
+needed** — clone, run, and signing in with Google works.
 
-1. `GITHUB_OAUTH_CLIENT_ID`
-2. `GITHUB_OAUTH_CLIENT_SECRET`
+The app requests only the `email` scope and exchanges the resulting access token with the
+CircuitVerse API, so there is no client ID in the source and nothing to configure per machine. The
+OAuth client is registered in Google Cloud Platform against the package name
+(`org.circuitverse.mobile_app`) and the signing certificate's SHA-1 fingerprint; that is maintained
+centrally and does not need repeating for each contributor.
 
-#### Google Configuration
-
-For Google OAuth we use [google_sign_in](https://pub.dev/packages/google_sign_in). You'll require a Java KeyStore(`.jks`)
-
-1. Add `cv_debug.jks` in `android/app/`.
-2. Add `key.debug.properties` in `android/`.
-
-Note: The OAuth Configuration section is not mandatory to get started. To get hold of the above secrets/files drop a message on slack with clear requirements and we'll take care.
+Signing debug builds with a shared certificate is optional: if `android/key.debug.properties` and the
+keystore it points at are present, `android/app/build.gradle` uses them, and falls back to your local
+debug keystore when they are not.
 
 ## Project Structure
 
