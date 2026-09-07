@@ -799,52 +799,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get update_assignment_error => 'خطأ';
 
   @override
-  String get ib_search_circuitverse => 'ابحث في CircuitVerse';
-
-  @override
-  String get ib_navigate_chapters => 'انتقل إلى فصول مختلفة';
-
-  @override
-  String get ib_circuitverse => 'CircuitVerse';
-
-  @override
-  String get ib_interactive_book => 'الكتاب التفاعلي';
-
-  @override
-  String get ib_return_home => 'العودة إلى الصفحة الرئيسية';
-
-  @override
-  String get ib_home => 'الصفحة الرئيسية للكتاب التفاعلي';
-
-  @override
-  String get ib_loading_chapters => 'جاري تحميل الفصول...';
-
-  @override
-  String get ib_show_toc => 'عرض جدول المحتويات';
-
-  @override
-  String get ib_page_copyright_notice =>
-      'حقوق النشر © 2021 المساهمون في CircuitVerse. موزعة تحت رخصة [CC-by-sa].';
-
-  @override
-  String get ib_page_table_of_contents => 'جدول المحتويات';
-
-  @override
-  String get ib_page_navigate_previous => 'انقر للانتقال إلى الصفحة السابقة';
-
-  @override
-  String get ib_page_navigate_next => 'انقر للانتقال إلى الصفحة التالية';
-
-  @override
-  String get ib_page_loading_image => 'جاري تحميل الصورة...';
-
-  @override
-  String get ib_page_image_load_error => 'فشل تحميل الصورة';
-
-  @override
-  String get ib_page_no_image_source => 'لم يتم توفير مصدر للصورة';
-
-  @override
   String get notifications_no_notifications => 'لا توجد إشعارات حتى الآن';
 
   @override

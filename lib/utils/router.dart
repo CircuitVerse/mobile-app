@@ -16,7 +16,7 @@ import 'package:mobile_app/ui/views/groups/my_groups_view.dart';
 import 'package:mobile_app/ui/views/groups/new_group_view.dart';
 import 'package:mobile_app/ui/views/groups/update_assignment_view.dart';
 import 'package:mobile_app/ui/views/cv_landing_view.dart';
-import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
+import 'package:mobile_app/features/interactive-book/root.dart';
 import 'package:mobile_app/ui/views/profile/edit_profile_view.dart';
 import 'package:mobile_app/ui/views/profile/profile_view.dart';
 import 'package:mobile_app/ui/views/projects/edit_project_view.dart';
@@ -83,8 +83,8 @@ class CVRouter {
       case UpdateAssignmentView.id:
         var _assignment = settings.arguments as Assignment;
         return _buildRoute(UpdateAssignmentView(assignment: _assignment));
-      case IbLandingView.id:
-        return _buildRoute(const IbLandingView());
+      case Root.id:
+        return _buildRoute(const Root());
       case ProjectPreviewFullScreen.id:
         var _project = settings.arguments as Project;
         return _buildRoute(ProjectPreviewFullScreen(project: _project));

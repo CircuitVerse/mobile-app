@@ -812,52 +812,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get update_assignment_error => 'त्रुटि';
 
   @override
-  String get ib_search_circuitverse => 'सर्किटवर्स खोजें';
-
-  @override
-  String get ib_navigate_chapters => 'विभिन्न अध्यायों पर नेविगेट करें';
-
-  @override
-  String get ib_circuitverse => 'सर्किटवर्स';
-
-  @override
-  String get ib_interactive_book => 'इंटरएक्टिव बुक';
-
-  @override
-  String get ib_return_home => 'होम पर वापस जाएं';
-
-  @override
-  String get ib_home => 'इंटरएक्टिव बुक होम';
-
-  @override
-  String get ib_loading_chapters => 'अध्याय लोड हो रहे हैं...';
-
-  @override
-  String get ib_show_toc => 'विषय सूची दिखाएं';
-
-  @override
-  String get ib_page_copyright_notice =>
-      'कॉपीराइट © 2021 सर्किटवर्स के योगदानकर्ता। [CC-by-sa] लाइसेंस के तहत वितरित।';
-
-  @override
-  String get ib_page_table_of_contents => 'विषय सूची';
-
-  @override
-  String get ib_page_navigate_previous => 'पिछले पृष्ठ पर जाने के लिए टैप करें';
-
-  @override
-  String get ib_page_navigate_next => 'अगले पृष्ठ पर जाने के लिए टैप करें';
-
-  @override
-  String get ib_page_loading_image => 'छवि लोड हो रही है...';
-
-  @override
-  String get ib_page_image_load_error => 'छवि लोड करने में विफल';
-
-  @override
-  String get ib_page_no_image_source => 'कोई छवि स्रोत प्रदान नहीं किया गया';
-
-  @override
   String get notifications_no_notifications => 'अभी तक कोई सूचनाएं नहीं हैं';
 
   @override

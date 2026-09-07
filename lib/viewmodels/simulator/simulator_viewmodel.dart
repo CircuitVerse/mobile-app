@@ -9,7 +9,7 @@ import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
-import 'package:mobile_app/ui/views/ib/ib_landing_view.dart';
+import 'package:mobile_app/features/interactive-book/root.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 import 'package:path_provider/path_provider.dart';
@@ -293,7 +293,7 @@ class SimulatorViewModel extends BaseModel {
 
   bool findMatchInString(String url) {
     if (url.contains('learn.circuitverse.org')) {
-      Get.offNamed(IbLandingView.id);
+      Get.offNamed(Root.id);
     } else if (url.contains('sign_in')) {
       Get.offAndToNamed(LoginView.id);
     } else if (url.contains('sign_out')) {

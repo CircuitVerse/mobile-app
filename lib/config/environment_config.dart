@@ -6,12 +6,7 @@ class EnvironmentConfig {
 
   static const String IB_API_BASE_URL = String.fromEnvironment(
     'IB_API_BASE_URL',
-    defaultValue: 'https://learn.circuitverse.org/_api/pages',
-  );
-
-  static const String IB_BASE_URL = String.fromEnvironment(
-    'IB_BASE_URL',
-    defaultValue: 'https://learn.circuitverse.org',
+    defaultValue: 'https://learn.circuitverse.org/api',
   );
 
   // GITHUB OAUTH ENV VARIABLES

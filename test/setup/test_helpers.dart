@@ -7,12 +7,10 @@ import 'package:mobile_app/services/API/contributors_api.dart';
 import 'package:mobile_app/services/API/grades_api.dart';
 import 'package:mobile_app/services/API/group_members_api.dart';
 import 'package:mobile_app/services/API/groups_api.dart';
-import 'package:mobile_app/services/API/ib_api.dart';
 import 'package:mobile_app/services/API/projects_api.dart';
 import 'package:mobile_app/services/API/users_api.dart';
 import 'package:mobile_app/services/database_service.dart';
 import 'package:mobile_app/services/dialog_service.dart';
-import 'package:mobile_app/services/ib_engine_service.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/assignment_details_viewmodel.dart';
@@ -21,8 +19,6 @@ import 'package:mobile_app/viewmodels/groups/group_details_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/my_groups_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/new_group_viewmodel.dart';
 import 'package:mobile_app/viewmodels/groups/update_assignment_viewmodel.dart';
-import 'package:mobile_app/viewmodels/ib/ib_landing_viewmodel.dart';
-import 'package:mobile_app/viewmodels/ib/ib_page_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/edit_profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/profile_viewmodel.dart';
 import 'package:mobile_app/viewmodels/profile/user_favourites_viewmodel.dart';
@@ -49,10 +45,6 @@ class GradesApiMock extends Mock implements GradesApi {}
 class ProjectsApiMock extends Mock implements ProjectsApi {}
 
 class CollaboratorsApiMock extends Mock implements CollaboratorsApi {}
-
-class IbApiMock extends Mock implements IbApi {}
-
-class IbEngineServiceMock extends Mock implements IbEngineService {}
 
 LocalStorageService getAndRegisterLocalStorageServiceMock() {
   _removeRegistrationIfExists<LocalStorageService>();
@@ -134,25 +126,7 @@ CollaboratorsApi getAndRegisterCollaboratorsApiMock() {
   return _collaboratorsApi;
 }
 
-IbApi getAndRegisterIbApiMock() {
-  _removeRegistrationIfExists<IbApi>();
-  var _ibApi = IbApiMock();
-
-  locator.registerSingleton<IbApi>(_ibApi);
-  return _ibApi;
-}
-
-IbEngineService getAndRegisterIbEngineServiceMock() {
-  _removeRegistrationIfExists<IbEngineService>();
-  var _ibEngineService = IbEngineServiceMock();
-
-  locator.registerSingleton<IbEngineService>(_ibEngineService);
-  return _ibEngineService;
-}
-
 @GenerateNiceMocks([
-  MockSpec<IbLandingViewModel>(),
-  MockSpec<IbPageViewModel>(),
   MockSpec<UserFavouritesViewModel>(),
   MockSpec<ProjectDetailsViewModel>(),
   MockSpec<EditProfileViewModel>(),
@@ -183,8 +157,6 @@ void registerServices() {
   getAndRegisterUsersApiMock();
   getAndRegisterProjectsApiMock();
   getAndRegisterCollaboratorsApiMock();
-  getAndRegisterIbApiMock();
-  getAndRegisterIbEngineServiceMock();
 }
 
 void unregisterServices() {
@@ -198,8 +170,6 @@ void unregisterServices() {
   locator.unregister<UsersApi>();
   locator.unregister<ProjectsApi>();
   locator.unregister<CollaboratorsApi>();
-  locator.unregister<IbApi>();
-  locator.unregister<IbEngineService>();
 }
 
 void _removeRegistrationIfExists<T extends Object>() {

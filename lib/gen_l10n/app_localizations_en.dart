@@ -808,52 +808,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get update_assignment_error => 'Error';
 
   @override
-  String get ib_search_circuitverse => 'Search CircuitVerse';
-
-  @override
-  String get ib_navigate_chapters => 'Navigate to different chapters';
-
-  @override
-  String get ib_circuitverse => 'CircuitVerse';
-
-  @override
-  String get ib_interactive_book => 'Interactive Book';
-
-  @override
-  String get ib_return_home => 'Return to Home';
-
-  @override
-  String get ib_home => 'Interactive Book Home';
-
-  @override
-  String get ib_loading_chapters => 'Loading Chapters...';
-
-  @override
-  String get ib_show_toc => 'Show Table of Contents';
-
-  @override
-  String get ib_page_copyright_notice =>
-      'Copyright © 2021 Contributors to CircuitVerse. Distributed under a [CC-by-sa] license.';
-
-  @override
-  String get ib_page_table_of_contents => 'Table of Contents';
-
-  @override
-  String get ib_page_navigate_previous => 'Tap to navigate to previous page';
-
-  @override
-  String get ib_page_navigate_next => 'Tap to navigate to next page';
-
-  @override
-  String get ib_page_loading_image => 'Loading image...';
-
-  @override
-  String get ib_page_image_load_error => 'Failed to load image';
-
-  @override
-  String get ib_page_no_image_source => 'No image source provided';
-
-  @override
   String get notifications_no_notifications => 'No notifications yet';
 
   @override

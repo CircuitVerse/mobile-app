@@ -475,14 +475,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.7+1"
-  flutter_math_fork:
-    dependency: "direct main"
-    description:
-      name: flutter_math_fork
-      sha256: "6d5f2f1aa57ae539ffb0a04bb39d2da67af74601d685a161aff7ce5bda5fa407"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.4"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -709,14 +701,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
-  hive_generator:
-    dependency: "direct dev"
-    description:
-      name: hive_generator
-      sha256: "06cb8f58ace74de61f63500564931f9505368f45f98958bd7a6c35ba24159db4"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.1"
   hooks:
     dependency: transitive
     description:
@@ -729,18 +713,10 @@ packages:
     dependency: "direct main"
     description:
       name: html
-      sha256: "43b67b8f43321ab066817dfac5619596c98bb1b61624e77203bb4351785f9699"
+      sha256: "6d1264f2dffa1b1101c25a91dff0dc2daee4c18e87cd8538729773c073dbf602"
       url: "https://pub.dev"
     source: hosted
-    version: "0.15.7"
-  html_unescape:
-    dependency: "direct main"
-    description:
-      name: html_unescape
-      sha256: "15362d7a18f19d7b742ef8dcb811f5fd2a2df98db9f80ea393c075189e0b61e3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
+    version: "0.15.6"
   http:
     dependency: "direct main"
     description:
@@ -857,10 +833,10 @@ packages:
     dependency: "direct main"
     description:
       name: intl
-      sha256: "1ca20c894b1717686a2319b8548763d812bc0aabdac580420a44c5178c57a867"
+      sha256: "3df61194eb431efc39c4ceba583b95633a403f46c9fd341e550ce0bfa50e9aa5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.20.3"
+    version: "0.20.2"
   io:
     dependency: transitive
     description:
@@ -950,22 +926,21 @@ packages:
     source: hosted
     version: "1.3.0"
   markdown:
-    dependency: "direct main"
+    dependency: transitive
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "62f78c64d963ba6f73bd70ed65630dc934a264e6"
-      url: "https://github.com/dart-lang/markdown.git"
-    source: git
-    version: "7.2.3"
+      name: markdown
+      sha256: ee85086ad7698b42522c6ad42fe195f1b9898e4d974a1af4576c1a3a176cada9
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.3.1"
   matcher:
     dependency: transitive
     description:
       name: matcher
-      sha256: "31bd099b47c10cd1aeb55146a2d46ce0277630ecef3f7dae54ad7873f36696cd"
+      sha256: dc0b7dc7651697ea4ff3e69ef44b0407ea32c487a39fff6a4004fa585e901861
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.20"
+    version: "0.12.19"
   material_color_utilities:
     dependency: transitive
     description:
@@ -978,10 +953,10 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: "307249ce4ff29d58a18e97f6345f539382eb9c9c29ecda628900f31de0443dd9"
+      sha256: "1741988757a65eb6b36abe716829688cf01910bbf91c34354ff7ec1c3de2b349"
       url: "https://pub.dev"
     source: hosted
-    version: "1.19.0"
+    version: "1.18.0"
   mime:
     dependency: "direct overridden"
     description:
@@ -1286,14 +1261,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.0"
-  scroll_to_index:
-    dependency: "direct main"
-    description:
-      name: scroll_to_index
-      sha256: b707546e7500d9f070d63e5acf74fd437ec7eeeb68d3412ef7b0afada0b4f176
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   share_plus:
     dependency: "direct main"
     description:
@@ -1382,14 +1349,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  showcaseview:
-    dependency: "direct main"
-    description:
-      name: showcaseview
-      sha256: c92a9ea98c3a13191a88f93c1d75cbc3ba419f16e385ada89b1ee10f22f1bd96
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.2"
   simple_chips_input:
     dependency: "direct main"
     description:
@@ -1411,14 +1370,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
-  source_helper:
-    dependency: transitive
-    description:
-      name: source_helper
-      sha256: "86d247119aedce8e63f4751bd9626fc9613255935558447569ad42f9f5b48b3c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.5"
   source_span:
     dependency: transitive
     description:
@@ -1471,10 +1422,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: "2a122cbe059f8b610d3a5415f42e255b6c17b1f21eee1d960f31080237fb4f11"
+      sha256: "949a932224383300f01be9221c39180316445ecb8e7547f70a41a35bf421fb9e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.12"
+    version: "0.7.11"
   theme_provider:
     dependency: "direct main"
     description:
@@ -1507,14 +1458,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  tuple:
-    dependency: transitive
-    description:
-      name: tuple
-      sha256: a97ce2013f240b2f3807bcbaf218765b6f301c3eff91092bcfa23a039e7dd151
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
   typed_data:
     dependency: transitive
     description:
@@ -1623,10 +1566,10 @@ packages:
     dependency: transitive
     description:
       name: vector_math
-      sha256: f36f9f3be64c6198714492bb455c11056e33e2f85d9a0b676a48301e44fdcf47
+      sha256: d530bd74fea330e6e364cda7a85019c434070188383e1cd8d9777ee586914c5b
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2"
+    version: "2.2.0"
   vm_service:
     dependency: transitive
     description:
