@@ -38,7 +38,7 @@ dependencies:
   google_sign_in: ^6.2.1
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  html: 0.15.6
+  html: 0.15.7
   image_cropper: ^12.2.1
   image_picker: ^1.2.3
   intl: ^0.20.3
