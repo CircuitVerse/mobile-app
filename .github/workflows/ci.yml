@@ -17,6 +17,43 @@ permissions:
   contents: read
 
 jobs:
+  build-vue:
+    name: Build Vue Simulator
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: 3.44.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: vue/package-lock.json
+
+      - name: Install simulator dependencies
+        working-directory: vue
+        run: npm ci --no-audit --no-fund
+
+      - name: Build the simulator bundle
+        run: dart run tool/build_vue_simulator.dart
+
+      - name: Upload the bundle
+        uses: actions/upload-artifact@v6
+        with:
+          name: vue-simulator-bundle
+          path: vue/dist/simulatorvue/v0
+          retention-days: 1
+
   test:
     name: Test & Analyze
     permissions:
@@ -97,7 +134,7 @@ jobs:
 
   build-validation:
     name: Build Validation
-    needs: test
+    needs: [test, build-vue]
     strategy:
       matrix:
         include:
@@ -114,6 +151,12 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
+
+      - name: Download the simulator bundle
+        uses: actions/download-artifact@v7
+        with:
+          name: vue-simulator-bundle
+          path: vue/dist/simulatorvue/v0
 
       - name: Setup Java (for Android)
         if: matrix.build-type == 'android'
@@ -167,6 +210,14 @@ jobs:
           flutter build apk --debug \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
+
+      # A missing bundle does not fail the build: Flutter prints an error and
+      # exits 0, shipping an app with no simulator in it.
+      - name: Verify the simulator shipped in the APK
+        if: matrix.build-type == 'android'
+        run: |
+          unzip -l build/app/outputs/flutter-apk/app-debug.apk \
+            | grep -q simulatorvue
 
       - name: Upload Android APK
         if: matrix.build-type == 'android'

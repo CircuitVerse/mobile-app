@@ -150,7 +150,15 @@ jobs:
         uses: actions/checkout@v6
         with:
           ref: master
-        
+          submodules: recursive
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: vue/package-lock.json
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -218,6 +226,11 @@ jobs:
           flutter gen-l10n
           flutter packages pub run build_runner build --delete-conflicting-outputs
           
+      - name: Build the simulator bundle
+        run: |
+          npm ci --no-audit --no-fund --prefix vue
+          dart run tool/build_vue_simulator.dart
+
       - name: Build Android App Bundle
         env:
           GH_OAUTH_CLIENT_ID: ${{ secrets.GH_OAUTH_CLIENT_ID }}
