@@ -35,7 +35,7 @@ void main() {
     EnvironmentConfig.CV_BASE_URL = 'http://127.0.0.1:${upstream.port}';
 
     server = VueSimulatorServer(
-      documentRoot: 'vue/dist/simulatorvue/v1',
+      documentRoot: 'vue/dist/simulatorvue/v0',
       tokenProvider: () => token,
     );
     await server.start();
@@ -153,6 +153,50 @@ void main() {
     final response = await request.close();
 
     expect(response.statusCode, HttpStatus.forbidden);
+    expect(received, isEmpty);
+  });
+
+  test('keeps proxied answers out of the webview cache', () async {
+    // They vary by session, so a cached /api/v1/me would follow the next login.
+    final response = await send('GET', '/api/v1/me');
+
+    expect(response.headers.value(HttpHeaders.cacheControlHeader), 'no-store');
+  });
+
+  test('does not carry the token through a redirect', () async {
+    final redirected = <String>[];
+    await upstream.close(force: true);
+    upstream = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    upstream.listen((request) async {
+      redirected.add(request.uri.path);
+      if (request.uri.path == '/api/v1/me') {
+        request.response.statusCode = HttpStatus.movedPermanently;
+        request.response.headers.set(HttpHeaders.locationHeader, '/elsewhere');
+      }
+      await request.response.close();
+    });
+    EnvironmentConfig.CV_BASE_URL = 'http://127.0.0.1:${upstream.port}';
+
+    final request = await client.openUrl(
+      'GET',
+      Uri.parse('http://127.0.0.1:${server.port}/api/v1/me'),
+    );
+    request.cookies.add(Cookie(VueSimulatorServer.secretCookie, server.secret));
+    request.followRedirects = false;
+    final response = await request.close();
+
+    // The 3xx comes back to the page instead of being followed here.
+    expect(response.statusCode, HttpStatus.movedPermanently);
+    expect(response.headers.value(HttpHeaders.locationHeader), '/elsewhere');
+    expect(redirected, ['/api/v1/me']);
+  });
+
+  test('will not send the token over plain http off the device', () async {
+    EnvironmentConfig.CV_BASE_URL = 'http://circuitverse.org';
+
+    final response = await send('GET', '/api/v1/me');
+
+    expect(response.statusCode, HttpStatus.badGateway);
     expect(received, isEmpty);
   });
 

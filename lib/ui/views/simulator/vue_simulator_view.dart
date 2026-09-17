@@ -48,10 +48,12 @@ class _VueSimulatorViewState extends State<VueSimulatorView> {
     final project = await model.fetchProject(projectId);
     if (!mounted) return;
 
+    // Stay in the simulator if the lookup failed -- leaving it would close the
+    // circuit with nowhere to go.
+    if (project == null) return;
+
     Navigator.of(context).pop();
-    if (project != null) {
-      await Get.toNamed(ProjectDetailsView.id, arguments: project);
-    }
+    await Get.toNamed(ProjectDetailsView.id, arguments: project);
   }
 
   /// Pops first, so the landscape lock and full screen are undone before the

@@ -140,8 +140,21 @@ class VueSimulatorServer {
       '${EnvironmentConfig.CV_BASE_URL}${request.uri.path}',
     ).replace(query: request.uri.query.isEmpty ? null : request.uri.query);
 
+    // The token goes out on this request, so refuse to send it in the clear.
+    // Loopback is fine: that traffic never leaves the device, and the tests
+    // point CV_BASE_URL at a local server.
+    if (target.scheme != 'https' && !_isLoopback(target.host)) {
+      debugPrint('[vue-sim] refusing to proxy over ${target.scheme}');
+      request.response.statusCode = HttpStatus.badGateway;
+      return;
+    }
+
     final body = await _readBody(request);
     final upstream = await _client!.openUrl(request.method, target);
+
+    // Follow nothing: a redirect would carry the token to whatever it points
+    // at. The page gets the 3xx and comes back through here for the new URL.
+    upstream.followRedirects = false;
 
     request.headers.forEach((name, values) {
       final lower = name.toLowerCase();
@@ -184,8 +197,18 @@ class VueSimulatorServer {
     if (contentType != null) {
       request.response.headers.contentType = contentType;
     }
+    // Answers depend on who is signed in, so keep them out of the webview
+    // cache -- otherwise the next account sees the last one's /me.
+    request.response.headers.set(HttpHeaders.cacheControlHeader, 'no-store');
+    final location = response.headers.value(HttpHeaders.locationHeader);
+    if (location != null) {
+      request.response.headers.set(HttpHeaders.locationHeader, location);
+    }
     await response.forEach(request.response.add);
   }
+
+  bool _isLoopback(String host) =>
+      host == 'localhost' || host == '127.0.0.1' || host == '::1';
 
   Future<List<int>> _readBody(HttpRequest request) async {
     final chunks = <int>[];

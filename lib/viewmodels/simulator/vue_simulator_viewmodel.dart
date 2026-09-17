@@ -24,6 +24,9 @@ class VueSimulatorViewModel extends BaseModel {
 
   final LocalStorageService _storage = locator<LocalStorageService>();
 
+  /// Set once the view is gone, so a startup still in flight gives up.
+  bool _destroyed = false;
+
   /// Static so re-entering the view reuses the same server.
   static VueSimulatorServer? _server;
 
@@ -58,6 +61,7 @@ class VueSimulatorViewModel extends BaseModel {
   }
 
   Future<void> onModelReady([String? projectId]) async {
+    _destroyed = false;
     setStateFor(SIMULATOR, ViewState.Busy);
     _serverInstance.projectId = projectId;
 
@@ -71,6 +75,7 @@ class VueSimulatorViewModel extends BaseModel {
       // The bundle is not committed, and a build without it still succeeds, so
       // check before starting or the user just gets a blank webview.
       await rootBundle.load('$_documentRoot/index.html');
+      if (_destroyed) return;
 
       if (!_serverInstance.isRunning) {
         await _serverInstance.start();
@@ -81,22 +86,34 @@ class VueSimulatorViewModel extends BaseModel {
         name: VueSimulatorServer.secretCookie,
         value: _serverInstance.secret,
       );
+
+      // Left while we were starting: shut the server we just brought up.
+      if (_destroyed) {
+        await _serverInstance.close();
+        return;
+      }
       setStateFor(SIMULATOR, ViewState.Idle);
     } on FlutterError catch (_) {
       const message =
           'Simulator bundle not found. Run '
           'dart run tool/build_vue_simulator.dart, then reinstall the app.';
       debugPrint('[vue-sim] $message');
-      setErrorMessageFor(SIMULATOR, message);
-      setStateFor(SIMULATOR, ViewState.Error);
+      _reportError(message);
     } catch (e) {
       debugPrint('[vue-sim] could not start the server: $e');
-      setErrorMessageFor(SIMULATOR, e.toString());
-      setStateFor(SIMULATOR, ViewState.Error);
+      _reportError(e.toString());
     }
   }
 
+  void _reportError(String message) {
+    if (_destroyed) return;
+    setErrorMessageFor(SIMULATOR, message);
+    setStateFor(SIMULATOR, ViewState.Error);
+  }
+
   Future<void> onModelDestroy() async {
+    _destroyed = true;
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
