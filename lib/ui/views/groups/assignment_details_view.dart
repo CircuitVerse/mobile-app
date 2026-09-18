@@ -43,6 +43,8 @@ class _AssignmentDetailsViewState extends State<AssignmentDetailsView> {
   @override
   void dispose() {
     _gradeFocusNode.dispose();
+    _gradesController.dispose();
+    _remarksController.dispose();
     super.dispose();
   }
 
