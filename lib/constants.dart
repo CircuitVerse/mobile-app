@@ -44,4 +44,7 @@ class Constants {
   static const String UNAUTHENTICATED =
       'Unauthenticated to perform this action';
   static const String UNAUTHORIZED = 'Unauthorized to perform this action';
+
+  /// NOTIFICATION CONSTANTS
+  static const String NOTIFICATION_NOT_FOUND = 'Notification not found';
 }

@@ -30,10 +30,12 @@ class NotificationsServiceImpl implements NotificationsService {
       }
 
       return notif;
+    } on UnauthorizedException {
+      throw Failure(Constants.UNAUTHENTICATED);
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.GROUP_NOT_FOUND);
+      throw Failure(Constants.NOTIFICATION_NOT_FOUND);
     } on Exception {
       throw Failure(Constants.GENERIC_FAILURE);
     }
@@ -47,10 +49,12 @@ class NotificationsServiceImpl implements NotificationsService {
     try {
       ApiUtils.addTokenToHeaders(headers);
       await ApiUtils.patch(uri, headers: headers);
+    } on UnauthorizedException {
+      throw Failure(Constants.UNAUTHENTICATED);
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.GROUP_NOT_FOUND);
+      throw Failure(Constants.NOTIFICATION_NOT_FOUND);
     } on Exception {
       throw Failure(Constants.GENERIC_FAILURE);
     }
@@ -64,10 +68,12 @@ class NotificationsServiceImpl implements NotificationsService {
     try {
       ApiUtils.addTokenToHeaders(headers);
       await ApiUtils.get(uri, headers: headers);
+    } on UnauthorizedException {
+      throw Failure(Constants.UNAUTHENTICATED);
     } on ForbiddenException {
       throw Failure(Constants.UNAUTHORIZED);
     } on NotFoundException {
-      throw Failure(Constants.GROUP_NOT_FOUND);
+      throw Failure(Constants.NOTIFICATION_NOT_FOUND);
     } on Exception {
       throw Failure(Constants.GENERIC_FAILURE);
     }
