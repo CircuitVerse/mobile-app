@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:get/get.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/ui/views/cv_landing_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
@@ -56,7 +57,11 @@ class _AuthOptionsViewState extends State<AuthOptionsView> {
                 child: Row(
                   children: <Widget>[
                     const Expanded(child: Divider(thickness: 1)),
-                    Text('  Or ${widget.isSignUp ? 'SignUp' : 'Login'} with  '),
+                    Text(
+                      widget.isSignUp
+                          ? AppLocalizations.of(context)!.auth_or_signup_with
+                          : AppLocalizations.of(context)!.auth_or_login_with,
+                    ),
                     const Expanded(child: Divider(thickness: 1)),
                   ],
                 ),

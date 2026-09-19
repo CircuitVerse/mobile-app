@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/models/models.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class PopQuizWidget extends StatefulWidget {
   final List<QuestionModel> content;
@@ -39,7 +40,7 @@ class _PopQuizWidgetState extends State<PopQuizWidget> {
               Icon(Icons.quiz_outlined, color: theme.colorScheme.primary),
               const SizedBox(width: 8),
               Text(
-                'Pop Quiz!',
+                AppLocalizations.of(context)!.ib_pop_quiz,
                 style: theme.textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: theme.colorScheme.primary,
@@ -53,7 +54,7 @@ class _PopQuizWidgetState extends State<PopQuizWidget> {
                   });
                 },
                 icon: const Icon(Icons.refresh, size: 16),
-                label: const Text('Reset'),
+                label: Text(AppLocalizations.of(context)!.ib_reset),
               ),
             ],
           ),
@@ -141,8 +142,12 @@ class _PopQuizWidgetState extends State<PopQuizWidget> {
                     const SizedBox(height: 8),
                     Text(
                       question.options[selected].isAnswer
-                          ? '✓ Correct!'
-                          : '✗ Incorrect. The answer is: ${question.options.firstWhere((o) => o.isAnswer).option}',
+                          ? AppLocalizations.of(context)!.ib_pop_quiz_correct
+                          : AppLocalizations.of(context)!.ib_pop_quiz_incorrect(
+                            question.options
+                                .firstWhere((o) => o.isAnswer)
+                                .option,
+                          ),
                       style: TextStyle(
                         color:
                             question.options[selected].isAnswer

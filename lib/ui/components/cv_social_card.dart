@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/cv_theme.dart';
-import 'package:mobile_app/utils/url_launcher.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
+import 'package:mobile_app/cv_theme.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
+import 'package:mobile_app/utils/url_launcher.dart';
 
 class CircuitVerseSocialCard extends StatelessWidget {
   const CircuitVerseSocialCard({
@@ -87,21 +88,29 @@ class CircuitVerseSocialCard extends StatelessWidget {
                   onPressed: () async {
                     try {
                       await Clipboard.setData(ClipboardData(text: url));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Copied to clipboard!'),
-                          duration: Duration(seconds: 2),
-                          behavior: SnackBarBehavior.floating,
-                        ),
-                      );
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              AppLocalizations.of(context)!.copied_to_clipboard,
+                            ),
+                            duration: const Duration(seconds: 2),
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
+                      }
                     } catch (error) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Failed to copy to clipboard.'),
-                          duration: Duration(seconds: 2),
-                          behavior: SnackBarBehavior.floating,
-                        ),
-                      );
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              AppLocalizations.of(context)!.failed_to_copy,
+                            ),
+                            duration: const Duration(seconds: 2),
+                            behavior: SnackBarBehavior.floating,
+                          ),
+                        );
+                      }
                     }
                   },
                   icon: Icon(

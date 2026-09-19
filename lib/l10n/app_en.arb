@@ -511,5 +511,72 @@
   "google_analytics": "Google Analytics",
   "privacy_section3_text4_string2": ". The third party analytics companies we work with may combine the information collected with other information they have independently collected from other websites and/or other online products and services. Their collection and use of information is subject to their own privacy policies.\n\n",
   "contact_us": "Contact Us",
-  "contact_us_text": "If you have any questions about our practices or this Privacy Policy, please contact us at "
+  "contact_us_text": "If you have any questions about our practices or this Privacy Policy, please contact us at ",
+  "copied_to_clipboard": "Copied to clipboard!",
+  "failed_to_copy": "Failed to copy to clipboard.",
+  "auth_or_signup_with": "  Or SignUp with  ",
+  "auth_or_login_with": "  Or Login with  ",
+  "route_not_defined": "No route defined for {route}",
+  "@route_not_defined": {
+    "placeholders": {
+      "route": {
+        "type": "String"
+      }
+    }
+  },
+  "ib_reset_progress_title": "Reset progress?",
+  "ib_reset_progress_desc": "Every topic will be marked as unread. Downloaded content is not affected.",
+  "ib_reset": "Reset",
+  "ib_cancel": "Cancel",
+  "ib_go_to_home": "Go to Home",
+  "ib_back": "Back",
+  "ib_forward": "Forward",
+  "ib_chapter_not_found": "Chapter {chapterNumber} is not part of this book.",
+  "@ib_chapter_not_found": {
+    "placeholders": {
+      "chapterNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "ib_interactive_book": "Interactive Book",
+  "ib_offline_mode": "Offline Mode",
+  "ib_offline_downloading": "Downloading {done} of {total} pages…",
+  "@ib_offline_downloading": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "ib_offline_saved": "Book saved on this device. Tap to remove.",
+  "ib_offline_download_prompt": "Download content to access anytime, anywhere.",
+  "ib_offline_remove": "Remove",
+  "ib_offline_download_all": "Download All",
+  "ib_overall_progress": "Overall Progress",
+  "ib_topics_completed": "{completed} / {total} topics completed",
+  "@ib_topics_completed": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "ib_pop_quiz": "Pop Quiz!",
+  "ib_pop_quiz_correct": "✓ Correct!",
+  "ib_pop_quiz_incorrect": "✗ Incorrect. The answer is: {answer}",
+  "@ib_pop_quiz_incorrect": {
+    "placeholders": {
+      "answer": {
+        "type": "String"
+      }
+    }
+  },
+  "ib_enter_number_range": "Please enter a number between 0 and 255."
 }

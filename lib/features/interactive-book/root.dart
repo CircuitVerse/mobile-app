@@ -8,6 +8,7 @@ import 'package:mobile_app/features/interactive-book/models/page.dart';
 import 'package:mobile_app/features/interactive-book/services/navbar.dart';
 import 'package:mobile_app/features/interactive-book/services/offline.dart';
 import 'package:mobile_app/features/interactive-book/services/progress.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class Root extends StatefulWidget {
   static const String id = 'interactive_book_view';
@@ -213,7 +214,11 @@ class _RootState extends State<Root> {
       if (chapter == null) {
         // Better to say so than to request a page under an empty slug.
         return Center(
-          child: Text('Chapter $chapterNumber is not part of this book.'),
+          child: Text(
+            AppLocalizations.of(context)!.ib_chapter_not_found(
+              chapterNumber.toString(),
+            ),
+          ),
         );
       }
       chapterPath = chapter.path;
@@ -235,7 +240,9 @@ class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Interactive Book')),
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.ib_interactive_book),
+      ),
       drawer: Navbar(
         currentPage: currentPage,
         chapterNumber: chapterNumber,

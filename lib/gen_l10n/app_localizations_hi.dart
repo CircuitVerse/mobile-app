@@ -1509,4 +1509,96 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get contact_us_text =>
       'यदि हमारे व्यवहार या इस गोपनीयता नीति के बारे में आपके कोई प्रश्न हैं, तो कृपया हमसे संपर्क करें - ';
+
+  @override
+  String get copied_to_clipboard => 'क्लिपबोर्ड पर कॉपी किया गया!';
+
+  @override
+  String get failed_to_copy => 'क्लिपबोर्ड पर कॉपी करने में विफल।';
+
+  @override
+  String get auth_or_signup_with => '  या इसके साथ साइन अप करें  ';
+
+  @override
+  String get auth_or_login_with => '  या इसके साथ लॉगिन करें  ';
+
+  @override
+  String route_not_defined(String route) {
+    return '$route के लिए कोई रूट परिभाषित नहीं है';
+  }
+
+  @override
+  String get ib_reset_progress_title => 'प्रगति रीसेट करें?';
+
+  @override
+  String get ib_reset_progress_desc =>
+      'प्रत्येक विषय को अपठित के रूप में चिह्नित किया जाएगा। डाउनलोड की गई सामग्री प्रभावित नहीं होगी।';
+
+  @override
+  String get ib_reset => 'रीसेट करें';
+
+  @override
+  String get ib_cancel => 'रद्द करें';
+
+  @override
+  String get ib_go_to_home => 'होम पर जाएं';
+
+  @override
+  String get ib_back => 'पीछे';
+
+  @override
+  String get ib_forward => 'आगे';
+
+  @override
+  String ib_chapter_not_found(String chapterNumber) {
+    return 'अध्याय $chapterNumber इस पुस्तक का हिस्सा नहीं है।';
+  }
+
+  @override
+  String get ib_interactive_book => 'इंटरैक्टिव बुक';
+
+  @override
+  String get ib_offline_mode => 'ऑफ़लाइन मोड';
+
+  @override
+  String ib_offline_downloading(int done, int total) {
+    return '$total में से $done पेज डाउनलोड हो रहे हैं…';
+  }
+
+  @override
+  String get ib_offline_saved =>
+      'पुस्तक इस डिवाइस पर सहेजी गई है। हटाने के लिए टैप करें।';
+
+  @override
+  String get ib_offline_download_prompt =>
+      'कभी भी, कहीं भी एक्सेस करने के लिए सामग्री डाउनलोड करें।';
+
+  @override
+  String get ib_offline_remove => 'हटाएं';
+
+  @override
+  String get ib_offline_download_all => 'सभी डाउनलोड करें';
+
+  @override
+  String get ib_overall_progress => 'कुल प्रगति';
+
+  @override
+  String ib_topics_completed(int completed, int total) {
+    return '$completed / $total विषय पूरे हुए';
+  }
+
+  @override
+  String get ib_pop_quiz => 'पॉप क्विज़!';
+
+  @override
+  String get ib_pop_quiz_correct => '✓ सही!';
+
+  @override
+  String ib_pop_quiz_incorrect(String answer) {
+    return '✗ गलत। सही उत्तर है: $answer';
+  }
+
+  @override
+  String get ib_enter_number_range =>
+      'कृपया 0 और 255 के बीच एक संख्या दर्ज करें।';
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/models/navbar.dart';
 import 'package:mobile_app/features/interactive-book/services/progress.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 /// Overall completion across the whole book.
 class OverallProgressCard extends StatelessWidget {
@@ -48,7 +49,7 @@ class OverallProgressCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'Overall Progress',
+                        AppLocalizations.of(context)!.ib_overall_progress,
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
@@ -70,7 +71,10 @@ class OverallProgressCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  '$completed / $total topics completed',
+                  AppLocalizations.of(context)!.ib_topics_completed(
+                    completed,
+                    total,
+                  ),
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(color: Color(0xFF6B7280)),

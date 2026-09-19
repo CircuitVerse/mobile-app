@@ -1492,4 +1492,94 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get contact_us_text =>
       'إذا كان لديك أي أسئلة حول ممارساتنا أو سياسة الخصوصية هذه، يرجى الاتصال بنا على ';
+
+  @override
+  String get copied_to_clipboard => 'تم النسخ إلى الحافظة!';
+
+  @override
+  String get failed_to_copy => 'فشل النسخ إلى الحافظة.';
+
+  @override
+  String get auth_or_signup_with => '  أو تسجيل الاشتراك عبر  ';
+
+  @override
+  String get auth_or_login_with => '  أو تسجيل الدخول عبر  ';
+
+  @override
+  String route_not_defined(String route) {
+    return 'لم يتم تحديد مسار لـ $route';
+  }
+
+  @override
+  String get ib_reset_progress_title => 'إعادة ضبط التقدم؟';
+
+  @override
+  String get ib_reset_progress_desc =>
+      'سيتم وضع علامة على كل موضوع كغير مقروء. المحتوى الذي تم تنزيله لن يتأثر.';
+
+  @override
+  String get ib_reset => 'إعادة ضبط';
+
+  @override
+  String get ib_cancel => 'إلغاء';
+
+  @override
+  String get ib_go_to_home => 'الانتقال إلى الرئيسية';
+
+  @override
+  String get ib_back => 'السابق';
+
+  @override
+  String get ib_forward => 'التالي';
+
+  @override
+  String ib_chapter_not_found(String chapterNumber) {
+    return 'الفصل $chapterNumber ليس جزءًا من هذا الكتاب.';
+  }
+
+  @override
+  String get ib_interactive_book => 'الكتاب التفاعلي';
+
+  @override
+  String get ib_offline_mode => 'وضع عدم الاتصال';
+
+  @override
+  String ib_offline_downloading(int done, int total) {
+    return 'جارٍ تنزيل $done من $total صفحة…';
+  }
+
+  @override
+  String get ib_offline_saved => 'تم حفظ الكتاب على هذا الجهاز. انقر للإزالة.';
+
+  @override
+  String get ib_offline_download_prompt =>
+      'قم بتنزيل المحتوى للوصول إليه في أي وقت وفي أي مكان.';
+
+  @override
+  String get ib_offline_remove => 'إزالة';
+
+  @override
+  String get ib_offline_download_all => 'تنزيل الكل';
+
+  @override
+  String get ib_overall_progress => 'التقدم الكلي';
+
+  @override
+  String ib_topics_completed(int completed, int total) {
+    return 'تم إكمال $completed من $total موضوعًا';
+  }
+
+  @override
+  String get ib_pop_quiz => 'اختبار سريع!';
+
+  @override
+  String get ib_pop_quiz_correct => '✓ صحيح!';
+
+  @override
+  String ib_pop_quiz_incorrect(String answer) {
+    return '✗ غير صحيح. الإجابة هي: $answer';
+  }
+
+  @override
+  String get ib_enter_number_range => 'يرجى إدخال رقم بين 0 و 255.';
 }
