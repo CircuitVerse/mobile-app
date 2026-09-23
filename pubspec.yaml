@@ -34,7 +34,7 @@ dependencies:
   flutter_typeahead: ^6.0.0
   fluttericon: ^2.0.0
   get: ^4.7.3
-  get_it: ^9.2.1
+  get_it: ^9.3.0
   google_sign_in: ^6.2.1
   hive: ^2.0.4
   hive_flutter: ^1.1.0
