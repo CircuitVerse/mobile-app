@@ -1,0 +1,85 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_call:
+
+concurrency:
+  group: ${{ github.workflow }}-test-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: "3.47.0"
+
+jobs:
+  test:
+    name: Test & Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+    timeout-minutes: 30
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Cache pub dependencies
+        uses: actions/cache@v6
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+
+      - name: Get Dependencies
+        run: flutter pub get
+
+      - name: Generate Localization Files
+        run: flutter gen-l10n
+
+      - name: Build Runner (Generate Dart Files)
+        run: dart run build_runner build --delete-conflicting-outputs
+
+      - name: Format Check (Exclude generated files)
+        run: |
+          find . -name "*.dart" \
+            -not -path "./lib/gen_l10n/*" \
+            -not -path "./.dart_tool/*" \
+            -not -path "./build/*" \
+            -not -name "*.g.dart" \
+            -not -name "*.freezed.dart" \
+            -not -name "*.mocks.dart" \
+            -print0 |
+            xargs -0 -r dart format --set-exit-if-changed
+
+      - name: Analyze Code
+        run: flutter analyze
+
+      - name: Run Tests with Coverage
+        run: flutter test --coverage
+
+      - name: Upload Coverage to Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          coverage-reporter-version: v0.6.15
+          fail-on-error: false
