@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 
 class TocWidget extends StatelessWidget {
   final List<String> chapters;
   final Function(int) onTap;
 
   const TocWidget({super.key, required this.chapters, required this.onTap});
+
+  @Preview(name: 'Table of Contents')
+  static Widget preview() => SizedBox(
+  width: 360,
+  child: TocWidget(
+    chapters: const [
+      'Welcome to CircuitVerse',
+      'Binary Numbers',
+      'Logic Gates',
+    ],
+    onTap: (_) {},
+  ),
+);
 
   @override
   Widget build(BuildContext context) {
