@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/models/models.dart';
+import 'package:flutter/widget_previews.dart';
 
 class ChapterContentsWidget extends StatelessWidget {
   final List<ChapterItemsModel> items;
@@ -12,6 +13,30 @@ class ChapterContentsWidget extends StatelessWidget {
     required this.chapterNumber,
     required this.navigateToChapter,
   });
+
+  @Preview(name: 'Chapter Contents')
+  static Widget preview() => SizedBox(
+    width: 360,
+    child: ChapterContentsWidget(
+      chapterNumber: 1,
+      navigateToChapter: (_, __) {},
+      items: [
+        ChapterItemsModel(
+          category: 'Number Systems',
+          content: [
+            ChapterContentsItemsContentModel(id: 1, name: 'What is a bit?'),
+            ChapterContentsItemsContentModel(id: 2, name: 'Binary to decimal'),
+          ],
+        ),
+        ChapterItemsModel(
+          category: 'Logic Gates',
+          content: [
+            ChapterContentsItemsContentModel(id: 3, name: 'AND, OR and XOR'),
+          ],
+        ),
+      ],
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
