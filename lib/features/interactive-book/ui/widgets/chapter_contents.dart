@@ -19,7 +19,7 @@ class ChapterContentsWidget extends StatelessWidget {
     width: 360,
     child: ChapterContentsWidget(
       chapterNumber: 1,
-      navigateToChapter: (_, __) {},
+      navigateToChapter: (_, _) {},
       items: [
         ChapterItemsModel(
           category: 'Number Systems',
