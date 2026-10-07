@@ -2,11 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/models/widgets_models/number_points.dart';
 import 'package:mobile_app/features/interactive-book/ui/widgets/bullet_points.dart';
 import 'package:mobile_app/features/interactive-book/ui/theme.dart';
+import 'package:flutter/widget_previews.dart';
 
 class NumberPointsWidget extends StatelessWidget {
   final List<ItemModel> items;
 
   const NumberPointsWidget({super.key, required this.items});
+  @Preview(name: 'Number Points')
+  static Widget preview() => SizedBox(
+    width: 360,
+    child: NumberPointsWidget(
+      items: [
+        ItemModel(
+          content: 'Convert the number to binary',
+          children: [
+            'Divide the number by 2',
+            'Write down the remainder',
+          ],
+        ),
+        ItemModel(
+          content: 'Read the remainders from bottom to top',
+          children: [],
+        ),
+      ],
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
