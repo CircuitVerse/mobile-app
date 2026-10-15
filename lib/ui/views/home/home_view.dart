@@ -100,6 +100,64 @@ class _HomeViewState extends State<HomeView> {
       );
     }
 
+    Widget _buildFeatureCards() {
+      final featureCards = <FeatureCard>[
+        FeatureCard(
+          assetPath: 'assets/images/homepage/export-hd.png',
+          cardHeading: AppLocalizations.of(context)!.feature1_title,
+          cardDescription: AppLocalizations.of(context)!.feature1_description,
+        ),
+        FeatureCard(
+          assetPath: 'assets/images/homepage/combinational-analysis.png',
+          cardHeading: AppLocalizations.of(context)!.feature2_title,
+          cardDescription: AppLocalizations.of(context)!.feature2_description,
+        ),
+        FeatureCard(
+          assetPath: 'assets/images/homepage/embed.png',
+          cardHeading: AppLocalizations.of(context)!.feature3_title,
+          cardDescription: AppLocalizations.of(context)!.feature3_description,
+        ),
+        FeatureCard(
+          assetPath: 'assets/images/homepage/sub-circuit.png',
+          cardHeading: AppLocalizations.of(context)!.feature4_title,
+          cardDescription: AppLocalizations.of(context)!.feature4_description,
+        ),
+        FeatureCard(
+          assetPath: 'assets/images/homepage/multi-bit-bus.png',
+          cardHeading: AppLocalizations.of(context)!.feature5_title,
+          cardDescription: AppLocalizations.of(context)!.feature5_description,
+        ),
+      ];
+
+      return Align(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final columnCount =
+                  constraints.maxWidth >= 1080
+                      ? 3
+                      : constraints.maxWidth >= 600
+                      ? 2
+                      : 1;
+              const spacing = 24.0;
+              final cardWidth =
+                  (constraints.maxWidth - spacing * (columnCount - 1)) /
+                  columnCount;
+
+              return Wrap(
+                spacing: spacing,
+                children:
+                    featureCards
+                        .map((card) => SizedBox(width: cardWidth, child: card))
+                        .toList(),
+              );
+            },
+          ),
+        ),
+      );
+    }
+
     return BaseView<HomeViewModel>(
       builder:
           (context, model, child) => SafeArea(
@@ -115,37 +173,7 @@ class _HomeViewState extends State<HomeView> {
                     title: AppLocalizations.of(context)!.features_title,
                     subtitle: AppLocalizations.of(context)!.features_subtitle,
                   ),
-                  FeatureCard(
-                    assetPath: 'assets/images/homepage/export-hd.png',
-                    cardHeading: AppLocalizations.of(context)!.feature1_title,
-                    cardDescription:
-                        AppLocalizations.of(context)!.feature1_description,
-                  ),
-                  FeatureCard(
-                    assetPath:
-                        'assets/images/homepage/combinational-analysis.png',
-                    cardHeading: AppLocalizations.of(context)!.feature2_title,
-                    cardDescription:
-                        AppLocalizations.of(context)!.feature2_description,
-                  ),
-                  FeatureCard(
-                    assetPath: 'assets/images/homepage/embed.png',
-                    cardHeading: AppLocalizations.of(context)!.feature3_title,
-                    cardDescription:
-                        AppLocalizations.of(context)!.feature3_description,
-                  ),
-                  FeatureCard(
-                    assetPath: 'assets/images/homepage/sub-circuit.png',
-                    cardHeading: AppLocalizations.of(context)!.feature4_title,
-                    cardDescription:
-                        AppLocalizations.of(context)!.feature4_description,
-                  ),
-                  FeatureCard(
-                    assetPath: 'assets/images/homepage/multi-bit-bus.png',
-                    cardHeading: AppLocalizations.of(context)!.feature5_title,
-                    cardDescription:
-                        AppLocalizations.of(context)!.feature5_description,
-                  ),
+                  _buildFeatureCards(),
                   const SizedBox(height: 16),
                   CVSubheader(
                     title: AppLocalizations.of(context)!.editor_picks_title,
