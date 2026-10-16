@@ -21,60 +21,25 @@ class OpenProject extends VueNavigation {
   const OpenProject(this.projectId);
 
   final String projectId;
-
-  @override
-  bool operator ==(Object other) =>
-      other is OpenProject && other.projectId == projectId;
-
-  @override
-  int get hashCode => projectId.hashCode;
-}
-
-/// Show a project on the app's own project screen.
-class OpenProjectPage extends VueNavigation {
-  const OpenProjectPage(this.projectId);
-
-  final String projectId;
-
-  @override
-  bool operator ==(Object other) =>
-      other is OpenProjectPage && other.projectId == projectId;
-
-  @override
-  int get hashCode => projectId.hashCode;
 }
 
 /// Open a screen the app already has.
 class OpenAppScreen extends VueNavigation {
-  const OpenAppScreen(this.screen, {this.argument});
+  const OpenAppScreen(this.screen, [this.argument]);
 
   final VueAppScreen screen;
   final String? argument;
-
-  @override
-  bool operator ==(Object other) =>
-      other is OpenAppScreen &&
-      other.screen == screen &&
-      other.argument == argument;
-
-  @override
-  int get hashCode => Object.hash(screen, argument);
 }
 
-enum VueAppScreen { profile, groups, login }
+enum VueAppScreen { profile, groups, login, project }
 
 /// Leave the simulator and go back to the app.
 class ReturnToApp extends VueNavigation {
-  const ReturnToApp(this.path);
-
-  final String path;
-
-  @override
-  bool operator ==(Object other) => other is ReturnToApp && other.path == path;
-
-  @override
-  int get hashCode => path.hashCode;
+  const ReturnToApp();
 }
+
+/// Project ids are numeric. Anything else is never handed to the page.
+bool _isId(String segment) => RegExp(r'^\d+$').hasMatch(segment);
 
 /// Classifies a navigation. [isLocal] is true for our own asset server.
 VueNavigation resolveVueNavigation(Uri uri, {required bool isLocal}) {
@@ -82,46 +47,39 @@ VueNavigation resolveVueNavigation(Uri uri, {required bool isLocal}) {
   if (!isLocal) return const StayOnCurrentPage();
 
   final path = uri.path;
-  if (path.isEmpty || path == '/' || path == '/index.html') {
+  if (path.isEmpty ||
+      path == '/' ||
+      path == '/index.html' ||
+      path.startsWith('/api/')) {
     return const LoadInWebView();
   }
-  if (path.startsWith('/api/')) return const LoadInWebView();
 
   final segments = uri.pathSegments;
 
-  if (segments.length >= 3 &&
+  // /simulatorvue/edit/<id> after a save, /simulator/edit/<id> on cancel.
+  if (segments.length == 3 &&
       (segments[0] == 'simulator' || segments[0] == 'simulatorvue') &&
-      segments[1] == 'edit') {
-    // We only bundle v1, so a request for another version is not ours to open.
-    final version = uri.queryParameters['simver'];
-    if (segments[0] != 'simulatorvue' || (version != null && version != 'v1')) {
-      return ReturnToApp(uri.path);
-    }
-    // Project ids are numeric. Anything else is never injected as script.
-    if (RegExp(r'^\d+$').hasMatch(segments[2])) return OpenProject(segments[2]);
-
-    // After loading a project, setup.js redirects here using the project name.
-    // The circuit is already on the canvas, so ignore it.
-    return const StayOnCurrentPage();
+      segments[1] == 'edit' &&
+      _isId(segments[2])) {
+    return OpenProject(segments[2]);
   }
 
-  if (segments.isNotEmpty && segments[0] == 'users') {
-    if (segments.length >= 2 && segments[1] == 'sign_in') {
-      return const OpenAppScreen(VueAppScreen.login);
-    }
+  if (segments.length >= 2 && segments[0] == 'users') {
     if (segments.length == 2) {
-      return OpenAppScreen(VueAppScreen.profile, argument: segments[1]);
+      return segments[1] == 'sign_in' || segments[1] == 'sign_up'
+          ? const OpenAppScreen(VueAppScreen.login)
+          : OpenAppScreen(VueAppScreen.profile, segments[1]);
     }
-    if (segments.length >= 3 && segments[2] == 'groups') {
+    if (segments[2] == 'groups') {
       return const OpenAppScreen(VueAppScreen.groups);
     }
-    // Where the app lands after saving or updating project details.
+    // Where the simulator lands after saving or updating project details.
     if (segments.length >= 4 &&
         segments[2] == 'projects' &&
-        RegExp(r'^\d+$').hasMatch(segments[3])) {
-      return OpenProjectPage(segments[3]);
+        _isId(segments[3])) {
+      return OpenAppScreen(VueAppScreen.project, segments[3]);
     }
   }
 
-  return ReturnToApp(uri.path);
+  return const ReturnToApp();
 }

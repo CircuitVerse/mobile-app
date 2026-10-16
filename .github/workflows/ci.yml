@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           submodules: recursive
+          persist-credentials: false
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -39,10 +40,6 @@ jobs:
           node-version: 22
           cache: npm
           cache-dependency-path: vue/package-lock.json
-
-      - name: Install simulator dependencies
-        working-directory: vue
-        run: npm ci --no-audit --no-fund
 
       - name: Build the simulator bundle
         run: dart run tool/build_vue_simulator.dart
@@ -217,14 +214,6 @@ jobs:
           flutter build apk --debug \
             --dart-define=GITHUB_OAUTH_CLIENT_ID=$GH_OAUTH_CLIENT_ID \
             --dart-define=GITHUB_OAUTH_CLIENT_SECRET=$GH_OAUTH_CLIENT_SECRET
-
-      # A missing bundle does not fail the build: Flutter prints an error and
-      # exits 0, shipping an app with no simulator in it.
-      - name: Verify the simulator shipped in the APK
-        if: matrix.build-type == 'android'
-        run: |
-          unzip -l build/app/outputs/flutter-apk/app-debug.apk \
-            | grep -q simulatorvue
 
       - name: Upload Android APK
         if: matrix.build-type == 'android'

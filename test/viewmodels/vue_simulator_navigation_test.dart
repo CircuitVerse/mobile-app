@@ -9,121 +9,63 @@ void main() {
     isLocal: true,
   );
 
-  group('stays in the webview', () {
-    test('the bundle entry point', () {
-      expect(resolveLocal('/'), isA<LoadInWebView>());
-      expect(resolveLocal('/index.html'), isA<LoadInWebView>());
-    });
+  Matcher opensProject(String id) =>
+      isA<OpenProject>().having((d) => d.projectId, 'projectId', id);
 
-    test('proxied API calls', () {
-      expect(resolveLocal('/api/v1/me'), isA<LoadInWebView>());
-    });
+  Matcher opensScreen(VueAppScreen screen, [String? argument]) =>
+      isA<OpenAppScreen>()
+          .having((d) => d.screen, 'screen', screen)
+          .having((d) => d.argument, 'argument', argument);
+
+  test('loads the bundle and proxied API calls in the webview', () {
+    expect(resolveLocal('/'), isA<LoadInWebView>());
+    expect(resolveLocal('/index.html'), isA<LoadInWebView>());
+    expect(resolveLocal('/api/v1/me'), isA<LoadInWebView>());
   });
 
-  group('reopens saved projects in place', () {
-    test('the path the app redirects to after a save', () {
-      expect(
-        resolveLocal('/simulatorvue/edit/2006856'),
-        const OpenProject('2006856'),
-      );
-    });
-
-    test('leaves the v0 simulator path alone', () {
-      // /simulator/ is the old simulator, which this build does not carry.
-      expect(resolveLocal('/simulator/edit/42'), isA<ReturnToApp>());
-    });
-
-    test('carries a version query along', () {
-      expect(
-        resolveLocal('/simulatorvue/edit/42?simver=v1'),
-        const OpenProject('42'),
-      );
-    });
-
-    test('absorbs the self-redirect setup.js fires after loading a project', () {
-      // setup.js fires this after loading any project, using the name not the id.
-      expect(
-        resolveLocal('/simulatorvue/edit/My%20Adder?simver=v1'),
-        isA<StayOnCurrentPage>(),
-      );
-      expect(resolveLocal('/simulatorvue/edit/test'), isA<StayOnCurrentPage>());
-    });
-
-    test('does not open a numeric id meant for another version', () {
-      expect(
-        resolveLocal('/simulatorvue/edit/42?simver=v2'),
-        isA<ReturnToApp>(),
-      );
-    });
-
-    test('returns to the app for a version this build cannot open', () {
-      expect(
-        resolveLocal('/simulatorvue/edit/test?simver=v2'),
-        isA<ReturnToApp>(),
-      );
-      expect(resolveLocal('/simulator/edit/test'), isA<ReturnToApp>());
-    });
-
-    test('refuses a non-numeric id rather than injecting it as script', () {
-      // The id gets interpolated into injected JavaScript.
-      expect(
-        resolveLocal('/simulatorvue/edit/1";alert(1);//'),
-        isNot(isA<OpenProject>()),
-      );
-    });
+  test('reopens a saved project in place', () {
+    expect(resolveLocal('/simulatorvue/edit/2006856'), opensProject('2006856'));
+    // Where the project details dialog goes on cancel.
+    expect(resolveLocal('/simulator/edit/42'), opensProject('42'));
   });
 
-  group('hands website routes to native screens', () {
-    test('profile carries the user id', () {
-      expect(
-        resolveLocal('/users/409461'),
-        const OpenAppScreen(VueAppScreen.profile, argument: '409461'),
-      );
-    });
-
-    test('groups', () {
-      expect(
-        resolveLocal('/users/409461/groups'),
-        const OpenAppScreen(VueAppScreen.groups),
-      );
-    });
-
-    test('sign in', () {
-      expect(
-        resolveLocal('/users/sign_in'),
-        const OpenAppScreen(VueAppScreen.login),
-      );
-    });
+  test('refuses a non-numeric id rather than handing it to the page', () {
+    expect(
+      resolveLocal('/simulatorvue/edit/1";alert(1);//'),
+      isA<ReturnToApp>(),
+    );
   });
 
-  group('never hands off to a browser', () {
-    test("a project page opens the app's own project screen", () {
-      // Where the Vue app goes after a save or a details update.
-      expect(
-        resolveLocal('/users/409461/projects/2006856'),
-        const OpenProjectPage('2006856'),
-      );
-      expect(
-        resolveLocal('/users/409461/projects/2006856/edit'),
-        const OpenProjectPage('2006856'),
-      );
-    });
+  test('hands website routes to native screens', () {
+    expect(
+      resolveLocal('/users/409461'),
+      opensScreen(VueAppScreen.profile, '409461'),
+    );
+    expect(
+      resolveLocal('/users/409461/groups'),
+      opensScreen(VueAppScreen.groups),
+    );
+    expect(resolveLocal('/users/sign_in'), opensScreen(VueAppScreen.login));
+    expect(resolveLocal('/users/sign_up'), opensScreen(VueAppScreen.login));
+    // Where the Vue app goes after a save or a details update.
+    expect(
+      resolveLocal('/users/409461/projects/2006856/edit'),
+      opensScreen(VueAppScreen.project, '2006856'),
+    );
+  });
 
-    test('a route with no in-app screen returns to the app', () {
-      expect(
-        resolveLocal('/users/409461/notifications'),
-        const ReturnToApp('/users/409461/notifications'),
-      );
-    });
+  test('returns to the app for a route with no in-app screen', () {
+    expect(resolveLocal('/users/409461/notifications'), isA<ReturnToApp>());
+    expect(resolveLocal('/users'), isA<ReturnToApp>());
+  });
 
-    test('off-origin links are refused, staying in the simulator', () {
-      expect(
-        resolveVueNavigation(
-          Uri.parse('https://learn.circuitverse.org/docs'),
-          isLocal: false,
-        ),
-        isA<StayOnCurrentPage>(),
-      );
-    });
+  test('refuses off-origin links, staying in the simulator', () {
+    expect(
+      resolveVueNavigation(
+        Uri.parse('https://learn.circuitverse.org/docs'),
+        isLocal: false,
+      ),
+      isA<StayOnCurrentPage>(),
+    );
   });
 }

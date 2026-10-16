@@ -39,8 +39,6 @@ class VueSimulatorServer {
   HttpServer? _server;
   HttpClient? _client;
 
-  bool get isRunning => _server != null;
-
   /// Assigned by the OS on [start].
   int get port => _server?.port ?? 0;
 
@@ -129,9 +127,6 @@ class VueSimulatorServer {
       (c) => c.name == secretCookie && c.value == secret,
     );
     if (!hasKey) {
-      debugPrint(
-        '[vue-sim] rejected an unkeyed request to ${request.uri.path}',
-      );
       request.response.statusCode = HttpStatus.forbidden;
       return;
     }
@@ -185,12 +180,6 @@ class VueSimulatorServer {
     }
 
     final response = await upstream.close();
-    if (kDebugMode) {
-      debugPrint(
-        '[vue-sim] proxy ${request.method} ${request.uri.path} '
-        '-> ${response.statusCode}${token == null ? " (signed out)" : ""}',
-      );
-    }
 
     request.response.statusCode = response.statusCode;
     final contentType = response.headers.contentType;
@@ -220,21 +209,13 @@ class VueSimulatorServer {
     final dot = path.lastIndexOf('.');
     final ext = dot == -1 ? '' : path.substring(dot + 1).toLowerCase();
     return switch (ext) {
-      'html' => ContentType.html,
-      'js' || 'mjs' => ContentType('text', 'javascript', charset: 'utf-8'),
+      'js' => ContentType('text', 'javascript', charset: 'utf-8'),
       'css' => ContentType('text', 'css', charset: 'utf-8'),
-      'json' => ContentType.json,
       'svg' => ContentType('image', 'svg+xml', charset: 'utf-8'),
       'png' => ContentType('image', 'png'),
-      'jpg' || 'jpeg' => ContentType('image', 'jpeg'),
-      'gif' => ContentType('image', 'gif'),
-      'ico' => ContentType('image', 'x-icon'),
       'woff2' => ContentType('font', 'woff2'),
       'woff' => ContentType('font', 'woff'),
       'ttf' => ContentType('font', 'ttf'),
-      'eot' => ContentType('application', 'vnd.ms-fontobject'),
-      'wasm' => ContentType('application', 'wasm'),
-      'tar' => ContentType('application', 'x-tar'),
       _ => ContentType.binary,
     };
   }

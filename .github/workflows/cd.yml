@@ -151,6 +151,7 @@ jobs:
         with:
           ref: master
           submodules: recursive
+          persist-credentials: false
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -227,9 +228,7 @@ jobs:
           flutter packages pub run build_runner build --delete-conflicting-outputs
           
       - name: Build the simulator bundle
-        run: |
-          npm ci --no-audit --no-fund --prefix vue
-          dart run tool/build_vue_simulator.dart
+        run: dart run tool/build_vue_simulator.dart
 
       - name: Build Android App Bundle
         env:

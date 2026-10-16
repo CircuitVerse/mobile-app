@@ -38,9 +38,6 @@ void main(List<String> args) async {
 
   final buildOut = p(vueDir, 'dist/simulatorvue/$simVersion');
 
-  // v0 has no bundled yosys: it synthesises Verilog through
-  // /api/v1/simulator/verilogcv, which the app's server proxies.
-
   // index.html loads jQuery from a CDN, which is no use offline. Dropping the
   // tag is not an option either: parts of the bundle read the global $ before
   // globalVariables.ts sets it, and the page comes up blank.
@@ -68,7 +65,7 @@ void main(List<String> args) async {
   // can be ignored. Touching pubspec.yaml forces a rescan.
   File(p(appRoot, 'pubspec.yaml')).setLastModifiedSync(DateTime.now());
 
-  stdout.writeln('==> done: ${sizeOf(buildOut)} in $buildOut');
+  stdout.writeln('==> done: $buildOut');
 }
 
 /// Joins a '/'-separated path onto [base] using the platform separator.
@@ -95,14 +92,6 @@ Future<void> run(
     stderr.write(result.stderr);
     fail('$cmd ${args.join(' ')} failed');
   }
-}
-
-String sizeOf(String dir) {
-  var bytes = 0;
-  for (final f in Directory(dir).listSync(recursive: true)) {
-    if (f is File) bytes += f.lengthSync();
-  }
-  return '${(bytes / (1024 * 1024)).toStringAsFixed(1)}M';
 }
 
 Never fail(String message) {
