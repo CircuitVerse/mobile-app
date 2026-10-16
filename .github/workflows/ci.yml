@@ -56,6 +56,7 @@ jobs:
 
   test:
     name: Test & Analyze
+    needs: build-vue
     permissions:
       contents: read
       checks: write  # for test results
@@ -67,6 +68,12 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
+
+      - name: Download the simulator bundle
+        uses: actions/download-artifact@v7
+        with:
+          name: vue-simulator-bundle
+          path: vue/dist/simulatorvue/v0
 
       - name: Setup Java
         uses: actions/setup-java@v4
