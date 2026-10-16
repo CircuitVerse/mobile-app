@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/features/interactive-book/root.dart';
 import 'package:mobile_app/ui/views/simulator/simulator_view.dart';
-import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/cv_landing_viewmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -137,24 +136,9 @@ class CVDrawer extends StatelessWidget {
           contentPadding: const EdgeInsets.symmetric(horizontal: 28),
           leading: const Icon(FontAwesome5.atom),
           title: Text(AppLocalizations.of(context)!.cv_simulator),
-          onTap: () async {
+          onTap: () {
             Navigator.pop(context);
-            final url = await Get.toNamed(SimulatorView.id);
-            await Future.delayed(const Duration(seconds: 1));
-            if (url is String) {
-              if (url.contains('sign_out')) {
-                _model.onLogoutPressed();
-              } else if (url.contains('edit')) {
-                SnackBarUtils.showDark(
-                  'New project created',
-                  'Please check your profile to edit..',
-                );
-              } else if (url.contains('groups')) {
-                _model.setSelectedIndexTo(6);
-              } else if (url.contains('users')) {
-                _model.setSelectedIndexTo(5);
-              }
-            }
+            Get.toNamed(SimulatorView.id);
           },
         ),
 

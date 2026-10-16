@@ -3,21 +3,27 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:get/get.dart';
-import 'package:mobile_app/config/environment_config.dart';
+import 'package:mobile_app/enums/view_state.dart';
 import 'package:mobile_app/locator.dart';
 import 'package:mobile_app/models/projects.dart';
+import 'package:mobile_app/services/API/projects_api.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
-import 'package:mobile_app/ui/views/authentication/login_view.dart';
-import 'package:mobile_app/features/interactive-book/root.dart';
+import 'package:mobile_app/services/vue_simulator_server.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+/// Runs the bundled Vue simulator (cv-frontend-vue v0) on a local server.
+///
+/// The bundle cannot be loaded from `file://`: it is an ES module build that
+/// also spawns a worker and calls fetch, all blocked without a real origin.
 class SimulatorViewModel extends BaseModel {
   // ViewState Keys
   static const String SIMULATOR = 'simulator';
+
+  /// Built by tool/build_vue_simulator.dart, bundled via pubspec.yaml.
+  static const String _documentRoot = 'vue/dist/simulatorvue/v0';
 
   // Services
   final LocalStorageService _service = locator<LocalStorageService>();
@@ -31,23 +37,32 @@ class SimulatorViewModel extends BaseModel {
     'com.example.mobile_app/media_store',
   );
 
-  // Project to edit
-  Project? _projectToEdit;
+  late final VueSimulatorServer _server = VueSimulatorServer(
+    documentRoot: _documentRoot,
+    tokenProvider: () => token,
+  );
 
-  String get url {
-    if (_projectToEdit != null) {
-      return '${EnvironmentConfig.CV_BASE_URL}/simulator/edit/${_projectToEdit!.id}';
-    }
-    return '${EnvironmentConfig.CV_BASE_URL}/simulator';
-  }
+  /// Set once the view is gone, so a startup still in flight gives up.
+  bool _destroyed = false;
+
+  String get url => _server.url;
 
   String? get token => _service.isLoggedIn ? _service.token : null;
 
-  Uri get uri => Uri.parse(EnvironmentConfig.CV_BASE_URL);
+  /// Port the server bound to. Valid once it has started.
+  int get port => _server.port;
 
-  void setProjectToEdit(Project? project) {
-    _projectToEdit = project;
-    notifyListeners();
+  /// Project the simulator opens on load. Set before the page loads.
+  set projectId(String? id) => _server.projectId = id;
+
+  /// Looks up a project so a website link can open the app's project screen.
+  Future<Project?> fetchProject(String projectId) async {
+    try {
+      return await locator<ProjectsApi>().getProjectDetails(projectId);
+    } catch (e) {
+      debugPrint('[vue-sim] could not fetch project $projectId: $e');
+      return null;
+    }
   }
 
   Future<bool> _requestStoragePermission() async {
@@ -287,59 +302,46 @@ class SimulatorViewModel extends BaseModel {
     }
   }
 
-  void clearCookies() async {
-    await cookieManager.deleteAllCookies();
-  }
-
-  bool findMatchInString(String url) {
-    if (url.contains('learn.circuitverse.org')) {
-      Get.offNamed(Root.id);
-    } else if (url.contains('sign_in')) {
-      Get.offAndToNamed(LoginView.id);
-    } else if (url.contains('sign_out')) {
-      clearCookies();
-      return true;
-    }
-
-    final components = url.split('/');
-    final length = components.length;
-
-    // Check for project edit URLs
-    if (components[length - 1] == 'edit' &&
-        components[length - 3] == 'projects') {
-      return true;
-    }
-
-    // Check for project save/update URLs
-    if (url.contains('projects') &&
-        (url.contains('saved') || url.contains('updated'))) {
-      return true;
-    }
-
-    // Check for groups or users URLs
-    if (url.contains('groups') || url.contains('users')) {
-      return true;
-    }
-
-    return false;
-  }
-
-  void onModelReady([Project? project]) {
-    if (project != null) {
-      setProjectToEdit(project);
-    }
+  Future<void> onModelReady([String? projectId]) async {
+    setStateFor(SIMULATOR, ViewState.Busy);
+    _server.projectId = projectId;
 
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+    try {
+      // The bundle is not committed, and a build without it still succeeds, so
+      // check before starting or the user just gets a blank webview.
+      await rootBundle.load('$_documentRoot/index.html');
+      await _server.start();
+      // The page proves it is ours by sending this back on API calls.
+      await cookieManager.setCookie(
+        url: WebUri(url),
+        name: VueSimulatorServer.secretCookie,
+        value: _server.secret,
+      );
+
+      // Left while we were starting: shut the server we just brought up.
+      if (_destroyed) return _server.close();
+      setStateFor(SIMULATOR, ViewState.Idle);
+    } catch (e) {
+      debugPrint('[vue-sim] could not start the simulator: $e');
+      if (_destroyed) return;
+      setErrorMessageFor(SIMULATOR, e.toString());
+      setStateFor(SIMULATOR, ViewState.Error);
+    }
   }
 
-  void onModelDestroy() {
-    _projectToEdit = null;
+  Future<void> onModelDestroy() async {
+    _destroyed = true;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    await _server.close();
   }
 }
