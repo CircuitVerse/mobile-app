@@ -1,10 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/models/models.dart';
+import 'package:flutter/widget_previews.dart';
 
 class PopQuizWidget extends StatefulWidget {
   final List<QuestionModel> content;
 
   const PopQuizWidget({super.key, required this.content});
+
+  @Preview(name: 'Pop Quiz')
+  static Widget preview() => SizedBox(
+    width: 360,
+    child: PopQuizWidget(
+      content: [
+        QuestionModel(
+          question: 'How many bits are in one byte?',
+          options: [
+            OptionModel(option: '4', isAnswer: false),
+            OptionModel(option: '8', isAnswer: true),
+            OptionModel(option: '16', isAnswer: false),
+            OptionModel(option: '32', isAnswer: false),
+          ],
+        ),
+        QuestionModel(
+          question: 'Which digits does binary use?',
+          options: [
+            OptionModel(option: '0 and 1', isAnswer: true),
+            OptionModel(option: '0 to 9', isAnswer: false),
+          ],
+        ),
+      ],
+    ),
+  );
 
   @override
   State<PopQuizWidget> createState() => _PopQuizWidgetState();

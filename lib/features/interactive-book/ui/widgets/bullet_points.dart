@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/ui/theme.dart';
+import 'package:flutter/widget_previews.dart';
 
 class BulletPointsWidget extends StatelessWidget {
   final List<String> bulletPoints;
 
   const BulletPointsWidget({super.key, required this.bulletPoints});
+
+  @Preview(name: 'Bullet Points')
+  static Widget preview() => const SizedBox(
+  width: 360,
+   child: BulletPointsWidget(
+     bulletPoints: [
+      'A bit is the smallest unit of data in a computer.',
+      'Eight bits make up one byte.',
+      'Binary uses only the digits 0 and 1.',
+     ],
+   ),
+ );
 
   @override
   Widget build(BuildContext context) {
