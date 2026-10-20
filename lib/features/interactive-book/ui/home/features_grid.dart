@@ -5,35 +5,52 @@ class FeaturesGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      crossAxisSpacing: 12,
-      mainAxisSpacing: 12,
-      childAspectRatio: 1.15,
-      children: const [
-        FeatureCard(
-          icon: Icons.school_outlined,
-          title: "Learn",
-          subtitle: "Comprehensive digital logic tutorials",
-        ),
-        FeatureCard(
-          icon: Icons.science_outlined,
-          title: "Experiment",
-          subtitle: "Interactive circuit simulations",
-        ),
-        FeatureCard(
-          icon: Icons.quiz_outlined,
-          title: "Practice",
-          subtitle: "Quizzes and exercises",
-        ),
-        FeatureCard(
-          icon: Icons.emoji_events_outlined,
-          title: "Master",
-          subtitle: "Track your progress",
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final columns =
+            width < 600
+                ? 2
+                : width < 800
+                ? 3
+                : 4;
+
+        return Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1000),
+            child: GridView.count(
+              crossAxisCount: columns,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: columns == 2 ? 1.15 : 1.3,
+              children: const [
+                FeatureCard(
+                  icon: Icons.school_outlined,
+                  title: "Learn",
+                  subtitle: "Comprehensive digital logic tutorials",
+                ),
+                FeatureCard(
+                  icon: Icons.science_outlined,
+                  title: "Experiment",
+                  subtitle: "Interactive circuit simulations",
+                ),
+                FeatureCard(
+                  icon: Icons.quiz_outlined,
+                  title: "Practice",
+                  subtitle: "Quizzes and exercises",
+                ),
+                FeatureCard(
+                  icon: Icons.emoji_events_outlined,
+                  title: "Master",
+                  subtitle: "Track your progress",
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
