@@ -8,6 +8,7 @@ import 'package:mobile_app/features/interactive-book/ui/navbar/header.dart';
 import 'package:mobile_app/features/interactive-book/ui/navbar/nav_tile.dart';
 import 'package:mobile_app/features/interactive-book/ui/navbar/offline_card.dart';
 import 'package:mobile_app/features/interactive-book/ui/navbar/progress_card.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class Navbar extends StatefulWidget {
   final IbPage currentPage;
@@ -84,19 +85,18 @@ class _NavbarState extends State<Navbar> {
       context: context,
       builder:
           (context) => AlertDialog(
-            title: const Text('Reset progress?'),
-            content: const Text(
-              'Every topic will be marked as unread. Downloaded content is '
-              'not affected.',
+            title: Text(AppLocalizations.of(context)!.ib_reset_progress_title),
+            content: Text(
+              AppLocalizations.of(context)!.ib_reset_progress_desc,
             ),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context, false),
-                child: const Text('Cancel'),
+                child: Text(AppLocalizations.of(context)!.ib_cancel),
               ),
               FilledButton(
                 onPressed: () => Navigator.pop(context, true),
-                child: const Text('Reset'),
+                child: Text(AppLocalizations.of(context)!.ib_reset),
               ),
             ],
           ),
@@ -362,7 +362,7 @@ class _ErrorState extends StatelessWidget {
           TextButton.icon(
             onPressed: onGoHome,
             icon: const Icon(Icons.home_outlined),
-            label: const Text('Go to Home'),
+            label: Text(AppLocalizations.of(context)!.ib_go_to_home),
           ),
         ],
       ),

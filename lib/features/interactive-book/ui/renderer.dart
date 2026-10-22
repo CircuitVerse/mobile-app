@@ -3,6 +3,7 @@ import 'package:mobile_app/features/interactive-book/models/models.dart';
 import 'package:mobile_app/features/interactive-book/models/page.dart';
 import 'package:mobile_app/features/interactive-book/ui/widgets/widgets.dart';
 import 'package:mobile_app/features/interactive-book/services/chapters.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class Renderer extends StatefulWidget {
   /// Which page to fetch. About and Guidelines come from their own endpoints
@@ -170,7 +171,7 @@ class _RendererState extends State<Renderer> {
                           widget.decrementChapter();
                         },
                         icon: const Icon(Icons.arrow_back),
-                        label: const Text('Back'),
+                        label: Text(AppLocalizations.of(context)!.ib_back),
                       ),
                     Spacer(),
                     if (widget.showForwardArrow)
@@ -179,7 +180,7 @@ class _RendererState extends State<Renderer> {
                           widget.incrementChapter();
                         },
                         icon: const Icon(Icons.arrow_forward),
-                        label: const Text('Forward'),
+                        label: Text(AppLocalizations.of(context)!.ib_forward),
                       ),
                   ],
                 ),

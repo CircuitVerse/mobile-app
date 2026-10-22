@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 import 'package:mobile_app/models/assignments.dart';
 import 'package:mobile_app/models/groups.dart';
 import 'package:mobile_app/models/projects.dart';
@@ -90,8 +91,17 @@ class CVRouter {
         return _buildRoute(ProjectPreviewFullScreen(project: _project));
       default:
         return _buildRoute(
-          Scaffold(
-            body: Center(child: Text('No route defined for ${settings.name}')),
+          Builder(
+            builder:
+                (context) => Scaffold(
+                  body: Center(
+                    child: Text(
+                      AppLocalizations.of(
+                        context,
+                      )!.route_not_defined(settings.name ?? ''),
+                    ),
+                  ),
+                ),
           ),
         );
     }

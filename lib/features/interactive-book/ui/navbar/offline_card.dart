@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/features/interactive-book/models/navbar.dart';
 import 'package:mobile_app/features/interactive-book/services/offline.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 /// Download-for-offline card. Shows the cache size once content is stored and
 /// switches to a live counter while a download is running.
@@ -44,14 +45,14 @@ class OfflineModeCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Offline Mode',
+                      AppLocalizations.of(context)!.ib_offline_mode,
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      _subtitle(downloading, hasContent),
+                      _subtitle(context, downloading, hasContent),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Color(0xFF6B7280),
                         height: 1.3,
@@ -117,14 +118,17 @@ class OfflineModeCard extends StatelessWidget {
     );
   }
 
-  String _subtitle(bool downloading, bool hasContent) {
+  String _subtitle(BuildContext context, bool downloading, bool hasContent) {
     if (downloading) {
-      return 'Downloading ${library.done} of ${library.total} pages…';
+      return AppLocalizations.of(context)!.ib_offline_downloading(
+        library.done,
+        library.total,
+      );
     }
     if (hasContent) {
-      return 'Book saved on this device. Tap to remove.';
+      return AppLocalizations.of(context)!.ib_offline_saved;
     }
-    return 'Download content to access anytime, anywhere.';
+    return AppLocalizations.of(context)!.ib_offline_download_prompt;
   }
 
   Widget _actionButton(
@@ -155,7 +159,9 @@ class OfflineModeCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
       child: Text(
-        hasContent ? 'Remove' : 'Download All',
+        hasContent
+            ? AppLocalizations.of(context)!.ib_offline_remove
+            : AppLocalizations.of(context)!.ib_offline_download_all,
         style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
       ),
     );

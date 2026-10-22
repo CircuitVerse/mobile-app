@@ -2835,6 +2835,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'If you have any questions about our practices or this Privacy Policy, please contact us at '**
   String get contact_us_text;
+
+  /// No description provided for @copied_to_clipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard!'**
+  String get copied_to_clipboard;
+
+  /// No description provided for @failed_to_copy.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to copy to clipboard.'**
+  String get failed_to_copy;
+
+  /// No description provided for @auth_or_signup_with.
+  ///
+  /// In en, this message translates to:
+  /// **'  Or SignUp with  '**
+  String get auth_or_signup_with;
+
+  /// No description provided for @auth_or_login_with.
+  ///
+  /// In en, this message translates to:
+  /// **'  Or Login with  '**
+  String get auth_or_login_with;
+
+  /// No description provided for @route_not_defined.
+  ///
+  /// In en, this message translates to:
+  /// **'No route defined for {route}'**
+  String route_not_defined(String route);
+
+  /// No description provided for @ib_reset_progress_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset progress?'**
+  String get ib_reset_progress_title;
+
+  /// No description provided for @ib_reset_progress_desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Every topic will be marked as unread. Downloaded content is not affected.'**
+  String get ib_reset_progress_desc;
+
+  /// No description provided for @ib_reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get ib_reset;
+
+  /// No description provided for @ib_cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get ib_cancel;
+
+  /// No description provided for @ib_go_to_home.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Home'**
+  String get ib_go_to_home;
+
+  /// No description provided for @ib_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get ib_back;
+
+  /// No description provided for @ib_forward.
+  ///
+  /// In en, this message translates to:
+  /// **'Forward'**
+  String get ib_forward;
+
+  /// No description provided for @ib_chapter_not_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Chapter {chapterNumber} is not part of this book.'**
+  String ib_chapter_not_found(String chapterNumber);
+
+  /// No description provided for @ib_interactive_book.
+  ///
+  /// In en, this message translates to:
+  /// **'Interactive Book'**
+  String get ib_interactive_book;
+
+  /// No description provided for @ib_offline_mode.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline Mode'**
+  String get ib_offline_mode;
+
+  /// No description provided for @ib_offline_downloading.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading {done} of {total} pages…'**
+  String ib_offline_downloading(int done, int total);
+
+  /// No description provided for @ib_offline_saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Book saved on this device. Tap to remove.'**
+  String get ib_offline_saved;
+
+  /// No description provided for @ib_offline_download_prompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Download content to access anytime, anywhere.'**
+  String get ib_offline_download_prompt;
+
+  /// No description provided for @ib_offline_remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get ib_offline_remove;
+
+  /// No description provided for @ib_offline_download_all.
+  ///
+  /// In en, this message translates to:
+  /// **'Download All'**
+  String get ib_offline_download_all;
+
+  /// No description provided for @ib_overall_progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall Progress'**
+  String get ib_overall_progress;
+
+  /// No description provided for @ib_topics_completed.
+  ///
+  /// In en, this message translates to:
+  /// **'{completed} / {total} topics completed'**
+  String ib_topics_completed(int completed, int total);
+
+  /// No description provided for @ib_pop_quiz.
+  ///
+  /// In en, this message translates to:
+  /// **'Pop Quiz!'**
+  String get ib_pop_quiz;
+
+  /// No description provided for @ib_pop_quiz_correct.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ Correct!'**
+  String get ib_pop_quiz_correct;
+
+  /// No description provided for @ib_pop_quiz_incorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'✗ Incorrect. The answer is: {answer}'**
+  String ib_pop_quiz_incorrect(String answer);
+
+  /// No description provided for @ib_enter_number_range.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a number between 0 and 255.'**
+  String get ib_enter_number_range;
 }
 
 class _AppLocalizationsDelegate

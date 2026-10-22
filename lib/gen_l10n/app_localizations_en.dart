@@ -1502,4 +1502,95 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get contact_us_text =>
       'If you have any questions about our practices or this Privacy Policy, please contact us at ';
+
+  @override
+  String get copied_to_clipboard => 'Copied to clipboard!';
+
+  @override
+  String get failed_to_copy => 'Failed to copy to clipboard.';
+
+  @override
+  String get auth_or_signup_with => '  Or SignUp with  ';
+
+  @override
+  String get auth_or_login_with => '  Or Login with  ';
+
+  @override
+  String route_not_defined(String route) {
+    return 'No route defined for $route';
+  }
+
+  @override
+  String get ib_reset_progress_title => 'Reset progress?';
+
+  @override
+  String get ib_reset_progress_desc =>
+      'Every topic will be marked as unread. Downloaded content is not affected.';
+
+  @override
+  String get ib_reset => 'Reset';
+
+  @override
+  String get ib_cancel => 'Cancel';
+
+  @override
+  String get ib_go_to_home => 'Go to Home';
+
+  @override
+  String get ib_back => 'Back';
+
+  @override
+  String get ib_forward => 'Forward';
+
+  @override
+  String ib_chapter_not_found(String chapterNumber) {
+    return 'Chapter $chapterNumber is not part of this book.';
+  }
+
+  @override
+  String get ib_interactive_book => 'Interactive Book';
+
+  @override
+  String get ib_offline_mode => 'Offline Mode';
+
+  @override
+  String ib_offline_downloading(int done, int total) {
+    return 'Downloading $done of $total pages…';
+  }
+
+  @override
+  String get ib_offline_saved => 'Book saved on this device. Tap to remove.';
+
+  @override
+  String get ib_offline_download_prompt =>
+      'Download content to access anytime, anywhere.';
+
+  @override
+  String get ib_offline_remove => 'Remove';
+
+  @override
+  String get ib_offline_download_all => 'Download All';
+
+  @override
+  String get ib_overall_progress => 'Overall Progress';
+
+  @override
+  String ib_topics_completed(int completed, int total) {
+    return '$completed / $total topics completed';
+  }
+
+  @override
+  String get ib_pop_quiz => 'Pop Quiz!';
+
+  @override
+  String get ib_pop_quiz_correct => '✓ Correct!';
+
+  @override
+  String ib_pop_quiz_incorrect(String answer) {
+    return '✗ Incorrect. The answer is: $answer';
+  }
+
+  @override
+  String get ib_enter_number_range =>
+      'Please enter a number between 0 and 255.';
 }

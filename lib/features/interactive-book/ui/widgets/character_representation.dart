@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widget_previews.dart';
+import 'package:mobile_app/gen_l10n/app_localizations.dart';
 
 class CharacterRepresentationWidget extends StatefulWidget {
   @Preview(name: 'Character Representation')
@@ -42,7 +43,7 @@ class _CharacterRepresentationState
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text('Please enter a number between 0 and 255.'),
+          content: Text(AppLocalizations.of(context)!.ib_enter_number_range),
           duration: Duration(seconds: 2),
         ),
       );
