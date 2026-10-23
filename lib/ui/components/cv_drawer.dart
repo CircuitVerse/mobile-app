@@ -23,7 +23,10 @@ class CVDrawer extends StatelessWidget {
     return NavigationDrawer(
       selectedIndex: _model.selectedIndex > 8 ? null : _model.selectedIndex,
       onDestinationSelected: (index) {
-        // We handle selection manually via onTap to support non-sequential indices and ExpansionTiles
+        if (index == 0) {
+          _model.setSelectedIndexTo(0);
+          Navigator.pop(context);
+        }
       },
       children: [
         Padding(
