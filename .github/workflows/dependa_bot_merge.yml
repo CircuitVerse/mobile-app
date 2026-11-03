@@ -4,10 +4,12 @@ on: pull_request
 permissions:
   contents: write
   pull-requests: write
+  actions: read
 
 jobs:
   dependabot:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'CircuitVerse/mobile-app'
     steps:
       - name: Dependabot metadata
@@ -15,6 +17,29 @@ jobs:
         uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Wait for CI to pass
+        if: steps.metadata.outputs.update-type == 'version-update:semver-patch'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          for _ in $(seq 1 30); do
+            run_id=$(gh run list --workflow ci.yml --commit "$HEAD_SHA" \
+              --limit 1 --json databaseId --jq '.[0].databaseId // empty')
+            [ -n "$run_id" ] && break
+            sleep 20
+          done
+
+          if [ -z "$run_id" ]; then
+            echo "::error::No CI run found for $HEAD_SHA after 10 minutes; refusing to merge."
+            exit 1
+          fi
+
+          echo "Waiting on CI run $run_id for $HEAD_SHA"
+          gh run watch "$run_id" --exit-status
+
       - name: Enable auto-merge for Dependabot PRs
         if: steps.metadata.outputs.update-type == 'version-update:semver-patch'
         run: gh pr merge --auto --merge "$PR_URL"
