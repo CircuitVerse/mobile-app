@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/enums/auth_type.dart';
 import 'package:mobile_app/models/user.dart';
+import 'package:mobile_app/utils/app_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageService {
@@ -24,12 +25,12 @@ class LocalStorageService {
 
   dynamic _getFromDisk(String key) {
     var value = _preferences!.get(key);
-    debugPrint('LocalStorageService:_getFromDisk. key: $key value: $value');
+    appLogger.i('LocalStorageService:_getFromDisk. key: $key value: $value');
     return value;
   }
 
   void _saveToDisk<T>(String key, T content) {
-    debugPrint('LocalStorageService:_saveToDisk. key: $key value: $content');
+    appLogger.i('LocalStorageService:_saveToDisk. key: $key value: $content');
 
     if (content is String) {
       _preferences!.setString(key, content);
