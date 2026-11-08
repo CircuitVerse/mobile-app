@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:mobile_app/features/interactive-book/models/models.dart';
+import 'package:mobile_app/utils/app_logger.dart';
 
 abstract class ViewModel {
   final String type;
@@ -38,14 +39,14 @@ abstract class ViewModel {
           case 'image':
             return ImageModel.fromJson(json);
           default:
-            debugPrint('Unhandled widget sub_type: $subType — skipping');
+            appLogger.w('Unhandled widget sub_type: $subType — skipping');
             return _UnknownViewModel(
               type: json['type'] ?? '',
               subType: subType,
             );
         }
       default:
-        debugPrint('Unhandled view type: ${json['type']} — skipping');
+        appLogger.w('Unhandled view type: ${json['type']} — skipping');
         return _UnknownViewModel(type: json['type'] ?? '');
     }
   }

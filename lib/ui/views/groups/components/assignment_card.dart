@@ -6,6 +6,7 @@ import 'package:mobile_app/models/assignments.dart';
 import 'package:mobile_app/ui/views/groups/assignment_details_view.dart';
 import 'package:mobile_app/ui/views/groups/components/group_card_button.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
+import 'package:mobile_app/utils/app_logger.dart';
 
 class AssignmentCard extends StatefulWidget {
   const AssignmentCard({
@@ -126,7 +127,7 @@ class _AssignmentCardState extends State<AssignmentCard> {
           );
         } else {
           /// Add Not Submitted Button if _isProjectNotPresent & _isDeadlineOver
-          debugPrint(
+          appLogger.i(
             AppLocalizations.of(context)!.assignment_card_not_submitted,
           );
         }

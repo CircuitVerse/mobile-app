@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:mobile_app/utils/app_logger.dart';
 
 enum DatabaseBox { Metadata, Cache }
 
@@ -29,7 +30,7 @@ class DatabaseServiceImpl implements DatabaseService {
     try {
       await Hive.initFlutter();
     } catch (e) {
-      debugPrint('Hive Initialization Failed');
+      appLogger.e('Hive Initialization Failed');
     }
   }
 

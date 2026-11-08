@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:mobile_app/utils/app_logger.dart';
 
 class SubChapter {
   final int id;
@@ -12,8 +13,8 @@ class SubChapter {
     final id = json['id'];
     final name = json['name'];
 
-    if (id is! int || name is! String) {
-      debugPrint('Skipping malformed sub-chapter: $json');
+  if (id is! int || name is! String) {
+      appLogger.w('Skipping malformed sub-chapter: $json');
       return null;
     }
 
@@ -46,7 +47,7 @@ class Chapter {
     final path = json['path'];
 
     if (id is! int || name is! String || path is! String || path.isEmpty) {
-      debugPrint('Skipping malformed chapter: $json');
+      appLogger.w('Skipping malformed chapter: $json');
       return null;
     }
 

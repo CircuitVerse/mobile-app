@@ -5,6 +5,7 @@ import 'package:mobile_app/models/projects.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
+import 'package:mobile_app/utils/app_logger.dart';
 
 class FeaturedProjectCard extends StatefulWidget {
   const FeaturedProjectCard({
@@ -116,7 +117,7 @@ class _FeaturedProjectCardState extends State<FeaturedProjectCard> {
         ),
       );
     } catch (e) {
-      debugPrint('Error sharing project: $e');
+      appLogger.e('Error sharing project: $e');
     }
   }
 

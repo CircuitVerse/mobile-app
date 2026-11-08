@@ -12,6 +12,7 @@ import 'package:mobile_app/ui/components/cv_primary_button.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
+import 'package:mobile_app/utils/app_logger.dart';
 import 'package:mobile_app/utils/validators.dart';
 import 'package:mobile_app/viewmodels/groups/add_assignment_viewmodel.dart';
 import 'package:mobile_app/gen_l10n/app_localizations.dart';
@@ -266,7 +267,7 @@ class _AddAssignmentViewState extends State<AddAssignmentView> {
       try {
         _descriptionEditorText = _controller.document.toPlainText();
       } on NoSuchMethodError {
-        debugPrint(
+        appLogger.e(
           'Handled html_editor error. NOTE: This should only throw during tests.',
         );
         _descriptionEditorText = '';
