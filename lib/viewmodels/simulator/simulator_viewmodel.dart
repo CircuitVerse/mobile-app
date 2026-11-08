@@ -10,6 +10,7 @@ import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/services/local_storage_service.dart';
 import 'package:mobile_app/ui/views/authentication/login_view.dart';
 import 'package:mobile_app/features/interactive-book/root.dart';
+import 'package:mobile_app/utils/app_logger.dart';
 import 'package:mobile_app/utils/snackbar_utils.dart';
 import 'package:mobile_app/viewmodels/base_viewmodel.dart';
 import 'package:path_provider/path_provider.dart';
@@ -61,7 +62,7 @@ class SimulatorViewModel extends BaseModel {
           'getApiLevel',
         );
         final apiLevel = result ?? 28;
-        debugPrint('Android API Level: $apiLevel');
+        appLogger.i('Android API Level: $apiLevel');
 
         if (apiLevel >= 29) {
           // Android 10+: No runtime permission needed to write via MediaStore.
@@ -71,16 +72,16 @@ class SimulatorViewModel extends BaseModel {
           final permission = Permission.storage;
           if (await permission.isGranted) return true;
           final status = await permission.request();
-          debugPrint('Storage permission status: $status');
+          appLogger.i('Storage permission status: $status');
           return status.isGranted;
         }
       } catch (e) {
-        debugPrint('Error checking API level: $e');
+        appLogger.e('Error checking API level: $e');
         // Fallback: try storage permission
         final permission = Permission.storage;
         if (await permission.isGranted) return true;
         final status = await permission.request();
-        debugPrint('Fallback storage permission status: $status');
+        appLogger.i('Fallback storage permission status: $status');
         return status.isGranted;
       }
     }
@@ -226,7 +227,7 @@ class SimulatorViewModel extends BaseModel {
 
       if (bytes.isEmpty) throw Exception('No data received');
 
-      debugPrint('Downloaded ${bytes.length} bytes');
+      appLogger.i('Downloaded ${bytes.length} bytes');
 
       if (Platform.isAndroid && _isImageFile(extension)) {
         try {
@@ -234,11 +235,11 @@ class SimulatorViewModel extends BaseModel {
             'getApiLevel',
           );
           final apiLevel = result ?? 28;
-          debugPrint('Using MediaStore for API level: $apiLevel');
+          appLogger.i('Using MediaStore for API level: $apiLevel');
 
           if (apiLevel >= 29) {
             // Use MediaStore for Android 10+
-            debugPrint('Attempting MediaStore save for: $fileName');
+            appLogger.i('Attempting MediaStore save for: $fileName');
             final success = await _mediaStoreChannel
                 .invokeMethod<bool>('saveToPictures', {
                   'bytes': Uint8List.fromList(bytes),
@@ -246,7 +247,7 @@ class SimulatorViewModel extends BaseModel {
                   'mimeType': _getMimeType(extension),
                 });
 
-            debugPrint('MediaStore save result: $success');
+            appLogger.i('MediaStore save result: $success');
             if (success == true) {
               SnackBarUtils.showDark(
                 'Download Complete!',
@@ -258,7 +259,7 @@ class SimulatorViewModel extends BaseModel {
             }
           }
         } catch (e) {
-          debugPrint(
+          appLogger.e(
             'MediaStore method failed, falling back to file system: $e',
           );
         }
@@ -279,7 +280,7 @@ class SimulatorViewModel extends BaseModel {
             'path': file.path,
           });
         } catch (e) {
-          debugPrint('Media scan error: $e');
+          appLogger.e('Media scan error: $e');
         }
       }
     } catch (e) {
