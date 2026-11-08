@@ -13,7 +13,7 @@ class SubChapter {
     final id = json['id'];
     final name = json['name'];
 
-      if (id is! int || name is! String) {
+  if (id is! int || name is! String) {
       appLogger.w('Skipping malformed sub-chapter: $json');
       return null;
     }
