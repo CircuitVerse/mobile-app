@@ -18,7 +18,26 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Something went wrong'), findsOneWidget);
     expect(find.text('No internet'), findsOneWidget);
+    expect(
+      find.text('Please check your connection and try again.'),
+      findsNothing,
+    );
     await tester.tap(find.text('Retry'));
     expect(retried, 1);
+  });
+
+  testWidgets('CVErrorView falls back to localized message', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: const Scaffold(body: CVErrorView()),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Please check your connection and try again.'),
+      findsOneWidget,
+    );
   });
 }

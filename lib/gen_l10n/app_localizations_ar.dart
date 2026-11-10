@@ -1497,5 +1497,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get error_view_title => 'حدث خطأ ما';
 
   @override
+  String get error_view_message => 'يرجى التحقق من اتصالك والمحاولة مرة أخرى.';
+
+  @override
   String get error_view_retry => 'إعادة المحاولة';
 }

@@ -513,5 +513,6 @@
   "contact_us": "Contact Us",
   "contact_us_text": "If you have any questions about our practices or this Privacy Policy, please contact us at ",
   "error_view_title": "Something went wrong",
+  "error_view_message": "Please check your connection and try again.",
   "error_view_retry": "Retry"
 }

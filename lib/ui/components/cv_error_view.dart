@@ -29,14 +29,12 @@ class CVErrorView extends StatelessWidget {
                 color: CVTheme.textColor(context),
               ),
             ),
-            if (message != null && message!.isNotEmpty) ...[
-              const SizedBox(height: 8),
-              Text(
-                message!,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: CVTheme.textColor(context)),
-              ),
-            ],
+            const SizedBox(height: 8),
+            Text(
+              message ?? l10n.error_view_message,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: CVTheme.textColor(context)),
+            ),
             if (onRetry != null) ...[
               const SizedBox(height: 16),
               CVPrimaryButton(title: l10n.error_view_retry, onPressed: onRetry),

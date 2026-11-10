@@ -1507,5 +1507,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get error_view_title => 'Something went wrong';
 
   @override
+  String get error_view_message =>
+      'Please check your connection and try again.';
+
+  @override
   String get error_view_retry => 'Retry';
 }

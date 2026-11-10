@@ -2842,6 +2842,12 @@ abstract class AppLocalizations {
   /// **'Something went wrong'**
   String get error_view_title;
 
+  /// No description provided for @error_view_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check your connection and try again.'**
+  String get error_view_message;
+
   /// No description provided for @error_view_retry.
   ///
   /// In en, this message translates to:
