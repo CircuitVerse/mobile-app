@@ -1509,4 +1509,14 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get contact_us_text =>
       'यदि हमारे व्यवहार या इस गोपनीयता नीति के बारे में आपके कोई प्रश्न हैं, तो कृपया हमसे संपर्क करें - ';
+
+  @override
+  String get error_view_title => 'कुछ गलत हो गया';
+
+  @override
+  String get error_view_message =>
+      'कृपया अपना कनेक्शन जांचें और पुनः प्रयास करें।';
+
+  @override
+  String get error_view_retry => 'पुनः प्रयास करें';
 }

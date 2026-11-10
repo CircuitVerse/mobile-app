@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_drawer.dart';
+import 'package:mobile_app/ui/components/cv_error_view.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -115,8 +116,29 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
           ]);
         }
 
+        final hasFetchError =
+            model.isError(model.FETCH_FEATURED_PROJECTS) &&
+            model.projects.isEmpty;
+        final errorView =
+            hasFetchError
+                ? CVErrorView(
+                  onRetry:
+                      () => model.fetchFeaturedProjects(
+                        size: widget.embed ? 3 : 5,
+                      ),
+                )
+                : null;
+        final isInitialLoading =
+            model.isBusy(model.FETCH_FEATURED_PROJECTS) &&
+            model.projects.isEmpty;
+        final stateView =
+            errorView ??
+            (isInitialLoading
+                ? const Center(child: CircularProgressIndicator())
+                : null);
+
         if (widget.embed) {
-          return Column(children: _items);
+          return stateView ?? Column(children: _items);
         }
 
         if (!model.showSearchBar) {
@@ -193,16 +215,18 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
             ],
           ),
           drawer: const CVDrawer(),
-          body: Padding(
-            padding: const EdgeInsetsDirectional.all(16),
-            child: ListView.builder(
-              controller: controller,
-              itemCount: _projects.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _projects[index];
-              },
-            ),
-          ),
+          body:
+              stateView ??
+              Padding(
+                padding: const EdgeInsetsDirectional.all(16),
+                child: ListView.builder(
+                  controller: controller,
+                  itemCount: _projects.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _projects[index];
+                  },
+                ),
+              ),
         );
       },
     );

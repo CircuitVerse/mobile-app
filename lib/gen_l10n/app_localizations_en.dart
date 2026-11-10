@@ -1502,4 +1502,14 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get contact_us_text =>
       'If you have any questions about our practices or this Privacy Policy, please contact us at ';
+
+  @override
+  String get error_view_title => 'Something went wrong';
+
+  @override
+  String get error_view_message =>
+      'Please check your connection and try again.';
+
+  @override
+  String get error_view_retry => 'Retry';
 }

@@ -1492,4 +1492,13 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get contact_us_text =>
       'إذا كان لديك أي أسئلة حول ممارساتنا أو سياسة الخصوصية هذه، يرجى الاتصال بنا على ';
+
+  @override
+  String get error_view_title => 'حدث خطأ ما';
+
+  @override
+  String get error_view_message => 'يرجى التحقق من اتصالك والمحاولة مرة أخرى.';
+
+  @override
+  String get error_view_retry => 'إعادة المحاولة';
 }
