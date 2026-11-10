@@ -2835,6 +2835,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'If you have any questions about our practices or this Privacy Policy, please contact us at '**
   String get contact_us_text;
+
+  /// No description provided for @error_view_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get error_view_title;
+
+  /// No description provided for @error_view_retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get error_view_retry;
 }
 
 class _AppLocalizationsDelegate

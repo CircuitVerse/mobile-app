@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:mobile_app/cv_theme.dart';
 import 'package:mobile_app/models/projects.dart';
 import 'package:mobile_app/ui/components/cv_drawer.dart';
+import 'package:mobile_app/ui/components/cv_error_view.dart';
 import 'package:mobile_app/ui/components/cv_header.dart';
 import 'package:mobile_app/ui/components/cv_text_field.dart';
 import 'package:mobile_app/ui/views/base_view.dart';
@@ -115,8 +116,19 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
           ]);
         }
 
+        final hasFetchError =
+            model.isError(model.FETCH_FEATURED_PROJECTS) &&
+            model.projects.isEmpty;
+        final errorView = hasFetchError
+            ? CVErrorView(
+                message: model.errorMessageFor(model.FETCH_FEATURED_PROJECTS),
+                onRetry: () =>
+                    model.fetchFeaturedProjects(size: widget.embed ? 3 : 5),
+              )
+            : null;
+
         if (widget.embed) {
-          return Column(children: _items);
+          return errorView ?? Column(children: _items);
         }
 
         if (!model.showSearchBar) {
@@ -124,10 +136,9 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
             0,
             CVHeader(
               title: AppLocalizations.of(context)!.featured_editor_picks,
-              description:
-                  AppLocalizations.of(
-                    context,
-                  )!.featured_editor_picks_description,
+              description: AppLocalizations.of(
+                context,
+              )!.featured_editor_picks_description,
               subtitleToDescriptionSpace: 8,
             ),
           );
@@ -160,10 +171,9 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
                     },
                     icon: const Icon(Icons.arrow_back),
                   ),
-                  hint:
-                      AppLocalizations.of(
-                        context,
-                      )!.featured_search_for_circuits,
+                  hint: AppLocalizations.of(
+                    context,
+                  )!.featured_search_for_circuits,
                   action: TextInputAction.search,
                   controller: _controller,
                   onFieldSubmitted: (value) {
@@ -193,16 +203,18 @@ class _FeaturedProjectsViewState extends State<FeaturedProjectsView> {
             ],
           ),
           drawer: const CVDrawer(),
-          body: Padding(
-            padding: const EdgeInsetsDirectional.all(16),
-            child: ListView.builder(
-              controller: controller,
-              itemCount: _projects.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _projects[index];
-              },
-            ),
-          ),
+          body:
+              errorView ??
+              Padding(
+                padding: const EdgeInsetsDirectional.all(16),
+                child: ListView.builder(
+                  controller: controller,
+                  itemCount: _projects.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _projects[index];
+                  },
+                ),
+              ),
         );
       },
     );
